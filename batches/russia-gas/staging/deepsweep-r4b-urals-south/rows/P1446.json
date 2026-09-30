@@ -1,0 +1,367 @@
+{
+ "project_id": "P1446",
+ "pipeline_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+ "sheet_row": 819,
+ "wiki": "https://www.gem.wiki/Chelyabinsk-Petrovsk_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "P1446 is a real, independently-corroborated, operating Soviet-era (1980) trunk gas pipeline -- no existence, duplicate, or misclassification concern found. Two independent, unrelated, live sources (polit74.ru, a 2023 South-Urals regional news outlet reporting a foiled bombing/leak incident; neftegaz.ru, a 2015 national energy trade-press outlet reporting a routine capital repair) each explicitly name 'Газопровод Челябинск-Петровск' / 'МГП Челябинск-Петровск' and describe it as a real, physically operating trunk (Fuel=Gas, PipelineType=transmission, StartYear1=1980, Diameter=1420mm, Capacity=37.12 bcm/y, Owner=Gazprom PJSC 100% all directly stated). No sibling/duplicate PID exists in this roster for the same corridor. ONE SPEC ERROR found and flagged for Update: GEM's EndState/Province currently reads 'Samara,' but the pipeline's actual endpoint town, Petrovsk, is the administrative center of Petrovsky District, SARATOV Oblast (ru.wikipedia.org), not Samara Oblast -- confirmed independently by GEM's own route geojson (P1446.geojson, internal corroboration only, terminating at ~52.316N 45.394E = Petrovsk, Saratov Oblast) and consistent with the sheet's own existing controlled-vocab form 'Saratov Oblast' used elsewhere in the tracker. Likely origin of the error: incident reporting on this line (including the polit74.ru source used for most of this row's other fills) centers on km 967 of the route, which genuinely IS in Samara Oblast -- a real transit region partway along the corridor, not the terminus -- so 'Samara' plausibly reflects that transit-region confusion rather than fabrication. PROPOSED CORRECTION for Update: EndState/Province 'Samara' -> 'Saratov Oblast'. StartLocation/StartState-Province/StartCountryOrArea and EndLocation/EndCountryOrArea are all confirmed correct and unchanged. Capacity=37.12 bcm/y is attributed directly to this named pipeline (not a multi-PID corridor aggregate); likely reflects combined throughput of parallel physical strings (main + reserve line(s), per the 2015 repair report) recorded under one ProjectID, which is normal GOIT/GGIT practice for a single corridor and not a spec concern. Diameter=1420mm exactly sourced; a 2014 bashinform.ru report's '1400mm' for a Bashkortostan section is almost certainly journalistic rounding of the same standard GOST nominal size, not a distinct true value -- noted as context, not filed as a separate concern. LengthKnown=1285.00km could NOT be independently corroborated in this pass (see Length [ref] fill, UNRESOLVED) -- internally consistent with the km-967-in-Samara-Oblast incident marker falling partway along the route to Saratov Oblast, but not itself sourced; flagged for a future pass with a dedicated length-focused search (e.g. a Gazprom Transgaz Ufa/Samara asset register).",
+   "contested": {
+    "EndState/Province": ""
+   },
+   "researcher_notes": "Read to exhaustion for this row: polit74.ru (12-Jul-2023, incident report: Status/Fuel/PipelineType-context/StartYear1/Capacity/Diameter/Owner/Location-transit-region all sourced from this one document), neftegaz.ru 228907 (2015, repair report: PipelineType/Fuel-context/operator-subsidiary/interconnects with Urengoy-Novopskov and Urengoy-Petrovsk), bashinform.ru 619638 (2014 Bashkortostan-section incident, fetched and url_verifier-passed; content is a client-rendered Nuxt SPA whose article body could not be directly extracted from the raw HTML, so its '1400mm' figure is treated as a WebSearch-summarized lead, weighted low, and used only as context for the diameter note above, not as an independent citation), ru.wikipedia.org Petrovsk (Saratov Oblast) page (place-name/admin-district confirmation), GEM's own P1446.geojson route file (internal corroboration only, never cited as a [ref]). Two targeted WebSearch queries for a directly-stated total pipeline length ('1285 км' and a general length-phrasing query) did not surface a citable source; the one length-adjacent hit (a search-engine-generated '172km' summary) was not attributable to a specific document and was rejected as uncitable. Cross-row leads considered and declined: neftegaz.ru names 'Уренгой-Новопсков' and 'Уренгой-Петровск' as interconnected trunks, but neither PID is in this Urals-South roster -- no cross_row_lead filed as out of batch scope."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+    "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. 12-Jul-2023: an emergency crew found an active gas leak and an improvised explosive device at km 967 of the live, pressurized 'Chelyabinsk-Petrovsk' trunk; the pipe is described as in active service (an operating pipe is what makes a leak/incident newsworthy and defusable-in-place)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. 2015: describes a routine, non-interrupting capital repair of an 11km section (isolating tech interconnects to Urengoy-Novopskov/Urengoy-Petrovsk without affecting 'бесперебойность транспорта газа' -- uninterrupted gas transport) -- confirms a live, in-service trunk, operated by Gazprom Transgaz Ufa."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating confirmed by 2 independent sources 8 years apart (2015 routine-repair report, 2023 live-incident report), both describing this exact named trunk as continuously in gas service. No indication anywhere in this research pass of any shutdown, decommissioning, or non-operating state."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+    "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Headline itself is about a plot to cut off gas supply ('отрезать от газа'); the line is explicitly called a 'газопровод' (gas pipeline) throughout."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Explicitly labelled 'магистральный газопровод (МГП)' -- trunk gas pipeline -- and describes gas-transport continuity."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Fuel=Gas is unambiguous and directly stated ('газопровод'/'газ') in both independent sources."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Explicitly names it 'магистральный газопровод (МГП) Челябинск-Петровск' -- literally 'trunk/main gas pipeline', the standard Russian term GEM maps to PipelineType=transmission -- and it is shown interconnecting with two other named trunk lines (Urengoy-Novopskov, Urengoy-Petrovsk), consistent with a transmission-grade trunk rather than a distribution line."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single strong source but the term used ('магистральный газопровод') is an unambiguous, standard technical designation, not a judgment call; corroborated by the pipeline's role interconnecting with two other named trunk lines in the same article. A second independent source describing it in trunk-line terms was searched for but not found within the lean-pass search budget; this is a single-source high-tier ref on an unambiguous technical term, not an inferred/presumed classification."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1980"
+   },
+   "primary_value": "1980",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Exact statement: 'Газопровод был введен в эксплуатацию в 1980 году' (the pipeline was put into service in 1980)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=1980 exactly matched by one direct, unambiguous statement. A second independent confirmation was searched for (targeted queries for the commissioning date/history of this line) and not found within the lean-pass budget; no source found contradicts 1980, and no other commissioning year appears anywhere in this research pass. Tiered medium (single source) pending a second corroboration in a future pass."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "37.12",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "37.12",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Exact match: 'Его мощность составляет 37,12 миллиарда кубометров газа в год' (its capacity is 37.12 billion cubic meters of gas per year), stated as a property of THIS named pipeline, not a parent system or corridor."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "37.12 bcm/y is stated directly for this named pipeline (not a multi-PID corridor aggregate the way some Urals-region trunks are recorded) -- this repair/incident report attributes the figure specifically to 'Газопровод Челябинск-Петровск'. Note for context: the pipeline runs multiple parallel physical strings/loops (main line + at least one reserve line per the 2015 repair report's mention of a 2nd reserve line being connected), so 37.12 bcm/y likely reflects the combined throughput of those parallel strings under one ProjectID, consistent with how GOIT/GGIT records a single corridor as one row -- this is NOT an aggregate-vs-segment mismatch (no sibling PID exists for this corridor in the roster). Single source found within the lean-pass budget; a second independent capacity figure was searched for and not found -- tiered medium pending future corroboration."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Could not corroborate LengthKnown=1285.00 km. Searched (Russian-language): '\"Челябинск-Петровск\" 1285 км газопровод' and a general 'протяженность километров' query -- neither surfaced a source stating a total-length figure for this pipeline; the only length-adjacent hit was a low-confidence AI-generated search summary asserting '172 km,' which is not attributable to any specific retrievable document, contradicts the internal route evidence (the 2023 incident at km 967 of this line, in Samara Oblast, requires a total length materially greater than 172 km), and was not pursued further as a citable value. Internal sanity check only (not used as a ref): GEM's own recorded 1285 km is consistent with km 967 falling in Samara Oblast partway along a route from Chelyabinsk to Petrovsk (Saratov Oblast) -- i.e. plausible, but not independently sourced. Leaving UNRESOLVED per the lean-pass one-search budget; a length-specific source (e.g. a Gazprom Transgaz Ufa or Samara asset page, or a technical/engineering registry) would need a dedicated follow-up search."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1420",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1420",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Exact match: 'диаметр труб - Диаметр труб 1420 миллиметров'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "1420mm exactly matched and is the standard Soviet/Russian GOST nominal trunk-pipe diameter for a line of this capacity class. Note for context, not filed as a spec concern: a 2014 bashinform.ru incident report on a Bashkortostan (km 138) section of this same line describes the ruptured pipe as '1400 мм' -- almost certainly journalistic rounding of the standard 1420mm nominal size (1400mm is not a standard GOST trunk diameter), not evidence of a distinct true diameter. Single source found within the lean-pass budget for the exact 1420 figure; tiered medium pending a second direct corroboration."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "EndState/Province",
+   "values": {
+    "StartLocation": "Chelyabinsk",
+    "StartState/Province": "Chelyabinsk region",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Petrovsk",
+    "EndState/Province": "Samara",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Samara",
+   "proposed_refs": [
+    "https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D1%81%D0%BA_(%D0%A1%D0%B0%D1%80%D0%B0%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C)",
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D1%81%D0%BA_(%D0%A1%D0%B0%D1%80%D0%B0%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C)",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (name='Petrovsk'). States Petrovsk is 'административный центр Петровского района Саратовской области' -- the administrative center of Petrovsky District, Saratov Oblast -- NOT Samara Oblast."
+    },
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. This 2023 article itself places its incident 'в Самарской области' (in Samara Oblast) at km 967 of the pipeline -- a MIDPOINT along the route, not the Petrovsk terminus. GEM's own route geometry (P1446.geojson, internal, not a citable ref) terminates at ~52.316N 45.394E, which is Petrovsk, Saratov Oblast, consistent with the wiki source, not Samara."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "StartLocation/StartState-Province/StartCountryOrArea (Chelyabinsk / Chelyabinsk region / Russia) and EndLocation/EndCountryOrArea (Petrovsk / Russia) are all confirmed correct and unchanged. EndState/Province is INCORRECT as currently recorded: GEM has 'Samara' but the endpoint town Petrovsk is the administrative center of Petrovsky District, SARATOV Oblast (per ru.wikipedia.org), matching the sheet's own existing controlled-vocab form 'Saratov Oblast' used elsewhere in the tracker and matching GEM's own route geojson terminus. Likely origin of the GEM error: incident/repair reporting on this pipeline (including the very polit74.ru source used here) tends to describe events happening AT km 967, which genuinely IS in Samara Oblast -- a real midpoint the line transits through en route from Chelyabinsk to its actual Saratov Oblast terminus -- so 'Samara' is a plausible confusion between a transit region and the terminus region, not a fabrication. Filed as REFS_ADDED (existence/classification/geography researched and sourced) with the EndState/Province discrepancy flagged separately in the validity[] record for Update to action (proposed correction: EndState/Province = 'Saratov Oblast')."
+  },
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "oo_sheet_row": 1211,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Direct statement: 'Газопровод Челябинск-Петровск находится в ведении компании «Газпром»' (the pipeline is under the jurisdiction/ownership of Gazprom)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC 100% directly stated. Corroborating context (not a separate independent citation of ownership, but consistent): the 2015 neftegaz.ru repair report names the operating subsidiary as 'Газпром трансгаз Уфа' (Gazprom Transgaz Ufa, a wholly-owned Gazprom PJSC subsidiary carrying out works on this line), consistent with parent-company ownership. Single direct ownership statement found within the lean-pass budget; tiered medium pending a second independent corroboration (e.g. a Gazprom Transgaz Ufa asset-register page) in a future pass. On the operators/owners tab, oo_sheet_row 1211."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Chelyabinsk-Petrovsk Gas Pipeline",
+   "sheet_row": 819,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {
+    "EndState/Province": "Saratov Oblast"
+   },
+   "evidence_date": "2023-07",
+   "staleness_rule": "Sheet LastUpdated = 2023-08. Newest dated evidence found in this pass is polit74.ru, 12-Jul-2023 -- just before the cutoff -- reporting a live incident (leak + defused IED) on this pressurized, in-service trunk. Two targeted post-cutoff searches ('Челябинск-Петровск капремонт 2024', 'Chelyabinsk-Petrovsk pipeline news 2026') found no dated news after 2023-08 for this specific line. Per the sweep contract's own dormancy rule, absence of fresh news on an old (1980) Soviet-era operating trunk is not evidence of a status change -- it is confirmed via the most recent available evidence (an active-service incident just before the cutoff) plus no signal anywhere in this pass (repair histories, interconnect articles, regional press) suggesting shutdown, decommissioning, or reconstruction. Verdict is 'confirm', not 'stale'.",
+   "proposed_refs": [
+    "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+    "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/"
+   ],
+   "verifications": [
+    {
+     "url": "https://polit74.ru/incident/terroristy_pytalis_otrezat_ot_gaza_chelyabinskuyu_oblast/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. 12-Jul-2023, newest dated evidence found: an active, pressurized, in-service trunk (leak + IED found and defused on a live line)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/228907-remont-gazoprovoda-chelyabinsk-petrovsk-zavershitsya-k-sentyabryu-2015-g/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. 2015, corroborating continuous operating service (routine, non-interrupting repair)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status itself (operating) is CONFIRMED: no cancellation, shutdown, decommissioning, or reconstruction signal found anywhere in this research pass, across sources spanning 2014-2023. The 'proposed_changes' entry here reflects the EndState/Province spec correction detailed in the paired validity[] record (GEM's 'Samara' -> 'Saratov Oblast' for the Petrovsk terminus), carried here for visibility on the row-level review; it is not a status change. No evidence found dated after 2023-08 (the sheet's LastUpdated) despite two targeted searches -- consistent with a 46-year-old Soviet-era trunk generating routine incident/repair coverage rather than continuous news, not with any change in operating state."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Real, corroborated 1980 Gazprom trunk (operating, transmission, 37.12 bcm/y, 1420mm, all sourced); confirmed EndState/Province error -- Petrovsk terminus is Saratov Oblast, not Samara -- flagged for Update; Length=1285km left UNRESOLVED, uncorroborated."
+}

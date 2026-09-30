@@ -1,0 +1,486 @@
+{
+ "project_id": "P4171",
+ "pipeline_name": "Pskov-Strugi Krasnye Gas Pipeline",
+ "sheet_row": 2151,
+ "wiki": "https://www.gem.wiki/Pskov-Strugi_Krasnye_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "concern_type": "classification",
+   "sheet_row": 2151,
+   "concern": "PipelineType is recorded as 'distribution' but the object being built is named 'Газопровод-отвод и ГРС Струги-Красные' (a gas-pipeline lateral/branch, отвод, that BUILDS a new ГРС at Strugi Krasnye). Per this batch's own established rule (from P4085/P4092/P4093 precedent): an отвод terminating AT a ГРС is the upstream/trunk side of the network (transmission, at trunk pressure, normally operated by a Gazprom Transgaz subsidiary), while distribution is the network DOWNSTREAM of the ГРС. No source found explicitly classifies this object as transmission or distribution, so it is flagged here rather than silently reclassified.",
+   "contested": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor public-hearing notice names the object 'Газопровод-отвод и ГРС Струги-Красные Псковской области' -- an отвод (branch) that builds a ГРС, per this batch's convention the trunk/upstream side of that station."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Developer's own notice, same object name and description, confirming it is an отвод+ГРС construction project rather than a downstream distribution network."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Flagging per the explicit instruction to raise classification doubts via a contested object rather than staging a PipelineType fill, since no source explicitly states 'transmission' or 'distribution' for this specific object -- the отвод-terminates-at-ГРС structural pattern is what supports transmission, not a direct statement."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor (federal environmental regulator, Severo-Zapadnoye mezhregionalnoye upravleniye) public-hearing registry entry titled 'Проектная документация по объекту: «Газопровод-отвод и ГРС Струги-Красные Псковской области», включая предварительные материалы ОВОС' — names the object exactly. States OVOS period 01.06.2024-01.11.2024, public-discussion period 22.08.2024-22.09.2024, and that the route lies in Струго-Красненский and Порховский districts (associated ВОЛС route also crosses Псковский, Палкинский districts and Печорский округ) -- confirms the object is real and, as of Aug-Sep 2024, is at the project-design/OVOS stage (pre-construction)."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Gazprom Linde Engineering (ООО «ГЛ Инжиниринг», the project designer)'s own notice for the same public hearing. Names customer/заказчик ООО «Газпром газификация» (OGRN 1217800107744, INN 7813655197, email domain eoggazprom.ru -- the Yedinyy Operator Gazifikatsii) and designer ООО «ГЛ Инжиниринг»; states the purpose is uninterrupted gas supply to a consumer ('подачи газа потребителю') and gives the same district list as the RPN listing."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both the Rosprirodnadzor public-hearing registry entry and the developer's own notice (both dated Aug-Sep 2024) confirm the 'Газопровод-отвод и ГРС Струги-Красные Псковской области' object is real and, as of the most recent evidence found, is still at the project-design/OVOS (pre-construction) stage -- 'proposed' remains correct. Two independent origins: a federal environmental regulator (RPN) and the Gazprom-group project designer/customer notice."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor (federal environmental regulator, Severo-Zapadnoye mezhregionalnoye upravleniye) public-hearing registry entry titled 'Проектная документация по объекту: «Газопровод-отвод и ГРС Струги-Красные Псковской области», включая предварительные материалы ОВОС' — names the object exactly. States OVOS period 01.06.2024-01.11.2024, public-discussion period 22.08.2024-22.09.2024, and that the route lies in Струго-Красненский and Порховский districts (associated ВОЛС route also crosses Псковский, Палкинский districts and Печорский округ) -- confirms the object is real and, as of Aug-Sep 2024, is at the project-design/OVOS stage (pre-construction)."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Gazprom Linde Engineering (ООО «ГЛ Инжиниринг», the project designer)'s own notice for the same public hearing. Names customer/заказчик ООО «Газпром газификация» (OGRN 1217800107744, INN 7813655197, email domain eoggazprom.ru -- the Yedinyy Operator Gazifikatsii) and designer ООО «ГЛ Инжиниринг»; states the purpose is uninterrupted gas supply to a consumer ('подачи газа потребителю') and gives the same district list as the RPN listing."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources describe the object as a 'газопровод-отвод' (gas-pipeline branch) built to supply gas ('подачи газа потребителю') via a new ГРС (gas distribution station) at Strugi Krasnye -- Fuel=Gas is directly stated."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Pskov",
+    "StartState/Province": "Pskov Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Strugi Krasnye",
+    "EndState/Province": "Pskov Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Pskov",
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor (federal environmental regulator, Severo-Zapadnoye mezhregionalnoye upravleniye) public-hearing registry entry titled 'Проектная документация по объекту: «Газопровод-отвод и ГРС Струги-Красные Псковской области», включая предварительные материалы ОВОС' — names the object exactly. States OVOS period 01.06.2024-01.11.2024, public-discussion period 22.08.2024-22.09.2024, and that the route lies in Струго-Красненский and Порховский districts (associated ВОЛС route also crosses Псковский, Палкинский districts and Печорский округ) -- confirms the object is real and, as of Aug-Sep 2024, is at the project-design/OVOS stage (pre-construction)."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Gazprom Linde Engineering (ООО «ГЛ Инжиниринг», the project designer)'s own notice for the same public hearing. Names customer/заказчик ООО «Газпром газификация» (OGRN 1217800107744, INN 7813655197, email domain eoggazprom.ru -- the Yedinyy Operator Gazifikatsii) and designer ООО «ГЛ Инжиниринг»; states the purpose is uninterrupted gas supply to a consumer ('подачи газа потребителю') and gives the same district list as the RPN listing."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources place the object's ГРС/end point at Strugi Krasnye (Струго-Красненский муниципальный округ, р.п. Струги Красные) in Pskov Oblast, Russia, and state the pipeline route + its associated fibre-optic (ВОЛС) route together cross Струго-Красненский, Порховский, Псковский and Палкинский districts and Печорский округ -- Псковский район (Pskov district) is explicitly among the districts the associated infrastructure crosses, corroborating Pskov as the start reference. No document gives a specific tie-in village more precise than 'Pskov'/Pskov Oblast, so the recorded StartLocation is kept as-is rather than narrowed on inference."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor (federal environmental regulator, Severo-Zapadnoye mezhregionalnoye upravleniye) public-hearing registry entry titled 'Проектная документация по объекту: «Газопровод-отвод и ГРС Струги-Красные Псковской области», включая предварительные материалы ОВОС' — names the object exactly. States OVOS period 01.06.2024-01.11.2024, public-discussion period 22.08.2024-22.09.2024, and that the route lies in Струго-Красненский and Порховский districts (associated ВОЛС route also crosses Псковский, Палкинский districts and Печорский округ) -- confirms the object is real and, as of Aug-Sep 2024, is at the project-design/OVOS stage (pre-construction)."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Gazprom Linde Engineering (ООО «ГЛ Инжиниринг», the project designer)'s own notice for the same public hearing. Names customer/заказчик ООО «Газпром газификация» (OGRN 1217800107744, INN 7813655197, email domain eoggazprom.ru -- the Yedinyy Operator Gazifikatsii) and designer ООО «ГЛ Инжиниринг»; states the purpose is uninterrupted gas supply to a consumer ('подачи газа потребителю') and gives the same district list as the RPN listing."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources (independently: the federal regulator's registry AND the developer's own notice) name the project's Заказчик (customer/developer) as ООО «Газпром газификация» (OGRN 1217800107744, INN 7813655197, Saint Petersburg, email domain eoggazprom.ru -- the Yedinyy operator gazifikatsii, Gazprom's unified gasification-program subsidiary). This supports Gazprom-group ownership as recorded (Owner1=Gazprom PJSC 100%), though the precise legal developer is this wholly Gazprom-linked subsidiary rather than the parent PJSC directly -- noting the nuance rather than changing the cell, since GEM's convention on this tracker uses the parent PJSC for Gazprom-group gasification objects tracker-wide."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Could NOT confirm 'distribution' as correct, and found reason to doubt it -- filed as a separate classification concern in validity[] rather than staging a ref for a value I think is wrong, and rather than silently overwriting it (no source in hand explicitly classifies the object). The object being built is named 'Газопровод-отвод и ГРС Струги-Красные' -- a gas-pipeline BRANCH (отвод) off the trunk network THAT BUILDS the ГРС (gas distribution station) at Strugi Krasnye. Per this batch's own documented distribution-vs-transmission test, an отвод terminating AT a ГРС is the upstream/trunk side (transmission), operated by a Transgaz subsidiary at trunk pressure; distribution is the network DOWNSTREAM of the ГРС. See validity[] for the classification concern."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Could not verify ProposalYear=2021 against a source naming this pipeline. gem.wiki's own two harvested citations are the only leads: (1) gazprommap.ru/pskovskaya/ 'Программа газификации 2021-2025 в Псковской области' -- checked the live page AND the closest Wayback capture to GEM's 2022 retrieval date (2022-07-19 snapshot); neither the live nor the 2022 archived version of this page contains the string 'Струг' anywhere -- it is a generic regional gasification-programme landing page that does not name this specific отвод, so it cannot source a specific inclusion year for THIS object; (2) the Pskov Oblast Administration decree 'ПОСТАНОВЛЕНИЕ от 24.03.2022 № 90' (pskov.ru/sites/default/files/documents/2022/35d.doc) -- pskov.ru answers 403 (ddos-guard) from here, and the Wayback CDX API has no capture at all for this specific /35d.doc path (checked both the exact URL and a wildcard on the same 2022 documents directory). Tried three additional web searches for the decree text and for a Pskov-Strugi-Krasnye-specific 2021/2022 inclusion date via DuckDuckGo Lite; the first search succeeded (see the fills that used it) but subsequent queries were rate-limited (captcha) before a hit on the decree text or an alternate mirror. The 2024 OVOS/public-hearing documents I did find are dated Aug-Sep 2024 and do not restate a proposal/inclusion year. Leaving ProposalYear unsourced rather than fabricating a ref for it."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states ConstructionYear. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states StartYear1. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states Capacity. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states Pressure. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states LengthKnown. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states Diameter. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states SegmentCost. This отвод is still at the public-hearing/OVOS stage (project documentation being reviewed Aug-Oct 2024 per Rosprirodnadzor and the developer's own notice, see Status [ref]) -- detailed engineering figures (length, diameter, pressure, capacity, cost, construction/start dates) are typically not published at the notice stage; the full project-documentation package (which would carry these) is held by the four district administrations (Струго-Красненский, Порховский, Палкинский, Псковский) for in-person/download review during the comment period (22.08.2024-02.10.2024, now closed) and their gosuslugi.ru sites timed out from here. Checked gem.wiki's 2 harvested citations (neither names this object, see Proposal [ref] note), the RPN registry page, both GLE.ru notices, and gle.ru's public-discussions index page (no results/protocol document for this specific object posted there yet). Genuinely unresolved, not skipped."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2151,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Could not determine which upstream trunk/field this отвод taps. The documents found describe only the new branch+GRS being built, not the tie-in trunk gas main it draws from. Pskov Oblast's gas supply runs off the Northern Corridor system (Vuktyl/Urengoy -origin gas reaching the NW via the Serpukhov-Leningrad / Pskov-area trunks), but no document in hand names the specific tie-in point or field for THIS отвод -- guessing would be exactly the kind of unsupported FuelSource this sweep exists to avoid."
+  },
+  {
+   "sheet_row": 2151,
+   "oo_sheet_row": 3113,
+   "ref_col": "Operator [ref]",
+   "kind": "operator",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Found the project's CUSTOMER/developer -- ООО «Газпром газификация» (OGRN 1217800107744, email domain eoggazprom.ru), i.e. Gazprom's Yedinyy operator gazifikatsii (Unified Gasification Operator), per both the RPN registry and the developer's own notice -- but this is the entity managing construction/financing of new gasification objects nationwide, not the entity that will operate the отвод once built and handed over. For NW Russia отводы off the trunk system the eventual operator is normally a Gazprom Transgaz subsidiary (Gazprom Transgaz Saint Petersburg for Pskov Oblast per this batch's source-ladder guidance), but no document found names that transfer/operator explicitly for this still-in-design object. Leaving UNRESOLVED rather than naming the construction customer as Operator."
+  }
+ ],
+ "status_reviews": [
+  {
+   "sheet_row": 2151,
+   "segment_name": "",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "evidence_date": "2024-09",
+   "proposed_refs": [
+    "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+    "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://rpn.gov.ru/regions/78/public/160820240757313-5903386.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Rosprirodnadzor public-hearing registry entry, OVOS period 01.06.2024-01.11.2024, public-discussion period 22.08.2024-22.09.2024 -- project documentation is still under environmental review, i.e. pre-construction."
+    },
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/09/Uvedomlenie_P1_OO-GO-GRS-Strugi.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Струги-Красные",
+     "note": "Developer's (Gazprom Linde Engineering) own notice for the same public hearing, same object and same pre-construction/OVOS stage."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Sheet's LastUpdated is 2023-07-21 with Status=proposed. Newer (Aug-Sep 2024) evidence from two independent origins (a federal environmental regulator and the project's own designer/customer) confirms the object is real and still at the project-documentation/OVOS public-hearing stage as of the most recent evidence found -- no construction start, ProposalYear restatement, or completion found in any document searched (see Construction [ref]/Start [ref] UNRESOLVED notes for what was checked). Status=proposed is CONFIRMED, not changed."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P4166",
+   "url": "https://gle.ru/wp-content/uploads/2024/10/Uvedomlenie_P1_OO-GO-GRS-Pustoshka.pdf",
+   "facts": "Same customer (ООО «Газпром газификация», OGRN 1217800107744) and same designer (ООО «ГЛ Инжиниринг», Gazprom Linde Engineering) filed an essentially identical-format public-hearings/OVOS notice for the parallel object 'Газопровод-отвод и ГРС Пустошка Псковской области' (dated Oct 2024). P4166 is the Novosokolniki-Pustoshka Gas Pipeline (EndLocation=Pustoshka) -- this notice could source that row's Status/Fuel/Owner/Location units the same way the sibling Strugi Krasnye notice sourced P4171's. Discovered via gle.ru's public-discussions hub page (https://gle.ru/activity/safety-and-ecology/public-discuss/), which also lists a third sibling object ('Сороки') not yet matched to a PID.",
+   "verifications": [
+    {
+     "url": "https://gle.ru/wp-content/uploads/2024/10/Uvedomlenie_P1_OO-GO-GRS-Pustoshka.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пустошка",
+     "note": "Verified reachable and names Pustoshka; content not otherwise used by this P4171 shard."
+    }
+   ]
+  }
+ ],
+ "summary": "Confirmed as proposed (pre-construction, OVOS/public-hearing stage per Aug-Sep 2024 RPN + gle.ru notices); flagged PipelineType classification concern (отвод+ГРС = transmission per batch convention, not distribution); 9 units UNRESOLVED (no engineering-detail source found at this design stage) with a P4166 cross-row lead."
+}

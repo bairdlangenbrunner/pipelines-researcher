@@ -1,0 +1,269 @@
+{
+ "project_id": "P4146",
+ "pipeline_name": "Nadym-Punga Gas Pipeline",
+ "sheet_row": 2129,
+ "wiki": "https://www.gem.wiki/Nadym-Punga_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "superseded",
+   "concern_type": "spec",
+   "recommendation": "See the two properly-labeled validity records below (segment_name=RouteAccuracy/geometry and segment_name=Length [ref] scope mismatch) -- this blank-segment_name record was an artifact of an initial key collision during shard construction (both original records upserted under the same (segment_name=\"\", concern_type=\"spec\") key, so the second silently replaced the first) and is retained empty here only because the helper has no delete operation; it carries no independent content.",
+   "researcher_notes": "Superseded/empty placeholder -- see RouteAccuracy/geometry and Length [ref] scope mismatch validity records for the actual findings.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "contested": {}
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change -- row is correctly distinguished from its siblings; keep as its own PID.",
+   "researcher_notes": "Existence/classification/duplicate check: P4146 (line III (1975, 1420mm, 30 bcm/y)) is one of five parallel strings (I–V) of the Nadym-Punga corridor, each independently commissioned in a different year with its own diameter/capacity per aup.ru's corridor table (I/II=1972/1974, 1220mm, 14 bcm/y each; III/IV/V=1975/1977/1981, 1420mm, 30 bcm/y each). All three rows in this family group (P2348/P4145/P4146 = lines I/II/III) and their siblings P4147/P4148 (lines IV/V, out of this batch's scope) are correctly kept as five separate PIDs rather than one merged row or duplicates of each other -- each is a physically distinct parallel pipe with its own commissioning date and spec, consistent with how multi-string corridors are modeled elsewhere in GEM. Operator (Gazprom Transgaz Yugorsk LLC) and Fuel=Gas classification both confirmed correct and consistent across the family via the sources cited in this shard's fills[]. No duplicate-entity or misclassification concern found.",
+   "proposed_refs": [
+    "http://www.aup.ru/books/m5/6_1.htm",
+    "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "contested": {}
+  },
+  {
+   "segment_name": "RouteAccuracy/geometry",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Downgrade RouteAccuracy from 'high' to 'low' (or at minimum re-flag for re-digitization) for P4146 pending a full re-trace; do not leave 'high' standing unexamined. Not proposing a specific replacement RouteType/RouteAccuracy value here beyond 'low' as a directional correction -- a human router should re-trace or confirm the corridor extent before locking in a final tier.",
+   "researcher_notes": "Independently re-measured the routes-repo GeoJSON for P4146 (Nadym-Punga line III) via haversine summation over its 114-point LineString: total mapped length ≈ 50.4 km, against the sheet's recorded LengthKnown=566.0 km -- the digitized geometry covers only ≈8.9% of the pipeline's claimed length. The line's geographic extent (lat 62.80–62.98°N, lon 64.34–65.13°E) is a small interior fragment; it does not reach the Nadym origin area (≈65.53°N, 72.52°E), consistent with this being a short interior segment of the corridor rather than an end-to-end trace of the full pipeline. This matches the task brief's own pre-existing annotation for this PID ('OK_INTERIOR' -- not flagged as a direction/endpoint mismatch, but as an incomplete-coverage geometry). RouteAccuracy=high implies confident, essentially complete tracing; a route covering roughly a tenth of the claimed length does not support that rating regardless of how accurately the traced portion itself is digitized. Per controlled_vocab.md, 'high' is not blocked by the unbuilt-cap rule for this operating row -- the cap only applies to proposed/shelved/cancelled/construction rows -- so this is a substantive, evidence-based contest of the value, not a vocabulary-rule violation. NOTE: OpenStreetMap tags/geometry are read here only for internal validity judgment, per standing rules -- not cited as a [ref] or corroboration source anywhere in this shard's fills.",
+   "proposed_refs": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "contested": {
+    "RouteAccuracy": "low"
+   }
+  },
+  {
+   "segment_name": "Length [ref] scope mismatch",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Re-source Length [ref] for P4146 from a source that states the standalone Nadym-Punga III segment length, or annotate ResearcherNotes that 566 km is presently uncorroborated at its recorded scope. Do not treat aup.ru's 1238 km combined figure as support for 566 km.",
+   "researcher_notes": "The sheet's Length [ref] for P4146 cites aup.ru alone for LengthKnown=566.00 km. On direct reading, aup.ru does not state 566 km for this segment -- it gives a COMBINED figure of 1238 km explicitly labeled as covering line III's continuation onward past Punga to Nizhnyaya Tura (\"Надым-Пунга-Н.Тура III\"), not a standalone Nadym-Punga segment figure. This is a ref-doesn't-match-value defect distinct from a plain missing value: the cell is not blank and not un-sourced, but the source actually cited does not say what the sheet claims it says. See the paired Length [ref] fill record (class_out=UNRESOLVED) for the source-search detail; this validity record exists so the mismatch itself -- not just the failed search for an alternative -- is machine-readable on the row.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "contested": {}
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 2129,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1975"
+   },
+   "primary_value": "1975",
+   "proposed_refs": [
+    "http://www.aup.ru/books/m5/6_1.htm",
+    "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.aup.ru/books/m5/6_1.htm",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "aup.ru academic monograph (windows-1251 decoded, live-fetched), corridor trunkline table lists commissioning year and design capacity for this Nadym-Punga line individually."
+    },
+    {
+     "url": "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Gazprom Transgaz Yugorsk official corporate history page (Wayback capture), self-identifies as operator of the Nadym-Punga corridor lines, corroborating the commissioning-era timeline."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Re-verified StartYear1=1975 for Nadym-Punga line III. The current_ref pair on the sheet was aup.ru + a Vyakhirev-book Wayback PDF (gazanaliz.ru/books/Vyahirev/6.pdf, 2016 capture); the PDF downloads (804,150 bytes, HTTP 200 at capture time) but its text layer uses a non-standard legacy Cyrillic symbol-font encoding -- pdftotext -layout, pypdf and PyMuPDF/fitz all extract garbled text (e.g. \"ÉãÄÇÄ\"), and a direct string search for Пунга (Punga) in the extracted text returns zero hits -- so it cannot be confirmed to actually state this row's values and is dropped from proposed_refs rather than re-cited blind. Replaced with a second, genuinely independent, machine-verified source. aup.ru (live-fetched, windows-1251 decoded) independently states 1975 as this string's commissioning year in its Nadym-Pur-Taz corridor trunkline table. Added the Gazprom Transgaz Yugorsk official history page (Wayback capture; the live corporate site is not directly fetchable from this environment) as a second, independent (operator self-attestation vs. outside academic monograph) source corroborating the corridor's build-out timeline. A related nadymdobycha.gazprom.ru press retrospective (Wayback capture) further corroborates the corridor's early-1970s commissioning window."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2129,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "30.00"
+   },
+   "primary_value": "30.00",
+   "proposed_refs": [
+    "http://www.aup.ru/books/m5/6_1.htm",
+    "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.aup.ru/books/m5/6_1.htm",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "aup.ru academic monograph (windows-1251 decoded, live-fetched), corridor trunkline table lists commissioning year and design capacity for this Nadym-Punga line individually."
+    },
+    {
+     "url": "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Gazprom Transgaz Yugorsk official corporate history page (Wayback capture), self-identifies as operator of the Nadym-Punga corridor lines, corroborating the commissioning-era timeline."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Re-verified Capacity=30.00 bcm/y for Nadym-Punga line III. Same source substitution as Start [ref] (The current_ref pair on the sheet was aup.ru + a Vyakhirev-book Wayback PDF (gazanaliz.ru/books/Vyahirev/6.pdf, 2016 capture); the PDF downloads (804,150 bytes, HTTP 200 at capture time) but its text layer uses a non-standard legacy Cyrillic symbol-font encoding -- pdftotext -layout, pypdf and PyMuPDF/fitz all extract garbled text (e.g. \"ÉãÄÇÄ\"), and a direct string search for Пунга (Punga) in the extracted text returns zero hits -- so it cannot be confirmed to actually state this row's values and is dropped from proposed_refs rather than re-cited blind. Replaced with a second, genuinely independent, machine-verified source.) aup.ru is confirmed live to state this string's design throughput (bcm/y) in its corridor table, and the Gazprom Transgaz Yugorsk official history page is added as the second independent source corroborating the string-by-string capacity build-out of the corridor."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2129,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator1"
+   ],
+   "primary_value_col": "Operator1",
+   "values": {
+    "Operator1": "Gazprom Transgaz Yugorsk LLC"
+   },
+   "primary_value": "Gazprom Transgaz Yugorsk LLC",
+   "proposed_refs": [
+    "http://www.aup.ru/books/m5/6_1.htm",
+    "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.aup.ru/books/m5/6_1.htm",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "aup.ru academic monograph (windows-1251 decoded, live-fetched), corridor trunkline table lists commissioning year and design capacity for this Nadym-Punga line individually."
+    },
+    {
+     "url": "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Gazprom Transgaz Yugorsk official corporate history page (Wayback capture), self-identifies as operator of the Nadym-Punga corridor lines, corroborating the commissioning-era timeline."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_REF filled: Operator1=Gazprom Transgaz Yugorsk LLC (OOO Gazprom transgaz Yugorsk) for Nadym-Punga line III. Sourced from (1) the Gazprom Transgaz Yugorsk official corporate history page (Wayback capture), which self-identifies as the operating entity for the Nadym-Pur-Taz corridor gas trunklines including the Nadym-Punga lines, and (2) aup.ru, an independent academic monograph analyzing this operator company's asset base by name, discussing the Nadym-Punga lines within the Yugorsk transgaz zone of responsibility. Two independent origins (operator self-attestation + outside academic analysis) per the corroboration rule."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2129,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "http://www.aup.ru/books/m5/6_1.htm",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "aup.ru states a COMBINED figure of 1238 km for \"Надым-Пунга-Н.Тура III\" (i.e. line III continued onward past Punga to Nizhnyaya Tura), never a standalone 566 km figure for the Nadym-Punga segment alone; string-searched the decoded page text for \"566\" -- zero hits."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "The sheet's current_ref for Length [ref] (566.00 km) is aup.ru alone, and on direct reading aup.ru does NOT state 566 km for this row's scope. Its corridor table gives a COMBINED figure of 1238 km explicitly labeled \"Надым-Пунга-Н.Тура III\" -- i.e. line III's length is reported together with its onward continuation past Punga to Nizhnyaya Tura, not as a standalone Nadym-Punga segment figure. 566 km appears nowhere on the page (string search: zero hits; the i-bteu.by mirror of the same underlying monograph was also checked and confirmed to be the identical dataset, not independent, so it was not treated as a second source). Per lean-pass scope, ran one targeted web search for \"Надым-Пунга III 566 км\" (and a close variant) -- no result surfaced a standalone 566 km figure for this segment. This is therefore left UNRESOLVED for Length [ref] (the value itself is NOT contested here as wrong -- 566 km may well be correct segment-level GEM data from a source not surfaced by this search -- only that the currently-cited ref does not actually support it at the cited scope). Flagged separately as a validity/spec concern recommending the ref be swapped or the value re-sourced."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 2129,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {},
+   "evidence_date": "2025-05",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518074132/https://nadymdobycha.gazprom.ru/press/news/2022/03/144107/",
+    "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/",
+    "https://xn--90adfabb9ciclc.xn--p1ai/info/news/10471/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518074132/https://nadymdobycha.gazprom.ru/press/news/2022/03/144107/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "March 2022 Gazprom dobycha Nadym press item (Wayback capture) discusses the Nadym-Punga corridor's 50th-anniversary operating history, confirming the lines were still an active part of the operating gas-transport system as of the article's 2022 publication."
+    },
+    {
+     "url": "https://web.archive.org/web/20250602142626/https://yugorsk-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Gazprom Transgaz Yugorsk's current official corporate history page (Wayback capture, 2025) lists the Nadym-Punga corridor lines among its present-day operating trunkline network, not among decommissioned/legacy assets."
+    },
+    {
+     "url": "https://xn--90adfabb9ciclc.xn--p1ai/info/news/10471/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Peregrebnoye (Oktyabrsky District, Khanty-Mansi AO) municipal government notice, dated 2025, names 'Nadym-Punga I, II' explicitly in the context of ongoing right-of-way/land-use administration for the operating pipeline corridor -- independent, non-Gazprom local-government evidence that these specific lines remain active infrastructure as of 2025, not abandoned or decommissioned."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "REQUIRED annual-update status review for P4146 (Nadym-Punga line III), lean-pass mode (one review per row). This is a Soviet-era trunkline (commissioned in the 1970s) that has been in continuous operation for five decades; per the task brief's own guidance, absence of recent news about a pipeline this old is NOT evidence of a status change, and the correct default posture is to look for any evidence of decommissioning/abandonment/major disruption rather than requiring fresh routine confirmation. Found none: no repair-shutdown, accident, tariff-dispute, or decommissioning coverage surfaced for this specific line in the corridor. Instead found affirmative, dated evidence of continued operation: a 2025 Gazprom Transgaz Yugorsk corporate history page still listing the corridor among its live trunklines, and a 2025 Peregrebnoye municipal government notice explicitly naming 'Nadym-Punga I, II' in an active right-of-way administration context (independent of Gazprom). VERDICT: CONFIRM -- 'operating' remains accurate as of the most recent evidence located (2025). No change proposed to Status, LastUpdated, or any other field from this review."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Existence/classification/non-duplication confirmed (1 of 5 parallel Nadym-Punga strings, correctly its own PID); Start[ref]/Capacity[ref] re-verified 1975/30.00 bcm/y (unreadable Vyakhirev PDF citation dropped, aup.ru + Gazprom Transgaz Yugorsk history page substituted, both machine-verified); Operator[ref] filled Gazprom Transgaz Yugorsk LLC; UNRESOLVED: Length[ref]=566km -- the cited aup.ru ref actually states a COMBINED 1238km figure for line III plus its onward continuation to Nizhnyaya Tura, never a standalone 566km segment figure (targeted search found no alternative); flagged as its own spec validity concern. Second concern: RouteAccuracy=high contested to low -- mapped geometry independently measured at ~50.4km vs recorded 566km (~9% coverage), a short interior fragment. Status review verdict=confirm operating (2025 operator + independent municipal-government evidence, no decommissioning signal)."
+}

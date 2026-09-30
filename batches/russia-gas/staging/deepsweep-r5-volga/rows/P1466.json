@@ -1,0 +1,341 @@
+{
+ "project_id": "P1466",
+ "pipeline_name": "Petrovsk-Elets Gas Pipeline",
+ "sheet_row": 831,
+ "wiki": "https://www.gem.wiki/Petrovsk-Algasovo-Elets_Pipelines",
+ "validity": [
+  {
+   "segment_name": "",
+   "sheet_row": 831,
+   "concern_type": "duplicate",
+   "verdict": "concern",
+   "contested": {
+    "Capacity": "16.40"
+   },
+   "recorded_value": "16.40 bcm/y",
+   "candidate_value": "possible double-count vs. sibling row P5656",
+   "recommendation": "An independent Penza Oblast MChS government document states that Petrovsk-Elets consists of TWO 1220mm pipes with a COMBINED throughput of 45 million m3/day (~16.4 bcm/y) -- i.e. 16.4 bcm/y is explicitly a two-pipe SYSTEM total, not a per-pipe figure. GEM carries P1466 ('Petrovsk-Elets') at Capacity=16.40 AND a sibling row P5656 ('Petrovsk-Elets Looping'/expansion) also at Capacity=16.40 (per prior-session CSV check). If P1466 and P5656 represent the system's two separate physical pipes, then recording the FULL combined 16.40 on BOTH rows double-counts total system capacity as ~32.8 bcm/y, roughly double the true ~16.4 bcm/y combined throughput. Recommend a human reviewer check whether P5656 should instead carry a per-pipe or incremental-looping capacity value distinct from P1466's, per this batch's flagged 'Petrovsk-Algasovo-Elets SYSTEM aggregate-vs-segment concern'.",
+   "proposed_refs": [
+    "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta"
+   ],
+   "verifications": [
+    {
+     "url": "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'«Петровск - Елец» - две трубы диаметром 1220 мм и производительностью 45 млн. куб. м в сутки' -- combined two-pipe figure."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "This is the SPEC/duplicate concern explicitly anticipated by this batch's scope brief for P1466. See paired cross_row_leads[] entry naming P5656."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 831,
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "contested": {
+    "EndState/Province": "Lipetsk"
+   },
+   "recorded_value": "Lipetsk",
+   "candidate_value": "Lipetsk Oblast",
+   "recommendation": "Formatting fix: GEM's EndState/Province cell reads 'Lipetsk', missing the ' Oblast' suffix used consistently elsewhere in the tracker for Russian federal subjects (e.g. 'Saratov Oblast', 'Leningrad Oblast'). Recommend correcting to 'Lipetsk Oblast'.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Confirms Eletskoe LPUMG (and this pipeline's terminus at Elets) is located in Lipetsk Oblast."
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Minor data-hygiene fix, not a substantive factual dispute."
+  }
+ ],
+ "fills": [
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "1220",
+    "DiameterUnits": "mm"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta"
+   ],
+   "verifications": [
+    {
+     "url": "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'«Петровск - Елец» - две трубы диаметром 1220 мм...' -- exact match to GEM's recorded 1220mm."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Only one independent source found (Penza Oblast MChS government document) despite searching Eletskoe LPUMG's own page (no diameter given there) and energybase.ru (not accessible for this specific route). Kept single-source at medium tier per rule 4(d)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "16.40",
+    "CapacityUnits": "bcm/y"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta"
+   ],
+   "verifications": [
+    {
+     "url": "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'производительностью 45 млн. куб. м в сутки' for the two 1220mm pipes of Петровск-Елец COMBINED. 45 million m3/day x 365 = 16.425 bcm/y, matching GEM's recorded 16.40 for P1466 almost exactly."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "IMPORTANT DUPLICATE/SPEC CONCERN -- see validity[] and cross_row_leads[]. The MChS source explicitly describes 45 million m3/day (~16.4 bcm/y) as the COMBINED throughput of BOTH pipes ('две трубы... производительностью 45 млн куб. м в сутки' -- two pipes, [combined] output 45 million m3/day), not per-pipe. GEM's sibling row P5656 ('Petrovsk-Elets Looping'/expansion pipeline) ALSO carries Capacity=16.40 per the prior session's CSV check. If each row is meant to represent ONE of the two physical pipes, then EITHER (a) each row should carry roughly half the combined figure (~8.2 bcm/y) with the 16.40 being the two-pipe system total, or (b) 16.40 is correct for the system and one of the two rows is double-counting it. Filing this value as recorded (REFS_ADDED, matches the sheet) because the aggregate 16.4 IS what the source states and is not itself wrong, but flagging strongly that having BOTH P1466 and P5656 independently carry the full combined 16.40 figure looks like a double-count error requiring human adjudication."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {},
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source found stating the length of Petrovsk-Elets specifically. Searched: Eletskoe LPUMG's own history/about page (Wayback, no length given), Petrovskoe LPUMG's history page (Wayback, entirely about unrelated Central Asia-Center/Urengoy-Novopskov lines, no mention of Petrovsk-Elets at all), the Penza MChS characteristic document (gives diameter and combined capacity but not length), and a 44-page government resolution PDF found via web search (grepped in full for 'Петровск'/'Елец'/length terms -- zero relevant matches). Kept GEM's recorded value as-is; UNRESOLVED, not asserted."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "StartYear1"
+   ],
+   "values": {},
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "GEM records StartYear1=1982. A WebSearch synthesis suggested this date, but it could NOT be verified against any primary source: Petrovskoe LPUMG's history page (Wayback capture, fully fetched and read) makes zero mention of Elets, 1982, or 1983, discussing only Central Asia-Center and Urengoy-Novopskov construction; a 44-page government resolution PDF located via search (fetched, pdftotext -layout extracted, grepped for 'Петровск', 'Елец', '1982', '1983') contains zero matches. Per standing anti-hallucination discipline, an unverified WebSearch synthesis is not treated as a citable fact. UNRESOLVED -- kept GEM's recorded 1982 as-is (not contradicted, just unconfirmed) pending a human researcher with more time/access."
+  },
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Eletskoe LPUMG's own page (operator of this exact pipeline) lists 'Петровск — Елец' among its currently operated trunk gas pipelines, describing ongoing reliable operation."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single primary source (the operating subsidiary's own current facilities list), but directly on-point -- names this exact pipeline as a presently-operated line."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Listed among 'магистральных газопроводов' (trunk GAS pipelines)."
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Trivial confirmation."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "Owner1"
+   ],
+   "values": {
+    "Owner1": "Gazprom PJSC"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Published on moskva-tr.gazprom.ru (Gazprom Transgaz Moscow), the operating subsidiary of PAO Gazprom responsible for Eletskoe LPUMG, which runs this pipeline."
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Owner recorded at ultimate-parent level (Gazprom PJSC), consistent with GEM convention."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Explicitly grouped among 'магистральных газопроводов' (TRUNK/transmission gas pipelines), unlike P2383 where the operator itself calls the line distribution."
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No classification concern for this row -- the operator's own page affirmatively calls it a trunk/transmission pipeline (unlike the P2383 finding)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 831,
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Petrovsk",
+    "StartState/Province": "Saratov Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Elets",
+    "EndState/Province": "Lipetsk Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Lists 'Петровск - Елец' as a trunk pipeline transiting Penza Oblast between Petrovsk (Saratov Oblast) and Elets (Lipetsk Oblast)."
+    },
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Eletskoe LPUMG (based in Elets, Lipetsk Oblast) operates this pipeline at its Elets terminus, confirming the Lipetsk Oblast endpoint."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "DATA-QUALITY FIX: GEM's current sheet value for EndState/Province is 'Lipetsk' (missing the ' Oblast' suffix used consistently elsewhere in the tracker, e.g. 'Leningrad Oblast', 'Saratov Oblast'). Recommend correcting to 'Lipetsk Oblast' for consistency -- filed as a formatting/attribution fix, analogous to prior batches' Leningrad->Leningrad Oblast corrections. Corridor (Petrovsk, Saratov Oblast -> Elets, Lipetsk Oblast) is well-corroborated by 2 independent sources."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 831,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2022-08",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220811104426id_/https://moskva-tr.gazprom.ru/eletskoe-lpumg/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Eletskoe LPUMG's own page (Wayback capture 2022-08-11) lists Petrovsk-Elets among its currently-operated trunk pipelines under reliable ongoing operation."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "CONFIRM operating, though the only dated evidence found (2022-08-11 Wayback capture) slightly PREDATES the sheet's own Jul/Aug-2023 last-update -- disclosed honestly rather than treated as fresher-than-sheet confirmation. Targeted searches for 2024-2025 news on this specific corridor (Gazprom Transgaz Moscow + Petrovsk-Elets) found nothing more recent, but also nothing suggesting any change in status. Separately, see validity[] for the Start=1982 (unresolved) and Capacity double-count concerns, both independent of this operating-status confirmation."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P5656",
+   "url": "https://58.mchs.gov.ru/glavnoe-upravlenie/harakteristika-subekta",
+   "note": "Cross-row lead: P5656 ('Petrovsk-Elets Looping'/expansion) reportedly also carries Capacity=16.40 bcm/y (per prior-session CSV check). The Penza MChS source used for P1466's capacity states 45 million m3/day (~16.4 bcm/y) is the COMBINED throughput of Petrovsk-Elets's two 1220mm pipes together -- suggesting P1466 and P5656 (if each represents one of the two pipes) are both recording the full system total rather than a per-pipe split. Recommend checking P5656's Capacity[ref] and the pipe-vs-system relationship between these two rows as part of this same duplicate/spec concern."
+  }
+ ],
+ "summary": "Petrovsk-Elets: diameter/status/fuel/owner/type/location sourced (Penza MChS + Eletskoe LPUMG operator page); Length and Start=1982 UNRESOLVED (2 failed primary-source search attempts each, WebSearch synthesis rejected); Capacity=16.40 flagged as likely DOUBLE-COUNTED against sibling P5656 (source states 16.4 is the COMBINED two-pipe system total, cross_row_lead filed); EndState/Province 'Lipetsk'->'Lipetsk Oblast' formatting fix flagged."
+}

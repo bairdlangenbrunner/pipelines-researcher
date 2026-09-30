@@ -1,0 +1,630 @@
+{
+ "project_id": "P2326",
+ "pipeline_name": "Kohtla-Järve-Leningrad Gas Pipeline",
+ "sheet_row": 1201,
+ "wiki": "https://www.gem.wiki/Kohtla-J%C3%A4rve-Leningrad_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "I",
+   "concern_type": "attribution",
+   "severity": "medium",
+   "summary": "State-audit flagged a START_MISMATCH: sheet StartState/Province recorded only the bare country name 'Estonia' rather than an actual Estonian county/subject, while route geometry starts in Ida-Viru County. Route itself is correct (Kohtla-Järve is the historically and currently documented origin of this line) — only the state-level attribution field was under-specified.",
+   "contested": {
+    "StartState/Province": "Ida-Viru County"
+   },
+   "evidence": [
+    "https://investinestonia.com/placemarks/kohtla-jarve/",
+    "https://idaviru.ee/en/idavirurecordplaces-2/"
+   ],
+   "researcher_notes": "Judged the route first per SOP: Kohtla-Järve (Mooni, Jõhvi locality) to Leningrad Oblast is exactly the well-documented historical corridor for this pipeline (vkg.ee, stena.ee, tsrmedia.ru, gazprofsoyuz.rf all independently corroborate) — no existence/route concern. The fix is narrowly the StartState/Province cell: 'Estonia' is the country, not a state/province/county; Ida-Viru County is the correct subject, confirmed by two independent Estonian government/quasi-government sources and matching the state-audit's geometry-derived boundary crossing. See fills[] Location [ref] for the paired corrected-value record.",
+   "recommended_action": "Update StartState/Province from 'Estonia' to 'Ida-Viru County' (StartCountryOrArea stays 'Estonia', StartLocation stays 'Mooni, Jõhvi' — both already correct)."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling"
+   ],
+   "verifications": [
+    {
+     "url": "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Kohtla-Järve-Leningrad connection",
+     "note": "Re-read in full (BISI think-tank report, dated 2025-04-18, independent of Gazprom/GEM). States verbatim: 'Since 2019, the Kohtla-Järve-Leningrad connection has no longer been commercially used but remains available for technical gas supply to system operators and pipeline stations.' This supports Status=operating under the brief's rule that a line still in the Unified System (even if its cross-border commercial flow has stopped) stays operating unless a source says the pipe itself is out of service — this source explicitly says the connection 'remains available,' i.e. intact and in technical service, not abandoned."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Re-verified the existing ref (was HTTP-checked OK by the builder but the status token wasn't found verbatim, correctly flagged as 'inferred from prose'). Read the full report: it discusses Baltic Russia-gas pipelines in a footnote and states the Kohtla-Järve-Leningrad connection stopped COMMERCIAL use in 2019 (pre-dating the 2022 Estonia embargo) but 'remains available for technical gas supply to system operators and pipeline stations' — i.e. the pipe is maintained/operational, just not carrying commercial export/import volumes. This is a real and important caveat for the row (see status_reviews) but does not change the Status value: 'operating' (in the Unified Gas Supply System, technically available) is still the correct controlled-vocab value; there is no 'idle-for-technical-use-only' status in GEM's vocabulary, and the pipe is not abandoned/shelved."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013"
+   ],
+   "verifications": [
+    {
+     "url": "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода «Кохтла-Ярве – Ленинград»",
+     "note": "url_verifier's Latin fuzzy match missed this (punycode domain газпромпрофсоюз.рф / Gazprom trade union site). Read by hand: article headlined 'Строительство газопровода «Кохтла-Ярве – Ленинград» завершилось в 1948 году' explicitly names the pipeline and states it is a газопровод (gas pipeline) — supports Fuel=Gas."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The worklist flagged this ref as name_found=false (Latin fuzzy matcher only). Opened the page directly: it is a Gazprom Trade Union news item specifically about this pipeline's 1948 completion, naming it in Cyrillic ('Кохтла-Ярве – Ленинград') and calling it a газопровод. Corroborated independently by energybase.ru's technical database entry (Тип в зависимости от транспортируемой среды: Газопровод)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad"
+   ],
+   "verifications": [
+    {
+     "url": "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода «Кохтла-Ярве – Ленинград»",
+     "note": "States 'Магистраль протяженностью 203 километра' — магистраль = trunk/transmission line, matching PipelineType=transmission and also confirming Length=203 km (see Length [ref])."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "energybase.ru's own site-wide category is 'Каталог магистральных газопроводов России' (catalog of TRUNK gas pipelines) and the page itself calls it Газопровод with 203 km trunk-scale length/5.4 bcm/y capacity — a distribution/gathering line would not carry this classification."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Confirmed as a магистральный газопровод (trunk transmission line), not a gathering/distribution line — consistent across both independent sources and with its historical role supplying an entire city (Leningrad)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "1945",
+    "ProposalMonth": "June"
+   },
+   "primary_value": "1945",
+   "proposed_refs": [
+    "https://www.stena.ee/blog/kohtla-yarve-xviii%E2%80%93xx-vekov"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.stena.ee/blog/kohtla-yarve-xviii%E2%80%93xx-vekov",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве",
+     "note": "Local-history article states: spring 1945, decision made to build the world's first shale-gas plant at Kohtla-Järve; then '10 июня 1945 года правительство СССР своим отдельным решением выделило дополнительные средства как на полное восстановление разрушенного, так и на дальнейшее развитие сланцевой промышленности Северо-Востока Эстонии... а Ленинграда и других городов — бытовым газом' (10 June 1945, the USSR government by separate decision allocated additional funds for further development of NE Estonia's shale industry, with the explicit aim of supplying Leningrad with household gas). This is the specific government decision proposing gas supply to Leningrad — supports ProposalYear=1945, Month=June."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single strong source for a specific proposal date (a named June 10, 1945 USSR government decree). Searched for a second, independent corroboration of that exact decree date (tried the Mosenergo museum piece 'ГАЗ ДЛЯ СТОЛИЦЫ' and general 1945-1953 Soviet-reconstruction history pages) without finding one that names Kohtla-Järve/Leningrad specifically alongside the June 1945 decree — most other sources (energybase, Gazprom trade union) start their account at construction/1945 without a proposal-vs-construction distinction. Staged at medium given single-source; ProposalYear and ConstructionYear are the same year here (1945), which is plausible for a wartime-reconstruction-era project where funding decision and construction start were close together."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "1945"
+   },
+   "primary_value": "1945",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+    "https://www.stena.ee/blog/kohtla-yarve-xviii%E2%80%93xx-vekov"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Год начала строительства 1945' (Construction start year: 1945) directly in the pipeline's technical data block."
+    },
+    {
+     "url": "https://www.stena.ee/blog/kohtla-yarve-xviii%E2%80%93xx-vekov",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве",
+     "note": "Independent local-history source: spring 1945 decision to build the shale-gas plant/pipeline infrastructure, with the 10 June 1945 government funding decree aimed at supplying Leningrad — corroborates 1945 as the year work began, from an origin independent of the energybase technical database."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent origins agree on 1945: a technical pipeline database (energybase.ru, direct data field) and a local-history article describing the actual 1945 government decisions. Consistent with StartYear1=1948 (a 3-year construction period for a 203 km trunk line in the immediate postwar period is plausible and is exactly what the Gazprom trade-union history page independently describes: mine-clearing sappers ahead of ditch-diggers, hand-laid pipe)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1948"
+   },
+   "primary_value": "1948",
+   "proposed_refs": [
+    "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad"
+   ],
+   "verifications": [
+    {
+     "url": "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода «Кохтла-Ярве – Ленинград»",
+     "note": "Names the exact commissioning date: '6 ноября 1948 года, над газораспределительной станцией «Броневая» вспыхнула первая газовая свеча - символ завершения строительства' (6 November 1948, first gas flare lit over the Bronevaya GDS — symbol of construction completion). Supports StartYear1=1948 precisely (month=November)."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Год ввода в эксплуатацию 1948' (commissioning year: 1948), independent of the Gazprom trade-union history page."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Re-verified the existing ref by hand (Latin fuzzy matcher missed the Cyrillic name). Found the precise commissioning date, 6 November 1948, which is a candidate StartMonth1=November if the merge wants finer granularity than the sheet currently carries — flagging in case the orchestrator wants to add it, kept StartYear1 as the primary fill to match the existing cell."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "5.40",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "5.40",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Мощность 5.40 млрд. м³/год' (Capacity: 5.40 billion m3/year) verbatim, matching the recorded value and units exactly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single strong source (a dedicated Russian pipeline technical database, exact-match figure). Searched for a second numeric confirmation of 5.40 bcm/y specifically (Russian government decree list, trade press, Gazprom Transgaz SPB history pieces) — those discuss the pipeline's existence/history/route but none states a throughput/capacity figure; the only other numeric capacity found in search results (12.5 bcm/y, static.government.ru decree) is a FUTURE planned post-reconstruction upgrade figure, not the current recorded capacity, so it is not usable to corroborate 5.40 (noted as a forward-looking figure, not contested against the current value). Staged at medium pending a second source."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "5.40",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "5.40",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Давление 5.40 МПа' (Pressure: 5.40 MPa) directly in the technical data block."
+    },
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "Reconstruction project scope document states 'строительство магистрального газопровода «Кохтла-Ярве-Ленинград» Ду700, Рр-5,4МПа протяженностью 114км' (design pressure Рр = 5.4 MPa) for a Ду700 section of this system, independently agreeing with energybase's 5.40 MPa figure."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent origins state the identical 5.4 MPa design pressure — a technical database (energybase.ru) and a contractor's reconstruction-project scope page (proektneftegaz.ru). Note the 114 km length on the proektneftegaz document does not match this row (203 km) — that figure matches the Kohtla-Järve-Leningrad II string (P5589, 114 km); see cross_row_leads. The 5.4 MPa pressure class is system-wide for this pipeline (both нитки share the same design pressure per that document), so it is a valid ref for this row's Pressure cell despite the length mismatch — filed as a lead for P5589 too."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "203.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "203.00",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+    "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Протяженность 203 км' (Length: 203 km) verbatim."
+    },
+    {
+     "url": "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода «Кохтла-Ярве – Ленинград»",
+     "note": "Gazprom trade-union history article states 'Магистраль протяженностью 203 километра' (a 203-km trunk line), independently agreeing with energybase."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent sources agree exactly on 203 km. FLAGGING A THIRD, CONFLICTING FIGURE found in passing and resolved rather than silently dropped: an unrelated trade-press history piece (tsrmedia.ru, corporate-history feature on Gazprom Transgaz Saint Petersburg) states the original 1948 pipeline was '260-километрового газопровода Кохтла-Ярве — Ленинград' (260 km). Given TWO independent, more specific/technical sources (a dedicated pipeline database and a company-history piece specifically about this line, both at 203 km) against ONE general corporate-history article's rounder 260 km figure, I treat 203 km as correct and the 260 km figure as either a loose/rounded journalistic figure, a measure including feeder/branch mileage, or an error — not staged as a contested value, but noted here for the record rather than silently discarded."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "700",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "700",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "States 'Диаметр труб 720 мм' — this is the OUTER diameter (Дн 720). See researcher_notes on the Дн/Ду convention: this agrees with recorded Diameter=700 (nominal bore Ду700), not a conflict."
+    },
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "States 'газопровода «Кохтла-Ярве-Ленинград» Ду700' — Ду700 = nominal bore (условный диаметр) 700 mm, the exact convention GEM's Diameter column uses."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent sources, and they use two DIFFERENT (and complementary, not conflicting) Russian pipe-diameter conventions: proektneftegaz.ru's reconstruction-project scope explicitly states Ду700 (условный диаметр / nominal bore, 700mm) for this line, matching the recorded value exactly. energybase.ru states 720mm, which is Дн (наружный диаметр / actual outer diameter) — for Russian trunk-line steel pipe, a nominal Ду700 line is standardly built from 720mm-OD pipe (the wall thickness accounts for the ~20mm difference); this is the same well-known Дн720/Ду700 pairing seen elsewhere in this batch (e.g. P1456 records Diameter=720 directly, i.e. the Дн convention). Read together these describe the SAME physical pipe, not a discrepancy — staged at high with the convention explained rather than flagged as a spec conflict."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Historically this pipeline is unusual: built 1945-48 to carry SHALE GAS (газосланцевый / горючий сланцевый газ) manufactured at Kohtla-Järve's oil-shale gasification plant to Leningrad (confirmed via vkg.ee company history: '1948...1952 Household gas is pumped to Leningrad and Tallinn', and stena.ee's account of the 1945 decision to build 'the world's first shale-gas plant' at Kohtla-Järve specifically to supply Leningrad with household gas). Multiple independent secondary sources (search results citing the pipeline's history) state that from the mid-1950s/1957 the line was reversed/repurposed to carry Russian NATURAL gas from the Unified Gas Supply System into Estonia instead, once Siberian natural gas became available and the shale-gas plants' output was redirected to chemical feedstock use. I could not find a document naming the SPECIFIC current upstream field/stream (e.g. Vuktyl, Yamal) that feeds this particular line today, nor confirm gas still flows through it at all in either direction given BISI's 'no longer commercially used since 2019' finding (see Status [ref]/status_reviews) — a specific FuelSource value would be a guess. Searched: Gazprom Transgaz Saint Petersburg corporate materials, tsrmedia.ru company-history feature, general web search for 'Кохтла-Ярве Ленинград газ источник/происхождение'. Leaving blank rather than fabricating a field name."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea"
+   ],
+   "primary_value_col": "StartState/Province",
+   "values": {
+    "StartLocation": "Mooni, Jõhvi",
+    "StartState/Province": "Ida-Viru County",
+    "StartCountryOrArea": "Estonia"
+   },
+   "primary_value": "Ida-Viru County",
+   "proposed_refs": [
+    "https://investinestonia.com/placemarks/kohtla-jarve/",
+    "https://idaviru.ee/en/idavirurecordplaces-2/"
+   ],
+   "verifications": [
+    {
+     "url": "https://investinestonia.com/placemarks/kohtla-jarve/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Kohtla-Järve",
+     "note": "Estonian national investment-promotion agency page: 'Ida-Viru county, connected to oil shale mining, are administered as districts of Kohtla-Järve' — places Kohtla-Järve in Ida-Viru County."
+    },
+    {
+     "url": "https://idaviru.ee/en/idavirurecordplaces-2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Kohtla-Järve",
+     "note": "Ida-Viru County's own official/tourism site lists Kohtla-Järve among its places — the county government's own site naming the city as within it."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is the batch brief's flagged START_MISMATCH case (state-audit region_audit.csv: geometry start = Ida-Viru County (EE); sheet StartState/Province currently reads the bare country name 'Estonia', not a subject/county). Judged the route FIRST: Kohtla-Järve (Mooni, Jõhvi — a real locality in Jõhvi Parish, Ida-Viru County) to Leningrad Oblast/Vsevolozhsky District is exactly the historically documented route (vkg.ee, stena.ee, tsrmedia.ru, gazprofsoyuz all independently describe this Kohtla-Järve <-> Leningrad corridor) — the route is RIGHT, only the state cell was under-specified. StartLocation ('Mooni, Jõhvi') and StartCountryOrArea ('Estonia') are already correct and unchanged; only StartState/Province is corrected from the bare country name to the actual Estonian county, Ida-Viru County, sourced independently from two Estonian government/quasi-government sites. EndLocation/EndState/Province/EndCountryOrArea (Vsevolozhsky District / Leningrad Oblast / Russia) were NOT flagged by the audit and are left as-is."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No cost figure found for either the original 1945-48 construction (a wartime/postwar Soviet infrastructure project; contemporary cost records, if they survive, were not located in open Russian/Estonian sources) or the later reconstruction project (proektneftegaz.ru's and bolshekolpanskoe.ru's reconstruction-project documents describe scope — pipe replacement, valve/PIG-launcher installation — but neither states a project cost/budget figure; the bolshekolpanskoe.ru PDF itself could not be fetched this session — see validity notes on access). Searched: energybase.ru, the Russian government's gas-pipeline planning decree (consultant.ru), general web search for 'Кохтла-Ярве Ленинград газопровод реконструкция стоимость / млн руб'. Leaving blank rather than fabricating a figure."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint Petersburg LLC"
+   },
+   "primary_value": "Gazprom Transgaz Saint Petersburg LLC",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+    "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/kokhtla-yarve-leningrad",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "Page subtitle/operator field names 'ООО «Газпром трансгаз Санкт-Петербург»' directly against this pipeline, with the subsidiary's own contact details (phone, email)."
+    },
+    {
+     "url": "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве —Ленинград",
+     "note": "Independent trade-press feature on Gazprom Transgaz Saint Petersburg's history: 'Свою историю «Газпром трансгаз Санкт-Петербург» ведет с 1948 года, когда было завершено строительство... газопровода Кохтла-Ярве — Ленинград' (the company traces its own history to the 1948 completion of this exact pipeline) — confirms it as the operating entity, from an origin independent of the technical database."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Matches the NW-corridor operator this batch expects for Leningrad Oblast/St Petersburg-area lines (Gazprom Transgaz Saint Petersburg), NOT Gazprom Transgaz Ukhta. Two independent origins: a technical pipeline database and a trade-press company-history feature."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 1201,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве —Ленинград",
+     "note": "States operator Gazprom Transgaz Saint Petersburg 'Является 100-процентной дочерней компанией ПАО «Газпром»' (is a 100% subsidiary of PJSC Gazprom) — the operating entity for this specific line is wholly owned by Gazprom PJSC."
+    },
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "Reconstruction-project scope page names the project's Заказчик (client/investor) as 'ООО «Газпром инвест Запад» ОАО «Газпром»' — i.e. Gazprom (then ОАО, now ПАО/PJSC, same legal entity post-2015 rename) is the named investor/customer behind capital works on this exact line, via its capital-projects subsidiary."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "No single source states 'Gazprom PJSC owns pipeline X' in as many words (typical for Russian trunk-line assets, which sit inside Gazprom's Unified Gas Supply System and are described operationally, not by a public asset register) — but two independent sources together establish it: the operating subsidiary for this specific line is 100%-owned by Gazprom PJSC (tsrmedia.ru), and Gazprom (ОАО, renamed ПАО/PJSC in 2015 — same entity) is separately named as the capital-project customer/investor behind reconstruction work on this exact line (proektneftegaz.ru). Consistent with the recorded Owner1=Gazprom PJSC 100%."
+  }
+ ],
+ "status_reviews": [
+  {
+   "sheet_row": 1201,
+   "segment_name": "I",
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2025-04",
+   "summary": "Status=operating remains correct. Commercial cross-border gas trade on this line stopped in 2019 (three years before Estonia's 2022 general ban on Russian gas imports, and for reasons unrelated to it — Estonia's own broader shift away from Russian gas supply contracts). BISI's April 2025 report states the connection 'remains available for technical gas supply to system operators and pipeline stations' — i.e. the physical pipeline is intact, maintained, and technically in-service within the Unified Gas Supply System, even though it is not currently carrying commercial export/import volumes. Per the brief's own rule, a line that has stopped exporting but remains in the Unified System is operating, not idle/mothballed/retired — there is no GEM controlled-vocabulary status for 'technically available, commercially unused' short of 'operating'.",
+   "sources": [
+    "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling"
+   ],
+   "caveat": "Note for context (not a status change): commercial use ceased in 2019, predating the 2022 Estonia Russian-gas embargo by three years. If GEM later wants a distinct 'idle/standby' status for pipelines carrying zero commercial flow while remaining technically available, this row would be a candidate — but no such value exists in the current controlled vocabulary, and BISI's own language ('remains available') supports keeping operating.",
+   "researcher_notes": "Read the full BISI report (independent UK think-tank, not Gazprom/GEM/Russian-state-linked) rather than relying on a snippet. Cross-checked against Elering's (Estonian TSO) own gas network development plan, which shows Estonia's current primary Russia-interconnection point is at Izborsk/Pskov, not Kohtla-Järve — confirming this specific pipeline is a distinct, separate corridor that has not carried Estonia's modern import volumes for some time, consistent with BISI's 2019 commercial-halt date rather than contradicting the operating verdict."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P5589",
+   "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+   "note": "Reconstruction-project scope page describes BOTH strings ('1 и 2 нитки') of the Kohtla-Järve-Leningrad system. It states a 114km Ду700 section at Рр=5.4MPa design pressure — this 114km figure does NOT match P2326 (203km) but may match the second string/parallel line (P5589 per this batch's worklist) or a specific reconstructed segment of one of the two lines. Worth checking against P5589's recorded length/diameter/pressure when that row is researched — if it matches, this is a usable Length/Diameter/Pressure ref for P5589 too.",
+   "suggested_ref_cols": [
+    "Length [ref]",
+    "Diameter [ref]",
+    "Pressure [ref]"
+   ]
+  },
+  {
+   "project_id": "P5589",
+   "url": "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013",
+   "note": "Gazprom Trade Union history article on the ORIGINAL 1945-48 Kohtla-Järve-Leningrad line (203km, commissioned 6 Nov 1948) — useful background/history source if P5589 is the second/parallel string built later, to establish it as a distinct later addition rather than a duplicate of this original line.",
+   "suggested_ref_cols": [
+    "Construction [ref]",
+    "Start [ref]"
+   ]
+  },
+  {
+   "project_id": "P5589",
+   "url": "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+   "note": "Trade-press piece states the original pipeline was 260km (vs the 203km this row's sources converge on) — flagging in case P5589 (second string) is the source of the length discrepancy, e.g. if 260km ends up being the combined/two-string figure rather than a single-line error.",
+   "suggested_ref_cols": [
+    "Length [ref]"
+   ]
+  }
+ ],
+ "summary": "P2326 re-audited: existence/route/classification all confirmed as a genuine, well-documented 1945-48 Kohtla-Järve-Leningrad trunk gas pipeline (Gazprom Transgaz Saint Petersburg / Gazprom PJSC 100%). All 15 worklist units resolved (13 REFS_ADDED/REVERIFIED with 2-independent-source corroboration on most, 2 UNRESOLVED: FuelSource, SegmentCost). Diameter Ду700/Дн720 and Length 203km-vs-260km apparent conflicts investigated and resolved (unit-convention and outlier-source explanations, not real discrepancies). Location: StartState/Province corrected from bare 'Estonia' to 'Ida-Viru County' (START_MISMATCH fix), filed as both a fill and an attribution validity concern. Status review: confirmed operating — commercial flow halted 2019 (pre-dating the 2022 Estonia embargo) but line remains technically available/in the Unified System per BISI 2025-04. 3 cross-row leads filed for P5589."
+}

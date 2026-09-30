@@ -1,0 +1,647 @@
+{
+ "project_id": "P2447",
+ "pipeline_name": "Valdai-Pskov-Riga Gas Pipeline",
+ "sheet_row": 1251,
+ "wiki": "https://www.gem.wiki/Valdai-Pskov-Riga_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "summary": "P2447 'Valdai-Pskov-Riga Gas Pipeline' is a genuine, singular, correctly-classified Soviet-era (1972) trunk gas transmission pipeline still in Gazprom's operating roster (Gazprom Transgaz Saint Petersburg / Pskov LPUMG) as of a May 2025 branch page. No evidence of hallucination, misclassification, or a true duplicate found. One caveat and one soft observation noted below; one sheet-cell defect (EndState/Province) filed as a separate attribution concern.",
+   "existence": "confirmed",
+   "classification": "confirmed",
+   "duplicate_status": "not a duplicate",
+   "caveats": [
+    "energybase.ru's 2026 Gazstroyprom procurement-tender listings reference a 'Валдай-Псков-Рига-2' project code. No independent source confirms a second, physically distinct pipeline strand; this most plausibly denotes a reconstruction/overhaul project phase on the SAME existing line (a common Russian gas-industry naming convention for major-overhaul contracts) rather than a second physical pipe. Flagging for awareness, not staging as a duplicate/existence concern absent corroboration -- if a future pass finds independent confirmation of a truly separate second string, it should be raised as a new-pipeline discovery lead, not folded into P2447.",
+    "DISCOVERY-CANDIDATE OBSERVATION (not a formal cross_row_lead -- no existing roster PID to attach to): the same May 2025 Gazprom Transgaz Saint Petersburg / Pskov LPUMG branch page that sources Operator/Owner for this row also lists two other pipelines in the same branch's zone of responsibility that do not appear to match any pipeline in the 28-line R2 roster: 'Изборск — Инчукалнское ПХГ' (Izborsk-Inchukalnskoye/Inčukalns UGS) and 'Изборск — Тарту' (Izborsk-Tartu). Surfacing for the orchestrator/triage layer's awareness as possible discovery candidates for a future Discovery pass -- not staged as a finding against P2447 itself."
+   ],
+   "route_geometry_assessment": "region_audit.csv disposition=END_MISMATCH for this PID reflects a SHEET CELL defect (EndState/Province='Latvia', a country name, not a place), not a route geometry defect. The traced geometry (Novgorod Oblast -> Pskov Oblast -> Voru County Estonia -> multiple Latvian municipalities -> Riga) is plausible and consistent with sourced descriptions of the pipeline's corridor and its own name; RouteAccuracy is already 'high' and is not being downgraded. See the separate attribution validity concern for the cell-level fix.",
+   "status_assessment": "See status_reviews[] entry: verdict=confirm, still operating as of May 2025 per the operator's own branch listing, notwithstanding Latvia's Jan 2023 ban on importing Russian gas (an export-flow change, not a change to the pipe's operating status within the Unified Gas Supply System -- the line continues to serve Pskov Oblast domestically and remains listed in Gazprom's current infrastructure)."
+  },
+  {
+   "verdict": "concern",
+   "summary": "EndState/Province is recorded as 'Latvia' -- a country name duplicating EndCountryOrArea -- rather than a place/region value. The state-audit's routes-repo geometry (disposition=END_MISMATCH) correctly resolves the pipeline's actual terminus to the city of Riga, consistent with the pipeline's own name and all sourced descriptions of its route. Route geometry itself is correct and is NOT being changed; this is a sheet attribution/cell-content defect.",
+   "contested": {
+    "EndState/Province": "Riga"
+   },
+   "concern_type": "attribution",
+   "evidence": [
+    "batches/russia-gas/staging/state-audit-20260914/region_audit.csv row for P2447: geometry end resolves to 'Riga (LV)'; disposition=END_MISMATCH against sheet's EndState/Province='Latvia'.",
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/ -- names the line's terminus as the city of Riga.",
+    "https://ria.ru/20220808/gaz-1808152487.html -- describes gas flow via this line to Riga, crossing the Luhamaa (Estonia)/Latvia corridor consistent with the traced geometry."
+   ],
+   "recommendation": "Update EndState/Province from 'Latvia' to 'Riga'; leave EndCountryOrArea='Latvia' unchanged (already correct); leave route geometry and RouteAccuracy ('high') unchanged.",
+   "researcher_notes": "Judged the route geometry's plausibility first per the state-audit workflow rule: the geometry is sourced-consistent and RouteAccuracy is already high, so the correct remediation is a cell fix (captured in the Location [ref] fill), not a route-geometry edit or a RouteAccuracy downgrade. This validity record names the specific contested backend column as required."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+    "https://www.reuters.com/business/energy/gazprom-carry-out-repair-work-gas-pipeline-latvia-2022-01-14/",
+    "https://ria.ru/20220808/gaz-1808152487.html",
+    "https://spb-tr.gazprom.ru/about/branches/pscovscoe/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "Jan 15 2022 neftegaz.ru article: pipeline stopped 17 Jan-6 Feb 2022 for scheduled maintenance, i.e. an operating line, cites Gazprom Transgaz Saint Petersburg."
+    },
+    {
+     "url": "https://www.reuters.com/business/energy/gazprom-carry-out-repair-work-gas-pipeline-latvia-2022-01-14/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Valdai-Pskov-Riga gas pipeline which runs to Latvia",
+     "note": "Live URL 401s from this IP (paywall); read via Wayback capture 20220114174740. Reuters Jan 14 2022: Gazprom will carry out planned maintenance on the Valdai-Pskov-Riga gas pipeline to Latvia -- confirms it as an active, operating line."
+    },
+    {
+     "url": "https://ria.ru/20220808/gaz-1808152487.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистральному трубопроводу Валдай — Псков — Рига",
+     "note": "RIA Novosti Aug 8 2022: Latvia resumed Russian gas imports via the Valdai-Pskov-Riga trunk pipeline through the Luhamaa (Estonia) metering station; ~4 mcm/day per Entsog data, corroborated by Conexus Baltic Grid's supply scheme -- confirms the line was actively flowing gas."
+    },
+    {
+     "url": "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "«Валдай — Псков — Рига»",
+     "note": "Live host times out from this IP (measured condition for this batch); read via Wayback capture 20250523055006. Gazprom Transgaz Saint Petersburg's own Pskov LPUMG branch page, current as of May 2025, lists 'Valdai-Pskov-Riga' as one of three pipelines in its zone of responsibility -- the newest dated confirmation the line remains part of the operating system."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Status=operating confirmed by 5 sources spanning 2022-2025, including the operator's own May 2025 branch page (Gazprom Transgaz Saint Petersburg / Pskov LPUMG) still listing this line in its current zone of responsibility. Note: Latvia's own import of Russian gas via this line stopped after its Jan 1 2023 legal ban (see status_reviews), but per the brief's own rule this is a change in export duty, not in the pipe's operating status -- the line still supplies Pskov Oblast domestically and remains in Gazprom's listed infrastructure as of 2025."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/valday-pskov-riga",
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/valday-pskov-riga",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Валдай - Псков - Рига",
+     "note": "energybase.ru profile classifies the object type as 'Газопровод' (gas pipeline)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Магистральный газопровод (МГП) Валдай - Псков - Рига",
+     "note": "Named 'Магистральный газопровод' (trunk GAS pipeline) throughout; carries gas from the Vuktyl/Yamal fields to Pskov Oblast and Latvia."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Trivial confirmation -- every source names it a gas pipeline (газопровод); no ambiguity, correctly classified."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+    "https://informpskov.ru/news/119024.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Магистральный газопровод (МГП) Валдай - Псков - Рига",
+     "note": "Explicitly labeled 'магистральный газопровод' (trunk/transmission pipeline), a 1,000mm, 5.4 MPa long-haul line connecting the Komi/Yamal gas stream to Pskov Oblast and Latvia -- a transmission trunk, not a gathering or distribution line."
+    },
+    {
+     "url": "https://informpskov.ru/news/119024.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистрального газопровода Валдай – Псков – Рига",
+     "note": "Also refers to it as a 'магистральный газопровод' (main/trunk pipeline)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Correctly classified as transmission: a long-haul (365 km) trunk line, not a gathering, process, or local distribution line."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1972"
+   },
+   "primary_value": "1972",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/valday-pskov-riga",
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+    "https://informpskov.ru/news/98945.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/valday-pskov-riga",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Валдай - Псков - Рига",
+     "note": "Field 'Год ввода в эксплуатацию' (commissioning year) = 1972."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод был построен в 1972 г.",
+     "note": "States the pipeline was built/commissioned in 1972."
+    },
+    {
+     "url": "https://informpskov.ru/news/98945.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Псковское ЛПУМГ ... создано в 1972 году",
+     "note": "Aug 2012 40th-anniversary piece: Pskov LPUMG, the unit responsible for the Valdai-Pskov-Riga and Izborsk-Tartu pipelines, was itself created in 1972 to run them -- corroborates the 1972 commissioning."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "1972 confirmed by 3 independent sources: the operator's own asset-registry-style profile (energybase), a 2022 trade-press article restating the operator's own history, and an independent 2012 anniversary piece about the Pskov management unit created that same year specifically to run this line."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "5.4"
+   },
+   "primary_value": "5.4",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "States 'рабочее давление 5,4 МПа' (working pressure 5.4 MPa) for the pipeline."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single-source fill (medium tier). Searched for a second independent source for the 5.4 MPa design pressure figure: checked energybase.ru (gives length/diameter/year but not pressure), Glavgosexpertiza project-approval database (no public record found for this specific line), ENTSOG/Conexus Baltic Grid technical interconnection data (gives capacity/flow, not upstream Russian-side design pressure), and globalsecurity.org (403-blocked, could not access). No second source found stating a pressure figure for this line; neftegaz.ru is a reputable Russian trade-press outlet reporting operator-sourced technical specs in its Jan 2022 maintenance-notice article."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "365.00"
+   },
+   "primary_value": "365.00",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+    "https://energybase.ru/pipeline/valday-pskov-riga"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "States the pipeline's length as 365 km ('протяжённостью 365 км')."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/valday-pskov-riga",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Валдай - Псков - Рига",
+     "note": "energybase.ru profile 'Протяжённость' (length) field also lists 365 km, corroborating neftegaz.ru independently (energybase compiles from multiple public technical/registry sources, not simply reprinting the neftegaz article)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "365 km confirmed by 2 independent sources (neftegaz.ru trade press + energybase.ru infrastructure database); matches the sheet's already-recorded LengthKnown exactly."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1000.00"
+   },
+   "primary_value": "1000.00",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "States the pipeline diameter as 1000 mm ('диаметром 1000 мм')."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single-source fill (medium tier). Same second-source search as Pressure (energybase.ru, Glavgosexpertiza, ENTSOG/Conexus, globalsecurity.org [blocked]) turned up no independent confirmation of the specific 1000mm diameter figure; energybase.ru's profile lists length and year but leaves the diameter field blank. neftegaz.ru remains the only source found stating this spec."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Vuktyl gas field (Komi Republic) and Yamal-Nenets AO fields, via the Siyanie Severa (Ukhta-Torzhok) trunk pipeline system"
+   },
+   "primary_value": "Vuktyl gas field (Komi Republic) and Yamal-Nenets AO fields, via the Siyanie Severa (Ukhta-Torzhok) trunk pipeline system",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "Article describes the line as fed from the Ukhta-Torzhok ('Сияние Севера') trunk system carrying Komi/Yamal gas, tapped off near Valdai to run to Pskov and onward to Latvia."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single-source fill (medium tier) -- this is a MISSING_VALUE unit (cell was blank). Searched for a second source on the specific upstream gas-field origin: found general descriptions of the Ukhta-Torzhok system's Komi/Yamal supply basin (Gazprom corporate materials, excluded as GEM-adjacent operator self-description already counted once) but no fully independent second source naming the exact originating fields for the Valdai tap specifically. Value phrased to reflect the sourced feed corridor rather than a single named field, to avoid overclaiming precision beyond what neftegaz.ru actually states."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint Petersburg LLC (Pskov LPUMG branch)"
+   },
+   "primary_value": "Gazprom Transgaz Saint Petersburg LLC (Pskov LPUMG branch)",
+   "proposed_refs": [
+    "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+    "https://informpskov.ru/news/98945.html",
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "«Валдай — Псков — Рига»",
+     "note": "Live host times out from this IP (known-flaky per batch calibration); read via Wayback capture 20250523055006. Gazprom Transgaz Saint Petersburg's own Pskov LPUMG branch page lists Valdai-Pskov-Riga as one of the pipelines in its operating zone."
+    },
+    {
+     "url": "https://informpskov.ru/news/98945.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Псковское ЛПУМГ",
+     "note": "Independent regional news outlet confirms Pskov LPUMG (a branch of Gazprom Transgaz Saint Petersburg) as the operating unit responsible for this line and Izborsk-Tartu."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "ООО «Газпром трансгаз Санкт-Петербург»",
+     "note": "Names Gazprom Transgaz Saint Petersburg LLC as the entity carrying out the scheduled maintenance."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "3 independent sources (operator's own branch page, independent regional news outlet, independent trade press) agree the operator is Gazprom Transgaz Saint Petersburg LLC, specifically its Pskov LPUMG (Линейное производственное управление магистральных газопроводов) branch."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/valday-pskov-riga",
+    "https://spb-tr.gazprom.ru/about/branches/pscovscoe/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/valday-pskov-riga",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Валдай - Псков - Рига",
+     "note": "Field 'Собственник' (owner) = ПАО «Газпром» (Gazprom PJSC)."
+    },
+    {
+     "url": "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "«Валдай — Псков — Рига»",
+     "note": "Live host times out from this IP; read via Wayback capture 20250523055006. Listed within Gazprom's own trunk-pipeline subsidiary system, consistent with 100% Gazprom PJSC ownership (this asset class is not third-party-owned infrastructure in the Unified Gas Supply System)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "energybase.ru is a compiled infrastructure database (not a Gazprom self-publication) directly naming Gazprom PJSC as owner; the Gazprom Transgaz SPB branch page corroborates operational control by a wholly-owned Gazprom subsidiary but is the same corporate family, so tier held at medium rather than high (treating operator-family self-description and one independent compiler as not fully distinct origins for OWNERSHIP specifically, though sufficient for operator above)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "EndState/Province",
+   "values": {
+    "StartLocation": "Zimogor'e",
+    "StartState/Province": "Novgorod Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Riga",
+    "EndState/Province": "Riga",
+    "EndCountryOrArea": "Latvia"
+   },
+   "primary_value": "Riga",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+    "https://ria.ru/20220808/gaz-1808152487.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "Confirms the route runs from a tap near Valdai (Novgorod Oblast) through Pskov Oblast to Riga, Latvia -- the pipeline's name and description both terminate the line at the city of Riga, not merely 'in Latvia'."
+    },
+    {
+     "url": "https://ria.ru/20220808/gaz-1808152487.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистральному трубопроводу Валдай — Псков — Рига",
+     "note": "Describes gas flow via this line to Riga specifically, crossing into Latvia at the Luhamaa (Estonia)/Latvia corridor, consistent with the state-audit's traced geometry."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "STATE/REGION AUDIT FINDING: region_audit.csv (batches/russia-gas/staging/state-audit-20260914/region_audit.csv) flags this row's endpoint as disposition=END_MISMATCH: the routes-repo geometry's actual terminus resolves to Riga (Latvia's capital), but the sheet's EndState/Province cell currently holds 'Latvia' -- a country name, not a state/province/city value, duplicating EndCountryOrArea. I judged the underlying route geometry itself FIRST: the traced path (Novgorod Oblast -> Pskov Oblast -> Voru County, Estonia -> multiple Latvian municipalities -> Riga) matches the sourced description of the pipeline's corridor and its own name ('...-Riga'), and RouteAccuracy is already recorded as 'high' -- so the route geometry is plausible and correct; this is a genuine SHEET CELL defect, not a route problem. Filing StartLocation/StartState/StartCountryOrArea unchanged (already correct, confirmed by the same sources) and proposing EndState/Province: 'Latvia' -> 'Riga' (the terminal city itself, consistent with StartLocation being a place name rather than a bare oblast). A parallel 'attribution' validity concern is being filed naming EndState/Province as the contested column per the brief's requirement. Route geometry itself is NOT being touched, per standing rule -- no coordinates proposed or edited."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED. This pipeline was built in the Soviet era (commissioned 1972), and no source located -- energybase.ru, neftegaz.ru, informpskov.ru anniversary piece, RIA Novosti, Gazprom Transgaz SPB branch page -- gives an explicit proposal/planning-announcement year distinct from the 1972 commissioning year. Soviet-era trunk-pipeline projects of this vintage are very rarely documented with a separate 'proposed' date in available open sources (typically only the commissioning date survives in the public record); searched Glavgosexpertiza-type archival planning records and Soviet gas-industry histories (e.g. gazprom history microsites) without finding a distinct proposal year. Leaving blank rather than guessing or backdating from the commissioning year."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionStartYear"
+   ],
+   "primary_value_col": "ConstructionStartYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED. No source located gives a construction-start year distinct from the 1972 commissioning/in-service year. Checked the same source set as Proposal (energybase.ru, neftegaz.ru, informpskov.ru, RIA Novosti, Gazprom Transgaz SPB) plus a search for Soviet Gosplan-era construction records for the Ukhta-Torzhok/Valdai tap network; none specify a distinct build-start date, only the 1972 commissioning. Leaving blank rather than assuming a 1-2 year lead time not actually documented anywhere."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED for the specific 2.70 bcm/y design-capacity figure currently on the sheet. Extensively searched: energybase.ru (lists length/diameter/year/owner but no capacity field for this pipeline), neftegaz.ru maintenance article (gives diameter/pressure/length but no throughput figure), ENTSOG Transparency Platform and Conexus Baltic Grid (Latvia TSO) interconnection point data for the Latvia entry point (gives ACTUAL metered flows, not this line's nameplate design capacity), globalsecurity.org (403-blocked, could not access), ithy.com (pipeline not mentioned at all in any indexed page). The closest data found is actual 2019-2020 flow figures of roughly 1.6-1.7 bcm/y through this corridor per Conexus/ENTSOG reporting -- but that is metered throughput in specific years, not a stated design/nameplate capacity, and does not confirm or refute the sheet's 2.70 bcm/y figure (a pipe routinely running below nameplate capacity is normal and does not itself corroborate or contradict a capacity spec). No source stating a specific design capacity number for this line, in either direction, was found. Recommend leaving the existing sheet value as unconfirmed/legacy rather than removing it, since no contradicting evidence was found either -- flagging as a gap for a future pass with access to Glavgosexpertiza or an internal Gazprom technical passport, neither of which is publicly searchable."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1251,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED. No source found gives a construction cost for this 1972 Soviet-era trunk pipeline -- unsurprising given the pipeline predates modern project-finance disclosure norms by decades and was built as a state infrastructure project under Soviet planning, not a costed commercial project with public capex figures. Checked all sources gathered for this row (energybase.ru, neftegaz.ru, informpskov.ru, RIA Novosti, Gazprom Transgaz SPB) -- none mention cost. No plausible modern source (e.g. a recent reconstruction/overhaul cost figure) was found either; the 2022 maintenance article describes only a temporary shutdown for planned repair work, with no associated cost disclosed."
+  }
+ ],
+ "status_reviews": [
+  {
+   "verdict": "confirm",
+   "current_status": "operating",
+   "proposed_status": "operating",
+   "evidence_date": "2025-05",
+   "proposed_refs": [
+    "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+    "https://ria.ru/20220808/gaz-1808152487.html",
+    "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/"
+   ],
+   "verifications": [
+    {
+     "url": "https://spb-tr.gazprom.ru/about/branches/pscovscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "«Валдай — Псков — Рига»",
+     "note": "Live host times out from this IP (known-flaky per batch calibration); read via Wayback capture 20250523055006, dated May 2025 -- the newest available confirmation. Gazprom Transgaz Saint Petersburg's own Pskov LPUMG branch page currently lists Valdai-Pskov-Riga among the pipelines in its active zone of responsibility."
+    },
+    {
+     "url": "https://ria.ru/20220808/gaz-1808152487.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистральному трубопроводу Валдай — Псков — Рига",
+     "note": "RIA Novosti Aug 2022: confirms the line was actively flowing gas to Latvia via the Luhamaa metering station post the initial 2022 disruption period, i.e. functioning as an operating line at that date."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/720823-mgp-valday-pskov-riga-budet-ostanovlen-dlya-planovogo-remonta/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГП Валдай - Псков - Рига",
+     "note": "Jan 2022: pipeline taken offline only for a brief scheduled maintenance window (17 Jan-6 Feb 2022), i.e. an actively maintained, in-service line, not a shut-in one."
+    }
+   ],
+   "geopolitical_context_considered": "Latvia's law banning import of Russian natural gas took effect 1 Jan 2023. This stops LATVIA's import of gas via this line, but per the brief's dormancy/status rule, a cessation of one downstream country's import flow is an export-duty change, not evidence the physical pipe itself has ceased operating -- especially since: (1) the line also serves Pskov Oblast domestically within Russia (it does not exist solely to supply Latvia), (2) it remains part of the Unified Gas Supply System and is still listed in the operator's own current (May 2025) branch-infrastructure roster, and (3) no source found states the pipe itself has been mothballed, decommissioned, or physically isolated. No source found post-2023 states or implies flow has been physically halted for reasons beyond the Latvian import ban; absent evidence the pipe is idle/isolated (as opposed to simply not supplying one particular downstream customer), 'operating' remains the accurate status per the dormancy-inference rules (which require evidence of actual non-operation, not merely a market/contractual change).",
+   "class_out": "confirm",
+   "researcher_notes": "No status change warranted. Reaffirming 'operating' with newest-available (May 2025) operator-side evidence plus two independent corroborating sources spanning the 2022-2023 disruption period, explicitly addressing and setting aside the Latvia import-ban complication per the brief's export-flow-vs-pipe-status distinction."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Confirmed (caveat): genuine 1972 Gazprom trunk gas pipeline, still operating (May 2025 evidence), not a duplicate; fixed EndState/Province attribution defect (Latvia->Riga) per state-audit; Proposal/Construction/Capacity/SegmentCost UNRESOLVED."
+}

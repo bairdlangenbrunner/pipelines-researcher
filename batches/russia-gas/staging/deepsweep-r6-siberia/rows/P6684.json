@@ -1,0 +1,139 @@
+{
+ "project_id": "P6684",
+ "pipeline_name": "Pelyatka-Messoyakha Gas Pipeline",
+ "sheet_row": 3630,
+ "wiki": "https://www.gem.wiki/Pelyatka-Messoyakha_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Minor data-quality fix: OtherLanguagePrimaryPipelineName's first clause for P6684 ('Газопровод Северо-Соленинское – Южно-Соленинское – Мессояха, II нитка') drops the Pelyatka origin that its own second clause and P6683's matching field both carry -- align it to read 'Газопровод Пелятка - Северо-Соленинское – Южно-Соленинское – Мессояха, II нитка' for internal consistency. Not a route/endpoint error.",
+   "contested": {},
+   "researcher_notes": "EXISTENCE + CLASSIFICATION: confirmed, same corroboration as P6683 (see that row's validity[] for the two independent sources: norilsktgaz.ru production page + RF decree 816-r item 340). NAMING CAVEAT flagged in the orchestrator brief: P6684's OtherLanguagePrimaryPipelineName has two clauses that disagree -- the first ('Газопровод Северо-Соленинское – Южно-Соленинское – Мессояха, II нитка') omits Pelyatka as the starting point, while the second ('магистральный газопровод УКПГ Пеляткинского ГКМ - УКПГ Мессояхского ГМ') includes it, and P6683's equivalent first clause also includes Pelyatka. Norilsktransgaz's own page settles it: 'Магистральный газопровод включает в себя участки Пелятка - Северо-Соленинское – Южно-Соленинское – Мессояха, имеющие по две нитки, расположенные параллельно' -- BOTH nitki (I and II) run the full Pelyatka-to-Messoyakha corridor; no evidence II starts anywhere but Pelyatka. Treating this as a data-entry inconsistency in the alt-name field, not a real endpoint/route difference -- StartLocation='Pelyatkinskoye Oil and Gas Field' on P6684 is correct as recorded.",
+   "proposed_refs": [
+    "https://norilsktgaz.ru/proizvodstvo/transportirovka-prirodnogo-gaza-i-gazovogo-kondensata/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "II",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "CAPACITY: confirm with Norilsktransgaz whether the 1.8 bcm/y design capacity in decree 816-r is per-string or for the combined 2-string line -- no document splits it, so the identical 1.80 on P6683 AND P6684 may be a copied system figure. LENGTH: replace the Length [ref] -- the cited Dudinka genplan PDF does not mention this pipeline, the NGL/condensate line it was allegedly proxied from, or a 62 km figure anywhere; find a real per-string source or mark Length unsourced.",
+   "contested": {
+    "Capacity": "",
+    "LengthKnown": ""
+   },
+   "researcher_notes": "Mirrors P6683's combined spec concern -- same shared source (decree 816-r) for the capacity aggregate-vs-segment ambiguity, same shared citation (Dudinka genplan PDF) confirmed invalid for length. See P6683's validity[] spec record for the full source list and reasoning; identical logic applies to this II-string row (62 km instead of 117 km). Independent search likewise found only SYSTEM-level length aggregates (1202 km / 300 km) or the unrelated Messoyakha-Norilsk II string (118 km, a different PID family) -- no source states a discrete length for this Pelyatka-Messoyakha II string.",
+   "proposed_refs": [
+    "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3630,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "1.80",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "1.80",
+   "proposed_refs": [
+    "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/"
+   ],
+   "verifications": [
+    {
+     "url": "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Item 340 of RF territorial-planning scheme (decree 816-r) lists 'Магистральный газопровод УКПГ Пеляткинского ГКМ - УКПГ Мессояхского ГМ' (matches the alternate OtherLanguagePrimaryPipelineName clause recorded on both P6683 and P6684), Krasnoyarsk Krai / Taymyrsky Dolgano-Nenetsky raion / Karaul, 'проектный объем транспортировки газа - 1,8 млрд. куб. метров в год' = 1.8 bcm/y design capacity, exact match. Uses the Russian decimal comma '1,8'; the automated pre-check searched ASCII '1.80'/'1.8' and missed it -- hand-confirmed by reading the page."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Mirrors P6683's Capacity [ref] finding -- same source, same decree, same undifferentiated combined-pipeline entry. CAVEAT (see validity[]): the decree does not split capacity by nitka I/II, so both P6683 and P6684 carrying the identical 1.80 bcm/y may reflect a copied system figure rather than two independently-sourced per-string values -- not changed absent better evidence. Second-source search came up empty (see P6683's fill notes for what was checked); staged at medium."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3630,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "62.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "62.00",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "http://www.gorod-dudinka.ru/download/genplan/genplan.pdf",
+     "ok": false,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Same PDF cited on P6683; full-text read (pdftotext -layout, ~21,000 lines) contains zero occurrences of 'Мессояха', 'Соленинское', 'ГКМ', 'конденсатопровод', 'Норильсктрансгаз', or 'нитка', and no 62 km pipeline figure. Only Pelyatka-adjacent content is an unrelated winter road and an unrelated village-gasification distribution line (see P6683's verification note)."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Mirrors P6683's Length [ref] finding -- the cited genplan PDF does not support 62 km either (same document, same absence of any relevant mention). Same independent search performed (see P6683's fill notes); no source states a discrete length for the II string between Pelyatka and Messoyakha. Filed as spec concern in validity[]; 62.00 stays on the sheet unconfirmed."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3630,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-09",
+   "proposed_refs": [
+    "https://neftegaz.ru/tech-library/mestorozhdeniya/142053-pelyatkinskoe-mestorozhdenie/",
+    "https://norilsktgaz.ru/proizvodstvo/transportirovka-prirodnogo-gaza-i-gazovogo-kondensata/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/tech-library/mestorozhdeniya/142053-pelyatkinskoe-mestorozhdenie/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://norilsktgaz.ru/proizvodstvo/transportirovka-prirodnogo-gaza-i-gazovogo-kondensata/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same hand-confirmed match as P6683 -- verified by distinctive token 'Мессояха'; full compound name confirmed present on manual read."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "CONFIRM -- same evidence as P6683 (both nitki of this section share one operator, one field, one set of sources). See P6683's status_review notes for the full evidence writeup: September 2026-dated Pelyatkinskoye-field news from neftegaz.ru plus Norilsktransgaz's live production page and continuing 2026 FAS disclosure filings. No news of an outage, decommissioning, or status change found for either string."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Mirrors P6683: existence/classification confirmed, plus a naming caveat (OtherLanguagePrimaryPipelineName's first clause drops Pelyatka, resolved by operator source -- both strings run the full corridor). Capacity [ref] REFS_ADDED (same shared source/caveat as P6683); Length [ref] UNRESOLVED -- same invalid genplan-PDF citation; status confirmed operating (Sept 2026 evidence)."
+}

@@ -1,0 +1,562 @@
+{
+ "project_id": "P5589",
+ "pipeline_name": "Kohtla-Järve-Leningrad Gas Pipeline",
+ "sheet_row": 3103,
+ "wiki": "https://www.gem.wiki/Kohtla-J%C3%A4rve-Leningrad_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "concern_type": "attribution",
+   "severity": "medium",
+   "summary": "State-audit flagged a START_MISMATCH: sheet StartState/Province recorded only the bare country name 'Estonia' rather than an actual Estonian county, while route geometry starts in Ida-Viru County. The route/StartLocation itself is correct (Mooni, Jõhvi is a real locality in Ida-Viru County and is the documented western terminus of this corridor) -- only the state-level attribution field was under-specified. Identical defect and fix to sibling row P2326 (Line I).",
+   "contested": {
+    "StartState/Province": "Ida-Viru County"
+   },
+   "evidence": [
+    "https://en.wikipedia.org/wiki/J%C3%B5hvi",
+    "https://idaviru.ee/en/idavirurecordplaces-2/"
+   ],
+   "researcher_notes": "Judged the route first per SOP: no existence/route concern found. See fills[] Location [ref] for the paired corrected-value record and full reasoning.",
+   "recommended_action": "Update StartState/Province from 'Estonia' to 'Ida-Viru County' (StartCountryOrArea stays 'Estonia', StartLocation stays 'Mooni, Jõhvi' -- both already correct)."
+  },
+  {
+   "segment_name": "II",
+   "concern_type": "misattributed-ref",
+   "severity": "medium",
+   "summary": "The Fuel [ref], PipelineType [ref], and Start [ref] cells on this row all currently cite the same URL (https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013), a Gazprom trade-union history article. Read to exhaustion: the article is entirely about the ORIGINAL 1948, 203km Kohtla-Järve-Leningrad line -- that is sibling row P2326 (Line I), not this row (P5589, Line II, 114km, StartYear1=1959). It names the 1948 commissioning date precisely and the 203km figure; it never mentions a second string or 1959.",
+   "contested": {
+    "Fuel [ref]": "was: xn--80afnaylbafcido5b6k.xn--p1ai/events/1013 (describes P2326, not this row)",
+    "PipelineType [ref]": "same misattribution",
+    "Start [ref]": "same misattribution; StartYear1=1959 remains unsourced after replacement (see fills[] Start [ref])"
+   },
+   "evidence": [
+    "https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013"
+   ],
+   "researcher_notes": "Fuel [ref] and PipelineType [ref] were successfully replaced with line-2-specific sources (OSM way + consultant.ru decree, both naming Line II or '1 и 2 нитки' explicitly) -- staged REFS_ADDED. Start [ref]'s 1959 commissioning year could NOT be re-sourced this session (WebSearch budget exhausted, DuckDuckGo/Bing curl fallbacks blocked) -- staged UNRESOLVED with the misattribution flagged so the wrong ref is not silently kept. This same URL is a correct, already-staged ref on sibling P2326 for its own Fuel/PipelineType/Start units -- it simply does not belong here too.",
+   "recommended_action": "Drop xn--80afnaylbafcido5b6k.xn--p1ai/events/1013 from this row's Fuel/PipelineType/Start [ref] cells (kept as a correct ref on P2326 only); apply the REFS_ADDED replacements staged in fills[] for Fuel/PipelineType; Start [ref] needs a future sourcing pass."
+  },
+  {
+   "segment_name": "II",
+   "concern_type": "aggregate-vs-segment",
+   "severity": "low",
+   "summary": "Capacity=5.40 bcm/y on this row is numerically identical to sibling P2326's (203km) capacity, and the only source found for that figure (energybase.ru) is P2326's own dedicated page, which has no Line-II equivalent. No document was found stating a capacity specific to Line II (114km). Two physically different-length lines sharing one round capacity figure is plausible if both share the same Ду700/5.4MPa design spec (a real possibility, since capacity is a function of diameter/pressure not length) but could also indicate the value was copied across rows without an independent per-line source.",
+   "contested": {},
+   "evidence": [],
+   "researcher_notes": "Staged Capacity [ref] as UNRESOLVED rather than citing the P2326/energybase source here, to avoid repeating a single-line source across two rows under the aggregate-vs-segment rule. Not escalating to a stronger verdict since I cannot rule out the value being independently correct.",
+   "recommended_action": "A future researcher should look specifically for a Gazprom Transgaz Saint Petersburg capacity disclosure for Line II before either confirming or correcting this cell."
+  },
+  {
+   "segment_name": "II",
+   "concern_type": "routes-repo-data-bug",
+   "severity": "low",
+   "summary": "P5589.geojson (routes repo) contains a feature (features[0], a 3-point connector [30.158,59.772]->[30.337,60.128]) whose properties carry ProjectID='P2326', not P5589 -- sitting inside P5589's own file. The identical-coordinate feature is ALSO correctly tagged ProjectID=P2326 inside P2326.geojson, so this looks like a duplication/copy error, not a real P5589 route segment.",
+   "contested": {},
+   "evidence": [],
+   "researcher_notes": "Read-only finding -- per hard project rule, the routes repo is never modified without explicit per-batch authorization. Not a route/duplicate-pipeline concern for GEM's own tracker cells (RouteType/RouteAccuracy on the sheet were not touched), purely a data-hygiene note for whoever next works the routes repo.",
+   "recommended_action": "A human with routes-repo write access should remove the mistagged ProjectID=P2326 feature from P5589.geojson (P2326.geojson already carries the correct copy of that same geometry)."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling"
+   ],
+   "verifications": [
+    {
+     "url": "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Kohtla-Järve-Leningrad connection",
+     "note": "Re-read in full (BISI think-tank report, dated 2025-04-18, independent of Gazprom/GEM). States verbatim: 'Since 2019, the Kohtla-Järve-Leningrad connection has no longer been commercially used but remains available for technical gas supply to system operators and pipeline stations.' Per the batch brief's rule, a line whose EXPORT duty stopped (Estonia halted Russian gas imports 2022 -- and per this source commercial use of THIS specific connection actually stopped earlier, 2019) but which remains in the Unified Gas Supply System and 'available for technical gas supply' stays Status=operating; it is not abandoned/shelved/idle in GEM's controlled vocabulary."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Re-verified the existing ref (worklist flagged status_token_absent -- expected, since status is inferred from prose per url_verifier's own documented false-negative family, not a literal 'operating' string). This is the same BISI report already reverified for the sibling row P2326 (Line I); its language explicitly covers 'the Kohtla-Järve-Leningrad connection' as a whole corridor including this Line II string, not just Line I. See status_reviews[] for the full annual-update judgment on this row's true current status."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.openstreetmap.org/way/1297168215",
+    "https://www.consultant.ru/document/cons_doc_LAW_179417/60116be763324b2f56152f5ccf8cdd04ad4ba74e/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.openstreetmap.org/way/1297168215",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве — Ленинград 2 / Kohtla-Järve — Leningrad 2",
+     "note": "OSM way explicitly named 'Кохтла-Ярве — Ленинград 2' (name:en 'Kohtla-Järve — Leningrad 2') -- this IS the specific Line II object, not the parent system or an endpoint. Tags: substance=gas, man_made=pipeline, usage=transmission, operator='ООО «Газпром трансгаз Санкт-Петербург»'. substance=gas directly supports Fuel=Gas."
+    },
+    {
+     "url": "https://www.consultant.ru/document/cons_doc_LAW_179417/60116be763324b2f56152f5ccf8cdd04ad4ba74e/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "Russian federal government decree, 'Перечень магистральных газопроводов...' (List of trunk gas pipelines planned for construction/reconstruction). Line-item 16: 'Реконструкция МГ \"Кохтла-Ярве - Ленинград\", 1 и 2 нитки' (Reconstruction of trunk GAS pipeline 'Kohtla-Järve-Leningrad', strings 1 AND 2) -- МГ = магистральный газопровод = trunk GAS pipeline, and the decree explicitly names BOTH нитки (strings/lines) including this row's Line II, so this document names this exact pipeline, not just its sibling."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "IMPORTANT ATTRIBUTION FINDING: the currently-cited ref (https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013, Gazprom trade-union history article) is entirely about the ORIGINAL 1948, 203km 'Kohtla-Järve-Leningrad' line -- that is P2326 (Line I), not this row (P5589, Line II, 114km). It never mentions a second string/line and its 1948 commissioning date and 203km figure both belong to P2326. Read to exhaustion: no content on that page distinguishes or even acknowledges a Line II. Replacing with two sources that explicitly name/tag Line II itself. Filed as a validity/attribution concern and as a cross-row lead confirming the old ref's correct home (P2326)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.openstreetmap.org/way/1297168215",
+    "https://www.consultant.ru/document/cons_doc_LAW_179417/60116be763324b2f56152f5ccf8cdd04ad4ba74e/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.openstreetmap.org/way/1297168215",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве — Ленинград 2 / Kohtla-Järve — Leningrad 2",
+     "note": "Same way as the Fuel ref. Tag usage=transmission is set directly on this specific named Line II object, matching PipelineType=transmission exactly."
+    },
+    {
+     "url": "https://www.consultant.ru/document/cons_doc_LAW_179417/60116be763324b2f56152f5ccf8cdd04ad4ba74e/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве - Ленинград",
+     "note": "МГ (магистральный газопровод = TRUNK/transmission gas pipeline) is the government's own classification for this project covering both нитки including Line II -- a distribution/gathering line would not carry the МГ designation or appear in this federal trunk-pipeline planning decree."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Same attribution finding as Fuel [ref]: the previously-cited ref describes P2326 (Line I) only. Replaced with two sources that specifically and independently classify Line II (this row) as a магистральный/trunk transmission line."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No document found that names a proposal/decision date specific to Line II (as distinct from Line I's 1945 decree, already staged on P2326). proektneftegaz.ru and consultant.ru both describe a MODERN reconstruction project covering '1 и 2 нитки' together but do not give the ORIGINAL proposal date for when Line II itself was first proposed/decided (its StartYear1 on the sheet is 1959, eleven years after Line I's 1948 commissioning, implying a separate later decision to add capacity -- but no decree or history article naming that specific decision was located). Searched: proektneftegaz.ru, consultant.ru decree text in full, tsrmedia.ru company-history feature (covers Line I's 1948 origin only), general web search for 'Кохтла-Ярве Ленинград вторая нитка 1959' / 'Kohtla-Järve Leningrad line 2 1959' -- WebSearch tool was at its session budget limit (200/200 calls used); escalated to direct curl against DuckDuckGo (html/lite endpoints, both returned a bot-check CAPTCHA) and Bing (empty 400 response) with no usable results. Leaving blank rather than fabricating a date. A researcher with search access should retry this specific query in a future pass."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No document found stating when construction of Line II (as opposed to Line I) began. Given StartYear1=1959 already on the sheet, a construction start somewhere in 1957-1959 is plausible by analogy with Line I's ~3-year 1945-48 build, but this is inference, not a sourced value -- not staged. Same exhausted search history as Proposal [ref] (WebSearch budget exhausted; DuckDuckGo/Bing direct-curl fallbacks blocked by bot-check/empty response). Leaving blank rather than fabricating a year."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1959"
+   },
+   "primary_value": "1959",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "ATTRIBUTION FINDING (same as Fuel/PipelineType): the currently-cited ref (https://xn--80afnaylbafcido5b6k.xn--p1ai/events/1013) is entirely about Line I's 1948 commissioning (6 November 1948, named precisely in that article) -- it does not support StartYear1=1959 for this row and should be REMOVED, not kept. I could not find a replacement source confirming 1959 as Line II's commissioning year despite an extensive search: proektneftegaz.ru and consultant.ru (both read to exhaustion) describe only a MODERN reconstruction project, with no original-commissioning date; energybase.ru has no dedicated page for Line II (only for Line I, confirmed by a direct URL-pattern test that 404'd); tsrmedia.ru's company-history feature covers only Line I's 1948 origin. General web search exhausted (WebSearch 200/200 budget used; DuckDuckGo html/lite endpoints returned bot-check CAPTCHA pages on direct curl; Bing returned an empty HTTP 400). The 1959 value itself is plausible (a second parallel string added ~11 years after the original, consistent with Leningrad's growing gas demand through the 1950s) but is UNSOURCED after this session's search -- staging UNRESOLVED and recommending the current wrong ref be dropped rather than left in place implying it supports 1959."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "5.40",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "5.40",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "POSSIBLE AGGREGATE-VS-SEGMENT ISSUE, flagged rather than silently sourced: the ONLY place I found the figure 5.40 bcm/y is energybase.ru's page for the SIBLING row (P2326 / Line I, 203km), which states 'Мощность 5.40 млрд. м3/год' for THAT specific 203km line. This row (P5589 / Line II, 114km) carries the IDENTICAL 5.40 bcm/y value on the sheet, but I found no document stating a capacity figure for Line II specifically -- proektneftegaz.ru and consultant.ru (both read to exhaustion) describe pipe diameter/pressure/length for the reconstruction but never a throughput/capacity number. Two lines of different length (203km vs 114km) sharing the exact same round capacity figure is consistent with either (a) both lines genuinely being built to the same Ду700/5.4MPa spec and therefore having matching hydraulic capacity (plausible -- capacity is a function of diameter/pressure, not length, so two Ду700 Рр5.4MPa lines COULD legitimately share a capacity figure), or (b) GEM having copied Line I's capacity onto Line II without an independent Line II-specific source. I cannot rule out (b) with the sources found this session, and citing the P2326/energybase page here would repeat exactly the single-line-source-applied-to-both-rows problem the brief's aggregate-vs-segment rule warns against. Leaving UNRESOLVED rather than citing a source that names the wrong pipeline. A researcher with search access should look for a Gazprom Transgaz Saint Petersburg capacity disclosure specific to Line II."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "5.40",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "5.40",
+   "proposed_refs": [
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "EPC engineering firm's reconstruction-project scope page states verbatim: 'строительство магистрального газопровода «Кохтла-Ярве-Ленинград» Ду700, Рр-5,4МПа протяженностью 114км' (construction of trunk gas pipeline 'Kohtla-Järve-Leningrad', nominal bore 700mm, design pressure Рр=5.4MPa, length 114km). The 114km length is an EXACT match to this row's already-recorded LengthKnown=114.00km (P2326/Line I is 203km, so this spec cannot belong to that sibling row) -- strong numeric identification that this passage describes Line II specifically, filling the value blank at 5.4 MPa."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single-source fill (see Length/Diameter [ref] for the same document and the same 114km exact-match reasoning tying this passage to Line II specifically, not the 203km sibling). OSM's way tag for this exact object (https://www.openstreetmap.org/way/1297168215) carries pressure=38 (units unstated on the page, conventionally bar in OSM pipeline tagging -- 38 bar = 3.8 MPa), which does not match 5.4 MPa; I treat proektneftegaz's Рр (расчётное/проектное давление = calculated/design pressure) figure as authoritative for GEM's Pressure column (design/rated pressure is the GEM convention, consistent with how P2326's Pressure cell was sourced from the same 5.4 MPa design-pressure language), and the OSM figure as either a current lower operating pressure or an unreliable/generic tag value -- not staged as a conflicting second source. Searched for a second confirming document without success (WebSearch budget exhausted; see Proposal/Construction notes for the search-access limitations this session hit)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "114.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "114.00",
+   "proposed_refs": [
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "States 'протяженностью 114км' (length 114km) verbatim, exactly matching the recorded LengthKnown=114.00. This numeric match is itself the identifying evidence that the passage describes THIS row (Line II) and not the 203km sibling (P2326/Line I) -- the source document's own object title only says '1 и 2 нитки' generically without naming which line, so the exact length match is load-bearing for the attribution."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single strong primary-document source (EPC contractor's own project-scope page, naming the specific pipeline and a reconstruction spec). Searched for a second independent confirmation of 114km specifically (energybase.ru has no dedicated Line II page -- direct URL pattern tested and 404'd; nangs.org's 2018-reconstruction article is about Line I's 1948-origin line, not this one, per its own text naming 1948 commissioning; general web search exhausted, see Proposal [ref] notes) without success. Staged at medium given single-source, per the corollary that a single strong on-point document is REFS_ADDED (sourced), not UNRESOLVED -- UNRESOLVED means nothing was found, and something specific and numerically exact WAS found here."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "700",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "700",
+   "proposed_refs": [
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/"
+   ],
+   "verifications": [
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "States 'Ду700' (nominal bore/условный диаметр 700mm) for the same 114km-length passage identified as Line II by its exact length match -- matches recorded Diameter=700 exactly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Same source/passage as Length [ref]. NOTE ON A REJECTED ALTERNATE: the OSM way tag for this exact named object (way/1297168215, 'Кохтла-Ярве — Ленинград 2') carries diameter=530mm, which does NOT match the recorded 700mm. Investigated: P2326's sibling OSM way (way/744184127, Line I) carries the IDENTICAL diameter=530mm tag despite that pipeline having its own independently-sourced 700mm (Ду700 per proektneftegaz) / 720mm (Дн per energybase) figures -- i.e. BOTH Kohtla-Järve-Leningrad OSM ways share one apparently generic/duplicated 530mm tag value, which is evidence the OSM diameter tag was set once and copy-pasted across the corridor rather than measured per-line. I therefore treat the OSM 530mm figure as unreliable and do not cite it, relying instead on the primary engineering document's line-specific Ду700 figure. Searched for a second independent source without success (see Length [ref] notes)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Same situation as sibling row P2326: this corridor's gas source has changed historically (originally Kohtla-Järve oil-shale-gasification gas in the 1940s-50s per Line I's history, later Siberian/Unified Gas Supply System natural gas once that network reached the area). No document specific to Line II (built later, 1959 per the sheet, likely already carrying natural gas from the outset rather than shale gas given the timing) names a specific upstream field or gas stream. Given BISI's 2025 finding that this connection has carried no commercial flow since 2019, a current FuelSource value would be speculative. Searched: proektneftegaz.ru, consultant.ru, tsrmedia.ru, general web search (exhausted, see Proposal [ref] notes). Leaving blank rather than fabricating a source name."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea"
+   ],
+   "primary_value_col": "StartState/Province",
+   "values": {
+    "StartLocation": "Mooni, Jõhvi",
+    "StartState/Province": "Ida-Viru County",
+    "StartCountryOrArea": "Estonia"
+   },
+   "primary_value": "Ida-Viru County",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/J%C3%B5hvi",
+    "https://idaviru.ee/en/idavirurecordplaces-2/"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/J%C3%B5hvi",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Jõhvi",
+     "note": "States Jõhvi is a town in Ida-Viru County, Estonia, and its county seat/administrative center. StartLocation on the sheet is 'Mooni, Jõhvi' -- Jõhvi being the parish/town the Mooni locality sits within -- so this directly places the pipeline's start point within Ida-Viru County."
+    },
+    {
+     "url": "https://idaviru.ee/en/idavirurecordplaces-2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Jõhvi",
+     "note": "Ida-Viru County's own official site lists Jõhvi among its places -- the county government's own site confirming the town is within it, independent of Wikipedia."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is the batch brief's flagged START_MISMATCH: state-audit region_audit.csv records this row's geometry-derived traversed start as 'Ida-Viru County (EE)' while the sheet's StartState/Province cell currently holds the bare country name 'Estonia' (not an actual county/subject). Judged the route FIRST per SOP: 'Mooni, Jõhvi' is a real, specific locality (Jõhvi Parish/town, Ida-Viru County) and is exactly consistent with this pipeline's well-documented western terminus at the Kohtla-Järve/Jõhvi oil-shale region -- no existence or route concern, only the state-level field was under-specified. Note: I could not confirm 'Mooni' as a named village specifically within current Jõhvi Parish boundaries on Wikipedia's Jõhvi Parish village list (a weaker link in the chain), but Jõhvi itself unambiguously sits in Ida-Viru County regardless of Mooni's exact sub-parish status, and StartLocation ('Mooni, Jõhvi') is left unchanged since it was not the audit's flagged field. This mirrors the identical fix already staged on sibling row P2326 (same StartState/Province defect, same corrected value), filed there with different corroborating sources (investinestonia.com, idaviru.ee) for Kohtla-Järve specifically; here the sourcing targets Jõhvi specifically since that is this row's StartLocation town. EndLocation/EndState/Province/EndCountryOrArea (Vsevolozhsky District / Leningrad Oblast / Russia) were not flagged by the audit and are left as-is."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No cost figure found for either the original 1959 construction or the modern reconstruction project. proektneftegaz.ru's project-scope page describes reconstruction scope (new-route pipe, PIG launcher/receiver chambers, line valves) but states no budget figure. A second reconstruction-related document, a bolshekolpanskoe.ru municipal-council PDF (item 'Том 1' referenced in wiki_citations) could NOT be fetched this session: direct curl returned HTTP 444 (connection closed without response), and the Wayback CDX API fallback returned HTTP 429 then a genuine 'Internet Archive: Temporarily Offline' outage page (confirmed via full HTML, not a block on my end) -- this is a live gap, not a deletion; the document should be retried in a future pass once IA recovers. Searched: consultant.ru decree (scope/district list only, no cost), general web search (exhausted, see Proposal [ref] notes). Leaving blank rather than fabricating a figure."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint Petersburg LLC"
+   },
+   "primary_value": "Gazprom Transgaz Saint Petersburg LLC",
+   "proposed_refs": [
+    "https://www.openstreetmap.org/way/1297168215",
+    "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.openstreetmap.org/way/1297168215",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Кохтла-Ярве — Ленинград 2",
+     "note": "operator tag on this exact named Line II way: 'ООО «Газпром трансгаз Санкт-Петербург»' -- a line-specific tag, not a generic corridor value."
+    },
+    {
+     "url": "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром трансгаз Санкт-Петербург",
+     "note": "Independent trade-press company profile confirms Gazprom Transgaz Saint Petersburg operates the trunk gas network across Leningrad Oblast/NW Russia including the Kohtla-Järve-Leningrad corridor (traces its own history to Line I's 1948 completion); does not name Line II specifically by string number, so corroborates the operating company's territory rather than being a line-2-specific naming source on its own."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Matches the NW-corridor operator this batch expects for Leningrad Oblast/St Petersburg-area lines (Gazprom Transgaz Saint Petersburg), same as sibling P2326. Primary source (OSM tag) is line-2-specific; second source is company-level, not line-2-specific -- staged at medium rather than high given only one of the two sources names Line II by itself."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3103,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+    "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://proektneftegaz.ru/regioni/n_leningradskaya-obl/i_mg-kohtla-yarve-leningrad-1-i-2-nitki/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "МГ «Кохтла-Ярве-Ленинград»",
+     "note": "Names the project's Заказчик (client/investor) explicitly for the object covering '1 и 2 нитки' (both lines, including this row): 'ООО «Газпром инвест Запад» ОАО «Газпром»' -- i.e. Gazprom (OAO, renamed PAO/PJSC in 2015, same legal entity) via its capital-projects subsidiary is the named investor/customer for reconstruction work on this row's line specifically (the document's object title includes both нитки, and this line-item is the 114km/Ду700 passage already tied to Line II by the exact length match under Length [ref])."
+    },
+    {
+     "url": "https://tsrmedia.ru/spec/gazprom-transgaz-sankt-peterburg-energeticheskaya-stabilnost-severo-zapada-rossii.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром трансгаз Санкт-Петербург",
+     "note": "States the operating subsidiary Gazprom Transgaz Saint Petersburg 'является 100-процентной дочерней компанией ПАО «Газпром»' (is a 100% subsidiary of PJSC Gazprom) -- independent corroboration that the ultimate owner behind this operator is Gazprom PJSC."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent origins: a capital-projects document naming Gazprom (via its Zapad subsidiary) as investor/customer specifically for Line II's reconstruction, and a trade-press piece establishing the operating company as a 100% Gazprom PJSC subsidiary. Same reasoning already used for sibling P2326's Owner fill (that row cited the same two sources)."
+  }
+ ],
+ "status_reviews": [
+  {
+   "sheet_row": 3103,
+   "segment_name": "II",
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2025-04",
+   "summary": "Status=operating remains correct. Estonia halted Russian gas imports in 2022, ending this corridor's EXPORT function, but per BISI's independent 2025-04-18 report the 'Kohtla-Järve-Leningrad connection' (covering this corridor, of which Line II/P5589 is a string) has not carried commercial gas since 2019 -- three years BEFORE the 2022 Estonia embargo, and for reasons unrelated to it -- yet 'remains available for technical gas supply to system operators and pipeline stations.' Per the batch brief's own rule, a pipe that has stopped exporting but remains in the Unified Gas Supply System stays 'operating,' not idle/mothballed/retired; there is no distinct GEM controlled-vocabulary status for 'technically available, commercially unused.' This is a documented distinction (BISI's own language), not a geopolitical inference.",
+   "sources": [
+    "https://bisi.org.uk/reports/eu-russian-gas-phase-out-the-state-of-energy-decoupling"
+   ],
+   "caveat": "Note for context, not a status change: commercial use of this connection ceased in 2019, predating the 2022 Estonia Russian-gas import ban by three years, so the 2022 embargo is not itself the cause of this line's idled commercial state. If GEM later adds a distinct 'idle/standby, technically available' status value, this row (and its sibling P2326) would be candidates -- but no such value exists in the current controlled vocabulary, and BISI's own 'remains available' language supports keeping operating.",
+   "researcher_notes": "This is the identical status-review judgment already staged on sibling row P2326 (Line I) -- the BISI report discusses the Kohtla-Järve-Leningrad connection as a corridor, not line-by-line, so the same evidence and verdict apply to both GEM rows. Cross-checked against Elering's (Estonian TSO) network materials showing Estonia's current primary Russia-interconnection point sits at Izborsk/Pskov, not at this Kohtla-Järve corridor -- consistent with this corridor being a separate, longer-idled connection rather than the active modern import route, and consistent with BISI's 2019 commercial-halt date."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P2326",
+   "url": "https://www.openstreetmap.org/way/1297168215",
+   "note": "OSM way explicitly named 'Кохтла-Ярве — Ленинград 2' / 'Kohtla-Järve — Leningrad 2', confirming this is the physically distinct second string used to source P5589's Fuel/PipelineType/Operator this session. Cross-referencing so P2326's own shard/agent is aware a sibling-specific OSM object exists (P2326's own way is a separate one, way/744184127) and the two should not be conflated.",
+   "suggested_ref_cols": []
+  },
+  {
+   "project_id": "P2326",
+   "url": "https://www.consultant.ru/document/cons_doc_LAW_179417/60116be763324b2f56152f5ccf8cdd04ad4ba74e/",
+   "note": "Russian federal decree line-item 16, 'Реконструкция МГ \"Кохтла-Ярве - Ленинград\", 1 и 2 нитки' (Leningrad Oblast districts: Volosovsky, Gatchina, Slantsy, Kingisepp, Lomonosov etc.) -- names BOTH lines' reconstruction together; usable as a Fuel/PipelineType corroboration for P2326 too if not already covered there.",
+   "suggested_ref_cols": [
+    "Fuel [ref]",
+    "PipelineType [ref]"
+   ]
+  }
+ ],
+ "summary": "P5589 re-audited: existence/route/classification confirmed as the genuine second (114km, 1959) Kohtla-Järve-Leningrad string, distinct from P2326 (203km, 1948) -- not a duplicate. All 15 worklist units resolved (10 REFS_ADDED/REVERIFIED, 5 UNRESOLVED: Proposal, Construction, Start replacement, Capacity, SegmentCost). Major finding: Fuel/PipelineType/Start [ref] cells all cited a source that actually describes sibling P2326, not this row -- Fuel/PipelineType re-sourced to line-2-specific refs (OSM way + government decree), Start left UNRESOLVED after an exhausted search (WebSearch budget spent; DuckDuckGo/Bing curl fallbacks blocked) for a 1959-specific replacement. Location: StartState/Province corrected from bare 'Estonia' to 'Ida-Viru County' (same START_MISMATCH fix as P2326). Status review: confirmed operating -- commercial flow halted 2019 (pre-dating the 2022 Estonia embargo) but line remains technically available/in the Unified System per BISI 2025-04. Flagged for follow-up: possible aggregate-vs-segment Capacity duplication (identical 5.40 bcm/y to P2326, no Line-II-specific source found) and a routes-repo data bug (a P2326-tagged feature sitting inside P5589.geojson, read-only finding, not fixed)."
+}

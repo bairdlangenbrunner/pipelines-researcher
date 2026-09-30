@@ -1,0 +1,79 @@
+R7 Central + South + North Caucasus — lean pass (docs/sops/lean_pass.md)
+========================================================================
+workflow run id     wf_22bc874f-a76 (critical-deep-sweep, model sonnet)
+                    dispatched from workflow_baked.js (built 2026-09-22; deepsweep_args.json baked in as a
+                    literal, 19,998-char BRIEF.md byte-exact to every agent). Pre-dispatch: fresh pull
+                    2026-09-30 — 0 changed cells on the 49 rows vs the 20260922 snapshot, owners tab identical,
+                    so the 09-22 worklist stood. dryrun_deepsweep.mjs clean.
+agents              14 (family groups, --groups auto as reviewed 2026-09-22)
+dispatched          2026-09-30
+wall time           19 min 55 s (0 empty shards, 0 errors, 538 tool uses)
+subagent tokens     1,659,264 total
+rows                49
+tokens / row        ~33.9 k   (reference: R3 full deep ~184 k/row; R5 ~37.9 k; R4a ~45.4 k; R4b ~54.5 k;
+                    R6 ~36.3 k) -> lowest lean batch so far
+
+lean_summary.json   full units 732 -> owed 408 (MISSING_REF 385, HAS_REF 23)
+                    deferred 324 -> deferred_units.json (fills_deferred 298,
+                    has_ref_access_blocked 14, has_ref_cleared_by_script 12)
+
+outputs (staged_resolutions.json)
+  status reviews    49: 36 confirm / 4 unclear / 9 change.
+                    CHANGE  P2227 Russia–Turkey West line (Turkish section, BOTAS) mothballed -> operating;
+                            StartYear1 1986 -> 1988 (1986 = construction start). CONTESTED — both name-bearing
+                            refs are Turkish state (BOTAS, Energy Ministry) static descriptions; flow evidence
+                            (Argus, Strandzha/Malkoclar) names the entry point, not the line. Reviewer call:
+                            the row is the Russia–Turkey supply line whose Russian supply ended 2020.
+                    CHANGE  P3971 Zamyany–Bugrinskoye proposed -> construction, ConstructionYear 2023 -> 2024.
+                    CHANGE  P3973 Puchezh–Yuryevets proposed -> operating, StartYear1 2022 (gas Dec 2022).
+                    CHANGE  P3974 Palekh–Lukh proposed -> operating, StartYear1 2024 (one source).
+                    CHANGE  P3996 / P3997 Zaterechny GDS offtake proposed -> operating (neftegaz 2026-03,
+                            single Gazprom origin; P3997 looks like a duplicate of P3996 — see validity).
+                    CHANGE  P4013 Borok–Breytovo proposed -> operating, StartYear1 2026 (gas 2026-09-18).
+                    CHANGE  P4130 Stomino–Nikitenki construction -> operating, StartYear1 2023.
+                    CHANGE  P4142 Rzhev–Olenino–Zapadnaya Dvina proposed -> construction, 2024-07.
+                    UNCLEAR P1477, P2288, P4132 (no post-2023 source names the line; operating kept),
+                            P3998 (existence of a separate Zaterechny–Velichaevskoe line comes first).
+  validity          55 records: 32 concern, 23 confirmed (caveat).
+                    open by type: spec 17, classification 8, attribution 5, duplicate 2.
+                    headline:
+                    - Duplicates: P3997 vs P3996 (one Zaterechny offtake documented); P4143 = stage 2
+                      (Olenino–Nelidovo) of P4142.
+                    - P2381/P5665 Rostov–Maykop I/II: StartState 'Yaroslavl Oblast' is wrong -> Rostov Oblast
+                      (816-r item 283); capacities 3.10/4.10 unsourced vs 26.783 bcm/y system figure.
+                    - P2380 КГМО: row merges two strings; Length 365 / Dia 800 conflict with Table 1.1
+                      (I 469.1 km DN820, II 492.2 km DN1220) — fills staged for string I, split is the call.
+                    - P2426 Pisarevka–Anapa: Capacity 63 bcm/y is South Stream's design figure (system), not
+                      this line; length 880.6 km spans both phases.
+                    - P0769 Yamal–Europe: Owner1 'EuRoPol Gaz 100%' covers only the Polish section.
+                    - P3714: 114 km / 28 in describe the OFFSHORE export line to the Kalmykia landfall, not a
+                      line reaching Budyonnovsk.
+                    - P2366 Length 810 is a chainage marker; P2379/P2380 FuelSource 'Elshansky' unsupported.
+                    - P5551 Rostov–Serpukhov II: StartYear1 1961 -> 1965 (uk.wikipedia, low); Dia 820 vs Ду-1020.
+                    - P0760 South Stream SegmentCostUnits USD -> EUR (source says EUR 15.5 bn).
+                    - Classification (flag only): P3973, P3974, P3996, P4013, P4130, P4142, P4144 recorded
+                      `distribution` but documented as газопровод-отвод to a GRS (transmission-class).
+  refs              408 unit records: 301 REFS_ADDED, 107 UNRESOLVED; tier high 71 / medium 180 / low 138 /
+                    blank 19; 126 unique URLs on 48 rows. Fuel 42, Location 41, Owner 37, Status 33,
+                    PipelineType 29, Diameter 26, Length 22, Capacity 21, Start 17, others <10.
+                    389 ref-only folds. Existing HAS_REF URLs all carried in the workbook [ref] cells
+                    (union with the new refs) — none deleted.
+  fills             19 staged value changes (status/year corrections above, P2381/P5665 StartState,
+                    P2380 Length/Diameter, P2285 StartYear1 1964 -> 1967, P0760 cost units).
+
+gates (sweep_gates.py, exit 0) — gates_report.txt
+  B 0  C 4  D 0  E 0  F 0  I 0  I' 0  L 0 (385 MISSING_REF owed, 86 unresolved-with-notes)  M 0
+  J skipped — lean pass: 298 blank-value units deferred; 19 FILL records staged
+  C 4 = P2285 Fuel/PipelineType/Owner, P2379 PipelineType on the Belousovo LPUMG capture (trivial
+  values; left).
+  advisory: A 14, K 112 (expected in lean mode — second sources deferred).
+
+orchestrator edits  (logged in the record notes as [orchestrator QC 2026-09-30])
+                    - P2426 Capacity [ref]: REFS_ADDED -> UNRESOLVED (the only page gives South Stream's
+                      63 bcm/y system figure and does not name the line; the agent's own note said so).
+                      Cleared gate I.
+                    - http://web.archive.org -> https:// in proposed refs + verifications (32), so the same
+                      snapshot is not pasted twice beside the existing https ref.
+
+deliverable        batches/russia-gas/deliverables/pipelines_batch_20260930_1321_ET_russia-gas_deepsweep-r7-central-south.xlsx
+                   (8 sheets, recalc ok, no error cells, no duplicated URL in any cell)

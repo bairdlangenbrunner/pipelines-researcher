@@ -1,0 +1,359 @@
+{
+ "project_id": "P3979",
+ "pipeline_name": "Lebyazhye-Makushino Gas Pipeline",
+ "sheet_row": 1981,
+ "wiki": "https://www.gem.wiki/Lebyazhye-Makushino_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Lebyazhye-Makushino Gas Pipeline",
+   "concern_type": "classification",
+   "verdict": "concern",
+   "contested": {
+    "PipelineType": ""
+   },
+   "recorded_value": "PipelineType = 'distribution' for Lebyazhye-Makushino Gas Pipeline (Макушино).",
+   "candidate_value": "Likely 'transmission', per this batch's own отвод-и-ГРС rule: a газопровод-отвод terminating AT a ГРС is transmission; separate межпоселковый lines downstream of the ГРС are distribution. Decree 816-r item 330 names this object 'Газопровод-отвод и ГРС Макушино'. Live gazprommap.ru map (2026-09-22) lists 'Газопровод-отвод и ГРС «Макушино»' (done:0), matching the same отвод-и-ГРС naming convention as the Лебяжье/Варгаши objects seen at the same program level. The 2022 snapshot (C) shows the identical naming already in place under the prior program, done:0 at that time too.",
+   "recommendation": "Flag only, per the batch instruction to never reclassify these rows unilaterally -- recommend a human review PipelineType for all three Kurgan отвод rows (P3977/P3978/P3979) together, since the same evidence pattern (decree naming + Gazprom's own program-map naming convention, which consistently separates отвод-и-ГРС objects from differently-named межпоселковый objects at the same sites) applies uniformly across all three.",
+   "proposed_refs": [
+    "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+    "https://www.gazprommap.ru/kurganskaya/",
+    "https://web.archive.org/web/20220706095510/https://www.gazprommap.ru/kurganskaya/"
+   ],
+   "verifications": [
+    {
+     "url": "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Decree 816-r item 330 names this object 'Газопровод-отвод и ГРС Макушино'."
+    },
+    {
+     "url": "https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Live gazprommap.ru map (2026-09-22) lists 'Газопровод-отвод и ГРС «Макушино»' (done:0), matching the same отвод-и-ГРС naming convention as the Лебяжье/Варгаши objects seen at the same program level."
+    },
+    {
+     "url": "https://web.archive.org/web/20220706095510/https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "2022 Wayback snapshot shows the same отвод-и-ГРС vs межпоселковый naming split already existed under the prior 2021-2025 program -- not a recent naming change."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "This is the batch's own documented TRAPS item for the Kurgan отводы family; staged identically across all three rows."
+  }
+ ],
+ "fills": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.gazprommap.ru/kurganskaya/",
+    "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Live gazprommap.ru program map (accessed 2026-09-22) still lists 'Газопровод-отвод и ГРС «Макушино»' with done:0 -- not yet built, still in the active current (2026-2030) program."
+    },
+    {
+     "url": "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Лебяжье",
+     "insecure_tls": true,
+     "note": "url_verifier.py failed both the normal request and the verify=False retry with SSLError on this kurganobl.ru URL (a documented, recurring failure mode for this host this batch). Manually confirmed live and on-topic via `curl -sk --max-time 20 -A \"Mozilla/5.0\"`: HTTP 200, expected term present in the returned HTML. kurganobl.ru article (node-42293; exact publish date not confirmed on page, but node-ID sequencing places it after node-41779, confirmed 2026-06-06) restates the same unfinished gap between GRS Vargashi and GRS Lebyazhye as the item remaining for the eastern districts including Makushinsky -- i.e. still describes the wider corridor, of which Lebyazhye-Makushino is the next unbuilt leg, as ongoing/unfinished work in 2026."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Status=proposed remains current as of 2026-09-22 -- Gazprom's own live program map plus a 2026 government article both indicate this segment is not yet built. Cross-checked in status_reviews (verdict=confirm) despite being >2 years past the sheet's 2023-07-24 update date -- NOT dormant, given active 2025-2026 government engagement region-wide."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+    "https://www.gazprommap.ru/kurganskaya/"
+   ],
+   "verifications": [
+    {
+     "url": "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Decree 816-r item 330 lists this object as a gas pipeline branch (газопровод-отвод) with a gas-transport-volume figure."
+    },
+    {
+     "url": "https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Gazprom's own regional gasification program map names it a gas facility within its gas-supply-program listing."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Two independent sources confirm Fuel=Gas."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "distribution"
+   },
+   "primary_value": "distribution",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": null,
+   "researcher_notes": "Same classification concern as P3977/P3978: no independent source describes this object as 'distribution'-type. Both the federal decree (A) and Gazprom's own program map (B, live+2022 snapshot C) name it 'Газопровод-отвод и ГРС «Макушино»' -- an отвод-и-ГРС branch object -- and the same map separately lists differently-named межпоселковый (inter-settlement) distribution objects at other sites in the same program. Per this batch's own отвод-и-ГРС=transmission rule and the flag-never-reclassify instruction, this is not corrected here -- see validity[] (concern_type=classification). Fills unit left UNRESOLVED rather than citing sources for a value under dispute."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2021"
+   },
+   "primary_value": "2021",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220706095510/https://www.gazprommap.ru/kurganskaya/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220706095510/https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Self-fetched 2022 Wayback snapshot of gazprommap.ru names its own program window 'Программа газификации 2021-2025' and lists this Makushino отвод-и-ГРС object (done:0) within it -- supports a 2021 proposal/program-start year."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Single-source, inferred from the program's own naming window, not an explicit proposal-date statement."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "0.19",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "0.19",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/"
+   ],
+   "verifications": [
+    {
+     "url": "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Decree 816-r item 330 states a projected gas-transport volume of 185 million m3/year (and GRS throughput of 21.7 thousand m3/h) for this exact object -- 185 mcm/y vs GEM's recorded 190 mcm/y (0.19 bcm/y) is a ~2.7% difference, within reasonable rounding/estimation tolerance for a 'projected' federal-planning design figure, not a genuine conflict."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Single independent source (decree 816-r); staged with the SAME recorded value (0.19 bcm/y) per the rule that a source agreeing within rounding IS a ref -- discrepancy (185 vs 190 mcm/y) noted rather than silently resolved. Not upgraded to high: only one source found stating a numeric capacity for this specific object."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1981,
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Lebyazhye",
+    "StartPrefecture/District": "Lebyazhyevsky District",
+    "StartState/Province": "Kurgan Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Makushino",
+    "EndState/Province": "Kurgan Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Lebyazhye",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/"
+   ],
+   "verifications": [
+    {
+     "url": "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Decree 816-r item 330's district list names район Лебяжьевский (Lebyazhyevsky District, start) and муниципальный округ Макушинский (Makushinsky District, end) for this exact object, and adds that it will bring gas for the first time to three districts: Makushinsky, Petukhovsky and Chastoozersky."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Single independent source pins Start=Lebyazhye(Lebyazhyevsky District)/End=Makushino(Makushinsky District). A second independent source for Location specifically was not located within lean-pass budget (B/C's map tool gives no district text)."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1981,
+   "oo_sheet_row": 2943,
+   "tab": "operators_owners",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+    "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona"
+   ],
+   "verifications": [
+    {
+     "url": "https://rulaws.ru/goverment/Rasporyazhenie-Pravitelstva-RF-ot-06.05.2015-N-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Decree 816-r places this object within the federal Unified Gas Supply System scheme Gazprom PJSC operates, but does not name Gazprom for this specific object by title."
+    },
+    {
+     "url": "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром",
+     "insecure_tls": true,
+     "note": "url_verifier.py failed both the normal request and the verify=False retry with SSLError on this kurganobl.ru URL (a documented, recurring failure mode for this host this batch). Manually confirmed live and on-topic via `curl -sk --max-time 20 -A \"Mozilla/5.0\"`: HTTP 200, expected term present in the returned HTML. kurganobl.ru article on ongoing regional gasification work names Gazprom's continued role delivering the program this object belongs to."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "researcher_notes": "Ownership supported by reasonable program-wide inference, not a per-object ownership statement -- same caveat as P3977/P3978/P5404 precedent. Kept at medium."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Lebyazhye-Makushino Gas Pipeline",
+   "sheet_row": 1981,
+   "current_status": "proposed",
+   "verdict": "confirm",
+   "proposed_status": "proposed",
+   "proposed_changes": {},
+   "evidence_date": "2026-09-22",
+   "staleness_rule": "Sheet update date is 2023-07-24 (>2y old, would default to a dormancy check), but the dormancy/shelved inference does NOT apply: there is active, dated 2025-2026 government engagement region-wide, and Gazprom's own live map still tracks this object as unbuilt.",
+   "proposed_refs": [
+    "https://www.gazprommap.ru/kurganskaya/",
+    "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona",
+    "https://www.kurganobl.ru/content/gubernator-vadim-shumkov-obsudil-s-rukovodstvom-gazproma-prodolzhenie-raboty-po-gazifikacii"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprommap.ru/kurganskaya/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Макушино",
+     "note": "Live gazprommap.ru program map, accessed 2026-09-22: 'Газопровод-отвод и ГРС «Макушино»' still listed done:0 in the CURRENT (2026-2030) program -- still active, still unbuilt."
+    },
+    {
+     "url": "https://www.kurganobl.ru/content/v-kurganskoy-oblasti-prodolzhaetsya-rabota-po-gazifikacii-okrugov-regiona",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Лебяжье",
+     "insecure_tls": true,
+     "note": "url_verifier.py failed both the normal request and the verify=False retry with SSLError on this kurganobl.ru URL (documented recurring failure for this host this batch). Manually confirmed via `curl -sk --max-time 20 -A \"Mozilla/5.0\"`: HTTP 200, expected term present. kurganobl.ru article (node-42293; exact publish date not confirmed on-page, node-ID sequencing places it after node-41779/2026-06-06) restates the same Vargashi-Lebyazhye gap as still the priority unfinished item for the eastern districts -- Lebyazhye-Makushino is the next unbuilt leg of the same corridor, consistent with continued non-dormant status."
+    },
+    {
+     "url": "https://www.kurganobl.ru/content/gubernator-vadim-shumkov-obsudil-s-rukovodstvom-gazproma-prodolzhenie-raboty-po-gazifikacii",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Варгаши",
+     "insecure_tls": true,
+     "note": "url_verifier.py failed both the normal request and the verify=False retry with SSLError on this kurganobl.ru URL (documented recurring failure for this host this batch). Manually confirmed via `curl -sk --max-time 20 -A \"Mozilla/5.0\"`: HTTP 200, expected term present. kurganobl.ru article confirmed dated 2026-06-06: governor/Gazprom meeting names the wider 5-district eastern gasification effort (which includes Makushinsky District, this object's endpoint) as an active current priority, not abandoned."
+    }
+   ]
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Status: confirm proposed -- Gazprom's own live map still done:0 for GRS Makushino, 2026 kurganobl.ru articles show the wider eastern-district gasification corridor is still active government priority; NOT dormant despite >2y since sheet update. Classification concern staged (likely transmission) -- flagged only. Capacity REFS_ADDED at same value (0.19 bcm/y vs decree's 185 mcm/y, ~2.7% within rounding tolerance, noted). Fuel/Proposal/Location/Owner REFS_ADDED."
+}

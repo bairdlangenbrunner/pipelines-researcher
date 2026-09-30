@@ -1,0 +1,694 @@
+{
+ "project_id": "P2352",
+ "pipeline_name": "Power of Siberia Gas Pipeline",
+ "sheet_row": 1216,
+ "wiki": "https://www.gem.wiki/Power_of_Siberia_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Phase I",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action on existence/duplicate/classification for P2352 itself. It is the genuine, physically distinct Phase I segment of the Power of Siberia system (Chayandinskoye NGKM, Sakha Republic -> Blagoveshchensk, Amur Oblast, ~2,200 km, operating since Dec 2, 2019) and is clearly distinguishable from its named-family siblings on the 32-pipeline roster: P2353 is Phase II (Kovyktinskoye field, Irkutsk Oblast -> Chayandinskoye NGKM, ~800-803.5 km, commissioned Dec 21, 2022 per Gazprom's own 2022 Annual Report -- see cross_row_leads); P3208 appears, per an independent technical-library phase breakdown (neftegaz.ru), to correspond to a Phase III COMPRESSOR-STATION-ONLY capacity expansion along the SAME already-existing Chayandinskoye-to-Atamanskaya section of THIS segment's own corridor (7 new compressor stations, 481 MW, targeted for 2022) -- i.e. likely no new physical pipe of its own (flagged as a cross_row_lead for P3208's own audit, not resolved here, since it bears on P3208's LengthKnown/Diameter fields, not P2352's); P5521 (Belogorsk-Khabarovsk) and any Power-of-Siberia-2/'Sila Baikala' rows are later, physically separate, not-yet-complete corridors connecting the Power of Siberia system to the unrelated Sakhalin-Khabarovsk-Vladivostok system (RBC 2024: construction just beginning on Belogorsk-Khabarovsk, targeted for 2029) and must not be confused with P3208's compressor work. No indication P2352 duplicates, or is duplicated by, any other roster row.",
+   "contested": {},
+   "researcher_notes": "Checked P2352 against the batch's flagged Power-of-Siberia family (P2352/P2353/P3208/P7600) and the separately-flagged P0758/P2027 and P3208/P5521 pairs. All distinguishing facts above trace to independent or Gazprom-primary sources reached this session (Gazprom's own project page segment-specific paragraph; neftegaz.ru's phase-by-phase technical breakdown; Gazprom's 2022 Annual Report; RBC's 2024 coverage of the Belogorsk-Khabarovsk interconnector). None of the P0758/P2027 or P3208/P5521 pair concerns bear directly on P2352 itself (P2352 is upstream of both disputes) -- see cross_row_leads for what was found that DOES bear on those other PIDs.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://web.archive.org/web/20250513104902/https://www.rbc.ru/business/21/03/2024/65fc6acb9a7947498f7481f3"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Phase I",
+   "verdict": "concern",
+   "concern_type": "route",
+   "recommendation": "Flag RouteAccuracy as contested / route-candidate-owed. The routes-repo geometry currently on file for P2352 (goit-ggit-pipeline-routes/data/individual-routes/gas-pipelines/P2352.geojson, OSM way/476168197, 192-point LineString) computes to only ~252.5 km of geodesic length -- roughly 11% of the sourced/claimed 2,200 km Phase I extent -- and every point falls within a small area entirely inside Sakha Republic (lat 55.36-57.30N, lon 124.84-125.26E), never approaching Amur Oblast or Blagoveshchensk. This is consistent with the mapped geometry being only an initial fragment near the Chayandinskoye field, not the full segment. Recommend this PID be treated as a route-candidate target for a full-length §8 route-creation pass (Chayandinskoye NGKM, Sakha Republic -> Blagoveshchensk, Amur Oblast) rather than leaving RouteAccuracy/RouteType as if the current short fragment represents the whole pipeline. No routes-repo write made or proposed here -- read-only per this task's standing scope; this is a finding for the routes-repo maintainers / a future §8 pass.",
+   "contested": {
+    "RouteAccuracy": "contested -- mapped geometry (~252.5 km) covers only ~11% of the sourced 2,200 km Phase I extent, and is confined entirely to Sakha Republic, never reaching Amur Oblast"
+   },
+   "researcher_notes": "Computed independently via Haversine great-circle summation over all 192 coordinate pairs in the published geojson (read-only; goit-ggit-pipeline-routes is not a repo this task may write to). First point [125.2508356, 57.299473], last point [125.0372028, 55.3642102] -- both well within Sakha Republic, nowhere near Blagoveshchensk (approx. 50.27N, 127.5E). This is a geometry/routes-repo finding about mapped route completeness, independent of and additional to the Location [ref] state/province cell corrections made in fills[].",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Phase I",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Note SegmentCost=$55bn as a combined pipeline-plus-field-development figure, not a clean construction-only cost for this 2,200km segment's own pipe. The cited Reuters (2015-06-02) source explicitly scopes the number: '$55 billion for the Russian section, including bringing new gas fields on stream.' No source found in this pass isolates a pipe-construction-only figure for Phase I alone. Recommend keeping the figure (best-documented, on-point, and the ref genuinely states it) but annotating ResearcherNotes with the scope caveat if/when this fill is applied, rather than presenting $55bn as pure pipeline construction cost.",
+   "contested": {
+    "SegmentCost": "aggregate -- source explicitly scopes $55bn to the Russian pipeline section PLUS new gas field development combined, not pipe construction alone"
+   },
+   "researcher_notes": "Confirmed by direct reading of the Reuters 2015-06-02 article (Wayback capture) rather than relying on the url_verifier substring check alone. Distinct from, and not to be confused with, the ~$400bn 30-year gas SUPPLY CONTRACT value figure found in Gazprom/neftegaz.ru sources -- that is a revenue/contract figure, unrelated to construction cost.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220728102623/https://www.reuters.com/article/russia-china-gas-idUKL5N0YO1XM20150602"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://tass.com/economy/2039905"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own 2022 Annual Report (approved by shareholders 2023-06-30) lists 'Газопровод «Сила Сибири»' under 'Построенные и действующие газопроводы' (built and OPERATING gas pipelines) on its national network map legend."
+    },
+    {
+     "url": "https://tass.com/economy/2039905",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "TASS, 2025-11-06 (independent wire service): pipeline running at/above its 38 bcm/y max design capacity, record daily deliveries into 2026 — confirms continued operation well past the sheet's 2025-08-14 LastUpdated."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "krasnodar-dobycha.gazprom.ru's PDF (ConnectTimeout live, per Measured Conditions) resolves via Wayback and genuinely names 'Сила Сибири' as a built/operating trunk pipeline. e-disclosure.ru (the sheet's second existing ref) still 403s even through Wayback for this specific file id — kept as an access failure per standing rule (never delete over a block), not dropped; see the Owner unit for a working Wayback capture of the related e-disclosure.ru company page. TASS Nov-2025 adds strong independent, recent corroboration of continued operating status."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Listed among Gazprom's 'газопроводы' (GAS pipelines) network map."
+    },
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own project page describes it throughout as a 'gas pipeline'/'gas trunkline' transporting natural gas."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "krasnodar-dobycha PDF ConnectTimeouts live; reached via Wayback. Both sources unambiguously gas."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Listed under 'Основные магистральные газопроводы (МГ)' (main TRUNK/transmission gas pipelines) in Gazprom's own 2022 Annual Report network-map legend — 'магистральный' is the Russian technical term GEM's controlled vocabulary maps to 'transmission'."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single-source (Gazprom-affiliated) confirmation reached via Wayback; the term used ('магистральный газопровод') is the standard Russian classification for a transmission/trunk line, distinct from distribution or gathering pipe. Same reasoning independently applied to sibling row P2027 in this batch."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2012"
+   },
+   "primary_value": "2012",
+   "proposed_refs": [
+    "https://web.archive.org/web/20260105063738/https://www.rbc.ru/base/21/05/2025/682cad3d9a794757d1c16904"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20260105063738/https://www.rbc.ru/base/21/05/2025/682cad3d9a794757d1c16904",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "RBC's dedicated 2025-05-21 background/history article on Power of Siberia states: 'В 2012 году по инициативе Владимира Путина проект был запущен повторно. Изначально он носил имя «Якутия — Хабаровск — Владивосток», однако после проведения конкурса был переименован в «Силу Сибири»' (In 2012, on Putin's initiative, the project was relaunched; it originally bore the name 'Yakutia-Khabarovsk-Vladivostok' but was renamed 'Sila Sibiri' after a naming contest) — names the pipeline and states the year."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE resolved. Independent, dedicated-history source states 2012 as the relaunch/(re)proposal year, explicitly tied to the 'Сила Сибири' name. ProposalMonth left blank: public record elsewhere (multiple secondary retellings) gives Dec 27, 2012 for the formal naming announcement at a State Council meeting, but no citable non-gem.wiki source found in the time available states that exact date while also naming the pipeline directly — declining to guess the month. Note: an Oct 2012 Interfax article (interfax.ru/business/273323, contemporaneous with Putin's original construction directive) was checked and manually read in full — it genuinely does NOT contain the string 'Сила Сибири' (predates the branding decision per the RBC timeline above), so per the strict name-match rule it was NOT used as a ref despite being on-topic."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2014",
+    "ConstructionMonth": "9"
+   },
+   "primary_value": "2014",
+   "proposed_refs": [
+    "https://www.rferl.org/a/russia-china-gas-pipeline-yakutsk/26559938.html",
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.rferl.org/a/russia-china-gas-pipeline-yakutsk/26559938.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "RFE/RL (2014) — sheet's existing ref, reverified live: 200, names 'Power of Siberia Gas Pipeline', supports 2014."
+    },
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own project page, segment-specific: 'In September 2014, Gazprom commenced the construction of Power of Siberia's first section running some 2,200 kilometers from the Chayandinskoye field (Yakutia) to Blagoveshchensk (Chinese border)' — this is explicitly about THIS Phase I segment, not a system aggregate, and gives the month."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Added ConstructionMonth=9 (September) from Gazprom's own segment-specific construction-start statement, which independently corroborates RFE/RL's already-verified 2014 year and is explicit that the 2,200km figure/date refer to the first (Phase I) section specifically."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2019",
+    "StartMonth1": "12"
+   },
+   "primary_value": "2019",
+   "proposed_refs": [
+    "https://web.archive.org/web/20201221210854/https://www.reuters.com/article/us-china-russia-gas-start/putin-and-xi-oversee-launch-of-landmark-russian-gas-pipeline-to-china-idUSKBN1Y60X9",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20201221210854/https://www.reuters.com/article/us-china-russia-gas-start/putin-and-xi-oversee-launch-of-landmark-russian-gas-pipeline-to-china-idUSKBN1Y60X9",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Reuters (2019-12-02 dateline via Wayback, live 401 from this vantage) — 'Putin and Xi oversee launch of landmark Russian gas pipeline to China' — confirms Dec 2019 launch, names Power of Siberia."
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "neftegaz.ru technical-library phase breakdown states Phase I ('1 очередь') 'введена в эксплуатацию 2 декабря 2019 г.' (commissioned Dec 2, 2019) — exact date, independent of Reuters."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources (Reuters wire service; neftegaz.ru Russian technical trade press) agree on December 2019, with neftegaz.ru giving the exact date (Dec 2). Adds StartMonth1=12, not previously recorded."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "38.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "38.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://tass.com/economy/2039905"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own project page: 'Export capacity: 38 billion cubic meters per year.'"
+    },
+    {
+     "url": "https://tass.com/economy/2039905",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "TASS 2025-11-06: pipeline reached its 'maximum design capacity of 38 bln cubic meters (bcm) of gas per year' on 2024-12-01 and is on track to exceed 38 bcm for 2025 — independent, recent confirmation of the same figure as an operating reality, not just a design target."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This export-capacity figure is legitimately attributable to THIS segment specifically: Phase I is the sole pipe carrying gas to the China border, so all system export capacity physically transits this exact 2,200km run (Phases II/III add upstream supply/compression into Phase I, not separate export capacity) — not a misapplied system aggregate. TASS Nov-2025 independently confirms the design capacity was reached and is now being exceeded."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "9.8",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "9.8",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+    "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Working pressure: 9.8 MPa.'"
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'рабочее давление - 9,8 МПа' — independent technical-library corroboration."
+    },
+    {
+     "url": "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom Transgaz Tomsk's own 'Сила Сибири' project page: 'Рабочее давление — 9,8 МПа' — third source, same figure."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE resolved: three sources agree exactly on 9.8 MPa. All three state this as the design/operating pressure for the system generally rather than calling out Phase I specifically by name at this line — flagged per the aggregate-vs-segment rule, but pressure (like diameter) is a non-additive physical/engineering constant of the pipe itself across a continuously-built trunk, not a summed system total like length or cost, so applying it to this segment is defensible (same reasoning the P2027 shard in this batch used for the SKV trunk's pressure)."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "2200.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "2200.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Segment-specific (NOT the ~3,000km system 'Figures and facts' aggregate elsewhere on the same page): 'Power of Siberia's first section running some 2,200 kilometers from the Chayandinskoye field (Yakutia) to Blagoveshchensk (Chinese border)' — exact match to the sheet."
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Independent technical-library phase breakdown states Phase I ('1 очередь ... участок от Чаяндинского НГКМ до г. Благовещенск') length as 'протяженность - 2156,1 км' — a distinct, more precise-looking figure, 43.9 km (2.0%) below the sheet's 2200.00."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Gazprom's OWN page states 2,200 km specifically for the first (Phase I) section, matching the sheet exactly and confirming this is not a system-wide figure misapplied to the segment. A second independent source (neftegaz.ru) gives 2156.1 km for the same phase — a ~2% discrepancy, most plausibly reflecting different measurement conventions (rounded design-route km vs. precise as-built engineering km) rather than a different segment definition (both sources place the same endpoints: Chayandinskoye NGKM to Blagoveshchensk). Per standing rule 7 this is treated as a source agreeing within rounding, not a non-answer or a material spec concern — noted here for transparency rather than filed as a separate validity concern."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1420",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1420",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+    "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Diameter: 1,420 millimeters.'"
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'диаметр трубы линейной части газопровода - 1420 мм' — independent corroboration."
+    },
+    {
+     "url": "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom Transgaz Tomsk's own page: 'Диаметр — 1420 мм' — third agreeing source."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Three sources agree exactly. Same aggregate-vs-segment caveat as Pressure applies and is accepted on the same non-additive-physical-constant reasoning."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Chayandinskoye and Kovyktinskoye gas fields"
+   },
+   "primary_value": "Chayandinskoye and Kovyktinskoye gas fields",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250513104902/https://www.rbc.ru/business/21/03/2024/65fc6acb9a7947498f7481f3",
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250513104902/https://www.rbc.ru/business/21/03/2024/65fc6acb9a7947498f7481f3",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "RBC (independent outlet, 2024-03-21): '«Сила Сибири» — это магистральный газопровод... который транспортирует газ с Ковыктинского месторождения в Иркутской области и Чаяндинского в Якутии' (transports gas from the Kovyktinskoye field in Irkutsk Oblast and the Chayandinskoye field in Yakutia)."
+    },
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own page: gas supplied from Chayandinskoye field from launch, with Kovyktinskoye field added 'in late 2022'."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Independent (RBC) and primary (Gazprom) sources agree exactly with the sheet's recorded FuelSource. The sheet's existing ref (rbc.ru/business/21/03/2024/...) 401s live but reverifies clean via Wayback."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Yakutia",
+    "StartState/Province": "Sakha Republic",
+    "StartCountryOrArea": "Russia",
+    "EndPrefecture/District": "Blagoveshchensk",
+    "EndState/Province": "Amur Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Yakutia",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220905125039/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Segment-specific: 'Power of Siberia's first section running some 2,200 kilometers from the Chayandinskoye field (Yakutia) to Blagoveshchensk (Chinese border)' — confirms start in Yakutia (Republic of Sakha) and end at Blagoveshchensk (administrative center of Amur Oblast)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two corrections made: (1) EndState/Province typo fixed, 'Amur Oblas' -> 'Amur Oblast' (canonical federal-subject spelling per this repo's CLAUDE.md); (2) previously-blank StartState/Province filled as 'Sakha Republic' (canonical spelling), sourced directly from Gazprom's segment-specific text naming 'Yakutia' as the start. IMPORTANT SCOPE CAVEAT: the SAME Gazprom page separately states, in its SYSTEM-WIDE 'Figures and facts' section, that the pipeline overall 'traverses three Russian constituent entities, namely the Irkutsk and Amur Regions and the Republic of Sakha (Yakutia)' — that sentence describes all three phases combined (Irkutsk Oblast belongs only to Phase II/P2353's Kovyktinskoye-to-Chayandinskoye route); it is NOT evidence that Phase I (this row) itself passes through Irkutsk, and Irkutsk was deliberately NOT added to this row's Location fields. This row's own StartState/Province + EndState/Province (Sakha Republic -> Amur Oblast) is sourced only from the segment-specific sentence."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "55000000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "55000000000.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220728102623/https://www.reuters.com/article/russia-china-gas-idUKL5N0YO1XM20150602"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220728102623/https://www.reuters.com/article/russia-china-gas-idUKL5N0YO1XM20150602",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Reuters (2015-06-02, via Wayback, live 401 from this vantage): states Gazprom's build cost as '$55 billion for the Russian section, including bringing new gas fields on stream' — the figure IS literally stated, but is explicitly scoped as pipeline-plus-field-development combined, not construction-only for this segment's own pipe."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Ref genuinely states the $55bn figure verbatim, so this is REVERIFIED rather than UNRESOLVED per standing rule 7 — but see the paired validity[] 'spec' concern: Reuters' own wording scopes $55bn to the Russian pipeline section PLUS bringing new gas fields onstream (i.e., includes upstream Chayandinskoye/Kovyktinskoye field development, not just this 2,200km segment's pipe construction). No source found that isolates a clean pipe-construction-only cost for Phase I alone. Tier reduced to medium for this scope caveat. Do not confuse with the separate, much larger ~$400bn figure appearing in Gazprom/neftegaz.ru sources, which is the 30-year GAS SUPPLY CONTRACT value (revenue), not a construction cost, at all."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom PJSC",
+    "OperatorLocalLanguage": "ПАО \"Газпром\""
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250124203126/https://tomsk-tr.gazprom.ru/about/sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Official project page on 'Сила Сибири' hosted by ООО «Газпром трансгаз Томск» (Gazprom Transgaz Tomsk), the wholly Gazprom PJSC-owned subsidiary operating this corridor — site footer references disposal of 'непрофильных активов ПАО «Газпром»' (non-core assets of PJSC Gazprom), confirming the subsidiary relationship. The page hosts the pipeline's own technical project data."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_REF resolved for the recorded value 'Gazprom PJSC'. ATTRIBUTION NOTE (not acted on): the source that hosts this project page is specifically Gazprom Transgaz Tomsk, an operating subsidiary, which suggests day-to-day operation may run through that subsidiary rather than the parent PJSC directly — but no source found explicitly states 'Operator: Gazprom Transgaz Tomsk' as a formal designation distinct from the ultimate parent, so the recorded value (Gazprom PJSC) is kept and sourced as-is rather than changed on inference. Worth a closer look in a future pass if a source naming the specific operating subsidiary surfaces."
+  },
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20191206073416/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2",
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20191206073416/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "e-disclosure.ru's company-disclosure-portal page for 'ПАО «Газпром»' (id=934) — live URL 403s (kept per standing rule, not confirmed dead), but resolves via a 2019-12-06 Wayback capture (HTTP 200): lists Gazprom PJSC's annual-report disclosure filings, confirming it as the correctly-named legal entity."
+    },
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own 2022 Annual Report lists 'Газопровод «Сила Сибири»' among its own built/operating pipeline network — i.e., asserts it as a Gazprom Group asset."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The sheet's existing e-disclosure.ru ref, previously only access-checked as a live 403, now reverifies as reachable (HTTP 200) via a 2019 Wayback capture — the URL is not dead, per standing rule kept rather than dropped. That page itself is a generic corporate-filings index (confirms legal-entity identity, not pipeline-specific ownership), so paired with Gazprom's own 2022 Annual Report (which lists Power of Siberia among the Group's own assets) and this row's other units (RBC/TASS/Gazprom project page all attribute the pipeline to 'Газпром'/Gazprom throughout) for the 100% Gazprom PJSC ownership attribution. No single source is a clean per-asset ownership-register statement giving the exact percentage for this specific pipeline, so kept at medium tier rather than high."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P2353",
+   "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+   "facts": "Same neftegaz.ru phase breakdown used for P2352's Length/Diameter/Pressure gives Phase II ('2 очередь') as: route from the Kovyktinskoye field (Irkutsk Oblast) to the Chayandinskoye NGKM, length 'около 803,5 км' (~803.5 km), target commissioning '2023 г' as projected in this source -- but Gazprom's own 2022 Annual Report (krasnodar-dobycha.gazprom.ru PDF, this shard's KRASNODAR_PDF) states the Kovykta-Chayanda section actually entered service earlier, '21 декабря 2022 года запущен в работу участок «Ковыкта — Чаянда» газопровода «Сила Сибири»' (commissioned Dec 21, 2022) -- a concrete StartYear1/Month1 candidate (2022/12) that appears to run AHEAD of the projected-2023 figure in the technical-library source. Also: Gazprom's own project page states Phase II is '~800 kilometers' (rounder figure) vs. neftegaz.ru's 803.5 km -- same small-discrepancy pattern as Phase I's 2200 vs 2156.1 km. Irkutsk Oblast belongs to Phase II's route, not Phase I's (see P2352's Location fill notes)."
+  },
+  {
+   "project_id": "P3208",
+   "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+   "facts": "Same source's phase breakdown describes a '3 очередь' (Phase 3): 'расширение газотранспортных мощностей на участке от Чаяндинского НГКМ до КС Атаманская: строительство 7 КС мощностью 481 МВт, срок - до 2022 г.' (expansion of transport CAPACITY on the section from Chayandinskoye NGKM to Atamanskaya compressor station: construction of 7 compressor stations totaling 481 MW, target by 2022). If P3208 corresponds to this phase, it is a compressor-station-only capacity expansion ALONG P2352's OWN already-existing corridor, not a new pipeline route -- worth checking directly whether P3208 has LengthKnown/Diameter values that should instead be LengthKnown=0/Diameter=blank per the standing 'expansion with no new physical pipe' rule. Not resolved here since it is P3208's own row."
+  },
+  {
+   "project_id": "P5521",
+   "url": "https://web.archive.org/web/20250513104902/https://www.rbc.ru/business/21/03/2024/65fc6acb9a7947498f7481f3",
+   "facts": "RBC, 2024-03-21 (independent, not Gazprom): 'Газпром' начал соединение двух крупных газопроводов «Сила Сибири» и «Сахалин — Хабаровск — Владивосток»... Их соединит газовая магистраль «Белогорск — Хабаровск»' (Gazprom began connecting Power of Siberia and Sakhalin-Khabarovsk-Vladivostok via a new line, Belogorsk-Khabarovsk), described as the first stage of the 'Восточная система газоснабжения' (Eastern Gas Supply System) integrating eastern and western Russian gas transport capacity; Energy Minister Alexander Novak is quoted giving a 2029 completion target. As of this article's date the connector was only just beginning construction -- useful dated context (existence, name, status-as-of-March-2024, target completion year) if P5521 is this connector, and a clear basis for NOT confusing it with P3208's compressor-only work (see above)."
+  },
+  {
+   "project_id": "P7600",
+   "url": "https://neftegazpro.ru/masshtabnye-obekty/stroitelnye-raboty-dlya-podklyucheniya-gazoprovoda-tas-yuryakhskogo-i-verkhnevilyuchanskogo-mestorozhdenii-k-sila-sibiri",
+   "facts": "Harvested as a gem.wiki citation lead only (P2352's wiki reference list, cite_note :11-14) -- NOT independently fetched or verified in this session, and not cited as a ref for any P2352 unit. Title translates to 'Construction work to connect the Tas-Yuryakhskoye and Verkhnevilyuchanskoye field pipeline to Power of Siberia' -- a plausible feeder-pipeline lead for whichever PID (candidate: P7600) tracks that connection; flagged for that row's own audit to fetch and verify directly rather than assumed reliable here."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Phase I",
+   "sheet_row": 1216,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-09-03",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://tass.com/economy/2039905",
+    "https://ru.themoscowtimes.com/2026/09/03/postavki-gaza-iz-rf-v-kitay-po-sile-sibiri-i-cherez-kazakhstan-v-26g-sostavyat-50-mlrd-kubm-a205230"
+   ],
+   "verifications": [
+    {
+     "url": "https://tass.com/economy/2039905",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "TASS, 2025-11-06: Power of Siberia reached its 38 bcm/y maximum design capacity on 2024-12-01 and was on track to exceed 38 bcm for calendar 2025; historical annual deliveries table 2020-2024 shown, all consistent with continuous operation."
+    },
+    {
+     "url": "https://ru.themoscowtimes.com/2026/09/03/postavki-gaza-iz-rf-v-kitay-po-sile-sibiri-i-cherez-kazakhstan-v-26g-sostavyat-50-mlrd-kubm-a205230",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "The Moscow Times (Russian edition), 2026-09-03: reports 2026 combined Power-of-Siberia-plus-Kazakhstan-transit deliveries to China projected at ~50 bcm, with Power of Siberia itself delivering above its original 38 bcm/y contract level (per the same reporting cycle covered by TASS/Sputnik/RBC coverage of record daily deliveries through H1 2026) -- clearly operating, most recent dated evidence found."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verdict: confirm. Multiple independent, recently-dated sources (TASS 2025-11-06; The Moscow Times 2026-09-03; corroborating search hits from Sputnik/RBC/tadviser/interfax.ru covering the same Nov-2025-through-Sept-2026 news cycle of record daily/annual deliveries) place the pipeline not merely operating but running at or above its full 38 bcm/y design capacity, with Gazprom and CNPC reportedly discussing a further increase to 44 bcm/y. This is well newer than the sheet's LastUpdated=2025-08-14 and gives no indication of any status change, disruption, or classification issue -- status=operating stands confirmed."
+  }
+ ],
+ "summary": "P2352 (Power of Siberia Phase I, Chayandinskoye NGKM/Sakha Republic -> Blagoveshchensk/Amur Oblast) reverified/confirmed across all 15 worklist units: Status/Fuel/PipelineType/Construction/Start/Capacity/Length/Diameter/FuelSource/Location/SegmentCost REVERIFIED (Location corrected: 'Amur Oblas' typo fixed to 'Amur Oblast', blank StartState/Province filled 'Sakha Republic'); Pressure and Proposal(Year) newly sourced (REFS_ADDED, MISSING_VALUE resolved, ProposalMonth left blank/unresolved); Operator newly sourced (REFS_ADDED, MISSING_REF resolved, value kept as Gazprom PJSC); Owner REVERIFIED via a working Wayback capture of the previously-403 e-disclosure.ru ref. Zero units left UNRESOLVED. Three validity findings filed: (1) confirmed-with-caveat on the existence/duplicate/classification check against the Power-of-Siberia family and the batch's flagged P0758/P2027 and P3208/P5521 pairs -- no duplicate issue for P2352 itself; (2) a route concern -- the routes-repo geojson is only ~252.5 km (~11% of the sourced 2,200 km), confined to Sakha Republic, never reaching Amur Oblast, RouteAccuracy contested and flagged as a §8 route-candidate target; (3) a spec concern on SegmentCost=$55bn, which the cited Reuters source explicitly scopes to the Russian pipeline section PLUS new gas field development combined, not a clean construction-only figure for this segment. A minor Length discrepancy (Gazprom's segment-specific 2,200 km vs. neftegaz.ru's 2,156.1 km, ~2%) is noted in the Length fill as within-rounding, not filed as a separate concern. One status_reviews entry: verdict=confirm, evidence_date=2026-09-03 (TASS 2025-11-06 + The Moscow Times 2026-09-03), pipeline running at/above its 38 bcm/y design capacity through 2026, well newer than the sheet's 2025-08-14 LastUpdated. Four cross_row_leads filed for P2353, P3208, P5521, and P7600."
+}

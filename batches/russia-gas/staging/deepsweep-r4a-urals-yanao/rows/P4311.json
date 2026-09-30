@@ -1,0 +1,448 @@
+{
+ "project_id": "P4311",
+ "pipeline_name": "Yamburg-Tula Gas Pipeline",
+ "sheet_row": 2284,
+ "wiki": "https://www.gem.wiki/Yamburg-Tula_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "concern_type": "spec",
+   "verdict": "concern",
+   "contested": {
+    "LengthKnown": "3113.00"
+   },
+   "recorded_value": "3113 km",
+   "candidate_value": "2146 km (ЭРТА/gasforum.ru table)",
+   "recommendation": "The ЭРТА/gasforum.ru trunk-pipeline table -- the SAME table that matches the sheet's 2946 km for string I (P2450) exactly -- states string II's length as 2146 km, 967 km short of the sheet's recorded 3113 km. This is a real conflict, not a rounding difference, and the table's exact match on string I argues against dismissing it outright on string II. However: a 2026-dated procurement tender (new.etpgpb.ru, Putyatinskoe LPUMG, an underwater-crossing repair job on 'Ямбург-Тула-2') gives a route km-marker of approximately 2846.655-2847.353 km -- if genuine, this alone makes the table's 2146 km figure physically impossible (a repair point cannot lie beyond the pipe's own recorded end), and is directional evidence the sheet's 3113 km is closer to correct than ERTA's 2146 km. The tender page could not itself be fetched or archived this pass (direct curl failed, no Wayback snapshot exists), so it is NOT a citable ref -- context only. Recommendation: KEEP the recorded 3113 km (do not replace with ERTA's 2146 km); flag for a human to seek a Glavgosexpertiza state-expertise approval or as-built/commissioning document, or to independently re-verify the tender's km-marker, before either figure is treated as fully resolved.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург-Тула",
+     "note": "Table row 'Ямбург-Тула II' states length 2146 km, conflicting with the sheet's recorded 3113 km -- the source of this concern."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Filed per the spec-disagreement protocol, parallel to P2450's Length fill which uses the same ERTA table (matches there). Length [ref] staged UNRESOLVED (not REFS_ADDED for either number) in fills[] pending this being resolved by a human against a primary/as-built source."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "concern_type": "route",
+   "verdict": "concern",
+   "contested": {
+    "route_geometry": "identical to P2450"
+   },
+   "recorded_value": "Two separate rows (P2450 segment I, P4311 segment II), each presumptively a distinct physical string per the 'string pair' convention",
+   "candidate_value": "The routes-repo GeoJSONs for P2450 and P4311 are coordinate-for-coordinate IDENTICAL (461 vertices each, same lon/lat pairs in the same order, haversine length 3031.5 km both), not two independently digitized parallel lines",
+   "recommendation": "This is a routes-repo (GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes) observation, read-only per standing rules -- no edit made or proposed here, flagged for a human PR against that repo. Two physically parallel strings sharing a corridor is expected and would normally produce two visually similar but NOT vertex-identical traces (real pipes running side-by-side diverge slightly at compressor stations, river crossings, etc.). A byte-for-byte identical LineString for both PIDs is much more consistent with one trace having been copy-pasted to stand in for the other than with two independently surveyed/digitized strings. RouteAccuracy on both rows should be treated as reflecting ONE traced corridor, not two independently corroborated strings, until a human re-digitizes at least one of the pair from source imagery/documents.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verified this session via direct read of ../goit-ggit-pipeline-routes/data/individual-routes/gas-pipelines/{P2450,P4311}.geojson (read-only access to a colleague-owned repo, no write made). Same finding filed identically on both P2450 and P4311's shards since it is one fact about the pair, not specific to either row."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+    "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+    "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург – Тула",
+     "note": "Gazprom Transgaz Chaikovsky company newspaper, dated March 2025: capital repair with pipe-fitting replacement on the 'перемычке МГ «Ямбург – Тула II»' (tie-in/crossover of gas pipeline Yamburg-Tula II) -- direct evidence of active maintenance well past the sheet's 2023-07 LastUpdated."
+    },
+    {
+     "url": "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "2019-03-19 neftegaz.ru report: rupture at km-marker 603 of 'Ямбург - Тула-2', 10 km north of Sosnovka, Beloyarsky district, Khanty-Mansi AO -- confirms the line was live/pressurized in 2019."
+    },
+    {
+     "url": "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Corroborates the same 2019-03-12 rupture event, naming the responsible operator Gazprom Transgaz Yugorsk LLC -- independent confirmation of an in-service pipe under active Gazprom-system operation."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Recorded Status='operating' confirmed for string II by three independent, dated Russian-language sources naming it specifically ('Ямбург – Тула II' / 'Ямбург - Тула-2'): a 2025 Gazprom company-newspaper maintenance report, and two 2019 news reports (neftegaz.ru, ugra-news.ru) on the same rupture/repair event. See status_reviews for the annual-update confirm verdict."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+    "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург-Тула",
+     "note": "ЭРТА/gasforum.ru trunk-pipeline table lists 'Ямбург-Тула' I and II among Russia's магистральные газопроводы (trunk GAS pipelines)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Article title itself: 'магистральный газопровод Ямбург-Тула 2' -- explicitly a trunk gas pipeline."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Fuel=Gas confirmed by two independent sources naming string II specifically as a магистральный газопровод (trunk gas pipeline)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+    "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург-Тула",
+     "note": "Table category is explicitly магистральные газопроводы (trunk/main gas pipelines) -- direct match for GEM's 'transmission' classification."
+    },
+    {
+     "url": "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург – Тула",
+     "note": "Refers to it as 'МГ «Ямбург – Тула II»' -- МГ = магистральный газопровод (trunk/transmission gas pipeline)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "PipelineType=transmission confirmed for string II by both the ЭРТА trunk-pipeline table and Gazprom's own 'МГ' terminology."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No independent source found stating a construction/commissioning year for string II specifically. Searched: the ЭРТА/gasforum.ru table (gives lengths/diameters/pressure but not commissioning years), ru.wikinews and ru.wikipedia's Газотранспортная система России page (cover string I's 1988 date and the 2-string system generally but do not separately date string II), the Gazprom Transgaz Chaikovsky and Gazprom Transgaz Yugorsk company-newspaper archives (maintenance reporting, no construction-history content), and a targeted web search for 'Ямбург Тула II построен 1989' / 'вторая нитка Ямбург Тула год ввода'. Recorded StartYear1=1989 (one year after string I's independently-confirmed 1988) is plausible given the pattern of parallel strings commissioned in sequence, but nothing found states it explicitly. Staged UNRESOLVED rather than a low-tier confirm since zero corroboration was found, per lean-pass budget (one targeted search run)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Genuine spec conflict, not a rounding difference: the ЭРТА/gasforum.ru trunk-pipeline table (the same table that matches the sheet's 2946 km for string I exactly) states string II's length as 2146 km, 967 km short of the sheet's recorded 3113 km. A 2026-dated procurement-tender listing (new.etpgpb.ru, a Putyatinskoe LPUMG underwater-crossing repair on 'Ямбург-Тула-2') gives a route km-marker of ~2846.655-2847.353 km, which -- if genuine -- would make the ЭРТА table's 2146 km figure physically impossible (the pipe cannot have a repair point beyond its own recorded end) and is directional evidence the sheet's 3113 km is closer to correct. However the tender page itself could not be independently fetched (direct curl failed, no Wayback snapshot exists for it), so it cannot be cited as a proposed_ref -- it is context only, not a source. Recommend keeping the recorded 3113 km rather than replacing it with the ERTA figure, but staging this as UNRESOLVED (not REFS_ADDED) since neither candidate can be confidently sourced as REFS_ADDED-quality. See validity[] for the formal spec concern."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1020, 1420.00",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1020, 1420.00",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+    "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Rupture reported at exact Ø1420mm reading, directly confirming the 1420mm diameter component for string II specifically."
+    },
+    {
+     "url": "https://web.archive.org/web/20220108194255/http://gasforum.ru/obzory-i-issledovaniya/539/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург-Тула",
+     "note": "Table row 'Ямбург-Тула II' also lists 1420mm diameter -- diameter is independently corroborated even where the table's length figure for this string is disputed."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The 1420mm component of the recorded multi-value Diameter='1020, 1420.00' is independently confirmed by two sources naming string II specifically, including a direct rupture-point Ø reading. The 1020mm component was not independently found -- kept as recorded, same caveat as P2450's Diameter fill. Tier medium reflecting this partial confirmation."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Yamburg",
+    "StartPrefecture/District": "Nadymsky District",
+    "StartState/Province": "Yamalo-Nenets Autonomus Okrug",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Tula",
+    "EndState/Province": "Tula Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Yamburg",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+    "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Rupture located ~10 km north of Sosnovka, Beloyarsky district, Khanty-Mansi AO -- a transit region directly on the corridor between Yamalo-Nenets AO (start) and Tula Oblast (end), consistent with the recorded route."
+    },
+    {
+     "url": "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Corroborates the same Khanty-Mansi AO transit location for the identical event."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "StartLocation=Yamburg and EndLocation=Tula corroborated by the pipeline's own name, and the 2019 Khanty-Mansi AO transit rupture (two independent reports of the same event) confirms the route passes through a plausible corridor region between the two endpoints. District-level detail not independently re-verified this pass, same caveat as P2450's Location fill; kept as recorded."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+    "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург – Тула",
+     "note": "Gazprom Transgaz Chaikovsky (Gazprom PJSC subsidiary) company newspaper reporting repair on its own Yamburg-Tula II asset."
+    },
+    {
+     "url": "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Names Gazprom Transgaz Yugorsk LLC as the responsible operator for the string-II rupture repair -- a wholly-owned Gazprom PJSC subsidiary."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC (100%) confirmed by two independent sources naming two different Gazprom Transgaz operating subsidiaries (Chaikovsky and Yugorsk) responsible for maintenance along this string's route -- both wholly-owned Gazprom PJSC subsidiaries, consistent with the recorded ownership."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "II",
+   "sheet_row": 2284,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2025-03",
+   "proposed_refs": [
+    "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+    "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+    "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250504152327/https://tchaikovsky-tr.gazprom.ru/d/journal/cf/207/gaz-ehkspress-2-(678)_2025.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург – Тула",
+     "note": "March 2025 Gazprom Transgaz Chaikovsky company newspaper: capital repair with pipe-fitting replacement on the 'перемычке МГ «Ямбург – Тула II»', dated well past the sheet's 2023-07-27 LastUpdated -- direct evidence of ongoing operation and active maintenance in 2025."
+    },
+    {
+     "url": "https://neftegaz.ru/news/incidental/193746-v-khmao-gazoviki-remontiruya-magistralnyy-gazoprovod-yamburg-tula-2-obnaruzhili-i-ustranili-defekt-t/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "2019-03-19: rupture found and repaired on the live, pressurized pipe in Beloyarsky district, Khanty-Mansi AO -- corroborates continuous operation."
+    },
+    {
+     "url": "https://ugra-news.ru/article/v_yugre_proizoshyel_razryv_magistralnogo_gazoprovoda_yamburg_tula_2/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Ямбург - Тула-2",
+     "note": "Corroborates the same 2019 event and names the responsible operator (Gazprom Transgaz Yugorsk)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status review in annual-update mode. Verdict: CONFIRM operating. The strongest evidence is the March 2025 Gazprom Transgaz Chaikovsky company-newspaper report of capital repair specifically on string II's tie-in/crossover -- dated well after the sheet's 2023-07-27 LastUpdated and impossible for a decommissioned or idle line. CAUTION: the same newspaper issue also contains a passage describing an incident 'По легенде' (according to the training scenario) -- explicit drill/exercise language, not a real event, and was NOT used as evidence here; only the capital-repair paragraph is cited. No source found indicating shutdown, mothballing, or repurposing of string II since 1989 (recorded, unconfirmed) commissioning."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Confirmed real, correctly classified string II of the Yamburg-Tula pair, not a duplicate of P2450; Status=operating reconfirmed (Mar 2025 Gazprom repair report + 2019 rupture reports); 6/8 REFS_ADDED, 2 UNRESOLVED (Start year 1989 -- no independent source found; Length 3113km -- genuine spec conflict vs ERTA's 2146km, kept recorded value); 2 validity concerns (spec conflict on Length; routes-repo P2450/P4311 geojsons are coordinate-identical, flag for human re-digitize)."
+}

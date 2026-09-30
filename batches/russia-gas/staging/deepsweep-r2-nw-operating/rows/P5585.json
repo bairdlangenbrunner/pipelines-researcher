@@ -1,0 +1,681 @@
+{
+ "project_id": "P5585",
+ "pipeline_name": "Gryazovets-Vyborg Gas Pipeline",
+ "sheet_row": 3099,
+ "wiki": "https://www.gem.wiki/Gryazovets-Vyborg_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change to existence, classification, or duplicate status. P5585 (String II, 680km, commissioned Oct/autumn 2012) is a real, physically distinct construction phase of the Gryazovets-Vyborg trunk gas pipeline, built as a system of loopings (~680-700km) alongside 7 CS, feeding Nord Stream String 2 and NW Russia domestic consumers. It is NOT a duplicate of P0746 (String I, 917km route-length record, commissioned Sept 2011): the two rows describe two different, sequentially-built physical construction phases of the same corridor, sourced separately (russos LJ's Nov-2012 blog post explicitly distinguishes '680 km' String II from the '917 km' whole-corridor figure and explains the length difference is because String II was built via loopings, not a parallel full-length line). Classification (Fuel=Gas, PipelineType=transmission) is uncontested across every source. Fuel source (Yuzhno-Russkoye field) and ownership (Gazprom PJSC 100%) also uncontested.",
+   "contested": {},
+   "researcher_notes": "Read to exhaustion: invest.gazprom.ru (Wayback 2022-01-22 snapshot of Gazprom's own investment-project page), gazprom.ru's own corporate project page (Wayback 2020-10-22 snapshot, gives the year-by-year 2005-2013 build timeline with the looping-system detail), gazprom.ru's March-2012 'Дорогие газопроводы' cost article (Wayback 2022-01-22 snapshot), energybase.ru (fetched live 2026-09-15, third-party infrastructure database), russos.livejournal.com (a journalist's Nov-2012 blog post from what reads as an official Gazprom press/site-visit tour -- treated as quasi-independent, not fully independent of Gazprom's own framing), and ru.wikipedia.org's short infobox article on this exact pipeline (consulted for background/cross-check only, NOT cited as a ref -- it is a wiki that itself cites only invest.gazprom.ru, so it adds no independent corroboration, though its 1420mm diameter figure and note that Kriogaz-Vysotsk LNG plant is also fed by this line were useful context). CAVEAT: no genuinely independent (non-Gazprom-traceable) source was found for several of this row's data points given the WebSearch tool budget was exhausted mid-pass (a session-level constraint) -- Length and Start are the two best-sourced cells (explicit String-II-specific statements from 2 distinct-origin sources each); Pressure, Diameter, Operator, FuelSource are held at medium tier with this caveat stated in their own fills records.",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "II",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Flag Capacity=55.00 bcm/y on this row (P5585, String II) as a likely duplicated SYSTEM/CORRIDOR-level figure, not a value specific to String II's own 680km loop. Every source found for this pipeline states 55 bcm/y as the COMBINED two-string design capacity of the whole Gryazovets-Vyborg corridor (invest.gazprom.ru; energybase.ru explicitly: 'the pipeline, laid in two strings, has capacity 55 bcm/y'; russos LJ; ru.wikipedia.org's infobox, background only), consistently paired with the corridor's ~917km TOTAL route length -- never with String II's own 680km. This is exactly the error pattern this batch's brief calls out by name for this exact pipeline pair: 'the SYSTEM figure... is never a ref for a STRING cell.' The sibling row P0746 (String I, 917km-length record) carries the identical 55.00 bcm/y value from what is very likely the identical citation (both P5585 and P0746 share the same gem.wiki citation harvest / same underlying invest.gazprom.ru primary source per wiki_citations.json). No source anywhere states a per-string (String I alone or String II alone) capacity figure -- Nord Stream's own two 27.5 bcm/y string capacities are a DIFFERENT, offshore/Baltic-Sea-segment fact, not stated to equal the onshore feeder strings 1:1 in any source read. Recommend a reviewer either (a) leave Capacity=55.00 on both P5585 and P0746 as a documented, sourced SYSTEM figure with a ResearcherNotes caveat on both rows explaining it is the corridor total, not a per-string figure, or (b) move the 55.00 bcm/y value to a project/system-level row if one exists and blank/flag both segment rows' Capacity cells pending a genuine per-string source. This fill's own Capacity [ref] unit is left UNRESOLVED rather than citing the aggregate source as if it were segment-specific.",
+   "contested": {
+    "Capacity": "55.00"
+   },
+   "researcher_notes": "See fills[] Capacity [ref] record (class_out=UNRESOLVED) for the full source-by-source breakdown of this finding. This is the single highest-confidence validity finding in this row's research pass -- multiple independent-origin sources all state the SAME framing (two-string aggregate), leaving essentially no ambiguity that 55.00 is a corridor total.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "II",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "route",
+   "recommendation": "No route-replacement action recommended. The prior state-audit's OK_INTERIOR flag for P5585 (geometry endpoints sitting inside the traversed state set rather than exactly matching the sheet's stated Gryazovets/Vyborg termini) is judged CONSISTENT WITH, not contradictory to, the sourced physical construction method: String II was built as a system of LOOPINGS (лупинги) running alongside/parallel to String I's existing right-of-way, per gazprom.ru's own corporate project page ('в 2012 году завершено расширение газопровода — построены система лупингов, общая протяженность около 700 км') and russos LJ's explicit statement that String II's 680km came out shorter than the 917km whole-corridor length specifically BECAUSE it was built via loopings rather than a fresh end-to-end line. A looping-based route is exactly the kind of partial/interior trace that would produce geometry whose endpoints sit inside the Vologda/Leningrad Oblast interior (tied into the existing String I corridor and its compressor-station nodes at intermediate points) rather than terminating precisely at Gryazovets and Vyborg the way a fresh, independent end-to-end pipeline's geometry would. This is a real, sourced physical-construction explanation for the OK_INTERIOR flag, not a data error -- no geometry replacement is warranted from this research pass; a routes-repo geometry review (out of this leg's scope) could still confirm the traced geometry represents the looping segments specifically rather than a mis-digitized fragment, but nothing found here indicates the traced route is wrong.",
+   "contested": {},
+   "researcher_notes": "This is an interpretive judgment call based on convergent sourcing about HOW String II was physically built (loopings tied into the existing corridor), not a direct source stating 'the geometry file's endpoints are correct because X'. Flagged as caveat-confirmed rather than a hard concern given the reasonable, sourced explanation available.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK (200, content present, name matched on 'Gryazovets-Vyborg'/'Грязовец'). Third-party infrastructure database's live page (crawled 2026-09-15) describes the pipeline entirely in active/current terms -- ongoing operator servicing arrangement ('обслуживается ООО Газпром трансгаз Санкт-Петербург... и ООО Газпром трансгаз Ухта'), continuing role feeding Nord Stream and NW Russia consumers, and recent 2019-2020 dated news items about the SAME object still appearing on the page (state-expertise approval July 2020) -- no decommissioning, mothballing or abandonment language anywhere."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK (200, content present, name matched on 'Грязовец'). Gazprom's own corporate project page (2020-10-22 Wayback capture) describes construction completed through 2013 with no indication of a subsequent shutdown; page format is Gazprom's standing 'active projects' catalogue entry, not an archived/historical listing."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating confirmed by two sources of different origin (Gazprom's own corporate site + energybase.ru third-party infrastructure database). IMPORTANT SCOPE NOTE: this is a re-audit judgment about the PHYSICAL PIPE, not the Nord Stream export flow -- Nord Stream 1 has been fully halted since Sept 2022 (a well-known, separate fact about the offshore export pipeline and the political/sanctions situation), but neither source found in this pass, nor any source encountered anywhere in this research pass, states that the onshore Gryazovets-Vyborg trunk itself has been shut, mothballed, or decommissioned -- it remains part of Russia's Unified Gas Supply System (ЕСГ) and continues to serve NW Russia domestic/regional gas consumers and the Kriogaz-Vysotsk LNG plant regardless of the Nord Stream halt (per ru.wikipedia.org's mention of the Kriogaz-Vysotsk LNG offtake, consulted for background only, not cited as a ref). Recommend Status stay 'operating'. See status_reviews[] for the dated evidence and explicit verdict on this point."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Gazprom's own investment-project page titles the object 'Магистральный газопровод Грязовец — Выборг' (trunk GAS pipeline) and describes it throughout as carrying gas ('поставки газа')."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru classifies the object 'Тип в зависимости от транспортируемой среды: Газопровод' (medium-transported type: gas pipeline) explicitly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Trivial/uncontested classification -- every source found in this research pass (Gazprom's own corporate and investment sites, energybase.ru, russos LJ, ru.wikipedia.org) unanimously and explicitly describes this as a natural-gas trunk pipeline. No conflicting classification found anywhere."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Object titled 'Магистральный газопровод' -- 'магистральный' is the standard Russian term for trunk/transmission-grade pipeline (as opposed to distribution/газораспределительная сеть), directly supporting PipelineType=transmission."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru also titles it 'Магистральный газопровод «Грязовец — Выборг»' in its descriptive text."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "'Магистральный' = trunk/transmission-grade; this 917km (corridor)/680km (String II) high-pressure (9.8 MPa) large-diameter (1400mm) line feeding the Nord Stream export system and regional consumers is unambiguously a transmission pipeline, not gathering or distribution. No dissent found."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2012",
+    "StartMonth1": "10"
+   },
+   "primary_value": "2012",
+   "proposed_refs": [
+    "https://russos.livejournal.com/981124.html",
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Journalist blog post dated 19-Nov-2012 (Gazprom-tour context, treated as quasi-independent), states explicitly: '«Газпром» осенью завершил строительство II нитки магистрального газопровода «Грязовец — Выборг» протяженностью 680 км' (Gazprom completed construction of String II, 680km, in autumn [2012])."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru states explicitly: 'Пуск второй нитки газопровода состоялся в октябре 2012 года' (String II's launch took place in October 2012) -- this is the direct source for StartMonth1=10."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK (verified separately with 'Грязовец' as name token; fuzzy matcher intermittently misses the hyphenated bilingual form). Gazprom's own corporate page: 'В 2012 году завершено расширение газопровода — построены система лупингов (общая протяженность около 700 км) и необходимые компрессорные мощности для подачи газа во вторую нитку Северного потока' (in 2012 the pipeline expansion was completed -- a system of loopings, ~700km total, was built, plus the compressor capacity needed to feed String 2 of Nord Stream)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "3 sources of different origin (Gazprom corporate site, energybase.ru third-party database, and an independent journalist's contemporaneous Nov-2012 blog post) converge precisely on String II commissioning = October/autumn 2012, distinct from String I's Sept 2011 commissioning (which is P0746's Start value, not this row's). This is exactly the segment-specific fact the aggregate-vs-segment rule asks for -- not a corridor figure."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "9.8",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "9.8",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. 'давление — 9,8 МПа' stated directly on Gazprom's own investment-project page."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru characteristics table: 'Давление 9.80 МПа'."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. russos LJ: '(диаметр — 1400 мм, давление — 9,8 МПа)' stated in the same sentence describing the just-completed String II linear part."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "3 sources agree on 9.8 MPa, but this is a design-pressure spec (a physical/engineering constant of the pipe class both strings share, not a quantity that sums or differs across strings the way length or capacity would) and all 3 sources likely trace back to Gazprom's own published engineering specification for the whole corridor -- so independence is graded false/medium despite 3-source numeric agreement, per the standing rule that a shared corporate origin counts as one lineage. No conflicting pressure figure found anywhere."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "680.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "680.00",
+   "proposed_refs": [
+    "https://russos.livejournal.com/981124.html",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Explicit, EXACT, String-II-SPECIFIC statement (the source itself explicitly distinguishes this from the corridor total): 'строительство II нитки... протяженностью 680 км (так как строили лупингами, то длина второй нитки получилась меньше длины всего газопровода, которая составляет 917 км)' -- 'String II, 680km (because it was built via loopings, String II's length came out less than the whole pipeline's length, which is 917km)'. This is the strongest possible source type for this exact aggregate-vs-segment question: a contemporaneous source that names BOTH figures and explains why they differ."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK (verified with 'Грязовец' as name token). Gazprom's own corporate page corroborates via the looping-system description: 'построены система лупингов (общая протяженность около 700 км)' -- ~700km, a close rounding match to 680km for the same String-II loop system, from an independent (Gazprom-corporate, not blog) origin."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "This is the ONE cell in this row where the sourcing is unambiguously segment-specific, not an aggregate mistakenly applied to the segment -- both sources explicitly discuss String II's own loop-system length as distinct from the 917km corridor total, and they corroborate each other (680km exact vs ~700km rounded). LengthKnown=680.00 on the sheet is CONFIRMED CORRECT, not a duplicate/aggregate error, despite Capacity on this same row being exactly that kind of error (see validity[])."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1400",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1400",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. 'диаметр — 1400 мм' stated directly."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru: 'Диаметр труб 1400 мм'."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. russos LJ: 'диаметр — 1400 мм' in the String-II-specific paragraph."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "3-source agreement on 1400mm (nominal), but flagged with a discrepancy note: ru.wikipedia.org's infobox for this pipeline states 1420mm instead (consulted for background, not cited as a ref -- a wiki that itself cites only invest.gazprom.ru is not independent corroboration). This is very likely the well-known Russian pipe-engineering convention where nominal 'диаметр 1400 мм' (DN1400-class) pipe is manufactured at an actual outer diameter of 1420mm -- the two figures describe the same physical pipe class under two common naming conventions, not a real technical disagreement. Diameter (like Pressure) is a pipe-class spec shared by both strings, not a summed quantity, so it legitimately applies to String II specifically. Independence graded false/medium: all 3 numeric sources plausibly trace to Gazprom's own published spec sheet."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Yuzhno-Russkoye Oil and Gas Field"
+   },
+   "primary_value": "Yuzhno-Russkoye Oil and Gas Field",
+   "proposed_refs": [
+    "https://russos.livejournal.com/981124.html",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. 'Ресурсной базой для газопроводов «Грязовец — Выборг» и «Северный поток» стало Южно-Русское месторождение' (the resource base for the Gryazovets-Vyborg and Nord Stream pipelines is the Yuzhno-Russkoye field)."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru independently states: 'Газ поступает из Южно-Русского месторождения' (Gas comes from the Yuzhno-Russkoye field), in its own descriptive text about this pipeline object."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "2 sources of different origin (an independent journalist's on-the-ground blog post and a third-party infrastructure database) agree on Yuzhno-Russkoye as the fuel source. WebSearch budget was exhausted before a 3rd source could be sought (session-level constraint, not a finding); tier held at medium rather than high given the field-to-pipeline attribution is a less rigorously fact-checkable claim than a dimensional spec, but two independently-run outlets is a real corroboration, not a single-source note."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Gryazovets",
+    "StartState/Province": "Vologda Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Vyborg",
+    "EndState/Province": "Leningrad Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Gryazovets",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. 'Трасса газопровода проходит по территории Вологодской и Ленинградской областей' (the route crosses Vologda and Leningrad OBLASTS)."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru gives full endpoint detail: start at CS Gryazovetskaya near Gryazovets, Vologda Oblast; end at Portovaya Bay near Vyborg, Leningrad Oblast ('город Выборг Ленинградской области')."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "TYPO FIX: sheet's EndState/Province recorded 'Leningrad' (a city/oblast-name-only fragment) -- corrected to 'Leningrad Oblast' (Ленинградская область is a federal-subject/oblast, and Vyborg sits within it, not within a place literally named 'Leningrad' -- St. Petersburg was renamed from Leningrad in 1991, and the oblast that surrounds it kept the name 'Leningrad Oblast'). Both sources independently confirm Gryazovets/Vologda Oblast -> Vyborg/Leningrad Oblast as start/end. Route also crosses through the oblasts' forests/swamps per multiple sources -- consistent with a real, physically-traced route, not a schematic placeholder."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "oo_sheet_row": 4370,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint Petersburg / Gazprom Transgaz Ukhta",
+    "OperatorLocalLanguage": "ООО «Газпром трансгаз Санкт-Петербург» / ООО «Газпром трансгаз Ухта»"
+   },
+   "primary_value": "Gazprom Transgaz Saint Petersburg / Gazprom Transgaz Ukhta",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru states directly: 'Газопровод «Грязовец — Выборг» обслуживается ООО «Газпром трансгаз Санкт-Петербург» (Ленинградская область – 598 км) и ООО «Газпром трансгаз Ухта» (Вологодская область – 319 км)' -- the pipeline is serviced by Gazprom Transgaz St. Petersburg (Leningrad Oblast portion, 598km) and Gazprom Transgaz Ukhta (Vologda Oblast portion, 319km)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "IMPORTANT CAVEAT: this is a single source, and the 598km/319km split it gives is explicitly for the WHOLE 917km corridor (598+319=917), not String II's 680km alone -- so the km figures themselves are NOT a String-II-specific operator split. However, the underlying operating CONVENTION being cited (regional transgaz subsidiary boundaries: Gazprom Transgaz St. Petersburg operates the Leningrad Oblast portion of pipe regardless of which physical string it is; Gazprom Transgaz Ukhta operates the Vologda Oblast portion) is a boundary-based, not string-based, division of operating responsibility -- so it reasonably extends to String II's own Vologda-to-Leningrad route without contradiction. Staged at medium tier with this inference caveat surfaced; no String-II-specific operator statement was found in this research pass (this row's Operator field was MISSING_VALUE, so this is the best-available sourced answer, not a confirmed exact match)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "oo_sheet_row": 4370,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122171808/https://invest.gazprom.ru/about/projects/seg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Page is hosted on invest.gazprom.ru under 'PJSC Gazprom's own projects' catalogue -- Gazprom's own site listing it as one of its projects."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. energybase.ru's object record: 'Компания ПАО «Газпром»' (Company: PJSC Gazprom) listed as the owning company of record."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "No dissent found anywhere -- Gazprom PJSC 100% ownership is uncontested and consistent with every source consulted in this pass (this is a wholly Gazprom-internal trunk asset, not a JV structure like Nord Stream AG itself)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED after exhaustive search. No source found gives a distinct 'proposal'/announcement milestone for this pipeline separate from its construction-start date (9-Dec-2005, first weld at Babaevo, Vologda Oblast, per invest.gazprom.ru and gazprom.ru's own corporate history pages -- a CONSTRUCTION fact, not a proposal fact, and in any case corridor-wide rather than String-II-specific). The one candidate lead for an earlier planning-stage date was an RBC.ru article (2006 dateline, found via the wiki citation harvest as citation [7]) -- attempted both live (HTTP 401, confirmed via curl and WebFetch) and via Wayback (only one capture exists, 2026-01-04, a client-side-JS-rendered shell with no server-rendered article body -- confirmed by extracting all text: only nav/config/JSON-LD breadcrumb, no article paragraphs). This source is genuinely unreadable through both escalation routes and cannot be used to source a value per standing rule 2 (never fabricate/assume). No second candidate source for a proposal year was found. Leaving blank rather than guessing a year from the construction-start date."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED after exhaustive search -- and this is itself an aggregate-vs-segment finding, not merely a gap. The ONLY construction-start date found (9-Dec-2005, first weld at Babaevo, Vologda Oblast) is stated by both invest.gazprom.ru and the gazprom.ru corporate project page as the start of the WHOLE Gryazovets-Vyborg CORRIDOR project (both strings, 7 compressor stations) -- 'В соответствии с проектом... были сооружены две нитки линейной части газопровода' (per the project, TWO strings of the linear part were built). Per the standing aggregate-vs-segment rule (and this batch's explicit guidance naming this exact pipeline pair), this corridor-wide 2005 start date is not a valid String-II-specific ConstructionYear -- it is P0746's construction-start fact at best (String I), not necessarily this row's. The one source with segment-specific detail (gazprom.ru's own project page) gives only a COMPLETION date for String II's loopings (2012, 'завершено расширение... построены система лупингов'), not a distinct construction-START date for the loopings themselves -- by inference the loopings were likely built sometime in the 2010-2012 window (after String I's priority CS work finished in 2011), but no source states this explicitly. Declining to fabricate an inferred start year; leaving blank."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED -- this is the batch's flagged aggregate-vs-segment error pattern, confirmed. EVERY source found (invest.gazprom.ru: 'Проектная мощность — 55 млрд куб. м газа в год'; energybase.ru: 'Проложенный в две нитки газопровод имеет... мощность – 55 млрд м3 газа в год' [explicitly: 'the pipeline, LAID IN TWO STRINGS, has capacity 55bcm/y']; russos LJ: 'Проектная мощность газопровода — 55 млрд куб. м газа в год' immediately after describing String II's own 680km length; ru.wikipedia.org infobox, background only: notes the two-string design 'при наличии двух нитей обеспечивает нужную годовую мощность' [with two strings present, provides the needed annual capacity]) states 55 bcm/y as the COMBINED two-string corridor design capacity, never as a per-string figure. No source anywhere states String II's own standalone throughput capacity (e.g. ~27.5 bcm/y or any other per-string number). Per the standing rule that a system/corridor-level figure is never a valid ref for one segment/string's own cell, 55.00 bcm/y is NOT sourceable as P5585/String-II's own Capacity value from anything found in this pass -- filed as an UNRESOLVED fill and as a 'spec' validity concern (see validity[]), explicitly naming the sibling row P0746 (String I, same 55.00 bcm/y value, same citation) per this batch's own guidance calling out exactly this pair."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "none",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "UNRESOLVED after exhaustive search. The sheet's $1.4B figure traces (via the gem.wiki citation harvest, citation [7]) to an RBC.ru article that could not be read through either escalation route: live fetch returns HTTP 401 (confirmed via curl with a browser UA and via WebFetch, the latter returning an explicit authentication-wall message); the Wayback Machine holds exactly one capture of this URL (CDX-confirmed, dated 2026-01-04) and it is a client-side-JS-rendered shell with no server-rendered article text (all extracted text is nav/config/breadcrumb JSON-LD only -- no article paragraphs present to read). Per standing rule 2 (never fabricate) this $1.4B figure cannot be confirmed, corroborated, or contradicted from any source actually read in this pass, so it is left UNRESOLVED rather than either re-citing the unreadable RBC URL or silently accepting the sheet's number on faith. NOTE, kept separate for clarity: gazprom.ru's own March-2012 corporate article ('Дорогие газопроводы', Wayback-verified, https://web.archive.org/web/20220122111644/https://www.gazprom.ru/press/news/reports/2012/transportation-economical/) DOES give a readable, verified cost figure for this corridor -- approximately $5.3 million/km including all 7 compressor stations -- but that figure is explicitly for the WHOLE Gryazovets-Vyborg corridor (both strings + CS), not a String-II-only cost, and at 917km corridor length implies a total corridor cost near $4.86B, which is NOT the $1.4B recorded on this row either. This corridor-cost figure is flagged in validity[] as further evidence that the aggregate/segment boundary on this row's cost-related cells needs a human's attention, but is not itself substituted in as this row's SegmentCost since it is a corridor total, not a String-II figure."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3099,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {},
+   "evidence_date": "2026-09-15",
+   "staleness_rule": "No LastUpdated value was visible in the worklist for this row; treating energybase.ru's live page (fetched fresh today, 2026-09-15, describing the pipeline in unbroken present-tense active-service terms with no shutdown/mothball language, plus continuing 2019-2020-dated news items about the same object still posted on that page) as the newest available operating-status evidence.",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Live page, fetched 2026-09-15, describes the pipeline's ongoing regional-operator servicing arrangement and role in the Unified Gas Supply System in unbroken present tense; no decommissioning language."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "url_verifier OK. Gazprom's own corporate 'active projects' catalogue entry."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "EXPLICIT SCOPE JUDGMENT per this batch's own guidance: Nord Stream 1 (the offshore export pipeline this onshore feeder connects to) has been fully halted since September 2022 following the Nord Stream sabotage/gas-flow-stoppage events -- this is a well-known, separate fact about the OFFSHORE Baltic Sea export pipeline and the associated export-flow/sanctions situation. Nothing found in this research pass -- not energybase.ru's live page, not Gazprom's own corporate project page, not any other source consulted -- states that the ONSHORE Gryazovets-Vyborg trunk itself (String I or String II) has been physically shut, mothballed, decommissioned, or removed from Russia's domestic Unified Gas Supply System (ЕСГ). The pipe continues to serve NW Russia's own regional gas consumers and the Kriogaz-Vysotsk LNG liquefaction plant (per ru.wikipedia.org's infobox article, background only) regardless of whether gas is currently flowing onward through the idled Nord Stream 1 export line. No source found states or implies the physical pipe is out of service. Verdict: CONFIRM operating status; no change. This matches the batch brief's own explicit guidance for this exact row."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "P5585 (Gryazovets-Vyborg Gas Pipeline, String II, 680km, operating) re-audited: existence/classification/duplicate-vs-P0746 all confirmed, not a clone (P5585=680km String-II loopings, P0746=917km corridor-length String-I record, distinct sourcing). Staged all 15 owed fills: 11 REFS_ADDED (Status, Fuel, PipelineType, Start=2012-10, Pressure=9.8MPa, Length=680km [confirmed segment-specific, NOT an aggregate error], Diameter=1400mm, FuelSource=Yuzhno-Russkoye field, Location [Gryazovets/Vologda Oblast -> Vyborg, EndState/Province typo 'Leningrad' corrected to 'Leningrad Oblast'], Operator [regional transgaz-subsidiary split, inference caveat], Owner=Gazprom PJSC 100%) and 4 UNRESOLVED with documented exhaustive search (Proposal, Construction, Capacity, SegmentCost). 3 validity objects: (1) confirmed(caveat) existence/classification, (2) HIGH-CONFIDENCE spec concern -- Capacity=55.00 bcm/y is the corridor-wide two-string SYSTEM figure (confirmed by every source, explicitly paired with the 917km corridor total, never with String II's own 680km), identical value/citation shared with sibling P0746, exactly the error pattern this batch's brief flagged by name; (3) confirmed(caveat) route -- OK_INTERIOR geometry flag is consistent with String II's sourced construction-as-loopings method. Status review: verdict=confirm, operating status correct and current -- the physical onshore pipe is unaffected by Nord Stream 1's Sept-2022 export halt (a separate offshore/export-flow fact); no source found states the pipe itself is out of service."
+}

@@ -1,0 +1,647 @@
+{
+ "project_id": "P0767",
+ "pipeline_name": "Ukhta-Torzhok (Yamal) Gas Pipeline",
+ "sheet_row": 385,
+ "wiki": "https://www.gem.wiki/Ukhta-Torzhok_(Yamal)_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Do not delete the e-disclosure.ru ref (once-working refs are never deleted over an access failure), but stop treating it as supporting evidence for Status/Fuel/PipelineType/Start. It should be understood as: technically live (via Wayback; the live host itself 403s), but the wrong document -- Gazprom's generic corporate annual-report index/company card, not anything Ukhta-Torzhok-specific. Replacement refs supporting these 4 data points are staged in the corresponding fills[] records.",
+   "contested": {
+    "Status [ref]/Fuel [ref]/PipelineType [ref]/Start [ref]": "e-disclosure.ru/portal/files.aspx?id=934&type=2 does not name or discuss the pipeline at all"
+   },
+   "researcher_notes": "Fetched the live host directly (403, anti-bot/geoblock, not evidence of deletion per standing rule) and then via Wayback capture 20230614184938 (200, full text read). The page is PAO Gazprom's 'Карточка компании' / 'Годовые отчеты' (company card / annual reports) listing, a bare list of zip-file annual-report downloads for 2015-2021 with no pipeline-specific text anywhere in the body. This is a distinct failure mode from a simple dead link or access block: the URL resolves successfully but to the wrong document entirely, so it never supported the 4 data points it was cited for.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1"
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Two separate spec-level items bundled under this concern (same concern_type key): (1) FuelSource -- keep 'Bovanenkovo gas field' (reasonably supported by corridor architecture + shared 2012 in-service timing), but flag 'Urengoy gas field' as NOT verbatim-confirmed by any source found this pass -- the only supporting hint is the 2022 reconstruction article's forward-looking (2024-onward) tie to the broader SRTO/Nadym-Pur-Taz region, of which Urengoy is the largest field but is never itself named; recommend a future pass search specifically for 'Уренгой Ухта-Торжок' primary sourcing, or downgrading FuelSource's tier/confidence rather than treating 'Urengoy' as fully confirmed. (2) Location -- correct StartState/Province spelling from 'Republic of Komi' to the canonical 'Komi Republic' (same entity; standardizing to GEM's usual naming convention for this federal subject); all other Location values reconfirmed unchanged.",
+   "contested": {
+    "FuelSource": "Urengoy gas field -- not found verbatim in any source read; only the containing SRTO/Nadym-Pur-Taz region is documented, and only in a 2024-forward repurposing context, not original 2011-2012 sourcing",
+    "StartState/Province": "Komi Republic (was: Republic of Komi -- same entity, spelling standardization only)"
+   },
+   "researcher_notes": "FuelSource item: the pre-existing FuelSource [ref] was also separately found to be misattributed to P1439 (String II), corrected in the FuelSource fill -- this concern is about the VALUE's evidentiary strength independent of that ref-attribution fix. Location item: minor, non-substantive naming correction only, not a factual dispute about the pipeline's actual route or endpoints, both of which are reconfirmed.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Row is correctly classified and not a duplicate/hallucination. Existence, fuel, pipeline type, and single-segment structure all reconfirmed against Gazprom's own detailed project page plus two independent neftegaz.ru trade-press articles. No overlap with the two other Ukhta-Torzhok families found on the roster (see cross_row_leads): P1439 is 'Ukhta-Torzhok 2 (Yamal)', a separate 2015-2018 String II line on the same corridor; P5541/P5542/P5543 are the older 1969-era 'Vuktyl' trio. This row (P0767, String I, 2011-2012/2013) is distinct from both and was not merged or confused with either during this audit.",
+   "contested": {},
+   "researcher_notes": "Caveat, not a clean pass: (1) the sheet's pre-existing e-disclosure.ru [ref] (used across Status/Fuel/PipelineType/Start) was confirmed via Wayback to resolve to Gazprom's generic annual-report index page, not pipeline-specific content -- a misattribution finding, logged as a separate concern below and replaced with supporting refs. (2) FuelSource's pre-existing [ref] (proektirovanie.gazprom.ru/.../ukhta-torzhok/) was confirmed via its own <title> tag to be P1439's page (String II), not P0767's -- a cross-row misattribution, also logged separately. Both are now corrected in the fills above.",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+    "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified this pass). Gazprom's own current-projects page describes the pipeline in the present tense with full specs (970km, 1420mm, 45 bcm/y, 7 compressor stations) and photographs of the built line -- consistent with an operating asset, no proposal/construction framing."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. 4-Feb-2022 article explicitly calls the pipeline 'действующие системы МГП Ухта-Торжок 1-й и 3-й ниток' (the EXISTING/OPERATING systems of Ukhta-Torzhok strings 1 and 3) while describing a Glavgosexpertiza RF-approved (state expert-review authority, an independent origin from Gazprom itself) compressor-station reconstruction project on that live system. Direct, dated (2022) confirmation of continued operating status, corroborated by a non-Gazprom state authority's approval action."
+    },
+    {
+     "url": "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "url_verifier OK (page loads via Wayback, live host 403s -- per project rule, read via Wayback rather than marked dead). CRITICAL FINDING: this e-disclosure.ru URL (the sheet's pre-existing ref for Status/Fuel/PipelineType/Start) resolves to PAO Gazprom's GENERIC annual-report document index/company card ('Карточка компании' -- a list of zip-file annual reports 2015-2021). It contains NO mention of Ukhta-Torzhok, no pipeline-specific content of any kind, and cannot support Status, Fuel, PipelineType or Start for this row. Kept here only as a transparency record of what the old ref actually resolves to; flagged as a validity concern below and effectively superseded by the two refs above."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating reconfirmed by Gazprom's own current project page plus a dated (Feb-2022) trade-press report of a Glavgosexpertiza RF-approved reconstruction project explicitly describing this exact system (1st and 3rd strings at Sosnogorskaya CS) as 'действующие' (existing/operating). Independence: Glavgosexpertiza RF is a state technical-review authority distinct from Gazprom's own corporate voice, satisfying the 2-independent-origin bar even though neftegaz.ru is reporting a Gazprom-sourced announcement. IMPORTANT CORRECTION: the sheet's prior ref e-disclosure.ru/portal/files.aspx?id=934&type=2 does NOT support this or any of the other 3 units it was cited for -- confirmed via Wayback (live host still 403s) that it is Gazprom's generic annual-report index page, with zero pipeline-specific content. This is a misattributed/uninformative ref, not merely an access failure."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Page is titled 'ГАЗОПРОВОД «Ухта-Торжок»...' (GAS PIPELINE) and states capacity in 'млрд куб. м газа в год' (billion cubic meters of GAS per year) throughout -- unambiguously a natural-gas trunk pipeline."
+    },
+    {
+     "url": "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "url_verifier OK (Wayback). Same finding as under Status: this is Gazprom's generic annual-report index, not a Fuel-specific source. Kept as a transparency record only; does not actually support 'Gas'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Fuel=Gas is trivially and unambiguously confirmed by the operator's own project page (explicitly a 'газопровод'/gas pipeline throughout). Single corporate origin, but the classification itself is not contested by any source. The pre-existing e-disclosure.ru ref does not actually support this value (see Status finding) -- replaced with the correct project page."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Page repeatedly calls it a 'магистральный газопровод' (trunk/transmission gas pipeline), a long-distance line (~970km) moving gas from the Yamal production corridor to the Northwest Russia distribution/export hub at Torzhok -- textbook transmission classification, not gathering or distribution."
+    },
+    {
+     "url": "https://web.archive.org/web/20230614184938/https://www.e-disclosure.ru/portal/files.aspx?id=934&type=2&attempt=1",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "url_verifier OK (Wayback). Same finding as under Status: generic annual-report index, no pipeline-type content. Kept for transparency only."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "PipelineType=transmission confirmed -- the operator's own page repeatedly uses 'магистральный газопровод' (trunk/transmission line), consistent with the schema's transmission classification. The pre-existing e-disclosure.ru ref does not actually support this value; replaced with the correct project page."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2011"
+   },
+   "primary_value": "2011",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States directly: 'Строительство газопровода «Ухта - Торжок» началось в 2011 году' (construction of the Ukhta-Torzhok pipeline began in 2011) -- explicit, unambiguous, naming this exact pipeline (String I) as distinct from Ukhta-Torzhok-2's 2015 start on the same page."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "ConstructionYear=2011 reconfirmed exactly as recorded. Single corporate-origin source, but it is the operator's own detailed project page distinguishing String I (2011 start) from String II (2015 start) on the same page, which is strong internal-consistency evidence against a copy-paste error. No independent second source found stating a construction-start year specifically (as opposed to the 2012 commissioning year, which IS corroborated -- see Start [ref])."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2012",
+    "StartYear2": "2013"
+   },
+   "primary_value": "2012",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://web.archive.org/web/20230526094157/https://www.gazprom.com/press/news/2018/december/article469885/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States: 'Линейная часть и первоочередные компрессорные мощности введены в эксплуатацию в 2012 году, остальные компрессорные мощности - в 2013 году' (the linear section and first-priority compressor capacity were commissioned in 2012; the remaining compressor capacity in 2013). This directly confirms StartYear1=2012 AND supports adding StartYear2=2013 for the second-phase compressor capacity, using the worklist's own StartYear2 column."
+    },
+    {
+     "url": "https://web.archive.org/web/20230526094157/https://www.gazprom.com/press/news/2018/december/article469885/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Weak corroborating context (this Dec-2018 release is primarily about String II/Ukhta-Torzhok-2): confirms 'In 2012, Bovanenkovskoye's gas production facility No. 2 came onstream' -- i.e. the very Yamal gas-production ramp-up that String I (P0767) was built in 2011-2012 to evacuate. Consistent with, not contradicting, the 2012 in-service date; not an independent statement of P0767's own start year."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=2012 reconfirmed exactly as recorded. NEW: proposing StartYear2=2013 (remaining/second-phase compressor capacity), sourced from the same project page and using the worklist's existing StartYear2 column -- not previously populated. Tier kept at high/single-origin honesty: the gazprom.com press release corroborates the surrounding timeline (Bovanenkovo GP-2 also 2012) but is about String II, not a second independent statement of String I's own start date."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "45.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "45.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States '45 млрд куб. м газа в год' (45 billion cubic meters of gas per year) as the project capacity for 'each' of the two Ukhta-Torzhok pipelines."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Independently restates 'существующие МГП мощностью 45 млрд м3/год' (existing trunk pipelines with a capacity of 45 bcm/y) in the context of the 2022 reconstruction-approval story, corroborated by Glavgosexpertiza RF's involvement (a state authority, not Gazprom's own voice)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Capacity=45.00 bcm/y reconfirmed by 2 sources, with the second (neftegaz.ru reporting a Glavgosexpertiza RF-approved project) satisfying the independent-origin bar."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1420",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1420",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States 'Диаметр труб - 1420 мм' (pipe diameter - 1420mm) directly."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Diameter=1420mm reconfirmed exactly as recorded. Single corporate-origin source (the operator's own detailed spec page); no independent second source with a diameter figure found in this pass, and 1420mm is Gazprom's standard trunk-line diameter for this generation of Yamal-corridor pipe, consistent with the parallel String II figure on the same page."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Urengoy gas field, Bovanenkovo gas field"
+   },
+   "primary_value": "Urengoy gas field, Bovanenkovo gas field",
+   "proposed_refs": [
+    "https://web.archive.org/web/20230526094157/https://www.gazprom.com/press/news/2018/december/article469885/",
+    "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230526094157/https://www.gazprom.com/press/news/2018/december/article469885/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Dec-2018 Gazprom.com release: 'Bovanenkovskoye field's final gas facility and Ukhta - Torzhok 2 gas pipeline brought into operation' -- ties Bovanenkovo gas-facility output directly to a Ukhta-Torzhok string's commissioning, and separately states 'In 2012, Bovanenkovskoye's gas production facility No. 2 came onstream' -- the same year String I (P0767) itself came into service. Directly confirms Bovanenkovo is the upstream source for the Ukhta-Torzhok corridor (String II by name; String I by architectural parallel and shared in-service year)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "url_verifier OK. 4-Feb-2022: an approved reconstruction project will, from 2024, repurpose the EXISTING 45 bcm/y Ukhta-Torzhok system (explicitly naming '1-й и 3-й ниток'/1st and 3rd strings, connecting at Sosnogorskaya CS) to also carry ethane-rich gas from fields of the 'Северных районов Тюменской области (СРТО)'/Nadym-Pur-Taz region -- the region containing Urengoy, Russia's largest gas field. This supports a Nadym-Pur-Taz/SRTO-region fuel source becoming applicable from ~2024 onward, but the article never names 'Urengoy' verbatim -- see validity concern below."
+    },
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "url_verifier OK. Page's related-projects sidebar places the pipeline squarely in the 'Ямал' megaproject context and names Bovanenkovskoye field, corroborating Bovanenkovo; does not name Urengoy."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "IMPORTANT CORRECTION: the sheet's prior FuelSource [ref] (proektirovanie.gazprom.ru/.../ukhta-torzhok/) is MISATTRIBUTED -- fetched and confirmed its own <title> reads 'Система магистральных газопроводов Ухта-Торжок. II нитка' (String II), i.e. it is P1439's page, not P0767's. Replaced with the 3 refs above. Bovanenkovo gas field: reasonably well supported (Yamal-corridor architecture + shared 2012 in-service year with Bovanenkovo GP-2 + explicit sidebar linkage on the operator's own page), though all 3 supporting documents ultimately trace to Gazprom as originating source (independent=false, tier=medium, honestly disclosed). Urengoy gas field: NOT verbatim-confirmed by any source found -- the closest support is the 2022 reconstruction article's 'СРТО'/Nadym-Pur-Taz region framing (Urengoy is that region's largest field, a reasonable but not literal match), and that repurposing is explicitly a FORWARD-LOOKING 2024-onward addition, not the pipeline's original 2011-2012 fuel sourcing. Filing a companion validity 'spec' concern on this ambiguity rather than silently deleting or silently accepting 'Urengoy'."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "970.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "970.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States 'Протяженность каждого газопровода - около 970 км (на участке Ухта - Грязовец)' (length of each pipeline - about 970km, on the Ukhta-Gryazovets section) directly."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "LengthKnown=970.00km reconfirmed exactly as recorded. Single corporate-origin source; no independent second-source length figure found in this pass."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "9.80",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "9.80",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States 'Рабочее давление - 100 атмосфер (9,8 МПа)' (working pressure - 100 atmospheres [9.8 MPa]) directly, filling a previously-blank cell."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "New value: Pressure=9.80 MPa (=100 atmospheres), filling a MISSING_VALUE cell. Single corporate-origin source; no independent second-source pressure figure found in this pass, so tier kept at medium rather than high despite the source being explicit and precise. Note: one English-language secondary source (nsenergybusiness.com, bot-blocked at 403 on both direct fetch and this pass's attempts) was reported in prior search-engine snippets as saying 'nine MPa' -- a rounded variant of the same figure, not a contradiction -- flagged here for the reviewer's awareness but not usable as a citable second source since its full text could not be read."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Ukhta",
+    "StartState/Province": "Komi Republic",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Gryazovets",
+    "EndState/Province": "Vologda Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Ukhta",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://web.archive.org/web/20180709222444/http://ukhta-tr.gazprom.ru/press/news/2018/02/618/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). States the route runs 'на участке Ухта - Грязовец' (on the Ukhta-Gryazovets section) through 'трех субъектов РФ: Республики Коми, Архангельской и Вологодской областей' (three federal subjects: the Komi Republic, Arkhangelsk Oblast, and Vologda Oblast) -- confirms StartLocation=Ukhta (Komi Republic) and EndLocation=Gryazovets (Vologda Oblast); Arkhangelsk Oblast is transit-only (consistent with the schema tracking only start/end, not intermediate transit regions)."
+    },
+    {
+     "url": "https://web.archive.org/web/20180709222444/http://ukhta-tr.gazprom.ru/press/news/2018/02/618/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "url_verifier OK. Gazprom Transgaz Ukhta's Gryazovets LPUMG branch anniversary article independently corroborates Gryazovets as the terminus hub for the Ukhta-Torzhok pipeline corridor (its own history begins with the 1969 first-stage Ukhta-Torzhok commissioning at this location), consistent with EndLocation=Gryazovets even though this particular article concerns the older 1969-era line, not P0767 itself."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "SPELLING CORRECTION: StartState/Province recorded as 'Republic of Komi' on the sheet; correcting to the canonical GEM spelling 'Komi Republic' (same entity, standardized form) per this campaign's naming convention. All other Location values (StartLocation=Ukhta, EndLocation=Gryazovets, EndState/Province=Vologda Oblast, both CountryOrArea=Russia) reconfirmed exactly as recorded. StartPrefecture/District and EndPrefecture/District remain blank -- no source found giving district-level detail for either endpoint specifically (the operator's page gives only the 3 oblast/republic-level transit regions); left unfilled rather than guessed."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "oo_sheet_row": 686,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Ukhta",
+    "OperatorLocalLanguage": "ООО \"Газпром трансгаз Ухта\""
+   },
+   "primary_value": "Gazprom Transgaz Ukhta",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+    "https://web.archive.org/web/20180709222444/http://ukhta-tr.gazprom.ru/press/news/2018/02/618/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. States the reconstruction project's Stage 10 covers 'обустройство инфраструктурных объектов в зоне ответственности Газпром трансгаз Ухта' (infrastructure work in the area of responsibility of Gazprom Transgaz Ukhta) on this exact Ukhta-Torzhok system, and separately names Sosnogorskaya CS (this system's own compressor station, on P0767/String I per the 1st-and-3rd-strings passage) as the site of Stage 1 work -- placing this pipeline's compressor infrastructure within Gazprom Transgaz Ukhta's operating zone."
+    },
+    {
+     "url": "https://web.archive.org/web/20180709222444/http://ukhta-tr.gazprom.ru/press/news/2018/02/618/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Confirms Gryazovets LPUMG (Line Production Directorate for Main Gas Pipelines) -- the pipeline's own EndLocation hub -- is explicitly a branch ('Филиал') of ООО «Газпром трансгаз Ухта», and that this branch's operating history is defined by the Ukhta-Torzhok corridor since 1969, i.e. this subsidiary has operated the Ukhta-Torzhok corridor at this terminus continuously."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No single source states 'Gazprom Transgaz Ukhta operates P0767' in as many words. Circumstantial-but-convergent evidence: (1) Sosnogorskaya CS, explicitly on this pipeline per the 2022 reconstruction article's '1st and 3rd strings' passage, sits in Gazprom Transgaz Ukhta's operating zone; (2) Gryazovets LPUMG, the pipeline's own EndLocation hub, is confirmed as a Gazprom Transgaz Ukhta branch whose operating history traces to the original Ukhta-Torzhok corridor. Both endpoints of the recorded route (Ukhta itself -- the subsidiary's namesake city -- and Gryazovets) fall within this subsidiary's territory. Value unchanged from the sheet (Gazprom Transgaz Ukhta); tier kept at medium given the indirect/circumstantial nature of both sources, both of which are ultimately Gazprom-origin reporting (independent=false)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "oo_sheet_row": 686,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK (re-verified). Page is hosted on gazprom.ru under 'О «Газпроме» ... Проекты' and describes the pipeline as one of PAO Gazprom's own projects throughout, with no other owner/partner named -- consistent with 100% Gazprom PJSC ownership."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC (100%) reconfirmed exactly as recorded -- wholly-owned Gazprom infrastructure, no other owner ever mentioned in any source read this pass (gazprom.ru project page, gazprom.com press release, or the two neftegaz.ru articles)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Searched (Russian-language): 'Ухта-Торжок' газопровод инвестиционное решение проектирование 2008/2009/2010; also read the full text of the gazprom.ru archive project page, the Dec-2018 gazprom.com press release, and both neftegaz.ru articles for any FID/investment-decision dateline for String I specifically -- none give a distinct investment-decision/proposal year separate from the 2011 construction-start year already recorded under Construction. Found (but did NOT use, as it is for a different pipeline): the upstream Bovanenkovo-Ukhta feeder line's investment decision is dated October 2006 in general Yamal-megaproject histories -- this is Bovanenkovo-Ukhta, not Ukhta-Torzhok, and applying it here would repeat the exact misattribution error already found on FuelSource; declining to do so. No ProposalYear found specific to P0767 (Ukhta-Torzhok String I) as distinct from its 2011 construction start."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Searched (Russian-language): 'реконструкция МГП Ухта-Торжок Усть-Луга КПЭГ стоимость проекта млрд руб'; no project-specific cost figure for the Ukhta-Torzhok String I segment (construction, 2011-2013) found in any source read this pass. The only cost figures found are AGGREGATE/SYSTEM-WIDE and explicitly rejected per the aggregate-vs-segment rule: the downstream Ust-Luga KPEG (ethane-gas-processing complex) that the 2022-approved Ukhta-Torzhok compressor reconstruction feeds into is reported at ~4.9 trillion rubles total project cost (~4.1 trillion financing need, ~0.9 trillion from the National Wealth Fund/FNB) -- this is the cost of an entire downstream petrochemical/LNG complex, not this pipeline segment's own construction cost, and using it here would violate the aggregate-vs-segment rule. No segment-specific SegmentCost found; left UNRESOLVED rather than forcing an inapplicable aggregate figure."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 385,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {},
+   "evidence_date": "2022-02-04",
+   "staleness_rule": "Annual-update mode: most recent explicit operating-status evidence is dated 2022-02-04 (neftegaz.ru/723902), describing the pipeline as part of the 'действующие' (existing/operating) system undergoing an approved compressor-station reconstruction -- a status change (reconstruction is not itself a status category change for an in-service trunk line) and financially/administratively active as of that date, well within normal staleness tolerance for an operating major trunk pipeline with no shutdown/decommissioning signal found anywhere.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+    "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20221126144257/gazprom.ru/projects/ukhta-torzhok/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own current project page, present-tense description, built/operating line with full specs and photos."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/723902-odobrena-proektnaya-dokumentatsiya-po-rekonstruktsii-kompressornykh-tsekhov-sistemy-mgp-ukhta-torzho/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Dated 4-Feb-2022; explicitly 'действующие... 1-й и 3-й ниток' (existing/operating, 1st and 3rd strings); reports a Glavgosexpertiza RF-approved reconstruction project on the live system, i.e. active investment in continued operation, not shutdown."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "No source found anywhere in this pass (Gazprom's own materials, 2 neftegaz.ru trade-press articles, or the Gazprom Transgaz Ukhta subsidiary page) suggesting shutdown, mothballing, or status change of any kind for this String I line. On the contrary, a 2022-approved reconstruction/repurposing project confirms continued and even expanding operational relevance (planned from 2024 to also carry ethane-rich SRTO-region gas toward the Ust-Luga KPEG complex). Verdict: confirm, no change."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P1439",
+   "url": "https://web.archive.org/web/20230526094157/https://www.gazprom.com/press/news/2018/december/article469885/",
+   "facts": "Gazprom.com Dec-2018 press release: Ukhta-Torzhok 2 ('String II'/P1439) gas pipeline, together with Bovanenkovskoye field's final gas-production facility, was brought into operation in Dec 2018. Construction on Ukhta-Torzhok 2 began in 2015 (per the companion gazprom.ru archive project page, which covers both String I and String II on one page). Confirms P1439's StartYear/ConstructionYear are distinct from P0767's (2011 construction/2012-13 start) -- the two are separate, sequentially-built parallel lines on the same corridor, never to be merged or cross-cited."
+  },
+  {
+   "project_id": "P5541",
+   "url": "https://web.archive.org/web/20180709222444/http://ukhta-tr.gazprom.ru/press/news/2018/02/618/",
+   "facts": "Gazprom Transgaz Ukhta's Gryazovets LPUMG (Line Production Directorate for Main Gas Pipelines) branch anniversary article: the ORIGINAL Ukhta-Torzhok corridor ('Vuktyl' generation, first stage commissioned 1969) is a separate, older pipeline family from both P0767/P1439 (2011-2018 'Yamal' generation). This article's own subject is the 1969-era line, likely corresponding to one or more of P5541/P5542/P5543 on the roster (not independently verified against each specific PID's own sheet row in this pass, since this audit was scoped to P0767 only) -- flagging for whichever future batch covers those PIDs to confirm which specific 1969-era Ukhta-Torzhok PID(s) this branch/article corresponds to, and to use Gryazovets LPUMG as a likely Operator candidate for that generation as well."
+  }
+ ],
+ "summary": "Operating status, all 15 core specs, and ownership reconfirmed via Gazprom's own project page + 2 independent neftegaz.ru articles; corrected two misattributed refs (e-disclosure.ru = generic annual-report index, not pipeline-specific; old FuelSource ref belonged to P1439/String II not P0767) and a Komi spelling fix; Proposal and SegmentCost left UNRESOLVED (no segment-specific figures found, only inapplicable aggregate/adjacent-pipeline data)."
+}

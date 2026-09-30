@@ -1,0 +1,91 @@
+R6 Siberia — lean pass (docs/sops/lean_pass.md)
+===============================================
+workflow run id     wf_c0b39fa4-ba6 (critical-deep-sweep, model sonnet)
+                    dispatched from workflow_baked.js — deepsweep_args.json baked in as a literal, so the
+                    18,676-char BRIEF.md reached every agent byte-exact
+agents              11 (one per family group; hand-edited from 22 --groups auto groups, see deepsweep_args.json)
+dispatched          2026-09-22
+wall time           31 min 46 s (0 empty shards, 0 errors, 1,074 tool uses)
+subagent tokens     1,161,638 total
+rows                32
+tokens / row        ~36.3 k   (reference: R3 full deep ~184 k/row; R5 lean ~37.9 k; R4a ~45.4 k; R4b ~54.5 k)
+                    -> lowest lean batch so far: 13 of 32 rows fully uncited, but 11 groups of ~3 rows
+                    shared their decrees/programme pages (Omsk отводы, Novosibirsk–Barnaul, Norilsk)
+
+lean_summary.json   full units 483 -> owed 180 (MISSING_REF 159, HAS_REF 21)
+                    deferred 303 -> deferred_units.json (fills_deferred 183,
+                    has_ref_access_blocked 46, has_ref_cleared_by_script 74)
+
+outputs (staged_resolutions.json)
+  status reviews    32: 20 confirm / 4 change / 8 unclear.
+                    CHANGE  P3980 Andreevskaya–Ingaly–Bolsherechenskaya proposed -> operating (GRS Ingaly
+                            commissioned with gas supplied, om1.ru; operator's Sept-2026 quality passport lists
+                            GRS Ingaly/Bolsherechenskaya active; downstream P3981 launched Dec 2025, which needs
+                            this line carrying gas).
+                    CHANGE  P3981 Bolsherechenskaya–Tarskaya proposed -> operating, StartYear1 2025 / Month 12
+                            (RIA 2025-12-18 + kvnews.ru, separate bylines).
+                    CHANGE  P3982 Tyukalinsk–…–Nazyvaevsk construction -> operating, StartYear1 2023 -> 2022-12
+                            (PRIME 2022-12-20; the recorded 2023 may be the Nazyvaevsk-town phase — concern open).
+                    CHANGE  P4056 Novokuznetsk–Prokopyevsk proposed -> construction, ConstructionYear 2025
+                            (one source, gazpromgr.tomsk.ru Feb 2025; medium).
+                    UNCLEAR P2282/P2283/P3368 (no post-2023 source names the line — nothing suggests a problem);
+                            P3367, P2703, P2705, P3604, P4110 (existence/duplicate question comes first).
+  validity          42 records: 27 concern on 22 rows, 15 confirmed (caveat).
+                    open by type: spec 9, classification 7, attribution 5, existence 4, duplicate 2.
+                    headline:
+                    - P7615 Capacity 4.10 NOT overwritten: only figure found is reph.ru's 8.2 bcm/y for the
+                      whole corridor (NF's documented split) — the agent kept 4.10 UNRESOLVED on its own.
+                      New: string II's StartYear1 2012 is the Yurga-territory completion only; the
+                      Novokuznetsk stretch was still being built per the Kuzbass governor, Oct 2025 (target
+                      2027). StartLocation Vertikos looks like segment I's — Parabel suggested (low).
+                    - Existence: P3367 Barnaul–Shakhi (every source describes one Shakhov–Rebrikha отвод = P3368;
+                      its doc22.ru ref is an unrelated 8.5 km line); P2703 Achinsk–Abakan (nothing names it);
+                      P2705 Ust-Kamovskaya–Achinsk (one 2018 FT graphic); P4110 Karasuk–…–Chany (no document
+                      names the 5-town route; the districts are in the 2026–2030 Novosibirsk programme).
+                    - Duplicate: P3604 Angarskaya looks like the Kovykta–Sayansk–Angarsk–Irkutsk trunk
+                      (P2327/P5510); P5091 Altai route vs P0734 Power of Siberia 2 (cross-batch lead).
+                    - P6535 Owner1 = Sonatrach is wrong (ref 404) and 28.50 bcm/y is the whole Eastern
+                      system's figure (816-r item 364), not the 700 km branch.
+                    - P5510's sudact.ru ref (Capacity/Fuel/PipelineType) never names the line — miscitation;
+                      Capacity 0.00 is a placeholder.
+                    - Classification (flag only): Omsk отводы P3980/P3981/P3982, P3368, P4056 recorded
+                      `distribution` but sourced as газопровод-отвод to a GRS; P5517 the reverse (a
+                      Novosibirsk decree calls it распределительный).
+                    - P2283 Diameter 16 in vs 720 mm on an Altai LPUMG notice (PDF unfetchable);
+                      P2458 StartYear1 1980 -> 1982 (TPU thesis quoting the technical passport, one source);
+                      P3369 StartYear1 2023 -> 2028 (Altai governor, Aug 2025); P3370 Capacity candidate
+                      0.50 (816-r item #375, route mismatch — verify identity first).
+                    - P6683/P6684 1.80 bcm/y on both strings — per-string vs combined unresolved;
+                      P6674 operator may be a different Gazprom subsidiary (3 sources on the Bratsk
+                      crossing family); P6675 Diameter "426, 630, 720" unsourced (design due end-2026);
+                      P5091 ShelvedYear/CancelledYear uncorroborated.
+  refs              180 unit records: 78 REFS_ADDED, 1 REVERIFIED, 6 DEAD_LINK, 95 UNRESOLVED; tier high 20 /
+                    medium 40 / low 10 / blank 8; 48 unique URLs on 27 rows. Owner 12, Fuel 11, Operator 9,
+                    Status 8, Length 7, Start 6, Location 5, PipelineType/Capacity/Proposal 4, others 1–2.
+                    121 ref-only folds. DeadLinks 6 = kept HAS_REF baselines — none deleted.
+  fills             60 staged (incl. P2458/P3369/P3982 StartYear1, P3980–P3982 Status + districts,
+                    Norilsktransgaz operator on the Messoyakha–Norilsk rows).
+
+gates (sweep_gates.py, exit 0) — gates_report.txt
+  B 0  C 0  D 0  E 0  F 0  I 5  I' 1  L 0 (159 MISSING_REF owed, 80 unresolved-with-notes)  M 0
+  J skipped — lean pass: 183 blank-value units deferred; 60 FILL records staged
+  I 5 = P4056: refs name «газопровод-отвод к ГРС Прокопьевск», not "Novokuznetsk–Prokopyevsk" (whose start
+  point is itself the open attribution concern). Fuel tier high -> medium; left as honest residue.
+  I' 1 = P5510 Capacity: script REVERIFIED the sudact.ru ref on the string "0.00" — tier set low with the
+  agent's miscitation note (DEFECTS.md #3).
+  advisory: A 7, K 46 (expected in lean mode — second sources deferred).
+
+orchestrator edits  (originals in session scratchpad; all logged in the shard notes as [orchestrator QC 2026-09-22])
+                    - P2282/P2283/P3368: fill value keys Owner/Start/Construction renamed to Owner1(+%)/
+                      StartYear1/ConstructionYear (they had merged as non-folding fills).
+                    - P2705/P3604: UNRESOLVED fills carrying changed values (Status shelved, locations,
+                      FuelSource) reverted to the sheet values; P2705 FuelSource "&"->"and" reworded back.
+                      Status-review current_status corrected (P2705 said shelved; P3604 blank).
+                    - prose moved out of `contested` on P2458, P3369, P3370, P5517, P7615 (x2).
+                    - empty `recommendation` filled from the agents' notes on P2282, P2283, P3367, P7615 (x2).
+                    - P4056/P4110 group wrote an off-schema shape (summary/severity/evidence_refs;
+                      recommended_status/recommended_fields): normalized, gem.wiki + bare-domain refs dropped.
+                    - P5510 Capacity seeded REVERIFIED record: tier low + miscitation note.
+
+deliverable        batches/russia-gas/deliverables/pipelines_batch_20260922_1723_ET_russia-gas_deepsweep-r6-siberia.xlsx
+                   (10 sheets, recalc ok, no error cells)

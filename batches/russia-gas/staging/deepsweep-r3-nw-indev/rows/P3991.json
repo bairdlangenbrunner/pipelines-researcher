@@ -1,0 +1,567 @@
+{
+ "project_id": "P3991",
+ "pipeline_name": "Vylgort-Pazhga Gas Pipeline",
+ "sheet_row": 1990,
+ "wiki": "https://www.gem.wiki/Vylgort-Pazhga_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "classification",
+   "contested": {
+    "PipelineType": "transmission"
+   },
+   "recommendation": "Reclassify PipelineType from 'distribution' to 'transmission' (or flag for human review if the schema treats otvod-to-GRS branches as a third bucket). This otvod terminates AT ГРС «Пажга» and does not itself run through settlements; the actually-distribution segments (межпоселковый network from GRS Pazhga onward to Pazhga/Garyinsky/Garya/Nyuvchim/Shoshka/Graddor villages, and the внутрипоселковый network inside Pazhga village) are separately documented, built by a different operator, and are NOT this row -- they are downstream of the GRS this otvod feeds.",
+   "researcher_notes": "gem.wiki's own Background text for this row states 'It is a distribution pipeline' with no citation for that classification sentence specifically (it follows the cited gasification-program sentence but isn't itself attributed to source [1] or [2]). Per this batch's structural convention (also applied on sibling otvod rows elsewhere in this batch), a газопровод-отвод feeding a ГРС is upstream/trunk-side infrastructure operated by the regional Gazprom Transgaz subsidiary (here, Gazprom Transgaz Ukhta per komiinform.ru), while the межпоселковый/внутрипоселковый networks past the GRS are the properly distribution-side infrastructure, operated by AO Gazprom Gazoraspredelenie Syktyvkar (per mrg11.ru press releases on the Pazhga-area buildout: ~33.9km projected mezhposelkovyi network and a completed 21.4km internal Pazhga-village network -- both explicitly separate objects from 'газопровод-отвод к ГРС «Пажга»'). No source independently confirms 'distribution' for this specific otvod; flagging rather than silently changing PipelineType myself, since GEM may have a documented reason for the current classification that this pass did not surface.",
+   "proposed_refs": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "duplicate",
+   "contested": {},
+   "recommendation": "Keep P3990 (CS-12-Ust-Vym-Chasovo-Zelenets-Syktyvkar), P3991 (Vylgort-Pazhga, this row) and P3992 (Pazhga-Vizinga) as three SEPARATE rows -- do not merge/combine. They form one sequential corridor (CS-12 near Ust-Vym feeds toward Syktyvkar/Vylgort; Vylgort-area GRS feeds an otvod to GRS Pazhga; GRS Pazhga feeds an otvod on to GRS Vizinga) and each row's gem.wiki page cross-lists the other two as 'Associated infrastructure', which invites the question of whether GEM is artificially splitting one physical line into three rows. Evidence says no: Gazprom's own official Komi 2021-2025 gasification-program listing (gazprommap.ru/komi, archived 2022 and 2023) itemizes 'Газопровод-отвод к ГРС «Пажга» (10,0 тыс. куб м3/час)' and 'Газопровод-отвод к ГРС «Визинга» (7,5 тыс. м3/час)' as two DIFFERENT numbered program line items (point-12 and point-14 in the page's own internal point list) with two DIFFERENT capacities, each independently matching GEM's own recorded Capacity for P3991 (0.24 mill.Sm3/day = 10.0 thou m3/h) and P3992 (0.18 mill.Sm3/day = 7.5 thou m3/h) respectively. P3990 (CS-12 to Syktyvkar) is a structurally different, larger-capacity object (0.464 bcm/year per gem.wiki, roughly an order of magnitude larger than either otvod) feeding the corridor further upstream, not one of the two Pazhga/Vizinga otvod line items at all. This is a textbook case of GEM correctly following the batch-wide convention of one row per otvod-to-GRS pair along a shared corridor, not a duplicate/split-entity problem.",
+   "researcher_notes": "Corroboration: the 10.0 thou m3/h (Pazhga) and 7.5 thou m3/h (Vizinga) figures were read directly off the same archived gazprommap.ru/komi page in the same pass that sourced P3991's own Capacity fill, so this is the SAME single-origin document as that fill, not a second independent source -- noted as a caveat ('confirmed (caveat)' rather than a stronger verdict). No document was found that discusses the CS-12/Vylgort-Pazhga/Pazhga-Vizinga trio explicitly as a single named mega-project or single construction contract; each is tracked as its own numbered item in Gazprom's own regional program list. cross_row_leads filed pointing P3992 to this same corroborating capacity figure (7.5 thou m3/h) for its own Capacity [ref].",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "construction"
+   },
+   "primary_value": "construction",
+   "proposed_refs": [
+    "https://komiinform.ru/news/279170",
+    "https://www.bnkomi.ru/data/news/165041/"
+   ],
+   "verifications": [
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Gazprom Transgaz Ukhta 2024 results (published 2025-04-10): 'ведется строительство ГРС ...«Пажга» и «Визинга» с подачей газа в 2025 году и вводом в 2026 году' - construction of GRS Pazhga (and the otvod feeding it, reported as one package) is underway; gas supply targeted 2025, full commissioning 2026."
+    },
+    {
+     "url": "https://www.bnkomi.ru/data/news/165041/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "2023-11-11 article: object is among 8 objects region-wide 'в реализации' (in realization) as of Nov 2023, distinct from the 7 still at design stage - had moved off paper by end of 2023."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Sheet Status='proposed' (LastUpdated 2023-07-25) is stale. Gazprom Transgaz Ukhta's own 2024 results (via Komiinform, 2025-04-10) state construction of the terminating GRS 'Pazhga' is underway with gas supply in 2025 and full commissioning in 2026; bnkomi (2023-11-11) corroborates the object had moved into active realization by late 2023. No source separates the feeding otvod's schedule from its GRS's - both reported as one construction package. See status_reviews[] for the full status-change record; Status fill mirrors that verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.bnkomi.ru/data/news/141870/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.bnkomi.ru/data/news/141870/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Article on Komi Republic's 2021-2025 gas supply/gasification program lists 'газопровод-отвод к ГРС «Пажга»' among natural-gas pipeline (газопровод) objects."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Trivial confirmation - the object is explicitly a natural-gas pipeline within Gazprom's regional gasification program."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source classifies this object as 'distribution' or 'transmission' explicitly. Per the batch's structural rule, a газопровод-отвод terminating AT a ГРС is upstream/trunk-side infrastructure (operated by Gazprom Transgaz Ukhta), distinct from the межпоселковый/внутрипоселковый networks downstream of the station that are properly 'distribution' - this row matches that upstream pattern. Not re-supporting the recorded 'distribution' value; filed as a classification concern in validity[] instead."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.bnkomi.ru/data/news/141870/",
+    "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.bnkomi.ru/data/news/141870/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "States the Komi Republic gasification program runs 2021-2025 and lists 'газопровод-отвод к ГРС «Пажга»' among its objects with target completion 2024 - object proposed under the 2021-2025 program."
+    },
+    {
+     "url": "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Gazprom's regional gasification map (2022 capture) lists 'Газопровод-отвод к ГРС «Пажга» (10,0 тыс. куб м3/час)' as part of the 2021-2025 Komi program."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources place the object within the Komi 2021-2025 gasification program, matching the recorded ProposalYear=2021."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document states a specific construction-start year for this otvod itself. bnkomi (2023-11-11) places it among '8 объектов в реализации' region-wide without itemizing which; Komiinform (2025-04-10, Gazprom Transgaz Ukhta 2024 results) confirms construction of the terminating GRS 'Pazhga' is underway as of the report but gives no start date. Also searched Gazprom Gazoraspredelenie Syktyvkar and mrg11.ru press releases, which describe only the DOWNSTREAM мезposelkovyi/внутрипоселковый networks from GRS Pazhga, not the otvod feeding the station. Leaving UNRESOLVED rather than inferring a year from the region-wide '8 objects' figure."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2026"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [
+    "https://komiinform.ru/news/279170"
+   ],
+   "verifications": [
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "'ГРС «Пажга» и «Визинга» с подачей газа в 2025 году и вводом в 2026 году' - commissioning (ввод) target is 2026 (initial gas supply 2025); supersedes the sheet's 2024 target."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Corrects sheet's StartYear1=2024 (the 2021/2022-vintage program target per bnkomi/gazprommap) to 2026 per the operator's own 2025 report, which distinguishes 'подача газа' (initial gas supply) 2025 from 'ввод' (full commissioning) 2026 - used 2026 as StartYear1 (commissioning). Only one source gives the revised date; searched regional press and Komi government releases for a second, newer confirmation and found none past April 2025."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "0.24",
+    "CapacityUnits": "mill.Sm3/day"
+   },
+   "primary_value": "0.24",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "'Газопровод-отвод к ГРС «Пажга» (10,0 тыс. куб м3/час)' - 10.0 thousand m3/hour x 24h = 240,000 m3/day = 0.24 million Sm3/day, an exact match."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Same figure verified stable across the 2022-07-19 and 2023-03-12 Wayback captures of gazprommap.ru/komi, reducing risk of a one-off typo. Searched for a second independent source: the federal Распоряжение №816-р territorial-planning scheme's current item 266 covers GRS Vizinga (7.5 thou m3/h), not Pazhga; an item that may have covered Pazhga (item 265) was excluded by Распоряжение №1378-р (27.05.2023) with no surviving pre-amendment text found to confirm its prior content - flagged as an open lead (cross_row_leads / researcher_notes), not used as corroboration. bnkomi's two articles name the object but never state its capacity. No second source found; single-origin, medium tier."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document in the Komi gasification programme material, bnkomi/komiinform press coverage, or the federal 816-р decree states an operating pressure for this branch. Otvody in this batch are typically 5.4-7.5 MPa per general guidance, but that is not independently sourced for THIS object; left blank rather than assumed."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source gives the length of the otvod itself. Found lengths only for objects DOWNSTREAM of GRS Pazhga - the mezhposelkovyi network to Pazhga/Garyinsky/Garya/Nyuvchim/Shoshka/Graddor (projected 33.9 km per mrg11.ru 2025), the internal-settlement network in Pazhga village (21.4 km per mrg11.ru 2023), and the completed spurs to Lezym (7.7 km) and Yb (16 km) per bnkomi 2023-11-11 - those are distribution segments past the GRS, not this trunk-side otvod. Searched gazprommap.ru, bnkomi.ru, komiinform.ru and the 816-р decree text without finding the otvod's own length."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source states a diameter for this otvod. Searched the same document set as Length/Pressure; the programme materials give capacity and target commissioning year but not pipe diameter for individual otvody of this size."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "GEM's own wiki page lists 'Ukhta-Torzhok Gas Pipeline' as associated infrastructure, implying the Syktyvkar-area distribution network (and this otvod) is ultimately fed off that corridor, but no source found independently states which upstream field or trunk supplies this specific branch. Searched bnkomi, komiinform, gazprommap and the 816-р decree; none name a fuel source for this object. Left blank rather than inferring from the wiki's own unsourced 'associated infrastructure' field."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Vylgort",
+    "StartPrefecture/District": "Syktyvdinsky District",
+    "StartState/Province": "Komi Republic",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Pazhga",
+    "EndState/Province": "Komi Republic",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Vylgort",
+   "proposed_refs": [
+    "https://www.bnkomi.ru/data/news/141870/",
+    "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.bnkomi.ru/data/news/141870/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Places 'ГРС «Пажга»' in Сыктывдинского района (Syktyvdinsky District), within the Республики Коми (Komi Republic) program."
+    },
+    {
+     "url": "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Same district/republic placement on Gazprom's own regional gasification map."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources confirm Pazhga is in Syktyvdinsky District, Komi Republic. Neither source (nor any other found) names 'Vylgort' as the otvod's starting point - GEM's own wiki page describes the start only as 'a gas distribution station near Vylgort,' which reads as GEM's own geographic inference (Vylgort is the Syktyvdinsky District administrative center) rather than a sourced fact; nothing found contradicts it, so not flagged as wrong, just unconfirmed. Corrected StartState/Province spelling 'Republic of Komi' -> 'Komi Republic' per this batch's canonical form (state-audit spelling pass); EndState/Province was already correct."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Program-level cost is stated (bnkomi 2023-11-11: about 37 billion RUB group-wide investment for all 28 pipelines/560 km in the 2021-2025 Komi program) but that is an AGGREGATE figure covering all 28 objects, not attributable to this one otvod (aggregate-vs-segment rule) - no source itemizes this object's own cost. Left UNRESOLVED."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "oo_sheet_row": 2952,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Ukhta"
+   },
+   "primary_value": "Gazprom Transgaz Ukhta",
+   "proposed_refs": [
+    "https://komiinform.ru/news/279170"
+   ],
+   "verifications": [
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Article is explicitly about 'Газпром трансгаз Ухта'; states the company is building GRS «Пажга» within its own Komi Republic territory of operation."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Per the batch's operator convention, otvody terminating at a GRS in Komi/Vologda are operated by Gazprom Transgaz Ukhta (formerly Severgazprom). Komiinform's 2025-04-10 report on Gazprom Transgaz Ukhta's 2024 results explicitly includes GRS 'Pazhga' among the company's Komi Republic construction projects. Not a row-specific 'we operate the Vylgort-Pazhga otvod' statement - inferred one level from the GRS it feeds, per convention. Searched for a more specific source and found none."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "oo_sheet_row": 2952,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://www.bnkomi.ru/data/news/165041/",
+    "https://komiinform.ru/news/279170"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.bnkomi.ru/data/news/165041/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "'инвестиции группы компаний Газпром в республику в размере около 37 млрд рублей' funds the 28-object program that includes 'газопровод-отвод к ГРС «Пажга»' - the Gazprom group is the investor/owner of these program assets."
+    },
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга",
+     "note": "Confirms 'Газпром трансгаз Ухта' - a wholly-owned Gazprom PJSC subsidiary - as the entity building GRS Pazhga."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two different-origin sources (bnkomi funding statement; komiinform naming the Gazprom subsidiary building it) support Gazprom PJSC 100% ownership, matching the recorded value."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "verdict": "change",
+   "current_status": "proposed",
+   "proposed_status": "construction",
+   "proposed_changes": {
+    "Status": "construction",
+    "StartYear1": "2026"
+   },
+   "evidence_date": "2025-04",
+   "recommendation": "Change Status from 'proposed' to 'construction' and update StartYear1 from 2024 to 2026 (commissioning target; initial gas supply targeted 2025). LastUpdated (2023-07-25) predates both pieces of evidence below.",
+   "researcher_notes": "bnkomi.ru (2023-11-11) places 'газопровод-отвод к ГРС «Пажга»' among 8 Komi gasification-program objects already 'в реализации' (in realization/underway), distinct from 7 objects still at design/documentation stage as of that date. Komiinform.ru (2025-04-10), reporting Gazprom Transgaz Ukhta's 2024 annual results, states construction of GRS 'Пажга' (and 'Визинга') is underway with gas supply targeted for 2025 and full commissioning in 2026 -- both figures supersede the sheet's StartYear1=2024. No source separates the feeding otvod's own construction schedule from its terminating GRS's; both are consistently reported together as one package in every source found. Searched for a more recent (post-April-2025) confirmation and found none.",
+   "proposed_refs": [
+    "https://komiinform.ru/news/279170",
+    "https://www.bnkomi.ru/data/news/165041/"
+   ],
+   "verifications": [
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга"
+    },
+    {
+     "url": "https://www.bnkomi.ru/data/news/165041/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пажга"
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P3992",
+   "url": "https://web.archive.org/web/20220719231040/https://www.gazprommap.ru/komi/",
+   "note": "Same Gazprom regional gasification-program page used to corroborate P3991's Capacity also lists 'Газопровод-отвод к ГРС «Визинга» (7,5 тыс. м3/час)' as a separate numbered line item = 0.18 mill.Sm3/day, an exact match to P3992's recorded Capacity. Also corroborates the duplicate/family question closed on P3991 (P3990/P3991/P3992 are three distinct program line items, not one split entity) -- see P3991's duplicate validity concern. Same status-slip pattern likely applies: komiinform.ru/news/279170 (Gazprom Transgaz Ukhta 2024 results, 2025-04-10) reports GRS 'Визинга' construction underway alongside 'Пажга', gas supply 2025 / commissioning 2026 -- worth a status review on P3992 too."
+  },
+  {
+   "project_id": "P3990",
+   "url": "https://komiinform.ru/news/279170",
+   "note": "Gazprom Transgaz Ukhta 2024 annual-results article (2025-04-10) covers Komi Republic gasification broadly; worth checking whether it or bnkomi.ru's 2023/2024 articles on the same 2021-2025 program name CS-12-Ust-Vym-Chasovo-Zelenets-Syktyvkar specifically, for a possible status-review update on P3990 in parallel with P3991/P3992."
+  }
+ ],
+ "summary": "Real, correctly-identified otvod (10.0 thou m3/h to GRS Pazhga, exact match), not a duplicate of P3990/P3992 (three distinct program line items, confirmed); Status stale (proposed->construction, StartYear1 2024->2026 per 2025 operator report) and PipelineType likely mis-tagged distribution vs transmission -- both flagged. 6 of 15 units UNRESOLVED (Construction, Pressure, Length, Diameter, FuelSource, SegmentCost) for lack of segment-specific sourcing."
+}

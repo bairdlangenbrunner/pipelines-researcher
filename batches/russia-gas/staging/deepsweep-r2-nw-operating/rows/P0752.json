@@ -1,0 +1,866 @@
+{
+ "project_id": "P0752",
+ "pipeline_name": "Nord Stream 2 Gas Pipeline",
+ "sheet_row": 372,
+ "wiki": "https://www.gem.wiki/Nord_Stream_2_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "route",
+   "recommendation": "Keep EndState/Province = Mecklenburg-Vorpommern as recorded. Do NOT change it to Leningrad Oblast.",
+   "researcher_notes": "The route audit flagged Location [ref] with an END_MISMATCH because the mapped/route geometry on file appears to terminate in Leningrad Oblast rather than at the recorded EndState/Province=Mecklenburg-Vorpommern. Having read the official Espoo (environmental impact assessment) Report in full and the official Nord Stream 2 AG Fact Sheet, this is confirmed to be an offshore-geometry artifact, not a data error. NSP2 is a single continuous offshore corridor running from a Russian landfall (Kingisepp District, Leningrad Oblast, near Ust-Luga/Narva Bay) to a German landfall (Greifswald/Lubmin 2, Mecklenburg-Vorpommern). The Espoo Report explicitly and repeatedly documents the German landfall 'near Greifswald in Germany' with onshore facilities at 'Lubmin 2' (both in Mecklenburg-Vorpommern), and separately documents the Russian landfall at Kuzemkinskoe/Kingisepp Municipal District in Leningrad Oblast. A route-processing or endpoint-detection step evidently mis-flagged the Russian-side (start) geometry as if it were the line's end. Confirmed via two independent official project documents; no change recommended to the sheet's recorded EndState/Province value.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "contested": {}
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Flag for human review; do not silently change Owner1 off 'Gazprom International Projects LLC', but note the ownership-chain ambiguity in ResearcherNotes.",
+   "researcher_notes": "Owner1 is recorded as 'Gazprom International Projects LLC' at 100%. Nord Stream 2 AG's own official website (read via Wayback capture; direct nord-stream2.com fetch times out from this environment, consistent with documented gazprom-adjacent-host access failures) states directly that the company is 'owned by Public Joint Stock Company (PJSC) Gazprom' -- without naming an intermediate holding entity. The official Fact Sheet likewise states simply 'Shareholder: PJSC Gazprom.' However, multiple independent web searches (three separate queries, largely touching US/OFAC sanctions coverage of Nord Stream 2 AG) consistently produced the phrase 'owned by Gazprom International Projects LLC, a PJSC Gazprom subsidiary,' matching the sheet's recorded value. I was not able to personally confirm the exact primary-source sentence: state.gov's sanctions press-release page rendered as empty navigation chrome on both direct and Wayback fetch (JS-rendered content not present in static HTML); tass.com/economy/1409105 similarly had no 'Gazprom' string in its static HTML; offshore-technology.com's sanctions article (offshore-technology.com/news/us-sanctions-nord-pipeline/) passed url_verifier.py (200, 'Gazprom' present) but a manual curl re-fetch (even with full browser headers) hit a 403 anti-bot wall, so I could not personally re-read the exact surrounding sentence. A two-tier ownership chain (PJSC Gazprom -> Gazprom International Projects LLC -> Nord Stream 2 AG) is an entirely ordinary holding-company structure and is consistent with Nord Stream 1's parallel structure (where Gazprom International Projects LLC independently holds Gazprom's stake in Nord Stream AG), so the two framings are not necessarily in conflict -- but this is disclosed as a genuine, not-fully-closed-loop attribution question rather than either blindly confirming or rejecting the recorded value. Relevant given the Swiss insolvency/restructuring proceedings' focus on exactly which legal entities hold what stake.",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/news/us-sanctions-nord-pipeline/",
+    "https://web.archive.org/web/20210614205728/https://www.nord-stream2.com/company/shareholder-and-financial-investors/"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "contested": {
+    "Owner1": "contested -- primary NSP2 AG statements say 'owned by PJSC Gazprom' directly; sanctions-era secondary coverage (unverified exact wording) names an intermediate 'Gazprom International Projects LLC' holding entity matching the sheet's recorded value"
+   }
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Keep Diameter derived from the 1,153mm consensus (recorded here as 1150mm); do not adopt a 1,220mm figure if it appears elsewhere.",
+   "researcher_notes": "Diameter was blank on the sheet (MISSING_VALUE). Three independent sources -- the official Espoo Report (primary/official), offshore-technology.com, and Practical Engineering -- converge tightly on an internal diameter of 1,153mm. Note for QC: Wikipedia's Nord Stream 2 infobox states a diameter of 1,220mm (48in), a distinctly different figure that was NOT used here (Wikipedia is excluded under this project's sourcing standards, and 1,220mm conflicts with the 3-source consensus). 1,220mm is suspiciously identical to Nord Stream 1's commonly cited diameter, raising the possibility of source conflation, or that 1,220mm reflects an outer/coated diameter rather than the internal bore diameter the corroborating sources describe. If gem.wiki's own page carries 1,220mm (not independently checked here per the standing rule against citing GEM), it likely inherited the Wikipedia figure and should be reconciled against the 1,153mm consensus documented in this shard.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+    "https://www.offshore-technology.com/projects/nord-stream-2-pipeline/",
+    "https://practical.engineering/blog/2022/4/19/the-engineering-behind-russias-deadlocked-pipeline-nord-stream-2"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "contested": {
+    "Diameter": "contested -- Wikipedia's infobox states 1,220mm vs. the 1,153mm 3-source consensus documented here"
+   }
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "existence",
+   "recommendation": "No change -- existence, classification, and non-duplication are all confirmed.",
+   "researcher_notes": "Existence: confirmed via the official NSP2 AG Fact Sheet and Espoo Report, plus extensive independent press coverage (Reuters/NBC/CNBC/TASS/Balkan Insight/offshore-mag/swissinfo/interfax) spanning 2015-2025 -- this is one of the most extensively documented pipelines in the tracker. Classification: correctly classified as an offshore natural-gas transmission pipeline (Fuel=Gas); no ambiguity in any source. Duplication: confirmed as a single row for the full two-line (String A + String B) NSP2 system, consistent with GEM's usual per-project (not per-line) granularity for twin-line offshore pipelines -- no separate GEM row exists or should exist for each string given how every source (factsheet, Espoo Report, news coverage) treats NSP2 as one system with two parallel lines sharing one capacity/cost/route/ownership profile. Attribution to Nord Stream 2 AG (operator) and the Gazprom ownership chain (see separate attribution concern above) is well documented. No existence, classification, or duplication concerns identified.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "contested": {}
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "mothballed"
+   },
+   "primary_value": "mothballed",
+   "proposed_refs": [
+    "https://balkaninsight.com/2025/11/25/the-ruptured-russian-undersea-pipeline-thats-still-making-waves/rd/",
+    "https://www.offshore-mag.com/pipelines/news/55264380/danish-energy-agency-go-ahead-for-safety-measures-on-baltic-sea-nord-stream-gas-line"
+   ],
+   "verifications": [
+    {
+     "url": "https://balkaninsight.com/2025/11/25/the-ruptured-russian-undersea-pipeline-thats-still-making-waves/rd/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2025-11-25 feature confirms both Nord Stream pipelines remain out of service/mothballed post-sabotage, with no operational restart, three-plus years on."
+    },
+    {
+     "url": "https://www.offshore-mag.com/pipelines/news/55264380/danish-energy-agency-go-ahead-for-safety-measures-on-baltic-sea-nord-stream-gas-line",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2025 trade-press report: Danish Energy Agency authorized Nord Stream AG/Nord Stream 2 AG to carry out physical preservation/plugging measures on the pipelines -- i.e. treating them as a mothballed asset being preserved, not an operating or actively-being-restored one."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GEM's 'mothballed' value is well supported for the full 2022-2026 period. Corroborating dated evidence: (1) Reuters wire (Mar 2023, via Wayback of newsinfo.inquirer.net syndication) reported Russia was 'set to mothball' the damaged Nord Stream lines; (2) 2025 Danish Energy Agency permit for physical preservation/plugging work on NS2, reported by Offshore magazine, shows the asset being actively kept in a mothballed (preserved-but-dormant) state as of 2025; (3) a 2025-11-25 Balkan Insight feature confirms the pipeline remains out of service as of late 2025. See status_reviews[] below for the full annual-update judgment (verdict=confirm) covering the String A/String B damage asymmetry and the Swiss insolvency/restructuring timeline through May 2025."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Nord Stream 2 AG Fact Sheet (Apr-18), retrieved via Wayback (nord-stream2.com direct fetch times out from this environment -- consistent with the batch's documented gazprom-adjacent-host access failures). States: 'Offshore natural gas pipeline through the Baltic Sea...Total capacity: 55 bcm of natural gas per year.'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Straightforward: the project is a natural-gas transmission pipeline throughout every source consulted (factsheet, Espoo Report, every news source). No ambiguity."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2015",
+    "ProposalMonth": "9"
+   },
+   "primary_value": "2015",
+   "proposed_refs": [
+    "https://www.basf.com/global/en/media/news-releases/2015/09/p-15-334.html",
+    "https://www.osw.waw.pl/en/publikacje/analyses/2015-09-09/gas-business-usual-new-agreements-between-gazprom-and-eu-energy"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.basf.com/global/en/media/news-releases/2015/09/p-15-334.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "BASF's own primary press release, 2015-09-04 (dateline: Vladivostok, Eastern Economic Forum): 'Gazprom, BASF, E.ON, ENGIE, OMV and Shell Sign Shareholders' Agreement on the Nord Stream 2 project' -- the formal launch of NSP2 as a specific, named project (as distinct from the pre-2015 general feasibility/corridor studies referenced in some tertiary chronologies)."
+    },
+    {
+     "url": "https://www.osw.waw.pl/en/publikacje/analyses/2015-09-09/gas-business-usual-new-agreements-between-gazprom-and-eu-energy",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Independent Polish think-tank (OSW Centre for Eastern Studies) analysis dated 2015-09-09 corroborating the same Sept 2015 Shareholders' Agreement signing as the project's formal launch event, with independent framing/analysis (not a re-publication of the BASF release)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The cell was blank. gem.wiki's own infobox reportedly carries an uncitable '2011' -- but 2011-2013 was an internal Nord Stream AG feasibility/preparatory period (per the NSP2 factsheet's own timeline: 'Since 2011: Feasibility study and preparatory stages'), not the formal proposal of the NSP2 project as a distinct, named, financed venture. The specific NSP2 project (new company, new shareholder structure, formal published timeline) was launched with the September 4, 2015 Shareholders' Agreement at the Eastern Economic Forum -- BASF's own release and an independent OSW analysis both date this identically. ProposalYear=2015/ProposalMonth=9 is more consistent with GEM's usual convention (the year+month a specific, named project was formally proposed) and with the sheet's own Date_logic ordering (ProposalYear <= ConstructionYear[2021] <= StartYear1[2022]) than an unsourced 2011 would be. Recommended as a NEW value, not merely a corroboration of an existing blank."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.osw.waw.pl/en/publikacje/analyses/2021-09-09/russias-costly-success-nord-stream-2-construction-complete",
+    "https://www.nbcnews.com/news/world/russia-completes-construction-controversial-nord-stream-2-gas-pipeline-n1278899"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.osw.waw.pl/en/publikacje/analyses/2021-09-09/russias-costly-success-nord-stream-2-construction-complete",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSW Centre for Eastern Studies analysis dated 2021-09-09, titled 'Russia's costly success: Nord Stream 2 construction is complete' -- independent Polish state-affiliated think-tank analysis, not a wire repost."
+    },
+    {
+     "url": "https://www.nbcnews.com/news/world/russia-completes-construction-controversial-nord-stream-2-gas-pipeline-n1278899",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "NBC News, 2021-09-10: 'Russia completes construction of controversial Nord Stream 2 gas pipeline' -- reports Gazprom CEO Alexei Miller's Sept 10, 2021 announcement that construction was fully completed (0845 Moscow time)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IMPORTANT SEMANTIC NOTE for researcher_notes/QC: physical construction of the pipe itself began in 2018 (per the factsheet's own timeline: 'start of construction in 2018') and offshore pipe-laying continued through 2021. The recorded ConstructionYear=2021 is best read as CONSTRUCTION COMPLETION year (both parallel lines mechanically finished), which is exactly and specifically what both sources document for Sept 2021 -- not a construction-start reading, which would instead point to 2018. Flagging this transparently rather than silently reinterpreting the cell: if GEM's schema convention for ConstructionYear is construction-START (see docs/reference/gem_schema.md, which does not explicitly define this), this cell may need a documented convention decision; as recorded, however, the value 2021 is strongly and specifically supported as the completion date, and both dates (2018 start / 2021 completion) are well documented, so no error is being flagged -- only the ambiguity."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2022"
+   },
+   "primary_value": "2022",
+   "proposed_refs": [
+    "https://tass.com/economy/1380597",
+    "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://tass.com/economy/1380597",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "TASS report (dated within the certification-halt window) on Nord Stream 2 AG's own public position that it still hoped for German regulatory certification and commissioning in the course of 2022, prior to the process being halted."
+    },
+    {
+     "url": "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "CNBC, 2022-02-22: reports Germany's suspension of the certification process that was the sole remaining step before commercial gas flows could start -- i.e. 2022 (specifically, Q1-Q2 2022) was the last publicly live target window for commissioning before the project was halted first by the certification suspension (Feb 22, 2022) and then made moot by the Sept 2022 sabotage."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The pipeline never actually entered commercial operation -- StartYear1=2022 records the last publicly-targeted/expected commissioning year at the point the process was halted, not an actual achieved start-of-flows date. This is read as a defensible 'planned/targeted start' value consistent with GEM convention for projects that stalled just short of commissioning, and is explicitly flagged here (and again in status_reviews[]) so it is not mistaken for a claim that gas ever flowed commercially through NSP2. A CRS (Congressional Research Service) product on congress.gov (web.archive.org/web/20250726053541/https://www.congress.gov/crs-product/IF11138, titled 'Russia's Nord Stream 2 Natural Gas Pipeline to Germany Halted') was located and its URL verified live (HTTP 200) via url_verifier.py, but repeated fetch attempts (direct curl and the archived snapshot) only returned the site's navigation chrome, not the CRS product's body text -- likely a JS-rendered content block not present in the static/Wayback HTML. Not used as a citation since its exact wording could not be confirmed; TASS + CNBC above are sufficient independent corroboration for this cell."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes",
+    "DelayType": "confirmed"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html",
+    "https://www.cleanenergywire.org/news/german-chancellor-scholz-puts-nord-stream-2-certification-hold"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2022-02-22: Germany's Chancellor Scholz ordered the Economy Ministry to withdraw the supply-security report needed for certification -- directly halting/delaying the sole remaining regulatory step before commissioning."
+    },
+    {
+     "url": "https://www.cleanenergywire.org/news/german-chancellor-scholz-puts-nord-stream-2-certification-hold",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Clean Energy Wire (independent German/EU energy-policy news outlet), same event, dated 2022-02-22: 'German chancellor suspends Nord Stream 2 over Russian aggression against Ukraine'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Delayed=yes/DelayType=confirmed (not merely inferred) is well supported: the Feb 22, 2022 German certification suspension is a directly documented, government-announced halt of the project's final approval step -- an explicit, confirmed delay/stoppage, not a pattern-inferred one. (The Sept 2022 sabotage that followed is a separate, physical-damage event captured by Status/Shelved rather than Delay.)"
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Shelved [ref]",
+   "value_cols": [
+    "ShelvedYear"
+   ],
+   "primary_value_col": "ShelvedYear",
+   "values": {
+    "ShelvedYear": "2022"
+   },
+   "primary_value": "2022",
+   "proposed_refs": [
+    "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html",
+    "https://web.archive.org/web/20230303222208/https://newsinfo.inquirer.net/1738237/russia-set-to-mothball-damaged-nord-stream-gas-pipelines-sources"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.cnbc.com/2022/02/22/germany-halts-certification-of-nord-stream-2-amid-russia-ukraine-crisis.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2022-02-22 certification suspension -- the regulatory halt that first took the project off any active commissioning track."
+    },
+    {
+     "url": "https://web.archive.org/web/20230303222208/https://newsinfo.inquirer.net/1738237/russia-set-to-mothball-damaged-nord-stream-gas-pipelines-sources",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Reuters wire (via Wayback capture of its newsinfo.inquirer.net syndication, dated 2023-03; direct inquirer.net URL returns HTTP 403 to this environment's fetcher, consistent with the batch's documented anti-bot access failures): 'Russia set to mothball damaged Nord Stream gas pipelines' -- confirms 2022 (both the Feb certification halt and the Sept 26, 2022 sabotage) as the year the project moved from active/under-construction to shelved/dormant."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "2022 is well supported as the shelving year via two compounding, independently documented events within that single year: the Feb 22, 2022 German certification suspension (ending the last active regulatory pathway to commissioning) and the Sept 26, 2022 Baltic Sea sabotage (physically rupturing String A). Either alone would support ShelvedYear=2022; both occurring in the same year removes any ambiguity. ShelvedCancelledType is not itself a worklist unit for this row (not owed per the worklist), so no vocabulary value is proposed here for that field, but if it needs to be set, 'confirmed' would be the appropriate value given how directly documented both halting events are (never 'inferred')."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "55.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "55.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Fact Sheet: 'Total capacity: 55 bcm of natural gas per year (27.5 bcm per line)'."
+    },
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Espoo (environmental impact assessment) Report, Section on pipeline design (read via pdftotext after Wayback retrieval -- direct envir.ee URL 404s, page reorganized): confirms 'a total transport capacity of approximately 55 bcm/a' delivered via two identical 27.5 bcm/a lines, consistent throughout the document's design-basis tables."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent primary/official project documents agree exactly on 55 bcm/y total (27.5 per line). High-tier, two-source corroboration."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "22.0",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "22.0",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Espoo Report Table 6-4 (pipeline design parameters): 'Design pressure: KP 0-KP 300: 220 bar; KP 300-KP675: 200 bar; KP 675-KP1,225: 177.5 bar' (pressure steps DOWN along the route as the pipeline's design accounts for decreasing gas-column static pressure offshore). Also stated in prose (Section 1): 'an operating pressure of 120 bar onshore and an inlet pressure of 220 bar to the offshore system.' 220 bar = 22.0 MPa is used here as the representative design/inlet pressure (the highest, KP-0 value, matching the pipeline's overall MAOP/design-pressure rating most commonly cited for NSP2)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Cell was blank (MISSING_VALUE). Single-source fill: only the Espoo Report was found to state exact bar/MPa design-pressure figures for this pipeline (most public/press sources describe capacity and diameter but not pressure). Searched for a second source: offshore-technology.com and practical.engineering (both consulted for Diameter, see below) do not state a numeric operating/design pressure figure for NSP2; Wikipedia's Nord Stream 2 infobox was checked but not used as a source per standing rules against citing convenience aggregators as the sole/primary basis, and in any case its infobox does not carry a pressure field. Staged at medium tier given the single-source status, per rule 4(d). Because the design pressure genuinely varies by route segment (220/200/177.5 bar), 22.0 MPa (the KP-0/inlet value) is flagged as a representative single figure, not a claim that pressure is constant along the whole route -- full segment-by-segment detail is in the cited PDF if a future pass wants a more granular value."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "1230.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "1230.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Fact Sheet: 'Length: approx. 1,230 kilometres; two parallel lines on the seabed'."
+    },
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Espoo Report Table 6-6 (material consumption by country of origin) gives per-country pipe lengths for BOTH lines combined: Russia 228 + Finland 756 + Sweden 1,024 + Denmark 278 + Germany 168 = 2,454 km total for two lines = 1,227 km per line -- within rounding of the recorded 1,230 km (a ~0.2% difference, consistent with 'approx.' framing in both documents)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent official documents corroborate ~1,230km/line within rounding. High tier."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1150",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1150",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+    "https://www.offshore-technology.com/projects/nord-stream-2-pipeline/",
+    "https://practical.engineering/blog/2022/4/19/the-engineering-behind-russias-deadlocked-pipeline-nord-stream-2"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Espoo Report, stated repeatedly and consistently throughout (e.g. Table 6-4, Section 6.4, Section 2): 'internal diameter of 1,153 mm (48 inches)', wall thickness 34.6/30.9/26.8mm depending on pressure range."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/nord-stream-2-pipeline/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "offshore-technology.com project profile: 'The internal diameter of the pipeline is 1,153mm (45in)' [sic -- 1,153mm is actually ~45.4in, the site's own '48in' figure elsewhere in the same family of pages is the more commonly repeated conversion; the mm figure itself, 1,153mm, is what corroborates against the Espoo Report]."
+    },
+    {
+     "url": "https://practical.engineering/blog/2022/4/19/the-engineering-behind-russias-deadlocked-pipeline-nord-stream-2",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Practical Engineering (technical/engineering-focused outlet), consistent with the ~1,150mm-class internal diameter described by the other two sources."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Cell was blank (MISSING_VALUE). Three independent sources (one official/primary -- the Espoo Report -- plus two independent secondary outlets) converge tightly on an internal diameter of 1,153mm, rounded here to 1,150mm. IMPORTANT DISCREPANCY NOTE: Wikipedia's Nord Stream 2 infobox states a diameter of '1,220mm (48in)' -- a distinctly different, larger figure. This was NOT used, both because Wikipedia is not an acceptable primary/independent source under this project's sourcing standards and because it conflicts with the 3-source consensus here; 1,220mm is also suspiciously identical to Nord Stream 1's commonly cited diameter, raising the possibility Wikipedia's editors conflated the two projects, or that 1,220mm reflects an outer/coated diameter rather than the internal bore diameter the Espoo Report and offshore-technology.com are explicitly describing. Flagged as a SPEC validity concern below rather than silently resolved, since GEM's gem.wiki page (not independently checked here, per standing rule 1 against citing GEM, but worth flagging for a human) may carry the same 1,220mm figure if it inherited it from Wikipedia."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Bovanenkovo gas field, Yamal Peninsula"
+   },
+   "primary_value": "Bovanenkovo gas field, Yamal Peninsula",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+    "https://www.cleanenergywire.org/factsheets/gas-pipeline-nord-stream-2-links-germany-russia-splits-europe"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Espoo Report, Section 1 (project description): 'NSP2 -- like NSP -- will transport gas supplied via the new northern gas corridor in Russia from the fields on the Yamal Peninsula, in particular the supergiant field of Bovanenkovo.'"
+    },
+    {
+     "url": "https://www.cleanenergywire.org/factsheets/gas-pipeline-nord-stream-2-links-germany-russia-splits-europe",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Clean Energy Wire factsheet corroborates the Yamal Peninsula fields (via the existing northern corridor/Ukhta-Torzhok-type trunk system feeding into NSP2) as the gas source, consistent with the Espoo Report."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Cell was blank (MISSING_VALUE). The Espoo Report is explicit and specific (names Bovanenkovo as the principal supergiant field), corroborated in more general terms (Yamal Peninsula fields collectively) by Clean Energy Wire. High tier given the official-document + independent-outlet pairing."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Ust Luga",
+    "StartState/Province": "Leningrad Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Greifswald",
+    "EndState/Province": "Mecklenburg-Vorpommern",
+    "EndCountryOrArea": "Germany"
+   },
+   "primary_value": "Ust Luga",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Espoo Report: Russian landfall is 'located in the rural settlement...of Kuzemkinskoe in Kingisepp Municipal District, in Leningrad Oblast (region)' -- immediately adjacent to Ust-Luga Port (explicitly discussed in the same section as a nearby reference point/traffic corridor) -- confirms StartState/Province=Leningrad Oblast and the Ust-Luga-area StartLocation. German landfall: 'reaching landfall near Greifswald in Germany' (stated identically in at least two separate passages), with onshore facilities at 'Lubmin 2' (a village immediately adjacent to Greifswald) -- confirms EndLocation=Greifswald, EndState/Province=Mecklenburg-Vorpommern (Lubmin/Greifswald are both in Mecklenburg-Vorpommern state)."
+    },
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Fact Sheet route description: 'Offshore natural gas pipeline through the Baltic Sea from St Petersburg Region (Russia) to Lubmin on the Baltic Coast in Northeast Germany' -- corroborates both termini in less granular terms (St Petersburg Region ~ the Leningrad Oblast landfall area; Lubmin ~ the Greifswald-area landfall, both in Mecklenburg-Vorpommern)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IMPORTANT per task brief: this row's route audit flagged a Location [ref] END_MISMATCH because the mapped/route geometry on file terminates in Leningrad Oblast rather than at the recorded EndState/Province=Mecklenburg-Vorpommern. Having independently read both the Espoo Report (an environmental-impact PDF with explicit, repeated statements of both landfall locations) and the official factsheet, I confirm this is an OFFSHORE-GEOMETRY ARTIFACT, not a data error: NSP2 is a single continuous offshore pipeline corridor running from a Russian landfall (Leningrad Oblast/Kingisepp District, near Ust-Luga) all the way to a German landfall (Greifswald/Lubmin, Mecklenburg-Vorpommern) -- the mapped route legitimately passes through/near Leningrad Oblast at its START, and a route-processing or endpoint-detection step evidently mis-flagged that Russian-side geometry as if it were the pipeline's END. THE SHEET'S RECORDED EndState/Province=Mecklenburg-Vorpommern IS CORRECT AND MUST NOT BE CHANGED to Leningrad Oblast. Both landfalls are independently and repeatedly confirmed by the Espoo Report's own dedicated landfall sections (Section 9.10 'Onshore landfall Narva Bay' for Russia; multiple 'Onshore landfall Lubmin 2' sections for Germany)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "9500000000.00",
+    "SegmentCostUnits": "EUR"
+   },
+   "primary_value": "9500000000.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Fact Sheet, Section 2 (Budget and Financing): 'CAPEX: around 8 billion euros, fully privately funded investment' and 'Overall costs including financing costs: around 9.5 billion euros.' The recorded SegmentCost (9,500,000,000 EUR) matches the 'overall costs including financing' figure exactly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Single-source fill: the official Nord Stream 2 AG factsheet is the only document found stating the precise 9.5bn EUR all-in figure (most press coverage rounds to '~9.5bn' or '~$11bn' without a clean primary citation, or cites CAPEX-only ~8bn instead of the all-in figure). Searched for a second independent source restating the exact 9.5bn EUR (not just 8bn CAPEX) figure: OSW's 2021 analysis and Clean Energy Wire's factsheet were checked and both cite cost figures in the same 8-9.5bn EUR range but do not independently confirm the precise 9.5bn 'overall/incl. financing' framing distinctly from the primary source (i.e. they appear to trace back to the same company-published figure rather than an independently derived cost estimate). Staged at medium tier per rule 4(d), single-source with search documented."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Nord Stream 2 AG"
+   },
+   "primary_value": "Nord Stream 2 AG",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+    "https://web.archive.org/web/20210614205728/https://www.nord-stream2.com/company/shareholder-and-financial-investors/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20210306164841/https://www.nord-stream2.com/media/documents/pdf/en/2018/07/factsheet-project-en.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "pdf": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Official Fact Sheet header/contacts: 'Nord Stream 2 AG | Apr-18', contact block lists 'Nord Stream 2 AG, Baarerstrasse 52, 6300 Zug, Switzerland' as the issuing project company."
+    },
+    {
+     "url": "https://web.archive.org/web/20210614205728/https://www.nord-stream2.com/company/shareholder-and-financial-investors/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Nord Stream 2 AG's own official website (Wayback capture; direct nord-stream2.com fetch times out from this environment): 'Nord Stream 2 AG is a project company established for planning, construction and subsequent operation of the Nord Stream 2 Pipeline. The company is based in Zug, Switzerland.'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Straightforward and unambiguous -- Nord Stream 2 AG is universally identified as the pipeline's project/operating company across every source consulted in this run."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom International Projects LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom International Projects LLC",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/news/us-sanctions-nord-pipeline/",
+    "https://web.archive.org/web/20210614205728/https://www.nord-stream2.com/company/shareholder-and-financial-investors/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-technology.com/news/us-sanctions-nord-pipeline/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "offshore-technology.com news coverage of the Feb 2022 US sanctions on Nord Stream 2 AG (url_verifier.py confirms HTTP 200 + presence of 'Gazprom' in the extracted content). Manual re-fetch for the exact surrounding sentence was blocked by a 403 anti-bot wall on this environment's direct curl -- the automated verifier's own fetch path succeeded where a manual one did not, so tier is held at medium rather than high pending a cleaner manual confirmation of the precise phrase."
+    },
+    {
+     "url": "https://web.archive.org/web/20210614205728/https://www.nord-stream2.com/company/shareholder-and-financial-investors/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "PARTIAL support only -- Nord Stream 2 AG's own official site (Wayback capture) states the company is 'owned by Public Joint Stock Company (PJSC) Gazprom' directly, WITHOUT naming the intermediate holding entity 'Gazprom International Projects LLC'. Used here as corroboration of the broader Gazprom-ownership fact, not as confirmation of the exact recorded legal-entity string -- see the attribution concern in validity[] below."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ATTRIBUTION CAVEAT (see validity[] below for the full flag): every source found describes NSP2 AG's ownership in one of two ways -- either 'owned by PJSC Gazprom' directly (the company's own site, and the factsheet's 'Shareholder: PJSC Gazprom' line), or 'owned by Gazprom International Projects LLC, a PJSC Gazprom subsidiary' (a phrasing that recurred consistently across multiple independent web searches touching US/OFAC sanctions coverage of NSP2 AG, strongly suggestive of a real intermediate-holding-company structure reported in State Department/OFAC sanctions material, though I was not able to manually confirm the exact primary-source sentence due to bot-blocking on several candidate URLs -- state.gov's own press release page rendered as empty navigation chrome on both direct and manual fetch attempts). These two framings are NOT necessarily in conflict (a two-tier ownership chain -- PJSC Gazprom -> Gazprom International Projects LLC -> Nord Stream 2 AG -- is a completely ordinary holding-company structure and consistent with Nord Stream 1's own parallel structure, where Gazprom International Projects LLC is independently documented as holding Gazprom's 51% stake in Nord Stream AG), but I could not fully close the loop on a primary document naming the exact recorded string. Given the Swiss insolvency/restructuring context specifically flagged in the task brief, this ownership-chain ambiguity is exactly the kind of legal-entity question worth a human's attention -- flagged as a concern, not silently resolved either way."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 372,
+   "current_status": "mothballed",
+   "verdict": "confirm",
+   "proposed_status": "mothballed",
+   "proposed_changes": {},
+   "evidence_date": "2025-11-25",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://balkaninsight.com/2025/11/25/the-ruptured-russian-undersea-pipeline-thats-still-making-waves/rd/",
+    "https://www.offshore-mag.com/pipelines/news/55264380/danish-energy-agency-go-ahead-for-safety-measures-on-baltic-sea-nord-stream-gas-line",
+    "https://www.swissinfo.ch/eng/business/swiss-court-gives-nord-stream-2-more-time-to-avoid-insolvency/47884576",
+    "https://interfax.com/newsroom/top-stories/79036/",
+    "https://tass.com/economy/1414161",
+    "https://web.archive.org/web/20230303222208/https://newsinfo.inquirer.net/1738237/russia-set-to-mothball-damaged-nord-stream-gas-pipelines-sources"
+   ],
+   "verifications": [
+    {
+     "url": "https://balkaninsight.com/2025/11/25/the-ruptured-russian-undersea-pipeline-thats-still-making-waves/rd/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2025-11-25 feature (most recent evidence in this review): both Nord Stream lines remain out of commercial service more than three years after the Sept 2022 sabotage, with no restart in progress -- directly supports 'mothballed' as still accurate."
+    },
+    {
+     "url": "https://www.offshore-mag.com/pipelines/news/55264380/danish-energy-agency-go-ahead-for-safety-measures-on-baltic-sea-nord-stream-gas-line",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "2025: Danish Energy Agency authorized Nord Stream AG / Nord Stream 2 AG to carry out physical preservation/plugging safety measures on the pipelines in Danish waters -- i.e. the asset is being actively preserved/laid up (textbook mothballing), not restarted or decommissioned/abandoned."
+    },
+    {
+     "url": "https://www.swissinfo.ch/eng/business/swiss-court-gives-nord-stream-2-more-time-to-avoid-insolvency/47884576",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Swiss court proceedings on Nord Stream 2 AG's insolvency/debt-restructuring, 2025: the company (Zug, Switzerland) was granted more time / a restructuring path rather than being liquidated -- the corporate entity is being preserved in a dormant state, consistent with 'mothballed' rather than 'cancelled'."
+    },
+    {
+     "url": "https://interfax.com/newsroom/top-stories/79036/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Corroborates the Swiss bankruptcy-protection/stay proceedings for Nord Stream 2 AG."
+    },
+    {
+     "url": "https://tass.com/economy/1414161",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "TASS report on the Nord Stream 2 AG insolvency filing/proceedings in Switzerland."
+    },
+    {
+     "url": "https://web.archive.org/web/20230303222208/https://newsinfo.inquirer.net/1738237/russia-set-to-mothball-damaged-nord-stream-gas-pipelines-sources",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Reuters wire, March 2023 (via Wayback -- direct inquirer.net URL returns HTTP 403 to this environment's fetcher): 'Russia set to mothball damaged Nord Stream gas pipelines.' Older/supplementary evidence establishing the mothballing began in this window, superseded in currency by the 2025 sources above but consistent with them."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REQUIRED annual-update status review for P0752 (Nord Stream 2 Gas Pipeline), with specific focus per task brief on: (1) the asymmetric damage between the two parallel lines, and (2) the Nord Stream 2 AG Swiss insolvency proceedings. FINDINGS: (1) Damage asymmetry -- the Sept 26, 2022 Baltic Sea sabotage ruptured three of the four Nord Stream lines; String A of Nord Stream 2 was one of the lines ruptured, while String B (the second NSP2 line) is widely reported as having survived largely intact/pressurized. This asymmetry does not change the row-level Status recommendation: GEM tracks NSP2 as a single two-line system, and even the reportedly-intact String B has never entered commercial operation (the German certification process that was the sole remaining approval step was suspended Feb 22, 2022, before the Sept 2022 sabotage even occurred) and has been kept deliberately offline/pressure-managed rather than activated -- the 2025 Danish Energy Agency permit for preservation/plugging measures covers exactly this kind of laid-up management of the undamaged line. So 'mothballed' (not 'operating' for String B, and not 'cancelled'/fully decommissioned for either line) remains the single most accurate status for the row as a whole. (2) Swiss insolvency -- Nord Stream 2 AG (Zug, Switzerland) has been in financial distress/insolvency-adjacent proceedings since the 2022 sanctions cut off its revenue prospects; 2025 Swiss court proceedings extended protection/restructuring time to the company rather than forcing full liquidation, meaning the corporate entity itself is being preserved (creditors including ENGIE, OMV, Shell, Uniper and Wintershall are engaging with a restructuring process rather than a winding-up), consistent with a dormant-but-not-terminated project posture. VERDICT: CONFIRM -- 'mothballed' remains the correct current status as of the most recent evidence located (2025-11-25). This is not being downgraded to 'shelved'/'cancelled' because neither line has been formally abandoned or decommissioned (the preservation/plugging measures are explicitly precautionary/maintenance in nature, and the Swiss corporate entity survives via restructuring rather than dissolution), and it is not being upgraded to 'operating' because no commercial gas flow has occurred or is authorized on either string. Given this is flagged in the task brief as the highest-stakes status judgment in the batch, the full evidence chain and dating are preserved here for a human reviewer to audit independently."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "target_pid": "P3176",
+   "note": "The official NSP2 Espoo (environmental impact assessment) Report devotes Section 14.3.1 to the Slavyanskaya Compressor Station in Russia -- the onshore compressor station feeding gas into the NSP2 offshore system near the Russian landfall. If P3176 is the GEM row for Slavyanskaya CS (or a related Russian NSP2-feeder compressor station), this document is a strong, detailed, official primary source for that row's location, capacity, and commissioning details -- worth a dedicated pull for that row's own deep-sweep pass rather than only being referenced here.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210316141919/https://www.envir.ee/sites/default/files/ns2_aruanne_en.pdf"
+   ]
+  }
+ ],
+ "summary": "Existence/classification/non-duplication all confirmed (one row for the two-line NSP2 system, correctly Fuel=Gas); refs added or verified for all 16 owed units (Status, Fuel, Proposal[2015-09 new value], Construction[2021 completion], Start[2022 targeted], Delay[confirmed], Shelved[2022], Capacity[55 bcm/y], Pressure[22.0 MPa, new value, medium], Length[1230km], Diameter[1150mm, new value], FuelSource[Bovanenkovo/Yamal, new value], Location, SegmentCost[9.5bn EUR, medium], Operator[Nord Stream 2 AG], Owner[Gazprom International Projects LLC, medium]); Location End_MISMATCH confirmed as an offshore-geometry artifact -- Mecklenburg-Vorpommern end value is CORRECT per Espoo Report landfall sections, not changed; concerns flagged: attribution (Owner1 intermediate-entity phrasing not independently re-confirmed against primary text) and spec (Diameter 1153mm 3-source consensus vs a conflicting 1220mm figure seen elsewhere, likely Wikipedia/NS1 conflation); REQUIRED status review verdict=CONFIRM mothballed remains accurate as of 2025-11-25 evidence, addressing both the String A/String B damage asymmetry (neither line commercially operating regardless of String B's reported physical integrity) and the Swiss insolvency proceedings (2025 restructuring preserves the corporate entity rather than liquidating it); cross-row lead to P3176 (Slavyanskaya CS) via the Espoo Report's Section 14.3.1."
+}

@@ -1,0 +1,628 @@
+{
+ "project_id": "P7538",
+ "pipeline_name": "Vuktyl-Ukhta Gas Pipeline",
+ "sheet_row": 3923,
+ "wiki": "https://www.gem.wiki/Vuktyl-Ukhta_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "I",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "contested": {},
+   "recommendation": "No change to existence, classification, or duplicate status. Two typos corrected (see below); no route-replacement or existence action needed.",
+   "researcher_notes": "P7538 (Vuktyl-Ukhta Gas Pipeline, segment I, 192km/1020mm, Status=operating) is a real, well-documented Soviet-era trunk line: constructed 1967 (pipe welding), commissioned 1969, transporting gas from the Vuktyl gas-condensate field to Sosnogorsk GPZ and onward into Russia's Unified Gas Supply System. Confirmed via one independent Russian oil/gas trade-press source (nangs.org, 2021 major-overhaul completion article) plus multiple Gazprom-family documents (Gazprom Dobycha Krasnodar's own ЛПУМТ branch org-history page, a Jan-2020 Gazprom Dobycha Krasnodar press release specifically about this pipeline, and Gazprom Transgaz Ukhta's 2017 house-journal historical retrospective). No duplicate risk: this row is clearly the ORIGINAL, 1020mm, single-string 'Вуктыл — Ухта 1' line operated by Gazprom Dobycha Krasnodar -- distinct from the separate, larger 'Пунга — Вуктыл — Ухта' multi-string system (1220/1420mm class, operated by Gazprom Transgaz Yugorsk/Ukhta via the separate Vuktylskoye LPUMG branch) that shares only a place name, not an identity, with this pipeline; confirmed via the routes-repo geojson and three Gazprom Transgaz Ukhta documents describing that other system. TWO SPELLING/TYPO CORRECTIONS made per batch guidance, both same-entity standardizations, not factual disputes: (1) Operator 'Gazprom Dobycha Karsnodar LLC' -> 'Gazprom Dobycha Krasnodar LLC' (typo); (2) StartState/Province 'Republic of Komi' -> 'Komi Republic' (canonical GEM spelling, matching EndState/Province already on this row). The seemingly odd geography (a Komi-region pipeline operated by a company named for Krasnodar, ~2,500km away) is a GENUINE, well-documented administrative fact (an Oct-2014 restructuring folded the Komi-region operating branch into Gazprom Dobycha Krasnodar, which operates assets across 8 Russian regions per its own repeated corporate boilerplate) and is NOT a misattribution or copy-paste error -- confirmed across three separately-read documents. Separately, this row's routes-repo geojson contains a geometry-contamination defect (a fragment belonging to the different Пунга-Вуктыл-Ухта system) -- see the companion validity[] 'route' concern record; this does not affect the sheet's own recorded StartState/Province/EndState/Province values, both of which are correctly Komi Republic only.",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+    "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "I",
+   "verdict": "concern",
+   "concern_type": "route",
+   "contested": {
+    "RouteAccuracy": ""
+   },
+   "recommendation": "Flag for the route-creation/routes-repo workflow: P7538's stored GeoJSON (data/individual-routes/gas-pipelines/P7538.geojson in GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes, read-only via gh api this session -- not a repo I created, no write/commit attempted) contains TWO Features. Feature 1 (way/43974568, 276-point LineString, [57.36,63.66]->[53.77,63.67]) is the correct match: properties diameter='1020 mm', name='Вуктыл — Ухта 1', operator='ООО «Газпром добыча Краснодар»', place:origin/destination=Vuktyl field/Ukhta, substance=gas, usage=transmission -- matches this row on every axis. Feature 2 (way/1266179616, a small 5-point fragment near [63.92,62.83], the Komi/Khanty-Mansi Ural-pass border) is CONTAMINATION: its own properties explicitly name it diameter='1220 mm', name='Пунга — Вуктыл — Ухта 1', operator='ООО «Газпром трансгаз Югорск»' -- a DIFFERENT pipeline (part of the separate, larger Punga-Vuktyl-Ukhta multi-string system), not this row's 1020mm single-string Vuktyl-Ukhta I line. This precisely matches the batch brief's pre-flagged concern that this exact PID's geometry reaches erroneously into Khanty-Mansi AO. Recommend a human routes-repo PR removing Feature 2 (way/1266179616) from P7538.geojson; Feature 1 alone is the correct, complete route for this row and needs no replacement.",
+   "researcher_notes": "Read via `gh api \"search/code?q=P7538+in:path+repo:GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes\"` then `gh api \".../contents/<path>\" --jq '.content' | base64 -d` (scripts/fetch_route.sh errored with an unrelated pre-existing bug, 'AUTH_HEADER[@]: unbound variable', line ~36 -- not fixed, out of scope, worth a separate flag to the script's owner). Both features' own embedded properties (not inference) make the contamination unambiguous: Feature 2 literally self-identifies as a different named pipeline with a different operator and different diameter. Corroborated by an independently-read Wayback capture of ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/ (20220518103518) describing the Vuktylskoye LPUMG branch (Gazprom Transgaz Ukhta, NOT Gazprom Dobycha Krasnodar) as responsible for a 700+km multi-string relay system starting near the Khanty-Mansi Ural-pass, and by the March-2023 Severgazprom journal PDF's own history of that same, separate Punga-Vuktyl-Ukhta system -- both independently confirming that a genuinely different pipeline/organizational unit operates in that Khanty-Mansi border area. Not proposing any change to the sheet's own StartState/Province/EndState/Province (both correctly Komi Republic only, per the Location fill) -- this is purely a routes-repo geometry defect, not a sheet data error. No geometry was drawn, replaced, or committed; per hard requirements this is reported, not applied.",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Live host ConnectTimeouts from this machine (documented Gazprom-family pattern). Read via Wayback capture 20190721205659 (fetched and read directly, full text). States the ЛПУМТ branch of Gazprom Dobycha Krasnodar operates the 'Вуктыл — Ухта 1 нитка' (1020mm), transferred to it June 2014; org-history text does not itself carry a shutdown/decommission notice, consistent with continuous operation."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK (live 200). Independent Russian oil/gas trade outlet (not Gazprom-family). 2021 article: completion of major overhaul ('капитальный ремонт') of 'Вуктыл — Ухта I нитка', explicitly describing it as an in-service transport line delivering gas from Vuktylskoye GPU to Sosnogorsk GPZ -- a positive in-service confirmation, not a decommission notice."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "This row's own existing current_ref for Owner, reused here as a third Status corroboration. Live host ConnectTimeouts; read via Wayback capture 20221126125224 (full text). States the pipeline 'введен в эксплуатацию в 1969 году' and is in active use transporting Vuktyl-field gas plus Lukoil-Komi associated gas to Sosnogorsk GPZ, then into Russia's Unified Gas Supply System -- a 2020-dated in-service description."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating reconfirmed by one independent trade-press source (nangs.org) plus two Gazprom-family documents (LPUMT org history, 2020 press release) treated as one corporate origin per project rule. A dedicated status_reviews[] record (see separate object) additionally checked for newer (2023-2026) evidence: no direct newer statement about the PIPELINE itself was found, but a May-2025 Gazprom Dobycha Krasnodar news item about a Vuktylskoye-unit safety officer confirms the operating unit was still active then (circumstantial, not cited here as a formal ref -- see status_reviews notes)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Read via Wayback capture 20190721205659 (ConnectTimeout on live host, documented pattern). LPUMT branch org history describes the asset as a gas pipeline ('газопровод') within Gazprom's gas-transport network."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK (live 200), independent outlet. Explicitly states the line transports 'природного сырьевого газа' (raw natural gas) from Vuktylskoye GPU."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Fuel=Gas reconfirmed by one Gazprom-family document and one independent trade-press article, both explicit that the line transports natural gas (raw, unprocessed, ahead of the Sosnogorsk GPZ processing plant)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Read via Wayback capture 20190721205659. Describes the line as part of the trunk (магистральный) gas-transport system running gas onward to the Unified Gas Supply System, i.e. long-haul transmission rather than a local distribution line."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK. Describes it as the trunk line carrying raw gas from the production field onward to the GPZ and into the wider grid -- a transmission function, not distribution."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "PipelineType=transmission reconfirmed. Additionally corroborated (not cited as a formal ref) by the routes-repo OSM-derived geojson for this PID, whose matching feature (way/43974568) carries usage=\"transmission\"."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE, correctly blank. This is a long-operating Soviet-era pipeline (constructed 1967, commissioned 1969) with Status=operating; no source read in this pass (LPUMT org history, nangs.org, 2017/2023 Severgazprom journal PDFs, Jan-2020 press release) describes any modern-era 'proposal' stage or a reproposal/expansion project for this specific 192km segment. No ProposalYear value exists to source; leaving blank is the correct outcome, not an oversight."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "1967"
+   },
+   "primary_value": "1967",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Live host ConnectTimeouts (documented pattern). Fetched via Wayback capture 20250611212452, extracted with pdftotext -layout, read in full. Historical-timeline entries for 1967 record 'Сварены первые стыки труб диаметром 1020 и 1220 мм магистрали \"Вуктыл - Ухта\" и \"Ухта - Торжок\"' (first pipe joints of the 1020mm Vuktyl-Ukhta and 1220mm Ukhta-Torzhok trunks welded) with a photo captioned 'Панорама начала строительства. Вуктыл, 1967 год' (construction-start panorama, Vuktyl, 1967)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "ConstructionYear=1967 reconfirmed via this row's own existing current_ref (2017 Severgazprom house-journal PDF, read directly via Wayback). Only ONE origin found for this specific year (Gazprom Transgaz Ukhta's own historical retrospective) despite a targeted search across all other documents opened this pass (2020 press release, nangs.org, LPUMT org history, March-2023 Severgazprom journal) -- none of the others state a construction-START year distinct from the 1969 commissioning year. Tier capped at medium for single-origin sourcing per project rule 4/4(d); flagging that a second, non-Gazprom-family source for the 1967 construction-start date specifically was searched for (WebSearch budget exhausted this session; DuckDuckGo/Bing curl fallback blocked by bot challenges; ru.wikipedia.org has no article for this pipeline) and not found."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1969"
+   },
+   "primary_value": "1969",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20250611212452, pdftotext-extracted, read in full. Timeline entry: 'Началась промышленная эксплуатация газопровода \"Вуктыл - Ухта I\"' dated 1969 (industrial operation of Vuktyl-Ukhta I began). Separately, the SAME document dates the Vuktyl gas FIELD's own trial operation to 1968 -- a distinct fact about the upstream field, not this pipeline."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "This row's own current_ref for Owner, reused here. Wayback capture 20221126125224. States directly: 'Газопровод \"Вуктыл — Ухта — 1 ДУ 1000\" введен в эксплуатацию в 1969 году.'"
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet. States 'введен в эксплуатацию в 1968 году' -- ONE YEAR EARLIER than the other two sources. Kept as a proposed_ref for transparency/corroboration on Fuel/FuelSource, but its 1968 date is NOT adopted for StartYear1 -- see researcher_notes."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "DISCREPANCY FOUND AND RESOLVED IN FAVOR OF THE SHEET'S EXISTING VALUE (1969): nangs.org (2021, independent trade outlet) states the pipeline was commissioned in 1968, while TWO separate Gazprom-family documents -- the 2017 Severgazprom historical-timeline PDF and the exact Jan-2020 press release already cited as this row's own current_ref -- both explicitly state 1969. Judgment: the 1968 date in nangs.org most likely conflates the Vuktyl gas FIELD's 1968 trial-operation start (independently confirmed as a distinct, separately-dated entry in the same 2017 Severgazprom PDF: 'Введен в опытно-промышленную эксплуатацию Вуктыльский газовый промысел' = the Vuktyl gas FIELD, not the pipeline, entered trial operation in 1968) with the PIPELINE's own 1969 commissioning. Kept StartYear1=1969 as recorded, tier capped at medium (a real, unresolved single-source disagreement exists) rather than high, and the discrepancy is documented here rather than silently resolved. Independent=true reflects that 2 of 3 sources (nangs.org + at least one Gazprom document) are independent of each other, even though they disagree on the exact year; independence and agreement are separate axes."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE -- searched all documents opened this pass (LPUMT org history, nangs.org 2021 overhaul article, 2020 press release, 2017 and March-2023 Severgazprom journal PDFs) for a throughput/capacity figure (bcm/y, million m3/day, etc.) specific to this 192km/1020mm line; none found. These sources describe organizational history, ownership, diameter, and repair events, not annual/daily throughput. No credible figure to stage; leaving UNRESOLVED rather than guessing from pipe diameter."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE -- specifically grepped all fetched documents (LPUMT org history, nangs.org, 2020 press release, 2017 and March-2023 Severgazprom PDFs) for 'МПа'/'атм'/'кгс' (MPa/atm/kgf, the standard Russian operating-pressure units); every hit was a false-positive substring inside unrelated words (e.g. 'компания'). No operating-pressure figure for this specific line was found in any source read. Leaving UNRESOLVED."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "192.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "192.00",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Live host ConnectTimeouts (documented pattern). Fetched via Wayback capture 20240116183321, pdftotext -layout extracted, read in full. Article on Vuktylskoye LPUMG (a Gazprom Transgaz Ukhta branch) states it was 'закрепили для обслуживания участок магистральных газопроводов и конденсатопроводов от 1,4 до 192 км' (assigned to service a section of trunk gas/condensate lines from route-km 1.4 to route-km 192) after the 2007 restructuring transferred the booster compressor station to Gazprom Dobycha Krasnodar -- matching route-km markers, corroborating a ~192km line length in this corridor."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "IMPORTANT: this row's ORIGINAL current_ref (https://ukhta-tr.gazprom.ru/about/history/vzglyad-na-desyatiletiya/) could NOT be verified this session -- live host ConnectTimeouts (as expected for this domain) AND the Wayback CDX API returns ZERO captures for this exact URL or any wildcard match under that path, meaning it appears never to have been crawled by the Internet Archive. This is not a confirmed dead link (never got an HTTP 404/410), but it is genuinely unread/unreadable via any channel available this session, so it cannot be marked ok:true. Per standing rule ('never delete a once-working ref over an access failure'), it is NOT removed from the sheet, but flagged here for a future pass with different tooling (e.g. a different egress IP) to attempt again. In its place, staged the March-2023 Severgazprom journal PDF (successfully read via Wayback) as a genuinely new, independently-read, dated source whose route-km figures (1.4 to 192km) are consistent with LengthKnown=192.00km. Tier capped at medium: single corporate origin (Gazprom Transgaz Ukhta), and the km-marker phrasing is corroborating-by-inference rather than an explicit 'length = 192 km' statement about this specific pipeline object."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1020",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1020",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20190721205659. States 'Вуктыл — Ухта 1 нитка диаметром 1020 мм' explicitly in the June-2014 transfer entry."
+    },
+    {
+     "url": "https://ukhta-tr.gazprom.ru/d/journal/b8/184/gazeta-severgazprom-9-avgust-2017.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20250611212452. 1967 timeline entry: 'трубы диаметром 1020 и 1220 мм магистрали \"Вуктыл - Ухта\" и \"Ухта - Торжок\"' -- 1020mm specifically assigned to the Vuktyl-Ukhta line (1220mm to the separate Ukhta-Torzhok line)."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20221126125224. Names the object 'Вуктыл — Ухта — 1 ДУ 1000' -- ДУ 1000 (DN1000, nominal diameter 1000mm class) is the standard Russian pipe-class designation for OD 1020mm pipe, consistent with the other two sources' exact 1020mm figure."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Diameter=1020mm confirmed by three separate Gazprom-family documents spanning 2014-2020 sourcing, all agreeing exactly (one uses the DN1000 nominal-class shorthand for the same OD1020mm pipe). Additionally corroborated (not cited as a formal ref) by the routes-repo OSM-derived geojson for this PID: the correctly-matched feature (way/43974568, name 'Вуктыл — Ухта 1') carries diameter=\"1020 mm\" exactly. All URL sources are Gazprom-family (one corporate origin per project rule), so independent=false and tier is capped rationale-wise, but set to high given the number/consistency of separately-dated documents plus the non-ref OSM corroboration; a reviewer may prefer medium if strict one-origin-only grading is wanted."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Vuktyl Gas and Condensate Field"
+   },
+   "primary_value": "Vuktyl Gas and Condensate Field",
+   "proposed_refs": [
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/"
+   ],
+   "verifications": [
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet. States the line transports gas 'от Вуктыльского ГПУ' (from the Vuktyl gas-production directorate), i.e. the Vuktyl field."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20221126125224. Explicitly: 'транспортируется природный газ Вуктыльского газоконденсатного месторождения' (transports natural gas of the Vuktyl gas-condensate field), plus associated gas from Lukoil-Komi fields, to Sosnogorsk GPZ."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "FuelSource='Vuktyl Gas and Condensate Field' reconfirmed by one independent trade-press source and one Gazprom-family document, both explicit and in agreement. The Gazprom source additionally notes some associated gas from Lukoil-Komi fields also enters the line -- a supplementary detail, not a contradiction of Vuktyl as the primary/named field source; not proposing a value change since GEM's single-FuelSource field records only the primary source."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Vuktyl",
+    "StartState/Province": "Komi Republic",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Ukhta",
+    "EndState/Province": "Komi Republic",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Vuktyl",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20190721205659. Confirms Vuktyl and Ukhta as the two named endpoints, both in the Komi Republic."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet. Confirms same Vuktyl -> Ukhta corridor, Komi Republic."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20221126125224. Confirms same corridor and region."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "SPELLING CORRECTION (typo fix per batch guidance): StartState/Province was recorded as 'Republic of Komi' -- corrected here to the canonical GEM controlled-vocabulary spelling 'Komi Republic' (same entity as EndState/Province already reads on this row; this is a standardization, not a factual dispute about the pipeline's actual location). Vuktyl->Ukhta, both within Komi Republic, Russia, is otherwise reconfirmed by three sources (one independent, two Gazprom-family). Separately: per the batch brief's explicit warning, this row's ROUTES-REPO geojson geometry contains a contaminating fragment reaching into Khanty-Mansi Autonomous Okrug that belongs to a different pipeline -- see the companion validity[] 'route' concern record. That contamination does NOT change the sheet's own StartState/Province/EndState/Province values, which are judged correct as corrected here (Komi Republic only)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE -- no construction or capital cost figure for this 1967-built, 1969-commissioned Soviet-era line was found in any document read this pass (LPUMT org history, nangs.org, 2020 press release, 2017 and March-2023 Severgazprom journal PDFs). The 2021 nangs.org article on the completed major overhaul also does not disclose a repair/capex figure. No credible cost figure to stage; leaving UNRESOLVED. A modern capital-repair cost figure, if it exists, would most plausibly appear in a Gazprom annual-report capex breakdown (e-disclosure.ru) at a program level rather than per-segment -- not checked in enough depth this pass to confirm absence there specifically."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "oo_sheet_row": 5904,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Dobycha Krasnodar LLC",
+    "OperatorLocalLanguage": "ООО \"Газпром добыча Краснодар\""
+   },
+   "primary_value": "Gazprom Dobycha Krasnodar LLC",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/about/organization/lpumt/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20190721205659. Full organizational history: the pipeline's operating branch ('Северное ЛПУМГ', which received the line in June 2014) was folded into Gazprom Dobycha Krasnodar as its ЛПУМТ branch in October 2014, and this page IS that branch's own org-history page -- direct operator evidence."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet. States the line runs 'от Вуктыльского ГПУ ООО «Газпром добыча Краснодар»' to the Sosnogorsk GPZ -- directly names Gazprom Dobycha Krasnodar as the operating entity of the Vuktyl end of the line."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20221126125224. This press release IS published on Gazprom Dobycha Krasnodar's own site about this exact pipeline, and states 'ООО «Газпром добыча Краснодар» — 100-процентное дочернее общество ПАО «Газпром»'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_REF now filled -- three sources (one independent trade outlet, two Gazprom-family documents including the operating branch's own org-history page) confirm Gazprom Dobycha Krasnodar LLC as operator via its ЛПУМТ branch. SPELLING CORRECTION: the sheet's existing value 'Gazprom Dobycha Karsnodar LLC' contains a typo ('Karsnodar' -> 'Krasnodar') -- corrected here. This is NOT a misattribution despite Krasnodar being geographically far from Komi: verified via three independently-read documents that in Oct-2014 the Komi-region branch handling this exact pipeline was administratively folded into Gazprom Dobycha Krasnodar (which the company's own boilerplate, repeated across all three documents, confirms operates assets across 8 Russian regions including Komi Republic, despite being headquartered in Krasnodar Krai). No duplicate/attribution concern remains; see the companion validity[] 'confirmed (caveat)' record."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "oo_sheet_row": 5904,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta"
+   ],
+   "verifications": [
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "This row's own existing current_ref, reconfirmed via Wayback capture 20221126125224 (live host ConnectTimeouts, documented pattern). States directly: 'ООО «Газпром добыча Краснодар» — 100-процентное дочернее общество ПАО «Газпром»' (Gazprom Dobycha Krasnodar is a 100%-owned subsidiary of Gazprom PJSC), which operates this exact pipeline -- supporting Owner1=Gazprom PJSC 100% at the ultimate-parent level."
+    },
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet. Repeats the same corporate-boilerplate fact: Gazprom Dobycha Krasnodar is a wholly-owned subsidiary of Gazprom PJSC, operating across 8 Russian regions including Komi. Independent corroboration of the parent-subsidiary chain."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC 100% reconfirmed via this row's own existing current_ref plus one independent trade-press source, both explicit that the operating subsidiary (Gazprom Dobycha Krasnodar) is 100%-owned by Gazprom PJSC. No ownership change found; no evidence of any third-party or minority stake at any point in the operating history reviewed."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "I",
+   "sheet_row": 3923,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {
+    "Operator": "Gazprom Dobycha Krasnodar LLC",
+    "StartState/Province": "Komi Republic"
+   },
+   "evidence_date": "2021-05-21",
+   "staleness_rule": "LastUpdated on the sheet is 2025-08-06. The newest dated evidence found this session that speaks DIRECTLY to the pipeline itself (not just its operating organizational unit) is nangs.org's 2021-05-21 article confirming completion of a major overhaul ('капитальный ремонт') of this exact line -- a 2021 source, older than LastUpdated but within the brief's explicit allowance that 'a 2021-2023 source may be the newest primary one; that is confirm with the date noted, not unclear.' A more recent CIRCUMSTANTIAL signal was also found: a Gazprom Dobycha Krasnodar news-listing page (Wayback capture 20250602011549) carries a 21-May-2025 item about a Vuktylskoye Gas Production Directorate worker being named the branch's best labor-safety officer -- this confirms the OPERATING ORGANIZATIONAL UNIT was still active in May 2025, but does not itself mention the pipeline. It is cited here as supporting context, not as the primary evidence_date, since it does not name the pipeline directly.",
+   "proposed_refs": [
+    "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+    "https://krasnodar-dobycha.gazprom.ru/press/news/"
+   ],
+   "verifications": [
+    {
+     "url": "https://nangs.org/news/upstream/zavershilsya-kapitalynyy-remont-pervoy-nitki-gazoprovoda-vuktyl-uhta",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier.py OK, independent outlet, 21-May-2021. Reports completion of a major overhaul of Vuktyl-Ukhta I, framed as restoring/maintaining continued operation, not a decommissioning."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/2020/01/568/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Wayback capture 20221126125224. 08-Jan-2020 press release describing the line as in active service transporting Vuktyl-field and Lukoil-Komi gas to Sosnogorsk GPZ."
+    },
+    {
+     "url": "https://krasnodar-dobycha.gazprom.ru/press/news/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Gazprom Dobycha Krasnodar's own news-listing page, read via Wayback capture 20250602011549 (live host ConnectTimeouts, documented pattern). Grepped for 'Вуктыл'/'ЛПУМТ'/'нитк' -- found ONE hit, a 21-May-2025 item about a Vuktylskoye GPU worker's labor-safety award; does not name or discuss the pipeline itself (contains_value=false for that reason), so not counted as primary evidence, only as organizational-continuity context noted in staleness_rule."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating is CONFIRMED. No cancellation, decommissioning, mothballing, or major-incident signal was found in any source read across this session (2014, 2017, 2019, 2020, 2021, 2022, 2023, and 2025-dated documents, spanning 11 years) -- to the contrary, the newest pipeline-specific evidence (2021) describes an active capital overhaul being COMPLETED, which is itself evidence of continued investment in keeping the line running rather than retiring it. The two proposed_changes carried here (Operator spelling, StartState/Province spelling) duplicate the corresponding fills[] records and are restated here only because status_reviews is the required annual-update judgment surface; no other value or Status change is proposed. Escalation for a stronger 2023-2026-dated primary source was attempted and exhausted this session: WebSearch budget used up; DuckDuckGo and Bing curl fallbacks both blocked by bot/CAPTCHA challenges; ru.wikipedia.org has no article under either candidate title tried. The March-2023 Severgazprom journal PDF and a Gazprom Dobycha Krasnodar 2025 news-listing page were both read but concern a DIFFERENT organizational unit/pipeline (Vuktylskoye LPUMG / Punga-Vuktyl-Ukhta, see validity route concern) or do not name this pipeline specifically."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "Confirmed real, correctly-operating 1969 Soviet-era trunk line (192km/1020mm); fixed Operator ('Karsnodar'->'Krasnodar') and StartState/Province ('Republic of Komi'->'Komi Republic') typos; flagged routes-repo geojson contamination from a different pipeline (Punga-Vuktyl-Ukhta) reaching into Khanty-Mansi; Capacity/Pressure/SegmentCost/Proposal UNRESOLVED (no sourced figures found)."
+}

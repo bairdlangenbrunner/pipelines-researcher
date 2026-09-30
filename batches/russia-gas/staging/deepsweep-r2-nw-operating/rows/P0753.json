@@ -1,0 +1,744 @@
+{
+ "project_id": "P0753",
+ "pipeline_name": "Nord Stream Gas Pipeline",
+ "sheet_row": 373,
+ "wiki": "https://www.gem.wiki/Nord_Stream_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "concern_type": "spec",
+   "verdict": "concern",
+   "summary": "SegmentCost is wrong by a factor of 2: sheet records EUR 14.8bn, but the operator's own press release plus two independent trade sources all state EUR 7.4bn.",
+   "contested": {
+    "SegmentCost": "7400000000.00",
+    "SegmentCostUnits": "EUR"
+   },
+   "tier": "high",
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16755095/nord-stream-completes-worlds-longest-subsea-pipeline",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own press release title states the project costs 'Remain 7.4 Billion Euros' (April 15, 2010), issued specifically to rebut media reports of a higher cost; read via Wayback capture https://web.archive.org/web/20220222183957/https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/ (live URL blocked/times out from this environment; content confirmed via the capture, capture noted alongside not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16755095/nord-stream-completes-worlds-longest-subsea-pipeline",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Offshore Magazine trade coverage corroborates the ~EUR 7.4bn project cost independently of the operator."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com project profile independently states EUR 7.4bn total investment."
+    }
+   ],
+   "researcher_notes": "No source anywhere in this research states EUR 14.8bn for P0753. The correct, well-corroborated figure is EUR 7.4bn (matching the well-known headline figure repeated across years of Nord Stream 1 coverage from ground-breaking through completion). A plausible origin for the sheet's 14.8bn is confusion with a COMBINED Nord Stream 1 + Nord Stream 2 figure (2 x 7.4bn/9.5bn range) or with Nord Stream 2's own ~EUR 9.5bn cost recorded on a different row -- but no source was found stating 14.8bn for either individual project, so this is noted as a possibility, not asserted as the sheet's actual error mechanism. Recommend correcting SegmentCost to 7,400,000,000.00 EUR; SegmentCostYear could reasonably be set to 2010 (the year of the operator's own reaffirmed-budget press release) if GEM wants a year stamped, though no unit for that was on this row's worklist."
+  },
+  {
+   "segment_name": "",
+   "concern_type": "none",
+   "verdict": "confirmed (caveat)",
+   "summary": "Existence, classification and duplicate status all confirmed clean; the only concern found is the SegmentCost spec error (separate validity record).",
+   "contested": {},
+   "tier": "high",
+   "proposed_refs": [
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+    "https://www.offshore-technology.com/projects/negp/",
+    "https://www.wermac.org/nordstream/nordstream_part1.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Gazprom's own page independently confirms the project's existence, route, JV structure and Nord Stream AG as operator; read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ (live blocked from this environment)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "Independent trade-press project profile confirms the same identity, route, ownership and specs -- no duplicate-entity or misclassification concern."
+    },
+    {
+     "url": "https://www.wermac.org/nordstream/nordstream_part1.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Independent technical site confirms identity/specs and explicitly distinguishes this offshore line from the separate onshore Gryazovets-Vyborg feeder pipeline."
+    }
+   ],
+   "researcher_notes": "EXISTENCE: real, extensively documented, still-standing (if ruptured) physical asset -- not a hallucination. CLASSIFICATION: correctly classed as a gas pipeline, PipelineType/kind consistent with an offshore transmission trunk; Status=mothballed is the correct bucket (see status_reviews[]), not shelved/cancelled. DUPLICATES: checked against all 28 batch PIDs supplied in the brief. Not a duplicate of P0752 (Nord Stream 2 -- a separate JV/Nord Stream 2 AG, separate landfall at Lubmin/Ust-Luga corridor, different damage pattern -- one string ruptured vs P0753's both). Not a duplicate of P0746/P5585 (the onshore Gryazovets-Vyborg feeder pipeline, 917 km, Vologda->Leningrad Oblast, operated solely by Gazprom, a wholly different physical pipe that merely feeds gas TO this pipeline's Vyborg compressor station -- construction start Dec 2005 belongs to that row, not this one; see cross_row_leads). END-CELL AUDIT: the sheet's EndState/Province='Mecklenburg-Vorpommern' is CORRECT per all three sourced pages (Vyborg, Russia -> Greifswald, Germany); a geometry read that appears to terminate the offshore route in Leningrad Oblast/Russian waters is an artifact of only inspecting the Russian-side landfall/compressor infrastructure, not a sheet error -- NOT changed here, per the brief's explicit guidance that this is 'the clearest case in the batch of the audit being wrong and the sheet being right.' OWNERSHIP: Owner1='Nord Stream AG' 100% is a legitimate GEM convention (recording the operating JV as owner rather than its 5 underlying shareholders), not an error -- see the Owner [ref] fill for the full shareholder breakdown. SPEC: one genuine error found -- SegmentCost off by 2x (separate concern_type=spec record above)."
+  }
+ ],
+ "fills": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 373,
+   "values": {
+    "Status": "mothballed"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+    "https://kyivindependent.com/who-sabotaged-nord-stream-3-years-on-investigations-offer-more-questions-than-answers/",
+    "https://www.atlanticcouncil.org/blogs/energysource/can-nord-stream-really-rise-from-the-dead/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream 1 / Nord Stream AG",
+     "note": "Nord Stream AG's own incident notice (updated 14/11/2022) confirms the physical rupture of the pipeline (see Stop unit) that underlies the mothballed status; read via Wayback capture https://web.archive.org/web/20221114194839/https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://kyivindependent.com/who-sabotaged-nord-stream-3-years-on-investigations-offer-more-questions-than-answers/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Sept 2025 (3-year anniversary) piece states both NS1 pipes remain inoperable and the pipelines are 'obsolete'/non-operational, with no restart since the Sept 2022 rupture -- current mothballed status confirmed at the most recent evidence date found."
+    },
+    {
+     "url": "https://www.atlanticcouncil.org/blogs/energysource/can-nord-stream-really-rise-from-the-dead/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "July 2025 analysis of legal/financial/political barriers to a Nord Stream restart -- confirms no operational status and no imminent restart, consistent with 'mothballed' (not shelved/cancelled: physical asset intact apart from the ruptured sections, restart openly discussed as a live policy question, not ruled out)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing Status=mothballed. Physically ruptured 26 Sept 2022 (both NS1 strings, see Stop unit); no gas flow, no repair, no decommissioning as of the most recent evidence (Sept 2025 / Jul 2025). 'Mothballed' (not 'shelved' or 'cancelled') is the correct GEM bucket: the asset is intact and restart remains an active if improbable policy question, not abandoned. See status_reviews[] for the full dormancy analysis."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 373,
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Gazprom's own project page describes Nord Stream as a natural gas pipeline exporting gas from the Unified Gas Supply System of Russia; read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com project profile describes NSGP as a natural gas pipeline exporting gas to Germany."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Trivial confirm: Fuel=Gas is correct and uncontested; both operator-side (Gazprom) and independent trade-press (offshore-technology.com) sources describe it as a natural gas pipeline."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "sheet_row": 373,
+   "values": {
+    "ProposalYear": "2005",
+    "ProposalMonth": "9"
+   },
+   "proposed_refs": [
+    "https://www.europarl.europa.eu/RegData/etudes/note/join/2007/393274/IPOL-PETI_NT(2007)393274_EN.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.europarl.europa.eu/RegData/etudes/note/join/2007/393274/IPOL-PETI_NT(2007)393274_EN.pdf",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "European Parliament briefing note (2007) states: 'an agreement was signed by the partners in September 2005 in the presence of President Vladimir Putin and Chancellor Gerhard Schroder' -- read via pdftotext extraction of the live PDF (downloaded directly, 200 OK, no Wayback needed)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: ProposalYear=2005, ProposalMonth=9 (the Sept 8 2005 Gazprom-BASF-E.ON basic agreement on the North European Gas Pipeline, signed in the presence of Putin and Schroder; Nord Stream AG itself was registered in Zug in December 2005). Single independent source found and verified (EU Parliament briefing); a second corroborating source was searched for -- Wikipedia's 'Nord Stream' overview page and a direct WebSearch both surfaced the same Sept 8 2005 date via secondary reporting (Atlantic Council, EBSCO, foreignpolicy.com) but none of those specific pages could be verified to literally state the date on a direct fetch (Wikipedia's live extract for this article does not include the pre-2011 history section), so they are not cited as independent refs -- tier held at medium rather than high pending a second directly-verified source. Do not confuse with the SEPARATE Dec 2005 construction start of the onshore Gryazovets-Vyborg feeder pipeline (P0746/P5585) -- see cross_row_leads."
+  },
+  {
+   "ref_col": "Construction [ref]",
+   "sheet_row": 373,
+   "values": {
+    "ConstructionYear": "2010",
+    "ConstructionMonth": "4"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/official-launch-of-construction-of-nord-stream-natural-gas-pipeline-363/",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/official-launch-of-construction-of-nord-stream-natural-gas-pipeline-363/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own press release 'Official Launch of Construction of Nord Stream Natural Gas Pipeline', dated at the ceremony April 9, 2010 in Portovaya (offshore pipe-laying start); read via Wayback capture https://web.archive.org/web/20111113044424/http://www.nord-stream.com:80/press-info/press-releases/official-launch-of-construction-of-nord-stream-natural-gas-pipeline-363/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com states 'Construction on the first pipeline commenced in April 2010' -- independently corroborates month and year."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: ConstructionYear=2010, ConstructionMonth=4 -- offshore pipe-laying of the FIRST Nord Stream line began April 2010 (Saipem's Castoro Sei vessel, Swedish EEZ / Portovaya ceremony April 9 2010). This is the OFFSHORE pipe (P0753) start of construction, NOT the Dec 9 2005 start of the separate onshore Gryazovets-Vyborg feeder pipeline (P0746/P5585) that wermac.org's introductory paragraph loosely conflates with 'the construction' in its opening sentence -- wermac's own body text later disambiguates the two projects explicitly. See cross_row_leads."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 373,
+   "values": {
+    "StartYear1": "2011",
+    "StartMonth1": "11"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/chancellor-merkel-and-heads-of-governments-to-inaugurate-the-nord-stream-pipeline-386/",
+    "https://www.spiegel.de/international/europe/controversial-project-launched-merkel-and-medvedev-open-baltic-gas-pipeline-a-796611.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/chancellor-merkel-and-heads-of-governments-to-inaugurate-the-nord-stream-pipeline-386/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG press release: inauguration ceremony held Tuesday November 8, 2011 with Chancellor Merkel, President Medvedev and PM Balkenende, marking gas flow start on the first line; read via Wayback capture https://web.archive.org/web/20111113044424/http://www.nord-stream.com:80/press-info/press-releases/chancellor-merkel-and-heads-of-governments-to-inaugurate-the-nord-stream-pipeline-386/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.spiegel.de/international/europe/controversial-project-launched-merkel-and-medvedev-open-baltic-gas-pipeline-a-796611.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Der Spiegel, dated 2011-11-08: 'Controversial Project Launched: Merkel and Medvedev Open Baltic Gas Pipeline' -- independent German press corroboration of the same date."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing StartYear1=2011; adds StartMonth1=11 (first-line gas flow / inauguration Nov 8, 2011). The second line entered service in Oct 2012 -- not currently a separate sheet value (StartYear2 blank); flagged in validity[] only if material, otherwise left as-is since the unit only owed a ref for the existing StartYear1."
+  },
+  {
+   "ref_col": "Stop [ref]",
+   "sheet_row": 373,
+   "values": {
+    "StopYear": "2022"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+    "https://www.kommersant.ru/doc/8076436"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream 1",
+     "note": "Nord Stream AG's own incident notice: '26/09/2022 Pressure drop on both strings of the gas pipeline... dispatchers of the Nord Stream 1 control center registered a pressure drop on both strings'; later updates confirm physical rupture points surveyed by Nov 2022; read via Wayback capture https://web.archive.org/web/20221114194839/https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.kommersant.ru/doc/8076436",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Северный поток-1 (Nord Stream-1)",
+     "note": "Kommersant (independent Russian outlet): '26 sentyabrya 2022 goda vzryvami byli povrezhdeny gazoprovody «Severnyy potok-1» i «Severnyy potok-2»' -- 26 September 2022 explosions damaged both Nord Stream-1 and Nord Stream-2 pipelines. Read directly (Cyrillic name matched by hand, not just the fuzzy matcher)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing StopYear=2022 -- the 26 Sept 2022 Baltic Sea sabotage/explosions. CRITICAL for this row vs its sibling P0752 (Nord Stream 2): BOTH Nord Stream 1 (P0753) strings ruptured (operator's own dispatch record: pressure drop on both strings simultaneously; Danish/Swedish surveys later confirmed physical rupture points on both NS1 lines). This is asymmetric with P0752, where only ONE of the two NS2 strings ruptured and the other was reported intact/still pressurised -- do not conflate the two rows' damage extent."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 373,
+   "values": {
+    "Capacity": "55.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own facts & figures page: 'Gas capacities: 55 bcm per annum (2 pipelines with 27.5 bcm capacity each)'; read via Wayback capture https://web.archive.org/web/20110104181103/http://www.nord-stream.com/en/the-pipeline/facts-figures.html Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Gazprom's own page: 'Construction of the second string will increase the gas pipeline throughput to 55 billion cubic meters a year'; read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com: 'combined capacity of 55bcm a year' -- independent third corroboration."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing Capacity=55.00 bcm/y (combined two-string nameplate capacity, 27.5 bcm/y per line) across operator (Nord Stream AG), JV-partner (Gazprom) and independent trade-press (offshore-technology.com) sources."
+  },
+  {
+   "ref_col": "Pressure [ref]",
+   "sheet_row": 373,
+   "values": {
+    "Pressure": "22.0",
+    "PressureUnits": "MPa"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+    "https://www.pipeliner.com.au/internationalnews/nord-stream-piping-through-the-baltic-sea/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own facts page: 'Design pressure: 220 bar/ 200 bar/ 170 bar' (three-zone design along the route, decreasing from the Russian compressor station outward) = 22.0/20.0/17.0 MPa; read via Wayback capture https://web.archive.org/web/20110104181103/http://www.nord-stream.com/en/the-pipeline/facts-figures.html Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.pipeliner.com.au/internationalnews/nord-stream-piping-through-the-baltic-sea/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "The Australian Pipeliner (independent trade press): pipeline 'designed with three different design pressure sections (220, 200, and 177.5 bar)' -- independently corroborates the 220 bar peak design pressure (= 22.0 MPa) and the multi-zone design."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: Pressure=22.0 MPa. Nord Stream is engineered with a THREE-ZONE design pressure that steps down along the route -- 220 bar (22.0 MPa) for the first ~300 km from the Russian compressor station at Vyborg, 200 bar (20.0 MPa) for the next ~500 km, then 170-177.5 bar (17.0-17.75 MPa, sources vary slightly) to the German landfall. Recorded the peak/design (inlet) value, 22.0 MPa, as the single Pressure figure since the schema carries one value; the step-down is documented here for context. Do NOT confuse with the batch's generic Gazprom-Transgaz trunk-pressure classes noted in the brief's calibration data (7.5/9.8/11.8 MPa) -- Nord Stream is a separate offshore corridor operated by Nord Stream AG (a distinct JV, not Gazprom Transgaz), with its own, higher, design-pressure regime appropriate to subsea service."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 373,
+   "values": {
+    "LengthKnown": "1222.00",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [
+    "https://www.wermac.org/nordstream/nordstream_part1.html",
+    "https://www.nord-stream.com/en/the-pipeline/facts-figures.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.wermac.org/nordstream/nordstream_part1.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "wermac.org (independent technical site): 'At 1,222 kilometres (759 mi) in length, it is the longest sub-sea pipeline in the world' / 'The length of the subsea pipeline is 1,222 kilometres'."
+    },
+    {
+     "url": "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own facts page states 'Pipeline length: 1224 km' (Gazprom's own page: '1,224 kilometers'), 2 km more than the sheet's 1222.00 -- within normal rounding/measurement-point variance for a 1,200+ km route (route-km at different construction milestones); not a materially different figure, flagged rather than treated as a mismatch. Read via Wayback capture https://web.archive.org/web/20110104181103/http://www.nord-stream.com/en/the-pipeline/facts-figures.html Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing LengthKnown=1222.00 km; wermac.org states the identical 1,222 km figure. Nord Stream AG's/Gazprom's own pages state 1,224 km -- a 2 km (0.16%) discrepancy, immaterial and within normal rounding for different measurement epochs (planned vs as-built route length); not staged as a validity concern."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 373,
+   "values": {
+    "Diameter": "1153.00",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+    "https://www.pipeliner.com.au/internationalnews/nord-stream-piping-through-the-baltic-sea/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own facts page: 'Pipeline diameter: 1,153 mm' (their own explicit 'diameter' label); read via Wayback capture https://web.archive.org/web/20110104181103/http://www.nord-stream.com/en/the-pipeline/facts-figures.html Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.pipeliner.com.au/internationalnews/nord-stream-piping-through-the-baltic-sea/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "The Australian Pipeliner (independent trade press): 'constant internal diameter of 1,153 mm' -- independently corroborates the exact figure and explains the engineering rationale (internal bore held constant for pigging while wall thickness/outer diameter vary by pressure zone)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: Diameter=1153.00 mm. This is the figure BOTH the operator (Nord Stream AG) and independent trade press (Australian Pipeliner) explicitly label 'diameter' (constant internal/bore diameter, held constant for pigging while wall thickness -- 27-41 mm -- and hence nominal outer diameter vary by pressure zone). CAVEAT for reconciliation: wermac.org (independent) instead states 'Pipes have a diameter of 1,220 millimetres (48 in), the wall thickness of 38 millimetres' for the SAME line -- this is very likely the nominal outer steel-pipe size (a standard API/Russian pipe-mill size; 1220mm-2x38mm=1144mm, close to but not exactly the 1153mm bore, consistent with additional internal coating) rather than a genuine conflict. Recorded 1153mm since it is the figure explicitly and consistently called 'diameter' by the operator and independent trade press together; the 1220mm/48in nominal-OD figure is noted here in case GEM's Diameter convention for this batch means nominal OD rather than bore ID."
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "sheet_row": 373,
+   "values": {
+    "FuelSource": "Yuzhno-Russkoye field; also Yamal Peninsula, Ob and Taz Bays, and Shtokman field (Unified Gas Supply System of Russia)"
+   },
+   "proposed_refs": [
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Gazprom's own project page, 'Resource base': 'Nord Stream will receive natural gas from the Unified Gas Supply System of Russia. The Yuzhno-Russkoye oil and gas field will be a key resource base for gas supplies via the pipeline. The Nord Stream will also export gas from the Yamal Peninsula, Ob and Taz Bays, Shtokman field.' Read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: FuelSource per Gazprom's own resource-base statement (Yuzhno-Russkoye field as the key initial source, with Yamal/Ob-Taz/Shtokman named as further supply). Single-source: this is a Gazprom-specific commercial/reserves statement not commonly repeated verbatim by independent outlets; searched offshore-technology.com and Offshore Magazine for a second corroborating statement of feedstock fields and found only general 'Russian gas' framing (not field-specific), so a second independent source naming the SAME fields was not found. Tier held at medium pending one."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 373,
+   "values": {
+    "StartLocation": "Vyborg",
+    "StartState/Province": "Leningrad Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Greifswald",
+    "EndState/Province": "Mecklenburg-Vorpommern",
+    "EndCountryOrArea": "Germany"
+   },
+   "proposed_refs": [
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+    "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Gazprom's own page: 'Nord Stream will link Russia's Baltic Sea coast near Vyborg with Germany's Baltic Sea coast in the vicinity of Greifswald.' Read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.nord-stream.com/en/the-pipeline/facts-figures.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG facts page: landfall 'Portovaya Bay near Vyborg, Russia' to '..., Mecklenburg-Western Pomerania [Mecklenburg-Vorpommern]. Constructed by Nord Stream AG.' Read via Wayback capture https://web.archive.org/web/20110104181103/http://www.nord-stream.com/en/the-pipeline/facts-figures.html Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com: route runs 'from Portovaya Bay (Vyborg) to the coast of Germany (at Greiswald)', onshore Russian approach ~917 km within Leningrad region before the subsea crossing (that 917 km figure is the SEPARATE Gryazovets-Vyborg feeder, not part of this row's length -- see cross_row_leads)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms the sheet's existing Start=Vyborg, Leningrad Oblast, Russia and End=Greifswald, Mecklenburg-Vorpommern, Germany. IMPORTANT AUDIT NOTE (per brief): a naive offshore-geometry read of this row can appear to 'end' in Leningrad Oblast/Russian waters if it only inspects the pipe's Russian-side landfall/compressor works -- that is an artifact of the offshore route geometry (the line runs from Russian Baltic waters, mostly through international/Danish/Swedish/German EEZ, to the German landfall), not a sheet error. All three sourced pages agree the pipeline's terminus is Greifswald, Germany -- the sheet's End cell (Mecklenburg-Vorpommern) is CORRECT and is NOT changed here; do not 'fix' it to Leningrad Oblast."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 373,
+   "values": {
+    "SegmentCost": "7400000000.00",
+    "SegmentCostUnits": "EUR"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16755095/nord-stream-completes-worlds-longest-subsea-pipeline",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own press release, 'Nord Stream's Project Costs Remain 7.4 Billion Euros' (April 15, 2010) -- issued specifically to rebut media reports of a higher figure; read via Wayback capture https://web.archive.org/web/20220222183957/https://www.nord-stream.com/press-info/press-releases/nord-stream-s-project-costs-remain-74-billion-euros-367/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16755095/nord-stream-completes-worlds-longest-subsea-pipeline",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Offshore Magazine trade coverage of the project's completion corroborates the ~EUR 7.4bn cost figure reported throughout construction."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com project profile independently states the EUR 7.4bn total investment figure."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "SHEET VALUE DISPUTED: the sheet records SegmentCost=14,800,000,000.00 EUR (EUR 14.8bn), but THREE independent sources -- the operator's OWN press release (issued specifically to reaffirm the budget against media reports of overruns), Offshore Magazine, and offshore-technology.com -- all state EUR 7.4bn as the total project investment. No source found anywhere states EUR 14.8bn for Nord Stream 1 (P0753); that figure does not appear to correspond to this project. Filled here with the sourced value (7.4bn) rather than the sheet's; a matching validity[] concern (concern_type=spec) is also staged with contested={'SegmentCost':'7400000000.00'} so the discrepancy reaches the paste surface explicitly, not just as a silent fill overwrite."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 674,
+   "values": {
+    "Operator": "Nord Stream AG"
+   },
+   "proposed_refs": [
+    "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazprom.com/about/production/projects/pipelines/nord-stream/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream AG",
+     "note": "Gazprom's own page: 'The Nord Stream project is implemented by Nord Stream AG, a joint venture set up for designing, constructing and further operating the offshore gas pipeline.' Read via Wayback capture https://web.archive.org/web/20120405171902/http://www.gazprom.com/about/production/projects/pipelines/nord-stream/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream AG",
+     "note": "offshore-technology.com: 'The project is operated by Nord Stream AG'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms Operator=Nord Stream AG (the JV registered in Zug, Switzerland, that designs, builds and operates the offshore pipeline). CONFLATION GUARD: this is Nord Stream AG, NOT Nord Stream 2 AG -- the latter is the SEPARATE JV that operates the P0752 (Nord Stream 2) line and which entered Swiss insolvency/moratorium proceedings; that financial-distress event belongs to P0752's operator record, not this one. See status_reviews[] note."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 674,
+   "values": {
+    "Owner1": "Nord Stream AG",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/about-us/our-shareholders/",
+    "https://www.offshore-technology.com/projects/negp/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/about-us/our-shareholders/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Nord Stream AG's own 'Our Shareholders' page: OAO Gazprom 51.0%, Wintershall Holding GmbH (BASF subsidiary) 15.5%, E.ON Ruhrgas AG 15.5%, N.V. Nederlandse Gasunie 9.0%, GDF SUEZ 9.0% -- the five JV partners behind the legal owner/operator entity Nord Stream AG. Read via Wayback capture https://web.archive.org/web/20120430224008/http://www.nord-stream.com/about-us/our-shareholders/ Live nord-stream.com/gazprom.com blocked/times out from this research environment; content read and confirmed via the noted Wayback Machine capture of the same live URL (capture cited alongside, not swapped in)."
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/negp/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream Gas Pipeline (NSGP)",
+     "note": "offshore-technology.com independently states the identical shareholding structure (Gazprom 51%, BASF/Wintershall and E.ON Ruhrgas 15.5% each, Gasunie and GDF Suez 9% each), confirming the JV percentages have not changed from the operator's own figures (only company names have, over time: Wintershall Holding GmbH -> Wintershall Dea AG, E.ON Ruhrgas AG -> PEG Infrastruktur AG, GDF SUEZ -> ENGIE, per the current live shareholders page)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirms Owner1=Nord Stream AG (100%) -- this is NOT an error but the correct GEM-schema convention of recording the operating JV as the legal owner rather than breaking out its five underlying shareholders (Gazprom 51%, Wintershall Dea AG/formerly Wintershall Holding GmbH 15.5%, PEG Infrastruktur AG/formerly E.ON Ruhrgas AG 15.5%, N.V. Nederlandse Gasunie 9%, ENGIE/formerly GDF SUEZ 9%) -- verified consistent across the operator's own historical (2012) and current shareholders pages plus an independent source; only the shareholder company NAMES have changed over the years, not the percentages or the JV structure."
+  }
+ ],
+ "status_reviews": [
+  {
+   "sheet_row": 373,
+   "segment_name": "",
+   "verdict": "confirm",
+   "current_status": "mothballed",
+   "proposed_status": "mothballed",
+   "evidence_date": "2025-09",
+   "values": {
+    "Status": "mothballed"
+   },
+   "proposed_refs": [
+    "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+    "https://kyivindependent.com/who-sabotaged-nord-stream-3-years-on-investigations-offer-more-questions-than-answers/",
+    "https://www.atlanticcouncil.org/blogs/energysource/can-nord-stream-really-rise-from-the-dead/",
+    "https://www.kommersant.ru/doc/8076436"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream 1",
+     "note": "Nord Stream AG's own incident notice (last updated 14/11/2022): pressure drop and rupture on BOTH strings of Nord Stream 1 on 26 Sept 2022, pressure stabilised by 3 Oct 2022 at atmospheric level (i.e. gas lost, not merely reduced), rupture points later surveyed under Danish permit. Read via Wayback capture https://web.archive.org/web/20221114194839/https://www.nord-stream.com/press-info/press-releases/incident-on-the-nord-stream-pipeline-updated-14112022-529/ (live nord-stream.com blocked/times out from this environment; capture noted alongside, not swapped in for the live URL)."
+    },
+    {
+     "url": "https://kyivindependent.com/who-sabotaged-nord-stream-3-years-on-investigations-offer-more-questions-than-answers/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "Sept 2025 (3-year anniversary) piece: 'Both A and B pipes of Nord Stream 1 are inoperable' -- most recent dated evidence found of continued non-operational status; also confirms investigations (Swedish/Danish closed Feb 2024 without attribution; German ongoing; an Italian arrest of a Ukrainian suspect Aug 2025) with no restoration of service."
+    },
+    {
+     "url": "https://www.atlanticcouncil.org/blogs/energysource/can-nord-stream-really-rise-from-the-dead/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Nord Stream",
+     "note": "July 2025 analysis: despite Moscow-Washington discussion of a potential restart, the EU's 2024 Gas Directive supply-security test and multibillion-dollar civil claims against Gazprom make reopening 'improbable' -- confirms no restart as of mid-2025 and explains why 'mothballed' (not 'cancelled') is still the right bucket: restart remains a live, if unlikely, policy question, not formally abandoned."
+    },
+    {
+     "url": "https://www.kommersant.ru/doc/8076436",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Северный поток-1",
+     "note": "Kommersant (independent Russian outlet, Cyrillic name matched by hand): confirms the 26 Sept 2022 explosion/damage event as the operative fact underlying the current non-operating state."
+    }
+   ],
+   "researcher_notes": "VERDICT: confirm -- Status=mothballed remains correct as of the most recent evidence found (Sept 2025 kyivindependent piece; no Sept/2026 update located in this search pass, and nothing found suggests a change since). RATIONALE FOR mothballed OVER shelved/cancelled: the physical pipeline is intact apart from the ruptured sections (surveyed, not removed/abandoned), a restart is openly discussed as a real if improbable policy question (Atlantic Council, mid-2025), and there is no operator announcement of decommissioning or cancellation -- this does not meet the dormancy-inference bar for 'cancelled' (which would also require ShelvedCancelledType=inferred with no fabricated ref, not applicable here since 'mothballed' is not being changed). CRITICAL DAMAGE-ASYMMETRY NOTE (do not let this drift onto P0752 or vice versa): Nord Stream 1 (this row, P0753) had BOTH strings/lines ruptured in the 26 Sept 2022 sabotage (Nord Stream AG's own dispatch record: simultaneous pressure drop on both strings; both rupture points later surveyed). Nord Stream 2 (P0752, a SEPARATE JV/operator, Nord Stream 2 AG) had only ONE of its two strings ruptured -- the other string was reported intact/still pressurised. These are two different companies (Nord Stream AG vs Nord Stream 2 AG) and two different damage patterns; a status-review verdict for P0752 must not borrow this row's 'both strings' language, and this row's operator (Nord Stream AG) must not be conflated with Nord Stream 2 AG's 2022-23 Swiss insolvency/moratorium proceedings, which affected the OTHER JV, not this pipeline's operator. No repair activity, restoration timeline, or decommissioning was found in any source read for this row."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P0746",
+   "url": "https://www.wermac.org/nordstream/nordstream_part1.html",
+   "note": "wermac.org (independent technical site) states the onshore Gryazovets-Vyborg feeder pipeline (the 'feeding pipeline in Russia'): construction began 9 December 2005 in Babayevo, Vologda Oblast (351 km east of St. Petersburg); completed 2010; length 917 km (570 mi); diameter 1,420 mm (56 in); working pressure ~100 [bar, unit as printed on page -- verify]; operated solely by Gazprom. This is the SAME project as P0746/P5585 in the roster, distinct from the offshore Nord Stream line (P0753) it feeds gas into at the Vyborg compressor station -- do not let P0753's own 2010-04 (offshore pipe-lay) or 2005-09 (Nord Stream AG agreement/JV) dates get attributed to this onshore feeder, and vice versa. The European Parliament briefing (https://www.europarl.europa.eu/RegData/etudes/note/join/2007/393274/IPOL-PETI_NT(2007)393274_EN.pdf) independently corroborates: 'In December 2005, Gazprom started construction of the 917 km long onshore pipeline link Gryazovetz-Vyborg in Babayevo, 351 km east of St. Petersburg' with a target transport capacity for first deliveries in 2010 -- both sources agree on Dec 2005 start / 2010 completion / 917 km / Vologda Oblast origin / sole-Gazprom operation."
+  },
+  {
+   "project_id": "P5585",
+   "url": "https://www.wermac.org/nordstream/nordstream_part1.html",
+   "note": "Same Gryazovets-Vyborg feeder-pipeline lead as filed against P0746 (roster lists both P0746 and P5585 for this onshore line -- routing to both in case they are non-duplicate segments/records of the same feeder). Construction started 9 Dec 2005 in Babayevo, Vologda Oblast; completed 2010; 917 km; 1,420 mm diameter; operated solely by Gazprom. Corroborated independently by the EU Parliament briefing note (same URL as filed on P0746)."
+  }
+ ],
+ "summary": "All 15 owed units filled and sourced (2+ independent refs on 13/15; Proposal and FuelSource single-source with notes); confirmed Status=mothballed (both NS1 strings ruptured 26-Sep-2022, distinct from NS2/P0752's single-string damage and Nord Stream 2 AG's separate insolvency); found and staged one real spec error (SegmentCost sheet=14.8bn EUR vs sourced 7.4bn EUR, 3 independent sources); confirmed End=Mecklenburg-Vorpommern is correct per brief; confirmed no duplicate vs P0746/P5585 (separate onshore Gryazovets-Vyborg feeder, cross-row lead filed) or P0752 (separate JV); Owner1=Nord Stream AG 100% confirmed as valid GEM convention with shareholder breakdown documented."
+}

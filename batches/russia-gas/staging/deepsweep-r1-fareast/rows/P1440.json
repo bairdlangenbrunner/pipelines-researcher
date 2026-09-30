@@ -1,0 +1,603 @@
+{
+ "project_id": "P1440",
+ "pipeline_name": "Trans-Korea Gas Pipeline",
+ "sheet_row": 817,
+ "wiki": "https://www.gem.wiki/Trans-Korea_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action on existence/classification/duplicate. This is a real, extensively and independently documented proposed international project -- not a GEM-only fabrication and not a duplicate of any other row on the 32-pipeline Far East roster (it is the only entry that is a Russia-DPRK-ROK international transit line; P0758/P2027 and the rest of the SKV family are wholly domestic Russian trunk infrastructure that would merely feed gas TOWARD this proposed line's Vladivostok origin, a genuinely distinct relationship, not an identity). Fuel=Gas and PipelineType=transmission are both uncontested.",
+   "contested": {},
+   "researcher_notes": "Checked existence against 6 independent outlets across the whole 1991-2022 span: Reuters (2018-06-29, Wayback), UPI/Yonhap-sourced reporting (2018-10-25, Wayback), Hankyoreh/hani.co.kr (2018-10-24, Korean-language, hand-confirmed), The Diplomat (2019-01-09 and 2022-04), and CSIS's 'Pipe Dreams to Pipelines' analysis (~2015). All six describe the same project: a Gazprom/KOGAS(-and-implicitly-North Korea) plan for a Russia-to-South-Korea gas pipeline transiting North Korea, originating from Russia's Far East (Vladivostok / the Sakhalin-Khabarovsk-Vladivostok system) and connecting to KOGAS's South Korean grid. Checked against the batch's 32-row Far East roster: no other row describes an international DPRK/ROK-transiting line, so this is not a relabeled duplicate of any domestic Russian segment. oilprice.com serves the CSIS piece verbatim on one URL (not independent of CSIS) but ALSO carries a second, genuinely separate original article by Tsvetana Paraskova ('Is The Russia-Korea Pipeline Feasible?') -- treated as a distinct independent source, not double-counted with CSIS.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "https://thediplomat.com/2019/01/a-closer-look-at-south-koreas-plan-for-cooperation-with-russia/",
+    "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT fill EndState/Province as 'South Gyeongsang' to match the merged route geometry as originally scoped -- the geometry itself appears to be the error. Every independently-dated source that specifies a route (most concretely hani.co.kr, naming the exact 2015 KOGAS/Samjong-KPMG least-cost-route study that produces GEM's own recorded LengthKnown=1202 km) describes the line running from the DPRK-Russia border via Wonsan-Cheorwon-Paju-Incheon to Pyeongtaek in Gyeonggi Province -- i.e. terminating in the Seoul metro-area corridor, roughly 35.9 deg N. The staged/merged routes-repo geometry for P1440 (GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P1440.geojson) instead terminates near 35.22 deg N, 127.75 deg E -- the Jeollabuk-do/Gyeongsangnam-do border, ~200 km south of Pyeongtaek and nowhere near any Seoul-corridor endpoint. The North Korean midpoint (~40.87 deg N, 127.70 deg E) also doesn't align well with Wonsan (~39.15 deg N). RouteAccuracy for this geometry should NOT be presumed reliable; flagging it as a route candidate for a human §8 correction rather than auto-replacing it (per hard requirement: a route is never auto-replaced). Filled EndLocation/EndState per the SOURCED value (Pyeongtaek / Gyeonggi Province) rather than the geometry's actual endpoint, consistent with the batch's 'judge the route first' rule.",
+   "contested": {
+    "RouteAccuracy": "likely inaccurate -- geometry terminus (~35.22N, 127.75E) does not match the sourced Pyeongtaek/Gyeonggi Province endpoint (~35.9N) that itself matches GEM's own recorded 1202 km length",
+    "EndState/Province": "Gyeonggi Province (sourced) -- NOT South Gyeongsang (what the current geometry's terminus would imply)"
+   },
+   "researcher_notes": "Read the staged P1440.geojson directly (sibling repo GOIT-GGIT-pipeline-routes, read-only): a 3-point LineString from (131.910,43.123) [Vladivostok-area] through (127.699,40.870) [a point in DPRK, north of but not matching Wonsan] to (127.755,35.216) [Jeollabuk-do/Gyeongsangnam-do border area]. Cross-checked the terminus against hani.co.kr's explicit route description ('북·러 접경에서 원산·철원·파주·인천을 거쳐 평택까지' -- 'from the DPRK-Russia border via Wonsan-Cheorwon-Paju-Incheon to Pyeongtaek'), which is the ONLY source read that names a specific, study-grade route, and whose stated total (1202 km) is an EXACT match to GEM's own recorded LengthKnown -- strong indirect confirmation that this Pyeongtaek/Gyeonggi routing, not the geometry's actual southern terminus, is the route GEM's own length figure is actually describing. Reuters/UPI/CSIS/Diplomat all describe the line running 'through North Korea to South Korea' generically without naming a specific ROK terminus city, so they neither confirm nor contradict Pyeongtaek specifically, but none suggests a Gyeongsang-province landfall either. This is a single-source (Korean-language) route confirmation for the exact terminus city; treated as medium tier for EndLocation/EndState specifically (see corresponding fills[] entry) even though the length match is a strong corroborating signal.",
+   "proposed_refs": [
+    "http://www.hani.co.kr/arti/economy/economy_general/867271.html"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ko"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "shelved"
+   },
+   "primary_value": "shelved",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "https://thediplomat.com/2022/04/how-south-korea-can-wean-itself-off-russian-fossil-fuels/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Trans-Korea gas pipeline",
+     "note": "Status is inferable not literal (per url_verifier doc guidance): describes a 2008 MOU that 'fell apart' after Kim Jong Il's death, and the 2018 'reappearance' framed as a renewed but still-unrealized idea beset by 'challenges' -- supports 'shelved' (paused/dormant, not abandoned-with-finality) rather than 'proposed' (actively advancing) or 'cancelled'. [repair 2026-09-14] Re-fetched (status 200, content confirmed) -- this is equivalent-form prose support for 'shelved', the same pattern as 'late 1960s' supporting StartYear 1967; setting contains_value: true."
+    },
+    {
+     "url": "https://thediplomat.com/2022/04/how-south-korea-can-wean-itself-off-russian-fossil-fuels/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": "",
+     "note": "Discusses 'a gas pipeline from Russia through North Korea' generically (does not name 'Trans-Korea Gas Pipeline' as a proper noun) as something 'prior South Korean administrations have considered' -- past tense, i.e. dormant as of April 2022, not an active current initiative. Kept as status-review context; not treated as fully name-matched to this specific PID per rule 4(a), so not relied on alone. [repair 2026-09-14] name_found corrected to false (page does not name this specific pipeline, per its own note text); contains_value left false -- not needed for merge since the Reuters ref alone satisfies ok+contains_value."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "No source uses the literal word 'shelved,' consistent with the url_verifier guidance that status is inferred from prose, not matched as a substring. Every source describing the project's history (repeated 1991/2008/2011 proposal cycles, each stalling on North Korea-related political risk, sanctions, or the nuclear standoff) supports a dormant-but-not-formally-abandoned characterization, i.e. 'shelved' as GEM's controlled vocabulary would use it. See status_reviews[] for whether this recorded value is now stale given the dormancy-inference rule."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Describes the plan to supply 'Russian gas' via pipeline throughout."
+    },
+    {
+     "url": "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Describes a 12 bcma natural gas pipeline through the Korean peninsula."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Trans-Korea gas pipeline",
+     "note": "No source uses the literal word 'transmission'; inferred from context -- a ~1,200 km international cross-border trunk line moving bulk gas from a Russian production/export hub to a national gas company's grid is definitionally a transmission line, not a local distribution network. [repair 2026-09-14] Re-fetched (status 200, content confirmed: ~1,200 km international bulk-gas line). This is equivalent-form/definitional support for 'transmission' per the contains_value rule (page need not use the literal word); setting contains_value: true."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Classification inferred from scale/function (long-distance international trunk), not a literal source statement -- kept at medium tier for that reason, but not seriously in doubt."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2011"
+   },
+   "primary_value": "2011",
+   "proposed_refs": [
+    "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines",
+    "https://oilprice.com/Latest-Energy-News/World-News/Is-The-Russia-Korea-Pipeline-Feasible.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Gazprom, South Korea, and North Korea signed a preliminary agreement to construct such a pipeline in 2011.'"
+    },
+    {
+     "url": "https://oilprice.com/Latest-Energy-News/World-News/Is-The-Russia-Korea-Pipeline-Feasible.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Russia and South Korea signed a \"road map\" in 2011, but have not advanced beyond that' -- independent origin (Paraskova/OilPrice original, not the syndicated CSIS piece)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent-origin sources (CSIS's own analysis and a separate, original OilPrice.com article by Tsvetana Paraskova -- confirmed NOT the same syndicated CSIS reprint that also appears on oilprice.com) agree on a formal 2011 tripartite roadmap/preliminary agreement. Two earlier candidate dates were found and rejected as the 'ProposalYear' answer: 1991 (CSIS: 'first proposed in 1991' -- an earlier Soviet/early-post-Soviet-era mention, not a concrete agreement) and 2008 (Reuters: a KOGAS-Gazprom memorandum of understanding, bilateral only, not yet including North Korea). 2011 is the best-corroborated, most concrete formal-agreement date with 2+ independent sources."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source states construction ever began. Reuters (2018) explicitly frames the project as never having advanced past agreements/studies. Searched all 6 wiki-cited sources plus CSIS and OilPrice -- none mention groundbreaking, contracts awarded, or physical work. Leaving UNRESOLVED rather than guessing."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "One single-source lead found and deliberately NOT filled: Reuters (2018) states the 2008 MOU-era plan targeted supply 'starting from 2015,' but frames this entirely in retrospect as part of an agreement that 'fell apart' -- i.e. an unrealized target date from a since-abandoned earlier plan iteration, not a current operational start year, and no second source corroborates 2015 specifically as a start-year target (distinct from hani.co.kr's 2015, which is the YEAR OF THE ROUTE-COST STUDY, not a start year -- these two 2015 references must not be conflated). Given the single-source, retrospective, superseded-plan nature of the Reuters figure, leaving UNRESOLVED rather than filling a shaky number."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "1071.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "1071.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "http://www.hani.co.kr/arti/economy/economy_general/867271.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Trans-Korea gas pipeline",
+     "note": "'The plan was to supply 7.5 million tonnes of Russian gas annually over 30 years' -- unit conversion, not a literal MMcf/d match (7.5 mtpa natural gas ~= 10.3-11 bcm/y ~= ~1000-1071 MMcf/d depending on density assumption, consistent with the recorded 1071.00). [repair 2026-09-14] Re-fetched (status 200, '7.5 million tonnes' confirmed present). This is an explicit unit-equivalent conversion per the contains_value rule; setting contains_value: true."
+    },
+    {
+     "url": "http://www.hani.co.kr/arti/economy/economy_general/867271.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "서이버리아 천연가스 파이프라인 (Siberia natural gas pipeline via North Korea, KOGAS-Gazprom joint study; route named 북·러 접경–원산·철원·파주·인천–평택)",
+     "note": "Hand-confirmation override: page states '연간 750만t의 시베리아 가스전 생산 천연가스' -- 'annually 7.5 million tonnes of Siberian gas field-produced natural gas' -- independently matching Reuters' figure exactly. [repair 2026-09-14] Fetched directly (curl, status 200) and confirmed '750만t' (7.5 million tonnes) is present verbatim. This is a Korean-script page the automated fuzzy name-matcher cannot match against the English project name, not a document nobody could open or a page that fails to name the project -- per the repair rule, a hand-read page is ok: true, and the article's whole subject is this KOGAS-Gazprom pipeline (names the same 1202 km study route and endpoints as the Length record), so name_found is corrected to true. Setting ok: true, status: 200, contains_value: true, name_found: true (all corrected from false)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en/ko",
+   "researcher_notes": "Two independent sources (Reuters, hani.co.kr) agree exactly on the underlying 7.5 million tonnes/year figure, and UPI (Wayback) also references '7.5 million tons of gas' transported through the pipeline, a third corroboration. None state the figure directly in MMcf/d or bcm/y, so the match to GEM's recorded 1071.00 MMcf/d requires a unit-conversion step (natural gas density ~0.717-0.75 kg/m3 depending on composition assumption); kept at medium tier for that conversion-dependency rather than high, despite 3-source agreement on the underlying tonnage. CSIS/OilPrice separately give looser round-number estimates (12 bcma / 10 bcm respectively) in the same broad range but not tight enough to treat as confirming the exact 1071.00 figure."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source read (all 6 wiki citations plus CSIS/OilPrice) states an operating or design pressure. Unsurprising for a pipeline that never advanced past feasibility studies and a signed roadmap -- detailed engineering specs like pressure are typically not published at this stage. Leaving UNRESOLVED."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "1202.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "1202.00",
+   "proposed_refs": [
+    "http://www.hani.co.kr/arti/economy/economy_general/867271.html",
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "https://web.archive.org/web/20181025115821/https://www.upi.com/Top_News/World-News/2018/10/25/Gas-pipeline-from-Russia-to-South-Korea-would-cost-195M/1531540447736/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.hani.co.kr/arti/economy/economy_general/867271.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "총 1202㎍ (2015 KOGAS/Samjong-KPMG route-cost study; route named 북·러 접경–원산·철원·파주·인천–평택)",
+     "note": "Hand-confirmation override: page states the 2015 KOGAS/Samjong-KPMG least-cost route study total is exactly '총 1202㎍' -- an EXACT match to the recorded value, naming the specific study. [repair 2026-09-14] Fetched directly (curl, status 200), '1202' confirmed present verbatim. Korean-script page the automated matcher can't fuzzy-match against the English name, not an unreadable or off-topic document -- ok: true per the repair rule. The article's whole subject is this KOGAS-Gazprom Russia-DPRK-ROK pipeline and it names the specific route/endpoint-pair, so name_found is corrected to true (was false)."
+    },
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Trans-Korea gas pipeline",
+     "note": "States '1,200 km (740 mile)' -- close rounding match, within 0.2%. [repair 2026-09-14] Re-fetched (status 200, '1,200 km' confirmed present). This is the explicit rounding-equivalent case the contains_value rule calls out ('1,200 km' supports 1202 km); setting contains_value: true."
+    },
+    {
+     "url": "https://web.archive.org/web/20181025115821/https://www.upi.com/Top_News/World-News/2018/10/25/Gas-pipeline-from-Russia-to-South-Korea-would-cost-195M/1531540447736/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Trans-Korea gas pipeline",
+     "note": "States '746 miles' = 1200.6 km -- close rounding match, within 0.1%. [repair 2026-09-14] Re-confirmed page resolves (status 200). Unit-conversion/rounding-equivalent match to 1202 km per the contains_value rule; setting contains_value: true."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en/ko",
+   "researcher_notes": "Three independent sources converge almost exactly (1202 km exact / 1200 km / 1200.6 km), with hani.co.kr naming the specific 2015 KOGAS-commissioned Samjong-KPMG study that produced the exact figure GEM records. High-confidence fill. Note: The Diplomat (2019) separately gives a materially different length ('11,00 km', apparently a typo for 1,100 km) for what it calls a shorter Sakhalin-Khabarovsk-Vladivostok-connector variant -- NOT used here since it disagrees and appears to describe a different route concept/typo rather than corroborating 1202."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source states a pipe diameter. Consistent with the project never having reached detailed engineering design. Leaving UNRESOLVED."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Far East Siberian gas fields"
+   },
+   "primary_value": "Far East Siberian gas fields",
+   "proposed_refs": [
+    "http://www.hani.co.kr/arti/economy/economy_general/867271.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.hani.co.kr/arti/economy/economy_general/867271.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "극동 시베리아 가스전 (Far East Siberian gas fields; same KOGAS-Gazprom pipeline article as the Length/Capacity records)",
+     "note": "Hand-confirmation override: page states '공사는 극동 시베리아 가스전에서 채굴되는 천연가스를... 공급하는' -- 'KOGAS [will supply] natural gas extracted from Far East Siberian gas fields' -- directly naming the upstream source. [repair 2026-09-14] Fetched directly (curl, status 200), '극동 시베리아' (Far East Siberia) confirmed present verbatim, an exact-form match to the recorded value. Korean-script page the automated matcher can't fuzzy-match against the English name, not an unreadable or off-topic document -- ok: true per the repair rule. Same article as the Length/Capacity records, whose whole subject is this pipeline and which names its specific route/endpoints, so name_found is corrected to true (was false)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ko",
+   "researcher_notes": "Single-source (Korean-language) fill -- no other source read names a specific upstream field/region, though Reuters/CSIS/UPI all consistently describe the gas as originating in Russia's Far East generally, consistent with this framing. Kept at medium (not high) tier for the single-source caveat."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Vladivostok",
+    "StartState/Province": "Primorsky Krai",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Pyeongtaek",
+    "EndState/Province": "Gyeonggi Province",
+    "EndCountryOrArea": "South Korea"
+   },
+   "primary_value": "Vladivostok",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "http://www.hani.co.kr/arti/economy/economy_general/867271.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'...from Vladivostok into North Korea and on to the South' -- confirms StartLocation=Vladivostok directly. Vladivostok is the administrative center of Primorsky Krai (uncontested geography, not independently sourced beyond this)."
+    },
+    {
+     "url": "http://www.hani.co.kr/arti/economy/economy_general/867271.html",
+     "ok": false,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Hand-confirmation override (Korean-script name mismatch): states the 1202km least-cost route runs '북·러 접경에서 원산·철원·파주·인천을 거쳐 평택까지' -- 'from the DPRK-Russia border via Wonsan-Cheorwon-Paju-Incheon to Pyeongtaek' -- naming Pyeongtaek (in Gyeonggi Province) as the terminus of the exact route whose length matches GEM's own recorded 1202 km."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en/ko",
+   "researcher_notes": "StartLocation=Vladivostok reconfirmed directly and is also consistent with the routes-repo geometry's origin point. EndLocation/EndState/Province is a SOURCED CORRECTION, not the value that would match the current staged route geometry (see validity[] spec concern): the geometry's actual terminus (~35.22N, 127.75E, near the Jeollabuk-do/Gyeongsangnam-do border) does not match Pyeongtaek/Gyeonggi Province (~35.9N) and was NOT filled here even though the batch's original scope note suggested 'South Gyeongsang' to match it -- doing so would mean sourcing a location to match a geometry judged likely inaccurate rather than the other way around. Single Korean-language source for the specific terminus city, but strongly corroborated indirectly by the exact 1202 km length match; medium tier."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Genuine source conflict, not a gap -- three non-agreeing construction-cost-adjacent figures were found and NONE was forced into the field: (1) The Diplomat (2019): 'the cost of pipeline laying would be about $2.5 billion.' (2) CSIS (~2015): 'Initial estimates suggested that the 12 bcma pipeline would cost around $6.3 billion.' These two do not agree and appear to be different-vintage estimates for different route/capacity assumptions, not a rounding difference. (3) UPI (2018, Wayback): a SEPARATE and different metric entirely -- a projected North Korea TRANSIT FEE (not construction cost) of '$158 million... annually' (article headline rounds this to '$195M'), per a KOGAS/KGC estimate reported via Yonhap, calculated by analogy to Gazprom's Ukraine/Belarus/Slovakia transit contracts. This transit-fee figure must not be conflated with SegmentCost (construction cost) -- it is excluded here on that basis, not merely because it's unsourced. Given the genuine $2.5B-vs-$6.3B disagreement between the two real construction-cost candidates, and no way to determine which (if either) GEM intends, leaving UNRESOLVED with both documented rather than picking one."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "oo_sheet_row": 1205,
+   "sheet_row_note": "Operator/Owner unit sourced against the operators_owners tab (oo_sheet_row 1205), not the main Gas tab sheet_row.",
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source distinguishes an 'operator' role from the owner parties (KOGAS, Gazprom). For a never-built, feasibility/roadmap-stage international project, no operating entity would plausibly have been designated yet. Leaving UNRESOLVED rather than assuming Operator=Owner without a source stating that framing."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "oo_sheet_row": 1205,
+   "sheet_row_note": "Operator/Owner unit sourced against the operators_owners tab (oo_sheet_row 1205), not the main Gas tab sheet_row.",
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "KOGAS",
+    "Owner2": "Gazprom PJSC"
+   },
+   "primary_value": "KOGAS",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+    "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Names KOGAS and Gazprom as the two parties to the underlying 2008 MOU and, implicitly, the project's would-be developers."
+    },
+    {
+     "url": "https://www.csis.org/analysis/new-russian-gas-export-projects-pipe-dreams-pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Gazprom, South Korea, and North Korea signed a preliminary agreement...' -- independently names Gazprom and South Korea (KOGAS is South Korea's state gas company and the party in every other source's account) as the project parties."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "KOGAS and Gazprom PJSC are named as the project's two parties/would-be co-developers across every source read (Reuters, hani.co.kr, CSIS, OilPrice), with North Korea's state authorities as the necessary but non-corporate transiting third party (no distinct North Korean owner entity is ever named). No ownership percentage split is stated anywhere -- left blank rather than guessed."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P0758",
+   "url": "https://web.archive.org/web/20180629104735/https://www.reuters.com/article/us-northkorea-southkorea-gas-russia-expl/trans-korea-gas-pipeline-project-reappears-but-challenges-remain-idUSKBN1JP0UN",
+   "facts": "Reuters and hani.co.kr both describe the Trans-Korea proposal as fed FROM the existing Sakhalin-Khabarovsk-Vladivostok trunk (P0758)/Far East Siberian gas fields at Vladivostok -- i.e. P0758 is P1440's would-be domestic Russian supply-side connection, not a duplicate or overlapping entity. No action needed on P0758 itself; noted for cross-row context only in case a future FuelSource/upstream-connectivity field on either row wants the linkage documented."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 817,
+   "current_status": "shelved",
+   "verdict": "stale",
+   "proposed_status": "cancelled",
+   "proposed_changes": {
+    "Status": "cancelled",
+    "ShelvedCancelledType": "inferred"
+   },
+   "evidence_date": "2019-01",
+   "staleness_rule": "shelved >= 4y -> cancelled (inferred)",
+   "proposed_refs": [
+    "https://thediplomat.com/2019/01/a-closer-look-at-south-koreas-plan-for-cooperation-with-russia/",
+    "https://thediplomat.com/2022/04/how-south-korea-can-wean-itself-off-russian-fossil-fuels/"
+   ],
+   "verifications": [
+    {
+     "url": "https://thediplomat.com/2019/01/a-closer-look-at-south-koreas-plan-for-cooperation-with-russia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://thediplomat.com/2022/04/how-south-korea-can-wean-itself-off-russian-fossil-fuels/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Generic reference to the concept, not name-matched to this specific PID -- context only, not treated as a fully independent confirming source."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Newest PROJECT-SPECIFIC dated evidence found is The Diplomat's 2019-01-09 piece (Reuters 2018-06-29 is slightly older). A 6th wiki-cited source (rg.ru, 'V Seule obsudili prokladku gazoprovoda iz Rossii v Iuzhnuiu Koreiu,' dated 2019-06-28, which would be the single newest citation on GEM's own page) could NOT be verified as of this audit: rg.ru returned HTTP 401 direct (likely a post-2022 geo-block on a Russian state outlet, not evidence of deletion), the cited Google cache URL is dead (Google retired web-cache serving; returns a bare Google-search redirect stub, no article content), and the Wayback CDX API returned 'Internet Archive: Temporarily Offline' on repeated attempts across this session -- an infrastructure outage, not a content finding. Not used as a citation; not treated as resolving the status question either way. The Diplomat's 2022-04 piece discusses the same Russia-DPRK-ROK pipeline concept generically ('prior South Korean administrations have considered') without naming this specific project, past-tense-framed -- consistent with, but not independent proof of, continued dormancy through April 2022. No project-specific news of any kind (resumed talks, formal cancellation, revived interest) was found for 2020-2026 in any source reached (CSIS, OilPrice, both Diplomat pieces, WebSearch). Applying the batch's dormancy-inference rule: a project already recorded 'shelved' with no confirmable project-specific evidence more recent than 2019 is well past the '>=4y dormant -> cancelled' threshold as of 2026-09-14 (roughly 7-7.5 years since the newest confirmable evidence). Proposing Status=cancelled with ShelvedCancelledType=inferred (lowercase per controlled vocab), per rule 2 with NO fabricated confirming URL for the cancellation itself -- this is a mechanical dormancy inference, not a sourced fact, and should be labeled as such. Important caveat for whoever applies this: unlike a typical shelved commercial project, this pipeline's dormancy is structurally tied to unresolved North Korea sanctions/political-risk conditions and has already had multiple historical proposal/dormancy cycles (1991, 2008, 2011) -- a future thaw in inter-Korean or Russia-DPRK relations could plausibly revive it under a different administration, so 'inferred cancelled' should be understood as 'no active current initiative found,' not as a claim that the underlying strategic rationale has been abandoned by any party."
+  }
+ ],
+ "summary": "P1440 confirmed as a real, well-documented proposed project (not fabricated, not a roster duplicate); Fuel/PipelineType/Proposal(2011)/Capacity/Length/Owner newly sourced (REFS_ADDED), FuelSource sourced single-language-source (Korean, hand-confirmed), Location sourced with a major correction -- EndLocation/EndState/Province filled as Pyeongtaek/Gyeonggi Province (sourced) rather than 'South Gyeongsang' as the batch's own scope note suggested, because the staged route geometry's actual terminus (~200km further south, near the Jeollabuk-do/Gyeongsangnam-do border) does not match any sourced description and is flagged as a likely-inaccurate route candidate for a human §8 correction, not auto-replaced. Construction/Start/Pressure/Diameter/Operator/SegmentCost UNRESOLVED (SegmentCost has a genuine $2.5B-vs-$6.3B construction-cost source conflict, both documented, neither forced; a separate $158-195M/year figure is a North Korea transit fee, explicitly not conflated with SegmentCost). Status review: verdict 'stale' -- proposing Status shelved->cancelled (ShelvedCancelledType=inferred) per the dormancy rule, newest confirmable project-specific evidence dated 2019-01 (~7 years dormant); GEM's own 6th wiki citation (rg.ru, 2019-06) could not be verified this session (401 + dead Google cache + Internet Archive temporarily offline) and is not relied on either way."
+}

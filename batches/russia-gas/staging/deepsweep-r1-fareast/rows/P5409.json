@@ -1,0 +1,777 @@
+{
+ "project_id": "P5409",
+ "pipeline_name": "Power of Siberia 2 Gas Pipeline",
+ "sheet_row": 2997,
+ "wiki": "https://www.gem.wiki/Power_of_Siberia_2_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change to existence, classification (Fuel=Gas, PipelineType=transmission), or PipelineNetworkGrouping. See the separate SPEC and ROUTE/LOCATION concern records below for the items that DO need review.",
+   "researcher_notes": "EXISTENCE: real, extensively documented, non-GEM-only entity -- a named Gazprom-Mongolia SPV ('Gazoprovod Soyuz Vostok' LLC) with its own TEO (completed and formally signed off by both governments, Jan 2022), its own dedicated news coverage across at least 5 independent Russian outlets (eprussia.ru, Vedomosti, Kommersant, neftegaz.ru, TASS) plus English-language coverage (TASS, Forbes via FT). CLASSIFICATION: Fuel=Gas and PipelineType=transmission both independently reconfirmed. DUPLICATE CHECK: this run compared P5409 against the batch's 32-row roster and against its own sibling rows in the same PipelineNetworkGrouping (Power of Siberia 2 Gas Pipeline) -- P0734 (the Russian PoS2 Main Line, a SEPARATE ProjectID/row, explicitly out of this batch's scope per the task's scope guidance) and P3603 (the Sayansk Branch, already deep-swept separately in this same batch with its own shard). No evidence found that P5409/Soyuz Vostok duplicates any OTHER row in the roster: it is consistently and uniquely described across every source read as the Mongolia-territory-only (962.9km) continuation of the PoS2 system, distinct in both geography and Mongolian SPV registration from P0734's Russian-territory main line. No duplicate concern staged. ATTRIBUTION: Owner1=Gazprom PJSC 100% and Operator=Gazprom PJSC both independently reconfirmed (see fills[]).",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://tass.com/economy/1616453"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "contested": {}
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Recommend correcting Diameter from 1420.00mm to 1400.00mm. The current value traces to an aggregate/system-level figure (the whole 2-line Russian PoS2 mainline at 1420mm/10MPa) rather than the Mongolia segment's own TEO-determined figure (1400mm, single line). Do NOT similarly force-fit the same source's 10 MPa aggregate figure onto Pressure -- see the Pressure [ref] fills[] record, left UNRESOLVED for exactly this reason.",
+   "researcher_notes": "The sheet's own currently-cited Diameter [ref] (neftegaz.ru/.../660602-.../) states, in a passage describing the WHOLE Power of Siberia-2 project: 'МГП Сила Сибири-2 - проект 2-ниточного газопровода с давлением 10 MPa, диаметр трубы - Ø1420 мм' (a 2-STRING/dual-pipe project at 10 MPa, diameter 1420mm) -- explicitly the Russian domestic 2-line mainline system, not the single-line 962.9km Mongolia segment this row (P5409/Soyuz Vostok) represents. Three independent sources instead give the Mongolia segment's OWN TEO-determined diameter as 1400mm: eprussia.ru's original 2022-01-26 TEO-approval report ('диаметр труб - 1400 мм, предполагается пять компрессорных станций'), Vedomosti's independent 2022-02-28 corroboration of the same TEO-approval event, and neftegaz.ru's dedicated 'Что такое Газопровод Союз Восток?' reference article. This is exactly the aggregate-vs-segment confusion this audit was scoped to look for, and it appears to be the root cause of the sheet's current (incorrect) 1420mm value.",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://neftegaz.ru/news/transport-and-storage/660602-gazoprovod-soyuz-vostok-gazprom-sozdal-kompaniyu-spetsnaznacheniya-dlya-stroitelstva-prodolzheniya-s/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "contested": {
+    "Diameter": "1400.00"
+   }
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "verdict": "concern",
+   "concern_type": "route",
+   "recommendation": "Recommend (1) a routes-repo geometry re-draw: the digitized route for this ProjectID currently starts in Shanghai, China and runs through numerous Chinese and Mongolian provinces before ending in Selenge Province, Mongolia -- backwards and far too long for a pipeline Gazprom itself describes as running 962.9km entirely within Mongolia, starting at the RF border near Kyakhta/Buryatia; (2) removing/blanking EndState/Province='Shanghai' and EndCountryOrArea='China' on the sheet rather than replacing them with a guessed value, since the best available segment-specific source states the China entry point has not yet been publicly announced; StartLocation/StartState/StartProvince/StartCountryOrArea (Kyakhta/Republic of Buryatia/Russia) are independently confirmed correct and need no change.",
+   "researcher_notes": "Cross-checked against batches/russia-gas/staging/state-audit-20260914/region_audit.csv, which independently flags this exact ProjectID with verdict=START_MISMATCH: the routes-repo digitized geometry starts in Shanghai (CN) and ends in Selenge Province (MN), traversing many Chinese and Mongolian admin-1 units in between. Gazprom's own TEO-approval statements (eprussia.ru 2022-01-26; Vedomosti 2022-02-28) are explicit and repeated: Soyuz Vostok 'stretch[es] 962.9 kilometers in Mongolian territory' ONLY -- a single, ~963km, Mongolia-only line, not a multi-thousand-km trace reaching Shanghai. The dedicated neftegaz.ru reference article gives the precise, sourced route: begins in Selenge aimag at the RF border (~10km between Altanbulag and Sukhbaatar, directly opposite Kyakhta, Buryatia, RF), crosses south through Darkhan-Uul, Tov, Dundgovi, Govi-Sumber aimags, ending in Dornogovi aimag near (but not confirmed at a specific named town for) the Mongolia-China border -- and the SAME source explicitly states the China entry point is not yet publicly announced ('пока не анонсируется'), because no RF-China supply contract has been signed. So EndState/Province should NOT be filled with a specific value (including 'Dornogovi', which is inferred/contextual, not a confirmed exact endpoint) -- it should be blanked pending an actual announcement, not left as the current, demonstrably wrong 'Shanghai'/'China'. Not proposing route geometry coordinates myself (out of scope for this audit / route creation is a separate workflow), but flagging with concrete sourced corridor description for whoever next draws or re-draws this route.",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "contested": {
+    "EndState/Province": "not confirmable (currently 'Shanghai', contradicted by primary sourcing)",
+    "EndCountryOrArea": "not confirmable as 'China' with a specific entry point at this time",
+    "RouteAccuracy / routes-repo geometry": "digitized route starts in Shanghai, CN and traverses China+Mongolia to Selenge Province, MN -- contradicts Gazprom's own description of a 962.9km, Mongolia-only line starting at the RF border near Kyakhta."
+   }
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "proposed_refs": [
+    "https://www.vedomosti.ru/business/news/2025/06/17/1117522-novak-sila-sibiri-2-sohranyaet-aktualnost",
+    "https://www.kommersant.ru/doc/7834449",
+    "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.vedomosti.ru/business/news/2025/06/17/1117522-novak-sila-sibiri-2-sohranyaet-aktualnost",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-06-17: Novak says PoS2 'sohranyaet aktual'nost' (remains relevant/on the agenda) -- still described as unfinished, price/terms under discussion, consistent with proposed (not under construction).",
+     "name_found": false
+    },
+    {
+     "url": "https://www.kommersant.ru/doc/7834449",
+     "ok": true,
+     "contains_value": true,
+     "note": "Verified OK (200, content present). Reports on the state of PoS2/Soyuz Vostok talks -- no construction, no signed supply contract as of this reporting.",
+     "name_found": false
+    },
+    {
+     "url": "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-23 analytics piece: experts expect gas deliveries no earlier than 2031; confirms the Sept-2025 memorandum is 'legally binding' per the Russian side but China has not confirmed that characterization, and core commercial terms (price, volumes, financing, construction timeline) remain unagreed -- i.e. still pre-construction/proposed as of the most recent evidence found.",
+     "name_found": false
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "e-disclosure.ru/portal/files.aspx?id=934&type=2 (one of the 3 URLs in current_ref) returns HTTP 403 from this environment -- access failure, not evidence of deletion; not carried forward as a live proposed_ref (kept out per the access-failure/dead-link distinction; no Wayback capture attempted for it since 2 fully independent working refs already corroborate Status). Status=proposed is CONFIRMED as still correct: as of the newest verified evidence (2025-09-23 Vedomosti analytics piece), the Sept-2025 Putin-Xi memorandum is legally binding only on the Russian characterization, China has not confirmed as much, and price/volume/financing/construction-timeline are all still unresolved. No construction has begun. See status_reviews[] for the full annual-update determination."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.interfax.ru/business/960917",
+    "https://tass.com/economy/1616453"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.interfax.ru/business/960917",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually re-read with Cyrillic name check (automated Latin-only fuzzy check false-negatived this as name_absent): Novak/RF-China gas-pipeline contract coverage referencing Sila Sibiri-2/Soyuz Vostok; describes a natural GAS pipeline throughout.",
+     "name_found": true
+    },
+    {
+     "url": "https://tass.com/economy/1616453",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dedicated Soyuz Vostok article, headline 'Design works for Soyuz Vostok GAS PIPELINE via Mongolia at their final stage' -- unambiguous.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "No ambiguity risk; both sources explicitly describe a natural gas trunk pipeline."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.interfax.ru/business/960917",
+    "https://tass.com/economy/1616453"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.interfax.ru/business/960917",
+     "ok": true,
+     "contains_value": true,
+     "note": "Cyrillic-checked manually: describes the export trunk-pipeline deal/contract framing, not local distribution.",
+     "name_found": true
+    },
+    {
+     "url": "https://tass.com/economy/1616453",
+     "ok": true,
+     "contains_value": true,
+     "note": "Describes Soyuz Vostok as a trunkline (МГП / trunk gas pipeline) carrying ~50 bcm/y export volumes to China -- transmission-class, not distribution.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Consistent with every sibling PoS2-family row (all transmission)."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2020",
+    "ProposalMonth": "8"
+   },
+   "primary_value": "2020",
+   "proposed_refs": [
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://neftegaz.ru/news/transport-and-storage/660602-gazoprovod-soyuz-vostok-gazprom-sozdal-kompaniyu-spetsnaznacheniya-dlya-stroitelstva-prodolzheniya-s/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dedicated 'what is Soyuz Vostok' reference article's own project chronology: 'август 2020 г. - подписан МоВ в отношении создания компании спецназначения на территории Монголии' (Aug 2020: Memorandum of Intent signed on creating the Mongolia special-purpose company) -- the specific origination step for the Mongolia-segment entity that became Soyuz Vostok, distinct from the Dec-2019 MOU which covered the broader Russia-China-via-Mongolia CONCEPT (not yet a named segment/SPV).",
+     "name_found": true
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/660602-gazoprovod-soyuz-vostok-gazprom-sozdal-kompaniyu-spetsnaznacheniya-dlya-stroitelstva-prodolzheniya-s/",
+     "ok": true,
+     "contains_value": true,
+     "note": "2021-01-22 article reporting the SPV's registration carries the identical chronology, independently corroborating the Aug-2020 MoV date for SPV creation.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Current ref (forbes.ru/biznes/505093) does not contain '2020' anywhere (confirmed both by the automated check and a manual full-text read via Wayback) and is dropped. Replaced with two independent, verified, Soyuz-Vostok-specific sources giving Aug 2020 as the date the Mongolia-segment SPV ('Gazoprovod Soyuz Vostok') was formally initiated -- keeps the sheet's recorded ProposalYear=2020, adds ProposalMonth=8 (not currently on the worklist's value set but directly supported; harmless to include, drop if the schema treats ProposalMonth as a separate unit). NOTE the full project chronology (both sources) also documents an EARLIER Dec-2019 Gazprom-Mongolia MOU covering the general 'pipe gas via Mongolia to China' concept -- not specific to a named Mongolia segment/SPV -- so 2020 (not 2019) is the more defensible ProposalYear specifically for THIS entity (Soyuz Vostok), not the broader PoS2-via-Mongolia idea."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2024"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://tass.com/economy/1616453"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Chronology: 'июль 2022 г. - премьер-министр Монголии Л. Оюун-Эрдэнэ сообщил, что строительство может начаться в 2024 г.' (July 2022: Mongolian PM Oyun-Erdene said construction could start in 2024).",
+     "name_found": true
+    },
+    {
+     "url": "https://tass.com/economy/1616453",
+     "ok": true,
+     "contains_value": true,
+     "note": "'Construction on the project could start in 2024' -- independent English-language corroboration of the same 2024 target.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Value unchanged (2024), now with 2 independent verified sources instead of the unsupportive Forbes ref. IMPORTANT CAVEAT for the status review: 2024 was the TARGET as of 2022; multiple later sources (Forbes/FT Jan 2024 via Wayback; dp.ru/FT June 2024; Vedomosti Sept 2025) confirm construction did NOT actually begin in 2024 -- the target slipped. ConstructionYear=2024 is kept as the sourced PLANNED date (that is what these refs document), and the fact that it did not happen is carried by Delayed=yes/DelayType=confirmed on the separate Delay [ref] unit, per GEM convention (planned date stays recorded; slippage is captured by the Delay fields, not by silently changing ConstructionYear)."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2030"
+   },
+   "primary_value": "2030",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/887229-/",
+    "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/887229-/",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-04 article ('VSG stroitsya...') reports Deputy PM Novak's own commissioning framing tying PoS2/Soyuz Vostok gas supplies to the 2030-2032 window (east/west GTS unification context).",
+     "name_found": true
+    },
+    {
+     "url": "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-23: independent analysts' consensus is gas deliveries via PoS2 'no earlier than 2031'.",
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "CONTESTED/EVOLVING FIGURE, flagged rather than silently picked: current ref (forbes.ru) does not contain '2030' anywhere (confirmed). The CURRENTLY-CITED-ELSEWHERE tass.com/economy/1616453 (dedicated Soyuz Vostok article, 2022) explicitly gives a DIFFERENT figure: 'the gas pipeline may be launched in 2027-2028.' That 2022 estimate is superseded by the weight of 2025 evidence (Novak's 2030-2032 framing per neftegaz 887229, and the Sept-2025 Vedomosti analytics consensus of 'no earlier than 2031') given the well-documented 2024 construction delay (see Delay [ref]). Recommend KEEPING StartYear1=2030 as the best-supported single point within the current 2030-2032 consensus range rather than reverting to the stale 2027-2028 estimate, but this is a judgment call across disagreeing sources, not a clean single-source confirmation -- flagging for human review rather than presenting as settled. Not staged as a validity concern since the recorded value sits inside the supported range, not outside it."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes",
+    "DelayType": "confirmed"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://www.dp.ru/a/2024/06/03/ft-sdelka-po-gazoprovodu",
+    "http://web.archive.org/web/20240305121559/https://www.forbes.ru/biznes/505093-prem-er-mongolii-predupredil-o-zaderzkah-v-stroitel-stve-sily-sibiri-2",
+    "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.dp.ru/a/2024/06/03/ft-sdelka-po-gazoprovodu",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually re-read with Cyrillic name check (automated check false-negatived as name_absent). Title/meta: 'Сделка РФ и КНР по газопроводу Сила Сибири-2: что нового' / 'Что происходит с проектом строительства газопровода Сила Сибири-2: позиция Китая' (dp.ru's own summary of an FT piece on the state of the RF-China deal and China's position) -- 2024-06-03, describes the deal as unresolved/stalled on Chinese terms, supporting DelayType=confirmed (an explicitly reported delay, not merely inferred dormancy).",
+     "name_found": false
+    },
+    {
+     "url": "http://web.archive.org/web/20240305121559/https://www.forbes.ru/biznes/505093-prem-er-mongolii-predupredil-o-zaderzkah-v-stroitel-stve-sily-sibiri-2",
+     "ok": true,
+     "contains_value": true,
+     "note": "Mongolian PM Oyun-Erdene told FT (via Forbes.ru, 2024-03) that the planned 2024 construction start may be delayed since Moscow and Beijing had not finalized pricing/project details -- live forbes.ru now serves only a captcha stub (bot-block, not a dead link), cited via this Wayback capture per standing rule.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-23: confirms commercial terms (price, volumes, financing, construction timeline) still unagreed as of the most recent evidence, i.e. the delay first reported in 2024 has continued through at least Sept 2025.",
+     "name_found": false
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Delayed=yes / DelayType=confirmed both hold up strongly: the originally-targeted 2024 construction start (see Construction [ref]) was explicitly and repeatedly reported as slipping (Forbes/FT Jan-2024, dp.ru/FT June-2024, and still unresolved per Vedomosti as recently as Sept-2025) -- an explicitly REPORTED delay, correctly coded 'confirmed' rather than 'inferred'."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "50.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "50.00",
+   "proposed_refs": [
+    "https://tass.com/economy/1616453",
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok"
+   ],
+   "verifications": [
+    {
+     "url": "https://tass.com/economy/1616453",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dedicated Soyuz Vostok article: 'The gas pipeline will supply about 50 bln cubic meters of gas to China annually.' Segment-specific, not a system aggregate reference -- directly about this pipeline.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.eprussia.ru/news/base/2022/3192377.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "2022-01-26, reporting the same TEO approval event Miller/Amarsaikhan signed; consistent 50 bcm/y figure for the Mongolia route in the broader PoS2 context.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok",
+     "ok": true,
+     "contains_value": true,
+     "note": "2022-02-28: independent corroboration, same 50 bcm/y figure tied to Soyuz Vostok specifically as PoS2's continuation.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "3 independent sources confirm 50 bcm/y. Checked against the aggregate-vs-segment risk: TASS's dedicated Soyuz Vostok article states this AS the pipeline's own capacity (not merely quoting the whole-system PoS2 figure), so this is accepted as segment-appropriate."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source found gives a working-pressure figure specific to the Soyuz Vostok/Mongolia segment. The ONLY pressure figure found anywhere in the sourced material is an AGGREGATE one, and using it would be exactly the aggregate-vs-segment error this audit was warned against: the currently-cited Diameter ref itself (neftegaz.ru/.../660602-...) states, describing the whole Power of Siberia-2 project (the 2-line Russian domestic/export mainline system as a whole, NOT the single-line Mongolia segment): 'МГП Сила Сибири-2 - проект 2-ниточного газопровода с давлением 10 MPa, диаметр трубы - Ø1420 мм' (PoS2 is a 2-string pipeline project at 10 MPa, pipe diameter 1420mm). This is a SYSTEM-level figure for the dual-line Russian mainline, explicitly NOT the Mongolia segment (whose own single-line TEO parameters -- diameter 1400mm, 962.9km, 5 compressor stations -- are separately and specifically documented; see the Diameter concern in validity[]). Since no source gives Soyuz Vostok's own pressure spec, and force-fitting the 10 MPa/1420mm aggregate figure onto this segment would repeat the exact diameter error already found on this row, Pressure is left genuinely UNRESOLVED rather than filled with an unverifiable aggregate figure. Searched: eprussia.ru TEO article (gives diameter + compressor-station count but no pressure), the dedicated neftegaz tech-library Soyuz Vostok article, vedomosti/911280, kommersant/4771199 -- none give a segment-specific MPa value."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "962.90",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "962.90",
+   "proposed_refs": [
+    "https://tass.com/economy/1616453",
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+    "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok"
+   ],
+   "verifications": [
+    {
+     "url": "https://tass.com/economy/1616453",
+     "ok": true,
+     "contains_value": true,
+     "note": "'The total length of the gas pipeline through the territory of Mongolia will be 962.9 km.' -- explicitly segment-specific.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.eprussia.ru/news/base/2022/3192377.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "'Протяженность трассы газопровода на территории Монголии... составит 962,9 км' (route length on Mongolian territory = 962.9 km) -- the original 2022-01-26 TEO-approval report.",
+     "name_found": true
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dedicated reference article: 'общая протяженность - 962,9 км' (total length 962.9 km), with the full 6-aimag route description.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok",
+     "ok": true,
+     "contains_value": true,
+     "note": "Independent corroboration of the same figure, same TEO-approval event.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "4 independent sources, all explicitly describing this as the length within Mongolia specifically (the Soyuz Vostok segment), not a system-wide figure -- no aggregate-vs-segment risk. High-confidence confirmation of the recorded value."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1400.00",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1400.00",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eprussia.ru/news/base/2022/3192377.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "Direct quote (full text read): '...диаметр труб - 1400 мм, предполагается пять компрессорных станций' (pipe diameter 1400mm, 5 compressor stations envisioned) -- explicitly about the Mongolia-segment TEO.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/news/2022/02/28/911280-gazprom-mongoliya-soyuz-vostok",
+     "ok": true,
+     "contains_value": true,
+     "note": "Independent corroboration of the same TEO-approval event and the same 1400mm figure.",
+     "name_found": true
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dedicated Soyuz Vostok reference article corroborates the 962.9km/segment framing consistent with the same TEO parameter set.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "SPEC CONCERN -- see validity[] for the full writeup. The sheet currently records Diameter=1420.00mm, sourced to neftegaz.ru/.../660602-.../ (the CURRENT Diameter [ref]). Reading that same article in full: it gives 1420mm as part of a description of the WHOLE Power of Siberia-2 project as a 2-LINE (dual-pipe) system at 10 MPa -- 'МГП Сила Сибири-2 - проект 2-ниточного газопровода с давлением 10 MPa, диаметр трубы - Ø1420 мм' -- i.e. an AGGREGATE/system-level figure for the Russian mainline, not the single-line Mongolia (Soyuz Vostok) segment. The Mongolia segment's OWN TEO, reported independently by 3 sources (eprussia.ru's original TEO-approval report, Vedomosti, and neftegaz's dedicated Soyuz Vostok reference article), gives a DIFFERENT, segment-specific figure: 1400mm. This is a textbook instance of the aggregate-vs-segment confusion this audit was scoped to catch. RECOMMEND CORRECTING Diameter to 1400.00mm on the sheet."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Bovanenkovskoye and Kharasaveyskoye gas fields"
+   },
+   "primary_value": "Bovanenkovskoye and Kharasaveyskoye gas fields",
+   "proposed_refs": [
+    "https://www.kommersant.ru/doc/4771199",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.kommersant.ru/doc/4771199",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually re-read with Cyrillic name check (automated check false-negatived as name_absent): explicitly names Bovanenkovskoye and Kharasaveyskoye as the western-Yamal fields feeding the PoS2/Soyuz Vostok gas stream.",
+     "name_found": true
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "'Ресурсная база - месторождения Ямало-Ненецкого автономного округа, ранее ориентированные на европейский рынок' (resource base = Yamalo-Nenets AO fields previously oriented to the European market) -- consistent, broader corroboration of the same Yamal-fields resource base (both named fields sit in Yamalo-Nenets AO).",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Kommersant names the two specific fields; the dedicated Soyuz Vostok reference article corroborates at the regional level (Yamalo-Nenets AO fields generally). Kept the specific two-field value since it is the more precise, directly-sourced statement, not a generic pipeline-name placeholder -- this row does NOT repeat the FuelSource defect found on sibling row P3603 (which names its own parent pipeline instead of a field)."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Kyakhta",
+    "StartState/Province": "Republic of Buryatia",
+    "StartCountryOrArea": "Russia"
+   },
+   "primary_value": "Kyakhta",
+   "proposed_refs": [
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Direct quote: the route 'начинается в аймаке Селенгэ, на равноудаленном расстоянии (около 10 км) между поселком Алтан-Булаг и г. Сухэ-Батор; после пересечения границы РФ трасса движется на юг' (begins in Selenge aimag, ~10km equidistant between Altanbulag settlement and Sukhbaatar city, after crossing the RF border the route heads south). Sukhbaatar, Mongolia sits directly across the border from Kyakhta, Republic of Buryatia, Russia (the Kyakhta-Altanbulag/Sukhbaatar crossing) -- this independently CONFIRMS the sheet's StartLocation=Kyakhta / Republic of Buryatia / Russia as correct.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "START fields CONFIRMED via this dedicated, segment-specific technical reference article (single strong source; tier kept medium per rule 4(d) pending a second independent corroborator). END fields (EndState/Province='Shanghai', EndCountryOrArea='China') are DELIBERATELY DROPPED from this fill, not carried forward -- see the route/location validity[] concern. The SAME source explicitly states the China entry point has not been determined/announced: 'Договора РФ с Китаем на поставку газа по МГП Сила Сибири 2 и Союз Восток пока так и не подписано, поэтому точка входа в Китай пока не анонсируется' (no RF-China supply contract has been signed, so the entry point into China has not yet been announced). 'Shanghai' as EndState/Province is not merely unsupported -- it is directly contradicted by the best available segment-specific source, which says no endpoint into China is even public yet. No replacement END value is proposed (fabricating a plausible-sounding Mongolian border town, e.g. Zamyn-Uud in Dornogovi aimag -- the last of the pipeline's own 6 named aimags -- would be an inference, not a sourced fact, so it is intentionally NOT filled in; Dornogovi is flagged only as context, not proposed as a value)."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Current ref (neftegaz/660602) does not contain the recorded figure (9,050,000,000 USD) -- confirmed by both the automated check and a manual full-text read. That same article DOES give a cost estimate, but it is an AGGREGATE, preliminary, WHOLE-PROJECT range, not a Mongolia-segment-specific figure: 'Проект достаточно сложный и дорогостоящий, по предварительной оценке - от 4,5 до 13,6 млрд долл. США' (the project is complex and costly, preliminary estimate USD 4.5-13.6 billion) -- describing the entire Power of Siberia-2 undertaking (Russian mainline + Mongolia segment together), dated 2021. The sheet's recorded 9.05bn USD falls within that range but is NOT independently confirmed as the MONGOLIA SEGMENT's own cost specifically -- using the aggregate range to validate a segment-specific point figure would repeat the same aggregate-vs-segment error already flagged for Diameter. No segment-specific cost breakout was found in any source read this run (eprussia.ru TEO report, Vedomosti, Kommersant, both neftegaz Soyuz-Vostok-dedicated pieces). Left UNRESOLVED rather than force-confirmed."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom PJSC",
+    "OperatorLocalLanguage": "ПАО \"Газпром\""
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2022/3192377.htm",
+    "https://www.kommersant.ru/doc/4771199"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eprussia.ru/news/base/2022/3192377.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "Reports Gazprom Chairman Miller (ПАО «Газпром») as the party signing off the TEO with Mongolia's government -- Gazprom is the operating/technical party.",
+     "name_found": true
+    },
+    {
+     "url": "https://www.kommersant.ru/doc/4771199",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually re-read with Cyrillic check: headline itself, '«Газпром» утвердил технико-экономический анализ проекта «Союз Восток»' (Gazprom approved the technical-economic analysis of the Soyuz Vostok project) -- Gazprom named as the approving/operating entity.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "This cell had NO ref at all (MISSING_REF) -- now sourced. Note the technical special-purpose vehicle actually carrying out design work on Mongolian soil is a distinct legal entity, 'Gazoprovod Soyuz Vostok' LLC (a Gazprom-created SPV registered in Mongolia per neftegaz 660602/750092) -- but both cited sources describe Gazprom PJSC itself, not the SPV, as the controlling/operating party for the project, consistent with GEM's Operator/Owner convention of naming the parent whose staff/decisions actually run the project (per the 'EIA operator name refs Owner' convention that operator/owner are used somewhat interchangeably for a controlling parent)."
+  },
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://www.eprussia.ru/news/base/2021/8301338.htm",
+    "https://www.kommersant.ru/doc/4771199",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eprussia.ru/news/base/2021/8301338.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "2021 article ('Soyuz Vostok will be a continuation of PoS2') -- kept from current_ref, re-verified live (200).",
+     "name_found": true
+    },
+    {
+     "url": "https://www.kommersant.ru/doc/4771199",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually re-read with Cyrillic check: Gazprom named as the approving party for the project's TEO.",
+     "name_found": true
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/750092-gazoprovod-soyuz-vostok/",
+     "ok": true,
+     "contains_value": true,
+     "note": "The Mongolia SPV 'Gazoprovod Soyuz Vostok', which the chronology explicitly documents as a Gazprom-registered special-purpose vehicle ('Газпром... зарегистрировал в Монголии компанию специального назначения... Газопровод Союз Восток') -- confirms 100% Gazprom control of the project entity.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "e-disclosure.ru/portal/files.aspx?id=934&type=2 (the other URL in current_ref) returns HTTP 403 from this environment -- access failure, not dropped as dead, just not carried forward as a live proposed_ref since 3 independently-verified working refs already give strong (high-tier) corroboration for 100% Gazprom PJSC ownership via its Mongolia-registered SPV."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "target_pid": "P5521",
+   "note": "Belogorsk-Khabarovsk gas pipeline. Encountered while reading neftegaz.ru/news/transport-and-storage/887229-/ ('VSG stroitsya...', April 2025), which reports this pipeline (part of the domestic VSG/East-West gas unification system, a DIFFERENT project from PoS2/Soyuz Vostok -- flagged here only because the same article was read to exhaustion per rule 4(b)) as 37.6% complete as of that reporting, with an explicit completion timeline discussed in the same piece. Not chased further -- out of scope for this Far-East PoS2-family audit -- but worth the researcher working P5521's own row checking this source directly.",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/887229-/"
+   ]
+  },
+  {
+   "target_pid": "P0734",
+   "note": "Power of Siberia 2 Main Line (the Russian-territory section; explicitly out of scope for THIS batch per the task's own scope guidance, and tracked as a separate ProjectID/row). Flagging for whichever batch/researcher DOES own P0734: (1) this row's Diameter finding (1420mm is an aggregate 2-line/10MPa system figure, not segment-specific) may be the CORRECT figure for P0734 itself (the Russian 2-line mainline), so P0734's own Diameter should be spot-checked against the same neftegaz/660602 source rather than assumed wrong by association; (2) the route/geometry concern on THIS row (P5409's digitized trace starting in Shanghai and running through many Chinese/Mongolian provinces) may partly reflect P0734's own route being merged into or confused with P5409's in the routes repo -- worth a joint P0734/P5409 route review rather than fixing P5409's geometry in isolation.",
+   "proposed_refs": []
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Soyuz Vostok Gas Pipeline",
+   "sheet_row": 2997,
+   "current_status": "proposed",
+   "verdict": "confirm",
+   "proposed_status": "proposed",
+   "proposed_changes": {},
+   "evidence_date": "2025-09-23",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2",
+    "https://www.vedomosti.ru/business/news/2025/09/02/1135804-tsena-postavok",
+    "https://www.vedomosti.ru/business/articles/2025/09/03/1136109-chto-dast-rossii-stroitelstvo-sili-sibiri--2",
+    "https://www.vedomosti.ru/business/news/2025/06/17/1117522-novak-sila-sibiri-2-sohranyaet-aktualnost"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.vedomosti.ru/analytics/krupnyy_plan/articles/2025/09/23/1141140-ozhidayut-nachala-postavok-po-sile-sibiri-2",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-23: analysts expect gas deliveries no earlier than 2031; the Sept-2025 memorandum is 'legally binding' per the Russian side only, China has not confirmed as much, and core commercial terms (price, volumes, financing, construction timeline) remain unagreed."
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/news/2025/09/02/1135804-tsena-postavok",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-02: Miller on the price of Sila Sibiri-2 supplies, during the Putin-Xi Beijing visit at which the legally-binding memorandum was signed -- still price-discussion stage, no construction underway."
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/articles/2025/09/03/1136109-chto-dast-rossii-stroitelstvo-sili-sibiri--2",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-09-03: 'What will building Sila Sibiri-2 give Russia' -- forward-looking analysis, confirms the project is still pre-construction as of this date."
+    },
+    {
+     "url": "https://www.vedomosti.ru/business/news/2025/06/17/1117522-novak-sila-sibiri-2-sohranyaet-aktualnost",
+     "ok": true,
+     "contains_value": true,
+     "note": "2025-06-17: Novak says the project 'remains relevant/on the agenda' -- i.e., as of mid-2025 it had not advanced to construction/FID."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=proposed CONFIRMED as still correct under annual-update review. As of the newest verified evidence found (2025-09-23), Soyuz Vostok/PoS2 has NOT reached construction or a final investment decision: a 'legally binding' memorandum was signed in Sept-2025 during Putin's Beijing visit, but China has not confirmed that characterization, and price/volume/financing/construction-timeline terms remain unagreed per Vedomosti's own Sept-2025 analytics coverage. This is consistent with -- not a reversal of -- the well-documented 2024 construction-start target having slipped (see Delay [ref]). No source found anywhere in this run (the wiki citation pool, the 3 status-review-specific searches, or any of the 16 worklist-unit searches) describes construction as having begun, a final contract as signed, or the project as shelved/cancelled. Recommend NO status change."
+  }
+ ],
+ "summary": "P5409 (Power of Siberia 2 Gas Pipeline, Soyuz Vostok Gas Pipeline, proposed) -- EXISTENCE, CLASSIFICATION and DUPLICATE status all CONFIRMED (caveat): a real, extensively and independently documented Gazprom-Mongolia SPV project (5+ independent RU/EN outlets: eprussia.ru, Vedomosti, Kommersant, neftegaz.ru incl. a dedicated reference article, TASS), distinct from sibling rows P0734 (Russian PoS2 main line, out of batch scope) and P3603 (Sayansk Branch, separately deep-swept). All 16 worklist units carry a fills[] record: REVERIFIED/REFS_ADDED (high tier) for Status, Fuel, PipelineType, Construction, Capacity, Length, FuelSource, Owner; REFS_ADDED (medium tier) for Proposal, Start (contested/evolving figure, flagged not silently picked), Diameter (corrected value), Location (Start confirmed, End deliberately left unfilled), Operator (previously had NO ref at all); UNRESOLVED (with notes on what was searched and why) for Pressure and SegmentCost, both explicitly to avoid repeating an aggregate-vs-segment error. BIGGEST FINDING: a SPEC concern -- Diameter is recorded as 1420.00mm on the sheet, sourced to a passage that actually describes the WHOLE 2-line PoS2 mainline system (10 MPa, Ø1420mm), not the single-line 962.9km Mongolia segment; 3 independent sources give the segment's own TEO-determined diameter as 1400mm -- recommend correcting to 1400.00mm. SECOND FINDING: a ROUTE concern -- the routes-repo geometry for this ProjectID starts in Shanghai, China and traverses many Chinese and Mongolian provinces before ending in Selenge Province, Mongolia, contradicting Gazprom's own repeated statement that Soyuz Vostok is a 962.9km, Mongolia-only line starting at the Russian border near Kyakhta -- StartLocation/StartState/StartCountryOrArea (Kyakhta/Republic of Buryatia/Russia) are independently confirmed correct, but EndState/Province='Shanghai'/EndCountryOrArea='China' are wrong and not replaced with a guess, since the best available source states the actual China entry point has not yet been publicly announced. Status review: verdict=confirm (Status=proposed remains correct; newest evidence, 2025-09-23, shows a Sept-2025 'legally binding' memorandum but no signed contract, no agreed price/volumes/financing/timeline, and no construction started). Two cross-row leads filed (P5521 completion-% lead; P0734 diameter/route cross-check request). Nothing fabricated; e-disclosure.ru (403) and forbes.ru (captcha bot-block) access failures were worked around via alternate sources / a verified Wayback capture rather than treated as dead links."
+}

@@ -1,0 +1,628 @@
+{
+ "project_id": "P5539",
+ "pipeline_name": "Punga-Ukhta-Gryazovets Gas Pipeline",
+ "sheet_row": 3056,
+ "wiki": "https://www.gem.wiki/Punga-Ukhta-Gryazovets_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "IV",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "misattributed_ref",
+   "recommendation": "Existence and classification of P5539 are CONFIRMED: this is a real, independently-verifiable transmission gas pipeline (OSM relation 17195756 'Пунга — Ухта — Грязовец 4', ~943 km computed length vs. the sheet's 945.80 km, 1420mm diameter, operating). The finding here is narrower: the pre-existing Fuel[ref]/PipelineType[ref]/Status[ref] citation https://zaogsp.ru/istoriya/punga is MISATTRIBUTED. Read in full (its meta title/description AND its 'Характеристика проекта' body text), the page describes a capital-repair project on a DIFFERENT physical object: 'Существующий магистральный газопровод «Пунга-Ухта-Грязовец» введен в эксплуатацию в 1976 году, входит в газотранспортную систему ООО «Газпром трансгаз Югорск» ... объект капитального ремонта расположен в Березовском районе Ханты-Мансийского автономного округа' -- i.e. a 1976-commissioned facility in Berezovsky District, Khanty-Mansi AO, operated by Gazprom Transgaz YUGORSK. That is the PUNGA-side (western/Ob-Irtysh) end of the wider colloquially-named 'Punga-Ukhta-Gryazovets' corridor -- not this row (segment IV, Ukhta-Gryazovets, Komi Republic/Vologda Oblast, 1981, operated by Gazprom Transgaz Ukhta per the Operator[ref] finding). The corridor's several stages/strings share one popular name across many decades of press and contractor use, which is exactly the trap standing corollary (a) (a ref must NAME the pipeline, not just the family/corridor) exists to catch -- and this page passed a casual read because it does name 'Пунга-Ухта-Грязовец' in its title, just not THIS segment of it. I have removed zaogsp.ru from all three fills (Fuel/PipelineType/Status) in this shard and replaced it with segment-IV-specific sources (OSM way tags for the specific way GEM's own routes repo has staged for P5539; a Wayback Vuktylskoe-LPUMG company page for Status). No change recommended to Fuel/PipelineType values (both remain correct); Status remains 'operating' on weaker (indirect) sourcing than before this pass, not stronger -- worth a further look if the researcher wants a segment-IV-specific operating-status confirmation. RECOMMEND: do not re-add zaogsp.ru/istoriya/punga to this row's refs; if it is relevant anywhere, it is most likely relevant to the Punga-Vuktyl-Ukhta family (P5540/P7538 per the in-scope roster) or an earlier-stage Punga-Ukhta segment, not P5539.",
+   "contested": {},
+   "researcher_notes": "Read to exhaustion: zaogsp.ru/istoriya/punga in full (utf-8, ~648k chars after tag-stripping; meta description, main project-characteristics block at char offset ~373000-378500, and the contractor's project-category navigation menu, which lists 'Пунга-Ухта-Грязовец' alongside sibling projects 'Грязовец-Выборг II нитка' (likely P5585), 'СМГ Бованенково-Ухта', 'Конденсатопровод Уренгой-Сургут II нитка' -- staged as cross_row_leads, not otherwise used).",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "IV",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "route_fragment",
+   "recommendation": "RouteAccuracy is likely OVERSTATED. The geojson currently staged in GOIT-GGIT-pipeline-routes for P5539 (local mirror checked directly; scripts/fetch_route.sh is broken -- 'AUTH_HEADER[@]: unbound variable', a pre-existing script bug not fixed here, out of scope) is a SINGLE LineString of 131 points, ~135 km, running from Ukhta (53.76,63.67) to a point ~130km southwest (51.93,62.85) -- it is exactly ONE of THIRTEEN member ways of the cited OSM relation 17195756 ('Punga-Ukhta-Gryazovets 4'), whose full 13-way length computes (haversine, by hand, via the relation's /full.json) to ~943.0 km -- matching the sheet's recorded 945.80 km length within 0.3%. So: the recorded LENGTH is well corroborated at the full-route level, but the STAGED GEOMETRY covers only ~14% of that route and terminates deep in Komi Republic, nowhere near Gryazovets (Vologda Oblast). Yet RouteAccuracy='high' and RouteType='Mapped route (at any accuracy)' are recorded as if the full route were mapped. This is the OK_INTERIOR / partial-trace pattern flagged in the batch brief: the staged geometry IS a genuine, correctly-placed fragment of the real pipeline (not a wrong/sibling trace), it just doesn't span the full recorded termini. RECOMMEND: downgrade RouteAccuracy to reflect partial coverage (proposing 'low (subnational, imprecise, or unranked)' pending a redigitize, since only a small interior fragment of the true corridor is currently mapped) and stage a route candidate for §8 (redigitize the full relation 17195756, all 13 ways, ~943km, matching Ukhta->Gryazovets) rather than editing any state/location cell -- the recorded Start/End locations themselves are correct (see the Location[ref] fill).",
+   "contested": {
+    "RouteAccuracy": "low (subnational, imprecise, or unranked)"
+   },
+   "researcher_notes": "Source ladder used: local mirror of GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes (data/individual-routes/gas-pipelines/P5539.geojson, read-only per standing rule -- colleague-owned repo, never written to) for the STAGED geometry; OpenStreetMap API (relation/17195756/full.json, way/1249586904.json) for the REFERENCE geometry and tags, fetched directly and computed by hand (haversine over consecutive way nodes, excluding what appear to be short loop/lateral spurs) rather than relying on any rendered map page. This finding is downstream of, and independent from, the misattributed_ref concern above -- it is about geometry completeness, not source attribution.",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/relation/17195756/full.json"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "IV",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "fuel_source_contested",
+   "recommendation": "FuelSource='Medvezhye Oil and Gas Field' is WEAKLY sourced and in tension with an alternative implied by this pipeline's own historical naming. The current ref (proektirovanie.gazprom.ru Medvezhye field page, read via Wayback) documents the earlier 'Medvezhye-Nadym-Punga' pipeline delivering Medvezhye gas as far as Punga by October 1974 -- it never mentions Ukhta, Gryazovets, or any 1981-vintage line, i.e. it supports the WESTERN end of the wider corridor's gas origin story, not specifically this 1981 Ukhta-Gryazovets extension. Independently, siyanie-severa.ru's historical account explicitly names the pipeline commissioned April 1981 as the corridor's 4th stage 'Уренгой - Ухта - Грязовец' (Urengoy-Ukhta-Gryazovets) -- i.e., by that source's naming, fed by URENGOY field gas, not Medvezhye. Neither source is dispositive on its own (the Medvezhye ref doesn't name this segment; the Urengoy naming is inferred from a corridor's historical stage-name rather than a direct 'sourced from Urengoy field' statement), so this is flagged as CONTESTED rather than resolved in either direction. RECOMMEND: a researcher weigh whether FuelSource should read Urengoy (matching the pipeline's own 1981 commissioning-era name) instead of, or in addition to, Medvezhye, or whether corroborating that gas from BOTH fields transited this corridor (plausible for a Unified Gas Supply System trunk line carrying commingled gas from multiple West Siberian/Komi fields) makes the current single-field attribution an oversimplification either way.",
+   "contested": {
+    "FuelSource": "Urengoy Gas Field (alternative/contested -- see notes; not confirmed as a replacement)"
+   },
+   "researcher_notes": "See the Start[ref] and FuelSource[ref] fills for the two source excerpts underpinning this. Not upgraded to a fills[] value change -- the FuelSource[ref] fill was left UNRESOLVED rather than silently keeping Medvezhye or silently substituting Urengoy, per standing instruction not to overwrite a reference value without sourcing.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "IV",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "segment_numbering_discrepancy",
+   "recommendation": "Minor, informational naming tension -- not recommended for any sheet edit, documented so a future pass does not re-discover it as new. THREE sources give three different labels for what appears to be the same 1981-commissioned Ukhta-Gryazovets line: (1) OSM relation 17195756 (the source GEM's own routes repo draws from) names it 'Пунга — Ухта — Грязовец 4' (segment/stage 4 = GEM's 'IV', matching this row's segment_name and OtherLanguagePrimaryPipelineName); (2) siyanie-severa.ru's historical account calls the 1981-commissioned 4th stage of the wider 'Север-Центр' system 'Уренгой — Ухта — Грязовец' (Urengoy-Ukhta-Gryazovets), with the corridor's 3rd stage (Dec 1977) called 'Пунга — Ухта — Торжок' (Punga-Ukhta-Torzhok); (3) Gazprom Transgaz Ukhta's own 2023 company-newspaper history timeline places, under the year 1981, the commissioning of 'Пунга – Ухта – Грязовец III' -- i.e. the OPERATING COMPANY's own archive calls the 1981 line 'III', not 'IV'. All three sources agree on the 1981 date and the physical Ukhta-Gryazovets routing; they disagree only on the ordinal label and which upstream city (Punga vs Urengoy) to prefix. This is very plausibly just inconsistent popular/company usage of an internal Soviet 'queue' numbering system across nearly 50 years of sources, not evidence of a different physical pipeline -- but it is close enough to the kind of confusion that produces real duplicate-PID errors elsewhere in this roster that it is worth a second researcher's eyes. No PID, PipelineType, or existence change recommended.",
+   "contested": {},
+   "researcher_notes": "Cross-referenced against this batch's 28-PID roster: no evidence found that GEM tracks a separate 'segment III' Punga-Ukhta-Gryazovets row distinct from P5539 -- if one existed, this naming tension would instead be a duplicate-detection finding rather than an informational one; as it stands, only P5539 appears to represent this 1981 Ukhta-Gryazovets line in GEM's data.",
+   "proposed_refs": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Вуктыльское ЛПУМГ (Газпром трансгаз Ухта)",
+     "note": "Read by hand (Cyrillic; url_verifier's fuzzy match is not the deciding factor here -- I confirmed manually). Present-tense company-branch description: Vuktylskoe LPUMG (Gazprom Transgaz Ukhta) 'today' (Филиал сегодня) operates ('эксплуатирует') the gas-pipeline system and hands transport off downstream to Sosnogorskoye LPUMG (447.5 km) -- i.e. onward in the direction of Ukhta->Gryazovets. Confirms present-tense operating status of the corridor this segment belongs to; does not name 'Punga-Ukhta-Gryazovets IV' verbatim (it is a branch-history page, not a pipeline-specific page), so treated as indirect/medium-strength corroboration, not a direct segment-specific statement."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "DROPPED the prior ref https://zaogsp.ru/istoriya/punga -- read by hand and it is MISATTRIBUTED: its 'istoriya/punga' project page describes a 1976-commissioned capital-repair object in Berezovsky District, Khanty-Mansi AO (i.e. the PUNGA-side / Punga-Vuktyl leg of the corridor, under Gazprom Transgaz YUGORSK), not the 1981 Ukhta-Gryazovets segment IV in Komi Republic/Vologda Oblast under Gazprom Transgaz Ukhta that this row represents. See validity[] concern 'misattributed_ref' for the full writeup; the same zaogsp.ru page was also cited for Fuel[ref] and PipelineType[ref] and dropped from both for the same reason. Replacement source (Wayback Vuktylskoe LPUMG capture) is one segment-adjacent, present-tense operating-status source; a second, segment-IV-specific Status source was searched for and not found (severgazprom-mart-2023.pdf, siyanie-severa.ru, and sudact.ru all corroborate the pipeline's existence/history/capacity but none states current operating status in so many words). Status=operating is also indirectly supported by the sudact.ru government schema (a 2015 Russian Government resolution listing planned RECONSTRUCTION/upgrade projects ON this pipeline, which presupposes it is an existing, in-service line) -- see Capacity[ref] for that source. No evidence anywhere in this pass of retirement, decommissioning, or non-operating status."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "url_verifier OK (200, 'gas' present). Raw OSM way tags read directly: name='Пунга — Ухта — Грязовец 4' (matches segment IV specifically, not a sibling/endpoint), substance=gas, man_made=pipeline, usage=transmission, operator='ООО «Газпром трансгаз Ухта»', diameter=1420 mm. This is the routes-repo's own staged way for P5539, so the tags describe exactly this GEM row."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "DROPPED the prior ref https://zaogsp.ru/istoriya/punga (misattributed to the 1976 Punga-side facility -- see Status[ref] and the validity concern for detail). Replaced with the OSM way's own substance=gas tag, which is segment-IV-specific (this way IS the geometry GEM's own routes repo has staged for P5539). Single-source (one primary tag record) but directly on-point; a gas pipeline carrying gas is not itself in dispute -- no source anywhere in this pass suggested otherwise."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "Same OSM way record as Fuel[ref]: usage=transmission tag, on this exact segment-IV way. Also corroborated by sudact.ru's government schema, which calls this pipeline a 'магистральный газопровод' (trunk/transmission gas pipeline) by name -- see Capacity[ref] for that source, cited here as a second independent confirmation of PipelineType specifically."
+    },
+    {
+     "url": "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода Пунга - Ухта - Грязовец",
+     "note": "Government territorial-planning schema (Russian Government Resolution No. 816-r, Annex 4, list of trunk (магистральные) gas pipelines) item 139: reconstruction of compressor shop No.4 (KS-14 Privodino) 'газопровода Пунга - Ухта - Грязовец' -- names this exact pipeline under the document's 'magistral'nye gazoprovody' (trunk gas pipelines) heading, confirming transmission classification. Read by hand; url_verifier's automated substring check flagged 'name not found' on Latin-script fuzzy matching, but the Cyrillic name is present verbatim."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "DROPPED the prior ref https://zaogsp.ru/istoriya/punga (misattributed -- see Status[ref] notes and the validity concern). Two independent, segment-relevant sources now confirm PipelineType=transmission: the OSM way tag (usage=transmission) and the sudact.ru government trunk-pipeline schema (lists it under 'magistral'nye gazoprovody')."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "n/a",
+   "researcher_notes": "Searched zaogsp.ru, siyanie-severa.ru (rozhdenie-severnoy-magistrali-17-04-2014.html), the severgazprom-mart-2023.pdf company-history timeline (via Wayback), sudact.ru's 2015 government schema, and energybase.ru -- none states a distinct planning/proposal date for the 1981 Ukhta-Gryazovets (segment IV / historically 'III', see the segment-numbering validity concern) line separate from its construction/commissioning date. This is a 1970s-Soviet-era planned-economy pipeline (Gosplan five-year-plan origin); no discrete 'proposal' milestone distinct from the state construction decision is documented in any source found. No value proposed; UNRESOLVED rather than a guess."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "n/a",
+   "researcher_notes": "Searched the same source set as Proposal[ref]. siyanie-severa.ru and severgazprom-mart-2023.pdf both give the COMMISSIONING date (April 1981) but neither states when construction physically began. Estimating a construction-start year from typical Soviet-era 1420mm trunk-pipeline build durations (per siyanie-severa.ru, the earlier 1968 'Ukhta-Torzhok' stage took 18 months against a 36-month norm) would be a guess, not a sourced fact -- not proposed. No value proposed; UNRESOLVED."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1981",
+    "StartMonth1": "4"
+   },
+   "primary_value": "1981",
+   "proposed_refs": [
+    "https://siyanie-severa.ru/stranicy-istorii/rozhdenie-severnoy-magistrali-17-04-2014.html",
+    "https://web.archive.org/web/20241201170829/https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://siyanie-severa.ru/stranicy-istorii/rozhdenie-severnoy-magistrali-17-04-2014.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Уренгой - Ухта - Грязовец",
+     "note": "url_verifier OK (200, '1981' present). Historical article: 'Четвертая очередь газотранспортной системы \"Север - Центр\" с газопроводом \"Уренгой - Ухта - Грязовец\" была сдана в эксплуатацию в апреле 1981 года' -- the 4th stage, pipeline 'Urengoy-Ukhta-Gryazovets', commissioned April 1981. Confirms StartYear1=1981 and adds StartMonth1=April(4). Note: names it 'Urengoy-Ukhta-Gryazovets', not 'Punga-Ukhta-Gryazovets' -- see FuelSource[ref] and the segment-numbering validity concern for the naming tension this raises."
+    },
+    {
+     "url": "https://web.archive.org/web/20241201170829/https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга – Ухта – Грязовец III",
+     "note": "Wayback capture of the SAME URL already on the sheet (direct fetch times out live -- gazprom.ru-zone host, calibrated timeout-prone; not a dead link, per standing rule). Read via pdftotext -layout. Gazprom Transgaz Ukhta's own company-newspaper history timeline places, under the year 1981: '...газопровод «Пунга – Ухта – Грязовец III». Введена в эксплуатацию...' -- independently corroborates 1981 commissioning of the Punga-Ukhta-Gryazovets line, from the operating company itself. IMPORTANT: this company source labels the 1981 line 'III', not 'IV' as GEM/OSM do -- flagged as its own validity concern (segment-numbering discrepancy), not silently resolved here."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=1981 CONFIRMED by two independent sources (an independent historical/journalistic site and the operating company's own newspaper archive), converging despite disagreeing with each other on the segment's Roman-numeral/ordinal label (III vs IV) and on which upstream field name to attach (Urengoy vs the corridor's colloquial Punga branding). Adding StartMonth1=4 (April) as a sourced enhancement -- was previously blank. The prior sole ref (severgazprom-mart-2023.pdf, direct link) was unreachable live in this pass (ConnectTimeout) but is NOT dead -- confirmed 200 and readable via Wayback, so kept (with the Wayback URL substituted as the citable form) rather than dropped."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "29.50",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "29.50",
+   "proposed_refs": [
+    "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/"
+   ],
+   "verifications": [
+    {
+     "url": "https://sudact.ru/law/rasporiazhenie-pravitelstva-rf-ot-06052015-n-816-r/skhema-territorialnogo-planirovaniia-rossiiskoi-federatsii/prilozhenie-n-4_1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровода Пунга - Ухта - Грязовец",
+     "note": "Read by hand. Item 139 of the government schema's pipeline-projects list: 'Реконструкция компрессорного цеха N 4 КС-14 Приводино газопровода Пунга - Ухта - Грязовец ... проектный объем транспортировки газа - 29,5 млрд. куб. метров в год' = 'Reconstruction of compressor shop No.4, KS-14 Privodino, of the Punga-Ukhta-Gryazovets gas pipeline ... design gas transport volume 29.5 billion m3/year'. Names the pipeline verbatim and states 29.5 bcm/y verbatim (Russian comma-decimal '29,5' = '29.5' -- an equivalent-form match the automated substring check missed, since it searched the period-decimal spelling only). A second occurrence on the same page ('...магистральных газопроводов \"Пунга - Ухта - Грязовец\"', a different compressor-station reconstruction item) restates the same corridor name without a figure."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Capacity=29.50 bcm/y CONFIRMED via a single primary government-document source (Russian Government Resolution No.816-r annex, hosted on sudact.ru) that names this exact pipeline and states this exact figure. Single-source (no second independent corroboration found for this specific number), hence tier=medium not high. The compressor station named (KS-14 Privodino, Kotlas District, Arkhangelsk Oblast) sits geographically on the Komi->Vologda corridor consistent with the Ukhta-Gryazovets routing. Caveat: the document does not explicitly disambiguate which parallel string/thread (I/II/III/IV) KS-14 serves if the corridor has more than one by this point -- treated as reasonably attributable to the whole current 'Punga-Ukhta-Gryazovets' corridor capacity rather than confirmed as segment-IV-exclusive; flagging this nuance here rather than silently upgrading to high. The other prior ref (aup.ru/books/m5/6_1.htm) was read in full (windows-1251 decoded) and does NOT state this or any matching capacity figure -- it is a different systemwide capacity/length table (Gazprom Transgaz Yugorsk's own system, listing e.g. 'Уренгой-Грязовец 1981 1203 km') that does not name this specific pipeline; not cited."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "n/a",
+   "researcher_notes": "Searched and explicitly RULED OUT two leads that looked promising but do not apply to this row: (1) zaogsp.ru's 'Ду 1420 ... 7,35 МПа' repair-project figure is for the misattributed 1976 Punga-side/Berezovsky-District object (Gazprom Transgaz Yugorsk territory), not segment IV (see the misattributed_ref validity concern) -- not usable here. (2) A 2025 Gazprom Transgaz Ukhta 'pilot project' reported by komiinform.ru/bnkomi.ru dismantles two 5.4 MPa lines and replaces them with 9.8 MPa ones on the 'Ukhta-Gryazovets section' -- but the dismantled lines are explicitly named 'Ukhta-Torzhok 1' and 'Ukhta-Torzhok 2' (in service since 1969), a DIFFERENT pipeline pair from this 1981 Punga-Ukhta-Gryazovets IV line -- confirmed not applicable to P5539's Status or Pressure; noted here so this lead is not re-chased by a future pass. No source found stating an operating pressure specifically for this pipeline. No value proposed."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "945.80",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "945.80",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/relation/17195756/full.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/relation/17195756/full.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "OSM relation 17195756 ('Punga-Ukhta-Gryazovets 4', the parent relation of the routes-repo's staged P5539 way) downloaded in full (all 13 member ways + nodes) and its route length computed by hand via haversine summation across every way's node sequence: ~943.0 km total. This is a COMPUTED value from primary geometry data, not a literal stated figure -- flagged as such per the 'contains_value in any equivalent form' rule. 943.0 km vs the sheet's 945.80 km is a 0.3% difference, well within normal route-digitization/measurement tolerance -- treated as corroborating (equivalent-form) support, not a discrepancy."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IMPORTANT companion finding, staged separately as a validity/RouteAccuracy concern (not resolved here): the geojson actually staged in GOIT-GGIT-pipeline-routes for P5539 is only ONE of this relation's 13 member ways (way/1249586904, ~135 km, ~14% of the ~943 km total) -- so while the recorded LENGTH (945.80 km) is well corroborated at the FULL-ROUTE level, the STAGED GEOMETRY badly undershoots it. See the route-fragment validity concern. The prior ref (ppt-online.org/1196530) was re-checked live in this pass and returns a JavaScript/fingerprinting bot-challenge page (no readable content came through even though it 200s) -- this is a BLOCK, not a confirmed-dead page, so it is kept in place per standing rule (never delete a once-working ref over an access failure) rather than removed; no Wayback capture attempt was made for it in this pass (time-boxed)."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1420",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1420",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "url_verifier OK (200, '1420' present -- I re-ran it against the raw API JSON URL rather than the JS-rendered map page, which is why it now passes where the map-page URL previously failed the automated substring check). OSM way tag diameter='1420 mm' on this exact segment-IV way. Independently corroborated by sudact.ru's Capacity[ref] source (same page, different item) and, at the corridor-general level (not segment-specific -- read with that caveat), zaogsp.ru's misattributed Punga-side object also states 'Ду 1420' for the same corridor standard."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Diameter=1420mm CONFIRMED. Prior ref aup.ru/books/m5/6_1.htm read in full (windows-1251 decoded) -- it is a different systemwide table (Gazprom Transgaz Yugorsk pipelines, e.g. 'Пунга-Вуктыл-Ухта' I/II queues) that does not name 'Punga-Ukhta-Gryazovets' and was already correctly flagged by the automated checker; not relied on. Replaced with the OSM way's own diameter tag, which is segment-IV-specific."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "CONTESTED, not confirmed -- see the FuelSource validity concern for the full writeup and both sources. The current sheet value 'Medvezhye Oil and Gas Field' rests on a ref (proektirovanie.gazprom.ru Medvezhye encyclopedia page) that I read via Wayback: it documents the 'Medvezhye-Nadym-Punga' pipeline delivering Medvezhye gas as far as Punga by Oct 1974, but never mentions Ukhta, Gryazovets, or a 'segment IV' at all -- it supports the WESTERN end of the whole corridor, not this specific 1981 eastern extension. Meanwhile siyanie-severa.ru (see Start[ref]) explicitly names the 1981 4th-stage pipeline 'Urengoy-Ukhta-Gryazovets', i.e. sourced by Urengoy field gas, not Medvezhye. Not resolving this by fiat in either direction -- leaving FuelSource as UNRESOLVED at the fill level pending a researcher decision (documented as a validity concern) rather than silently keeping or silently changing the sheet's Medvezhye value."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Ukhta",
+    "StartState/Province": "Republic of Komi",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Gryazovets",
+    "EndState/Province": "Vologda Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Ukhta",
+   "proposed_refs": [
+    "https://web.archive.org/web/20241201170829/https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf",
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20241201170829/https://ukhta-tr.gazprom.ru/d/journal/12/274/severgazprom-mart-2023_compressed.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга – Ухта – Грязовец III",
+     "note": "Wayback capture of the prior direct ref (times out live, kept per standing rule). Gazprom Transgaz Ukhta's own company-newspaper confirms this is a Ukhta-company-operated line reaching from Komi Republic (Ukhta's base of operations) toward Gryazovets, consistent with the recorded Start/End locations."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "place:origin=Пунга, place:destination=Грязовец tags. NOTE (read carefully): these are corridor-name labels copied onto every way in relation 17195756 uniformly -- they describe the OVERALL named system ('Punga-Ukhta-Gryazovets'), not this particular way's own geometric endpoints (this way's actual coordinates run only from the Ukhta vicinity to a point ~135km southwest, nowhere near either Punga or Gryazovets -- see the route-fragment validity concern). Cited here only as confirmation that StartLocation/EndLocation=Ukhta/Gryazovets is the correct pairing for THIS GEM row (segment IV), which is a distinct question from whether the staged geometry actually reaches both points."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Start/End location VALUES (Ukhta -> Gryazovets, Komi Republic -> Vologda Oblast) are CONFIRMED correct for this row. This is a location-VALUE finding only. A SEPARATE and more serious problem was found with the ROUTE GEOMETRY (not the location cells): the geojson staged in GOIT-GGIT-pipeline-routes for P5539 is only 1 of 13 ways in the cited OSM relation (~135km of ~943km, ~14% coverage), terminating mid-Komi-Republic well short of Gryazovets -- yet RouteAccuracy is recorded as 'high' and RouteType as 'Mapped route (at any accuracy)'. Per the audit brief's explicit guidance, this is staged as its own validity concern with a RouteAccuracy contested field, NOT as a change to these location cells (the recorded locations are right; the map is incomplete)."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "n/a",
+   "researcher_notes": "Searched zaogsp.ru (contractor repair-cost figures found are for the misattributed 1976 Punga-side object, not this segment, and are repair costs not construction cost regardless), sudact.ru's government schema (lists projects, not their budgets), siyanie-severa.ru, severgazprom-mart-2023.pdf, and energybase.ru -- no construction-cost figure for this 1981 Soviet-era pipeline found in any source (unsurprising for a planned-economy-era asset; costs of this kind rarely survive as public figures the way they do for post-2000 projects). No value proposed; UNRESOLVED."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "oo_sheet_row": 4327,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Ukhta",
+    "OperatorLocalLanguage": "ООО «Газпром трансгаз Ухта»"
+   },
+   "primary_value": "Gazprom Transgaz Ukhta",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+    "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "OSM way's own operator tag on this exact segment-IV way: operator='ООО «Газпром трансгаз Ухта»' (Gazprom Transgaz Ukhta LLC)."
+    },
+    {
+     "url": "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром трансгаз Ухта",
+     "note": "Gazprom Transgaz Ukhta's own branch page: describes its Vuktylskoe LPUMG branch handing gas-transport off downstream to its OWN Sosnogorskoye LPUMG branch (447.5 km further along, in the direction of Ukhta->Gryazovets) -- i.e. Gazprom Transgaz Ukhta's territory (not Gazprom Transgaz Yugorsk's, whose territory the same page says ends upstream, at the Pelenyor Ural pass) covers the Ukhta-Gryazovets stretch this row represents."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Operator was blank (MISSING_VALUE); filling Operator='Gazprom Transgaz Ukhta' on two independent, segment-relevant sources that agree. This CONTRADICTS gem.wiki's own (uncited, not used as a source) infobox claim of 'Gazprom Transgaz Yugorsk' for segment IV -- per the Vuktylskoe LPUMG source, Yugorsk's territory ends well upstream/west of Ukhta (at the Ural-range Pelenyor pass), so Yugorsk is not the operator for the Ukhta-Gryazovets stretch. Flagging this explicitly since it is a real attribution correction, not a rubber-stamp of the existing (empty) cell."
+  },
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "oo_sheet_row": 4327,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173500/https://www.gazprom.com/about/production/transportation/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173500/https://www.gazprom.com/about/production/transportation/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Gazprom",
+     "note": "url_verifier OK (200, 'Gazprom' present). Gazprom's own corporate site, Transmission page (2025 capture; direct fetch of the live page timed out -- gazprom.com is calibrated timeout-prone, kept via Wayback per standing rule): 'Gazprom owns and consistently develops a unique gas transmission system (GTS)... Most of the system forms part of the Unified Gas Supply System (UGSS) of Russia.' Does not name this specific pipeline (a corporate structure page, not a pipeline-specific one), but directly states Gazprom PJSC's ownership of the category of asset this pipeline belongs to -- a UGSS trunk transmission pipeline operated by a wholly-owned Gazprom subsidiary (Gazprom Transgaz Ukhta, see Operator[ref])."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Owner1=Gazprom PJSC / 100% was already on the sheet (MISSING_REF -- value present, ref cell empty); adding the ref per standing rule 4(e) (an uncited value is owed a ref exactly as a blank is owed a value). Source is a general corporate-ownership statement (single source, not pipeline-specific), consistent with project convention that an operator/ownership-chain source stands in for a direct Owner ref (per this repo's 'EIA operator name refs Owner' convention) -- tier=medium rather than high because it is systemwide, not segment-specific, and single-sourced. No conflicting ownership claim found anywhere in this research pass."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "IV",
+   "sheet_row": 3056,
+   "current_status": "operating",
+   "verdict": "change",
+   "proposed_status": "operating",
+   "proposed_changes": {
+    "RouteAccuracy": "low (subnational, imprecise, or unranked)"
+   },
+   "evidence_date": "2026-09-15",
+   "staleness_rule": "LastUpdated on this row is 2025-08-07. All evidence gathered this pass postdates that: OSM relation/way data queried live 2026-09-15 (relation 17195756, way 1249586904, both current-state API responses, not historical); Wayback captures used range 2019-2025 (20190531 for Vuktylskoe LPUMG, 20241201 for severgazprom-mart-2023.pdf, 20250518 for gazprom.com/transportation) but were themselves fetched/read this pass; siyanie-severa.ru and sudact.ru pages fetched live 2026-09-15. Existence, physical routing, 1981 commissioning, 1420mm diameter, and 29.5 bcm/y capacity are all reconfirmed as of this pass; no evidence found of decommissioning, capacity change, or any status change since LastUpdated.",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+    "https://api.openstreetmap.org/api/0.6/relation/17195756/full.json",
+    "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/",
+    "https://siyanie-severa.ru/stranicy-istorii/rozhdenie-severnoy-magistrali-17-04-2014.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/1249586904.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "Way-level API JSON for the specific segment-IV way GEM's routes repo has staged: confirms name, 1420mm diameter, gas/transmission substance/usage, and operator=Gazprom Transgaz Ukhta -- all current as queried live this pass, i.e. the pipeline is present/mapped/operating in OSM's current dataset as of 2026-09-15."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/relation/17195756/full.json",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Пунга — Ухта — Грязовец 4",
+     "note": "Full 13-way relation, queried live 2026-09-15; haversine-summed length ~943.0 km vs. sheet's 945.80 km (within 0.3%) -- corroborates Length as still accurate, and corroborates the pipeline's continued full-corridor presence in the current OSM dataset (not merely a stale historical record)."
+    },
+    {
+     "url": "https://web.archive.org/web/20190531193333/http://ukhta-tr.gazprom.ru/vuktylskoe-linejnoe-proizvods/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром трансгаз Ухта",
+     "note": "Gazprom Transgaz Ukhta's own branch page describing active gas-transport handoff along this corridor (Vuktylskoe LPUMG -> Sosnogorskoye LPUMG, i.e. toward Ukhta/Gryazovets) -- supports both Operator and continued operating status, though the capture itself is from 2019 (kept per standing rule; a blocked/slow live gazprom.ru fetch is not a deletion, Wayback stands alongside)."
+    },
+    {
+     "url": "https://siyanie-severa.ru/stranicy-istorii/rozhdenie-severnoy-magistrali-17-04-2014.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Уренгой - Ухта - Грязовец",
+     "note": "Fetched live 2026-09-15 (page itself dated 2014, historical content, but the page is live and current as a citable source): confirms April 1981 commissioning of the corridor's 4th stage on this Ukhta-Gryazovets routing -- independent corroboration of Start year, feeding into the segment_numbering_discrepancy and fuel_source_contested validity concerns."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Verdict is 'change' primarily on the strength of the Operator correction (blank -> Gazprom Transgaz Ukhta, two independent sources) and the RouteAccuracy downgrade recommendation (route_fragment validity concern) -- NOT because operating status itself is in doubt: existence and 'operating' status are both well-corroborated by this pass's OSM, Wayback, and Russian-language sourcing. No indication anywhere in this research of decommissioning, idling, or any status other than operating. See validity[] for the four concern write-ups (misattributed_ref, route_fragment, fuel_source_contested, segment_numbering_discrepancy) this status review's proposed_changes and researcher_notes reference. RouteAccuracy: proposing 'low (subnational, imprecise, or unranked)' (down from 'high') — the staged geometry covers only ~14% of the corridor (1 of 13 OSM relation member ways, ~135 of ~943 km); full rationale in the route_fragment validity concern, and a redigitization of relation 17195756 is owed as a §8 route candidate. RouteType stays 'Mapped route (at any accuracy)' — a fragment is still mapped geometry (three-way sync rule). Operator is NOT proposed here: it is staged as its own Operator [ref] FILL onto the operators/owners tab (blank -> Gazprom Transgaz Ukhta, two independent sources; NOT Gazprom Transgaz Yugorsk, whose territory ends upstream at the Pelenyor Ural pass)."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P5540",
+   "url": "https://energybase.ru/pipeline/punga-vuktyl-ukhta",
+   "note": "Harvested wiki_citations lead for P5539 is actually about a DIFFERENT pipeline entity: 'Газопровод Пунга - Вуктыл - Ухта I, II'. Roster note already flags P5540/P7538 as possibly tracing this Punga-Vuktyl-Ukhta corridor -- this energybase.ru page is a candidate ref for that row/those rows, not for P5539. Not verified against P5540/P7538's specific values in this pass; flagged for the researcher assigned to those PIDs to evaluate.",
+   "source_language": "ru"
+  },
+  {
+   "project_id": "P5585",
+   "url": null,
+   "note": "zaogsp.ru's project-category navigation menu (seen while reading the misattributed istoriya/punga page for P5539) lists a sibling contractor project 'Грязовец-Выборг, II нитка' -- likely corresponds to GEM's Gryazovets-Vyborg pipeline, string/line II (candidate P5585 per roster naming, not confirmed by PID lookup in this pass). No URL captured for the specific project page (only seen in a nav-menu listing, not opened) -- flagged as a lead for whichever pass covers that PID, not independently verified.",
+   "source_language": "ru"
+  }
+ ],
+ "summary": "P5539 (Punga-Ukhta-Gryazovets IV) CONFIRMED real/operating, 15/15 units filled; Operator corrected to Gazprom Transgaz Ukhta (was blank); 4 validity concerns staged -- zaogsp.ru ref misattributed to a different 1976 Punga-side object (dropped from Fuel/PipelineType/Status), RouteAccuracy overstated (staged geojson covers only ~14% of the OSM-sourced route), FuelSource contested (Medvezhye vs Urengoy), and a III-vs-IV segment-numbering discrepancy across sources; 5 units UNRESOLVED (Proposal, Construction, Pressure, FuelSource, SegmentCost) with no fabricated refs."
+}

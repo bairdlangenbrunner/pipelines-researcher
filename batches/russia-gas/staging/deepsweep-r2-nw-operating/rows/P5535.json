@@ -1,0 +1,605 @@
+{
+ "project_id": "P5535",
+ "pipeline_name": "Gryazovets-Leningrad Gas Pipeline",
+ "sheet_row": 3052,
+ "wiki": "https://www.gem.wiki/Gryazovets-Leningrad_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "(1) Change Diameter from 1020mm to 1220mm for P5535 (Line II) -- do NOT change P5534 (Line I), whose 1020mm is independently confirmed correct. (2) Investigate/correct StartYear1 away from 1991 -- contradicted by evidence, but no safe Line-II-specific replacement year was found this pass, so no specific year is proposed; a follow-up search for a Line-II-specific Gazprom Transgaz Ukhta/Severgazprom anniversary publication is the likeliest way to close it.",
+   "researcher_notes": "TWO spec concerns for P5535 (Line II), combined into one validity record because validity[] keys on (segment_name, concern_type) and both are 'spec':\n\n(a) DIAMETER -- CONFIRMED CORRECTION (higher confidence): the sheet's Diameter=1020mm is very likely wrong for this row. Two independent sources agree Line II is 1220mm: OSM community tagging, consistent across all 6 constituent ways of the Line-2 relation (17713721, e.g. way 377314744, name:en='Gryazovets - Leningrad 2'); and an independent Leningrad-Oblast highway-reconstruction project document (eurostolica.ru) naming 'Gryazovets-Leningrad-1' Du1000 and 'Gryazovets-Leningrad-2' Du1200 as two separate, differently-sized lines. GEM's OWN routes-repo geojson for P5535 (way 377314744) already carries diameter='1220 mm' from this same OSM source -- so the sheet cell disagrees with GEM's own already-ingested route geometry, a pre-existing internal inconsistency. By contrast, relation 17713722 ('Line 1' / P5534)'s ways consistently tag 1020mm, matching the sheet's P5534 value exactly -- confirming this is specifically a Line-2 sheet error, not a general OSM tagging quirk. Recommend changing Diameter to 1220mm for P5535 only.\n\n(b) STARTYEAR1 -- FLAGGED, NOT RESOLVED (lower confidence, no safe replacement): StartYear1=1991 is contradicted by Gazprom Transgaz Ukhta's own company history (https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/), which states both lines ('dve nitki') of the Gryazovets-Leningrad system were already built by 21 August 1986 (Severgazprom's formation date) -- five years before 1991. The most specific date found (a Gazprom Transgaz Ukhta VK anniversary post, cp1251-decoded, 31 October 1979) is diameter-tagged 1020mm, identifying it as Line I (P5534)'s commissioning date, not this row's corrected 1220mm Line II -- so it cannot safely be reused here without misattributing a Line-I fact to Line II. No source pins an exact commissioning year specific to Line II; it is only bounded to a pre-1986 window (and, if after Line I, post-1979). Not proposing a specific replacement year, since that would be fabricated precision this evidence doesn't support -- flagging as a concern for a human reviewer / follow-up search instead.",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+    "http://www.eurostolica.ru/obektyi/",
+    "https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/",
+    "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en/ru",
+   "contested": {
+    "Diameter": "1020",
+    "StartYear1": "1991"
+   }
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+    "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Wayback capture 2024-11-11 of Gazprom Transgaz Saint-Petersburg's Kolpinskoye LPUMG branch page: its 'zone of responsibility' explicitly lists «Gryazovets-Leningrad -- 1, 2» among the trunk pipelines it currently operates, alongside Serpukhov-Leningrad, Kohtla-Järve-Leningrad-1,2, etc. Dated Nov 2024, i.e. within the last year -- directly supports 'operating' as still current."
+    },
+    {
+     "url": "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Live VK post (Gazprom Transgaz Ukhta's own account), cp1251-decoded: '45 let so dnya vvoda v ekspluatatsiyu gazoprovoda Gryazovets-Leningrad' (45th anniversary of commissioning). Confirms the line as a long-operating asset in the company's own retrospective messaging; does not itself restate 'operating' as a status word (contains_value=false is honest -- it is a historical/anniversary post, not a live-status statement), included as corroborating existence/continuity evidence only."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Both proposed refs are Gazprom-affiliated (Gazprom Transgaz Saint-Petersburg company page; Gazprom Transgaz Ukhta's own VK account), so this is not a 2-independent-source pair by the strict rule -- but a current (2024) operator branch page listing the line within its live zone of responsibility is strong direct evidence for 'operating', and no independent source (media, regulator, OSM) contradicts it or suggests shelving/mothballing. The sheet's original current_ref also cited ukhta-tr.gazprom.ru/about/history/ (ConnectTimeout at builder time; Wayback equivalent verified at https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/, confirms the two-line Gryazovets-Leningrad system exists as part of the Severgazprom/Ukhta network, built by 1986). No existence, duplicate, or status concern found for this unit."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240224193656/https://spb-tr.gazprom.ru/about/history/",
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240224193656/https://spb-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Gazprom Transgaz Saint-Petersburg company history page (Wayback 2024-02-24) names Gryazovets-Leningrad among its gas trunk pipelines (magistralnye gazoprovody)."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSM way 377314744 (part of relation 17713721, 'Gryazovets-Leningrad 2'/Line II) carries substance=gas directly on the tag -- an independent, community-sourced confirmation of fuel type."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Gas is uncontested; OSM tagging (independent of Gazprom) and the operator's own history page agree."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240224193656/https://spb-tr.gazprom.ru/about/history/",
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240224193656/https://spb-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Company page describes Gryazovets-Leningrad as a magistralny (trunk/transmission) gazoprovod."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSM way tags usage=transmission directly."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Transmission classification uncontested; matches both a Gazprom source and independent OSM tagging."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No ProposalYear/Month could be sourced. This is a Soviet-era (pre-1986, likely late-1970s to mid-1980s) trunk pipeline; the planning/authorization process predates any searchable public 'proposal' announcement of the kind used for post-Soviet projects, and no Gosplan-era planning document was found online. Searched: general Russian-language queries combining Gryazovets-Leningrad with proposal/planning/decision terms, Gazprom Transgaz Ukhta and Saint-Petersburg company history pages (neither gives a proposal/decision date, only construction-era summaries), cyberleninka.ru academic literature. Leaving UNRESOLVED rather than guessing at a year."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No ConstructionYear specific to Line II (this segment, 1220mm/Du1200) could be pinned down. What IS established: Gazprom Transgaz Ukhta's own company history (https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/) states that by 21 Aug 1986 (when Severgazprom was formed), 'two lines (dve nitki) of the Gryazovets-Leningrad pipeline' had already been built, among other trunk lines -- so construction of BOTH lines is complete no later than 1986. A Wayback-archived VK post from Gazprom Transgaz Ukhta (cp1251-decoded) states a Gryazovets-Leningrad line was commissioned 31 October 1979 at diameter 1020mm -- that diameter matches Line I (P5534, sheet Diameter=1020mm), not Line II (P5535, corrected Diameter=1220mm per the Diameter fill below), so the 1979 date most plausibly belongs to P5534, not this row. No source pins an exact construction year specific to the 1220mm second line; it is bounded to the 1979(if after Line I)-1986 window. See the Start [ref] unit and the validity[] spec concern below for the StartYear1=1991 implausibility finding built on the same evidence. Leaving Construction UNRESOLVED rather than asserting an unsourced specific year; a human researcher with access to Soviet ministry archives or a company anniversary publication naming Line II specifically could likely close this."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1991"
+   },
+   "primary_value": "1991",
+   "proposed_refs": [
+    "https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/",
+    "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20150512013501/http://ukhta-tr.gazprom.ru/about/history/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Confirms 'two lines of the Gryazovets-Leningrad pipeline' were already built by 21 Aug 1986 (Severgazprom's formation date), i.e. this contradicts StartYear1=1991 for either line of the system -- the page does not contain '1991' anywhere in connection with this pipeline (contains_value=false, correctly, since the page argues AGAINST 1991)."
+    },
+    {
+     "url": "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l",
+     "ok": false,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "cp1251-decoded VK post gives 31 October 1979 as a Gryazovets-Leningrad commissioning date at diameter 1020mm -- that diameter identifies Line I (P5534), not this row (Line II, 1220mm). Does not contain '1991'. Per the worklist's own existing_ref_checks this URL already failed a '1991' content match."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=1991 is NOT corroborated and is contradicted by the best evidence found: Gazprom Transgaz Ukhta's own company history states both Gryazovets-Leningrad lines were already operational by August 1986, five years before 1991. No source found gives 1991 for either line. The most specific date found (VK post, 31 Oct 1979, diameter 1020mm) matches Line I (P5534)'s diameter, not this row's corrected 1220mm diameter -- so it cannot be applied here as a replacement without misattributing it to the wrong string. Because no source pins an exact commissioning year for Line II specifically (only the pre-1986 upper bound), I am NOT proposing a specific replacement year (that would be a fabricated precision this evidence doesn't support) -- filing this as UNRESOLVED for the fill, and separately raising a validity[] spec concern below so a human reviewer sees that 1991 should be corrected/investigated even though this pass can't supply the right number. Recommend a targeted follow-up search for a Line-II-specific company anniversary article (the pattern here, per the Line-I 1979 VK post, suggests Gazprom Transgaz Ukhta/Severgazprom likely publishes a similar anniversary piece for Line II on its own commissioning date)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No Line-II-specific capacity figure found. A Russian government decree (found via search, not independently re-confirmed this pass) discusses a 9.7 bcm/y figure but it is explicitly attributed to the 'Gryazovets-Leningrad, 1 nitka' (Line I / P5534), not Line II -- so it is not usable here without misattribution. Searched Gazprom Transgaz Ukhta/Saint-Petersburg company pages, energybase.ru, and general Russian-language searches; none give a segment-specific capacity for the second line. See cross_row_leads below pointing this decree finding at P5534 for that row's own research to confirm/use."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "OSM way 377314744 (https://api.openstreetmap.org/api/0.6/way/377314744.json) tags pressure=54 (unit not specified on the tag, conventionally atm/kgf-cm2 for Soviet-era trunklines, i.e. ~5.4 MPa) -- but this is a single, non-independently-corroborated source, and the bare tag doesn't state a unit, so I'm not confident enough in the unit conversion to stage a value. No second source (Gazprom company pages, academic literature) gives an explicit operating pressure for this line. Leaving UNRESOLVED rather than guessing the unit."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "609.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "609.00",
+   "proposed_refs": [
+    "https://cyberleninka.ru/article/n/globalnyy-gaz"
+   ],
+   "verifications": [
+    {
+     "url": "https://cyberleninka.ru/article/n/globalnyy-gaz",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "cyberleninka.ru academic article ('Globalnyy gaz') states the two-line (dvukhnitochny) Gryazovets-Leningrad gas pipeline system is 609 km. Since GEM records each parallel line/string of a двухниточный system at the SAME route distance (both strings follow essentially the same corridor), this aggregate figure is a legitimate per-line reference, not an aggregate-vs-segment violation -- consistent with GEM's own recorded 609.00 km already on P5534 (Line I)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Value confirmed as recorded (609.00 km). This is currently a single-source citation (cyberleninka.ru, an independent academic source, but only one) -- the sheet's prior citation to this same article's /viewer URL was a JS-only PDF shell that could not be content-verified; the non-viewer article URL is fully readable and does contain the figure. A second independent source for the 609 km figure was searched for but not found this pass (Gazprom company pages describe the corridor but do not restate the km figure); tier held at medium pending a second source."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1220",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1220",
+   "proposed_refs": [
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+    "http://www.eurostolica.ru/obektyi/"
+   ],
+   "verifications": [
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSM way 377314744, name='Gryazovets — Leningrad 2' (name:en literally 'Gryazovets — Leningrad 2'), tags diameter=1220 mm. This way is one of 6 constituent ways of relation 17713721 ('Line 2'); all 6 checked ways consistently tag 1220 mm. By contrast, relation 17713722 ('Line 1', corresponding to P5534) tags its checked ways at 1020 mm, matching the sheet's existing P5534 value exactly -- confirming this is a Line-2-specific discrepancy, not a general OSM tagging error."
+    },
+    {
+     "url": "http://www.eurostolica.ru/obektyi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": false,
+     "note": "Independent road-construction project document (Upravtodor Severo-Zapad / R-21 'Kola' highway reconstruction, Leningrad Oblast, km 51+500-68+000) explicitly lists utility relocation for 'Gryazovets-Leningrad-1' Du1000 AND 'Gryazovets-Leningrad-2' Du1200 as two separate, named pipelines with two different diameters -- directly corroborating that Line 2 (this row) is the larger-diameter (~1200mm nominal / 1220mm OD) line, distinct from Line 1's ~1000mm nominal (matching the sheet's 1020mm OD for P5534). name_found=false because url_verifier's fuzzy name match didn't register 'Gryazovets-Leningrad-2' against the transliterated pipeline name string, but the raw page text (manually inspected) explicitly names both lines and their distinct diameters -- read for relevance, this is squarely about this specific line."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en/ru",
+   "researcher_notes": "CORRECTION: the sheet's current Diameter=1020mm for P5535 (Line II) is very likely WRONG -- that is Line I's (P5534's) diameter. Two independent sources (OSM community tagging on 6 separate ways of the Line-2 relation; an independent highway-construction project document naming both lines with different diameters) agree Line II's diameter is 1220mm (Du1200 nominal). GEM's OWN routes-repo geometry for P5535 (data/individual-routes/gas-pipelines/P5535.geojson, way 377314744) ALREADY carries diameter='1220 mm' sourced from this same OSM way -- meaning GEM's own already-ingested route data disagrees with the sheet's Diameter cell, a pre-existing internal inconsistency this pass is now resolving in favor of the corroborated 1220mm. Paired with a validity[] spec concern below (contested: Diameter=1020) so this doesn't read as a silent value swap."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No specific upstream field/source attribution found for this segment. Given the system's Soviet-era origin and the Ukhta-Torzhok/Punga-Vuktyl-Ukhta/Punga-Ukhta-Gryazovets corridor context established via the Ukhta Transgaz company history, the ultimate gas source is plausibly Komi Republic/Timan-Pechora and West Siberian (Urengoy-era) fields feeding the Ukhta hub, but no source states this explicitly for Gryazovets-Leningrad specifically, so I am not staging an inferred FuelSource without a citable statement. Leaving UNRESOLVED."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "EndState/Province",
+   "values": {
+    "EndState/Province": "Leningrad Oblast"
+   },
+   "primary_value": "Leningrad Oblast",
+   "proposed_refs": [
+    "http://www.eurostolica.ru/obektyi/",
+    "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.eurostolica.ru/obektyi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": false,
+     "note": "The R-21 'Kola' highway reconstruction document (contractor: Upravtodor Severo-Zapad) explicitly places the utility relocation of 'Gryazovets-Leningrad-1/2' pipelines at km 51+500-68+000 of the R-21 highway, 'Leningradskaya oblast' (Leningrad Oblast) stated verbatim in the same project description. R-21 runs north out of Saint Petersburg through Leningrad Oblast, and this km range is consistent with the route geojson's northern/end coordinate (60.17N, 30.07E — Vsevolozhsky District, Leningrad Oblast, just north of the city)."
+    },
+    {
+     "url": "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Kolpinskoye LPUMG's listed zone of responsibility groups Gryazovets-Leningrad-1,2 alongside other lines terminating at Leningrad-Oblast/Saint-Petersburg-suburb towns (Gatchina, Lomonosov, Petrodvorets) -- consistent with, though not an explicit verbatim restatement of, 'Leningrad Oblast' as the end province (contains_value=false, correctly, since the oblast name itself isn't spelled out on this particular page)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "EndState/Province was BLANK on the sheet (StartLocation/StartState=Vologda Oblast and EndLocation=Saint-Petersburg/EndCountryOrArea=Russia were already present; only EndState/Province was missing) -- filling per the task brief's explicit pre-identified instruction for this row. ROUTE JUDGMENT (OK_INTERIOR, per brief flag): GEM's routes-repo geometry for P5535 (way 377314744, 567 points) runs from approx. [32.39, 59.78] (near Volkhov/Syasstroy area, Leningrad Oblast) to approx. [30.07, 60.17] (Vsevolozhsky District, just north of Saint Petersburg, Leningrad Oblast) -- BOTH endpoints of the stored geometry sit inside Leningrad Oblast, not at the sheet's true termini (Gryazovets in Vologda Oblast at the start; central Saint Petersburg at the end). This confirms the stored route is a SEGMENT/partial trace of the full line (the OK_INTERIOR case), not a wrong route -- the geometry is right as far as it goes, it just doesn't reach the true start terminus. This is a geometry-completeness observation, not a RouteAccuracy concern, since the traced portion is itself accurately placed. Route judged BEFORE this fill per the brief's instruction ('judge the route first')."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No cost figure found for this Soviet-era (pre-1986) pipeline segment; construction-cost accounting from that period is not publicly available online in the sources checked (Gazprom company histories, academic literature, government decrees). Leaving UNRESOLVED."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "oo_sheet_row": 4323,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint-Petersburg LLC, Gazprom Transgaz Ukhta LLC",
+    "OperatorLocalLanguage": "ООО «Газпром трансгаз Санкт-Петербург»"
+   },
+   "primary_value": "Gazprom Transgaz Saint-Petersburg LLC, Gazprom Transgaz Ukhta LLC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Kolpinskoye LPUMG (a branch of OOO Gazprom Transgaz Saint-Petersburg) page lists Gryazovets-Leningrad-1,2 within its operated zone."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSM way tags operator='OOO «Gazprom transgaz Sankt-Peterburg»' directly, matching OperatorLocalLanguage exactly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Operator [ref] was MISSING_REF (value present, no citation). Confirmed via two independent sources: Gazprom Transgaz Saint-Petersburg's own Kolpinskoye LPUMG branch page, and OSM's community-tagged operator field, both agreeing on Gazprom Transgaz Saint-Petersburg. The sheet's dual-operator value (...Saint-Petersburg LLC, ...Ukhta LLC) reflects that the line crosses two transgaz companies' territories (Ukhta Transgaz upstream near Gryazovets/Vologda Oblast, Saint-Petersburg Transgaz downstream) -- consistent with Gazprom Transgaz Ukhta's own history page also claiming the Gryazovets-Leningrad system as part of its built infrastructure."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "oo_sheet_row": 4323,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://www.gazpromspartakiada.ru/companies/gt-spb/",
+    "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.gazpromspartakiada.ru/companies/gt-spb/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Explicit statement: 'OOO «Gazprom transgaz Sankt-Peterburg» — 100-protsentnoe dochernee predpriyatie PAO «Gazprom»' (a 100%-owned subsidiary enterprise of PJSC Gazprom) -- directly confirms Owner1=Gazprom PJSC at 100%."
+    },
+    {
+     "url": "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Confirms the operating branch (Kolpinskoye LPUMG) is part of Gazprom Transgaz Saint-Petersburg, which operates Gryazovets-Leningrad-1,2 -- corroborates which company chain the ownership statement applies to; the 100% figure itself is not restated on this operational branch page (contains_value=false, correctly)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Gazprom PJSC 100% ownership (via wholly-owned subsidiary Gazprom Transgaz Saint-Petersburg, which per the Kolpinskoye LPUMG page operates this specific line) is explicitly and directly confirmed by gazpromspartakiada.ru's company-profile text. Both sources are Gazprom-group-affiliated (not a fully independent 2nd-party source), consistent with this being an uncontested, well-documented corporate-structure fact rather than a disputed data point; no evidence of any third-party ownership stake in this trunk line was found anywhere in this research pass."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3052,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "operating",
+   "proposed_changes": {},
+   "evidence_date": "2024-11-11",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+    "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+    "http://www.eurostolica.ru/obektyi/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20241111180611/https://spb-tr.gazprom.ru/about/branches/kolpinscoe/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "Wayback capture dated 2024-11-11 (most recent evidence in this review): Gazprom Transgaz Saint-Petersburg's Kolpinskoye LPUMG branch page lists Gryazovets-Leningrad-1,2 within its current, active zone of responsibility -- directly supports 'operating' as still accurate less than a year before this review."
+    },
+    {
+     "url": "https://api.openstreetmap.org/api/0.6/way/377314744.json",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": true,
+     "note": "OSM way for Line II is tagged flow_direction=forward, usage=transmission, substance=gas -- an actively-maintained community map entry consistent with an in-service pipeline, not one flagged abandoned/disused (OSM has separate disused:pipeline / abandoned tagging conventions that are NOT used here)."
+    },
+    {
+     "url": "http://www.eurostolica.ru/obektyi/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": false,
+     "note": "2022-2023-dated highway project document treats the Gryazovets-Leningrad-1,2 pipelines as live utility infrastructure requiring relocation/protection during nearby road reconstruction -- consistent with an operating, in-use pipeline (a shelved/decommissioned line would not need active utility-relocation coordination)."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Annual-update status review for P5535 (Gryazovets-Leningrad Gas Pipeline, Line II). VERDICT: CONFIRM -- 'operating' remains correct. Existence confirmed (ruling out a hallucination/duplicate concern): the Kolpinskoye LPUMG page explicitly names 'Gryazovets-Leningrad-1,2' as a distinct pair of lines within its current network, matching GEM's split into P5534 (Line I, 1020mm) and P5535 (Line II, corrected to 1220mm -- see validity[] spec concern). No indication anywhere in the sources reviewed (company pages, OSM, an unrelated but relevant 2022-2023 highway-construction document treating it as live infrastructure, academic literature) of shelving, mothballing, decommissioning, or capacity reduction. The one open issue from this review is NOT a status question but a spec correction (Diameter) and an unresolved StartYear1 concern, both filed separately above; neither affects the operating-status verdict."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P5534",
+   "url": "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l",
+   "note": "This pass on P5535 (Line II) found strong evidence that GEM's diameter and start-year conventions for the two Gryazovets-Leningrad строки should NOT be assumed identical -- confirm P5534 (Line I)'s OWN diameter and start year independently. Specifically: (1) OSM relation 17713722 ('Line 1') ways consistently tag 1020mm, matching P5534's current sheet value -- corroborating (not correcting) P5534. (2) This VK anniversary post (Gazprom Transgaz Ukhta, cp1251-decoded) gives 31 October 1979 as a Gryazovets-Leningrad commissioning date at diameter 1020mm -- since that diameter matches Line I specifically, 1979 is a strong candidate for P5534's StartYear1 (worth checking against whatever P5534 currently records). (3) A Russian government decree found via search (not independently re-verified in this pass, so not cited as a ref here) reportedly gives a ~9.7 bcm/y capacity figure explicitly for 'Gryazovets-Leningrad, 1 nitka' (Line I) -- worth chasing directly for P5534's Capacity unit rather than reusing on P5535.",
+   "proposed_refs": [
+    "https://vk.com/@-138918466-45-let-so-dnya-vvoda-v-ekspluataciu-gazoprovoda-gryazovec-l",
+    "https://www.openstreetmap.org/relation/17713722"
+   ]
+  },
+  {
+   "project_id": "P5585",
+   "url": "http://www.eurostolica.ru/obektyi/",
+   "note": "The eurostolica.ru highway-reconstruction document used for P5535's Diameter/Location fills also names 'Severo-Evropeyskiy gazoprovod-1' Du1400 and 'Severo-Evropeyskiy gazoprovod-2' Du1200 (Gryazovets-Vyborg / Nord European Gas Pipeline feeder lines) in the same utility-relocation list. If P5585 or a sibling row tracks one of these Gryazovets-Vyborg lines, this document may be a useful additional diameter/location corroboration -- worth a direct check rather than assuming, since 2012-era Gazprom press materials describe a phased Du1400/loop-line buildout for that corridor that could disagree with a single Du1200/Du1400 snapshot from a 2022-2023 document.",
+   "proposed_refs": [
+    "http://www.eurostolica.ru/obektyi/"
+   ]
+  }
+ ],
+ "summary": "Existence/classification/non-duplication confirmed for P5535 (Gryazovets-Leningrad Line II, distinct from P5534 Line I; Kolpinskoye LPUMG page names both '1,2' explicitly). Refs added/reverified for 15/15 owed units: Status, Fuel, PipelineType REVERIFIED (operating/Gas/transmission); Length REFS_ADDED (609.00km, medium, 2nd source still owed); Diameter REFS_ADDED and CORRECTED (1020mm->1220mm, high, 2 independent sources -- paired with a spec validity concern); Location REFS_ADDED (EndState/Province=Leningrad Oblast, filled per brief instruction; route judged OK_INTERIOR -- geometry is an accurate but partial segment, not a wrong route); Operator REFS_ADDED (Gazprom Transgaz Saint-Petersburg/Ukhta, high); Owner REVERIFIED (Gazprom PJSC 100%, medium). UNRESOLVED (5): Proposal, Construction, Capacity, Pressure, FuelSource, SegmentCost -- no Line-II-specific sourceable figures found (SegmentCost also UNRESOLVED = 6 total UNRESOLVED). Start [ref] also UNRESOLVED: existing StartYear1=1991 is contradicted (Ukhta Transgaz company history: both lines built by 1986) but no safe Line-II-specific replacement year was found, so a validity[] spec concern is raised instead of guessing. Two validity concerns staged: spec/Diameter (confirmed (caveat), corrected 1020->1220) and spec/StartYear1 (concern, 1991 implausible, no replacement found). Required status review: verdict=confirm, operating remains correct (evidence dated 2024-11-11). Cross-row leads filed to P5534 (own diameter/start-year/capacity verification, do not assume mirrors P5535) and P5585 (Gryazovets-Vyborg diameter document)."
+}

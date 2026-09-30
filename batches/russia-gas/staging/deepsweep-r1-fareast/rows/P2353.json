@@ -1,0 +1,697 @@
+{
+ "project_id": "P2353",
+ "pipeline_name": "Power of Siberia Gas Pipeline",
+ "sheet_row": 1217,
+ "wiki": "https://www.gem.wiki/Power_of_Siberia_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action on existence/duplicate/classification for P2353 itself. It is the genuine, physically distinct Phase II segment of the Power of Siberia system (Kovyktinskoye field, Irkutsk Oblast -> Chayandinskoye field, Sakha Republic, ~800-804 km, operating since Dec 21, 2022) and is clearly distinguishable from its named-family siblings: P2352 is Phase I (Chayandinskoye NGKM, Sakha Republic -> Blagoveshchensk, Amur Oblast, ~2,200 km, operating since Dec 2, 2019 -- upstream of and physically prior to this segment); P3208, per an independent technical-library phase breakdown (neftegaz.ru tech-library), corresponds to a Phase III COMPRESSOR-STATION-ONLY capacity expansion along the Chayandinskoye-to-Atamanskaya section of P2352's OWN corridor (7 new compressor stations, 481 MW, target by 2022) -- i.e. not a third physical pipe segment overlapping this row, and not resolved here since it is P3208's own audit; P5521 (Belogorsk-Khabarovsk) and any Power-of-Siberia-2/'Sila Baikala' rows are later, physically separate, not-yet-complete corridors connecting the Power of Siberia system to the unrelated Sakhalin-Khabarovsk-Vladivostok system, unrelated to P2353's own route. No indication P2353 duplicates, or is duplicated by, any other roster row. The prokhab.ru gem.wiki citation (Khabarovsk-Amur Oblast, ~800 km, Oct 2022) found among P2353's wiki citations is NOT relevant to this row -- its termini (Khabarovsk / Amur Oblast) do not match P2353's actual route (Irkutsk Oblast / Sakha Republic); the coincidental '~800 km' figure is the only overlap. Routed as a cross_row_lead for whichever PID actually covers a Khabarovsk-area line (candidate: P5521 or a sibling not in this roster slice) rather than used here.",
+   "contested": {},
+   "researcher_notes": "Checked P2353 against the batch's flagged Power-of-Siberia family (P2352/P2353/P3208/P7600) using Gazprom's own project page (segment-specific paragraphs), Gazprom's 2022 Annual Report (krasnodar-dobycha.gazprom.ru PDF, reached via Wayback), neftegaz.ru's phase-by-phase technical breakdown, and energybase.ru's dedicated 'Power of Siberia Phase II' object page. All four independently and consistently describe P2353 as the Kovyktinskoye-to-Chayandinskoye section commissioned Dec 21, 2022. The prokhab.ru citation was reviewed against P2353's actual sourced geography and found not to match; not used as a ref for any P2353 unit."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "verdict": "concern",
+   "concern_type": "route",
+   "recommendation": "Flag RouteAccuracy as contested / route-candidate-owed. The routes-repo geometry on file for P2353 (goit-ggit-pipeline-routes/data/individual-routes/gas-pipelines/P2353.geojson, 290-point LineString) computes to ~1,183.5 km by Haversine summation over every vertex -- roughly 48% LONGER than the sourced/recorded ~800-804 km segment length (the opposite-direction defect from P2352's sibling row, whose mapped route was only ~11% of its true length). The line's endpoints are consistent with the correct general termini (first vertex [119.156, 60.755] sits in southwestern Sakha Republic near the Chayandinskoye area; last vertex [106.144, 55.365] sits in the Irkutsk Oblast/Kovyktinskoye area -- start/end reversed relative to the physical Kovykta->Chayanda gas-flow direction, which per this task's own guidance is NOT itself a mismatch to flag), but the path length between them is far too long for an ~800 km pipe corridor. Recommend this PID be treated as a route-integrity review target (re-check whether the traced way includes an unrelated detour or a misattributed OSM segment) rather than treating the current geometry as reliable for RouteAccuracy purposes. No routes-repo write made or proposed here -- read-only per this task's standing scope.",
+   "contested": {
+    "RouteAccuracy": "contested -- mapped geojson computes to ~1,183.5 km via Haversine summation over all 290 vertices, ~48% longer than the sourced/recorded ~800-804 km segment length"
+   },
+   "researcher_notes": "Computed independently via Haversine great-circle summation over consecutive coordinate pairs in the published geojson (read from the local sibling checkout of GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes; read-only, this task may not write to that repo). Start/end reversal relative to gas-flow direction matches this task's own pre-analysis for P2353 and is explicitly not flagged as a defect; the length discrepancy is a separate, additional finding.",
+   "proposed_refs": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Note SegmentCost=280 billion RUB as a mid-construction ESTIMATE (dateline Nov 2020, ~2 years before the section's actual Dec 2022 commissioning), not a confirmed as-built final cost, and as single-source. neftegaz.ru's own wording is explicit: 'на данный момент стоимость проекта оценивается в 280 млрд руб.' ('at present, the project's cost is estimated at 280 billion rubles') -- an in-progress estimate, not a completion figure. No later, post-commissioning cost figure specific to this 800km segment was found in the time available (the ~1.1 trillion RUB figure appearing in the same neftegaz.ru technical-library phase breakdown is explicitly scoped to Phase I / P2352's own ~2,200 km section, not this segment -- not used here per the aggregate/misattribution rule; nor is the ~RUB 1.1 trillion system-wide programme cost figure flagged in this batch's roster guidance). Recommend keeping the 280 billion RUB figure (on-point, genuinely states it, names the segment) but treating it as a preliminary/under-construction estimate if applied.",
+   "contested": {
+    "SegmentCost": "estimate -- source explicitly scopes 280 billion RUB as a Nov-2020 in-progress cost estimate (2 years before commissioning), not a confirmed as-built final figure; single-sourced"
+   },
+   "researcher_notes": "Confirmed by direct reading of the neftegaz.ru article (fetched live, 200) rather than relying on the url_verifier substring check alone. A second, independent source for this segment's specific construction cost was searched for (Vedomosti's 'Стоимость Силы Сибири может превысить 1 трлн рублей' and RBC's background piece were both checked) but both discuss the WHOLE Power of Siberia programme's cost, not this segment's own cost, so neither was used as a second corroborating figure for SegmentCost specifically.",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own 2022 Annual Report (via Wayback; live host ConnectTimeouts per Measured Conditions): '21 декабря ... Ковыктинское ГКМ и участок МГ «Сила Сибири» Ковыкта — Чаянда' -- states the Kovykta-Chayanda section of Power of Siberia was launched into operation on Dec 21, 2022. pdftotext-extracted and read directly, not just url_verifier substring-matched."
+    },
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own project page, segment-specific: 'On December 21, 2022, a section of Power of Siberia between the Kovyktinskoye and Chayandinskoye fields was launched.'"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "e-disclosure.ru (the sheet's second existing ref for Status) still 403s, including via a fresh direct fetch that returned an anti-bot JS-challenge page (servicepipe.tech), not the underlying document; Wayback's CDX/availability APIs for that specific file id were down/rate-limited this session (IA-side 'Temporarily Offline' + 429s). Kept per standing rule (never delete over an access failure), not dropped -- see the Owner unit for corroborating e-disclosure-independent ownership sources. krasnodar-dobycha.gazprom.ru's PDF, previously flagged name_found:false in the worklist (Latin-only fuzzy match), genuinely names the pipeline in Cyrillic and directly states the segment's commissioning date -- resolves that false negative."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Listed among Gazprom's built/operating 'газопроводы' (GAS pipelines) network map."
+    },
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own project page describes the Kovykta-Chayanda section throughout as part of a 'gas trunkline' supplying natural gas."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources unambiguously gas; trivial confirmation."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "The Annual Report's network-map legend and text both use 'МГ' / 'магистральный газопровод' (main trunk/transmission gas pipeline) for this section -- the standard Russian classification GEM's controlled vocabulary maps to 'transmission', distinct from distribution or gathering pipe. Same reasoning applied to sibling row P2352 in this batch."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single-source (Gazprom-affiliated) confirmation reached via Wayback; neftegaz.ru and 1prime.ru independently use the same 'МГП'/'газопровод' trunk-line terminology throughout their coverage of this section, consistent with 'transmission'."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Searched specifically for a formal proposal/investment-decision date for the Kovykta-Chayanda (Phase II) section distinct from (a) the 2012 general project relaunch/naming (which P2352's own shard sources to 2012, but that predates any Kovykta-Chayanda-specific staging decision and is about the whole 'Сила Сибири' name/project, not this segment), and (b) the 2014 Gazprom-CNPC Sales and Purchase Agreement (system-level, explicitly about the whole 30-year/38 bcm/y contract, not a Phase-II-specific proposal date). Gazprom's own project page and the neftegaz.ru technical-library phase breakdown both describe Phase II only in terms of its Sept-2020 construction start and Dec-2022 commissioning; neither states when the phase itself was formally proposed/approved as distinct from Phase I. No citable non-gem.wiki source found in the time available states a Phase-II-specific proposal year. Left UNRESOLVED rather than guessed."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2020",
+    "ConstructionMonth": "9"
+   },
+   "primary_value": "2020",
+   "proposed_refs": [
+    "https://1prime.ru/20201102/832257275.html",
+    "https://www.interfax.ru/russia/735314",
+    "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/"
+   ],
+   "verifications": [
+    {
+     "url": "https://1prime.ru/20201102/832257275.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'В сентябре на востоке нашей страны начался второй этап строительства газопровода «Сила Сибири» на участке от Ковыктинского до Чаяндинского месторождения' (In September, in the east of our country, the second stage of construction of the 'Power of Siberia' pipeline began on the section from Kovyktinskoye to Chayandinskoye) -- read in full; the sheet's existing ref, previously flagged name_found:false by the worklist's Latin-only fuzzy matcher, does name the pipeline in Cyrillic. Resolves that false negative."
+    },
+    {
+     "url": "https://www.interfax.ru/russia/735314",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Independent outlet, same story: 'Второй этап строительства газопровода «Сила Сибири» ... начался в сентябре, сообщает корпоративная газета ООО «Газпром инвест»' (The second stage of construction... began in September, per Gazprom Invest's corporate newspaper)."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same story, third outlet; adds segment length (803 km) and working pressure (9.8 MPa) explicitly for this section."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "All three outlets (1prime.ru, interfax.ru, neftegaz.ru) trace to the same underlying Gazprom Invest corporate-newspaper item, so this is treated as one primary-adjacent origin reproduced across outlets (not counted as fully mutually independent per standing rule 4), hence tier=medium rather than high despite three URLs. Adds ConstructionMonth=9 (September), not previously recorded on the sheet."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2022",
+    "StartMonth1": "12"
+   },
+   "primary_value": "2022",
+   "proposed_refs": [
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://energybase.ru/pipeline/power-of-siberia2"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom's own 2022 Annual Report: '21 декабря ... участок МГ «Сила Сибири» Ковыкта — Чаянда' [launched] -- Dec 21, 2022, exact date."
+    },
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'On December 21, 2022, a section of Power of Siberia between the Kovyktinskoye and Chayandinskoye fields was launched.' Segment-specific, exact date matches the Annual Report."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "energybase.ru's dedicated 'Power of Siberia Phase II' object page: 'Год ввода в эксплуатацию 2022' (Year of commissioning: 2022) -- independent database entry, same year."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Confirms this task's own pre-analysis for P2353: the section came on stream Dec 2022, and StartYear1 should be (and correctly already is) 2022, not any earlier Kovyktinskoye-field development/licence date. Two genuinely independent sources (Gazprom primary + energybase.ru database) agree on the year; Gazprom's own page and Annual Report agree on the exact date (Dec 21). Adds StartMonth1=12, not previously recorded. energybase.ru's own 'Состояние: проектируется' (Status: at design stage) label elsewhere on the same page is stale/pre-launch and is NOT used for Status -- noted as a source-quality caveat, not applied."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "38.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "38.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://energybase.ru/pipeline/power-of-siberia2"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Export capacity: 38 billion cubic meters per year' -- stated in the page's system-wide 'Figures and facts' box, i.e. an aggregate figure on its face."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "energybase.ru's page, titled specifically 'Газопровод Сила Сибири II этап' (Power of Siberia Phase II pipeline): 'Мощность 38 млрд. м³/год' (Capacity 38 bcm/y) -- tagged directly to this Phase-II object, not the system as a whole."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Aggregate-vs-segment check performed deliberately: gazprom.com's 38 bcm/y figure appears only in the system-wide box, which by itself would NOT be sufficient to support this segment's own Capacity cell. However energybase.ru independently and explicitly tags 38 bcm/y to its dedicated Phase-II ('II этап') object specifically -- a genuine segment-level attribution from a source that is not Gazprom's own site. Physically this also makes sense: Kovykta gas is blended into the same 38 bcm/y-rated system this segment feeds, so the export-capacity figure is not a misapplied summed/extensive system total (unlike length or cost) but the design throughput rating the segment itself was built to carry."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "9.8",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "9.8",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/",
+    "https://energybase.ru/pipeline/power-of-siberia2",
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Протяженность участка Ковыкта — Чаянда 803 км, рабочее давлением 9,8 МПа' -- pressure stated explicitly FOR THIS SEGMENT ('участка Ковыкта — Чаянда'), not as a bare system aggregate."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Давление 9.80 МПа' -- also tagged to the dedicated Phase-II object page."
+    },
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Working pressure: 9.8 MPa' -- system-wide box; corroborating, not the primary basis given the segment-specific sources above."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE resolved. Genuinely segment-level (not misapplied-aggregate) confirmation: neftegaz.ru's construction-start article states 9.8 MPa in the same sentence as this segment's own 803 km length, and energybase.ru's dedicated Phase-II page independently states the same figure. Three sources agree exactly."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "800.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "800.00",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/power-of-siberia2",
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'...на новый 800-километровый участок газопровода «Сила Сибири»' (...to the new 800-km section of the 'Power of Siberia' pipeline) -- exact match to the sheet's 800.00 km."
+    },
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Segment-specific (not the ~3,000 km system aggregate elsewhere on the same page): 'the construction of a section stretching for 804 kilometers from the Kovyktinskoye field (Irkutsk Region) to the Chayandinskoye field' -- 804 km, 0.5% above the sheet's value."
+    },
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Протяженность участка Ковыкта — Чаянда 803 км' -- 803 km, also segment-specific and within 0.4% of the sheet's value."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "All three sources are segment-specific (none is a system-wide figure misapplied here). energybase.ru matches the sheet's 800.00 km exactly; Gazprom's own page (804 km) and neftegaz.ru (803 km, also given as ~803.5 km in neftegaz.ru's separate tech-library phase breakdown) are within 0.5% -- treated as agreement within rounding per standing rule 7, not filed as a separate spec concern. Note: the routes-repo geojson's own computed path length (~1,183.5 km) diverges far more sharply from all of these -- see the validity[] route concern; that is a routes-repo geometry finding, independent of and not contradicting this sourced attribute value."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1420",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1420",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://energybase.ru/pipeline/power-of-siberia2"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Segment-specific (not the system aggregate box): describing the river crossing 'built during the construction of Power of Siberia's section between the Kovyktinskoye and Chayandinskoye fields', the page states 'the gas pipeline's strings (the main one and the backup one), each of 1,420 mm in diameter, were pulled through the tunnels' -- diameter given in a sentence explicitly about this segment's own construction."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Диаметр труб 1420 мм' -- tagged to the dedicated Phase-II object page."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources give a genuinely segment-specific attribution (not a bare aggregate figure carried over from the system-wide box), satisfying the aggregate-vs-segment rule."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Kovyktinskoye field"
+   },
+   "primary_value": "Kovyktinskoye field",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'the construction of a section stretching for 804 kilometers from the Kovyktinskoye field (Irkutsk Region) to the Chayandinskoye field' -- this segment originates at (draws its gas from) Kovyktinskoye field and delivers into the existing trunk at Chayandinskoye, consistent with the sheet's single-field FuelSource value."
+    },
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Annual Report: 'В декабре запущено в работу Ковыктинское месторождение ... и участок Ковыкта — Чаянда МГ «Сила Сибири»' -- the Kovyktinskoye field and this pipeline section were brought online together."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Chayandinskoye is this segment's downstream connection point into the pre-existing Phase I trunk, not a second source field feeding INTO this new 800km run -- so the sheet's single-field value (Kovyktinskoye field) is correct as recorded, not incomplete."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Irkutsk",
+    "StartState/Province": "Irkutsk Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndPrefecture/District": "Chayandinskoye field",
+    "EndState/Province": "Yakutia",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Irkutsk",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Segment-specific: 'the construction of a section stretching for 804 kilometers from the Kovyktinskoye field (Irkutsk Region) to the Chayandinskoye field' -- confirms the start terminus (Kovyktinskoye field) sits in Irkutsk Region/Oblast, filling the previously-blank StartState/Province."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Only correction made: previously-blank StartState/Province filled as 'Irkutsk Oblast' (canonical federal-subject spelling), sourced directly from Gazprom's segment-specific text naming 'Irkutsk Region' as the Kovyktinskoye field's location. EndState/Province ('Yakutia') and other existing Location values were already correct and are left as recorded. Per this task's own pre-analysis, the routes-repo geometry runs in reverse physical direction (Sakha -> Irkutsk, i.e. opposite the StartLocation/EndLocation labeling here) -- this is explicitly NOT treated as a mismatch to flag; see validity[] for the separate route-LENGTH concern, which is unrelated to direction."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "280000000000.00",
+    "SegmentCostUnits": "RUB",
+    "SegmentCostYear": "2020"
+   },
+   "primary_value": "280000000000.00",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/637910-gazprom-nachal-stroitelstvo-otrezka-kovykta-chayanda-gazoprovoda-sila-sibiri-1/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Протяженность участка Ковыкта — Чаянда 803 км ... На данный момент стоимость проекта оценивается в 280 млрд руб.' (The Kovykta-Chayanda section is 803 km ... At present, the project's cost is estimated at 280 billion rubles) -- segment-specific, names the section directly in the same passage as the cost figure."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE resolved at medium tier, single-source. A second source was searched for (Vedomosti's and RBC's Power-of-Siberia cost coverage) but both address the whole programme's cost, not this segment specifically -- see the paired validity[] spec concern, which also flags that this Nov-2020 figure is a mid-construction ESTIMATE (2 years before the section's Dec-2022 commissioning), not a confirmed as-built final cost. SegmentCostYear=2020 records the estimate's dateline, not a claim about final cost timing."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom PJSC",
+    "OperatorLocalLanguage": "ПАО \"Газпром\""
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://energybase.ru/pipeline/power-of-siberia2"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own official corporate site (gazprom.com), page titled 'Power of Siberia', presenting the pipeline throughout as the Company's own project -- primary self-attribution of operatorship."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "energybase.ru's dedicated Phase-II object page lists 'Компания ПАО «Газпром»' (Company: PJSC Gazprom) directly against this specific object -- independent database attribution, not Gazprom's own site."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF resolved for the recorded value 'Gazprom PJSC'. Two sources, one primary/self-declared and one independent database entry, both segment-specific (Phase II object page), agree exactly."
+  },
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+    "https://energybase.ru/pipeline/power-of-siberia2",
+    "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250518173643/https://www.gazprom.com/projects/power-of-siberia/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own official corporate site presents the pipeline as the Company's own asset throughout."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/power-of-siberia2",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Компания ПАО «Газпром»' listed as the owning company against this specific Phase-II object -- independent database entry."
+    },
+    {
+     "url": "https://web.archive.org/web/20240326175224/https://krasnodar-dobycha.gazprom.ru/d/textpage/66/102/application-1.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Gazprom PJSC's own 2022 Annual Report lists the Kovykta-Chayanda section among its own built/operating pipeline network -- i.e. asserts it as a Gazprom Group asset."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The sheet's existing e-disclosure.ru ref (https://e-disclosure.ru/portal/files.aspx?id=934&type=2) still returns HTTP 403 on a direct fetch, and a fetch with a browser User-Agent returned HTTP 200 but with anti-bot JS-challenge content (servicepipe.tech loader, obfuscated meta-refresh redirect), not the underlying disclosure document -- NOT treated as the real page. Wayback's CDX search and availability APIs for this specific file id were unavailable this session (Internet Archive 'Temporarily Offline' + HTTP 429 on repeated retries with a cooldown). Per standing rule, the blocked ref is KEPT (not dropped -- only a confirmed 404/410 retires a ref), and is corroborated instead by three working sources that independently and consistently attribute 100% ownership to Gazprom PJSC. No single source gives a clean per-asset ownership register entry with the exact percentage for this specific segment, so kept at medium tier rather than high, matching the same reasoning P2352's sibling shard used for its own Owner unit."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P2352",
+   "url": "",
+   "facts": "The routes-repo geometry quality issue found for P2353 (mapped path ~1,183.5 km, ~48% LONGER than the sourced ~800-804 km) is the mirror image of the issue P2352's own shard found for its row (mapped path ~252.5 km, ~11% of the sourced 2,200 km, i.e. far too SHORT). Both Power-of-Siberia family rows in this batch have routes-repo geometry that is badly wrong in opposite directions -- worth flagging to routes-repo maintainers as a family-level data-quality pattern, not just two unrelated one-off errors, when a future §8 route-creation/review pass reaches this pipeline family."
+  },
+  {
+   "project_id": "P3208",
+   "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+   "facts": "Confirms/extends P2352's own cross_row_lead for P3208: neftegaz.ru's phase breakdown describes '3 очередь' (Phase 3) as a compressor-station-only capacity expansion on the Chayandinskoye-to-Atamanskaya section (7 new compressor stations, 481 MW, target 'до 2022 г.'), i.e. along P2352's (Phase I's) own corridor, not P2353's. This batch's roster guidance separately describes P3208 as a 'cancelled Phase I Expansion' -- that cancellation status was NOT found or checked against in this P2353 pass (out of scope for this row); flagging the apparent tension between 'target by 2022' in this 2013-dated-but-continuously-updated technical article and a 'cancelled' characterization elsewhere in the roster, for P3208's own audit to resolve directly."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Phase II Kovykta-Chayanda",
+   "sheet_row": 1217,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-09-14",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://tass.com/economy/2039905",
+    "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/"
+   ],
+   "verifications": [
+    {
+     "url": "https://tass.com/economy/2039905",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "TASS, 2025-11-06: Power of Siberia (the whole system, of which this segment is a physically integral, continuously-operating part carrying Kovyktinskoye-field gas into the trunk) reached its 38 bcm/y maximum design capacity on 2024-12-01 and was on track to exceed 38 bcm for calendar 2025 -- clearly still operating well past this section's own Dec-2022 commissioning and past the sheet's LastUpdated=2025-08-14."
+    },
+    {
+     "url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/141914-gts-sila-sibiri/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "This continuously-maintained technical-library page (dateModified '4 сентября', with sidebar news items dated through 2026-09-14, confirming near-real-time currency at the time of this research) states the Kovykta-Chayanda section's commissioning as accomplished fact ('ввод в эксплуатацию' context) within its still-current phase breakdown, and separately references a Sept-2026 VEF (Eastern Economic Forum) announcement about the unrelated Power-of-Siberia-2/'Sila Baikala' project -- i.e. the page and the broader Power-of-Siberia programme it describes are both live topics as of this session's date, with no indication of any disruption to this section."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verdict: confirm. This task's own pre-analysis for P2353 -- 'the Kovykta-Chayanda section came on stream Dec 2022, its start year should be 2022 not the field's date' -- is directly confirmed: StartYear1=2022 (with the exact date, Dec 21, 2022, now also sourced) is correct as recorded, and no evidence found in this pass suggests any status change since. No segment-specific 2025/2026 operational update was found beyond the whole-system TASS coverage (record deliveries, capacity reached/exceeded), but nothing suggests the Kovykta-Chayanda section itself has gone offline or changed classification -- it remains the segment that physically delivers Kovyktinskoye-field gas into the record-level 38+ bcm/y flow TASS describes. Status=operating stands confirmed."
+  }
+ ],
+ "summary": "P2353 (Power of Siberia Phase II, Kovyktinskoye field/Irkutsk Oblast -> Chayandinskoye field/Sakha Republic, ~800-804 km, operating since Dec 21, 2022) reverified/confirmed or newly sourced across all 15 worklist units: Status/Fuel/PipelineType/Construction/Start/Capacity/Length/Diameter/FuelSource/Owner REVERIFIED (Location corrected: previously-blank StartState/Province filled 'Irkutsk Oblast'); Pressure/Operator newly sourced (REFS_ADDED, MISSING_VALUE/MISSING_REF resolved); SegmentCost newly sourced at medium tier, single-source, flagged as a mid-construction estimate rather than a final figure (REFS_ADDED + paired spec concern); Proposal left UNRESOLVED (no segment-specific proposal/investment-decision date found, distinct from the 2012 project relaunch and 2014 system-wide SPA). Three validity findings filed: (1) confirmed-with-caveat on existence/duplicate/classification against the Power-of-Siberia family (P2352/P3208/P5521/P7600) -- no duplicate issue for P2353, and the prokhab.ru wiki citation found among P2353's sources was checked and found NOT relevant (geography mismatch); (2) a route concern -- the routes-repo geojson computes to ~1,183.5 km, ~48% LONGER than the sourced ~800-804 km (the mirror-image defect to sibling P2352's too-short route), RouteAccuracy contested; (3) a spec concern on SegmentCost=280bn RUB, sourced but explicitly a Nov-2020 in-progress estimate, not a confirmed as-built cost, and single-sourced. A minor Length discrepancy (800/803/804 km across three segment-specific sources, <1% spread) is noted in the Length fill as within-rounding, not filed as a separate concern. One status_reviews entry: verdict=confirm, evidence_date=2026-09-14, no evidence of any status change since the sheet's 2025-08-14 LastUpdated. Two cross_row_leads filed: a routes-repo family-pattern note for P2352, and an extension of P2352's own P3208 lead regarding an apparent tension between a 'target by 2022' technical-library description and this roster's 'cancelled' characterization of P3208."
+}

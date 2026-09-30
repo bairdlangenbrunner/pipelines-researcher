@@ -1,0 +1,61 @@
+R5 Volga — lean pass pilot (docs/sops/lean_pass.md)
+====================================================
+workflow run id     wf_fdcb9d0e-d5d (critical-deep-sweep, model sonnet, 8 concurrent)
+agents              11 (one per family group; groups_proposed.json accepted as-is)
+dispatched          2026-09-16 15:20:57 PDT
+wall time           39 min 22 s (2,362,404 ms; 0 errors, 0 empty shards, 980 tool uses)
+subagent tokens     1,176,315 total
+rows                31
+tokens / row        ~37.9 k   (reference: R3 full deep ~184 k/row, 4.97 M / 27 rows, 2 h 14 m)
+                    -> ~79% cheaper per row; wall time ~29% of R3's
+prompt              421,942 chars over 11 agents (~38.4 k each; BRIEF.md 14,984 chars inlined via --brief)
+
+lean_summary.json   full units 467 -> owed 275 (MISSING_REF 272, HAS_REF 3)
+                    deferred 192 -> deferred_units.json (fills_deferred 185,
+                    has_ref_cleared_by_script 6, has_ref_access_blocked 1)
+
+outputs (staged_resolutions.json, 387 records)
+  status reviews    31: 29 confirm / 2 unclear (P2340 Minnibaevo–Kazan 1954 line: which of the two
+                    lines was converted to ethane; P4063 Zorkino–Balakovo: both gem.wiki citations
+                    dead, no independent evidence) / 0 change.  P2385 retired confirmed, StopYear 1997 filled.
+  validity          39 records: 21 concern + 1 contested (P2425 SegmentCost unsourced) open on 17 rows;
+                    12 confirmed (caveat), 2 clean, 1 confirmed, 1 no_concern, 1 note.
+                    open by type: spec 10, classification 6, attribution 3, duplicate 1, existence 1.
+                    headline: P2430 LengthKnown 263 -> 152 km (two sources, staged as a fill);
+                    P2364 Start 1973 vs 1974 (two sources say 1974); P2383 operator's own history
+                    calls the Saratov–Gorky corridor распределительный; P4063/P4112 recorded
+                    distribution but sourced as газопровод-отвод to a GRS (transmission by the brief's
+                    test); P2340/P5744 Capacity 5.25 is a two-string aggregate on both rows; P1466/P5656
+                    Capacity 16.4 is a two-pipe system total carried on both rows; P5714 geometry
+                    traces the Perm–Gorky leg, not Nizhnyaya Tura–Perm (route candidate for §8).
+  refs added        236 REFS_ADDED records (213 MISSING_REF, 21 sourced fills, 2 HAS_REF re-verified)
+                    on 30 of 31 rows (P4063: none), 66 unique URLs; Owner [ref] 30, Status 30,
+                    Fuel 29, Location 28, PipelineType 27, Start 24, Diameter 23, Length 17.
+                    workbook Gas_Refs_Added tab 215 (21 baselines superseded by the sourced fills).
+  unresolved        59 MISSING_REF units with a searched note (Refs_Unresolved 39 after folding);
+                    1 DEAD_LINK (P2425 SegmentCost [ref], link_live — re-read, not delete).
+  fills             42 staged: 21 sourced (Location typos P1466 Lipetsk Oblast / P2341 Udmurt
+                    Republic; P2430 Length 152; P2385 LengthKnown 843 / Start 1946-07 / Stop 1997;
+                    P0756 Length 653.2; P2310 Length 582 + Start 1961; P2322 Length 386 + Start 1958;
+                    P2371 Length 174; Owner Gazprom PJSC x3; Start/End locations x4) + 21 UNRESOLVED
+                    (value proposed or blank, no ref found — deferred debt stays in deferred_units.json).
+
+gates (sweep_gates.py, exit 0)
+  E 0  F 0  I 0  I' PASS  L 0 (272 MISSING_REF owed, 39 unresolved-with-notes)  M 0
+  J skipped — lean pass: 185 blank-value units deferred; 42 FILL records staged
+  advisory: A 1 (P2342 all seven units on saratov-tr.gazprom.ru); C 43 (dominant documents:
+  ulianovsk-8422.my1.ru Syzran–Ulyanovsk page 19 units on P2286/P2430 — a uCoz free-hosted local
+  page, the weakest host in the batch, second source deferred; Wayback n-novgorod-tr history 16;
+  ru.wikipedia Нижняя Тура — Пермь — Горький — Центр 18; ufacity.info gas-supply-scheme PDF 16);
+  K 112 REFS_ADDED units on exactly one verified ref (expected in lean mode — second sources deferred).
+
+engine defects     1 logged to DEFECTS.md (validity `contested`/`notes` shape dropped at merge;
+                   P2390 and P2435 concern text blank in Gas_Validity — read the shards).
+
+deliverable        batches/russia-gas/deliverables/pipelines_batch_20260916_1902_ET_russia-gas_deepsweep-r5-volga.xlsx
+                   (9 sheets, recalc ok, no error cells)
+
+verdict on the pilot: token target met (~38 k/row vs the ≤~70 k target) and findings did not thin —
+22 open validity concerns on 17 rows vs R2's 25 on 28 rows; 0 status changes is consistent with a
+slice of 29 operating 1950s–70s trunks (R2's operating slice produced 1 change on 28 rows). Reuse the
+lean recipe for R4a, R4b, R6, R7.

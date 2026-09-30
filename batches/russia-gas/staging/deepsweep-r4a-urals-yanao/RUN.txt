@@ -1,0 +1,79 @@
+R4a Urals-YaNAO — lean pass (docs/sops/lean_pass.md)
+====================================================
+workflow run id     wf_febcbc1f-64d (critical-deep-sweep, model sonnet, 8 concurrent)
+                    dispatched from workflow_baked.js — the saved workflow with deepsweep_args.json
+                    baked in as a literal, so the 15,948-char BRIEF.md reached every agent byte-exact
+agents              11 (one per family group; groups_proposed.json)
+dispatched          2026-09-21 ~10:40 PDT
+wall time           57 min 11 s (3,430,872 ms; 0 errors, 0 empty shards, 1,415 tool uses)
+subagent tokens     1,361,070 total
+rows                30 (23 operating, 7 in-development)
+tokens / row        ~45.4 k   (reference: R3 full deep ~184 k/row; R5 lean pilot ~37.9 k/row)
+                    -> ~75% cheaper per row than R3; above R5 because this slice is 49 failing
+                    HAS_REF re-reads + gazprom.ru hosts reachable only via Wayback
+
+lean_summary.json   full units 453 -> owed 183 (MISSING_REF 134, HAS_REF 49)
+                    deferred 270 -> deferred_units.json (fills_deferred 146,
+                    has_ref_access_blocked 82, has_ref_cleared_by_script 42)
+                    P7546/P7547 Medvezhye–Nadym: no owed ref units (status + validity only)
+
+outputs (staged_resolutions.json, 287 records)
+  status reviews    30: 27 confirm / 1 change / 2 unclear.
+                    CHANGE  P5404 Bovanenkovo–Ukhta VI construction -> proposed (816-р lists нитка VI
+                    only among planned objects; original schedule put VI last).
+                    UNCLEAR P7546/P7547 Medvezhye–Nadym I/II — no post-2023-08 source names the line;
+                    only corridor-level evidence (Пангодинское ЛПУМГ active Oct 2023), which does not
+                    name the pipeline so is not staged. Recommendation: keep operating.
+  validity          50 records: 19 concern open on 16 rows (+1 superseded placeholder, P4146);
+                    21 confirmed (caveat), 3 clean, 3 confirm, 2 confirmed (not duplicate), 1 confirmed.
+                    open by type: spec 12, route 2, attribution 1, misattributed_ref 1,
+                    start_year_discrepancy 1, spec_values_thin_sourcing 1, length_discrepancy 1.
+                    headline:
+                    - P5402/P5403/P5404 LengthKnown 1158.60 km is String III's (P2287) figure — the cited
+                      severgazprom PDF names String III in that sentence and never IV/V/VI.
+                    - P2348/P4145/P4146 Nadym–Punga I/II/III: routes-repo geometry measures ~60/60/50 km
+                      against 696/605/566 km recorded, RouteAccuracy = high. Route candidates for §8.
+                    - P4146 Length [ref] (aup.ru) states a 1238 km COMBINED figure, not 566 km.
+                    - P4311 Yamburg–Tula II LengthKnown 3113 vs 2146 km in the ЭРТА/gasforum table that
+                      matches string I's 2946 exactly. Length [ref] left UNRESOLVED for a human.
+                    - P2450 (string I) carries OtherLanguagePrimaryPipelineName «…вторая нитка» — identical
+                      to P4311's; P2450/P4311 geometry in the routes repo flagged as the same trace.
+                    - P0737/P0738 SegmentCost $20 B each is an even split of a two-line aggregate
+                      (neftegaz.ru/694037 states the cost for «Бованенково–Ухта 1,2» jointly).
+                    - P2287 Capacity: consultant.ru's rendering of the decree is anomalous for String III;
+                      69.20 bcm/y stands on goarctic.ru — source-reliability flag, no value change.
+                    - P7546 LengthKnown 118 vs 57 km (aup.ru Table А «1 очередь»); the same table matches
+                      P7547's 115 km exactly. No change on one source.
+                    - P2355 length + start year differ in one 2018 interview — flagged, not changed.
+                    - P3506: a gem.wiki-cited TPU thesis is about Уренгой–Центр 2 (P5612), not this row.
+  refs added        165 REFS_ADDED records (114 MISSING_REF, 38 HAS_REF, 13 sourced fills) on 28 of 30
+                    rows, 68 unique URLs; tier high 69 / medium 94 / low 2. Owner [ref] 22, Start 18,
+                    Diameter 16, Length 15, Status 15, Fuel 14, PipelineType 14, Location 14,
+                    FuelSource 10, Capacity 10, Operator 8, Construction 3.
+                    workbook Gas_Refs_Added tab 152 (baselines superseded by sourced fills folded).
+  unresolved        20 MISSING_REF + 2 HAS_REF units with a searched note (Refs_Unresolved 13 after folding);
+                    8 DEAD_LINK (P0734 SegmentCost; P2355 Capacity, Owner; P4146 Length; P4148 Diameter;
+                    P6540 Start, Capacity, Location) — re-read, never deleted on an access failure.
+  fills             24 staged: 13 sourced (Operator1 Gazprom Transgaz Yugorsk LLC on P2348/P4145/P4146;
+                    Operator1 Gazprom Transgaz Tomsk LLC on P2355; P2358 Location/Length 115.50/Start 2021;
+                    P6540 Location/Capacity 38.37 bcm/y/Start 2027/Length 82.00; P2459 start+end
+                    locations; P3493 StartYear1 1981) + 11 UNRESOLVED.
+
+gates (sweep_gates.py, exit 0)
+  E 0  F 0  I 0  I' PASS  L 0 (134 MISSING_REF owed, 11 unresolved-with-notes)  M 0
+  J skipped — lean pass: 146 blank-value units deferred; 24 FILL records staged
+  I was 4 on the first run: P3507/P5612 Status + Owner [ref] on the Wayback kazan-tr Шемордан ЛПУ page,
+  stamped name_found=false by the agent (it screened on the English name). The page reads «Уренгой-Центр 1,
+  Уренгой-Центр 2»; url_verifier --name 'Уренгой-Центр' passes; stamped true by hand with a note in the
+  shard. backfill_name_found --recheck-false (with tracker aliases) also flipped 4 other false stamps.
+  advisory: A 0; C 15 (dominant documents: ru.wikipedia Газотранспортная_система_России 20 units;
+  Wayback core.ac.uk 237398547.pdf 17; Wayback ekaterinburg-tr news 2021/04/918 15); D 3 (P5402/3/4
+  validity records marked independent on one verified ref — the misattribution finding itself);
+  K 83 REFS_ADDED units on exactly one verified ref (expected in lean mode — second sources deferred).
+
+engine defects     R5's merge defect (validity text under `notes` dropped) FIXED before this merge, since it
+                   would have blanked findings here too (scripts/merge_deepsweep_shards.py). 2 new logged
+                   to DEFECTS.md (name matcher misses spaced-hyphen aliases; backfill skips status_reviews).
+
+deliverable        batches/russia-gas/deliverables/pipelines_batch_20260921_1439_ET_russia-gas_deepsweep-r4a-urals-yanao.xlsx
+                   (10 sheets, recalc ok, no error cells)

@@ -1,0 +1,75 @@
+R4b Urals-south — lean pass (docs/sops/lean_pass.md)
+====================================================
+workflow run id     wf_9cf149f4-31d (critical-deep-sweep, model sonnet)
+                    dispatched from workflow_baked.js — deepsweep_args.json baked in as a literal, so the
+                    17,491-char BRIEF.md reached every agent byte-exact
+agents              9 (one per family group; hand-edited from --groups auto, see deepsweep_args.json)
+dispatched          2026-09-22
+wall time           46 min 13 s (0 empty shards, 981 tool uses)
+subagent tokens     1,253,344 total
+rows                23
+tokens / row        ~54.5 k   (reference: R3 full deep ~184 k/row; R5 lean ~37.9 k; R4a lean ~45.4 k)
+                    -> above R4a because 16 of 23 rows were fully uncited (139 MISSING_REF of 156 owed),
+                    so nearly every unit was a fresh search rather than a re-read
+
+lean_summary.json   full units 345 -> owed 156 (MISSING_REF 139, HAS_REF 17)
+                    deferred 189 -> deferred_units.json (fills_deferred 143,
+                    has_ref_access_blocked 32, has_ref_cleared_by_script 14)
+
+outputs (staged_resolutions.json)
+  status reviews    23: 20 confirm / 1 change / 2 unclear.
+                    CHANGE  P3977 Shumikha–Almenevo proposed -> operating (the 2022 Wayback of gazprommap.ru
+                    Kurgan lists «Газопровод-отвод и ГРС Альменево» as an open programme object; the live
+                    2026–2030 list drops it; kurganobl.ru gasification reporting agrees).
+                    UNCLEAR P2337 Magnitogorsk–Sterlitamak (only historical sources; the Central-Asian flow it
+                    was built for ended mid-1980s). P2429 (identity in question, below). Keep operating.
+  validity          31 records: 13 concern open on 11 rows; 16 confirmed (caveat), 2 confirmed.
+                    open by type: classification 6, spec 3, spec-capacity 1, attribution 2,
+                    existence_classification 1.
+                    headline:
+                    - P2378 Punga–Vuktyl–Ukhta I carries line II's Diameter 1420 / StartYear1 1976; aup.ru
+                      tables + Transgaz Ukhta's 2017 newspaper give line I as 1220 mm / 1977. Staged as fills
+                      (medium) + spec concern — a line-I/line-II swap, P5537 keeps 1420/1976.
+                    - P2350 Nizhnevartovsk–Parabel–Kuzbass Capacity: the row's OWN cited ref (reph.ru) states
+                      8.2 bcm/y for the whole 1162 km line; string II was built in partial stages (1992/1994/
+                      2011). Recorded 4.10 is NF's documented even split (8/19/25), so the agent's 8.20 fill was
+                      DEFERRED by the orchestrator to a concern (divergence rule). P7615 (string II) is out of
+                      R4b and moves with any ruling.
+                    - P2320 carries «2-ая нитка» in OtherLanguagePrimaryPipelineName but is нитка I (1963,
+                      neftegaz.ru 2020); P5717 (нитка II) has that field blank — same pattern as P2450 in R4a.
+                    - Kurgan P3975/P3977/P3978/P3979 classification: отвод-to-ГРС objects in decree and
+                      Gazprom programme naming -> transmission, flagged not reclassified (P3975 carries NF's
+                      2023 note that GEM deliberately does not treat it as such).
+                    - P3975 LengthKnown 84 km matches the Shumikha–Mishkino–Yurgamysh segment (ends at
+                      Yurgamysh, ~2012–13), not this row's Mishkino–Yurgamysh–Kurgan. P3978 length ~15% off a
+                      56 km figure.
+                    - P2429: may be a segment/alias of Bukhara–Ural I rather than its own pipeline.
+                    - P5686: sourced as its own 1020 mm Dolgoderevenskoye–Krasnogorsky line, not a looping of
+                      the 1420 mm corridor.
+                    - P2357/P5745 SRTO–Ural I/II: identical LengthKnown 1986.00 and both Length refs point at
+                      energybase srto-ural-1 (geo-blocked, no Wayback) — copy suspected, unresolved. Operator
+                      attribution split Yekaterinburg vs Yugorsk.
+  refs              158 unit records: 115 REFS_ADDED, 6 REVERIFIED, 37 UNRESOLVED; tier high 53 / medium 54 /
+                    low 2; 47 unique URLs on 22 rows. Owner 17, Diameter 16, Status 15, Fuel 15, Location 15,
+                    Start 14, PipelineType 11, Capacity 5, Proposal 4, Operator 3, FuelSource 3, Length 2,
+                    Construction 1. 130 ref-only folds.
+                    DeadLinks tab 6 = kept HAS_REF baselines (energybase geo-block x3, P2350 reph.ru, P2378 x2);
+                    none is a deletion — only P2378's two carry a verified replacement.
+  fills             28 staged (incl. P2378 Diameter/StartYear1 corrections, P5712 EndLocation Perm, P2350
+                    Operator source — note 'Gazrpom Transgaz Tomsk LLC' is the tracker's existing typo'd
+                    entity string, 3 occurrences on the owners tab; flagged for a fix, not changed here).
+
+gates (sweep_gates.py, exit 0)
+  B 0  C 0  D 0  E 0  F 0  I 1  I' 0  L 0 (139 MISSING_REF owed, 32 unresolved-with-notes)  M 0
+  J skipped — lean pass: 143 blank-value units deferred; 28 FILL records staged
+  I 1 = P2315 Owner [ref]: the page states the owner but does not name Igrim–Serov–Nizhny Tagil;
+  tier high -> low by the orchestrator with a note (R2 precedent), left as honest residue.
+  advisory: A 2 (P2297/P5686 each rest on one document, uglevodorody.ru); K 60 single-ref units
+  (expected in lean mode — second sources deferred).
+
+orchestrator edits  P2315 tier; P2350 capacity fill deferred to concern; prose moved out of contested on
+                    P2357/P5745/P2429/P5686. Engine: build_ref_workbook no longer says a kept ref is
+                    "being replaced" when nothing verified replaces it. See DEFECTS.md.
+
+deliverable        batches/russia-gas/deliverables/pipelines_batch_20260922_1611_ET_russia-gas_deepsweep-r4b-urals-south.xlsx
+                   (9 sheets, recalc ok, no error cells)

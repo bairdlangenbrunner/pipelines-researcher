@@ -1,0 +1,504 @@
+{
+ "project_id": "P3603",
+ "pipeline_name": "Power of Siberia 2 Gas Pipeline",
+ "sheet_row": 1828,
+ "wiki": "https://www.gem.wiki/Power_of_Siberia_2%E2%80%93Sayansk_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change to Status=cancelled. GEM's own 2022-07-15 researcher determination (HF) is independently corroborated by 3 verified sources describing the 2022 PoS2 route realignment that places Sayansk as a waypoint on the main trunk rather than a standalone branch terminus. See the separate DUPLICATE and SPEC/FuelSource concern records below, and the status_reviews[] entry, for the items that DO need review.",
+   "researcher_notes": "EXISTENCE: the underlying proposal concept is real and well-documented -- not a GEM-only or fabricated entity. GEM's own wiki page for this ProjectID (gem.wiki/Power_of_Siberia_2-Sayansk_Gas_Pipeline) REDIRECTS into the main combined 'Power of Siberia 2 Gas Pipeline' article (three project-detail infoboxes on one page: Main Line, Sayansk Branch, Soyuz Vostok), which itself already documents the same inferred-cancellation rationale this run corroborates: 'Since a new route has been proposed in 2022 which would go through Sayansk, we consider this pipeline's proposal cancelled.' CLASSIFICATION: Fuel=Gas and PipelineType=transmission both confirmed against verified sources, consistent with the whole PoS2 family. The IMAGE SOURCE the wiki cites for this row's ProposalYear=2020 field (a Gazprom 'Development Map 2020' PNG) was downloaded and visually inspected this run (main map body + a cropped, upscaled legend) -- it does NOT depict or list 'Sayansk' anywhere; its 'Key gas export routes' legend (15 items) only lists Power of Siberia 2, Soyuz Vostok, and Sakhalin-Khabarovsk-Vladivostok. This is a genuine evidentiary weakness in the wiki's own sourcing for this row (not fabricated, just weaker than it first appears), which is why ProposalYear is left UNRESOLVED rather than filled with 2020 from that source.",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+    "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru/en",
+   "contested": {}
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "verdict": "concern",
+   "concern_type": "duplicate",
+   "recommendation": "Recommend a human redundancy review between P3603 (this row, PipelineNetworkGrouping under 'Power of Siberia 2 Gas Pipeline', Status=cancelled) and P2327/P5510 (both named literally 'Kovykta-Sayansk-Irkutsk Gas Pipeline', Status=proposed, both under a SEPARATE PipelineNetworkGrouping) -- not resolved in this run since it crosses into another batch's scope, but flagged here with concrete geometry + naming evidence rather than left as a vague hunch.",
+   "researcher_notes": "GEM's OWN wiki infobox for this exact ProjectID lists 'Kovykta-Sayansk-Irkutsk Gas Pipeline' as 'Associated infrastructure' for the Sayansk Branch -- i.e. the connection is already asserted by GEM's own data, not a novel finding. Checking the live sheet confirms two separate rows carrying that exact PipelineName: P5510 (Kovykta gas field -> Zhigalovo, Irkutsk Oblast, 112 km, proposed) and P2327 (Kovykta gas field -> Irkutsk, Irkutsk Oblast, 660 km, proposed). Comparing the routes-repo geometry directly: P3603's digitized line (GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P3603.geojson, 5 points) TERMINATES at coordinate [102.199089, 53.946438] -- and P2327's own digitized line (P2327.geojson, 62 points) passes through that EXACT SAME coordinate ([102.199089, 53.946438], the 9th of its 62 vertices) mid-route. This is not a rough regional match; it is an identical vertex to 6 decimal places, almost certainly because both routes were digitized against the same underlying settlement anchor (Sayansk town). Separately, P3603's route also runs through the same broad corridor as P0734 (the PoS2 Main Line itself: Yamalo-Nenets AO to Kyakhta, Buryatia) -- P0734's own vertices near this region ([101.987,52.847], [100.589,53.433]) sit within roughly 60-100 km of P3603's points ([101.224,53.453], [100.416,52.930]), i.e. the same corridor at 'medium' (schematic) accuracy for both, consistent with the sourced text finding (see the Status fill) that Sayansk sits ON the Main Line's own route. Net read: P3603's short 164km digitized 'branch' geometry shares a literal endpoint with a segment of the separately-tracked Kovykta-Sayansk-Irkutsk pipeline (P2327) AND runs through the same corridor as the PoS2 Main Line (P0734) -- three different GEM rows potentially describing overlapping physical geography under three different names/networks. This is exactly the kind of duplicate-geometry risk the standing rules ask to be surfaced, not silently resolved -- recommend the routes-repo QC pass (or the R6/Irkutsk-scope researcher working P2327/P5510) cross-check this explicitly. NOT recommending P3603 be deleted or merged unilaterally in this run -- that decision belongs to a human/route-QC pass with both rows' full context in view.",
+   "proposed_refs": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "",
+   "contested": {
+    "PipelineNetworkGrouping / route geometry": "P3603 (Power of Siberia 2 grouping, cancelled) shares an exact digitized route vertex ([102.199089, 53.946438]) with P2327 (Kovykta-Sayansk-Irkutsk Gas Pipeline grouping, proposed) and runs through the same corridor as P0734 (PoS2 Main Line). GEM's own wiki page for P3603 names 'Kovykta-Sayansk-Irkutsk Gas Pipeline' as associated infrastructure."
+   }
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "verdict": "concern",
+   "concern_type": "classification",
+   "recommendation": "Recommend correcting FuelSource off the current pipeline-name value -- either to blank (if unattributable) or to an actual upstream field once independently confirmed (Kovyktinskoye Gas Field is the leading candidate per the DUPLICATE finding above, but is NOT confirmed this run). Not applied to the sheet; the fills[] record for FuelSource [ref] is staged UNRESOLVED rather than confirming the current value.",
+   "researcher_notes": "FuelSource='Power of Siberia 2 Gas Pipeline' names the PARENT PIPELINE, not an upstream gas field/facility, which is a direct violation of the documented schema convention (docs/reference/gem_schema.md: 'FuelSource... is the upstream field/plant, not a fuel type... never fill it with [the parent's own name]... if you can't attribute one, leave it blank'). Confirmed as an outlier by comparing sibling PoS2-network rows in the live GGIT_gas.csv pull: P5409 (Soyuz Vostok) = 'Bovanenkovskoye and Kharasaveyskoye gas fields'; other checked siblings similarly name real fields, not pipeline names. See the FuelSource [ref] fills[] record for the Kovyktinskoye-field lead that was searched but not verified this run.",
+   "proposed_refs": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "contested": {
+    "FuelSource": "Currently 'Power of Siberia 2 Gas Pipeline' (the parent pipeline's own name) -- schema requires an upstream field/facility name (docs/reference/gem_schema.md), confirmed non-compliant against 5 sibling PoS2-family rows."
+   }
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "cancelled"
+   },
+   "primary_value": "cancelled",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+    "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually read (Cyrillic): describes the 2022 revised PoS2 route running through Irkutsk Oblast via Zima/Sayansk/Cheremkhovo into Buryatia -- supports Sayansk-as-waypoint, not a standalone branch.",
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+     "ok": true,
+     "contains_value": true,
+     "note": "Dead live link (glagol38.ru live = HTTP 404, confirmed); cited via Wayback snapshot per standing rule (blocked/dead origin gets its capture added, never silently dropped). Headline + body independently corroborate the same Cheremkhovo-Zima-Sayansk sequence on the PoS2 main route.",
+     "name_found": true
+    },
+    {
+     "url": "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/",
+     "ok": true,
+     "contains_value": true,
+     "note": "English-language corroboration (citing Russian Deputy PM Novak's own 2025-09 published route description): same Sayansk-as-waypoint-city framing, and explicitly names a DIFFERENT current 'branch' concept (Naushki-Ulan-Ude-Chita), reinforcing that 'Sayansk Branch' as a distinct entity is not the live branch concept.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Value unchanged (cancelled) -- these refs support the INFERENCE, matching GEM's own 2022-07-15 researcher note (HF, in ResearcherNotes on the live sheet) that the branch concept was superseded by a 2022 route realignment. Three independent, verified sources (url_verifier OK) consistently place 'Sayansk' as a WAYPOINT CITY on the Power of Siberia 2 MAIN LINE's own route through Irkutsk Oblast, not as the terminus of a separate branch pipeline: (1) neftegaz.ru (2022-02-09, RU trade press), reporting Gazprom's revised preliminary route: 'Предварительный маршрут МГП Сила Сибири-2: по территории Иркутской области с севера на юг через г. Зима и Саянск... г. Черемхово, территория Тункинского района Бурятии... до границы с Монголией... пересечение границы в районе г. Кяхта' (the main line runs south through Irkutsk Oblast via Zima and Sayansk, then Cheremkhovo, then Buryatia's Tunkinsky district, crossing into Mongolia near Kyakhta) -- explicitly framed as 'Газпром собирается заново строить маршрут' (Gazprom is effectively re-routing/rebuilding the line), i.e. a route CHANGE, not a literal 'this branch is cancelled' statement; (2) glagol38.ru (2022-05-13, Irkutsk regional outlet, dead live link -> cited via Wayback capture), headlined 'Газопровод \"Сила Сибири - 2\" пройдет через Черемхово, Зиму и Саянск' (PoS2 will pass through Cheremkhovo, Zima and Sayansk) -- same three-city sequence, independently reported by a different outlet; (3) asiatimes.com (2024-01-19, English-language, citing Russian Deputy PM Alexander Novak's Sept-2024 Energy Policy magazine article): 'the main pipeline will pass near cities of Achinsk, Krasnoyarsk, Kansk, Sayansk, Angarsk and Irkutsk and then over the territory of the Republic of Buryatia... until reaching the Russian-Mongolia border in the vicinity of Naushki' -- and separately identifies the actual DISTINCT 'new branch' under discussion as a 700km Naushki-Ulan-Ude-Chita spur (for a China entry point avoiding Mongolia), NOT a Sayansk branch. All three sources corroborate that 'Sayansk' functions as a through-point on the trunk alignment, which independently supports (by inference, not a literal announcement) GEM's own 2022-07-15 researcher determination (HF) that a once-proposed standalone 'Sayansk Branch' concept is superseded/absorbed into the realigned main trunk. Per standing rule 2, this is an INFERRED status conclusion, not a directly-stated cancellation -- ShelvedCancelledType=inferred would be the correct companion value if that cell is ever touched (out of this run's 15-unit worklist)."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Refers throughout to 'МГП' (магистральный газопровод / trunk GAS pipeline) and 'газификации' (gasification) -- confirms Gas.",
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+     "ok": true,
+     "contains_value": true,
+     "note": "Headline itself: 'Газопровод...' (gas pipeline).",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources unambiguously describe this as a natural gas pipeline concept (газопровод). No ambiguity risk."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Describes this as part of the МГП Сила Сибири-2 trunk export corridor to China via Mongolia -- a transmission-class trunk line, not a local distribution line.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Single explicit source for PipelineType specifically (the other two sources describe the route without using transmission-vs-distribution terminology); tier kept at medium/single-origin per rule 4(d). Consistent with every sibling PoS2-family row (all transmission) and with the trunk/export framing common to all three Status refs."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source found giving a specific ProposalYear/Month for the SAYANSK BRANCH specifically (as opposed to the PoS2 project generally, which cannot be used per the aggregate-vs-segment rule). The wiki's own cited source for ProposalYear=2020 (a Gazprom 'Development Map 2020' PNG) was downloaded and visually inspected (legend + map body); it does NOT depict or label any 'Sayansk' route or branch anywhere in its 15-item 'Key gas export routes' legend (items 13-15 are Power of Siberia 2, Soyuz Vostok, and Sakhalin-Khabarovsk-Vladivostok only) -- so that source does not actually support a 2020 proposal date for this entity and was deliberately NOT used. A WebSearch lead (tass.ru/tek/3605200, an older TASS article on a Kovykta-Sayansk pipeline tied to converting the Sayanskkhimplast PVC plant to gas) could not be read this run -- the page is a JS-rendered SPA shell with no server-side text -- so it is left as an unverified lead (see cross_row_leads) rather than cited."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Construction [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Status=cancelled and no source (of the 3 verified this run, nor the wiki's own citation pool) describes construction ever starting on a distinct Sayansk Branch. Searched neftegaz.ru, glagol38.ru, asiatimes.com, and the wiki's own citation list -- none mention construction activity specific to this entity."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Start [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Same as Construction -- never built/operated as a standalone entity; no source describes an in-service date. Searched the same source set."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source (verified set or wiki citation pool) gives a capacity figure specific to a standalone Sayansk Branch, as distinct from the PoS2 system-wide 50 bcm/y figure, which per the aggregate-vs-segment rule cannot be used to fill a segment/branch cell. Searched neftegaz.ru, glagol38.ru, asiatimes.com."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source gives a pressure spec for this specific entity. Searched the same source set; none of the three verified articles contain technical/engineering specs (all are route/policy-level news coverage)."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Length [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No independently-sourced length found for this specific entity (LengthKnown, the sourced field). Note: the sheet's LengthEstimateKm=164.32 and the routes-repo geometry (5-point line, ~164 km by construction) are GEOMETRY-DERIVED, not independently sourced -- per standing rules a digitized-route estimate is not itself a citable [ref] value, and per the DUPLICATE finding below (validity[]), the route's own reliability as a distinct physical alignment is itself in question. Searched neftegaz.ru, glagol38.ru, asiatimes.com -- none give a length figure."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source gives a diameter for this specific entity. Searched the same source set."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source gives a cost figure for this specific entity (never reached FID/construction). Searched the same source set."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "NOT confirming the sheet's current FuelSource='Power of Siberia 2 Gas Pipeline' -- per docs/reference/gem_schema.md ('FuelSource... is the upstream field/plant, not a fuel type'), this column must name an actual upstream gas FIELD/FACILITY, never the parent pipeline's own name. Confirmed schema-non-compliant by comparing sibling PoS2-network rows in GGIT_gas.csv (P5409, P2352, P2353, P3175, P2431), which all correctly name a real field (e.g. 'Bovanenkovskoye and Kharasaveyskoye gas fields'), not a pipeline name. A plausible correct value -- 'Kovyktinskoye Gas Field' -- is suggested by (a) general knowledge that Kovyktinskoye is PoS2's principal upstream source, and (b) the TASS lead (tass.ru/tek/3605200, unread this run -- JS-rendered SPA, no extractable text) whose search-result summary ties a historical 'Kovykta-Sayansk' pipeline concept specifically to Kovyktinskoye field gas. But no source was actually READ and verified this run that ties FuelSource to Kovyktinskoye FOR THIS SPECIFIC ENTITY, so per standing rule 2 (never fabricate/never default) this is left UNRESOLVED rather than filled with an unverified guess. See validity[] for the classification concern (contested column: FuelSource) and cross_row_leads for the P2327/P5510 angle, which may be the more correct home for the Kovyktinskoye-sourced physical concept entirely."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartCountryOrArea": "Russia",
+    "EndPrefecture/District": "Sayansk",
+    "EndState/Province": "Irkutsk Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Russia",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+    "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Explicitly places Sayansk within Irkutsk Oblast ('по территории Иркутской области... через г. Зима и Саянск'). Supports EndState/Province=Irkutsk Oblast, EndPrefecture/District=Sayansk (already on sheet), EndCountryOrArea/StartCountryOrArea=Russia.",
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+     "ok": true,
+     "contains_value": true,
+     "note": "Independently names Sayansk in the same Irkutsk-region city sequence (Cheremkhovo/Zima/Sayansk).",
+     "name_found": true
+    },
+    {
+     "url": "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Corroborates Sayansk in the same Achinsk-Krasnoyarsk-Kansk-Sayansk-Angarsk-Irkutsk sequence, all Russia.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Adding EndState/Province='Irkutsk Oblast' (new value, 3 independent sources agree) alongside the existing EndPrefecture/District='Sayansk', StartCountryOrArea/EndCountryOrArea='Russia'. StartLocation, StartPrefecture/District and StartState/Province remain UNRESOLVED -- no text source states a specific starting point for this entity. The digitized routes-repo geometry (GOIT-GGIT-pipeline-routes/.../P3603.geojson) starts at [100.416305, 52.930083] and the region_audit.csv state audit reads this as geo_first='Republic of Buryatia' -- but no textual source corroborates a Buryatia origin for THIS specific entity (all three sources place Sayansk on the Irkutsk-Oblast-to-Buryatia MAIN LINE corridor, i.e. Buryatia is downstream/further along the corridor toward the Mongolian border, not necessarily this spur's own start point). Flagging this route/geometry tension in validity[] rather than inventing a Start value here."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "oo_sheet_row": 2595,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "No source explicitly names an Operator (as distinct from Owner/developer) for this entity. Gazprom is named as the developer/project-lead throughout all three verified sources, but none use operator-specific terminology, and the project never reached an operating phase (cancelled pre-construction). Leaving Operator unfilled rather than assuming Owner=Operator without direct support -- searched neftegaz.ru, glagol38.ru, asiatimes.com, and the wiki's own citation pool."
+  },
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "oo_sheet_row": 2595,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+    "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "'Газпром собирается заново строить маршрут МГП Сила Сибири-2' -- Gazprom named as the project lead throughout.",
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+     "ok": true,
+     "contains_value": true,
+     "note": "Covers the same Gazprom-led PoS2 route change.",
+     "name_found": true
+    },
+    {
+     "url": "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/",
+     "ok": true,
+     "contains_value": true,
+     "note": "Discusses Gazprom (via CEO Alexey Miller and Deputy PM Novak) as the Russian project principal throughout.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Gazprom PJSC 100% ownership is consistent across all three sources and matches every other PoS2-family row in the tracker. Ownership (unlike physical specs such as length/capacity) is legitimately a whole-project fact that applies uniformly across a single sponsor's segments, so this is not an aggregate-vs-segment violation the way a system-wide capacity/length figure would be."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "target_pid": "P2327",
+   "note": "'Kovykta-Sayansk-Irkutsk Gas Pipeline' (proposed, Kovykta gas field -> Irkutsk, 660 km). GEM's own P3603 wiki page names this as associated infrastructure. This run found P2327's digitized route (routes-repo geojson) passes through the EXACT SAME coordinate ([102.199089, 53.946438]) where P3603's own route terminates -- see the DUPLICATE validity record on this shard for the full geometry comparison. Flagged for the researcher working P2327 (likely a different regional/Irkutsk-scope batch) to cross-check against P3603 for a redundancy/overlap review.",
+   "proposed_refs": []
+  },
+  {
+   "target_pid": "P5510",
+   "note": "Sibling row to P2327 -- same PipelineName 'Kovykta-Sayansk-Irkutsk Gas Pipeline' (proposed, Kovykta gas field -> Zhigalovo, Irkutsk Oblast, 112 km). Same flag as P2327: GEM's own P3603 wiki page names this network as associated infrastructure; worth a redundancy check against P3603 (and against P2327, since P5510 and P2327 also look like they could be overlapping/partial representations of the same corridor -- not evaluated in depth this run, out of scope for a Far-East PoS2 audit).",
+   "proposed_refs": []
+  },
+  {
+   "target_pid": "P0734",
+   "note": "PoS2 Main Line. This run's route-geometry check found P3603's 5-point digitized line runs through the same broad corridor as P0734's own route in this region (points within roughly 60-100 km of each other, both 'medium'/schematic accuracy) -- consistent with the sourced finding (neftegaz.ru, glagol38.ru, asiatimes.com) that Sayansk sits on the Main Line's own alignment. Not an exact-vertex match like P2327, but worth the Main Line researcher's awareness when next reviewing P0734's own route/spec fills.",
+   "proposed_refs": []
+  },
+  {
+   "target_pid": "P3603",
+   "note": "UNVERIFIED LEAD for this row's own future re-audit, not chased to completion this run: tass.ru/tek/3605200 ('Иркутские власти: Газпром готов строить газопровод Ковыкта-Саянск, но не уточняет сроки') surfaced via WebSearch, ties a historical 'Kovykta-Sayansk' pipeline concept to converting the Sayanskkhimplast PVC plant to gas (domestic industrial gasification), a different motive than PoS2's China-export trunk. Could not be read this run -- the page is a JS-rendered single-page app with no server-side text (curl returns only a loading spinner shell). If a future pass can extract its content (headless browser, Google cache, or an alternate TASS mirror), it may bear directly on the FuelSource concern (Kovyktinskoye field) and on the P2327/P5510 duplicate question above.",
+   "proposed_refs": []
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Sayansk Branch Pipeline",
+   "sheet_row": 1828,
+   "current_status": "cancelled",
+   "verdict": "confirm",
+   "proposed_status": "cancelled",
+   "proposed_changes": {},
+   "evidence_date": "2024-01-19",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+    "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+    "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/"
+   ],
+   "verifications": [
+    {
+     "url": "https://neftegaz.ru/news/transport-and-storage/724605-gazprom-predvaritelno-opredelil-trassirovku-gazoprovoda-do-kitaya/",
+     "ok": true,
+     "contains_value": true,
+     "note": "2022-02-09 route realignment coverage."
+    },
+    {
+     "url": "http://web.archive.org/web/20260106030016/https://glagol38.ru/text/13-05-2022/004",
+     "ok": true,
+     "contains_value": true,
+     "note": "2022-05-13 independent regional corroboration (via Wayback, live 404)."
+    },
+    {
+     "url": "https://asiatimes.com/2024/01/power-of-siberia-2-stuck-on-gas-price-branch-issues/",
+     "ok": true,
+     "contains_value": true,
+     "note": "2024-01-19 -- most recent evidence; still describes Sayansk as a waypoint on the realigned main line, and names a DIFFERENT branch (Naushki-Ulan-Ude-Chita) as the live branch concept under discussion -- no 2024 source revives a distinct 'Sayansk Branch' proposal."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru/en",
+   "researcher_notes": "Confirm Status=cancelled. GEM's 2022-07-15 researcher rationale (HF) holds up under independent re-verification with a source as recent as Jan-2024 (Asia Times), which discusses PoS2's branch question in detail without reviving a 'Sayansk Branch' concept -- the live branch discussion by 2024 is entirely about a different Chita-bound spur. No evidence found anywhere (verified sources, wiki citation pool, or the two additional WebSearch leads) that this specific branch concept has been revived. NOT recommending a Status change; the open items are the DUPLICATE and FuelSource concerns filed separately in validity[], which are classification/attribution questions, not evidence the cancellation itself is wrong or stale."
+  }
+ ],
+ "summary": "P3603 (Power of Siberia 2 Gas Pipeline, Sayansk Branch Pipeline, cancelled) -- existence and cancellation CONFIRMED (caveat): 3 independently verified sources (neftegaz.ru 2022-02, glagol38.ru 2022-05 via Wayback [live=404], asiatimes.com 2024-01) consistently describe Sayansk as a waypoint on the realigned PoS2 main trunk rather than a standalone branch terminus, corroborating GEM's own 2022-07-15 researcher rationale (HF) by inference, not a literal cancellation statement. All 15 worklist units carry a fills[] record: REFS_ADDED for Status/Fuel/PipelineType (value unchanged) and for Location (added EndState/Province=Irkutsk Oblast) and Owner (Gazprom PJSC 100%, all 3 sources); UNRESOLVED (with notes on what was searched) for Proposal, Construction, Start, Capacity, Pressure, Length, Diameter, SegmentCost, Operator, and -- deliberately, as a finding rather than a gap -- FuelSource, whose current value 'Power of Siberia 2 Gas Pipeline' names the parent pipeline rather than an upstream field, violating the documented gem_schema.md convention (confirmed against 5 sibling rows). BIGGEST FINDING: a DUPLICATE-geometry concern -- P3603's digitized route shares an EXACT vertex ([102.199089, 53.946438]) with P2327 ('Kovykta-Sayansk-Irkutsk Gas Pipeline', a separately-tracked, separately-grouped proposed pipeline that GEM's own P3603 wiki page already names as associated infrastructure), and runs through the same corridor as the PoS2 Main Line (P0734) -- flagged via validity[] (concern_type=duplicate, contested=PipelineNetworkGrouping/route geometry) and cross_row_leads to P2327/P5510/P0734 for a human redundancy review, not resolved unilaterally here. Status review: verdict=confirm (evidence as recent as 2024-01, no revival of this specific branch concept found anywhere). One unread lead (tass.ru/tek/3605200, JS-only page, no extractable text) flagged as an open thread rather than silently dropped. Nothing fabricated; the wiki's own ProposalYear=2020 source (a Gazprom map PNG) was downloaded and visually inspected and found to NOT depict Sayansk in its legend, which is why that date was not carried forward."
+}

@@ -1,0 +1,558 @@
+{
+ "project_id": "P4149",
+ "pipeline_name": "Bezhanitsy-Novorzhev Gas Pipeline",
+ "sheet_row": 2132,
+ "wiki": "https://www.gem.wiki/Bezhanitsy-Novorzhev_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Bezhanitsy-Novorzhev Gas Pipeline",
+   "sheet_row": 2132,
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Replace Operator (and re-examine Owner ref) -- current Operator 'Gazprom Dobycha Nadym LLC' is an Arctic gas-EXTRACTION subsidiary (Yamalo-Nenets AO, Medvezhye/Yubileynoye/Bovanenkovo fields), ~2,500km from Pskov Oblast, with no documented role in regional gas distribution. The only source that names a specific responsible entity for this exact object (energyland.info, 24 Jun 2022) identifies AO 'Gazprom Gazoraspredelenie Pskov' (quoting its deputy exec director for construction/investment, Igor Meluzov, discussing GRS Novorzhev + the 36km отвод). Both the Operator[ref] and Owner[ref] cells point to the same wrong-family entity (nadymdobycha.gazprom.ru URLs), suggesting a systematic mis-link rather than two independent errors.",
+   "contested": {
+    "Operator": "Gazprom Gazoraspredelenie Pskov"
+   },
+   "researcher_notes": "Could not directly disprove the existing nadymdobycha.gazprom.ru refs by fetching them (ConnectTimeout, consistent with the batch's documented *.gazprom.ru zone-wide blocking; Wayback was 'temporarily offline' when checked 2026-09-15). The entity-mismatch case rests on geographic/functional implausibility (an upstream Arctic extraction subsidiary attributed as operator of a small Pskov Oblast local distribution отвод) plus the positive, dated, named-entity evidence in energyland.info. Not silently overwriting -- flagging as contested for human review alongside the REFS_ADDED fill that proposes the replacement value.",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "Bezhanitsy-Novorzhev Gas Pipeline",
+   "sheet_row": 2132,
+   "verdict": "concern",
+   "concern_type": "classification",
+   "recommendation": "Reconsider PipelineType from 'distribution' to 'transmission'. This row is named 'Bezhanitsy -- GRS Novorzhev', i.e. it is the feeder/отвод INTO the ГРС (gas distribution station), which per Russian gas-industry usage and this batch's own classification rule is the upstream/transmission side, not the downstream межпоселковый (inter-settlement) or внутрипоселковый (intra-settlement/last-mile) distribution network past the ГРС. The 24 Jun 2022 energyland.info article explicitly distinguishes these as two separate object classes for this same district: a already-built 4.4km 'межпоселковый газопровод' (distribution, a DIFFERENT object, not this row) vs. the still-to-be-built 'ГРС «Новоржев» и газопровод-отвод протяженностью 36 км' (this row, the отвод).",
+   "contested": {
+    "PipelineType": "transmission"
+   },
+   "researcher_notes": "No source explicitly labels this object 'transmission' or 'distribution' in so many words -- the recommendation is inferred from the отвод-vs-межпоселковый terminology distinction that IS explicit in the source, combined with the batch's stated classification convention. Not silently changing the value; filed for human adjudication.",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "segment_name": "Bezhanitsy-Novorzhev Gas Pipeline",
+   "sheet_row": 2132,
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Capacity=0.07 bcm/y currently traces (via gem.wiki) to government.ru/docs/all/101903/?page=12, cited as Распоряжение Правительства РФ от 06.05.2015 N816-р. Page 12 of that paginated view resolves entirely to Republic of Crimea / Sevastopol objects (items ~141+) -- nothing about Pskov Oblast, Bezhanitsy, or Novorzhev. I also pulled the decree's full text via a legalacts.ru mirror and searched exhaustively (247k chars) for 'Бежаниц'/'Новоржев'/variants: zero hits. The decree DOES cover other Pskov Oblast items in this same batch (e.g. item 369, 'Газопровод-отвод и ГРС Гдов Псковской области' = P4172), so it is a real source for this genre of object, but it does not appear to include Bezhanitsy-Novorzhev at all. The capacity figure could not be independently corroborated from any other document found (energyland.info, gazprommap.ru/pskovskaya/, pskovregiongaz.ru, pln-pskov.ru/informpskov.ru all discuss this project without a throughput figure).",
+   "contested": {
+    "Capacity": ""
+   },
+   "researcher_notes": "Not disputing the number itself (0.07 bcm/y is a plausible small-отвод scale, consistent with e.g. Gdov's 87.6 million m3/y at item 369), only its citation -- the government.ru page cited is definitively the wrong page/content. Filed as UNRESOLVED on the fills side (no replacement source found); this validity object flags the citation-relevance defect for human review of whether the value itself should be kept, sourced elsewhere, or removed pending a real citation.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "ГРС «Новоржев» и газопровод-отвод протяженностью 36 км",
+     "note": "24 Jun 2022 EnergyLand (Nefteregaz, NW FD) article: as part of the 2021-2025 Pskov gasification programme it 'предстоит построить ГРС «Новоржев» и газопровод-отвод протяженностью 36 км' (a GRS Novorzhev + 36km feeder отвод is still TO BE BUILT) -- confirms proposed/not-yet-built as of that date, matching the recorded value at that vintage."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Note: my status_reviews[] record below proposes this row has since moved on -- a Jan 2026 Pskov regional-parliament press item (pln-pskov.ru / informpskov.ru, one press-release origin) states construction of GRS Novorzhev is now 'фактически завершено' (practically complete). This REFS_ADDED record supports 'proposed' as the value that was true when this 2022 source was written / as the value currently on the sheet; the status change itself is filed separately with its own refs per the status-review contract. Sheet's own cited sources (gazprommap.ru/pskovskaya/, government.ru 816-r p.12) do NOT name Bezhanitsy or Novorzhev anywhere -- see validity concern re: government.ru mis-citation. gazprommap.ru/pskovskaya/ itself lists only downstream межпоселковый objects for Novorzhev (done=1 for the ГРС-to-town 4.4km line), never an отвод-level object for this segment, so it cannot be cited as naming this row either."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровод-отвод протяженностью 36 км",
+     "note": "Article states the Novorzhev district объект is a 'газопровод-отвод' (gas pipeline feeder) built for 'газификация' (gas supply) -- explicitly a natural-gas pipeline, not NGL/oil."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Fuel=Gas is not seriously in doubt for a газопровод-отвод in a gasification programme; single source is sufficient here, no material second-source search performed given the near-zero risk of error on this cell."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source explicitly classifies this object as 'distribution' or 'transmission' in so many words, so I am not staging a value here -- but I DO dispute the current 'distribution' label; see the classification validity concern below. The same 24-Jun-2022 EnergyLand article that documents this row explicitly distinguishes TWO separate objects in Novorzhevsky district: the 4.4km 'межпоселковый газопровод' (inter-settlement DISTRIBUTION line, the subject of that article, already built by end-2022) and the still-to-be-built 'ГРС «Новоржев» и газопровод-отвод протяженностью 36 км' (this row, the FEEDER/отвод upstream of the ГРС). GEM's own convention elsewhere in this batch treats an отвод feeding a ГРС as the upstream/transmission side and the межпоселковый network past the ГРС as distribution -- this row is named exactly 'Bezhanitsy -- GRS Novorzhev', i.e. it IS the отвод, not the межпоселковый line. Recommend reclassifying to transmission; filed as contested in validity[]."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "программы развития газоснабжения и газификации региона на 2021–2025 годы",
+     "note": "Article states the object (GRS Novorzhev + 36km отвод) is being built 'в рамках программы развития газоснабжения и газификации региона на 2021-2025 годы' -- the regional gasification programme covering 2021-2025, consistent with ProposalYear 2021 (the year the covering programme began)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single source states the 2021-2025 programme window; did not find a second, separately-dated confirmation of 2021 specifically as the proposal year (as opposed to programme start), so keeping this at medium rather than high."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document gives an exact construction-START year/month. A 4 Jan 2026 Pskov regional-parliament press item (see status_reviews[]) says GRS Novorzhev construction is now 'фактически завершено' (practically complete), which implies construction happened sometime 2023-2025, but does not date the start. Searched: energyland.info (2022, project not yet started), gazprommap.ru/pskovskaya/ (no dated milestones for this specific object -- it isn't even listed as a tracked point on that map), government.ru/legalacts.ru 816-r decree (does not mention this pipeline at all). Leaving blank rather than guessing; the completion evidence is staged on the status_reviews record instead, which is the correct place for it."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document states an in-service/start-of-operation date; the newest evidence (4 Jan 2026 press item) speaks only to the GRS's construction being practically complete, not to gas actually flowing/commissioning. Not staging a StartYear guess. See status_reviews[] for the full status discussion."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "http://government.ru/docs/all/101903/?page=12",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": "",
+     "note": "This is the URL gem.wiki cites for Capacity=0.071 bcm/y (Распоряжение Правительства РФ 06.05.2015 N816-р). Page 12 of this paginated view resolves to items 141-147+, all in Republic of Crimea / Sevastopol -- nothing about Pskov Oblast, Bezhanitsy or Novorzhev. The citation is simply wrong (wrong page, or the page numbering shifted after amendments)."
+    },
+    {
+     "url": "https://legalacts.ru/doc/rasporjazhenie-pravitelstva-rf-ot-06052015-n-816-r/",
+     "ok": true,
+     "status": 200,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": "",
+     "note": "Full-text mirror of the same decree (items ~10-2026+ scanned). Zero occurrences of 'Бежаниц' or 'Новоржев' anywhere in the whole document. Item 369 IS a Pskov Oblast object ('Газопровод-отвод и ГРС Гдов Псковской области', 87.6 million m3/yr -- this is P4172's ref, not this row's) but there is no equivalent item for Bezhanitsy-Novorzhev. The 816-r decree does not appear to include this pipeline at all, so it cannot be Capacity's source."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "SPEC CONCERN: the sheet's Capacity value (0.07 bcm/y) traces on gem.wiki to a government.ru citation that, on inspection, points to an unrelated Crimean section of the 816-r decree, and the decree's full text (checked via legalacts.ru mirror) never mentions this pipeline at all. I could not independently verify 0.07 bcm/y from any other document either -- energyland.info, gazprommap.ru/pskovskaya/, pln-pskov.ru/informpskov.ru all discuss this project without giving a capacity/throughput figure. Filed as a spec validity concern; not fabricating a replacement number. The value may still be correct (a plausible household-scale отвод capacity) but it is currently unsourced under any citation I can verify."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document in the source ladder (energyland.info, gazprommap.ru/pskovskaya/, 816-r decree, pln-pskov.ru/informpskov.ru) states an operating pressure for this отвод. Pressure is blank on all 27 rows in this batch per the orchestrator's own calibration note; this is one more instance of the same gap, not a special omission."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "36.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "36.00",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "газопровод-отвод протяженностью 36 км",
+     "note": "Exact match: '...предстоит построить ГРС «Новоржев» и газопровод-отвод протяженностью 36 км' -- states 36km for the feeder отвод into GRS Novorzhev, the same object as this row."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single independent trade-press source (EnergyLand, 24 Jun 2022) gives an exact 36km match. Searched gazprommap.ru/pskovskaya/ for a second, independent confirmation -- it lists downstream Novorzhev distribution objects (done-flagged) but no separate отвод-level entry with a length figure for this specific segment, so no second source found; staged at medium rather than high pending a second document."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No document found states a pipe diameter for this отвод. energyland.info gives length only; gazprommap.ru/pskovskaya/ gives no engineering specs at all (title + done-flag only); the 816-r decree does not mention this pipeline. Not guessing from roster analogues (300-325mm elsewhere in this batch) without a source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Determining FuelSource here requires identifying which upstream trunk/field the 'existing pipeline near Bezhanitsy' (the отвод's tie-in point, per GEM's own Location text) draws from -- none of the sources found (energyland.info, gazprommap.ru/pskovskaya/, pskovregiongaz.ru, pln-pskov.ru/informpskov.ru) name the upstream trunk or field. Leaving unresolved rather than guessing a field/trunk for this Pskov Oblast local distribution-programme отвод."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Bezhanitsy",
+    "StartState/Province": "Pskov Oblast",
+    "EndLocation": "Novorzhev",
+    "EndState/Province": "Pskov Oblast"
+   },
+   "primary_value": "Bezhanitsy",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027",
+    "https://www.pskovregiongaz.ru/press-center/news/1064/"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Новоржевского района",
+     "note": "Confirms Novorzhev / Novorzhevsky district, Pskov Oblast as the отвод's destination end."
+    },
+    {
+     "url": "https://www.pskovregiongaz.ru/press-center/news/1064/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "рабочем поселке Бежаницы Псковской области",
+     "note": "14 Feb 2024 Gazprom Mezhregiongaz Pskov press release confirms Bezhanitsy (рабочий поселок Бежаницы) is in Pskov Oblast, Bezhanitsky district, and is a live gas-network settlement (internal distribution commissioned there Feb 2024) -- consistent with GEM's own Location text describing this отвод as connecting to 'an existing pipeline near Bezhanitsy'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent sources (different publishers: EnergyLand trade press and Gazprom Mezhregiongaz Pskov's own site) place Bezhanitsy and Novorzhev in Pskov Oblast, Russia -- both endpoints and the oblast on the sheet are correct. No state-cell spelling issue was flagged for this row in the state audit (unlike several other rows in this batch)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No cost/investment figure for this specific object found in energyland.info, gazprommap.ru/pskovskaya/, pskovregiongaz.ru, or the pln-pskov.ru/informpskov.ru Jan 2026 item. None of these documents give a ruble figure broken out per-object."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Gazoraspredelenie Pskov",
+    "OperatorLocalLanguage": "АО «Газпром газораспределение Псков»"
+   },
+   "primary_value": "Gazprom Gazoraspredelenie Pskov",
+   "proposed_refs": [
+    "http://www.energyland.info/news-show-tek-neftegaz-230027"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.energyland.info/news-show-tek-neftegaz-230027",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "заместитель исполнительного директора по строительству и инвестициям АО «Газпром газораспределение Псков» Игорь Мелузов",
+     "note": "Article's quoted authority on the still-to-be-built GRS Novorzhev + 36km отвод is Igor Meluzov, deputy executive director for construction and investment of AO Gazprom Gazoraspredelenie Pskov -- names this exact entity as the one responsible for building this exact object."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "ATTRIBUTION CONCERN (see validity[]): the sheet currently records Operator='Gazprom Dobycha Nadym LLC', a Yamalo-Nenets AO gas-EXTRACTION subsidiary (Medvezhye/Yubileynoye/Bovanenkovo fields) ~2,500km away with no documented role in Pskov Oblast distribution infrastructure -- geographically implausible and I could not find any source tying it to this row. Both nadymdobycha.gazprom.ru URLs on this row (this one and the Owner ref) connect-timeout from here (consistent with the batch's known *.gazprom.ru blocking), so I could not directly disprove them, but the entity mismatch stands regardless of reachability. I'm proposing Gazprom Gazoraspredelenie Pskov instead, sourced from the only document that names a specific operating entity for this exact object. Not marking the old ref DEAD (it never resolved either way), just superseded by a better-sourced value."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 2132,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://www.pskovregiongaz.ru/press-center/news/1064/"
+   ],
+   "verifications": [
+    {
+     "url": "https://nadymdobycha.gazprom.ru/press/news/2022/03/144107/",
+     "ok": false,
+     "status": null,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": "",
+     "note": "The sheet's existing ref. ConnectTimeout on direct fetch (consistent with the batch's measured *.gazprom.ru blocking) and Wayback was 'temporarily offline' when checked (2026-09-15), so I could not read it directly. Independent of reachability, it is a Gazprom Dobycha Nadym (Yamalo-Nenets gas-extraction subsidiary) press URL, which has no documented connection to a Pskov Oblast distribution отвод -- see the attribution concern on Operator. Not confirmed dead (410/404), so not deleting outright, but replacing with a directly relevant local source below."
+    },
+    {
+     "url": "https://www.pskovregiongaz.ru/press-center/news/1064/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газпром межрегионгаз Псков",
+     "note": "Gazprom's own regional-subsidiary site (Gazprom Mezhregiongaz Pskov, the managing organization of AO Gazprom Gazoraspredelenie Pskov) reporting Gazprom-programme gasification work in Bezhanitsy itself -- supports the standing convention used tracker-wide on this batch (Owner1=Gazprom PJSC 100% on 25 of 27 rows) that gasification-programme infrastructure in this region is Gazprom-group owned; does not use the literal string 'Gazprom PJSC' (no source does, for any row in this batch)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Keeping the recorded Owner1=Gazprom PJSC [100%] (consistent with 25 of 27 rows in this batch and with every source found describing this as Gazprom-group gasification-programme work), but replacing the stored ref -- see the verification note on the old nadymdobycha.gazprom.ru URL. Also see the Operator attribution concern: the SAME wrong-entity pattern (Gazprom Dobycha Nadym, an Arctic upstream subsidiary) appears on both the Operator and Owner [ref] cells for this row, which suggests a systematic mis-linking rather than two independent errors."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Bezhanitsy-Novorzhev Gas Pipeline",
+   "sheet_row": 2132,
+   "verdict": "change",
+   "current_value": "proposed",
+   "candidate_value": "construction",
+   "evidence_date": "2026-01",
+   "summary": "A 4 January 2026 press item (originating from the Pskov Regional Assembly's press service, republished verbatim by pln-pskov.ru and informpskov.ru) quotes vice-speaker Armen Mnatsakanyan on 2025 municipal year-end results: 'В Новоржевском округе фактически завершено строительство ГРС «Новоржев». Это значительный шаг на пути к газификации района. В этом году приложим все усилия для включения муниципалитета в программу догазификации.' (Construction of GRS Novorzhev is practically/factually complete in Novorzhevsky District; this year the district will push for inclusion in the follow-on 'dogazifikatsiya' programme.) This is much newer than the row's LastUpdated (2023-07-21) and indicates the ГРС (and, by strong implication, the connecting отвод this row represents, since a ГРС cannot be commissioned without its feeder) has progressed from 'proposed' to at least under-construction/near-complete, i.e. Status should move off 'proposed'. The quote does not explicitly confirm final in-service/gas-flowing commissioning of the 36km отвод itself (only the ГРС), so I am proposing 'construction' rather than jumping straight to 'operating' -- a human should weigh whether 'фактически завершено' (practically/de facto completed) for the ГРС structure is strong enough to call the whole object 'operating' given the уточнение about still needing 'dogazifikatsiya программа' inclusion this year, which suggests downstream household hookups (and possibly final commissioning) are not yet complete.",
+   "verifications": [
+    {
+     "url": "https://pln-pskov.ru/society/576026.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Псковская Лента Новостей (PLN), 11:36, 4 января 2026. Article: 'Итоги 2025 года для ряда муниципалитетов подвел вице-спикер Псковского областного Собрания.' Direct quote from Армен Мнацаканян: 'В Новоржевском округе фактически завершено строительство ГРС «Новоржев».' url_verifier run with --name 'Новоржев' tokens 'Новоржев'/'ГРС' -- OK, 200, expected content present."
+    },
+    {
+     "url": "https://informpskov.ru/news/497983.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Informpskov.ru (Псковское Агентство Информации, byline ПАИ), 11:25, 04 января 2026, sourced 'в пресс-службе регионального парламента' -- same date, same verbatim quotes as the pln-pskov.ru article. This is the SAME underlying press-release origin (Pskov Regional Assembly press service), not an independent second source -- noted explicitly per the batch's independence rule (one press release republished by two outlets = one origin). url_verifier run with --name 'Новоржев' token 'Новоржев' -- OK, 200, expected content present."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Tier is medium rather than high because both citations trace to one press-release origin (Pskov Regional Assembly), not two independently reported sources -- flagged explicitly per the independence rule. Searched gazprommap.ru/pskovskaya/ (the regional gasification-programme tracker map) for a second, independently-authored confirmation of GRS Novorzhev completion status; that page lists Novorzhev-related downstream distribution objects with done-flags but does not carry a dated 2025/2026 completion note for the ГРС or the отвод itself, so no second origin was found. Recommend a human either accept 'construction' at medium tier or hold for one more independent confirmation before moving to 'operating'.",
+   "proposed_refs": [
+    "https://pln-pskov.ru/society/576026.html"
+   ]
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P4171",
+   "url": "https://www.gazprommap.ru/pskovskaya/",
+   "facts": "Pskov Oblast regional gasification-programme map lists a pending (done=0) 'Газопровод-отвод и ГРС «Струги Красные»'-type object for Strugi Krasnye -- relevant to whichever PID covers a Strugi Krasnye отвод/ГРС; not yet built as of the page's current content. Cross-check against P4171's row for a possible status/existence match."
+  },
+  {
+   "project_id": "P4156",
+   "url": "https://www.gazprommap.ru/pskovskaya/",
+   "facts": "Same gazprommap.ru/pskovskaya/ page lists a pending (done=0) 'Газопровод-отвод и ГРС «Опочка»'-type object for Opochka. Cross-check against P4156's row (Opochka) for status/spec alignment."
+  },
+  {
+   "project_id": "P4166",
+   "url": "https://www.gazprommap.ru/pskovskaya/",
+   "facts": "Same page lists a pending (done=0) 'Газопровод-отвод и ГРС «Пустошка»'-type object for Pustoshka. Cross-check against P4166's row (Pustoshka) for status/spec alignment."
+  },
+  {
+   "project_id": "P4167",
+   "url": "https://www.gazprommap.ru/pskovskaya/",
+   "facts": "Same page lists a pending (done=0) 'Газопровод-отвод и ГРС «Идрица»'-type object for Idritsa. Cross-check against P4167's row (Idritsa) for status/spec alignment."
+  },
+  {
+   "project_id": "P4172",
+   "url": "https://legalacts.ru/doc/rasporjazhenie-pravitelstva-rf-ot-06052015-n-816-r/",
+   "facts": "Full-text mirror of Распоряжение Правительства РФ от 06.05.2015 N816-р confirms item 369 = 'Газопровод-отвод и ГРС Гдов Псковской области', capacity 87.6 million m3/year -- this decree item is likely P4172's (Gdov) correct Capacity ref (the decree does NOT contain an equivalent item for Bezhanitsy-Novorzhev/P4149, which is why that citation was flagged as wrong for P4149). Also cross-check the gazprommap.ru/pskovskaya/ page, which lists a pending (done=0) 'Газопровод-отвод и ГРС «Гдов»'-type object consistent with this PID."
+  }
+ ],
+ "summary": "P4149 Bezhanitsy-Novorzhev: existence/route/attribution real but mis-cited -- Length=36km and Proposal=2021 confirmed (medium, energyland.info), Operator/Owner attribution concern (Gazprom Dobycha Nadym implausible; propose Gazprom Gazoraspredelenie Pskov), PipelineType distribution-vs-transmission classification concern (отвод feeding ГРС), Capacity ref proven wrong (government.ru page-12 is Crimea content, decree full-text never mentions this pipeline) and left UNRESOLVED; status review flags a Jan-2026 press item (single origin, pln-pskov.ru/informpskov.ru) saying GRS Novorzhev construction is practically complete, proposing Status change proposed->construction; Construction/Start/Pressure/Diameter/FuelSource/SegmentCost left UNRESOLVED with searches documented."
+}

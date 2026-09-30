@@ -1,0 +1,581 @@
+{
+ "project_id": "P5542",
+ "pipeline_name": "Ukhta-Torzhok (Vuktyl) Gas Pipeline",
+ "sheet_row": 3059,
+ "wiki": "https://www.gem.wiki/Ukhta-Torzhok_(Vuktyl)_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "summary": "The sheet's existing Status/Fuel/PipelineType/Location ref (proektirovanie.gazprom.ru/press/ehntsiklopediya-proektirovshchika/krupnejshie-proekty/ukhta-torzhok/) documents a different pipeline: its own text is titled 'Система магистральных газопроводов Ухта-Торжок. II нитка (Ямал)' and describes the 2012-2019 Yamal-megaproject expansion (970 km, 1420 mm, 45 bcm/y, 9.8 MPa, routed through Komi/Arkhangelsk/Vologda/Yaroslavl/Tver), which matches P1439 ('Ukhta-Torzhok (Yamal) 2') almost exactly -- confirmed independently via bbgl.ru, ngkm.ru and zaogsp.ru describing the same 970km/1420mm/45bcm project. It never mentions Vuktyl and is not a valid source for P5542, which is the ORIGINAL 1220mm-diameter 'II нитка' of the Soviet-era Vuktyl-sourced Ukhta-Torzhok trunk, commissioned 1975 per the Urdomskoe LPUMG construction chronicle (a genuinely separate, older, narrower-diameter line that shares only the corridor name with the Yamal-era pair).",
+   "contested": {
+    "Status [ref]": "citation names the Yamal-era 970km/1420mm/45bcm line (matches P1439), not this 1220mm/1975 line",
+    "Location [ref]": "same miscitation"
+   },
+   "recommendation": "Replace the proektirovanie.gazprom.ru ref on P5542's Status/Fuel/PipelineType/Location cells with the Urdomskoe LPUMG source (staged in fills above), and consider whether the same wrong ref appears on sibling rows P5541/P5543 sharing this gem.wiki page. File a cross-row lead pointing this citation toward P1439 instead, where it is a strong, on-topic source.",
+   "sources": [
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "researcher_notes": "Values themselves (Status=operating, Fuel=Gas, PipelineType=transmission, endpoints Ukhta->Torzhok) are not in doubt and remain correct for P5542 on independent grounds -- this is a sourcing/attribution defect, not a value error. Not flagging as duplicate because P5542 and P1439 are genuinely two different physical pipelines built decades apart at different diameters/capacities sharing the same corridor and a similar generic name."
+  },
+  {
+   "segment_name": "II",
+   "concern_type": "route",
+   "verdict": "concern",
+   "summary": "Per the batch's state/route audit, P5542's routes-repo geometry is flagged OK_INTERIOR: the traced endpoints fall inside the traversed state/province set but do not match the sheet's actual recorded termini (Ukhta, Komi Republic -> Torzhok, Tver Oblast). This suggests the stored geometry may be only a partial trace of the full нитка II segment rather than a complete end-to-end route.",
+   "contested": {
+    "RouteAccuracy": "current value may overstate completeness if the underlying trace is only a partial segment"
+   },
+   "recommendation": "Flag for the route-creation workflow to inspect the routes-repo geometry against the full Ukhta-Torzhok corridor and confirm whether it spans the complete Ukhta-to-Torzhok run or only a sub-stretch (e.g. the Urdomskoe LPUMG's local segment); do not auto-replace the route in this pass.",
+   "sources": [],
+   "researcher_notes": "This concern is carried forward from the brief's own state-audit finding (P5541 and P5542 both listed OK_INTERIOR); no new geometry was drawn or verified in this research pass, consistent with the standing rule against proposing route edits."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://komiinform.ru/news/279170"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "1975 год — II нитка газопровода «Ухта — Торжок»",
+     "note": "Read via Wayback (live host times out per calibration). Urdomskoe LPUMG (Gazprom Transgaz Ukhta branch) construction chronicle names 'II нитка' of Ukhta-Torzhok explicitly and gives no indication of abandonment; the branch describes it among pipeline still under its current operational responsibility ('Филиал эксплуатирует ... км газопровода'). Substring screen misses the phrase only because the live page uses a non-breaking space between 'II' and 'нитка' (verified by eye)."
+    },
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": "",
+     "note": "April 2025 press-conference wrap-up: Gazprom Transgaz Ukhta CEO reports 2024 transport volume >104 bcm (up 6% y/y) and continued expansion 'along the entire length' of the company's trunklines; does not name Ukhta-Torzhok II by name (aggregate/system-level statement), used only as general still-operating/still-active-operator corroboration, not as segment-specific proof."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "The sheet's existing Status/Fuel/Location ref (proektirovanie.gazprom.ru/press/ehntsiklopediya-proektirovshchika/krupnejshie-proekty/ukhta-torzhok/) turns out to document a DIFFERENT pipeline: its own text calls itself 'Система магистральных газопроводов Ухта — Торжок. II нитка (Ямал)' and states cap=45 bcm/y, route through Komi/Arkhangelsk/Vologda/Yaroslavl/Tver, built as an expansion of the line completed in 2012 -- this is the modern Bovanenkovo-Ukhta-Torzhok Yamal project's second string, i.e. it matches P1439 'Ukhta-Torzhok (Yamal) 2' (len=970, dia=1420, cap=45) almost exactly, confirmed via independent web hits (bbgl.ru, ngkm.ru, zaogsp.ru all describing the same 970km/1420mm/45bcm/9.8MPa 'II нитка (Ямал)' project). It never mentions 'Vuktyl' and is not evidence for THIS row. P5542 is instead the ORIGINAL 1220mm-diameter 'II нитка' of the Soviet-era Vuktyl-sourced Ukhta-Torzhok trunk (part of the historic 'Сияние Севера' system), commissioned in 1975 per Urdomskoe LPUMG's own construction chronicle -- a genuinely separate, older, narrower-diameter line sharing only the corridor and a generic name with the Yamal-era pair. Filed as an attribution/miscitation validity concern below; keeping this REFS_ADDED record so the Status cell is not left with only a wrong citation. Single-origin (ukhta-tr.gazprom.ru); searched trade press (neftegaz.ru, tass, interfax) and web search (budget exhausted mid-sweep) for a second, non-Gazprom source naming 'Ukhta-Torzhok II' specifically for the Vuktyl-era line and did not find one -- the 1970s-era pipe predates most online Russian trade press archives."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "II нитка газопровода «Ухта — Торжок»; ... газ Вуктыла пришел в центр страны",
+     "note": "Read via Wayback. Page states the pipeline (including the 1975 II нитка) carries natural gas from the Vuktyl field ('газ Вуктыла')."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Same miscitation issue as Status: the sheet's existing ref for this cell (proektirovanie.gazprom.ru ukhta-torzhok page) is the Yamal-project II нитка (P1439-matching), not this 1975 Vuktyl-era II нитка. Fuel=Gas is not in genuine doubt (this is unambiguously a natural-gas trunk pipeline) but the ref is replaced with one that actually names and describes THIS segment. Single Gazprom-origin source; the fact itself (natural gas) is not the kind of value likely to be wrong, so I did not spend further search budget hunting a second source for a near-tautological fact."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Урдомское линейное производственное управление магистральных газопроводов ... II нитка газопровода «Ухта — Торжок»",
+     "note": "Page (title: 'trunk gas pipelines linear production directorate') names the II нитка specifically within its trunk-pipeline (магистральный газопровод) network -- supports transmission classification, not a gathering/feeder line."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Existing ref (ukhta-tr.gazprom.ru/sosnogorskoe-linejnoe-proizvod/) is plausible in principle (it is a genuine Ukhta-Torzhok-corridor LPU page) but never actually names 'II нитка' built in 1975 -- it discusses 'Ukhta-Torzhok I' (1969) and a 2017-commissioned 'Ukhta-Torzhok II' that is again the Yamal-era line, not this one. Replaced with the Urdomskoe page, which does name the 1975 II нитка directly and unambiguously as part of a magistral'nyy (trunk/transmission) gazoprovod network, matching GEM's transmission classification. No classification concern -- this is correctly a transmission trunk line, not a gathering/process line."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1975"
+   },
+   "primary_value": "1975",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "1975 год — II нитка газопровода «Ухта — Торжок»",
+     "note": "Read via Wayback (live times out). Construction chronicle states verbatim '1975 -- line II of the Ukhta-Torzhok pipeline'. Existing automated check failed only because the page uses non-breaking spaces (\\xa0) between 'II' and 'нитка'/'год' -- confirmed by eye this is the exact phrase and date. This SAME url was already in the sheet's current_ref (paired with an inaccessible archive.org book), so this is a REVERIFY of an existing citation, now readable."
+    },
+    {
+     "url": "https://archive.org/details/sovietenergysyst0000dien/page/86/mode/2up",
+     "ok": false,
+     "status": 403,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": "",
+     "note": "Existing co-citation. archive.org serves 'Item not available' (403, controlled-digital-lending restriction) to unauthenticated fetches, so this book's page 86 could not be read or verified in this session -- kept in researcher_notes only, not relied upon."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "1975 for нитка II is independently plausible against the LPUMG's own construction sequence: Line I ~1969 (per Sosnogorskoe LPUMG history and ru.wikipedia's 'Сияние Севера' account: construction began Oct 1967, gas flowing by late 1969), Line II 1975 (this source), Line III 1977-78 'уже 1420 х 75мм (первые две 1220 х 55мм)' -- i.e. the first two lines (I and II) share the 1220mm/55mm-wall spec, consistent with GEM's recorded Diameter=1220 on both P5541 and P5542. Single Gazprom-origin source for the exact year; searched for an independent non-Gazprom source (trade press, academic) confirming 1975 specifically and did not find one within the available search budget -- the referenced archive.org book (Dienes & Shabad, 'The Soviet Energy System', 1979) would likely be exactly this kind of independent corroboration but is access-restricted from this session (403, lending-library item)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1220",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1220",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "3 нитка — уже 1420 х 75 (первые две 1220 х 55)",
+     "note": "Read via Wayback. States that lines I and II ('первые две') are 1220mm (diameter) x 55mm (wall thickness), and line III steps up to 1420 x 75mm -- directly confirms Diameter=1220mm for нитка II. Automated screen missed it only due to non-breaking spaces."
+    },
+    {
+     "url": "https://archive.org/details/sovietenergysyst0000dien/page/86/mode/2up",
+     "ok": false,
+     "status": 403,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": "",
+     "note": "Same access-restricted book as the Start unit; could not verify."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Corroborated directionally by ru.wikipedia's 'Сияние Севера' article (tertiary, not cited): 'от Ухты до Торжка 1220 мм' for the first-stage Ukhta-Torzhok section. Single citable (Gazprom-origin) primary source for the II-нитка-specific figure; same second-source gap as the Start unit (access-restricted book, search budget exhausted)."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Vuktyl Gas and Condensate Field"
+   },
+   "primary_value": "Vuktyl Gas and Condensate Field",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "параллельно со строительством Вуктыла ... магистральный газопровод из двух составных частей «Вуктыл — Ухта» и «Ухта — Торжок» ... газ Вуктыла пришел в центр страны",
+     "note": "Read via Wayback. Explicitly ties the Ukhta-Torzhok trunk (built alongside 'Vuktyl-Ukhta') to Vuktyl field gas."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Existing ref (ukhta-tr.gazprom.ru/about/history/vzglyad-na-desyatiletiya/) has no Wayback capture at all (CDX query returned zero snapshots) and the live host times out per calibration -- effectively unverifiable/uncited. Replaced with the Urdomskoe LPUMG history page, which independently and explicitly ties the whole Ukhta-Torzhok trunk (built as the companion project to Vuktyl-Ukhta, commissioned off the same 1967 Council of Ministers resolution) to Vuktyl field gas. Single Gazprom-origin source; FuelSource is corroborated by every other Vuktyl-corridor row in this batch (P5540, P7538, P5539) citing the same field, which is not independent corroboration in the strict sense but is internally consistent."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Ukhta",
+    "StartState/Province": "Komi Republic",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Torzhok",
+    "EndState/Province": "Tver Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Ukhta",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистральный газопровод ... «Ухта — Торжок». Трасса последнего и пролегла через Урдому",
+     "note": "Read via Wayback. Confirms the trunk runs from Ukhta (Komi Republic) through Urdom (Arkhangelsk Oblast) toward Torzhok; consistent with an Ukhta->Torzhok routing through the corridor's Komi/Arkhangelsk/Vologda/Yaroslavl/Tver oblasts (per the separate proektirovanie.gazprom.ru page's route description for the parallel Yamal-era line, which shares the same physical corridor)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Existing ref is the miscited Yamal-project page (see Status note); replaced with the Urdomskoe page, which does name and describe THIS trunk's routing. Endpoints (Ukhta -> Torzhok) are not in doubt; StartState/Province corrected from 'Republic of Komi' to the sheet's canonical spelling 'Komi Republic' per this batch's brief (a known typo shared with P0767/P1439/P5539/P5540/P5541/P5543/P7538). EndState/Province Tver Oblast is already correct (Torzhok is in Tver Oblast) -- no change there. Separately flagging a RouteAccuracy concern below: the routes-repo geometry for this PID is flagged OK_INTERIOR in the state audit (endpoints inside the traversed set but not the sheet's termini), suggesting the stored trace may be a partial segment of the full Ukhta-Torzhok II line rather than the whole line -- see validity[]."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/press/news/2018/02/618/",
+    "https://web.archive.org/web/20210805121142/https://ukhta-tr.gazprom.ru/press/news/2018/02/618/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/press/news/2018/02/618/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "магистральные газопроводы ... Ухта-Торжок ... Справка: ООО «Газпром трансгаз Ухта» — 100-процентное дочернее предприятие ПАО «Газпром»",
+     "note": "Read via Wayback (live times out per calibration). This 2018 Gryazovetskoe LPUMG-anniversary article names 'Ukhta-Torzhok' among the trunk pipelines originating at the Gryazovets hub the corridor passes through, and its standing 'Справка' (backgrounder) states Gazprom Transgaz Ukhta is a 100% subsidiary of Gazprom PJSC -- supports Owner1=Gazprom PJSC 100%."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Existing ref, reverified via Wayback (live host times out). The article is a Gryazovetskoe-LPUMG anniversary piece, not Ukhta-Torzhok-II-specific, but the 100%-subsidiary fact is a corporate-structure statement that applies at the operator level, not per-нитка, and is uncontested/well-known public information about Gazprom's transgaz subsidiaries. Single citable source; the 100% Gazprom ownership of its transgaz operating subsidiaries is standard, stable public-record knowledge, not something in active dispute."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom transgaz Ukhta",
+    "OperatorLocalLanguage": "ООО \"Газпром трансгаз Ухта\""
+   },
+   "primary_value": "Gazprom transgaz Ukhta",
+   "proposed_refs": [
+    "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "С 1 апреля 1977 года ... организовано Урдомское ЛПУМГ ПО «Ухтатрансгаз» ... © 2022 ООО «Газпром трансгаз Ухта»",
+     "note": "Read via Wayback. Urdomskoe LPUMG (the branch operating the II нитка's Urdom stretch) is organized under, and the page is published by, ООО «Газпром трансгаз Ухта» -- directly supports Operator = Gazprom transgaz Ukhta."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "This is the corridor the batch brief assigns to Gazprom Transgaz Ukhta (the Komi/Vuktyl/Yamal corridor), and the Urdomskoe LPUMG page confirms it operationally (the LPU that maintains this stretch of Ukhta-Torzhok is organized under, and publishes as, ООО «Газпром трансгаз Ухта»). Single Gazprom-origin source, but this is the operator's own organizational-chart fact about itself, which is inherently self-sourced -- an outside source naming the operator of a specific trunk-line stretch is not a type of fact independent press typically reports."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear1",
+    "ProposalMonth1"
+   ],
+   "primary_value_col": "ProposalYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No segment-II-specific proposal/announcement date found. This 1220mm нитка was built ~1967-1975 alongside the parallel Vuktyl-Ukhta and Punga-Ukhta-Ukhta-Torzhok trunks under a single Soviet Council of Ministers development program for the Vuktyl field (per Urdomskoe and Sosnogorskoe LPUMG histories, and the ru.wikipedia 'Сияние Севера' overview); none of the available sources give a discrete 'proposal' date distinct from the construction chronicle for this specific line, and Soviet-era planning decisions of this kind are generally not documented as a public 'announcement' the way modern projects are. Searched: ukhta-tr.gazprom.ru LPUMG history pages (Urdomskoe, Sosnogorskoe), Gryazovetskoe LPUMG article, energybase.ru, komiinform.ru, general web search (budget exhausted before this specific term could be searched further). Leaving MISSING_VALUE rather than guessing from the construction-start year."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear1",
+    "ConstructionMonth1"
+   ],
+   "primary_value_col": "ConstructionYear1",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No source found that separately dates construction START (as distinct from the 1975 in-service/commissioning date already recorded under Start) for this specific нитка. The Urdomskoe LPUMG chronicle lists 1975 as the year the line entered the record ('1975 год -- II нитка газопровода Ухта-Торжок') without a separate ground-breaking date; the parallel Line I is documented (via Sosnogorskoe LPUMG / ru.wikipedia) as begun in Oct 1967, but no equivalent multi-year construction span is given for Line II specifically. Searched the same source set as Proposal above; web-search budget was exhausted before a targeted 'начало строительства' query for нитка II specifically could be run. Leaving MISSING_VALUE rather than assuming Start doubles as Construction."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "CapacityBcm/y",
+    "Capacity_mmcfd"
+   ],
+   "primary_value_col": "CapacityBcm/y",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No нитка-II-specific throughput/capacity figure found. Only system/aggregate figures exist in the available sources: Gazprom Transgaz Ukhta's 2024 total transport volume (>104 bcm across its whole network, per komiinform.ru) and various historical totals for the full multi-line Ukhta-Torzhok + Sиyaniye Severa corridor -- none broken out per нитка, and per the aggregate-vs-segment rule a system-level total is not a valid capacity ref for one individual line. Searched energybase.ru, the Gazprom LPUMG history pages, and general web search (budget exhausted). Leaving MISSING_VALUE."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure(MPa)"
+   ],
+   "primary_value_col": "Pressure(MPa)",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No нитка-II-specific operating pressure found. The only pressure figure encountered in this research (9.8 MPa) belongs to the DIFFERENT, later Yamal-project 'II нитка (Ямал)' documented on the sheet's miscited proektirovanie.gazprom.ru ref (matches P1439), not to this 1975 1220mm line, so it is not usable here. A targeted web search for the 1970s-era line's design pressure could not be run before the session's WebSearch budget (200/200) was exhausted. Leaving MISSING_VALUE rather than borrowing the Yamal-era figure."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnownKm",
+    "LengthEstimatedKm"
+   ],
+   "primary_value_col": "LengthKnownKm",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No нитка-II-specific length figure found; consistent with the batch brief's own note that this expected/acceptable gap applies to the historic Vuktyl-era Ukhta-Torzhok нитка trio (P5541/P5542/P5543), whose individual-line lengths are not broken out in any source located (only the full multi-line corridor's aggregate length appears in secondary accounts, which is not valid per the aggregate-vs-segment rule). Same source set searched as the other MISSING_VALUE units above. Leaving MISSING_VALUE."
+  },
+  {
+   "segment_name": "II",
+   "sheet_row": 3059,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "No cost figure for this 1970s Soviet-era line was located in any source, expected given the pipeline's age and the absence of market-price project-finance disclosures for Soviet infrastructure of this era. Searched the same source set as the other MISSING_VALUE units. Leaving MISSING_VALUE."
+  }
+ ],
+ "status_reviews": [
+  {
+   "sheet_row": 3059,
+   "segment_name": "II",
+   "verdict": "confirm",
+   "current_status": "operating",
+   "proposed_status": "",
+   "evidence_date": "2025-04",
+   "proposed_refs": [
+    "https://komiinform.ru/news/279170",
+    "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/"
+   ],
+   "verifications": [
+    {
+     "url": "https://komiinform.ru/news/279170",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": "",
+     "note": "April 2025 press-conference wrap-up: Gazprom Transgaz Ukhta CEO reports 2024 transport volumes up 6% y/y (>104 bcm) and ongoing operation/expansion across the company's trunkline network, of which the Ukhta-Torzhok corridor (including this нитка) is a core segment; system-level, not нитка-specific."
+    },
+    {
+     "url": "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "II нитка газопровода «Ухта — Торжок»",
+     "note": "Urdomskoe LPUMG page (2022 copyright footer) presents the II нитка as part of its currently-maintained trunk-pipeline inventory, with no mention of decommissioning, mothballing, or replacement."
+    }
+   ],
+   "researcher_notes": "No evidence of any kind suggests this 1975-built domestic-corridor нитка has been shut down, replaced, or is otherwise not operating -- unlike GEM rows on Russia's Ukraine-transit or EU-export legs (which the batch brief flags as facing real disruption risk since 2022), Ukhta-Torzhok is a purely domestic west-Russia trunk corridor feeding Gryazovets/Torzhok hubs, and Gazprom Transgaz Ukhta continues to report active, growing throughput as of its most recent (April 2025) public results. Evidence is at the operator/system level rather than нитка-II-specific (no source explicitly says 'нитка II is still flowing gas today'), which is why Status itself is being CONFIRMED rather than newly verified at a granular level, but nothing found contradicts 'operating' and this domestic segment carries none of the disruption signals the brief calls out for export-oriented lines. The sheet's own current ref for this cell is a genuine miscitation (see validity[] concern, attribution) but the underlying value is independently supported by the Urdomskoe LPUMG page above."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P1439",
+   "url": "https://web.archive.org/web/20220518091739/https://proektirovanie.gazprom.ru/press/ehntsiklopediya-proektirovshchika/krupnejshie-proekty/ukhta-torzhok/",
+   "fact": "This page (currently miscited on P5542's Status/Fuel/PipelineType/Location refs) is titled 'Система магистральных газопроводов Ухта-Торжок. II нитка (Ямал)' and states: length 970 km, diameter 1420 mm, capacity 45 bcm/y, design pressure 9.8 MPa, route through Komi Republic, Arkhangelsk Oblast, Vologda Oblast, Yaroslavl Oblast and Tver Oblast, built as the second line of the Yamal-megaproject Bovanenkovo-Ukhta-Torzhok expansion (completed circa 2012-2019). This matches P1439 'Ukhta-Torzhok (Yamal) 2' almost exactly and independent trade sources (bbgl.ru, ngkm.ru, zaogsp.ru) corroborate the same 970km/1420mm/45bcm/9.8MPa figures for this Yamal-era 'II нитка'.",
+   "suggested_action": "Consider using this proektirovanie.gazprom.ru page as a direct on-topic ref for P1439's Length/Diameter/Capacity/Pressure/Location cells if not already cited there -- it is a strong match for that pipeline, just wrongly attached to P5542 in the current sheet."
+  },
+  {
+   "project_id": "P5541",
+   "url": "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/sosnogorskoe-linejnoe-proizvod/",
+   "fact": "Sosnogorskoe LPUMG history page states Line I ('I нитка') of Ukhta-Torzhok was built starting Oct 1967 and gas began flowing by late 1969, at 1220mm diameter (same diameter class as Line II per Urdomskoe: 'первые две [нитки] 1220 х 55' -- first two lines both 1220mm OD / 55mm wall).",
+   "suggested_action": "Corroborates/could source P5541's Construction (~1967) and Start (~1969) and Diameter (1220mm) if not already well-sourced there."
+  },
+  {
+   "project_id": "P5543",
+   "url": "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+   "fact": "Urdomskoe LPUMG chronicle states Line III ('3 нитка') of Ukhta-Torzhok stepped up to 1420mm diameter / 75mm wall thickness ('3 нитка -- уже 1420 х 75'), built circa 1977-78 based on the chronicle's sequencing (immediately after the 1975 Line II entry).",
+   "suggested_action": "Could source/corroborate P5543's Diameter (1420mm) and approximate Start year (~1977-78) if not already well-sourced there."
+  },
+  {
+   "project_id": "P5539",
+   "url": "https://web.archive.org/web/20220518091739/https://ukhta-tr.gazprom.ru/urdomskoe-linejnoe-proizvodstv/",
+   "fact": "The same chronicle references a 4th trunk line built ~1980-81 in the same corridor family (Punga-Ukhta-Gryazovets 'Сияние Севера' system expansion), consistent with GEM's separately tracked P5539 'Line 4'.",
+   "suggested_action": "Worth checking this Urdomskoe/Sosnogorskoe source pair against P5539's existing Construction/Start refs for corroboration; not independently verified as an exact date match in this pass, flagging only as a lead."
+  }
+ ],
+ "summary": "Confirmed real, distinct 1975-built 1220mm Vuktyl-era Ukhta-Torzhok II нитка (not a P1439 Yamal-era duplicate); fixed a genuine attribution miscitation (sheet's Status/Location ref actually documents P1439), reverified Start/Diameter/Owner, added refs for Status/Fuel/PipelineType/FuelSource/Location/Operator, left Proposal/Construction/Capacity/Pressure/Length/SegmentCost UNRESOLVED, flagged a route OK_INTERIOR concern, and confirmed Status=operating."
+}

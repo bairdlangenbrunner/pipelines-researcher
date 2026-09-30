@@ -1,0 +1,6 @@
+# Engine defects observed during R4a Urals-YaNAO (logged, not fixed — docs/sops/lean_pass.md)
+
+- `url_verifier` name matching misses a tracker alias whose hyphen is spaced: P3507's `OtherLanguagePrimaryPipelineName` is «Газопровод Уренгой - Центр I нитка», the operator page reads «Уренгой-Центр 1», and neither the agent's verification nor `backfill_name_found.py --recheck-false --csv` matched — gate I flagged 4 good refs (P3507/P5612 Status + Owner [ref]). Hand-stamped in rows/P3507.json and rows/P5612.json with a note. Fix: normalize `\s*[-–—]\s*` to a bare hyphen and strip «Газопровод»/«нитка» + ordinal in `surface_forms`/`name_variants`; P5612 also has NO Cyrillic alias on the sheet, so sibling-segment aliases should be shared by `PipelineName`.
+- `scripts/backfill_name_found.py --shards rows` walks `fills[]` only — `status_reviews[].verifications` are never re-stamped, so a status ref stays `name_found=false` after a matcher fix (rows/P3507.json status_reviews[0]). Fix: iterate `status_reviews` and `validity` alongside `fills` in `units()`.
+
+Fixed this session (was R5's logged defect, would have corrupted this batch's output): `merge_deepsweep_shards.py` now falls back to a validity record's `notes` when `researcher_notes` is absent. R5's workbook still needs a rebuild to show the P2390/P2435 findings.

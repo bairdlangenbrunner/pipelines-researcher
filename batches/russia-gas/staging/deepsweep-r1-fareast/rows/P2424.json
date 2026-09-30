@@ -1,0 +1,802 @@
+{
+ "project_id": "P2424",
+ "pipeline_name": "Sobolevo-Petropavlovsk-Kamchatsky Gas Pipeline",
+ "sheet_row": 1239,
+ "wiki": "https://www.gem.wiki/Sobolevo-Petropavlovsk-Kamchatsky_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "existence",
+   "contested": {},
+   "recommendation": "No change to existence, classification (Fuel=Gas, PipelineType=transmission), or Status=operating. This is a real, well-documented, standalone Kamchatka pipeline; no other PID in the 32-row Far East roster describes the same physical asset (no duplicate risk).",
+   "researcher_notes": "Confirmed across a strong, independent multi-source base: energybase.ru (commercial pipeline-asset database, full spec sheet), Gazprom's own current project page (gazprom.ru/projects/kamchatka/, Wayback capture 2025-04-25 -- the pipeline is still described in the present tense as the backbone of Kamchatka's regional gas-supply system), Gazprom's 2019 press retrospective (Wayback capture, construction history/contractor detail), Novaya Gazeta (2020, independent investigative journalism), and NANGS/Life.ru (independent investigative journalism, named analyst Igor Yushkov). One operational caveat carried forward: Novaya Gazeta reports the line has chronically underperformed its 750 million m3/year design capacity (2019 actual throughput only 325 million m3, ~43% utilization) because the feeding Kshukskoye/Nizhne-Kvakchikskoye fields were never fully developed to design output -- a utilization/adequacy issue, not evidence the line is shut down, shelved, or misclassified.",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "contested": {
+    "SegmentCost": "3000000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "recommendation": "SegmentCost=$3,000,000,000 USD is not supported by any source found and is implausible for a 392km/530mm regional line; this reads like a currency-label error (a RUB figure entered/misread as USD) or an unofficial press estimate treated as a hard figure. The best-sourced figure is NANGS/Life.ru's disclosed construction cost: 5.9 billion RUB (2008 tranche) + 12.6 billion RUB (2009 tranche) = ~18.5 billion RUB total. Separately, Novaya Gazeta reports a vaguer unofficial estimate of $2-3 billion USD, explicitly noting Gazprom does not disclose the exact figure. Recommend changing SegmentCost to the disclosed RUB figure (18,500,000,000 RUB, SegmentCostYear~2009) rather than the unsupported $3B USD figure.",
+   "researcher_notes": "NANGS/Life.ru states construction financing as '5,9 млрд рублей' allocated in 2008 and a further '12,6 млрд рублей' in 2009 (~18.5bn RUB combined) for the Sobolevo-Petropavlovsk-Kamchatsky line and associated field infrastructure. Novaya Gazeta (2020) separately states 'а примерно в 2-3 миллиарда долларов (точную сумму в «Газпроме» не называют)' -- an approximate, explicitly-unofficial $2-3bn USD estimate, contrasted in the same article against an original stated construction budget the article calls too low. Both sources materially conflict with the sheet's flat $3,000,000,000 USD figure; neither source states $3B USD as a specific project cost.",
+   "proposed_refs": [
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem"
+   ],
+   "verifications": [
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "url_verifier fuzzy name-match misses the Cyrillic official pipeline name because the article refers to it colloquially ('камчатский газопровод' / 'the Kamchatka pipeline'); hand-confirmed on-topic match: page states 'В 2000 году на Камчатке стали строить газопровод протяжённостью 392 км. Газ в Петропавловск-Камчатский должны были подвести от четырёх месторождений: Кшукского, Нижне-Квакчикского...' -- exact 392km length + Petropavlovsk-Kamchatsky destination + the same Kshuksky/Nizhne-Kvakchikskoye fields uniquely identify this as P2424. url_verifier substring check (392+2000) passes independently."
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "contested": {
+    "CapacityUnits": "mtpa"
+   },
+   "recommendation": "Capacity numeric value 0.75 is correct and confirmed by three independent sources, but CapacityUnits='mtpa' (million tonnes per annum, an LNG/mass unit) is a units-label error for a gas transmission pipeline whose capacity is universally stated as a VOLUME per year. Recommend CapacityUnits -> 'bcm/y'.",
+   "researcher_notes": "energybase.ru: 'Мощность: 0.75 млрд. м³/год'. Gazprom's own current project page (Wayback 2025-04-25): 'производительность — до 750 млн куб. м газа в год'. Novaya Gazeta (2020): 'проектную мощность в 750 миллионов кубометров газа в год'. All three independently state 0.75 billion m3 / 750 million m3 per year -- i.e. bcm/y -- never mtpa (a unit that would not even apply to a non-LNG domestic gas trunk line).",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "contested": {
+    "Operator": "ПАО \"Газпром\""
+   },
+   "recommendation": "Operator is recorded as the parent company 'ПАО «Газпром»' (Gazprom PJSC). The actual operating subsidiary is Gazprom Transgaz Tomsk LLC (ООО «Газпром трансгаз Томск»), confirmed by energybase.ru's asset record, which names it as the operating company with its own contact details (phone, office@gtt.gazprom.ru, tomsk-tr.gazprom.ru). This matches the general Far East operator pattern already established for this campaign (Gazprom Transgaz Tomsk operates Power of Siberia, SKV, and the Kamchatka lines). Recommend Operator -> 'Gazprom Transgaz Tomsk LLC' / OperatorLocalLanguage 'ООО «Газпром трансгаз Томск»'; Owner1='Gazprom PJSC' 100% can stand as-is since Gazprom PJSC is genuinely the ultimate parent, just not the day-to-day operator.",
+   "researcher_notes": "energybase.ru's pipeline record lists 'ООО «Газпром трансгаз Томск»' as the operating company for this exact pipeline (appears as both the top-level 'Компания' field and the pipeline-specific record), with a Tomsk phone number (+7 3822 60-32-09) and a tomsk-tr.gazprom.ru website -- a specific, checkable subsidiary identity distinct from Gazprom PJSC itself. Single-source for this specific fact (energybase), but consistent with the campaign's own established Far East operator pattern.",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "contested": {
+    "FuelSource": "Nizhe Kvachikskoe field"
+   },
+   "recommendation": "FuelSource lists only 'Nizhe Kvachikskoe field' (Nizhne-Kvakchikskoye). Three independent sources (Novaya Gazeta, NANGS/Life.ru, and Gazprom's own current project page) all confirm the pipeline is currently fed by TWO fields -- Kshukskoye AND Nizhne-Kvakchikskoye -- with an original c.2000-era plan for four fields (adding Sredne-Kunzhikskoye and Severo-Kolpakovskoye, neither yet developed; combined C1 reserves ~16 bcm across all four per Gazprom's own figure, vs. Novaya Gazeta's lower current estimate of ~9 bcm remaining at the two developed fields). Recommend FuelSource -> 'Kshukskoye field, Nizhne-Kvakchikskoye field'.",
+   "researcher_notes": "Novaya Gazeta (2020): repeated references to gas 'на Кшукском и Нижне-Квакчикском месторождениях'. NANGS/Life.ru: 'Газ в Петропавловск-Камчатский должны были подвести от четырёх месторождений: Кшукского, Нижне-Квакчикского, Средне-Кунжикского и Северо-Колпаковского' (original 4-field plan). Gazprom's current project page (Wayback 2025-04-25): '«Газпром» ведет освоение Кшукского и Нижне-Квакчикского месторождений на западном побережье Камчатского полуострова' and gives combined 4-field reserves of ~16 bcm. Gazprom's 2019 press page independently repeats the same two-field (Kshuksky + Nizhne-Kvakchikskoye) framing for current supply.",
+   "proposed_refs": [
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/"
+   ],
+   "verifications": [
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "see SegmentCost concern's verification note for the hand-confirmed name match"
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "contested": {
+    "StartLocation": "Sobolevsky DistrictPetropavlovsk-Kamchatskiy",
+    "StartState/Province": "Kamchatka territory"
+   },
+   "recommendation": "StartLocation runs two cells together ('Sobolevsky DistrictPetropavlovsk-Kamchatskiy'). The pipeline starts in Sobolevsky District (confirmed by nedradv.ru's Kshukskoye field-location record: 'Камчатский край, Соболевский район') and ends at Petropavlovsk-Kamchatsky (already correctly recorded as EndLocation). Recommend StartLocation -> 'Sobolevsky District' with the trailing 'Petropavlovsk-Kamchatskiy' text removed. Separately, StartState/Province reads the non-canonical 'Kamchatka territory'; the state-audit route-geometry join (batches/russia-gas/staging/state-audit-20260914/region_audit.csv) flags this exact row with typo mapping 'Kamchatka territory->Kamchatka Krai' and confirms both route endpoints resolve to Kamchatka Krai at high route accuracy -- recommend StartState/Province -> 'Kamchatka Krai' to match EndState/Province (already correct).",
+   "researcher_notes": "nedradv.ru's field-info page for Kshukskoye gas condensate field (one of the two fields feeding this pipeline) states its administrative location as 'Камчатский край, Соболевский район' (Kamchatka Krai, Sobolevsky District), directly supporting Sobolevsky District as the pipeline's start location. The Krai-vs-territory correction is an internal controlled-vocabulary/route-audit finding (region_audit.csv), not an external-source claim, so it is not offered as a separate proposed_ref.",
+   "proposed_refs": [
+    "https://nedradv.ru/nedradv/ru/find_place?obj=f2f5e2370b07304ef3b5b8e49155e362"
+   ],
+   "verifications": [
+    {
+     "url": "https://nedradv.ru/nedradv/ru/find_place?obj=f2f5e2370b07304ef3b5b8e49155e362",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_REF resolved. energybase.ru's live asset record states 'Состояние: в эксплуатации' (status: operating). Gazprom's own current project page (Wayback capture 2025-04-25) independently confirms the pipeline was commissioned and remains the backbone of Kamchatka's regional gas-supply system as of the most recent capture. Caveat (not a status trigger): Novaya Gazeta (2020) reports the line has chronically underperformed its design throughput (2019 actual 325 million m3 vs 750 million m3 design, ~43%); no source describes the line as shut down, mothballed, or decommissioned."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Trivially confirmed. energybase.ru categorizes the asset's transport type as 'Газопровод' (gas pipeline); Gazprom's own materials repeatedly describe it as a 'магистральный газопровод' (trunk GAS pipeline) carrying natural gas ('природный газ') from the Kshukskoye/Nizhne-Kvakchikskoye fields to Petropavlovsk-Kamchatsky."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both Gazprom's 2019 press page and its current project page explicitly describe the line as a 'магистральный газопровод' (trunk/transmission-grade gas pipeline) -- matching GEM's controlled-vocabulary 'transmission' classification for a large-diameter (530mm) trunk line moving gas from field to city gate, not a local distribution main. energybase.ru's own 'Тип в зависимости от транспортируемой среды' (transport-type) field records it as a pipeline ('Газопровод') consistent with, though less explicit than, the Gazprom sources about the transmission/distribution distinction; treated as a genuinely independent corroborating source since energybase is a separate commercial database, not a Gazprom page."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "",
+   "researcher_notes": "Searched for a clean ProposalYear/ProposalMonth (GEM's convention: earliest public decision/announcement to build) and could not find one that fits without duplicating or guessing. The documented history is multi-phase: NANGS/Life.ru and Novaya Gazeta both describe gas development on the Sobolevo-area fields being planned through the 1990s, with a first construction attempt beginning in 2000 (funded initially via a fishing-quota financing scheme that reportedly stalled after ~90-100km of the line); the project was then restarted as part of a 2007 federal 'gasification of Kamchatka' push (following a Putin directive, per Gazprom's own retrospective and Novaya Gazeta's narrative), with full construction completing 2008-2010. No source states a specific 'first proposed in <year>' date distinct from either the c.2000 first-attempt year (already recorded on the sheet as ConstructionYear) or the 2007 restart year. Rather than arbitrarily pick one of these as 'Proposal' or duplicate ConstructionYear, leaving ProposalYear/ProposalMonth UNRESOLVED with this history recorded for whoever revisits it."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2000"
+   },
+   "primary_value": "2000",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "hand-confirmed match, see SegmentCost validity concern's verification note"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "ConstructionYear=2000 independently confirmed by energybase.ru's spec table ('Год начала строительства: 2000') and NANGS/Life.ru ('В 2000 году на Камчатке стали строить газопровод протяжённостью 392 км'). Note the actual build was multi-phase -- an initial 2000-2001 construction attempt (fishing-quota financed) reportedly stalled after ~90-100km, and Gazprom's full completion push ran 2008-2010 (per its own 2019 press retrospective and Novaya Gazeta) -- but 2000 as the year ground was first broken is correct and well-supported, not contradicted by any source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2010",
+    "StartMonth1": "9"
+   },
+   "primary_value": "2010",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=2010 confirmed by energybase.ru ('Год ввода в эксплуатацию: 2010') and independently by Gazprom's own 2019 press retrospective (Wayback capture), which describes Kamchatka CHP-2 being gasified with the launch of this pipeline and states the builder (Spetsgazavtotrans) completed the main first-stage gasification works in August 2010. That same press article is dated 29 September 2010 and describes the launch in the recent past -- consistent with, though not an explicit statement of, a September 2010 commissioning; staging StartMonth1=9 at MEDIUM confidence on that basis (the article date is suggestive, not a direct 'commissioned on <date>' statement) while StartYear1=2010 itself is high-confidence."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "0.75",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "0.75",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Capacity numeric value 0.75 reconfirmed by THREE independent sources -- energybase.ru ('Мощность: 0.75 млрд. м³/год'), Gazprom's own current project page ('производительность — до 750 млн куб. м газа в год'), and Novaya Gazeta ('проектную мощность в 750 миллионов кубометров газа в год') -- all state 0.75 bcm/y / 750 million m3/year design capacity, matching the sheet's numeric value. The sheet's CapacityUnits='mtpa' is wrong (an LNG-mass unit on a gas-volume figure); proposing CapacityUnits='bcm/y' here -- see validity[] spec concern for full detail. The EXISTING ref on the sheet (energypolicy.ru, current_ref) was independently re-checked this run and found to serve an unrelated 'this week's news' homepage with zero mention of Kamchatka, Sobolevo, or the capacity figure -- HTTP 200 but effectively uncited. Kept here in researcher_notes per the never-silently-drop-a-ref rule (old ref: https://energypolicy.ru/osobennosti-i-problemy-prostranstvennogo-razvitiya-vostochnoj-gazotransportnoj-sistemy-rossii/gaz/2024/15/16/ ); replaced with the three sources above, which actually state the value."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "6.37",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "6.37",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Pressure was blank (MISSING_VALUE). energybase.ru's spec table gives 'Давление: 6.37 МПа' (6.37 MPa) for this pipeline. Single-source only -- checked Gazprom's press/project pages and both the Novaya Gazeta and NANGS articles for a corroborating line-pressure figure and found none (they cover length/capacity/cost/history but not operating pressure). Staged at medium confidence pending a second source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "392.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "392.00",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "hand-confirmed match, see SegmentCost validity concern's verification note"
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "392km confirmed exactly by energybase.ru ('Протяженность: 392 км') and independently by NANGS/Life.ru ('газопровод протяжённостью 392 км'). Gazprom's own current project page rounds to 'около 390 км' (about 390km) -- an acceptable within-rounding agreement per the sweep rules, not a conflict, and cited here as a third corroborating source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "530",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "530",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+    "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20190903142300/http://www.gazprom.ru:80/press/comments/241658/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "530mm confirmed by energybase.ru ('Диаметр труб: 530 мм') and independently by Gazprom's own 2019 press page, which specifies 530mm diameter for the km80-143 section built by contractor Spetsgazavtotrans. Note the Gazprom source ties that figure to one specific construction segment (km80-143) rather than explicitly stating a uniform diameter along the full 392km; no alternative diameter was found stated for any other segment, so 530mm is treated as representative/confirmed for the row, with this segment-specific framing flagged for completeness."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Kshukskoye field, Nizhne-Kvakchikskoye field"
+   },
+   "primary_value": "Kshukskoye field, Nizhne-Kvakchikskoye field",
+   "proposed_refs": [
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/"
+   ],
+   "verifications": [
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "hand-confirmed match, see SegmentCost validity concern's verification note"
+    },
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Sheet's FuelSource lists only 'Nizhe Kvachikskoe field'. Three independent sources confirm the pipeline is fed by TWO fields, Kshukskoye AND Nizhne-Kvakchikskoye: Novaya Gazeta repeatedly references gas 'на Кшукском и Нижне-Квакчикском месторождениях'; NANGS/Life.ru describes the original c.2000 plan as drawing on four fields (Kshukskoye, Nizhne-Kvakchikskoye, Sredne-Kunzhikskoye, Severo-Kolpakovskoye), of which only the first two were ever developed; Gazprom's own current project page states '«Газпром» ведет освоение Кшукского и Нижне-Квакчикского месторождений'. See validity[] attribution concern for full detail."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Sobolevsky District",
+    "StartState/Province": "Kamchatka Krai",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Petropavlovsk-Kamchatsky",
+    "EndState/Province": "Kamchatka Krai",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Sobolevsky District",
+   "proposed_refs": [
+    "https://nedradv.ru/nedradv/ru/find_place?obj=f2f5e2370b07304ef3b5b8e49155e362"
+   ],
+   "verifications": [
+    {
+     "url": "https://nedradv.ru/nedradv/ru/find_place?obj=f2f5e2370b07304ef3b5b8e49155e362",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "StartLocation on the sheet runs two cells together ('Sobolevsky DistrictPetropavlovsk-Kamchatskiy'); splitting to StartLocation='Sobolevsky District' (source start) with EndLocation left as the already-correct 'Petropavlovsk-Kamchatsky'. nedradv.ru's field-info page for Kshukskoye gas condensate field (one of the two fields feeding this pipeline, in the same Sobolevsky area the pipeline originates from) states its administrative location as 'Камчатский край, Соболевский район' (Kamchatka Krai, Sobolevsky District), supporting Sobolevsky District as the correct start district. StartState/Province corrected from the non-canonical 'Kamchatka territory' to 'Kamchatka Krai' (matching EndState/Province, already correct) per the state-audit route-geometry join (region_audit.csv), which flags this exact row's typo and confirms both endpoints resolve to Kamchatka Krai at high route accuracy -- an internal cross-check, not an external-source claim, so not offered as a separate proposed_ref."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "18500000000.00",
+    "SegmentCostUnits": "RUB",
+    "SegmentCostYear": "2009"
+   },
+   "primary_value": "18500000000.00",
+   "proposed_refs": [
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem"
+   ],
+   "verifications": [
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "hand-confirmed match, see SegmentCost validity concern's verification note"
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Sheet's SegmentCost=$3,000,000,000 USD is unsupported by any source found and looks like a currency-label error or an unverified estimate; see validity[] spec concern for full detail. Proposing the disclosed RUB figure instead: NANGS/Life.ru states 5.9 billion RUB allocated in 2008 plus a further 12.6 billion RUB in 2009 (~18.5bn RUB total) for construction. Novaya Gazeta separately gives a vaguer, explicitly-unofficial $2-3bn USD estimate ('точную сумму в «Газпроме» не называют') -- corroborating that the true cost is disputed/undisclosed and materially different from a flat $3B, though not an exact cross-check of the RUB figure (different currency, rough estimate vs. disclosed budget line). Tier=medium reflecting that only one source gives the specific RUB figure."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "oo_sheet_row": 1842,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Tomsk LLC",
+    "OperatorLocalLanguage": "ООО «Газпром трансгаз Томск»"
+   },
+   "primary_value": "Gazprom Transgaz Tomsk LLC",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Sheet records Operator as the parent 'ПАО \"Газпром\"' (Gazprom PJSC). energybase.ru's asset record names the actual operating subsidiary as 'ООО «Газпром трансгаз Томск»' (Gazprom Transgaz Tomsk LLC), with its own contact details (phone +7 3822 60-32-09, office@gtt.gazprom.ru, tomsk-tr.gazprom.ru) distinct from Gazprom PJSC corporate contacts. Matches the general Far East operator pattern already established for this campaign (Gazprom Transgaz Tomsk operates Power of Siberia, SKV, and the Kamchatka lines). Single-source for this specific fact; see validity[] attribution concern."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "oo_sheet_row": 1842,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+    "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "https://novayagazeta.ru/articles/2020/03/25/84498-gorit-sinim-plamenem",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false
+    },
+    {
+     "url": "https://nangs.org/news/downstream/gazovoe-proklyatie-kamchatki-kak-osvaivayut-milliardy-vydelennye-na-obespechenie-poluostrova-toplivom",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "hand-confirmed match, see SegmentCost validity concern's verification note"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC 100% confirmed. Gazprom's own current project page frames this line as one of its Eastern Gas Program assets ('«Газпром» ведет освоение Кшукского и Нижне-Квакчикского месторождений'). Novaya Gazeta and NANGS/Life.ru independently frame it throughout as a Gazprom-funded, Gazprom-built, Gazprom-decided asset (both discuss Gazprom's own financing decisions and cost overruns for the project). Distinct from Operator, where the actual day-to-day operating subsidiary is Gazprom Transgaz Tomsk LLC (see Operator fill/validity note) -- not a discrepancy, just ultimate-owner vs. operating-subsidiary granularity."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 1239,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2025-04",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+    "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250425060857/https://www.gazprom.ru/projects/kamchatka/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://energybase.ru/pipeline/sobolevo-petropavlovsk-kamchatsky",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status=operating reconfirmed as current. Most recent evidence: Gazprom's own live project page, captured by Wayback on 2025-04-25, continues to describe the Sobolevo-Petropavlovsk-Kamchatsky pipeline in the present tense as the backbone of Kamchatka's regional gas-supply system, with no indication of shutdown or rebuild. energybase.ru's asset record (accessed 2026-09-14) independently lists it as 'в эксплуатации' (in operation) with live company contact details for operator Gazprom Transgaz Tomsk LLC. One caveat carried forward from Novaya Gazeta (2020): the line has chronically underperformed its 750 million m3/year design capacity (2019 actual throughput only 325 million m3, ~43% utilization) due to insufficient development at the feeding Kshukskoye/Nizhne-Kvakchikskoye fields -- a utilization/adequacy issue, not a status question, and does not change the operating verdict. Not stale under either the 2y or 4y rule -- newest evidence is a 2025 capture."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "P2424 (Sobolevo-Petropavlovsk-Kamchatsky) is real, correctly classified, and confirmed operating via 5 sources (energybase.ru, two gazprom.ru Wayback captures, Novaya Gazeta, NANGS/Life.ru); all 15 worklist units carry a fills[] record (REFS_ADDED for 13; UNRESOLVED with documented search trail for Proposal). Staged 6 validity[] findings: an existence/classification confirmation (caveat: chronic 2019 underutilization at ~43% of design capacity), a SegmentCost concern ($3B USD unsupported -- proposing the sourced ~18.5bn RUB figure), a CapacityUnits concern (mtpa should be bcm/y; the 0.75 numeric value itself is correct), an Operator attribution concern (Gazprom PJSC parent should be Gazprom Transgaz Tomsk LLC, the actual operating subsidiary), a FuelSource concern (missing Kshukskoye field alongside the recorded Nizhne-Kvakchikskoye), and a Location concern (StartLocation concatenation typo + StartState/Province 'territory'->'Krai' fix, both flagged in advance by the task and now sourced). No duplicate/existence issue found. status_reviews verdict: confirm (operating), evidence dated 2025-04. No cross_row_leads surfaced for sibling PIDs this run."
+}

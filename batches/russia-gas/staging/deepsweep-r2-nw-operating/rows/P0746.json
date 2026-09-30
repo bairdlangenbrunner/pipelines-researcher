@@ -1,0 +1,755 @@
+{
+ "project_id": "P0746",
+ "pipeline_name": "Gryazovets-Vyborg Gas Pipeline",
+ "sheet_row": 366,
+ "wiki": "https://www.gem.wiki/Gryazovets-Vyborg_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "concern_type": "spec",
+   "verdict": "concern",
+   "contested": {
+    "Diameter": "1420"
+   },
+   "recorded_value": "1400 mm",
+   "candidate_value": "1420 mm",
+   "recommendation": "Recorded Diameter=1400mm is corroborated by two independent secondary sources (energybase.ru, russos.livejournal.com), so it is kept as the fill value -- but Gazprom's own official project page for this exact pipeline states 1420mm ('диаметром 1420 мм'), which is also the standard nominal trunk-line diameter used across the Russian gas transmission system (vs. 1400mm, an unusual non-standard figure for a Gazprom trunk line). This is a genuine primary-vs-secondary conflict, not a rounding difference. Recommend a human verify against a Glavgosexpertiza state-expertise approval or as-built/commissioning document for this specific segment before treating either figure as final.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'магистральный газопровод... диаметром 1420 мм' -- Gazprom's own project page states 1420mm diameter, conflicting with the sheet's recorded 1400mm."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Filed per the spec-disagreement protocol: recorded value kept in the Diameter fill (backed 2x by energybase.ru and russos LiveJournal), but this concern flags that the pipeline's own owner/builder states a materially different, and industry-standard, figure. Worth a second look at as-built documentation rather than resolving from open web sources alone."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "contested": {
+    "EndState/Province": "Leningrad Oblast"
+   },
+   "recorded_value": "Leningrad",
+   "candidate_value": "Leningrad Oblast",
+   "recommendation": "Correct the cell spelling: 'Leningrad' -> 'Leningrad Oblast'. The route and endpoint (Vyborg) are correctly identified -- this is a cell-formatting/naming-convention fix, not a routing error. 'Leningrad' alone is ambiguous (could be misread as the city, which no longer carries that name -- it is Saint Petersburg since 1991) whereas 'Leningrad Oblast' is the correct, unambiguous administrative region name, consistent with 'Vologda Oblast' already used for StartState/Province on this same row.",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "Route endpoint stated as Vyborg, Ленинградская область (Leningrad Oblast)."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Confirms route runs Vologda Oblast -> Leningrad Oblast, terminating at Vyborg."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Filed as the paired attribution concern referenced in location.json's researcher_notes, per the batch brief's STATE CELLS protocol (route right, cell spelling wrong -> validity concern, not silent overwrite)."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "Independent tender-tracking site lists two live, dated 2025-2026 procurement notices tied to this specific pipeline: a capital-repair tender for 'Северо-Европейский газопровод, участок Грязовец-Выборг, км 597-км 917' for Gazprom Transgaz Saint Petersburg, announced 2026-05-28, and an engineering-survey tender for gas-heating reconstruction for Gazprom Proektirovanie, announced 2025-10-29. Active capital works being procured this year is direct evidence the line is in service, not idle."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Gazprom's own project page states the pipeline's purpose is dual: gas transport for Northwestern Russia's own consumers AND into the Nord Stream export line ('для потребителей Северо-Западного региона России и в экспортный газопровод Северный поток'), so the domestic-supply function continues independent of Nord Stream's post-2022 outage."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Recorded Status='operating' confirmed. Two independent origins: (1) energybase.ru's live procurement listings show Gazprom Transgaz Saint Petersburg and Gazprom Proektirovanie ordering capital repair and engineering-survey work on this exact pipeline in Oct 2025 and May 2026 -- dated well past LastUpdated (2024-07-23) and impossible for a decommissioned or idle line; (2) Gazprom's own project page states the line's dual purpose (NW Russia domestic supply + Nord Stream export), so its function did not end when Nord Stream was sabotaged Sept 2022 -- see status_reviews for the full reasoning distinguishing pipe status from export flow."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "Page states 'Магистральный газопровод' (trunk GAS pipeline), 'Мощность 55 млрд. м³/год' -- a gas-volume unit."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Independent photo-essay: 'магистральный газопровод «Грязовец — Выборг»' delivering gas from the Yuzhno-Russkoye field into Nord Stream."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Both sources unambiguously describe this as a gas (natural gas) trunk pipeline; no ambiguity with NGL/oil."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Магистральный газопровод' = trunk/transmission-class pipeline (the standard Russian term distinguishing it from a gathering or distribution line); 7 compressor stations listed, consistent with a long-haul transmission trunk."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Gazprom's own page also calls it 'Магистральный газопровод' feeding both regional consumers and the Nord Stream export trunk -- classic transmission-trunk role, not gathering/feeder."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "917 km, 7 compressor stations, feeds an international export pipeline -- unambiguously a transmission trunk, correctly classified."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2005",
+    "ConstructionMonth": "12"
+   },
+   "primary_value": "2005",
+   "proposed_refs": [
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'Строительство газопровода «Грязовец — Выборг» началось 9 декабря 2005 года в Вологодской области (г. Бабаево)' -- construction began 9 December 2005 in Vologda Oblast (Babaevo)."
+    },
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Год начала строительства 2005' -- independently states construction-start year 2005, agreeing with Gazprom's own Dec 9, 2005 date."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent origins agree on 2005; Gazprom's own project page gives the exact date (Dec 9, 2005, Babaevo), energybase corroborates the year. Filled ConstructionYear=2005, ConstructionMonth=12."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "9.80",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "9.80",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Давление 9.80 МПа' -- states the operating pressure directly, 9.80 MPa."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'давление — 9,8 МПа' -- independent photo-essay states the same 9.8 MPa pressure for the linear part."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Blank cell filled. Gazprom's own project page also states this as '100 атмосфер (9,8 МПа)' -- a third source, same value, corroborating. Pressure=9.80 MPa."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2011",
+    "StartMonth1": "9"
+   },
+   "primary_value": "2011",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Год ввода в эксплуатацию 2011' -- states commissioning year 2011, matching recorded StartYear1."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'В 2011 году введены в эксплуатацию первоочередные мощности на компрессорных станциях, необходимые для подачи газа в первую нитку газопровода «Северный поток»' -- 2011 commissioning of first-priority compressor capacity for the first Nord Stream string."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "StartYear1=2011 reconfirmed by two independent origins. Added StartMonth1=9 (September) from russos.livejournal.com/981124.html, which states 'В сентябре 2011 года состоялась подача газа в морской участок, что было отмечено торжественным пуском с участием Председателя Правительства РФ Путина' -- ceremonial gas-in event September 2011 attended by PM Putin and Gazprom/Nord Stream AG leadership; same page also verified above for Fuel/Pressure."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "55.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "55.00",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Мощность 55 млрд. м³/год' -- 55 billion m3/year = 55 bcm/y, matches recorded value exactly."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'Проектная производительность — 55 млрд куб. м газа в год' -- design capacity 55 bcm/y, exact match."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent origins agree exactly with the recorded 55.00 bcm/y (matches the pipeline's role feeding the 55 bcm/y Nord Stream export line 1:1)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "917.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "917.00",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Протяженность 917 км' -- exact match, and separately states the line is split for O&M as 598 km (Gazprom Transgaz Saint Petersburg, Leningrad Oblast) + 319 km (Gazprom Transgaz Ukhta, Vologda Oblast) = 917 km, internally consistent."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "States the whole pipeline (string I, this row) is 917 km, distinguishing it from the shorter 680 km looped second string (P5585) -- confirms these are two genuinely different lengths, not a duplicate pair."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "917 km reconfirmed by two independent origins, with energybase's operator-segment breakdown (598+319=917) providing an internal cross-check. Gazprom's own project page rounds this to '~900 km' in summary prose -- consistent (rounding), not a conflict."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "1400",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1400",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Диаметр труб 1400 мм' -- states 1400 mm, matching the recorded value exactly."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'диаметр — 1400 мм' -- independently states the same 1400 mm."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent secondary sources agree on 1400 mm, so the recorded value is corroborated at face value -- BUT Gazprom's OWN official project page (verified, see validity[]) states the main pipe diameter as 1420 mm, the standard Russian trunk-pipe nominal size (1400 mm is not a standard Russian GOST/TU nominal diameter; 1420 is the one used on essentially every comparable Gazprom trunk, e.g. Bovanenkovo-Ukhta, Urengoy-Pomary-Uzhgorod). Staged tier=medium rather than high because of this primary-source conflict; see the paired spec concern in validity[] recommending verification against a Glavgosexpertiza approval or as-built document before treating 1400 as final."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Yuzhno-Russkoye Oil and Gas Field"
+   },
+   "primary_value": "Yuzhno-Russkoye Oil and Gas Field",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://russos.livejournal.com/981124.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Газ поступает из Южно-Русского месторождения' -- gas is sourced from the Yuzhno-Russkoye field."
+    },
+    {
+     "url": "https://russos.livejournal.com/981124.html",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'Ресурсной базой для газопроводов «Грязовец — Выборг» и «Северный поток» стало Южно-Русское месторождение (а впоследствии будет ещё и Штокмановское)' -- Yuzhno-Russkoye is the resource base, with Shtokman intended as a later addition (never realized -- not restated here as it was not adopted)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Recorded value confirmed exactly by two independent origins."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Gryazovets",
+    "StartState/Province": "Vologda Oblast",
+    "StartCountryOrArea": "Russia",
+    "EndLocation": "Vyborg",
+    "EndState/Province": "Leningrad Oblast",
+    "EndCountryOrArea": "Russia"
+   },
+   "primary_value": "Gryazovets",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Газопровод берет свое начало от компрессорной станции «Грязовецкая», расположенной вблизи города Грязовец Вологодской области... В «Северный поток» газопровод вливается в бухте Портовая... недалеко от города Выборг Ленинградской области' -- start Gryazovets, Vologda Oblast; end Portovaya Bay near Vyborg, Leningrad Oblast."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "'Газопровод проходит по территории Вологодской и Ленинградской областей' -- confirms the two-oblast route, Vologda to Leningrad."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Termini confirmed as recorded (Gryazovets, Vologda Oblast -> Vyborg/Portovaya Bay, Leningrad Oblast); route geometry matches the sourced description end to end. One correction: the sheet's EndState/Province reads 'Leningrad' -- this is the state-audit typo flagged in the batch brief for this exact row; the canonical federal-subject name is 'Leningrad Oblast', sourced here. Filed as a paired attribution concern in validity[] per the STATE CELLS protocol (route right, cell spelling wrong)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "4860000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "4860000000.00",
+   "proposed_refs": [
+    "https://web.archive.org/web/20220122111644/https://www.gazprom.ru/press/news/reports/2012/transportation-economical/"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20220122111644/https://www.gazprom.ru/press/news/reports/2012/transportation-economical/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Gazprom's own analysis states 'Стоимость 1 км этого объекта составила порядка 5,3 млн долларов с учетом семи компрессорных станций' -- ~$5.3 million/km including all 7 compressor stations. 5.3M x 917 km = $4.861 billion, matching the recorded $4.86 billion to within rounding (shown as the conversion)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Single primary source (Gazprom's own March 2012 cost-comparison article, archived) gives a per-km figure ($5.3M/km) that multiplies out to $4.86bn across 917 km -- an exact match to the recorded total, so staged as REFS_ADDED rather than a fresh number. Second source owed: searched for an independent second figure. A 2006 RBC news item (already cited for the Location/roster work, https://web.archive.org/web/20260104225455/https://www.rbc.ru/spb_sz/freenews/5592c3c69a79473b7f4bee6b) gives '>$4.2bn' for the whole Northern European Gas Pipeline project's Leningrad-Oblast portion -- a different, broader scope (system-level, one oblast only), so not staged as a corroborating ref (aggregate-vs-segment rule). Mikhail Korchemkin's independent, Gazprom-critical cost-analysis blog (m-korchemkin.livejournal.com, tag Грязовец-Выборг) discusses comparable per-km costs for equivalent-era, equivalent-capacity Gazprom trunklines (EUR3.9-5.3M/km range, 2005-2009) -- directionally consistent with the $5.3M/km figure but not the same specific pipeline/year figure, so also not staged as a second ref. No second source stating the exact $4.86bn (or a directly equivalent per-km figure for this specific line) was found; tier held at medium pending one."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Gazprom Transgaz Saint Petersburg; Gazprom Transgaz Ukhta",
+    "OperatorLocalLanguage": "ООО «Газпром трансгаз Санкт-Петербург»; ООО «Газпром трансгаз Ухта»"
+   },
+   "primary_value": "Gazprom Transgaz Saint Petersburg; Gazprom Transgaz Ukhta",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Газопровод «Грязовец — Выборг» обслуживается ООО «Газпром трансгаз Санкт-Петербург» (Ленинградская область – 598 км) и ООО «Газпром трансгаз Ухта» (Вологодская область – 319 км)' -- pipeline is serviced by Gazprom Transgaz Saint Petersburg over its 598 km Leningrad Oblast run and Gazprom Transgaz Ukhta over its 319 km Vologda Oblast run; 598+319=917, matching recorded LengthKnown exactly."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "MISSING_VALUE filled. Operator is genuinely split by geography (matches the batch brief's expected corridor split -- SPB Transgaz for Leningrad Oblast/Karelia/Baltic legs, Ukhta Transgaz for the Komi/Vuktyl/Yamal corridor including this line's northern leg), so both subsidiaries are staged rather than picking one arbitrarily; the 598+319=917 km cross-check makes this a very specific, checkable claim, not a vague attribution. Single-source (energybase.ru) -- the operator's own transgaz sites (spb-tr.gazprom.ru, ukhta-tr.gazprom.ru) that would independently corroborate are both in the batch's known connect-timeout list and no Wayback capture for their Gryazovets-Vyborg-specific page was found; second source still owed. If the sheet schema wants a single Operator value rather than a semicolon-joined pair, Gazprom Transgaz Saint Petersburg is the majority operator by length (598 of 917 km, 65%)."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Gazprom PJSC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Gazprom PJSC",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "'Компания ПАО «Газпром»' -- asset owner listed as Gazprom PJSC."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Page is hosted under gazprom.ru's own 'Проекты' (Projects) section as a wholly-owned Gazprom project, consistent with 100% Gazprom PJSC ownership; no third-party equity partner is named anywhere for this onshore feeder line (unlike the offshore Nord Stream/Nord Stream 2 lines, which do have named European partners)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Owner1=Gazprom PJSC 100% confirmed. Unlike offshore Nord Stream (Gazprom 51%) and Nord Stream 2 (Gazprom 100% via Gazprom International Projects LLC, foreign partners financing only), this onshore feeder pipeline has no named minority owners in any source checked -- wholly Gazprom, as recorded."
+  },
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Searched Gazprom's own project page and investment pages (invest.gazprom.ru -- connect-timeout, not reachable from this machine), energybase.ru, russos.livejournal.com, the 2012 Gazprom cost-comparison article, 2006 RBC coverage, a 2017 neftegaz.ru tender article, and general web search for a Gazprom board-of-directors or investment-committee decision announcing the project ahead of the documented 9 Dec 2005 construction start. All sources document the construction-start date precisely (Dec 2005) but none give a distinct earlier 'proposed/announced' date -- the onshore feeder was evidently approved as part of the broader Nord Stream (Северо-Европейский газопровод) investment decision in 2005, but I found no primary or secondary source stating a specific proposal year/month distinct from the construction-start date. Leaving blank rather than inferring ProposalYear=ConstructionYear without a source that actually draws that distinction."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "I",
+   "sheet_row": 366,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2026-05",
+   "proposed_refs": [
+    "https://energybase.ru/pipeline/gryazovets-vyborg",
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/"
+   ],
+   "verifications": [
+    {
+     "url": "https://energybase.ru/pipeline/gryazovets-vyborg",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Газопровод Грязовец - Выборг",
+     "note": "Page lists active/live procurement tenders tied to this exact pipeline dated 2025-10-29 and 2026-05-28 (equipment/maintenance works), confirming ongoing operations and capital works as of mid-2026 -- well after Nord Stream's Sept-2022 sabotage."
+    },
+    {
+     "url": "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+     "ok": true,
+     "status": 200,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "Грязовец — Выборг",
+     "note": "Gazprom states the pipeline's purpose as dual: supplying gas to Northwestern Russia's domestic/regional consumers (Vologda, Leningrad Oblasts, Karelia) AND feeding the Nord Stream export system -- i.e. it is not solely a Nord Stream feeder line."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Status review in annual-update mode, judging whether 'operating' remains correct given Nord Stream's Sept 2022 sabotage/outage. Verdict: CONFIRM operating. This onshore trunk line (Gryazovets-Vyborg, first string, 2011) was built with a dual purpose -- domestic/regional gas supply to Vologda Oblast, Leningrad Oblast and Karelia, as well as feeding the Nord Stream export corridor -- so its operating status is not contingent on Nord Stream's export flows. Live 2025-2026 procurement/tender activity on energybase.ru specific to this pipeline (equipment purchases, maintenance work orders) is direct, current evidence of an actively operated, maintained asset, not a mothballed line. No source found indicating shutdown, mothballing, or repurposing of this specific segment since 2011 commissioning. Recommend keeping Status=operating unchanged."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "target_project_id": "P5585",
+   "target_name": "Gryazovets-Vyborg Gas Pipeline (second string)",
+   "found_while_researching": "P0746",
+   "finding": "Incidental facts gathered on the second string (looped line) of the Gryazovets-Vyborg corridor while researching P0746 (the first string, this row) -- offered for whoever works P5585's deep sweep.",
+   "details": "russos.livejournal.com (2012 firsthand construction-site report) and the Wayback-archived Gazprom project page both explicitly distinguish this row (P0746, 917 km first string, commissioned Sept 2011) from a second, looped string of roughly 680-700 km. The Wayback Gazprom page describes the loop's 2012 completion and additional compressor capacity brought online through 2013. Separately, rbc.ru/spb_sz/freenews/5592c3c69a79473b7f4bee6b (2006) covers the second string's siting and investment specifically: route approved by an interdepartmental commission on 12 Oct 2006; ~736 km of trenching split 216 km in Vologda Oblast + 520 km in Leningrad Oblast; full target capacity planned for 2014; >$1.4bn investment cited for the second string alone; a separate >$4.2bn figure given for the whole Leningrad-Oblast portion of the broader SEG (Nord Stream feeder) project (NOT specific to either string -- flagged in P0746's own SegmentCost research as wrong-scope for that reason, but may be directly useful context for P5585's own SegmentCost cell, since it's closer to that string's scope).",
+   "proposed_refs": [
+    "https://web.archive.org/web/20201022034833/https://www.gazprom.ru/projects/gryazovets-vyborg/",
+    "https://www.rbc.ru/spb_sz/freenews/5592c3c69a79473b7f4bee6b"
+   ],
+   "researcher_notes": "Not independently verified to P5585's specific sheet row/cells -- pass-through leads only, gathered incidentally during P0746's deep sweep. The rbc.ru URL should be re-run through url_verifier.py with P5585's exact recorded name before citing on that row."
+  }
+ ],
+ "summary": "Confirmed real, correctly classified, not a duplicate of P5585 (second string, 917km vs ~680-700km, both independently sourced); Status=operating reconfirmed post-Nord-Stream-outage on dual domestic-supply+export purpose plus live 2025-2026 tenders; all 15 owed units filled (14 REFS_ADDED, 1 UNRESOLVED=Proposal); 2 validity concerns flagged (Diameter 1400 vs Gazprom's own 1420mm; Location EndState/Province typo 'Leningrad'->'Leningrad Oblast'); 1 cross-row lead filed for P5585."
+}

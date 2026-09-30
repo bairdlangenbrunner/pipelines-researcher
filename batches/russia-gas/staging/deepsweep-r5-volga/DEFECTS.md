@@ -1,0 +1,5 @@
+# Engine defects observed during R5 Volga (logged, not fixed — docs/sops/lean_pass.md)
+
+- validity records written with `contested: {col: text}` plus `notes` (instead of `researcher_notes` + `recommendation`) lose their finding text at merge: `scripts/merge_deepsweep_shards.py` reads only `researcher_notes`/`recommendation`, so the workbook `Gas_Validity` Finding/Recommendation cells are BLANK for P2390 (Diameter 377 vs energybase 530 mm) and P2435 (Diameter 325 vs ufacity.info 300 mm), and the `contested` detail is dropped for P2309, P2310, P2322, P2388, P5743 too — rows/P2390.json validity[0], rows/P2435.json validity[0]; seven shards in this batch use the `contested`/`notes` shape. Fix: map `notes`→`researcher_notes` and fold `contested` into the finding text in `merge_deepsweep_shards.py` (and reject the shape in `check_shard_coverage.py`).
+
+**Update 2026-09-21:** the `notes`→`researcher_notes` half is fixed in `scripts/merge_deepsweep_shards.py` (R4a session; `contested` was already carried). This batch's workbook has NOT been rebuilt yet — re-merge + rebuild to surface the P2390/P2435 findings.
