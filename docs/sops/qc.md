@@ -146,6 +146,20 @@ findings are separate review surfaces to be worked alongside the actions file. A
 country note — the summary output wins over any hand-written count. Workbook
 layout: `docs/reference/workbook_conventions.md` §Handoff packet.
 
+**`--decisions` (review app).** `build_ref_workbook.py --decisions` reads each staging dir's
+`review_decisions.json` (the `--staging` dir plus every source dir the `staged_actions.json`
+sidecar names) and counts only a PERSON's latest call (`backend sync` / `push` records and undone
+ones leave a line undecided). Paste surfaces (`<Cmdty>_AllFillsBackend`, the sweep-mode
+`<Cmdty>_Backend` mirror, `OperatorsOwners`, `NewRows`) carry accepted lines only; on the
+`_Backend` mirror a non-accepted line keeps its segment row untinted (validity concerns still
+show). Change lists (StatusChanges, RouteSuggestions, matched-existing) drop rejects and
+suggests, but keep holds and undecided lines. Detail tabs gain `Decision` and `DecisionNote`
+(reviewer, time, note, suggested value) columns, and rejected + suggested lines land on a
+`<Cmdty>_Declined` tab (evidence workbook in handoff mode) with the reviewer's note and
+suggested value. A suggestion is never a paste value; `scripts/update_seed.py` routes it to an
+Update worklist. Without the flag the build is unchanged. A standalone or partially decided
+scope is fine: undecided lines simply stay off the paste surfaces, so decide everything first.
+
 ## Pre-delivery quality checklist (any doer batch)
 1. **URL spot-check** — fetch 3–5 `[ref]` URLs; confirm they resolve and contain the claim.
 2. **Expansion length** — every expansion: new pipe? if not, length 0 / diameter blank.

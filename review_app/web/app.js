@@ -103,16 +103,35 @@
     if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
     return "";
   }
-  // contested linking: a line on a column that an OPEN validity concern (no call yet) names is held
-  function lockCols(l, p) {
-    var open = {};
-    p.items.forEach(function (it) {
-      if (it.kind !== "concern" || it.call || !it.contested || typeof it.contested !== "object") return;
-      Object.keys(it.contested).forEach(function (c) { open[c] = 1; });
-    });
+  // contested linking: a line on a column that an OPEN validity concern (no call yet) names is held,
+  // unless the line IS the resolution: the concern's contested value (non-empty) equals the line's
+  // proposed value on that column (trimmed strings), as store.resolves does server-side.
+  function selfResolved(it, l, c) {
+    var cv = String((it.contested || {})[c] == null ? "" : it.contested[c]).trim();
+    var pv = (l.proposed_values || {})[c];
+    return cv !== "" && cv === String(pv == null ? "" : pv).trim();
+  }
+  function touchedCols(l) {
     var cols = [l.column].concat(l.value_cols || []);
     if (l.kind === "status") cols.push("Status");
-    return cols.filter(function (c, i) { return c && cols.indexOf(c) === i && open[c]; });
+    return cols.filter(function (c, i) { return c && cols.indexOf(c) === i; });
+  }
+  function lockCols(l, p) {
+    var open = {}, cols = touchedCols(l);
+    p.items.forEach(function (it) {
+      if (it.kind !== "concern" || it.call || !it.contested || typeof it.contested !== "object") return;
+      cols.forEach(function (c) { if ((c in it.contested) && !selfResolved(it, l, c)) open[c] = 1; });
+    });
+    return cols.filter(function (c) { return open[c]; });
+  }
+  // columns of this line on which an open concern agrees with the proposed value
+  function agreeCols(l, p) {
+    var out = [];
+    p.items.forEach(function (it) {
+      if (it.kind !== "concern" || it.call || !it.contested || typeof it.contested !== "object") return;
+      touchedCols(l).forEach(function (c) { if ((c in it.contested) && selfResolved(it, l, c) && out.indexOf(c) < 0) out.push(c); });
+    });
+    return out;
   }
   function rowLabel(l) {
     if (l.kind === "new_row") return "new row";
@@ -436,8 +455,11 @@
       }).join("") + "</ul></div></div>";
     return h;
   }
-  function concernNote(p, col) {
+  function concernNote(p, col, l) {
     var t = p._cont[col];
+    if (l && agreeCols(l, p).indexOf(col) >= 0) {
+      return '<div class="concern-inline">' + chip("contested", "ok") + " concern agrees with this value \u2014 accepting it resolves the concern" + (t ? " (" + esc(t) + ")" : "") + "</div>";
+    }
     return '<div class="concern-inline">' + chip("contested", "cont") + " " + (t ? esc(t) : "a validity concern contests this value (no detail recorded)") + "</div>";
   }
   function changesHtml(l, p, skipCol) {
@@ -459,7 +481,7 @@
       else if (!blankv(was) && String(was).trim() === String(now).trim()) {
         v = (contested ? wasH : esc(was)) + ' <span class="same">(unchanged)</span>';
       } else v = wasH + '<span class="arrow">→</span><span class="newv">' + esc(now) + "</span>";
-      rows.push('<div class="k">' + esc(c) + '</div><div class="v">' + v + (contested ? concernNote(p, c) : "") + "</div>");
+      rows.push('<div class="k">' + esc(c) + '</div><div class="v">' + v + (contested ? concernNote(p, c, l) : "") + "</div>");
     });
     return rows.length ? '<div class="chg">' + rows.join("") + "</div>" : "";
   }
@@ -549,7 +571,9 @@
       if (l.source_language) chips.push(chip("lang " + l.source_language));
     }
     var lock = lockCols(l, p);
+    var agree = agreeCols(l, p);
     if (l._cont) chips.push(chip("contested", "cont", "a validity concern contests a value on this line"));
+    if (agree.length) chips.push(chip("resolves concern", "ok", "an open concern's contested value on " + agree.join(", ") + " equals this proposed value; accepting it records a dismissed call on the concern"));
     if (lock.length) chips.push(chip("held: concern open", "warn", "a validity concern contests " + lock.join(", ") + " and has no call yet; accept is refused until it does (hold / reject are still allowed)"));
     if (l.in_backend) chips.push(chip("in backend", "", "the snapshot already holds this value and these refs"));
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
@@ -780,12 +804,14 @@
     if (S.saving[l.key]) return;
     S.saving[l.key] = true;
     setStat(l._i, "Saving…");
+    var pp = D.pipelines[l._p], before = lockedCount(pp);
     Store.decide([rec]).then(function (saved) {
-      saved.forEach(applyRecord);
+      applySaved(saved);
       S.stay[l.key] = true;
       banner("");
       var keepLine = S.line;
       refilter(true);
+      resolvedToast(saved, before, pp);
       if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
       if (advance && S.line === l._i) nextUndecided();
     }).catch(function (e) {
@@ -817,6 +843,16 @@
     it.decided_by = r.undecided ? null : r.reviewer;
     it.decided_at = r.undecided ? null : r.ts;
     noteSession(r, "call");
+  }
+  // /api/decide returns line records, then item records (`call`) for concerns the accept resolved
+  function applySaved(saved) {
+    saved.forEach(function (r) { if ("call" in r) applyItemRecord(r); else applyRecord(r); });
+  }
+  function resolvedToast(saved, before, p) {
+    var n = saved.filter(function (r) { return "call" in r; }).length;
+    if (!n) return;
+    var freed = Math.max(0, before - lockedCount(p));
+    toast("concern resolved by this accept: " + freed + " line" + (freed === 1 ? "" : "s") + " unlocked");
   }
   function lockedCount(p) { return p.lines.filter(function (l) { return lockCols(l, p).length; }).length; }
   // Save one item's call. Same in-place feedback as a line; when a concern's call releases the
@@ -921,7 +957,7 @@
       if (S.saving[l.key]) return;
       S.saving[l.key] = true;
       Store.decide([{key: l.key, decision: "suggest", suggested_value: sv.value, note: sn.value}]).then(function (saved) {
-        saved.forEach(applyRecord);
+        applySaved(saved);
         S.stay[l.key] = true;
         banner("");
         var keepLine = S.line;
@@ -1064,12 +1100,16 @@
     $("dlg-cancel").onclick = function () { dlg.close(); };
     $("dlg-ok").onclick = function () {
       var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "Saving…";
+      var pbefore = {};
+      t.lines.forEach(function (l) { pbefore[l._p] = lockedCount(D.pipelines[l._p]); });
       Store.decide(t.lines.map(function (l) { return {key: l.key, decision: t.decision}; })).then(function (saved) {
-        saved.forEach(applyRecord);
+        applySaved(saved);
         t.lines.forEach(function (l) { S.stay[l.key] = true; });
         dlg.close();
         refilter(true);
-        toast((t.decision === "accept" ? "accepted " : "held ") + saved.length + " line" + (saved.length === 1 ? "" : "s"));
+        var nl = saved.filter(function (r) { return !("call" in r); }).length;
+        toast((t.decision === "accept" ? "accepted " : "held ") + nl + " line" + (nl === 1 ? "" : "s"));
+        Object.keys(pbefore).forEach(function (pi) { resolvedToast(saved, pbefore[pi], D.pipelines[pi]); });
       }).catch(function (e) {
         ok.disabled = false; ok.textContent = "Retry";
         $("bulk-err").textContent = "Not saved: " + e.message;

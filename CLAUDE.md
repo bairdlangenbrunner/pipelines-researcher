@@ -181,11 +181,15 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
+| **Review a batch's decisions** (local review app: decide staged lines/items, then rebuild the workbook from the clicks) | "review the batch", "start the review app", "decide the <country> lines", "rebuild the actions workbook from the decisions" | `review_app/README.md` + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
 
 Routing notes:
+- **The handoff actions workbook honours `--decisions`** (`build_ref_workbook.py … --decisions`):
+  person clicks only — accepted lines on the paste surfaces, rejects/suggests off the change
+  lists (QC SOP → handoff contract). Review app decisions never write the sheet or routes repo.
 - **A reference route is presumptively REAL pipe** — an unmatched OSM/GulfPub trace is
   either geometry GEM is missing or a pipeline GEM is missing, never noise to filter.
   Triage by `disposition`, never as one undifferentiated "Addition" pile:

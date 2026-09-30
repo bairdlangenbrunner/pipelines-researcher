@@ -20,7 +20,16 @@ operational sequence.
 ## Sequence
 1. `scripts/refresh_csvs.sh` → fresh snapshot; load `header=2`; exclude buffer rows.
 2. **Derive the worklist**: the named rows ∪ any reconciliation value-disagreements
-   or handoff-packet fixes queued for this scope ∪ (if asked) stale in-dev rows.
+   or handoff-packet fixes queued for this scope ∪ (if asked) stale in-dev rows ∪ the
+   review-app seed, if one exists: `python scripts/update_seed.py --country <C> --commodity
+   <gas|oil> [--dirs …] [--out PATH]` reads each staging dir's `review_decisions.json` (latest
+   live record, undone ones ignored) and writes
+   `batches/<scope>/staging/update-seed-<YYYYMMDD>/staged_updates_seed.json`: one update unit
+   per line a person `suggest`ed (reviewer's value + note; `old` / `tier` / `refs` left empty)
+   and one research unit per concern called `confirmed` or `needs_research`. It is a WORKLIST,
+   not findings: research each unit as in step 3, then stage the results in this run's
+   `staged_updates.json` (the seed's filename differs on purpose so `staged_store` never loads
+   it as pending values). No decision files: empty seed, exit 0.
 3. For each pipeline:
    - Research priorities, in order: status changes (proposed → construction →
      operating, or → shelved/cancelled); missing `[ref]` URLs; then the key data

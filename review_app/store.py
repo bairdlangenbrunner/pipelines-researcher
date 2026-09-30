@@ -138,23 +138,46 @@ def index(data):
     return out
 
 
+def open_concerns(pipeline):
+    """Validity concerns on this pipeline with a contested map and no call yet."""
+    return [it for it in pipeline.get("items", [])
+            if it.get("kind") == "concern" and not it.get("call") and isinstance(it.get("contested"), dict)]
+
+
 def contested_cols(pipeline):
     """Columns named by an open validity concern on this pipeline (`call` still empty)."""
     cols = set()
-    for it in pipeline.get("items", []):
-        c = it.get("contested")
-        if it.get("kind") == "concern" and not it.get("call") and isinstance(c, dict):
-            cols.update(c)
+    for it in open_concerns(pipeline):
+        cols.update(it["contested"])
     return cols
 
 
-def locked_by(pipeline, line):
-    """Contested columns this line touches (its column, its value columns, Status for a status
-    line), as a sorted list; non-empty means accept is refused until the concern has a call."""
+def line_cols(line):
+    """Columns a line touches: its column, its value columns, Status for a status line."""
     cols = {line.get("column")} | set(line.get("value_cols") or [])
     if line.get("kind") == "status":
         cols.add("Status")
-    return sorted(c for c in cols & contested_cols(pipeline) if c)
+    return {c for c in cols if c}
+
+
+def resolves(line, concern):
+    """Sorted contested columns of `concern` on which the line IS the resolution: the concern's
+    contested value is non-empty and equals the line's proposed value on that column (both
+    stripped strings). An empty contested value means "unsourced", never a proposed blank, so it
+    never matches."""
+    pv = line.get("proposed_values") or {}
+    cont = concern.get("contested") or {}
+    return sorted(c for c in line_cols(line) & set(cont)
+                  if str(cont[c]).strip() and str(cont[c]).strip() == str(pv.get(c, "")).strip())
+
+
+def locked_by(pipeline, line):
+    """Contested columns this line touches, minus those it self-resolves (see `resolves`), as a
+    sorted list; non-empty means accept is refused until the concern has a call."""
+    held = set()
+    for it in open_concerns(pipeline):
+        held |= (line_cols(line) & set(it["contested"])) - set(resolves(line, it))
+    return sorted(held)
 
 
 def validate(records, data, reviewer=None, enforce_lock=True):
@@ -275,10 +298,33 @@ def _write(recs, dirs):
 def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
     """Validate, then write (under the process lock) to each touched dir's sidecars. `data` must
     already be overlaid (server.App does it) so the contested lock sees item calls. Returns the
-    records written (with reviewer and ts)."""
+    records written (with reviewer and ts): the line records, then any concern item records.
+
+    Self-resolving concerns: a person's accept of a line that `resolves` an open concern also
+    writes a `dismissed` call on that concern ("resolved by accepted <col> fill") in the same
+    transaction, so the concern's other contested columns unlock. Undoing the line accept does
+    NOT re-open the concern; undo the item call by hand."""
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
-        return _write(validate(records, data, reviewer, enforce_lock), dirs)
+        recs = validate(records, data, reviewer, enforce_lock)
+        items = []
+        if enforce_lock and reviewer not in MACHINE_REVIEWERS:
+            idx = index(data)
+            cols = {}          # concern key -> [columns resolved by accepted lines in this request]
+            for r in recs:
+                if r["decision"] != "accept" or r["undecided"]:
+                    continue
+                pipe, line, _ = idx[r["key"]]
+                for c in open_concerns(pipe):
+                    for col in resolves(line, c):
+                        cols.setdefault(c["key"], [])
+                        if col not in cols[c["key"]]:
+                            cols[c["key"]].append(col)
+            if cols:
+                items = validate_items([{"key": k, "call": "dismissed",
+                                         "note": "resolved by accepted " + ", ".join(v) + " fill"}
+                                        for k, v in cols.items()], data, reviewer)
+        return _write(recs + items, dirs)
 
 
 def validate_items(records, data, reviewer=None):

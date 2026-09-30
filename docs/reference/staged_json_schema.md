@@ -21,6 +21,32 @@ An assembled packet's `staged_resolutions.json` carries `meta.mode: "handoff"`
 (older packets say `"qc"`; both mark the dir as assembled, so
 `staged_store.discover_staging_dirs` never re-imports it as prior work).
 
+### Review-app sidecars (`review_log.jsonl`, `review_decisions.json`)
+
+Written by `review_app/` (`store.py`) into each staging dir it reviews, committed with the batch;
+they hold decisions ABOUT staged records and never change `staged_*.json`. A record is keyed
+`<dir label>::<pid>|<sheet_row>|<colid>` (`dir` label = path relative to the repo root).
+
+- `review_log.jsonl` — append-only truth, one JSON record per click, never edited. **Latest record
+  per `key` wins.** An undo appends a record with `undecided: true`. A torn last line is skipped.
+  - Line record (`ref`, `fill`, `status`, `oo`, `route`, `new_row`): `{key, dir, pid, sheet_row,
+    ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`; `decision` is
+    `accept | hold | reject | suggest` (`suggest` needs a `suggested_value` or a `note`).
+  - Item record (`concern`, `wikidiff`, `routeqc`, `route_suggestion`, `monitor`, `flag`,
+    `escalation`, `unresolved`, `confirmed`, `other`): `{key, dir, pid, kind, call, note, reviewer,
+    ts, undecided}`; `call` is `confirmed | dismissed | needs_research` for `concern`,
+    `noted | todo | dismissed` for the rest. Items never write a cell. Any call on a concern
+    releases its contested-column lock; accepting a line whose proposed value equals a contested
+    value also writes a `dismissed` item record ("resolved by accepted <col> fill").
+  - `reviewer` and `ts` (ISO-8601, America/New_York) are stamped server-side. Machine reviewers
+    (`MACHINE_REVIEWERS` = `backend sync`, `push`) are honest records of what wrote them but are
+    not a click: a line whose latest record is one, or an undo, counts as NOT reviewed, and
+    consumers that want "clicked accepts only" check for that.
+- `review_decisions.json` — derived: `{"generated": ts, "decisions": {key: latest record}}`,
+  regenerated atomically from the whole log after every append (log rolled back if it fails).
+  Consumers read it (and the log) through `review_app/decisions.py`, which matches a staged
+  record by `(pid, colid)` with `sheet_row` breaking ties, because sheet rows drift.
+
 ### `staged_actions.json` (sidecar — render input, NOT an apply target)
 
 The full carried-in staged-work join: EVERY pending action from the scope's prior

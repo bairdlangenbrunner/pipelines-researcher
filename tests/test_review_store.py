@@ -531,3 +531,95 @@ def test_api_suggest_roundtrip_counts_as_reviewed_and_undoes(live):
     # undo takes it back
     assert post(base + "/api/decide", [{"key": l["key"], "undo": True}])[0] == 200
     assert line(get_json(base + "/api/data"), "P9002", "fill")["reviewed"] is False
+
+
+# ---- self-resolving concerns (milestone 6) --------------------------------------------
+
+def p9001_concern(data, contested):
+    c = next(i for i in next(p for p in data["pipelines"] if p["pid"] == "P9001")["items"]
+             if i["kind"] == "concern")
+    c["contested"] = contested
+    return c
+
+
+def test_resolves_equality_rule_and_empty_never_matches(scope):
+    d = scope["dataset"]
+    status, owner = line(d, "P9001", "ref", "Status"), line(d, "P9001", "oo")
+    pipe = next(p for p in d["pipelines"] if p["pid"] == "P9001")
+    c = p9001_concern(d, {"Status": " operating ", "Owner1": "OldCo"})
+    assert store.resolves(status, c) == ["Status"] and store.locked_by(pipe, status) == []
+    assert store.locked_by(pipe, owner) == ["Owner1"]                # proposed NewCo != contested OldCo
+    c["contested"] = {"Status": "suspended"}                         # (b) a differing value stays locked
+    assert store.locked_by(pipe, status) == ["Status"]
+    c["contested"] = {"Status": ""}                                  # (c) empty = unsourced, no match
+    status["proposed_values"] = {"Status": ""}
+    assert store.resolves(status, c) == [] and store.locked_by(pipe, status) == ["Status"]
+
+
+def test_accepting_the_resolving_line_dismisses_the_concern_and_unlocks_the_rest(scope):
+    d = scope["dataset"]
+    status, owner = line(d, "P9001", "ref", "Status"), line(d, "P9001", "oo")
+    c = p9001_concern(d, {"Status": "operating", "Owner1": "OldCo"})
+    with pytest.raises(store.Contested, match="Owner1"):
+        dec(scope, [{"key": owner["key"], "decision": "accept"}])
+    saved = dec(scope, [{"key": status["key"], "decision": "accept"}])
+    assert [r["key"] for r in saved] == [status["key"], c["key"]]
+    item = saved[1]
+    assert (item["kind"], item["call"], item["note"], item["reviewer"], item["undecided"]) == \
+        ("concern", "dismissed", "resolved by accepted Status fill", "Baird", False)
+    assert set(item) == {"key", "dir", "pid", "kind", "call", "note", "reviewer", "ts", "undecided"}
+    assert logrecs(sidecars(scope, status)[0])[-1] == item
+    store.overlay(d, scope["dirs"])                                   # the call is now live: owner unlocks
+    assert dec(scope, [{"key": owner["key"], "decision": "accept"}])[0]["decision"] == "accept"
+    # (d) a concern with a live call is not dismissed again
+    assert len(dec(scope, [{"key": status["key"], "decision": "accept"}])) == 1
+
+
+def test_undo_and_hold_do_not_dismiss_and_undo_does_not_reopen(scope):
+    d = scope["dataset"]
+    status = line(d, "P9001", "ref", "Status")
+    c = p9001_concern(d, {"Status": "operating"})
+    assert len(dec(scope, [{"key": status["key"], "decision": "hold"}])) == 1
+    assert len(dec(scope, [{"key": status["key"], "decision": "accept"}])) == 2
+    dec(scope, [{"key": status["key"], "undo": True}])
+    store.overlay(d, scope["dirs"])
+    assert next(i for p in d["pipelines"] for i in p["items"] if i["key"] == c["key"])["call"] == "dismissed"
+
+
+def test_machine_reviewer_accept_does_not_dismiss(scope):
+    d = scope["dataset"]
+    status = line(d, "P9001", "ref", "Status")
+    p9001_concern(d, {"Status": "operating"})
+    saved = dec(scope, [{"key": status["key"], "decision": "accept"}], who=store.SYNC_REVIEWER)
+    assert len(saved) == 1
+
+
+def test_bulk_with_a_self_resolving_line_and_two_lines_one_dismissal(scope):
+    d = scope["dataset"]
+    status, fill = line(d, "P9001", "ref", "Status"), line(d, "P9002", "fill")
+    c = p9001_concern(d, {"Status": "operating"})
+    saved = dec(scope, [{"key": status["key"], "decision": "accept"}, {"key": fill["key"], "decision": "accept"}])
+    assert [r.get("call") for r in saved] == [None, None, "dismissed"] and saved[2]["key"] == c["key"]
+
+
+def _serve(scope, tmp_path):
+    path = tmp_path / "review_data.json"
+    path.write_text(json.dumps(scope["dataset"]), encoding="utf-8")
+    httpd = server.make_server(server.App(path, "tester", batches_root=scope["root"]), "127.0.0.1", 0)
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    yield f"http://127.0.0.1:{httpd.server_address[1]}", scope
+    httpd.shutdown()
+    httpd.server_close()
+
+
+def test_api_accept_self_resolving_line_returns_item_record_and_unlocks(scope, tmp_path):
+    p9001_concern(scope["dataset"], {"Status": "operating", "Owner1": "OldCo"})
+    base, s = next(_serve(scope, tmp_path))
+    status, owner = line(s["dataset"], "P9001", "ref", "Status"), line(s["dataset"], "P9001", "oo")
+    assert post(base + "/api/decide", [{"key": owner["key"], "decision": "accept"}])[0] == 409
+    st, body = post(base + "/api/decide", [{"key": status["key"], "decision": "accept"}])
+    assert st == 200 and [("call" in r) for r in body["saved"]] == [False, True]
+    assert body["saved"][1]["call"] == "dismissed" and body["saved"][1]["reviewer"] == "tester"
+    assert post(base + "/api/decide", [{"key": owner["key"], "decision": "accept"}])[0] == 200
+    got = next(i for p in get_json(base + "/api/data")["pipelines"] for i in p["items"] if i["kind"] == "concern")
+    assert got["call"] == "dismissed" and got["call_note"] == "resolved by accepted Status fill"

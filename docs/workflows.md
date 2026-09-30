@@ -361,12 +361,21 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    python scripts/merge_deepsweep_shards.py --staging batches/egypt-gas/staging/qc/
    python scripts/build_qc_staging.py … --sidecars-only     # refresh the sidecars
    ```
-6. **Build** (two files derived from `--output`: `…-actions.xlsx` — tab order =
+6. **Review, then build.** Optional but preferred: decide the staged lines in the review app
+   first (`review_app/README.md`), then build from the decisions. Start the server (writes only
+   each staging dir's `review_log.jsonl` / `review_decisions.json`), decide in the browser, stop it:
+   ```bash
+   python review_app/server.py --country Egypt --commodity gas      # http://127.0.0.1:8766/
+   ```
+   **Build** (two files derived from `--output`: `…-actions.xlsx` — tab order =
    work order, `<Cmdty>_Decisions` read FIRST — and `…-evidence.xlsx`, the audit
-   trail):
+   trail). Add `--decisions` to honour the clicks (person accepts only on the paste surfaces;
+   rejects/suggests move to `<Cmdty>_Declined`; QC SOP → handoff contract); without it the
+   build is unchanged:
    ```bash
    python scripts/build_ref_workbook.py --staging batches/egypt-gas/staging/qc/ \
-     --output batches/egypt-gas/deliverables/pipelines_batch_<stamp>_egypt-gas_handoff.xlsx
+     --output batches/egypt-gas/deliverables/pipelines_batch_<stamp>_egypt-gas_handoff.xlsx \
+     [--decisions]
    python scripts/recalc.py batches/egypt-gas/deliverables/pipelines_batch_<stamp>_egypt-gas_handoff-actions.xlsx
    python scripts/recalc.py batches/egypt-gas/deliverables/pipelines_batch_<stamp>_egypt-gas_handoff-evidence.xlsx
    python scripts/staged_summary.py --country Egypt --commodity gas   # drift check vs docs
@@ -511,8 +520,11 @@ snapshots in `data/` are stale.
    ./scripts/refresh_csvs.sh
    python scripts/apply_route_candidates.py --staging batches/<scope>/staging/route-creation \
      --commodity gas --csv data/GGIT_gas_snapshot_<date>.csv --scope-slug <scope> \
-     [--pids P8013,P8014,P8021]          # plan; then re-run with --apply
+     [--pids P8013,P8014,P8021 | --decisions]   # plan; then re-run with --apply
    ```
+   `--decisions` takes the PID list from the `route` lines a person accepted in the review app
+   (`review_decisions.json` in `--staging`) instead of `--pids`; giving both is refused, and so is
+   a dir with no accepted route line (exit before any plan).
    Then update the country note + CLAUDE.md pending bullet, regenerate
    `batches/INDEX.md`, and commit.
 

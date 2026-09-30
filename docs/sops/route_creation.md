@@ -187,6 +187,14 @@ systematically off (likely a segment-vs-network granularity misread, not a findi
 sheet-side `RouteType` / `RouteAccuracy` / `RouteNotes` / `Route [ref]` land via
 a separate §5 Update batch.
 
+**Review app.** Route candidates can be decided line by line in the review app
+(`review_app/README.md`): accept = the candidate geometry is good to apply, hold / reject /
+suggest as for any line. On an authorized §8 apply, `apply_route_candidates.py --decisions`
+(instead of `--pids`) takes the PID list from the `route` lines a person accepted in the
+`--staging` dir's `review_decisions.json`; both flags together, or no accepted route line, exits
+before the plan. The plan / review / `--apply` protocol and the three-way sync below are
+unchanged, and accepting in the app authorizes nothing by itself.
+
 ### The three-way sync rule (cardinal — Baird 2026-07-31)
 
 **`RouteType`, `RouteAccuracy`, and the routes repo must ALWAYS agree.** They are

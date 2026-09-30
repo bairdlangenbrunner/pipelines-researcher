@@ -16,7 +16,9 @@ serves that file as it is.
     GET  /geo/<path>       a *.geojson / *.json under batches/ (the route lines' candidate geometry)
     POST /api/decide       [{key, decision, suggested_value?, note?} | {key, undo: true}, ...]
                            -> {"saved": [record, ...]}; reviewer and ts are stamped here, never taken
-                           from the client. Appends to <dir>/review_log.jsonl and regenerates
+                           from the client. An accept that self-resolves an open concern (its proposed
+                           value equals the concern's contested value) also saves that concern's
+                           `dismissed` item record, after the line records (item records carry `call`). Appends to <dir>/review_log.jsonl and regenerates
                            <dir>/review_decisions.json (store.decide). 400 = refused, nothing written;
                            409 = accept on a line a still-open validity concern contests.
     POST /api/item         [{key, call, note?} | {key, undo: true}, ...] -> {"saved": [record, ...]};

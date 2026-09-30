@@ -2,18 +2,23 @@
 
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
-**After milestone 5b: data builder + server/UI with line decisions, suggest, item calls, bulk,
-session summary, and backend refresh; consumers `update_seed.py`, `staged_summary.py` decided
-counts and `apply_route_candidates.py --decisions`.**
+**After milestone 6: data builder + server/UI with line decisions (accept / hold / reject /
+suggest, undo), item calls, bulk with confirm, self-resolving concerns, session summary and
+backend refresh; consumers `build_ref_workbook.py --decisions`, `apply_route_candidates.py
+--decisions`, `staged_summary.py` decided counts and `update_seed.py`. `push.py` (phase 1b) does
+not exist yet.**
 
 ```bash
 python review_app/server.py --country Russia --commodity gas        # builds the dataset, opens the browser
 python review_app/server.py --no-build --data work/review_r7.json   # serve an existing dataset
 ```
 
-Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). `--dirs`, `--exclude-pids`,
-`--snapshot`, `--reviewer` (default `git config user.name`), `--port`, `--no-open`.
-Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `POST /api/decide`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
+Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). Flags: `--country`, `--commodity`
+(both required unless `--no-build`), `--dirs`, `--exclude-pids`, `--data`, `--reviewer` (default
+`git config user.name`), `--host` (loopback only), `--port`, `--no-open`, `--no-build`. The
+snapshot flag is `review_data.py --snapshot`, not a server flag.
+Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/decide`, `/api/item`,
+`/api/refresh`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
 first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
 hidden by default. Tier colours are the workbook's (`docs/reference/workbook_conventions.md`).
@@ -52,7 +57,21 @@ sidecars on every request, so rebuilt datasets and reloads show decisions.
 named in the `contested` map of an open concern item (no call yet) shows "held: concern open";
 accept is refused with 409 server-side. Hold and reject stay allowed.
 Any call on the concern (including `needs research`) releases the lock, and the UI unlocks that
-card's lines in place. No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
+card's lines in place.
+
+**Self-resolving concerns.** When an open concern's `contested[col]` equals the line's proposed
+value on that column, the line IS the resolution: that column does not lock the line (the card shows
+"resolves concern", and the contested chip reads "concern agrees with this value"), and accepting
+it records a `dismissed` call on the concern (note "resolved by accepted <col> fill", reviewer =
+the person) in the same write, so the concern's other contested columns unlock too. Equality is on
+trimmed strings against `proposed_values[col]`; an empty contested value never matches (it means
+"unsourced", not a proposed blank). A line is still locked by any contested column it touches that
+is not self-resolved (per concern). `/api/decide` returns the item records after the line records
+(item records carry `call`). Only a person's accept does it: hold / reject / suggest, undo and
+machine reviewers never dismiss, and a concern that already has a call is left alone. Undoing the
+line accept does NOT re-open the concern; undo the item call by hand (Items tab, "no call").
+Within one bulk request the lock is evaluated against the dataset before the request, so a line
+that depends on a dismissal made by another line of the same bulk is still refused. No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
 Russia gas data.
 
 ## Suggest
@@ -70,6 +89,9 @@ Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to a
 
 ## Consumers
 
+- `python scripts/build_ref_workbook.py --staging DIR --output OUT.xlsx --decisions` (handoff packet
+  or sweep workbook): the paste surfaces carry only lines a person accepted; see
+  `docs/sops/qc.md` (handoff contract). It also reads the decision files of every carried source dir.
 - `python scripts/update_seed.py --country C --commodity gas [--dirs ...] [--out PATH]` reads each
   staging dir's `review_decisions.json` and writes a §5 Update worklist seed
   (`batches/<scope>/staging/update-seed-<YYYYMMDD>/staged_updates_seed.json`): an update unit per
