@@ -285,6 +285,10 @@ python scripts/build_discovery_context.py --tracker gas --country "<Country>" --
 #   → Workflow({ name: 'country-discovery', args: <the printed JSON> })
 #   (optional per-phase models: add modelSearch / modelConsolidate / modelVet to args; fall back to args.model)
 #     (strategy fan-out → consolidate/match-to-existing → one vetting agent per candidate)
+#   (optional run-specific args: scopeRule = replaces the default transmission-only scope rule, e.g. a
+#     ≥25 km length floor; vetRule = extra rule text for every vetting agent; extra = context block for
+#     every search agent — territory naming, window, seed leads. Sliced runs: see
+#     batches/russia-gas/staging/discovery-seeds-20260930/build_slice_args.py)
 python scripts/merge_discovery_shards.py --staging $STG/
 python scripts/build_discovery_workbook.py --staging $STG/ \
   --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_discovery.xlsx
