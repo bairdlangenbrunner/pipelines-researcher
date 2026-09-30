@@ -28,6 +28,11 @@ const MODEL = A.model || 'sonnet'
 const MODEL_SEARCH = A.modelSearch || MODEL
 const MODEL_CONSOLIDATE = A.modelConsolidate || MODEL
 const MODEL_VET = A.modelVet || MODEL
+// args.scopeRule replaces the default transmission-only rule (e.g. a length threshold);
+// args.extra is a block of run-specific context (territory rules, seeds, window) for every search agent.
+const SCOPE_RULE = A.scopeRule || 'Transmission lines only — skip gathering/process/feeder lines and distribution networks.'
+const EXTRA_VET_NOTE = null // vet rule lives in args.vetRule (appended to the add-threshold)
+const EXTRA = A.extra ? `\n${A.extra}\n` : ''
 const ROSTER = A.roster.join("\n")
 
 const STRATEGIES = A.strategies || [
@@ -44,6 +49,7 @@ ${COUNTRY} that are MISSING from GEM's tracker. Your single search angle for thi
 ${s.brief}
 
 cd ${REPO} first.
+${EXTRA}
 
 ## The existing GEM roster (ALL statuses) — a candidate matching one of these rows is NOT a discovery
 ${ROSTER}
@@ -55,7 +61,7 @@ ${ROSTER}
    emit only OK/200 + token-present links.
    Save any downloaded file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\` (gitignored),
    never the repo root.
-3. Transmission lines only — skip gathering/process/feeder lines and distribution networks.
+3. ${SCOPE_RULE}
 4. Pre-filter against the roster (names, other names, endpoints). Borderline match → still emit it,
    but say which PID it might match in why_maybe_new; the consolidator decides.
 
@@ -123,6 +129,7 @@ ${STAGING}/discovery/queue.json and the existing-row context in ${STAGING}/disco
 ## The add-threshold (Discovery SOP §3) — ALL THREE or it is monitor, not new_row:
 (a) an identified sponsor; (b) at least country + region/endpoints; (c) a concrete step
 (MOU signed, FEED/EPC award, permit applied, tender issued, FID). Early rumor -> "monitor".
+${A.vetRule || ''}
 
 ## For a qualifying new_row, research the GEM columns
 Use EXACT GEM column names (header row 3 of data/<csv named in discovery_context.json>):
