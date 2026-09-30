@@ -84,12 +84,15 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    `20260930_1703_ET` after 20 gate-M narrative `contested`/`values` cells became bare candidates (original
    text kept in each record's `researcher_notes`, tagged `[gate M fix 2026-09-30]`). Older stamps are in
    `archive/`. Gate M is 0 on every US store.
-   **Second-publisher pass (2026-09-30, Update run):** `s2-tx-indev` rebuilt `20260930_1733_ET` (supersedes its
-   `_1703_ET`). Of its 19 not-green status changes, 9 lifted to green on a verified second publisher (P3885 P3886
-   P4379 P4453 P5664 P7779 P7796 P7811, and P0241 corrected to `operating` on Sempra's in-service release); P7853 and
-   P7854 are CONTRADICTED by Targa's Q2 2026 release (construction continues on Bull Run/Buffalo Run) and sit at
-   low; the rest found no second publisher and stay medium (notes list what was searched). The other 30 not-green
-   status changes are still to do.
+   **Second-publisher pass (2026-09-30, Update run, all 49 not-green status changes worked):** the seven batches
+   `remainder`, `s2-appalachian-indev`, `s2-gulf-indev`, `s2-gulf-se-operating`, `s2-tx-indev`,
+   `s2-tx-midcon-operating` and `s2-west` were rebuilt `20260930_1815_ET` (they supersede the `_1455`/`_1703`/`_1733`
+   builds; the older ones are in `archive/`). Lifted to green on a verified distinct second publisher: 19 of the 49
+   (tx-indev 9; P2567 P2600 P2651 P3199 P3201 P2538 P2574 P3187 P0315 P2553). Contradicted or needing a ruling:
+   P7853/P7854 (withdrawn, stay `construction`), P7851 (proposal corrected to `construction`), P2616 (year 2019, not
+   2026), P0321 (FERC dismissed 2016, not 2017), P4448 (certificate was granted; Columbia Gulf), P7814 (REX's project,
+   not Transco; `approved` is not a status), P7825 (`applied` is not a status; operator says construction), P0322.
+   The rest found no second publisher and stay medium; each note lists what was searched.
    Every batch closes the required gates **E, F, I', J, L at 0**, is coverage-clean
    (0 unmergeable records, 0 silent UNRESOLVED) and recalc-clean; the advisory gates
    (A single-host, B/C/D/K, and gate I where a source supports the value without naming the
