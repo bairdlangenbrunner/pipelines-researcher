@@ -185,9 +185,11 @@ Verified against the repo on 2026-09-30 (survey over all 142 staging dirs).
    note; a decision on it applies to every copy (the workbook builder gets the same resolution).
 7. **Schema drift the loader must absorb** (or fix first — see milestone 0): `meta.mode` absent on
    52 of 86 files; ~20 shapes of `meta.scope`; `tier` missing on 6 records, `independent` on 4,
-   `wiki` on ~600, `link_live` present on only 8,110; `proposed_refs`/`verifications` stored as
-   Python-repr strings in a few iran-gas STATUS records; old israel `staged_new` inlines refs as
-   `values["Status [ref]"]` strings. Missing tier renders as "untiered" and defaults to `hold`.
+   `wiki` on ~600, `link_live` present on only 8,110. **Repaired by milestone 0
+   (`scripts/repair_staged_drift.py`, 2026-09-30):** 199 string `sheet_row`s in 11 route-creation
+   stores → int; 3 old israel `staged_new` candidates with refs inlined as `values["X [ref]"]`
+   → `refs`. The survey's claim of Python-repr `proposed_refs` strings in iran-gas was wrong:
+   none exist. Missing tier renders as "untiered" and defaults to `hold`.
 8. **Tier colours are the workbook's** (`docs/reference/workbook_conventions.md`): high `C6EFCE`,
    medium `FFEB9C`, low `FFC7CE`, re-verified `DDEBF7`, contested `FCD5A5`, new row `E2EFDA`. Use
    the same hex in the UI so the app and the xlsx read identically.
