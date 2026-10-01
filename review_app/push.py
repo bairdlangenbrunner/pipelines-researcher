@@ -118,7 +118,7 @@ def accepted_lines(ds):
     return out
 
 
-def build_plan(commodity="gas"):
+def build_plan(commodity="gas", overwrite=()):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
     dirs, dc = review_data._country_dirs(countries, commodity, root, None)
@@ -148,6 +148,8 @@ def build_plan(commodity="gas"):
                 continue
             elif l["kind"] == "status" and c == "Status":
                 writes[c] = str(v)
+            elif any(o in l["key"] for o in overwrite):      # Baird named this line: overwrite the value
+                writes[c] = coerce(v)
             elif l["kind"] == "fill" and c == "Status":
                 writes[c] = str(v)
             else:
@@ -274,11 +276,13 @@ def apply(plan_path):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--commodity", default="gas")
+    ap.add_argument("--overwrite", action="append", default=[], metavar="KEY",
+                    help="let the accepted line whose key contains KEY overwrite a differing value (Baird names each)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
     a = ap.parse_args(argv)
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity)
+    plan, skipped, meta = build_plan(a.commodity, a.overwrite)
     show(plan, skipped)
     out = ROOT / "work" / "push_plan.json"
     out.parent.mkdir(exist_ok=True)
