@@ -98,7 +98,7 @@ def wait_line(pg, key, decision, by):
 
 def fill_line(data, pid, n=0):
     return [l for p in data["pipelines"] if p["pid"] == pid for l in p["lines"]
-            if not l.get("in_backend") and not l.get("locked")][n]
+            if not l.get("in_backend")][n]
 
 
 def test_two_reviewers_share_one_store(browser, app):

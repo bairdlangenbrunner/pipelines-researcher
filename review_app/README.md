@@ -3,7 +3,7 @@
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
 **After milestone 6: data builder + server/UI with line decisions (accept / hold / reject /
-suggest, undo), item calls, bulk with confirm, self-resolving concerns, session summary and
+suggest, undo), item calls, bulk with confirm, concerns as rivals / self-resolving, session summary and
 backend refresh; consumers `build_ref_workbook.py --decisions`, `apply_route_candidates.py
 --decisions`, `staged_summary.py` decided counts and `update_seed.py`. `push.py` (phase 1b) does
 not exist yet.**
@@ -44,22 +44,25 @@ comma list; omit for the review-app batch), `--commodity` (required with `--coun
 `git config user.name`; recorded as initials, below), `--host` (loopback only), `--port`, `--no-open`, `--no-build`. The
 snapshot flag is `review_data.py --snapshot`, not a server flag.
 Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/decide`, `/api/item`,
-`/api/refresh`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
+`/api/refresh`, `/api/push/plan`, `/api/push`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
-first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
+first ref, `d` toggle details, `/` search, `?` help. The header's **how to** button opens a
+plain-language page (`INFO` in `web/app.js`): what a change is, the four calls, and that an accept is
+logged at once but reaches the backend sheet only through a later push. The local server's **push changes** button (needs the decision store) pulls the store, plans against the live sheet, lists every cell, and writes only after a click on "write N cells" (same `push.py` plan/apply, backup CSV and read-back). Clicking outside any popup closes it. Filters combine; `in_backend` lines are
 hidden by default. With several `--country` values the filter bar leads with one checkbox per
 country (multi-select; none ticked = all); it keys on the BATCH country of the staging dir a card
 came from (`scope_countries`), not `CountriesOrAreas`, and rides in the URL as `cty=Russia|United States`.
 Scope-level items get one card per country. Keys are unchanged, so decisions carry over. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
 person, or `in_backend` — while hold stays bright (still open); an item grays once it carries a
-reviewed call (same convention as the LNG carriers app). Tier colours are the workbook's (`docs/reference/workbook_conventions.md`)
+reviewed call (same convention as the LNG carriers app). Tier colors are the workbook's (`docs/reference/workbook_conventions.md`)
 and appear on the tier chip and the line's left border.
 
 **Line cards** show one now / proposed table per line: a row per paired value column (`value_cols`
 with anything on either side), then the `[ref]` row. Each row carries a tag for what the line does
 to that cell: `fill` (empty cell → value / refs; an empty cell is drawn empty), `change`, `clear`, `add` / `replace` / `drop` (refs),
 `re-verified`, or none when it is unchanged (the value is repeated, muted). New values and added
-refs are green, changed values amber, contested current values orange; each added URL gets one
+refs are green, changed values amber, contested current values orange (a concern's differing
+candidate is a third, orange "concern candidate" row with its own accept button); each added URL gets one
 verification mark (`✓`, or the failed checks). Class, default, language, batch dir, notes and
 verification notes sit under "notes & record". Clicking the pipeline name (or the **Everything**
 tab) shows every line on the pipeline, filters ignored, then its items, on one page.
@@ -93,6 +96,11 @@ writes the sidecars alone and says so on every start. Appending to that tab is a
 authorization (CLAUDE.md → Hard requirements); it never touches the backend sheet, which only
 `push.py` writes, asked per run. The store keeps the reviewer's address (default: the
 `gws-gem-write` account's, `--reviewer-email` to override); the sidecars keep initials.
+If the server stops at "cannot read the store account's address" while `gws-gem-write auth status`
+says the token is valid, and every Drive/Sheets call 403s with "insufficient authentication scopes",
+the cached access token predates a re-login (gws trusts the cache until it expires): move
+`~/.config/gws-gem-write/token_cache.json` aside and rerun — it is re-minted from the refresh token,
+no browser needed (2026-10-01).
 
 Every staging dir gets two sidecars, committed with the batch:
 
@@ -135,25 +143,38 @@ backs the CURRENT status while the status leg proposes a change is contrary evid
 own card. A call made before a record was folded in is never back-filled: `/api/data` reports the
 line's `uncovered` keys, the card stays bright and says to press the same call again.
 
-**Contested lock.** A line whose column (`column`, `value_cols`, or `Status` for status lines) is
-named in the `contested` map of an open concern item (no call yet) shows "held: concern open";
-accept is refused with 409 server-side. Hold and reject stay allowed.
-Any call on the concern (including `needs research`) releases the lock, and the UI unlocks that
-card's lines in place.
+**Concerns never hold a line (Baird 2026-10-01; the old "contested lock" that refused accept with
+409 until the concern had a call is gone).** A validity concern's `contested` map is folded onto the
+lines it competes with at build time (`review_data._attach_rivals`), and the line is decided on its
+own, one of three ways:
 
-**Self-resolving concerns.** When an open concern's `contested[col]` equals the line's proposed
-value on that column, the line IS the resolution: that column does not lock the line (the card shows
-"resolves concern", and the contested chip reads "concern agrees with this value"), and accepting
-it records a `dismissed` call on the concern (note "resolved by accepted <col> fill", reviewer =
-the person) in the same write, so the concern's other contested columns unlock too. Equality is on
-trimmed strings against `proposed_values[col]`; an empty contested value never matches (it means
-"unsourced", not a proposed blank). A line is still locked by any contested column it touches that
-is not self-resolved (per concern). `/api/decide` returns the item records after the line records
-(item records carry `call`). Only a person's accept does it: hold / reject / suggest, undo and
-machine reviewers never dismiss, and a concern that already has a call is left alone. Undoing the
-line accept does NOT re-open the concern; undo the item call by hand (Items tab, "no call").
-Within one bulk request the lock is evaluated against the dataset before the request, so a line
-that depends on a dismissal made by another line of the same bulk is still refused. No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
+- **Rival candidate.** The concern names a candidate on a column the line proposes a different value
+  on: the card shows current / proposed / "concern candidate" (orange) with the concern's text and
+  refs, a "rival candidate" chip, and an **accept candidate** button (`c`; with two rivals the
+  button names each value). Pressing it is stored as a `suggest` whose `suggested_value` is the
+  candidate (request `{key, rival: <concern key>}`; the record carries `rival`), plus a `confirmed`
+  call on the concern (note "candidate accepted on <cols>") in the same write — so it reaches the
+  Update seed like any confirmed concern and never `push.py`. Accept / hold / reject / your own
+  suggest stay available and leave the concern alone. A `rival` request with any other decision,
+  on a line the concern has no differing candidate for, or naming an unknown key is refused (400,
+  nothing written).
+- **Corroboration.** The concern's candidate equals the proposal: a "concern agrees" chip, and
+  accepting the line records a `dismissed` call on the concern (note "resolved by accepted <col>
+  fill", reviewer = the person) in the same write. Equality is on trimmed strings against
+  `proposed_values[col]` (`store.proposed_on`; a status line's `proposed_status`); a blank candidate
+  never matches. Within one request, `confirmed` wins over `dismissed` for the same concern.
+- **Note only.** A concern with blank candidates (the current value is disputed, nothing offered)
+  or on columns no line proposes stays the inline orange note and an Items-tab call.
+
+`/api/decide` returns the item records after the line records (item records carry `call`). Only a
+person's decision writes a concern call: hold / reject / undo and machine reviewers never do, and
+a concern that already has a call is left alone (a rival suggest on an already-confirmed concern
+writes the line only). Undoing the line does NOT re-open the concern; undo the item call by hand
+(Items tab, "no call"). The Items tab keeps every concern and names the lines its candidate sits
+on ("candidate accepted on the Owner1 change by BL" / "also a candidate on the Status change"), so
+the remaining queue is the concerns nothing else answers. Dict-shaped candidates some subagents
+staged (`{"sheet_value", "corrected_value"}`) are normalized to the candidate string at build time
+(`review_data._cand`). No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
 Russia gas data.
 
 ## Suggest
@@ -178,8 +199,10 @@ Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to a
   staging dir's `review_decisions.json` and writes a §5 Update worklist seed
   (`batches/<scope>/staging/update-seed-<YYYYMMDD>/staged_updates_seed.json`): an update unit per
   `suggest` line (pid, sheet_row, column, ref_col, proposed_value, suggested_value, note,
-  reviewer, source dir) and a research unit per concern called `confirmed` or `needs_research`
-  (pid, concern_type, contested columns, text, note). Shape = `staged_updates.json` `rows` plus a
+  reviewer, source dir; `rival_concern` + `rival_text` when the suggest took a concern's candidate)
+  and a research unit per concern called `confirmed` or `needs_research` (pid, concern_type,
+  contested columns, text, note) — except one whose candidate a live suggest took, which is
+  answered, not researched. Shape = `staged_updates.json` `rows` plus a
   flat `units` list; `old` / `tier` / `refs` are left empty. No decision files: empty seed, exit 0.
 - `python scripts/staged_summary.py` prints `decided=12a/3h/1r/0s of 40` per dir (and
   `batches/INDEX.md` a `decided` column via `--index`); a dir with no decision file shows `—`.
@@ -204,9 +227,9 @@ kind takes `noted | todo | dismissed`. A wrong call is a 400. Item records are
 
 Three header-bar buttons (and `A` for the first) act on the CURRENT filtered queue and always
 confirm with the exact count and a per-kind breakdown: accept all defaults in view, hold all in
-view, accept all high for this pipeline. They skip lines locked by an open concern and lines a
-person already decided, and send one `POST /api/decide`. The server is all-or-nothing: if any
-line is locked or invalid the request is refused (409/400) and nothing is written.
+view, accept all high for this pipeline. The accept modes skip lines with a rival candidate (decide
+those by hand) and all modes skip lines a person already decided; one `POST /api/decide`. The
+server is all-or-nothing: if any line is invalid the request is refused (400) and nothing is written.
 
 ## Session summary
 
@@ -386,5 +409,5 @@ headless browser, `tests/test_review_publish.py` / `test_review_pull.py` / `test
 - The same Status proposal staged in two batch dirs shows as two identical-looking cards now that
   the batch name is off the header; fold them like `covers`, or mark the duplicate.
 - A contested note (orange) still shows on a line after its concern has a call; it could drop once
-  the concern is decided.
+  the concern is decided (a rival row is struck through instead).
 

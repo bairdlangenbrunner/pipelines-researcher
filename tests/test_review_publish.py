@@ -94,7 +94,7 @@ def test_index_knows_every_key_and_packs_without_loss(scope):
     status = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"]
                   if l["kind"] == "ref" and l["column"] == "Status")
     concern = next(i for p in d["pipelines"] if p["pid"] == "P9001" for i in p["items"] if i["kind"] == "concern")
-    assert idx[status["key"]]["lock"] == [{"c": concern["key"], "held": ["Status"], "res": []}]
+    assert "concerns" not in idx[status["key"]]                 # a blank candidate: nothing to resolve or take
     assert idx[status["key"]]["basis"] == status["basis"] and idx[concern["key"]] == \
         {"g": "i", "kind": "concern", "dir": concern["dir"], "pid": "P9001", "call0": ""}
     packed = publish.pack_index({"keys": idx})
@@ -108,9 +108,25 @@ def test_index_knows_every_key_and_packs_without_loss(scope):
         else:
             assert (c["k"], c["p"], c.get("r"), c.get("c", ""), c.get("d", "accept"), c["b"]) == \
                 (e["kind"], e["pid"], e["sheet_row"], e["ref_col"], e["def"], e["basis"])
-            assert [x[0] for x in c.get("l", [])] == [x["c"] for x in e.get("lock", [])]
+            assert [x[0] for x in c.get("x", [])] == [x["c"] for x in e.get("concerns", [])]
     with pytest.raises(SystemExit, match="does not start with its dir"):
         publish.pack_index({"keys": {"elsewhere::P1|4|x": dict(idx[status["key"]])}})
+
+
+def test_index_carries_what_a_line_resolves_or_may_take(scope):
+    d = scope["dataset"]
+    concern = next(i for p in d["pipelines"] if p["pid"] == "P9001" for i in p["items"] if i["kind"] == "concern")
+    concern["contested"] = {"Status": "operating", "Owner1": "OldCo"}
+    review_fixture.relink(d)
+    publish.stamp_basis(d, scope["dirs"])
+    idx = publish.make_index(d)["keys"]
+    status = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"] if l["kind"] == "ref" and l["column"] == "Status")
+    owner = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"] if l["kind"] == "oo")
+    assert idx[status["key"]]["concerns"] == [{"c": concern["key"], "res": ["Status"], "cand": "", "cols": []}]
+    assert idx[owner["key"]]["concerns"] == [{"c": concern["key"], "res": [], "cand": "OldCo", "cols": ["Owner1"]}]
+    packed = publish.pack_index({"keys": idx})
+    d0, _, rest = owner["key"].partition("::")
+    assert packed["keys"][packed["dirs"].index(d0)][rest]["x"] == [[concern["key"], [], "OldCo", ["Owner1"]]]
 
 
 def test_an_item_already_called_is_published_as_called(scope):

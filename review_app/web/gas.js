@@ -3,7 +3,7 @@
    app uses in place of the local HTTP one, and window.GasNav, which carries the route (the page
    is a sandboxed iframe: its own location is not the address bar). Anywhere else it does nothing.
 
-   What it adds to the local behaviour:
+   What it adds to the local behavior:
      - scopes: the published datasets (scopes.json); one is open at a time (?scope=<id>, a picker)
      - the dataset arrives as gzipped parts; decisions stored after it was published are laid on top
      - every 45 s (while the tab is visible) it asks the store for newer decisions, so two
@@ -154,7 +154,7 @@
       var n = ra.setLive(r);
       ra.rerender();
       var gone = r.gone.length ? ", " + r.gone.length + " no longer on the sheet" : "";
-      if (manual || n || r.gone.length) ra.toast("backend checked " + ra.et(r.checked_at) + ": " + n + " line" + (n === 1 ? "" : "s") + " changed since published" + gone);
+      if (manual || n || r.gone.length) ra.toast("backend checked " + ra.et(r.checked_at) + ": " + n + " change" + (n === 1 ? "" : "s") + " changed since published" + gone);
     }).catch(function (e) {
       if (manual) ra.toast("backend check failed: " + e.message);
       else if (window.console) console.warn("live check:", e.message);
@@ -195,7 +195,7 @@
     }
     var n = 0;
     D.pipelines.forEach(function (p) { p.lines.forEach(function (l) { if (l.drift && l.reviewed) n++; }); });
-    if (n) ra.banner(n + " decided line" + (n === 1 ? " was" : "s were") + " judged against backend cells that have since changed: more filters > sheet changed since decided");
+    if (n) ra.banner(n + " decided change" + (n === 1 ? " was" : "s were") + " judged against backend cells that have since changed: more filters > sheet changed since decided");
   }
   function switchScope(id, fromNav) {
     var ra = RA(), sc = find(id), sel = document.getElementById("scope-pick");

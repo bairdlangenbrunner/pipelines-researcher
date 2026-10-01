@@ -9,7 +9,7 @@
      [--delay 150] [--no-bundle] [--page FILE]
 
    ?user=<email> stands in for the Google login (open two tabs with two users to see the
-   concurrency behaviour). The fake decision store persists in --store (gitignored work/);
+   concurrency behavior). The fake decision store persists in --store (gitignored work/);
    --fresh starts it empty. GET /store shows its rows as JSON; POST /expire-cache empties the fake
    script cache (a republish then shows up at once, not after a minute). Decisions made here go NOWHERE
    else: not to Google, not to the staging dirs. Loopback only. */

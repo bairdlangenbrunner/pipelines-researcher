@@ -11,7 +11,9 @@ reviewer; `basis` (review_data.basis) names the backend cells the call was made 
 that went through the ledger (review_app/ledger.py) also carries id, scope, batch, snapshot, origin. An undo appends a record with `undecided: true`; nothing is ever
 deleted from the log. A line that `covers` other staged records (a status line and the
 `Status [ref]` record folded into it) writes one more record per covered key, same call, with
-`via` = the line's key. Nothing here touches the sheet, the routes repo or staged_*.json.
+`via` = the line's key. A `suggest` that took a validity concern's candidate value instead of the
+proposal (review_data._attach_rivals; request field `rival` = the concern's key) carries `rival`.
+Nothing here touches the sheet, the routes repo or staged_*.json.
 """
 import json
 import os
@@ -40,8 +42,10 @@ LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
 ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
               "unresolved", "confirmed", "other")
 # The call vocabulary per item kind. A concern's call settles the validity question
-# (confirmed = it stands, dismissed = closed, needs_research = goes to an Update worklist);
-# ANY call on a concern releases the contested lock on its columns. Everything else is
+# (confirmed = it stands, dismissed = closed, needs_research = goes to an Update worklist).
+# A concern never holds a line: a line it contests is decided on its own, and the two calls
+# that answer a concern from the line (accept proposed -> dismissed, accept its candidate ->
+# confirmed) are written by `decide` in the same transaction. Everything else is
 # noted / todo / dismissed. Items never write a cell.
 CONCERN_CALLS = ("confirmed", "dismissed", "needs_research")
 OTHER_CALLS = ("noted", "todo", "dismissed")
@@ -67,10 +71,6 @@ def initials(who):
 
 class Invalid(ValueError):
     """A request the store refuses before writing anything (HTTP 400)."""
-
-
-class Contested(Invalid):
-    """Accept refused: a validity concern contests a column on this line and has no call (HTTP 409)."""
 
 
 # ---- reading ---------------------------------------------------------------------
@@ -121,8 +121,8 @@ def overlay(data, dirs=None, root=None):
     (in place; returns it) from each dir's review_log.jsonl. `decision` is the latest record's
     call (None after an undo or with no record); `reviewed` says whether a person made it.
     Items get `call` / `call_note` (the latest item call; None after an undo or with no record)
-    plus reviewed / decided_by / decided_at. Run this before `validate` sees the dataset: the
-    contested lock reads the overlaid `call`."""
+    plus reviewed / decided_by / decided_at. Run this before `validate` sees the dataset: `decide`
+    reads the overlaid `call` to know which concern calls an accept still owes."""
     dirs = dirs if dirs is not None else dir_paths(data, root)
     logs = {}
     for p in data.get("pipelines", []):
@@ -144,6 +144,9 @@ def overlay(data, dirs=None, root=None):
                 if live and live.get("decision") == "suggest" and grp == "lines":
                     o["suggested_value"] = live.get("suggested_value", "")
                     o["decision_note"] = live.get("note", "")
+                    o["rival"] = live.get("rival") or None
+                elif grp == "lines":
+                    o["rival"] = None
                 if grp == "lines" and o.get("covers"):
                     # a covered record (review_data._fold_status_covers) is decided with its
                     # line; `uncovered` names the ones whose own record says something else
@@ -200,31 +203,43 @@ def line_cols(line):
     return {c for c in cols if c}
 
 
+def proposed_on(line, col):
+    """The value the line proposes on `col`, stripped ("" = nothing proposed there): its
+    proposed_values entry, or the proposed status of a status line on Status."""
+    pv = line.get("proposed_values") or {}
+    v = pv.get(col)
+    if (v is None or str(v).strip() == "") and col == "Status" and line.get("kind") == "status":
+        v = line.get("proposed_status")
+    return "" if v is None else str(v).strip()
+
+
 def resolves(line, concern):
     """Sorted contested columns of `concern` on which the line IS the resolution: the concern's
     contested value is non-empty and equals the line's proposed value on that column (both
     stripped strings). An empty contested value means "unsourced", never a proposed blank, so it
     never matches."""
-    pv = line.get("proposed_values") or {}
     cont = concern.get("contested") or {}
     return sorted(c for c in line_cols(line) & set(cont)
-                  if str(cont[c]).strip() and str(cont[c]).strip() == str(pv.get(c, "")).strip())
+                  if str(cont[c]).strip() and str(cont[c]).strip() == proposed_on(line, c))
 
 
-def locked_by(pipeline, line):
-    """Contested columns this line touches, minus those it self-resolves (see `resolves`), as a
-    sorted list; non-empty means accept is refused until the concern has a call."""
-    held = set()
-    for it in open_concerns(pipeline):
-        held |= (line_cols(line) & set(it["contested"])) - set(resolves(line, it))
-    return sorted(held)
+def rival_of(line, concern_key):
+    """The line's rival entry for `concern_key` that carries a differing candidate (a second
+    proposal the reviewer can take), or None."""
+    for rv in line.get("rivals") or []:
+        if rv.get("key") == concern_key and rv.get("cols"):
+            return rv
+    return None
 
 
-def validate(records, data, reviewer=None, enforce_lock=True):
-    """Normalised decision records (reviewer / ts stamped later), or Invalid; nothing is written
+def validate(records, data, reviewer=None):
+    """Normalized decision records (reviewer / ts stamped later), or Invalid; nothing is written
     for a bad request. A record is {key, decision, suggested_value?, note?} or {key, undo: true}
-    (an undo is stored as undecided: true). `enforce_lock=False` is for the backend-sync machine
-    only: a line the sheet already holds is not refused because a concern contests it."""
+    (an undo is stored as undecided: true), or {key, rival: <concern key>} to take a validity
+    concern's candidate value instead of the proposal: stored as a `suggest` whose
+    suggested_value is the candidate (review_data.rival_value) and which carries `rival`; the
+    decision, if given, must be `suggest`. A line is never refused because a concern contests
+    it: the concern's own call is written by `decide` alongside."""
     if not isinstance(records, list) or not records:
         raise Invalid("expected a non-empty list of decision records")
     idx = index(data)
@@ -242,25 +257,32 @@ def validate(records, data, reviewer=None, enforce_lock=True):
         decision = r.get("decision")
         if undo and not decision:
             decision = obj.get("default") or "hold"      # an undo record still carries a decision field
+        rival = str(r.get("rival") or "") if not undo else ""
+        if rival and not decision:
+            decision = "suggest"
         if not undo and not decision:
             raise Invalid(f"record {i}: no decision given (a bare key never defaults to accept)")
         if decision not in DECISIONS:
             raise Invalid(f"record {i}: decision {decision!r} is not one of {', '.join(sorted(DECISIONS))}")
         note = str(r.get("note") or "")
         sv = str(r.get("suggested_value") or "")
+        if rival:
+            rv = rival_of(obj, rival)
+            if rv is None:
+                raise Invalid(f"record {i}: {rival!r} is not a concern with a candidate value on {key!r}")
+            if decision != "suggest":
+                raise Invalid(f"record {i}: taking a concern's candidate is recorded as suggest, not {decision}")
+            sv = sv.strip() or rv["value"]
         if decision == "suggest" and not undo and not (sv.strip() or note.strip()):
             raise Invalid(f"record {i}: a suggestion needs a suggested_value or a note")
-        if decision == "accept" and not undo and enforce_lock:
-            held = locked_by(pipe, obj)
-            if held:
-                raise Contested(f"record {i}: {key!r} is held: a validity concern contests "
-                                f"{', '.join(held)} and has no call yet")
         rec = {"key": key, "dir": obj["dir"], "pid": pipe["pid"], "sheet_row": obj.get("sheet_row"),
                "ref_col": obj.get("ref_col") or obj.get("column") or "", "kind": obj["kind"],
                "decision": decision, "suggested_value": sv, "note": note,
                "reviewer": reviewer, "ts": None, "undecided": undo}
         if obj.get("basis"):        # the backend cells this call was made against (review_data.basis)
             rec["basis"] = obj["basis"]
+        if rival:
+            rec["rival"] = rival
         out.append(rec)
         out.extend(cover_records(obj, rec))
     return out
@@ -350,42 +372,66 @@ def _write(recs, dirs, stamp=True):
     return recs
 
 
-def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True, sink=None):
+def decide(records, data, reviewer, dirs=None, root=None, sink=None):
     """Validate, then write (under the process lock) to each touched dir's sidecars. `data` must
-    already be overlaid (server.App does it) so the contested lock sees item calls. Returns the
-    records written (with reviewer and ts): the line records, then any concern item records.
+    already be overlaid (server.App does it) so the concern calls below see the live `call`.
+    Returns the records written (with reviewer and ts): the line records, then any concern item
+    records.
 
     `sink(recs, dirs)` replaces the write: ledger.Ledger.sink appends the records to the Google
     decision store FIRST and then to the sidecars (the store is the single source of truth, the
     sidecars its committed mirror); the default writes the sidecars alone. A sink runs under
     _LOCK, so it calls _write, never append_records.
 
-    Self-resolving concerns: a person's accept of a line that `resolves` an open concern also
-    writes a `dismissed` call on that concern ("resolved by accepted <col> fill") in the same
-    transaction, so the concern's other contested columns unlock. Undoing the line accept does
-    NOT re-open the concern; undo the item call by hand."""
+    A person's line call answers a concern from the line, in the same transaction:
+    - accept of a line that `resolves` an open concern (the candidate equals the proposal)
+      writes `dismissed` on it ("resolved by accepted <col> fill");
+    - a `rival` suggest (the concern's candidate taken instead of the proposal) writes
+      `confirmed` on it ("candidate accepted on <col>"), unless it is already confirmed.
+    A concern that already has a call is otherwise left alone; machine reviewers, hold, reject
+    and undo write no concern call. Undoing the line call does NOT re-open the concern; undo the
+    item call by hand."""
     reviewer = initials(reviewer)
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
-        recs = validate(records, data, reviewer, enforce_lock)
+        recs = validate(records, data, reviewer)
         items = []
-        if enforce_lock and reviewer not in MACHINE_REVIEWERS:
-            idx = index(data)
-            cols = {}          # concern key -> [columns resolved by accepted lines in this request]
-            for r in recs:
-                if r["decision"] != "accept" or r["undecided"] or r.get("via"):
-                    continue
-                pipe, line, _ = idx[r["key"]]
-                for c in open_concerns(pipe):
-                    for col in resolves(line, c):
-                        cols.setdefault(c["key"], [])
-                        if col not in cols[c["key"]]:
-                            cols[c["key"]].append(col)
-            if cols:
-                items = validate_items([{"key": k, "call": "dismissed",
-                                         "note": "resolved by accepted " + ", ".join(v) + " fill"}
-                                        for k, v in cols.items()], data, reviewer)
+        if reviewer not in MACHINE_REVIEWERS:
+            owed = concern_calls(recs, data)
+            items = validate_items(owed, data, reviewer) if owed else []
         return (sink or _write)(recs + items, dirs)
+
+
+def concern_calls(recs, data):
+    """The item-call requests a batch of validated line records owes (see `decide`), in the order
+    the concerns are first met: {key, call, note} per concern. A confirmed-by-candidate call
+    wins over a dismissal of the same concern in one request."""
+    idx = index(data)
+    calls = {}
+    for r in recs:
+        if r["undecided"] or r.get("via"):
+            continue
+        pipe, line, _ = idx[r["key"]]
+        if r["decision"] == "accept":
+            for c in open_concerns(pipe):
+                cols = resolves(line, c)
+                if not cols:
+                    continue
+                cur = calls.get(c["key"])
+                if cur and cur["call"] == "confirmed":
+                    continue
+                have = cur["cols"] if cur else []
+                calls[c["key"]] = {"call": "dismissed", "cols": have + [x for x in cols if x not in have]}
+        elif r["decision"] == "suggest" and r.get("rival"):
+            rv = rival_of(line, r["rival"])
+            _, concern, _ = idx[r["rival"]]
+            if concern.get("call") == "confirmed":
+                continue
+            calls[r["rival"]] = {"call": "confirmed", "cols": list(rv["cols"])}
+    return [{"key": k, "call": v["call"],
+             "note": ("resolved by accepted " if v["call"] == "dismissed" else "candidate accepted on ")
+                     + ", ".join(v["cols"]) + (" fill" if v["call"] == "dismissed" else "")}
+            for k, v in calls.items()]
 
 
 def append_records(recs, dirs, sink=None):
@@ -400,7 +446,7 @@ def append_records(recs, dirs, sink=None):
 
 
 def validate_items(records, data, reviewer=None):
-    """Normalised item call records, or Invalid. A record is {key, call, note?} or {key, undo: true}.
+    """Normalized item call records, or Invalid. A record is {key, call, note?} or {key, undo: true}.
     The call must be in ITEM_CALLS for the item's kind."""
     if not isinstance(records, list) or not records:
         raise Invalid("expected a non-empty list of item records")

@@ -318,7 +318,7 @@ def main(argv=None):
             saved = store.record_items(records, ds, email, dirs, sink=led.sink)
         else:
             saved = store.decide(records, ds, email, dirs, sink=led.sink)
-    except (store.Invalid, store.Contested) as e:
+    except store.Invalid as e:
         sys.exit(f"refused: {e}")
     except StoreError as e:
         sys.exit(f"{e}\nnothing was recorded (not in the store, not in a staging dir)")

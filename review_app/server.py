@@ -17,13 +17,15 @@ same way, so countries added to the batch since startup come in on the next refr
     GET  /api/whoami       {"reviewer": ..., "caps": {"decide": true, "refresh": false, "push": false}}
     GET  /api/decisions?dir=<label>   that staging dir's current latest-per-key records (review_decisions.json)
     GET  /geo/<path>       a *.geojson / *.json under batches/ (the route lines' candidate geometry)
-    POST /api/decide       [{key, decision, suggested_value?, note?} | {key, undo: true}, ...]
+    POST /api/decide       [{key, decision, suggested_value?, note?} | {key, rival: <concern key>} | {key, undo: true}, ...]
                            -> {"saved": [record, ...]}; reviewer and ts are stamped here, never taken
                            from the client. An accept that self-resolves an open concern (its proposed
                            value equals the concern's contested value) also saves that concern's
-                           `dismissed` item record, after the line records (item records carry `call`). Appends to <dir>/review_log.jsonl and regenerates
-                           <dir>/review_decisions.json (store.decide). 400 = refused, nothing written;
-                           409 = accept on a line a still-open validity concern contests.
+                           `dismissed` item record, and a `rival` request (the concern's candidate taken
+                           instead of the proposal, stored as a suggest) saves its `confirmed` record,
+                           after the line records (item records carry `call`; store.decide). Appends to
+                           <dir>/review_log.jsonl and regenerates <dir>/review_decisions.json.
+                           400 = refused, nothing written.
     POST /api/item         [{key, call, note?} | {key, undo: true}, ...] -> {"saved": [record, ...]};
                            the call must be in store.ITEM_CALLS[kind]; same sidecars as /api/decide.
                            400 = refused, nothing written.
@@ -33,8 +35,13 @@ same way, so countries added to the batch since startup come in on the next refr
                            person decided -> {"snapshot", "lines", "synced"}. 409 when the server
                            was started with --no-build; 502 / 504 when the pull fails / times out.
 
-/api/push/plan and /api/push do not exist yet (404): accepted cells reach the sheet only through
-review_app/push.py (plan, ask Baird, --apply).
+    POST /api/push/plan    pull.py (store -> sidecars, read-only on Google), then push.build_plan (reads the live
+                           sheet, writes nothing there) -> {token, cells: [{tab, cell, ProjectID, column, before,
+                           after}], skipped: [[key, why]], stale}. Only with a decision store (not --no-store).
+    POST /api/push         {token} -> push.apply of exactly that plan (backup CSV, RAW cell-scoped write, read-back,
+                           `push` records) -> {cells, log}. 409 when the token is not the last plan or the sheet
+                           moved since it; the page asks the person to confirm the cell list first.
+Accepted cells reach the sheet only through push.py's plan/apply, here or on the command line.
 
 Every decision goes to the Google decision store FIRST (review_app/ledger.py: the `log` tab of the
 store spreadsheet in review_app/google.json, origin 'local') and to the staging dir's sidecars second;
@@ -65,6 +72,9 @@ for p in (ROOT / "scripts", HERE):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+import contextlib  # noqa: E402
+import io  # noqa: E402
+
 import ledger  # noqa: E402
 import paths  # noqa: E402
 import pull  # noqa: E402
@@ -72,7 +82,7 @@ import review_data  # noqa: E402
 import store  # noqa: E402
 
 # what this server can do; the front end reads these and hides/disables the matching controls
-CAPS = {"decide": True, "refresh": False, "push": False}    # refresh is switched on per App (built, not --no-build)
+CAPS = {"decide": True, "refresh": False, "push": False}    # refresh: per App (built, not --no-build); push: per App (has a store)
 REFRESH_CMD = [str(ROOT / "scripts" / "refresh_csvs.sh")]
 REFRESH_TIMEOUT = 600
 
@@ -111,6 +121,7 @@ class App:
         self.refresh_timeout = refresh_timeout
         self.lock = threading.Lock()
         self.refreshing = threading.Lock()
+        self.pushing = threading.Lock()
         self.load()
 
     def load(self):
@@ -179,6 +190,49 @@ class App:
         finally:
             self.refreshing.release()
 
+    def push_plan(self):
+        """Pull the store into the sidecars, then plan the push against the live sheet (no sheet write)."""
+        import push                                  # imports gws helpers; only needed when pushing
+        if self.ledger is None:
+            raise Refusal(409, "no decision store on this server (--no-store): push from the command line")
+        if not self.pushing.acquire(blocking=False):
+            raise Refusal(409, "a push is already running")
+        try:
+            commodity = (self.data.get("scope") or {}).get("commodity") or "gas"
+            try:
+                with self.lock:
+                    pull.pull(pull.config())
+                plan, skipped, meta = push.build_plan(commodity)
+            except (pull.GwsError, SystemExit) as e:
+                raise Refusal(502, f"could not plan the push: {e}")
+            push.save_plan(plan, meta, commodity)
+            return {"token": push.token(plan), "stale": len(meta.get("__stale__", [])), "skipped": skipped,
+                    "cells": [{k: p[k] for k in ("tab", "cell", "ProjectID", "column", "before", "after")} for p in plan]}
+        finally:
+            self.pushing.release()
+
+    def push_apply(self, token):
+        """Write exactly the last saved plan if its token is `token` (push.apply re-checks every cell)."""
+        import push
+        if self.ledger is None:
+            raise Refusal(409, "no decision store on this server (--no-store): push from the command line")
+        plan_path = ROOT / "work" / "push_plan.json"
+        if not plan_path.exists() or json.loads(plan_path.read_text()).get("token") != token:
+            raise Refusal(409, "that plan is no longer the current one: build the plan again")
+        if not self.pushing.acquire(blocking=False):
+            raise Refusal(409, "a push is already running")
+        out = io.StringIO()
+        try:
+            with self.lock, contextlib.redirect_stdout(out):
+                try:
+                    push.apply(plan_path)
+                except SystemExit as e:
+                    raise Refusal(409, f"nothing more was written: {e}")
+            log = out.getvalue()
+            return {"cells": len(json.loads(plan_path.read_text())["plan"]), "log": log}
+        finally:
+            self.pushing.release()
+
     def decisions(self, label):
         d = self.dirs().get(label)
         if d is None:
@@ -186,7 +240,7 @@ class App:
         return store.latest(store.read_log(d))
 
     def whoami(self):
-        return {"reviewer": self.reviewer, "caps": dict(CAPS, refresh=bool(self.build_argv)),
+        return {"reviewer": self.reviewer, "caps": dict(CAPS, refresh=bool(self.build_argv), push=self.ledger is not None),
                 "store": self.ledger is not None}
 
 
@@ -272,6 +326,20 @@ def make_handler(app):
                 except (Exception, SystemExit) as e:
                     print(f"review app: refresh failed: {e!r}", file=sys.stderr)
                     return self._json({"error": f"refresh failed: {e}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            if path in ("/api/push/plan", "/api/push"):
+                try:
+                    if path == "/api/push/plan":
+                        return self._json(app.push_plan())
+                    n = int(self.headers.get("Content-Length") or 0)
+                    body = json.loads(self.rfile.read(n).decode("utf-8") or "null") or {}
+                    return self._json(app.push_apply(str(body.get("token") or "")))
+                except Refusal as e:
+                    return self._json({"error": str(e)}, e.status)
+                except (ValueError, UnicodeDecodeError):
+                    return self._json({"error": "body is not JSON"}, HTTPStatus.BAD_REQUEST)
+                except Exception as e:
+                    print(f"review app: push failed: {e!r}", file=sys.stderr)
+                    return self._json({"error": f"push failed: {e}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
             if path in ("/api/decide", "/api/item"):
                 try:
                     n = int(self.headers.get("Content-Length") or 0)
@@ -280,8 +348,6 @@ def make_handler(app):
                     return self._json({"error": "body is not JSON"}, HTTPStatus.BAD_REQUEST)
                 try:
                     return self._json({"saved": (app.decide if path == "/api/decide" else app.item)(body)})
-                except store.Contested as e:
-                    return self._json({"error": str(e)}, HTTPStatus.CONFLICT)
                 except store.Invalid as e:
                     return self._json({"error": str(e)}, HTTPStatus.BAD_REQUEST)
                 except ledger.StoreError as e:     # the store refused: nothing recorded anywhere

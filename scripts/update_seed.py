@@ -10,8 +10,11 @@ It emits, read-only over the staging dirs:
 
   (a) an UPDATE unit for every line whose live decision is a person's `suggest`: the reviewer
       disagrees with the proposed value and supplies another (pid, sheet_row, column, ref_col,
-      proposed_value, suggested_value, note, reviewer, source dir);
-  (b) a RESEARCH unit for every concern item whose call is `confirmed` or `needs_research`
+      proposed_value, suggested_value, note, reviewer, source dir). A suggest that took a validity
+      concern's candidate (`rival` = the concern's key; review_app/store.py) also carries
+      `rival_concern` + `rival_text`, and that concern yields NO research unit of its own: the
+      line answers it;
+  (b) a RESEARCH unit for every other concern item whose call is `confirmed` or `needs_research`
       (pid, concern_type, contested columns, text, note, call, source dir).
 
 Output (default `batches/<scope>/staging/update-seed-<YYYYMMDD>/staged_updates_seed.json`) follows
@@ -119,7 +122,7 @@ def collect(dirs, label=None):
     """-> (units, stats). Pure read over the dirs' staged stores and decision sidecars."""
     from decisions import Decisions                  # lazy (imports review_data)
     label = label or staged_store.dir_label
-    units, stats = [], {"dirs": 0, "dirs_with_decisions": 0, "suggest": 0, "research": 0}
+    units, stats = [], {"dirs": 0, "dirs_with_decisions": 0, "suggest": 0, "research": 0, "answered_by_suggest": 0}
     for d in dirs:
         d = Path(d)
         stats["dirs"] += 1
@@ -127,13 +130,15 @@ def collect(dirs, label=None):
             continue
         stats["dirs_with_decisions"] += 1
         dec = Decisions(d)
-        for group, kind, rec, probe in dir_records(d):
-            r = dec.for_record(probe, kind)
-            if not r:
-                continue
-            if r.get("via"):
-                continue        # a covered record repeats its status line's call: one suggestion, one unit
+        found = [(g, k, rec, probe, dec.for_record(probe, k)) for g, k, rec, probe in dir_records(d)]
+        found = [x for x in found if x[4] and not x[4].get("via")]   # a covered record repeats its status line's call: one unit
+        concerns = {r.get("key"): rec for g, k, rec, probe, r in found if g == "item" and k == "concern"}
+        answered = {r["rival"] for g, k, rec, probe, r in found
+                    if g == "line" and r.get("decision") == "suggest" and r.get("rival")
+                    and dec.person_decision(probe, k) == "suggest"}
+        for group, kind, rec, probe, r in found:
             if group == "line" and r.get("decision") == "suggest" and dec.person_decision(probe, kind) == "suggest":
+                rc = concerns.get(r.get("rival")) if r.get("rival") else None
                 units.append({
                     "unit_type": "update", "project_id": probe["project_id"],
                     "pipeline_name": rec.get("pipeline_name") or rec.get("name") or "",
@@ -141,9 +146,13 @@ def collect(dirs, label=None):
                     "kind": kind, "column": _column(rec, kind), "ref_col": r.get("ref_col") or rec.get("ref_col", ""),
                     "proposed_value": _proposed(rec, kind), "suggested_value": r.get("suggested_value", ""),
                     "note": r.get("note", ""), "reviewer": r.get("reviewer"), "decided_at": r.get("ts"),
-                    "source_dir": label(d), "key": r.get("key")})
+                    "source_dir": label(d), "key": r.get("key"),
+                    "rival_concern": r.get("rival") or "", "rival_text": _text(rc) if rc else ""})
                 stats["suggest"] += 1
             elif group == "item" and kind == "concern" and r.get("call") in UNIT_CALLS and not r.get("undecided"):
+                if r.get("key") in answered:
+                    stats["answered_by_suggest"] += 1
+                    continue        # its candidate was taken on a line: the update unit above carries it
                 units.append({
                     "unit_type": "research", "project_id": probe["project_id"],
                     "pipeline_name": rec.get("pipeline_name") or "",
@@ -167,7 +176,8 @@ def rows_from_units(units):
             row["changes"][u["column"]] = {
                 "old": "", "new": u["suggested_value"], "action": "suggest", "tier": "", "ref_col": u["ref_col"],
                 "refs": [], "evidence": u["note"], "proposed_value": u["proposed_value"],
-                "reviewer": u["reviewer"], "source_dir": u["source_dir"]}
+                "reviewer": u["reviewer"], "source_dir": u["source_dir"],
+                "rival_concern": u.get("rival_concern", ""), "rival_text": u.get("rival_text", "")}
         else:
             row["research"].append({k: u[k] for k in ("concern_type", "contested_columns", "text", "call", "note",
                                                       "reviewer", "source_dir")})
@@ -205,7 +215,8 @@ def main(argv=None):
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(seed, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"update seed {a.country} {a.commodity}: {stats['suggest']} update unit(s) from suggest lines, "
-          f"{stats['research']} research unit(s) from concerns, {stats['dirs_with_decisions']} of {stats['dirs']} "
+          f"{stats['research']} research unit(s) from concerns ({stats['answered_by_suggest']} answered by a suggest "
+          f"that took their candidate), {stats['dirs_with_decisions']} of {stats['dirs']} "
           f"dir(s) carry decisions -> {out}")
     return seed
 

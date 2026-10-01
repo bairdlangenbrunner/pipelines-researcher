@@ -125,6 +125,20 @@ def _write(d, name, obj):
     (d / name).write_text(json.dumps(obj))
 
 
+def relink(data):
+    """Re-run review_data._attach_rivals after a test changed a concern's `contested` on a built
+    dataset (rivals are attached at build time). -> the stats counters."""
+    import review_data
+    stats = {"rivals": 0, "corroborations": 0}
+    for p in data["pipelines"]:
+        for l in p["lines"]:
+            l.pop("rivals", None)
+        for it in p["items"]:
+            it.pop("rival_lines", None)
+        review_data._attach_rivals(p["lines"], p["items"], stats)
+    return stats
+
+
 def make_scope(tmp_path):
     """-> dict(root=<batches root>, data=<data dir>, deep=<dir>, qc=<dir>)."""
     root, data = tmp_path / "batches", tmp_path / "data"

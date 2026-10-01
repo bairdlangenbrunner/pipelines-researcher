@@ -275,3 +275,56 @@ def test_fill_key_names_every_proposed_column(built):
     assert rd._colid(r, "fill") == "ProposalYear+ProposalMonth"
     assert rd._colid(dict(r, class_in="FILL"), "unresolved") == "ProposalYear+ProposalMonth"
     assert rd._colid(dict(r, values={}), "fill") == "ProposalYear"       # nothing proposed: the primary, as before
+
+
+# ---- concerns attached to lines as rivals / corroboration (2026-10-01) -----------------------
+
+def _with_concern(tmp_path, contested, concern_in_qc=True):
+    """Rewrite the P9001 concern's `contested` in the staged JSON (build-time normalization is under test)."""
+    import json
+    s = make_scope(tmp_path)
+    for d in ((s["deep"], s["qc"]) if concern_in_qc else (s["deep"],)):
+        f = d / "staged_resolutions.json"
+        doc = json.loads(f.read_text())
+        for r in doc["resolutions"]:
+            if r.get("ref_col") == "__VALIDITY__" and r["project_id"] == "P9001":
+                r["contested"] = contested
+        f.write_text(json.dumps(doc))
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    return data, stats
+
+
+def test_blank_candidate_is_a_note_never_a_rival(built):
+    data, stats, _ = built
+    (c,) = _find(data, "P9001", "concern")
+    assert c["contested"] == {"Status": ""} and "rival_lines" not in c
+    assert all("rivals" not in l for p in data["pipelines"] for l in p["lines"])
+    assert (stats["rivals"], stats["corroborations"]) == (0, 0)
+
+
+def test_dict_shaped_contested_is_normalized_and_becomes_a_rival(tmp_path):
+    data, stats = _with_concern(tmp_path, {"Status": {"sheet_value": "operating", "corrected_value": "suspended"},
+                                           "Owner1": ["x"], "Length": None})
+    (c,) = _find(data, "P9001", "concern")
+    assert c["contested"] == {"Status": "suspended", "Owner1": "", "Length": ""}
+    (st,) = _find(data, "P9001", "ref", column="Status")
+    (rv,) = st["rivals"]
+    assert (rv["key"], rv["cols"], rv["agrees"], rv["value"], rv["concern_type"]) == \
+        (c["key"], {"Status": "suspended"}, [], "suspended", "duplicate")
+    assert rv["text"] and isinstance(rv["refs"], list)
+    (oo,) = _find(data, "P9001", "oo")
+    assert "rivals" not in oo                                   # Owner1 candidate is blank: nothing to take
+    assert c["rival_lines"] == [st["key"]]
+    assert (stats["rivals"], stats["corroborations"]) == (1, 0)
+
+
+def test_agreeing_candidate_is_corroboration_and_differing_one_a_rival(tmp_path):
+    data, stats = _with_concern(tmp_path, {"Status": "operating", "Owner1": "OldCo"})
+    (c,) = _find(data, "P9001", "concern")
+    (st,), (oo,) = _find(data, "P9001", "ref", column="Status"), _find(data, "P9001", "oo")
+    assert st["rivals"] == [dict(st["rivals"][0], cols={}, agrees=["Status"], value="")]
+    assert oo["rivals"][0]["cols"] == {"Owner1": "OldCo"} and oo["rivals"][0]["value"] == "OldCo"
+    assert c["rival_lines"] == [st["key"], oo["key"]]
+    assert (stats["rivals"], stats["corroborations"]) == (1, 1)
+    assert rd.rival_value({"Owner1": "OldCo"}) == "OldCo"
+    assert rd.rival_value({"Capacity": "7", "CapacityUnits": "bcm/y"}) == "Capacity=7; CapacityUnits=bcm/y"

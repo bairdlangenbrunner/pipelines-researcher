@@ -69,8 +69,6 @@ def python_side(s, steps):
         try:
             fn = store.record_items if kind == "item" else store.decide
             out.append([strip(r) for r in fn(copy.deepcopy(recs), s["dataset"], ME, dirs=s["dirs"])])
-        except store.Contested:
-            out.append(409)
         except store.Invalid:
             out.append(400)
     return out
@@ -129,45 +127,72 @@ def test_bad_requests_are_refused_the_same_way(tmp_path):
     assert len((sheets.get("log") or {}).get("rows") or []) <= 1          # nothing but the header
 
 
-def test_contested_lock_and_item_calls_match(tmp_path):
+def test_a_contested_line_and_its_concern_are_independent_in_both_stores(tmp_path):
     def steps(d):
         k, c = line(d, "P9001", "ref", "Status")["key"], concern(d)["key"]
-        return [("line", [{"key": k, "decision": "accept"}]),              # 409: the concern has no call
+        return [("line", [{"key": k, "decision": "accept"}]),              # never held: the concern has no candidate
                 ("line", [{"key": k, "decision": "hold"}]),
                 ("item", [{"key": c, "call": "dismissed", "note": "checked"}]),
-                ("line", [{"key": k, "decision": "accept"}]),              # unlocked
+                ("line", [{"key": k, "decision": "accept"}]),
                 ("item", [{"key": c, "undo": True}]),
-                ("line", [{"key": k, "decision": "accept"}]),              # locked again
+                ("line", [{"key": k, "decision": "accept"}]),
                 ("item", [{"key": c, "call": "confirmed"}]),
                 ("line", [{"key": k, "decision": "accept"}])]
     py, _, _ = same(tmp_path, steps)
-    assert py[0] == 409 and py[5] == 409 and py[3][0]["decision"] == "accept" and py[7][0]["decision"] == "accept"
+    assert [len(r) for r in py] == [1] * 8 and py[0][0]["decision"] == "accept"
 
 
-def test_a_bulk_with_one_locked_line_saves_nothing(tmp_path):
+def test_a_bulk_with_a_contested_line_saves_both(tmp_path):
     def steps(d):
         return [("line", [{"key": line(d, "P9002", "fill")["key"], "decision": "accept"},
                           {"key": line(d, "P9001", "ref", "Status")["key"], "decision": "accept"}])]
     py, sheets, _ = same(tmp_path, steps)
-    assert py == [409] and len((sheets.get("log") or {}).get("rows") or []) <= 1
+    assert [r["decision"] for r in py[0]] == ["accept", "accept"]
+
+
+def contest(d):
+    concern(d)["contested"] = {"Status": "operating", "Owner1": "OldCo"}
+    review_fixture.relink(d)
 
 
 def test_self_resolving_accept_dismisses_the_concern_in_the_same_write(tmp_path):
-    def contest(d):
-        concern(d)["contested"] = {"Status": "operating", "Owner1": "OldCo"}
-
     def steps(d):
         st, ow = line(d, "P9001", "ref", "Status")["key"], line(d, "P9001", "oo")["key"]
-        return [("line", [{"key": ow, "decision": "accept"}]),             # Owner1 stays contested
+        return [("line", [{"key": ow, "decision": "accept"}]),             # Owner1 differs: no call either way
                 ("line", [{"key": st, "decision": "hold"}]),               # a hold dismisses nothing
                 ("line", [{"key": st, "decision": "accept"}, {"key": line(d, "P9002", "fill")["key"], "decision": "accept"}]),
-                ("line", [{"key": ow, "decision": "accept"}]),             # the dismissal released it
+                ("line", [{"key": ow, "decision": "accept"}]),
                 ("line", [{"key": st, "decision": "accept"}])]             # not dismissed twice
     py, _, _ = same(tmp_path, steps, mutate=contest)
-    assert py[0] == 409 and len(py[1]) == 1
+    assert len(py[0]) == 1 and len(py[1]) == 1
     assert [r.get("call") for r in py[2]] == [None, None, "dismissed"]
     assert py[2][2]["note"] == "resolved by accepted Status fill"
     assert len(py[3]) == 1 and len(py[4]) == 1
+
+
+def test_accept_candidate_matches_the_python_store(tmp_path):
+    def steps(d):
+        st, ow, c = line(d, "P9001", "ref", "Status")["key"], line(d, "P9001", "oo")["key"], concern(d)["key"]
+        return [("line", [{"key": ow, "rival": c, "decision": "accept"}]),          # 400: recorded as suggest only
+                ("line", [{"key": ow, "rival": "nope"}]),                             # 400
+                ("line", [{"key": st, "rival": c}]),                                  # 400: it agrees, no candidate
+                ("line", [{"key": ow, "rival": c}]),                                  # suggest OldCo + confirmed
+                ("line", [{"key": st, "decision": "accept"}]),                        # confirmed already: no dismissal
+                ("line", [{"key": ow, "rival": c, "note": "again"}]),                 # line only
+                ("line", [{"key": ow, "undo": True}])]
+    py, _, _ = same(tmp_path, steps, mutate=contest)
+    assert py[:3] == [400, 400, 400]
+    assert [(r.get("decision"), r.get("call")) for r in py[3]] == [("suggest", None), (None, "confirmed")]
+    assert (py[3][0]["suggested_value"], py[3][0]["rival"], py[3][1]["note"]) == ("OldCo", py[3][1]["key"], "candidate accepted on Owner1")
+    assert len(py[4]) == 1 and len(py[5]) == 1 and py[5][0]["note"] == "again" and py[6][0]["undecided"] is True
+
+
+def test_confirmed_wins_over_dismissed_in_one_request_in_both_stores(tmp_path):
+    def steps(d):
+        st, ow, c = line(d, "P9001", "ref", "Status")["key"], line(d, "P9001", "oo")["key"], concern(d)["key"]
+        return [("line", [{"key": st, "decision": "accept"}, {"key": ow, "rival": c}])]
+    py, _, _ = same(tmp_path, steps, mutate=contest)
+    assert [r.get("call") for r in py[0]] == [None, None, "confirmed"]
 
 
 def test_covered_records_fan_out_with_via(tmp_path):

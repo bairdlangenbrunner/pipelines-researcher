@@ -380,7 +380,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     data_dir = Path(data_dir or ROOT / "data")
     exclude = set(exclude_pids)
     stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
-             "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": []}
+             "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": [],
+             "rivals": 0, "corroborations": 0}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
     entries, rec_csv, rec_own = [], [], []
@@ -512,6 +513,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             (lines if e.group == "line" else items).append(obj)
             recs[obj["key"]] = e.rec
         lines = _fold_status_covers(lines, recs, stats)
+        _attach_rivals(lines, items, stats)
         lines.sort(key=lambda l: (l["_sort"], l["key"]))
         for l in lines:
             del l["_sort"]
@@ -748,6 +750,33 @@ def _fold_status_covers(lines, recs, stats):
     return out
 
 
+def _cand(v):
+    """One contested candidate as the bare string the contract asks for. A few subagents wrote
+    {"sheet_value": ..., "corrected_value": ...} instead (P0231 SegmentLength: the dict was
+    stringified, so the fill proposing its corrected_value was held as a conflict); the same unwrap
+    rule as build_ref_workbook._contested_cols."""
+    if isinstance(v, dict):
+        for k in ("corrected_value", "proposed_value", "value"):
+            if k in v:
+                v = v[k]
+                break
+        else:
+            v = ""
+    if isinstance(v, (dict, list, tuple)):
+        v = ""                                   # a nested shape names no value
+    return "" if v is None else str(v).strip()
+
+
+def _contested_map(raw):
+    """A concern's `contested` field -> {column: candidate string} ("" = the current value is
+    disputed with no candidate). A bare column list is tolerated; anything else is no map."""
+    if isinstance(raw, dict):
+        return {str(k).strip(): _cand(v) for k, v in raw.items() if str(k).strip()}
+    if isinstance(raw, (list, tuple)):
+        return {str(k).strip(): "" for k in raw if str(k).strip()}
+    return {}
+
+
 def _item(e):
     r = e.rec
     obj = {k: v for k, v in r.items() if v not in ("", None, [], {}, False)}
@@ -756,10 +785,63 @@ def _item(e):
         "key": f"{e.dir}::{e.pid}|{e.sheet_row}|{e.colid}",
         "kind": e.kind, "dir": e.dir, "also_in": e.also_in, "sheet_row": e.sheet_row,
         "sheet_row_moved": e.moved,
-        "contested": r.get("contested") or {},
+        "contested": _contested_map(r.get("contested")),
         "default": None, "call": None, "reviewed": False,
     })
     return obj
+
+
+_CONCERN_BODY = ("recommendation", "action", "detail", "summary", "researcher_notes", "staged_note")
+
+
+def _concern_text(it):
+    for k in _CONCERN_BODY:
+        v = it.get(k)
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+    return ""
+
+
+def rival_value(cols):
+    """The suggested_value an accepted candidate records: the bare candidate for one column,
+    `Col=val; Col2=val2` for several."""
+    if len(cols) == 1:
+        return next(iter(cols.values()))
+    return "; ".join(f"{c}={v}" for c, v in cols.items())
+
+
+def _attach_rivals(lines, items, stats):
+    """Fold a validity concern's candidate value onto the line it competes with (Baird
+    2026-10-01, replacing the contested LOCK that held such lines until the concern had a call).
+    For every open-or-not concern with a non-blank candidate on a column C, and every line on
+    this pipeline that proposes a value on C, the line gains a `rivals` entry
+    {key, cols: {C: candidate} where the candidate differs from the proposal, agrees: [columns
+    where it is the same value], value: rival_value(cols), concern_type, text, refs} and the
+    concern gains `rival_lines` [line keys]. A differing candidate is a second proposal the
+    reviewer decides between on the line (accept proposed / accept candidate); an agreeing one is
+    corroboration (a chip). A concern with blank candidates only, or on columns no line proposes,
+    attaches to nothing here: it is the inline contested note and an Items-tab call, as before."""
+    concerns = [it for it in items if it.get("kind") == "concern"
+                and any(str(v).strip() for v in (it.get("contested") or {}).values())]
+    for it in concerns:
+        cont = {c: str(v).strip() for c, v in it["contested"].items() if str(v).strip()}
+        for l in lines:
+            differs, agrees = {}, []
+            for c in sorted(store.line_cols(l) & set(cont)):
+                pv = store.proposed_on(l, c)
+                if pv == "":
+                    continue            # the line proposes nothing on C: no second proposal to weigh
+                (agrees.append(c) if pv == cont[c] else differs.__setitem__(c, cont[c]))
+            if not differs and not agrees:
+                continue
+            l.setdefault("rivals", []).append({
+                "key": it["key"], "cols": differs, "agrees": agrees,
+                "value": rival_value(differs) if differs else "",
+                "concern_type": it.get("concern_type") or "", "text": _concern_text(it),
+                "refs": [u for u in (it.get("proposed_refs") or it.get("refs") or []) if isinstance(u, str)],
+            })
+            it.setdefault("rival_lines", []).append(l["key"])
+            stats["rivals" if differs else "corroborations"] += 1
 
 
 # ---------------------------------------------------------------- CLI
@@ -789,7 +871,8 @@ def summary(data, stats):
            f"lines: {sum(lines.values())}  " + ", ".join(f"{k}={lines[k]}" for k in LINE_KINDS if lines[k]),
            f"items: {sum(items.values())}  " + ", ".join(f"{k}={items[k]}" for k in ITEM_KINDS if items[k]),
            f"dropped N/A records: {stats['dropped_na']}   in_backend lines: {inb}   "
-           f"Status [ref] records folded into their status line: {stats['status_covers']}",
+           f"Status [ref] records folded into their status line: {stats['status_covers']}   "
+           f"concern candidates folded onto lines as rivals: {stats['rivals']} (corroborating: {stats['corroborations']})",
            f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']})   "
            f"sheet_row moved: {stats['moved']}   not in snapshot: {stats['not_in_snapshot']}"]
     if stats.get("done_dropped"):

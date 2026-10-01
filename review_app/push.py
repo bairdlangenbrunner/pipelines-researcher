@@ -243,6 +243,15 @@ def token(plan):
     return hashlib.sha1(json.dumps(plan, sort_keys=True).encode()).hexdigest()[:12]
 
 
+def save_plan(plan, meta, commodity="gas"):
+    """Write work/push_plan.json (what --apply and the review server's push button read)."""
+    out = ROOT / "work" / "push_plan.json"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(json.dumps({"token": token(plan), "commodity": commodity, "plan": plan, "meta": meta,
+                               "stale": meta.get("__stale__", [])}, ensure_ascii=False, indent=1))
+    return out
+
+
 def show(plan, skipped):
     for p in plan:
         a = str(p["after"])
@@ -354,11 +363,7 @@ def main(argv=None):
         return apply(a.apply)
     plan, skipped, meta = build_plan(a.commodity, a.overwrite, a.include_stale)
     show(plan, skipped)
-    out = ROOT / "work" / "push_plan.json"
-    out.parent.mkdir(exist_ok=True)
-    out.write_text(json.dumps({"token": token(plan), "commodity": a.commodity, "plan": plan, "meta": meta,
-                               "stale": meta.get("__stale__", [])}, ensure_ascii=False, indent=1))
-    print("plan written:", out)
+    print("plan written:", save_plan(plan, meta, a.commodity))
 
 
 if __name__ == "__main__":

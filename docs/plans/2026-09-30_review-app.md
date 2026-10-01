@@ -272,9 +272,9 @@ Everything from the LNG UI, with these pipelines changes:
   "single source" chip when publishers < 2** (rule 4: status change stays green only on 2+);
   `oo` carries an "owners tab" chip; `route` shows length vs sheet length, ratio, suggested
   accuracy, QC pass, and a link to the geojson; `new_row` shows the whole candidate row.
-- **Contested values** render orange on the *current* value, with the concern inline; the card's
-  lines on that column are held until the concern has a call (linked-pair behaviour, like
-  Name ↔ Other names in LNG).
+- **Contested values** render orange on the *current* value, with the concern inline. *Changed
+  2026-10-01:* the lines on that column are never held (the LNG-style linked-pair lock is gone);
+  a differing candidate is a rival row on the line with its own accept (milestone 8).
 - **Filters**: decision state, kind, tier, class_out, dir, column, contested, single-source status,
   owners-tab, `in_backend`. Counts update live.
 - **Items tab**: per kind, with the call form (`agree | disagree | defer` + note for concerns and
@@ -381,14 +381,14 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
 1. `review_app/` skeleton + `review_data.py` + fixture + tests; build the dataset for one real
    scope (Russia gas R7, 531 records, or Egypt gas) and eyeball kinds and counts.
 2. Server + Store + read-only UI (queue, cards by kind, filters, keyboard).
-3. Decisions, undo, contested linking, `review_log.jsonl` / `review_decisions.json` + tests.
+3. Decisions, undo, contested linking (the lock, replaced in milestone 8), `review_log.jsonl` / `review_decisions.json` + tests.
 4. Bulk with confirm; Items tab with calls; session summary; sync backend.
 5. Suggest + `update_seed.py`; `build_ref_workbook.py --decisions`; `staged_summary` counts;
    `apply_route_candidates.py --decisions`.
 6. README + doc updates; **self-resolving concerns** (Baird 2026-09-30): when an open concern's
    `contested[col]` value equals a fill/status line's proposed value on that column, the fill IS
    the resolution — the line is not locked, and accepting it records a `dismissed` call on the
-   concern (note "resolved by accepted <col> fill") so the other contested columns unlock too;
+   concern (note "resolved by accepted <col> fill") — "unlock" is moot since milestone 8;
    first seen on P2227 StartYear1 (R7). Acceptance: Baird decides one real pending scope end to
    end and rebuilds its handoff actions workbook from the decisions.
 7. **One card per status call** (Baird 2026-09-30, built): a status-review line and the refs-leg
@@ -397,6 +397,18 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
    every covered key in the same transaction (`via` = the line's key), so the staged records
    stay separate on disk and the consumers are unchanged. A ref record backing a different
    status stays its own card. First seen on P2227 (R7); detail in `review_app/README.md`.
+8. **Concerns as rivals, never a lock** (Baird 2026-10-01, built): the contested lock held 472 of
+   7,795 Russia + US gas lines until an Items-tab call, 303 of them for a concern that already
+   offered a differing candidate and 164 for a concern with no candidate at all. Now
+   `review_data._attach_rivals` folds each concern's candidate onto the lines on that column:
+   differing → a `rivals` entry (candidate, concern text, refs) rendered as a third orange row with
+   **accept candidate** (`c`), stored as a `suggest` carrying `rival` + a `confirmed` call on the
+   concern in the same write; equal → corroboration (chip) and the milestone-6 dismissal; blank →
+   the inline note only. `store.Contested`/409, `locked_by` and the GAS mirror are deleted;
+   `publish.make_index` ships `concerns: [{c, res, cand, cols}]` per line and `Code.gs` validates
+   and writes the same calls (`concernCalls_`). `update_seed` treats a concern whose candidate a
+   live suggest took as answered (the update unit carries `rival_concern`/`rival_text`).
+   Dict-shaped candidates (`{sheet_value, corrected_value}`, 5 lines) normalize at build time.
 
 **Phase 1b** (ruling 1 passed): `push.py` + tests + CLAUDE.md wording; first push on a scope with
 < 50 accepted cells, backups committed.

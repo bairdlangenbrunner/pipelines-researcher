@@ -14,9 +14,9 @@
  *
  * The validation here is a port of review_app/store.py (validate / validate_items / decide):
  * tests/test_review_gas.py runs both against the same requests and compares the records.
- * What a line may lock on or resolve is precomputed by publish.py (the scope's index file, packed
- * by publish.pack_index and unpacked one entry at a time by get_ here), so the column logic lives
- * in Python only.
+ * What a line resolves, and which concern candidate it may take instead of its proposal, is
+ * precomputed by publish.py (the scope's index file, packed by publish.pack_index and unpacked one
+ * entry at a time by get_ here), so the column logic lives in Python only.
  */
 var LOG_TAB = 'log';
 var COLS = ['ts', 'reviewer', 'rec', 'pid', 'sheet_row', 'ref_col', 'kind', 'decision', 'call', 'suggested_value',
@@ -137,7 +137,7 @@ function index_(sc) {
 }
 /** One key's entry from the packed index (publish.pack_index), or null. A line:
  *  {g:'l', kind, dir, pid, sheet_row, ref_col, def, basis, covers: [{key, dir, sheet_row, ref_col, kind}],
- *   lock: [{c: concern key, held: [col], res: [col]}]}; an item: {g:'i', kind, dir, pid, call0}. */
+ *   concerns: [{c: concern key, res: [col], cand: candidate value, cols: [col]}]}; an item: {g:'i', kind, dir, pid, call0}. */
 function get_(I, key) {
   if (typeof key !== 'string') return null;
   if (!I.m) {
@@ -156,7 +156,7 @@ function get_(I, key) {
            covers: (c.v || []).map(function (x) {
              return {key: x[0], dir: x[0].substr(0, x[0].indexOf('::')), sheet_row: x[1] == null ? null : x[1], ref_col: x[2] || '', kind: x[3]};
            }),
-           lock: (c.l || []).map(function (x) { return {c: x[0], held: x[1] || [], res: x[2] || []}; })};
+           concerns: (c.x || []).map(function (x) { return {c: x[0], res: x[1] || [], cand: x[2] || '', cols: x[3] || []}; })};
     }
   }
   I.m[key] = out;
@@ -235,9 +235,10 @@ function entry_(idx, r, i) {
   if (!e) throw refuse_(400, 'record ' + i + ': unknown key ' + JSON.stringify(r.key));
   return e;
 }
-/** store.validate: normalised line records, each followed by its cover records. `open(key)` says
- *  whether a concern still has no call (the state BEFORE this request). */
-function validateLines_(records, idx, open) {
+/** store.validate: normalized line records, each followed by its cover records. A record may
+ *  instead carry `rival` = a concern key: the concern's candidate is taken instead of the
+ *  proposal, stored as a suggest with that value. */
+function validateLines_(records, idx) {
   list_(records, 'decision');
   var out = [];
   records.forEach(function (r, i) {
@@ -245,19 +246,22 @@ function validateLines_(records, idx, open) {
     if (e.g !== 'l' || LINE_KINDS.indexOf(e.kind) < 0) throw refuse_(400, 'record ' + i + ': ' + JSON.stringify(key) + ' is an item, not a line');
     var undo = !!(r.undo || r.undecided), decision = r.decision;
     if (undo && !decision) decision = e.def || 'hold';        // an undo record still carries a decision field
+    var rival = (!undo && r.rival) ? String(r.rival) : '';
+    if (rival && !decision) decision = 'suggest';
     if (!undo && !decision) throw refuse_(400, 'record ' + i + ': no decision given (a bare key never defaults to accept)');
     if (DECISIONS.indexOf(decision) < 0) throw refuse_(400, 'record ' + i + ': decision ' + JSON.stringify(decision) + ' is not one of ' + DECISIONS.join(', '));
     var note = text_(r.note, i, 'note'), sv = text_(r.suggested_value, i, 'suggested value');
-    if (decision === 'suggest' && !undo && !(sv.trim() || note.trim())) throw refuse_(400, 'record ' + i + ': a suggestion needs a suggested_value or a note');
-    if (decision === 'accept' && !undo) {
-      var held = {};
-      (e.lock || []).forEach(function (lk) { if (open(lk.c)) (lk.held || []).forEach(function (c) { held[c] = 1; }); });
-      held = Object.keys(held).sort();
-      if (held.length) throw refuse_(409, 'record ' + i + ': ' + JSON.stringify(key) + ' is held: a validity concern contests ' + held.join(', ') + ' and has no call yet');
+    if (rival) {
+      var rv = (e.concerns || []).filter(function (x) { return x.c === rival && x.cand; })[0];
+      if (!rv) throw refuse_(400, 'record ' + i + ': ' + JSON.stringify(rival) + ' is not a concern with a candidate value on ' + JSON.stringify(key));
+      if (decision !== 'suggest') throw refuse_(400, 'record ' + i + ': taking a concern\'s candidate is recorded as suggest, not ' + decision);
+      sv = sv.trim() || rv.cand;
     }
+    if (decision === 'suggest' && !undo && !(sv.trim() || note.trim())) throw refuse_(400, 'record ' + i + ': a suggestion needs a suggested_value or a note');
     var rec = {key: key, dir: e.dir, pid: e.pid, sheet_row: e.sheet_row == null ? null : e.sheet_row, ref_col: e.ref_col || '',
                kind: e.kind, decision: decision, suggested_value: sv, note: note, reviewer: null, ts: null, undecided: undo};
     if (e.basis) rec.basis = e.basis;
+    if (rival) rec.rival = rival;
     out.push(rec);
     (e.covers || []).forEach(function (c) {       // store.cover_records: the same call on every covered record
       var cr = {};
@@ -282,23 +286,39 @@ function validateItems_(records, idx) {
             reviewer: null, ts: null, undecided: undo};
   });
 }
-/** The second half of store.decide: a person's accept of a line that IS the resolution of an open
- *  concern also dismisses that concern, in the same write. */
-function selfResolved_(recs, idx, open) {
-  var cols = {}, order = [];
+/** store.concern_calls, the second half of store.decide: a person's accept of a line that IS the
+ *  resolution of an open concern dismisses it, and a `rival` suggest confirms the concern whose
+ *  candidate it took (unless already confirmed), in the same write. `callOf(key)` is the concern's
+ *  call BEFORE this request ('' = open). A confirmation wins over a dismissal of the same concern. */
+function concernCalls_(recs, idx, callOf) {
+  var calls = {}, order = [];
+  function put(k, call, cols) {
+    if (!has_(calls, k)) order.push(k);
+    calls[k] = {call: call, cols: cols};
+  }
   recs.forEach(function (r) {
-    if (r.decision !== 'accept' || r.undecided || r.via) return;
-    (get_(idx, r.key).lock || []).forEach(function (lk) {
-      if (!open(lk.c)) return;
-      (lk.res || []).forEach(function (col) {
-        if (!cols[lk.c]) { cols[lk.c] = []; order.push(lk.c); }
-        if (cols[lk.c].indexOf(col) < 0) cols[lk.c].push(col);
+    if (r.undecided || r.via) return;
+    var e = get_(idx, r.key);
+    if (r.decision === 'accept') {
+      (e.concerns || []).forEach(function (x) {
+        if (callOf(x.c) || !(x.res || []).length) return;
+        var cur = calls[x.c];
+        if (cur && cur.call === 'confirmed') return;
+        var cols = cur ? cur.cols.slice() : [];
+        x.res.forEach(function (col) { if (cols.indexOf(col) < 0) cols.push(col); });
+        put(x.c, 'dismissed', cols);
       });
-    });
+    } else if (r.decision === 'suggest' && r.rival) {
+      if (callOf(r.rival) === 'confirmed') return;
+      var rv = (e.concerns || []).filter(function (x) { return x.c === r.rival; })[0];
+      put(r.rival, 'confirmed', rv.cols.slice());
+    }
   });
   if (!order.length) return [];
   return validateItems_(order.map(function (k) {
-    return {key: k, call: 'dismissed', note: 'resolved by accepted ' + cols[k].join(', ') + ' fill'};
+    var v = calls[k];
+    return {key: k, call: v.call, note: v.call === 'dismissed'
+      ? 'resolved by accepted ' + v.cols.join(', ') + ' fill' : 'candidate accepted on ' + v.cols.join(', ')};
   }), idx);
 }
 
@@ -322,9 +342,9 @@ function write_(scopeId, ver, records, cursor, items) {
           if (r.reviewer !== reviewer) theirs[r.key] = r;
         }
       });
-      var open = function (k) {
+      var callOf = function (k) {       // a concern's call as of now ('' = open)
         var e = get_(idx, k);
-        return !!e && !(has_(calls, k) ? calls[k] : e.call0);
+        return e ? (has_(calls, k) ? calls[k] : e.call0) || '' : '';
       };
       // someone else decided one of these since this page last heard from the store: refuse the
       // whole request, hand the page their records, and let the reviewer look before pressing again
@@ -337,8 +357,8 @@ function write_(scopeId, ver, records, cursor, items) {
             {stale: true, records: newer, cursor: st.last});
         }
       }
-      var recs = items ? validateItems_(records, idx) : validateLines_(records, idx, open);
-      if (!items) recs = recs.concat(selfResolved_(recs, idx, open));
+      var recs = items ? validateItems_(records, idx) : validateLines_(records, idx);
+      if (!items) recs = recs.concat(concernCalls_(recs, idx, callOf));
       var ts = now_(), batch = Utilities.getUuid();
       recs.forEach(function (r) {
         r.reviewer = reviewer; r.ts = ts;

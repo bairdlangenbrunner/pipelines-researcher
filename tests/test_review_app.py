@@ -78,10 +78,11 @@ def test_whoami(live):
     assert w["caps"] == {"decide": True, "refresh": False, "push": False}
 
 
-def test_absent_routes_and_refresh_refused_without_build(live):
+def test_push_refused_without_store_and_refresh_refused_without_build(live):
     base, _, _ = live
     for p in ("/api/push/plan", "/api/push"):
-        assert post(base + p)[0] == 404
+        st, body = post(base + p)                        # POST only; this App has no decision store
+        assert st == 409 and "no decision store" in body["error"]
         assert get(base + p)[0] == 404
     assert get(base + "/api/refresh")[0] == 404          # POST only
     st, body = post(base + "/api/refresh")               # this App was not built (= --no-build)

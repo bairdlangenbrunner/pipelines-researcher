@@ -245,8 +245,10 @@ def make_watch(data):
 
 def make_index(data):
     """What Code.gs needs to validate a request without the dataset: see the module docstring of
-    review_app/gas/Code.gs. Column logic (line_cols / resolves) stays in store.py; this only
-    precomputes its answers per line."""
+    review_app/gas/Code.gs. Column logic (line_cols / resolves / rivals) stays in store.py and
+    review_data.py; this only precomputes its answers per line: `concerns` = [{c: concern key,
+    res: [columns the line's accept resolves], cand: the concern's candidate value a `rival`
+    suggest takes ("" when it has none that differs), cols: the columns that candidate covers}]."""
     keys = {}
     for p in data.get("pipelines", []):
         concerns = [it for it in p.get("items", [])
@@ -259,14 +261,15 @@ def make_index(data):
                        "ref_col": c.get("ref_col") or "", "kind": c["kind"]} for c in l.get("covers") or []]
             if covers:
                 e["covers"] = covers
-            lock = []
+            xs = []
             for c in concerns:
                 res = store.resolves(l, c)
-                held = sorted((store.line_cols(l) & set(c["contested"])) - set(res))
-                if held or res:
-                    lock.append({"c": c["key"], "held": held, "res": res})
-            if lock:
-                e["lock"] = lock
+                rv = store.rival_of(l, c["key"])
+                cand = rv["value"] if rv else ""
+                if res or cand:
+                    xs.append({"c": c["key"], "res": res, "cand": cand, "cols": sorted(rv["cols"]) if rv else []})
+            if xs:
+                e["concerns"] = xs
             keys[l["key"]] = e
         for it in p.get("items", []):
             keys[it["key"]] = {"g": "i", "kind": it["kind"], "dir": it["dir"], "pid": p["pid"],
@@ -279,7 +282,7 @@ def pack_index(index):
     Every key is "<dir>::<rest>" and the dir label is most of its length, so the keys are grouped
     by dir and the label is stored once: {"v": 2, "dirs": [label], "keys": [{rest: entry}]}, the
     two lists aligned. A line entry is {k kind, p pid, r sheet_row, c ref_col, d default (left out
-    when "accept"), b basis, v [[cover key, sheet_row, ref_col, kind]], l [[concern key, held, res]]};
+    when "accept"), b basis, v [[cover key, sheet_row, ref_col, kind]], x [[concern key, res, cand, cols]]};
     an item entry is {i kind, p pid, c0 the call the published dataset already holds}. Empty
     fields are left out. For the two-country gas batch this is 1.5 MB instead of 3.9."""
     dirs, groups = [], []
@@ -307,8 +310,8 @@ def pack_index(index):
                     if x["key"].partition("::")[0] != x["dir"]:
                         raise SystemExit(f"cover key {x['key']!r} does not start with its dir")
                 c["v"] = [[x["key"], x.get("sheet_row"), x.get("ref_col") or "", x["kind"]] for x in e["covers"]]
-            if e.get("lock"):
-                c["l"] = [[x["c"], x["held"], x["res"]] for x in e["lock"]]
+            if e.get("concerns"):
+                c["x"] = [[x["c"], x["res"], x["cand"], x["cols"]] for x in e["concerns"]]
         groups[dirs.index(d)][rest] = c
     return {"v": 2, "dirs": dirs, "keys": groups, "w": index.get("watch") or {}, "cmd": index.get("commodity") or ""}
 
@@ -434,7 +437,7 @@ def drive_scopes(files, tmp, gws=pull_mod.gws):
     hit = sorted((f for f in files if f["name"] == "scopes.json"), key=lambda f: f.get("modifiedTime", ""))
     if not hit:
         return {"scopes": []}, None
-    # gws prints an alt=media body to stdout and does not honour -o for it, so read stdout
+    # gws prints an alt=media body to stdout and does not honor -o for it, so read stdout
     out = gws(pull_mod.READ_PROFILE, "drive", "files", "get", "--params",
               json.dumps({"fileId": hit[-1]["id"], "alt": "media", "supportsAllDrives": True}), parse=False)
     return json.loads(out[out.index("{"):]), hit[-1]["id"]

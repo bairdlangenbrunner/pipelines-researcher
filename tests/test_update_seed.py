@@ -81,3 +81,23 @@ def test_no_decision_files_is_an_empty_seed_and_exit_zero(scope, capsys):
     assert seed["units"] == [] and seed["rows"] == {}
     assert "0 update unit(s)" in capsys.readouterr().out
     assert not list(scope["root"].rglob("review_log.jsonl"))          # read-only: nothing written into staging
+
+
+def test_a_concern_whose_candidate_was_taken_is_answered_not_researched(scope, capsys):
+    d = scope["dataset"]
+    owner, concern = _line(d, "P9001", "oo"), _item(d, "concern")
+    concern["contested"] = {"Status": "operating", "Owner1": "OldCo"}
+    review_fixture.relink(d)
+    store.decide([{"key": owner["key"], "rival": concern["key"]}], d, "BL", dirs=scope["dirs"])
+    seed = run(scope)
+    assert [u["unit_type"] for u in seed["units"]] == ["update"]            # confirmed, but answered by the suggest
+    u = seed["units"][0]
+    assert (u["column"], u["suggested_value"], u["rival_concern"]) == ("Owner1", "OldCo", concern["key"])
+    assert u["rival_text"]
+    ch = seed["rows"]["P9001"]["changes"]["Owner1"]
+    assert ch["new"] == "OldCo" and ch["rival_concern"] == concern["key"] and ch["rival_text"] == u["rival_text"]
+    assert seed["rows"]["P9001"].get("research", []) == []
+    assert "1 answered by a suggest" in capsys.readouterr().out
+    # undo the suggest: the confirmed concern is research again
+    store.decide([{"key": owner["key"], "undo": True}], d, "BL", dirs=scope["dirs"])
+    assert [u["unit_type"] for u in run(scope)["units"]] == ["research"]
