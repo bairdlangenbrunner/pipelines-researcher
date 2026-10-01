@@ -33,9 +33,16 @@ same way, so countries added to the batch since startup come in on the next refr
                            person decided -> {"snapshot", "lines", "synced"}. 409 when the server
                            was started with --no-build; 502 / 504 when the pull fails / times out.
 
-/api/push/plan and /api/push do not exist yet (404). The only things written are the two decision
-sidecars inside the staging dirs named by the dataset (and, on refresh, data/ snapshots by the pull
-script and the rebuilt dataset file).
+/api/push/plan and /api/push do not exist yet (404): accepted cells reach the sheet only through
+review_app/push.py (plan, ask Baird, --apply).
+
+Every decision goes to the Google decision store FIRST (review_app/ledger.py: the `log` tab of the
+store spreadsheet in review_app/google.json, origin 'local') and to the staging dir's sidecars second;
+the store is the single source of truth the served Google page, pull.py, publish.py and push.py all
+share. A store that cannot be written refuses the decision (502, nothing recorded anywhere).
+--no-store (tests, dev) writes the sidecars alone and says so. Otherwise the only things written are
+the two decision sidecars inside the staging dirs named by the dataset (and, on refresh, data/
+snapshots by the pull script and the rebuilt dataset file).
 """
 import argparse
 import gzip
@@ -58,7 +65,9 @@ for p in (ROOT / "scripts", HERE):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+import ledger  # noqa: E402
 import paths  # noqa: E402
+import pull  # noqa: E402
 import review_data  # noqa: E402
 import store  # noqa: E402
 
@@ -92,9 +101,10 @@ class App:
     """Server state: the dataset bytes (plus a gzipped copy) and who is reviewing."""
 
     def __init__(self, data_path, reviewer, batches_root=None, build_argv=None, refresh_cmd=None,
-                 refresh_timeout=REFRESH_TIMEOUT):
+                 refresh_timeout=REFRESH_TIMEOUT, ledger=None):
         self.data_path = Path(data_path)
         self.reviewer = store.initials(reviewer)     # people are recorded by initials
+        self.ledger = ledger                         # ledger.Ledger (store first) or None (sidecars alone)
         self.batches_root = Path(batches_root) if batches_root else ROOT / "batches"
         self.build_argv = list(build_argv) if build_argv else None    # review_data.main args; None = --no-build
         self.refresh_cmd = list(refresh_cmd) if refresh_cmd else list(REFRESH_CMD)
@@ -119,17 +129,25 @@ class App:
     def dirs(self):
         return store.dir_paths(self.data, self.batches_root.parent)
 
+    def sink(self, origin="local"):
+        """The write path for store.*: the ledger's (store first), or None = sidecars alone."""
+        if self.ledger is None:
+            return None
+        self.ledger.origin = origin
+        self.ledger.scope, self.ledger.snapshot = ledger.scope_of(self.data)
+        return self.ledger.sink
+
     def decide(self, records):
         """store.decide under this server's lock; the dataset on disk is never rewritten (the
         page overlays the returned records; a rebuild overlays the sidecars). The overlay runs
         first so the contested lock sees item calls made since the last /api/data."""
         with self.lock:
             store.overlay(self.data, self.dirs())
-            return store.decide(records, self.data, self.reviewer, self.dirs())
+            return store.decide(records, self.data, self.reviewer, self.dirs(), sink=self.sink())
 
     def item(self, records):
         with self.lock:
-            return store.record_items(records, self.data, self.reviewer, self.dirs())
+            return store.record_items(records, self.data, self.reviewer, self.dirs(), sink=self.sink())
 
     def refresh(self):
         """Pull the live sheet via refresh_cmd, rebuild, reload, backend-sync. Raises Refusal
@@ -154,7 +172,7 @@ class App:
                 self.load()
                 store.overlay(self.data, self.dirs())
                 snap = self.data.get("scope", {}).get("snapshot", "")
-                synced = store.sync_backend(self.data, self.dirs(), snap)
+                synced = store.sync_backend(self.data, self.dirs(), snap, sink=self.sink("sync"))
                 store.overlay(self.data, self.dirs())
                 n = sum(len(p.get("lines", [])) for p in self.data.get("pipelines", []))
             return {"snapshot": snap, "lines": n, "synced": len(synced)}
@@ -168,7 +186,8 @@ class App:
         return store.latest(store.read_log(d))
 
     def whoami(self):
-        return {"reviewer": self.reviewer, "caps": dict(CAPS, refresh=bool(self.build_argv))}
+        return {"reviewer": self.reviewer, "caps": dict(CAPS, refresh=bool(self.build_argv)),
+                "store": self.ledger is not None}
 
 
 def make_handler(app):
@@ -265,6 +284,9 @@ def make_handler(app):
                     return self._json({"error": str(e)}, HTTPStatus.CONFLICT)
                 except store.Invalid as e:
                     return self._json({"error": str(e)}, HTTPStatus.BAD_REQUEST)
+                except ledger.StoreError as e:     # the store refused: nothing recorded anywhere
+                    print(f"review app: store write failed: {e!r}", file=sys.stderr)
+                    return self._json({"error": f"decision store unreachable, nothing saved: {e}"}, HTTPStatus.BAD_GATEWAY)
                 except Exception as e:     # a failed write (the log was rolled back): say so loudly
                     print(f"review app: write failed: {e!r}", file=sys.stderr)
                     return self._json({"error": f"write failed: {e}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
@@ -297,6 +319,11 @@ def main(argv=None):
     ap.add_argument("--data", default=None, help="dataset path (default work/review_data.json)")
     ap.add_argument("--reviewer", default=None,
                     help="default: git config user.name; recorded as initials (store.initials)")
+    ap.add_argument("--reviewer-email", default=None,
+                    help="the address written on this person's rows in the Google decision store "
+                         "(default: the gws-gem-write account's address)")
+    ap.add_argument("--no-store", action="store_true",
+                    help="DEV/TESTS ONLY: write the staging-dir sidecars alone, skipping the Google decision store")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8766)
     ap.add_argument("--no-open", action="store_true", help="do not open the browser")
@@ -321,10 +348,27 @@ def main(argv=None):
         review_data.main(build)
     elif not data_path.exists():
         raise SystemExit(f"{data_path} not found: run without --no-build, or pass --data")
-    app = App(data_path, args.reviewer or git_user(), build_argv=None if args.no_build else build)
+    led = None
+    if args.no_store:
+        print("review app: --no-store: decisions go to the staging-dir sidecars ONLY and will not be in the "
+              "Google decision store (the served page, publish.py and push.py will not see them)", file=sys.stderr)
+    else:
+        cfg = pull.config()
+        if not cfg.get("store_sheet_id"):
+            raise SystemExit("no decision store configured (review_app/google.json: store_sheet_id); "
+                             "pass --no-store only for dev/tests")
+        email = args.reviewer_email or ledger.whoami()
+        if not email:
+            raise SystemExit("cannot read the store account's address (gws-gem-write auth?): pass --reviewer-email, "
+                             "or run `gws-gem-write auth login` yourself (needs a browser)")
+        data0 = json.loads(data_path.read_text(encoding="utf-8"))
+        led = ledger.Ledger(cfg["store_sheet_id"], *ledger.scope_of(data0), "local", reviewer_email=email)
+    app = App(data_path, args.reviewer or git_user(), build_argv=None if args.no_build else build, ledger=led)
     httpd = make_server(app, args.host, args.port)
     url = f"http://{args.host}:{httpd.server_address[1]}/"
-    print(f"review app: {url}  (reviewer: {app.reviewer}; decisions write to each staging dir's review_log.jsonl; Ctrl-C to stop)", file=sys.stderr)
+    where = (f"decisions write to the Google decision store ({led.scope}, as {led.reviewer_email}) then to each "
+             "staging dir's review_log.jsonl" if led else "decisions write to each staging dir's review_log.jsonl ONLY")
+    print(f"review app: {url}  (reviewer: {app.reviewer}; {where}; Ctrl-C to stop)", file=sys.stderr)
     if not args.no_open:
         webbrowser.open(url)
     try:

@@ -14,7 +14,7 @@ import server
 import store
 
 KEYS = ("key", "dir", "pid", "sheet_row", "ref_col", "kind", "decision", "suggested_value",
-        "note", "reviewer", "ts", "undecided")
+        "note", "reviewer", "ts", "undecided", "basis")      # basis: review_data.basis of the line as decided
 
 
 @pytest.fixture
@@ -660,6 +660,7 @@ def test_deciding_a_status_line_writes_the_covered_record_too(covered):
     assert [r["key"] for r in saved] == [st["key"], c["key"]]
     mine, cov = saved
     assert tuple(mine) == KEYS and tuple(cov) == KEYS + ("via",)
+    assert mine["basis"] == st["basis"] and len(mine["basis"]) == 12
     assert (cov["via"], cov["kind"], cov["ref_col"], cov["decision"], cov["reviewer"], cov["ts"]) == \
         (st["key"], "fill", "Status [ref]", "accept", "BL", mine["ts"])
     derived = json.loads(sidecars(covered, st)[1].read_text())["decisions"]

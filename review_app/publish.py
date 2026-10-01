@@ -69,6 +69,7 @@ for p in (ROOT / "scripts", HERE):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+import ledger  # noqa: E402
 import paths  # noqa: E402
 import pull as pull_mod  # noqa: E402
 import review_data  # noqa: E402
@@ -79,15 +80,11 @@ import store  # noqa: E402
 ET = ZoneInfo("America/New_York")
 PART_BYTES = 2_500_000          # raw JSON per part; gzips to well under 1 MB
 SCOPE_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
-BASIS_FIELDS = ("current", "current_ref", "current_status", "current_route_accuracy")
+BASIS_FIELDS = review_data.BASIS_FIELDS
+basis = review_data.basis          # review_data.build stamps it on every line; kept here for callers
 
 
 # ---- basis, drift, orphans ---------------------------------------------------------
-
-def basis(line):
-    """12 hex chars standing for the backend cells this line's proposal was judged against."""
-    blob = json.dumps([line.get(f) for f in BASIS_FIELDS], sort_keys=True, ensure_ascii=True)
-    return hashlib.sha1(blob.encode("ascii")).hexdigest()[:12]
 
 
 def _logs(data, dirs):
@@ -156,10 +153,11 @@ def orphans(data, dirs):
     return [r for _, r in _orphans(known_keys(data), _logs(data, dirs), dirs)]
 
 
-def carry_forward(data, dirs):
+def carry_forward(data, dirs, sink=None):
     """Re-key the person decisions that a renumbered sheet row orphaned (module docstring, step 5).
-    Appends the copies to the logs (store.append_records: time and reviewer kept) and returns
-    them; the caller overlays the dataset again. Carried only when the match is beyond doubt:
+    Appends the copies to the logs (store.append_records: time and reviewer kept; `sink` = the
+    ledger's, so the copies land in the decision store too) and returns them; the caller overlays
+    the dataset again. Carried only when the match is beyond doubt:
       - exactly one key of this build has the orphan's dir, ProjectID and full colid,
       - no record at all sits under that key (a later decision or a backend sync wins),
       - no other orphan wants the same key."""
@@ -186,7 +184,7 @@ def carry_forward(data, dirs):
             r["via"] = moved[r["via"]]
         new.append(r)
     if new:
-        store.append_records(new, dirs)
+        store.append_records(new, dirs, sink=sink)
     return new
 
 
@@ -326,9 +324,7 @@ def _gz(text):
     return gzip.compress(text.encode("utf-8"), 9, mtime=0)
 
 
-def scope_id(countries, commodity):
-    slugs = [staged_store.scope_dirname(c, commodity)[: -len(commodity) - 1] for c in countries]
-    return "-".join(slugs) + "-" + commodity.lower()
+scope_id = ledger.scope_id        # one rule for the scope's id, shared with the ledger's stamping
 
 
 def write_scope(data, out, sid, cursor, base, ver=None, build=None, target=PART_BYTES, label=None):
@@ -464,8 +460,10 @@ def upload(out, entry, cfg, yes=False, gws=pull_mod.gws, say=print):
 
 def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None, sid=None, cursor=1,
             batches_root=None, data_dir=None, sync=False, ver=None, target=PART_BYTES, batch=False,
-            include_done=False, emails=None):
-    """Build, overlay, stamp, write the mirror. -> (entry, report dict). No network.
+            include_done=False, emails=None, led=None):
+    """Build, overlay, stamp, write the mirror. -> (entry, report dict). No network unless `led`
+    (a ledger.Ledger): then the records this run writes -- backend syncs, carried-forward
+    decisions -- go to the decision store first, and the store cursor advances past them.
     `batch` = the countries are the review-app batch: all-decided ones are dropped (unless
     `include_done`), exactly as review_data.main does for the local server."""
     root = Path(batches_root) if batches_root else staged_store.BATCHES_ROOT
@@ -481,13 +479,23 @@ def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None
     data["scope"]["batch"] = batch
     base = root.parent
     paths_by_label = store.dir_paths(data, base)
+    sink = None
+    if led is not None:
+        led.scope, led.snapshot = ledger.scope_of(data)
+        sink = led.sink
     synced = []
     if sync:
-        synced = store.sync_backend(data, paths_by_label, data.get("scope", {}).get("snapshot", ""))
+        if led is not None:
+            led.origin = "sync"
+        synced = store.sync_backend(data, paths_by_label, data.get("scope", {}).get("snapshot", ""), sink=sink)
         store.overlay(data, paths_by_label)
-    carried = carry_forward(data, paths_by_label)
+    if led is not None:
+        led.origin = "publish"
+    carried = carry_forward(data, paths_by_label, sink=sink)
     if carried:
         store.overlay(data, paths_by_label)
+    if led is not None and led.last_row:
+        cursor = max(int(cursor), led.last_row)      # the page lays only rows AFTER this dataset over it
     drifted = stamp_basis(data, paths_by_label)
     lost = orphans(data, paths_by_label)
     restore_reviewers(data, paths_by_label, emails)
@@ -571,10 +579,16 @@ def main(argv=None):
             raise SystemExit(f"pull failed: {e}\n(auth? run `gws-gem auth login` yourself; it needs a browser)")
         print(pull_mod.report(res), file=sys.stderr)
         cursor, emails = res["cursor"], res["emails"]
-    entry, rep = publish(countries, a.commodity, out, dirs=a.dirs,
-                         exclude_pids=[p for p in a.exclude_pids.split(",") if p], snapshot=a.snapshot,
-                         sid=a.scope_id, cursor=cursor, batches_root=a.batches_root, data_dir=a.data_dir,
-                         sync=a.refresh, batch=batch, include_done=a.include_done, emails=emails)
+    led = None
+    if cfg.get("store_sheet_id") and not a.no_pull:
+        led = ledger.Ledger(cfg["store_sheet_id"], "", "", "publish", reviewer_email=ledger.whoami(), emails=emails)
+    try:
+        entry, rep = publish(countries, a.commodity, out, dirs=a.dirs,
+                             exclude_pids=[p for p in a.exclude_pids.split(",") if p], snapshot=a.snapshot,
+                             sid=a.scope_id, cursor=cursor, batches_root=a.batches_root, data_dir=a.data_dir,
+                             sync=a.refresh, batch=batch, include_done=a.include_done, emails=emails, led=led)
+    except ledger.StoreError as e:
+        raise SystemExit(f"{e}\nnothing published: the records this run would write could not reach the decision store")
     print(report(entry, rep))
     print(f"mirror written to {out}")
     if a.upload:

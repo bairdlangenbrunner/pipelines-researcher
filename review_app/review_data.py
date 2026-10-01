@@ -34,6 +34,7 @@ Read-only over batches/ and data/. Deterministic apart from `built`.
 """
 import argparse
 import csv
+import hashlib
 import json
 import os
 import sys
@@ -499,6 +500,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         lines.sort(key=lambda l: (l["_sort"], l["key"]))
         for l in lines:
             del l["_sort"]
+            l["basis"] = basis(l)
         items.sort(key=lambda i: (ITEM_KINDS.index(i["kind"]), i["key"]))
         pipelines.append({
             "pid": pid, "name": name, "segments": segs,
@@ -667,6 +669,18 @@ def _line(e, snap, own, stats):
             "suggested_route_accuracy", "qc_passed")})
         base["current_route_accuracy"] = r.get("current_route_accuracy") or srow.get("RouteAccuracy", "")
     return base
+
+
+# The backend cells a line's proposal is judged against. `basis` is their hash: a decision record
+# carries the basis of the line as the reviewer saw it, so publish.py (drift) and push.py (stale)
+# can tell when the sheet changed under a decision.
+BASIS_FIELDS = ("current", "current_ref", "current_status", "current_route_accuracy")
+
+
+def basis(line):
+    """12 hex chars standing for the backend cells this line's proposal was judged against."""
+    blob = json.dumps([line.get(f) for f in BASIS_FIELDS], sort_keys=True, ensure_ascii=True)
+    return hashlib.sha1(blob.encode("ascii")).hexdigest()[:12]
 
 
 def _norm(v):

@@ -6,8 +6,9 @@ the two sidecars that live IN each staging dir and are committed with the batch:
     review_decisions.json   derived: {"generated": ts, "decisions": {key: latest record}}
 
 Record shape: {key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note,
-reviewer, ts, undecided}; `reviewer` is a person's initials (initials()) or a machine
-reviewer. An undo appends a record with `undecided: true`; nothing is ever
+reviewer, ts, undecided, basis}; `reviewer` is a person's initials (initials()) or a machine
+reviewer; `basis` (review_data.basis) names the backend cells the call was made against. A record
+that went through the ledger (review_app/ledger.py) also carries id, scope, batch, snapshot, origin. An undo appends a record with `undecided: true`; nothing is ever
 deleted from the log. A line that `covers` other staged records (a status line and the
 `Status [ref]` record folded into it) writes one more record per covered key, same call, with
 `via` = the line's key. Nothing here touches the sheet, the routes repo or staged_*.json.
@@ -27,7 +28,7 @@ LOG_NAME = "review_log.jsonl"
 DERIVED_NAME = "review_decisions.json"
 # Reviewers that are machines, not people: their records are honest (they name what wrote
 # them) but are not a click, so `reviewed()` leaves the line undecided. `backend sync`
-# (sync_backend, after a refresh) writes them today; `push` arrives in phase 1b.
+# (sync_backend, after a refresh) and `push` (push.py, after a verified sheet write) write them.
 MACHINE_REVIEWERS = {"backend sync", "push"}
 SYNC_REVIEWER = "backend sync"
 # A person is recorded by their first and last initials, never their full name (Baird
@@ -258,6 +259,8 @@ def validate(records, data, reviewer=None, enforce_lock=True):
                "ref_col": obj.get("ref_col") or obj.get("column") or "", "kind": obj["kind"],
                "decision": decision, "suggested_value": sv, "note": note,
                "reviewer": reviewer, "ts": None, "undecided": undo}
+        if obj.get("basis"):        # the backend cells this call was made against (review_data.basis)
+            rec["basis"] = obj["basis"]
         out.append(rec)
         out.extend(cover_records(obj, rec))
     return out
@@ -347,10 +350,15 @@ def _write(recs, dirs, stamp=True):
     return recs
 
 
-def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
+def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True, sink=None):
     """Validate, then write (under the process lock) to each touched dir's sidecars. `data` must
     already be overlaid (server.App does it) so the contested lock sees item calls. Returns the
     records written (with reviewer and ts): the line records, then any concern item records.
+
+    `sink(recs, dirs)` replaces the write: ledger.Ledger.sink appends the records to the Google
+    decision store FIRST and then to the sidecars (the store is the single source of truth, the
+    sidecars its committed mirror); the default writes the sidecars alone. A sink runs under
+    _LOCK, so it calls _write, never append_records.
 
     Self-resolving concerns: a person's accept of a line that `resolves` an open concern also
     writes a `dismissed` call on that concern ("resolved by accepted <col> fill") in the same
@@ -377,16 +385,18 @@ def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
                 items = validate_items([{"key": k, "call": "dismissed",
                                          "note": "resolved by accepted " + ", ".join(v) + " fill"}
                                         for k, v in cols.items()], data, reviewer)
-        return _write(recs + items, dirs)
+        return (sink or _write)(recs + items, dirs)
 
 
-def append_records(recs, dirs):
+def append_records(recs, dirs, sink=None):
     """Append records that were ALREADY decided elsewhere (the Google store, via pull.py) to
     their staging dirs' sidecars, exactly as stored: reviewer, ts and every extra field are
     kept, nothing is validated against a dataset or re-stamped. `dirs` is {label: Path}; a
-    record whose dir is not in it is refused (Invalid) and nothing is written."""
+    record whose dir is not in it is refused (Invalid) and nothing is written. `sink` as in
+    decide (publish.carry_forward hands the ledger's; pull.mirror never does: its records CAME
+    from the store)."""
     with _LOCK:
-        return _write(list(recs), dirs, stamp=False) if recs else []
+        return (sink or _write)(list(recs), dirs, stamp=False) if recs else []
 
 
 def validate_items(records, data, reviewer=None):
@@ -415,17 +425,17 @@ def validate_items(records, data, reviewer=None):
     return out
 
 
-def record_items(records, data, reviewer, dirs=None, root=None):
+def record_items(records, data, reviewer, dirs=None, root=None, sink=None):
     """Item calls into the SAME review_log.jsonl / review_decisions.json as line decisions (an item
     key and a line key never coincide). Shape: {key, dir, pid, kind, call, note, reviewer, ts,
     undecided}; an undo is a record with undecided: true. Returns the records written."""
     reviewer = initials(reviewer)
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
-        return _write(validate_items(records, data, reviewer), dirs)
+        return (sink or _write)(validate_items(records, data, reviewer), dirs)
 
 
-def sync_backend(data, dirs, snapshot=""):
+def sync_backend(data, dirs, snapshot="", sink=None):
     """After a fresh pull + rebuild: every line the snapshot already holds (`in_backend`) that no
     person has decided gets a `backend sync` accept record. A machine record is not `reviewed`,
     so the line stays undecided in the queue (the UI shows "in backend"). Lines that already
@@ -454,4 +464,4 @@ def sync_backend(data, dirs, snapshot=""):
                     crec = logs[c["dir"]].get(c["key"])
                     if not (crec and not crec.get("undecided")):
                         recs.append(c)
-        return _write(recs, dirs) if recs else []
+        return (sink or _write)(recs, dirs) if recs else []
