@@ -119,7 +119,10 @@ parent-trunk rows and restate the aggregate-vs-segment rule for them.>`
 ```json
 {"project_id":"P####","sheet_row":0,"ref_col":"Status [ref]",
  "value_cols":["Status"],"values":{"Status":"operating"},
- "tab":"operators_owners",                     // ONLY for Operator/Owner units; else omit
+ "tab":"operators_owners",                     // ONLY for Operator/Owner units; else omit.
+                                               // Owner<N> values in the ownership team's style
+                                               // (docs/reference/owner_style.md): `Gazprom PJSC`,
+                                               // not `PAO Gazprom`; acronym -> researcher_notes
  "proposed_refs":["https://…"],                // [] when unresolved
  "verifications":[{"url":"https://…","ok":true,"contains_value":true,"name_found":true,
                    "note":"the phrase on the page that states the value AND names the line"}],

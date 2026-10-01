@@ -27,7 +27,7 @@ Where things live — **read on demand as the workflow dictates, not all at once
 - **Workflow recipes** (commands, in order): `docs/workflows.md`.
 - **Reference**: `docs/reference/` — `gem_schema.md`, `controlled_vocab.md`,
   `confidence_tiers.md`, `workbook_conventions.md`, `route_conventions.md`,
-  `source_roster.md`; plus `docs/country_notes/`.
+  `source_roster.md`, `owner_style.md` (how owner names are written); plus `docs/country_notes/`.
 - **Reference-dataset registry**: `sources/` — one `manifest.yml` (+ optional
   `adapter.py`) per scraped dataset; GulfPub + OpenStreetMap today. How to add one:
   `sources/README.md`.
@@ -343,7 +343,11 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **No orphan `[ref]` cells** — never fill a `[ref]` without a paired data value,
   or leave a researched value without a `[ref]`.
 - **Expansion with no new physical pipe → `LengthKnown = 0`, `Diameter = blank`.**
-- **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner.
+- **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner — **and
+  write the owner the ownership team's way** (`entity_style.py`; `docs/reference/owner_style.md`):
+  `Gazprom PJSC`, not `PAO Gazprom`; no trailing acronym (it goes to `researcher_notes` +
+  `data/owner_aliases.json`); adopt the team's spelling on an exact/alias gazetteer match, never
+  on a fuzzy one. `check_shard_coverage.py` blocks an un-styled `Owner<N>` proposal.
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
   separate human branch+PR against `GOIT-GGIT-pipeline-routes`; §8 candidate geometry
   (`ROUTE_CANDIDATE` `<PID>.geojson`) stays staged in this repo until a human PR or a

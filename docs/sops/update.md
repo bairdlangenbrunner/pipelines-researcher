@@ -49,8 +49,10 @@ operational sequence.
    guess paths, query strings or page IDs; a fact whose exact URL can't be located goes
    in `ResearcherNotes` as `Source: <company> press release dated <date>, titled
    '<title>' — URL not verified`, with the `[ref]` cell left blank.
-5. `scripts/entity_lookup.py "<owner>" "<country>"` before staging any new owner —
-   don't create duplicate entities.
+5. `scripts/entity_lookup.py "<owner>"` before staging any new owner — don't create
+   duplicate entities. It also prints the name in the ownership team's style
+   (`docs/reference/owner_style.md`): stage THAT in `Owner<N>`, and put the source's spelling
+   + any dropped acronym in `researcher_notes` (and the acronym in `data/owner_aliases.json`).
 6. Stage findings as `batches/<scope>/staging/<run>/staged_updates.json` (committed
    audit trail).
 7. Build the update workbook (no generic builder yet — copy the per-batch

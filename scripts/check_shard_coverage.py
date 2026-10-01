@@ -33,12 +33,23 @@ import argparse
 import collections
 import itertools
 import json
+import re
 import sys
 from functools import lru_cache
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_qc import BLOCK, is_ref_only, load_sheet, off_schema_keys, sheet_value  # noqa: E402
+
+
+def _owner_style(name: str):
+    """`entity_style.style(name)`, or None if the styler (or its data files) is unavailable —
+    a missing gazetteer must not block a shard over a check it cannot run."""
+    try:
+        from entity_style import style
+        return style(name)
+    except Exception:       # pragma: no cover — data files absent on a bare checkout
+        return None
 
 
 def load_units(staging: Path) -> dict[str, list[dict]]:
@@ -204,6 +215,28 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                     why.append(f"UNRESOLVED but `values` changes {', '.join(moved)} from the "
                                "sheet — an unsourced proposal belongs in researcher_notes; "
                                "set values to the sheet's")
+        # A proposed Owner<N> name is written the way the ownership team writes it
+        # (docs/reference/owner_style.md): trailing short legal form, no punctuation, no
+        # trailing acronym, team spelling on an exact/alias gazetteer hit. A value equal to
+        # the sheet's current cell is carried, not proposed, so it is not checked here.
+        if f.get("_leg") != "refs" and (f.get("tab") == "operators_owners"
+                                        or f.get("ref_col") == "Owner [ref]"):
+            restyle = []
+            for c, v in (f.get("values") or {}).items():
+                sv = str(v or "").strip()
+                if not re.fullmatch(r"Owner\d+", str(c)) or not sv:
+                    continue
+                cur = sheet_value(sheet, pid, f.get("sheet_row"), c) if sheet is not None else None
+                if cur is not None and str(cur).strip() == sv:
+                    continue
+                st = _owner_style(sv)
+                if st is not None and st.changed:
+                    restyle.append(f"{c}: {sv!r} -> {st.styled!r}")
+            if restyle:
+                why.append("owner name(s) not in the ownership team's style — "
+                           + "; ".join(restyle)
+                           + " (use the styled form in `values`; keep the source's spelling "
+                             "and any dropped acronym in researcher_notes)")
         if why:
             malformed.append({"ref_col": f.get("ref_col"), "why": "; ".join(why)})
     return unreported, silent, malformed

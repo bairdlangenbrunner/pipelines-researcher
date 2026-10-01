@@ -93,7 +93,11 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
   row, *not* `ResearcherNotes`. Because the tab is ProjectID-keyed (not entity-keyed) the ref is
   per-pipeline; no entity-level de-dup. (`discover_ref_pairs` still emits a synthetic
   `kind:'owner'` placeholder for the QC BroadSweep, but the sweep drops it in favour of the join.)
-  Full column layout: `docs/reference/gem_schema.md`.
+  Full column layout: `docs/reference/gem_schema.md`. **A proposed `Owner<N>` value is written
+  in the ownership team's style** (`docs/reference/owner_style.md`; `scripts/entity_style.py`):
+  trailing short legal form, no punctuation, no trailing acronym (acronym → `researcher_notes` +
+  `data/owner_aliases.json`), the team's own spelling on an exact/alias gazetteer hit.
+  `check_shard_coverage.py` blocks an un-styled proposal; gate O reports them at delivery.
 - **Route/geometry is OUT OF SCOPE.** `RouteType`/`RouteAccuracy`/`RouteNotes` → `Route [ref]`
   is dropped by `discover_ref_pairs` (`SKIP_REF_COLS`); **never research, fill, or re-verify a
   `Route [ref]`.** Pipeline geometry is reconciled against the `GOIT-GGIT-pipeline-routes` repo

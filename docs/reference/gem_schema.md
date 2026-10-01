@@ -68,6 +68,11 @@ tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owne
   the ownership team builds the parent tree **from** that SPV, which is exactly why the SPV has
   to be the thing recorded. Research stages the SPV and names the parents it found in
   `researcher_notes`; it never flattens the SPV up to its parent, and never invents a tree.
+- **Owner names are written the ownership team's way** — full legal name, trailing short legal
+  form, no punctuation, no trailing acronym (`Mountain Valley Pipeline LLC`, `Gazprom PJSC`,
+  `Ministry of Oil (Iraq)`). Rules, adoption policy and the alias file:
+  `docs/reference/owner_style.md`; `scripts/entity_style.py` applies them. Only `Owner1..11` and
+  `Owner1%..11%` are data on this tab — `AggregateOwners` / `Percentage Verification` are formulas.
 - **Columns A–E are FORMULAS, not data** — `PipelineNetworkContainer`, `PipelineName`,
   `SegmentName`, `Countries`, `Wiki` are each an `iferror(xlookup(F<row>, 'Gas pipelines'!F:F,
   …), xlookup(F<row>, 'Oil/NGL pipelines'!F:F, …))` keyed on `ProjectID` in column **F**, so

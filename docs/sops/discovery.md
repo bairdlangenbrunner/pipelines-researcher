@@ -28,7 +28,8 @@ home; the original 4-phase methodology doc is archived in `docs/archive/`). Comm
    [ref]`. (Capacity expansion, no new pipe → `no route`.)
 5. Collect all GEM columns with verified `[ref]` URLs for each discovery.
 6. `scripts/url_verifier.py` on all URLs; `scripts/entity_lookup.py` on every new
-   owner/operator/parent.
+   owner/operator/parent — and write each owner in the ownership team's style it prints
+   (`docs/reference/owner_style.md`).
 7. Stage `batches/<scope>/staging/<run>/staged_new.json`; build
    `…_<scope>_discovery.xlsx` (new rows green-tinted); `recalc.py`; present.
 

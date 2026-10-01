@@ -59,6 +59,23 @@ def main() -> None:
         print("→ reuse one of these rather than creating a duplicate, if it's the same entity.")
     else:
         print(f"no close existing entity for '{args.name}' ({args.tracker}) — likely safe to stage as new.")
+    # ...and however it is staged, write it the way the ownership team does
+    # (docs/reference/owner_style.md). The styled form is what goes in Owner<N>; the raw
+    # spelling + any dropped acronym go in researcher_notes.
+    try:
+        from entity_style import style
+    except ImportError:
+        return
+    st = style(args.name)
+    print(f"\nownership-team style: {st.styled!r}  [{st.confidence}/{st.basis}"
+          + (f" {st.entity_id}" if st.entity_id else "") + "]"
+          + (f"  flags={','.join(st.flags)}" if st.flags else ""))
+    if st.aliases:
+        print(f"  aliases to keep in notes / owner_aliases.json: {st.aliases}")
+    for c in st.candidates[:5]:
+        print(f"  candidate NOT adopted: {c['name']!r}"
+              + (f" ({c['entity_id']})" if c.get("entity_id") else "") + f" — {c.get('source', '')}")
+    print(f"  {st.note}")
 
 
 if __name__ == "__main__":
