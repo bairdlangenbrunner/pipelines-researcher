@@ -57,13 +57,6 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: 14px; overflow-wr
 .filters label { display: flex; align-items: center; gap: 4px; color: var(--muted); }
 .filters label.grow input { width: 16em; }
 .filters input#f-row { width: 10em; }
-.chiprow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.chiprow .cl { color: var(--muted); width: 5.2em; }
-.chips { display: flex; flex-wrap: wrap; gap: 4px; }
-.fchip { display: inline-flex; gap: 6px; align-items: baseline; min-height: 26px; padding: 0 10px; border-radius: 13px; font-size: 14px; }
-.fchip .n { font-variant-numeric: tabular-nums; color: var(--muted); }
-.fchip[aria-pressed=true] { border-color: var(--accent); background: var(--sel); font-weight: 600; }
-.fchip.zero { opacity: .45; }
 .row2 { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
 .more-filters { display: flex; flex-wrap: wrap; gap: 6px 14px; }
 .more-filters[hidden], .active-filters[hidden] { display: none; }
@@ -112,8 +105,31 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: 14px; overflow-wr
 .line .row1 { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .line .col { font-weight: 600; }
 .line .where { margin-left: auto; color: var(--muted); font-size: 14px; text-align: right; }
-.line .unit { border: 1px dashed var(--line); border-radius: 6px; padding: 6px 10px; margin: 8px 0; }
-.line .unit .ulabel { font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+/* now / proposed table: one row per paired column (value cols, then the [ref]); the tag says what the line does to it */
+table.pair { border-collapse: collapse; width: 100%; table-layout: fixed; margin: 8px 0 4px; font-size: 14.5px; }
+table.pair th { text-align: left; font-weight: 400; font-size: 12.5px; color: var(--muted); padding: 0 8px 2px; }
+table.pair th:nth-child(1) { width: 22%; } table.pair th:nth-child(2) { width: 32%; }
+table.pair th:nth-child(4) { width: 5.5em; }
+table.pair td { border-top: 1px solid var(--line); padding: 5px 8px; vertical-align: top; overflow-wrap: anywhere; }
+table.pair td.f { color: var(--muted); font-size: 13.5px; }
+table.pair td.t { text-align: right; }
+table.pair tr.same td { color: var(--muted); }
+table.pair tr.note td { border-top: 0; padding-top: 0; }
+table.pair tr.ref td { border-top-style: dashed; }
+table.pair ul { margin: 0; padding: 0; list-style: none; }
+table.pair li { margin: 0 0 3px; }
+table.pair li.kept a { color: var(--muted); }
+table.pair li.dropped a { color: var(--muted); text-decoration: line-through; }
+table.pair .newv { font-size: 15px; padding: 1px 6px; }
+.newref { padding: 1px 6px; border-radius: 4px; }
+.newref a { color: inherit; }
+.tag { display: inline-block; font-size: 11.5px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; padding: 0 6px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
+.tag-fill, .tag-add { color: var(--accept); }
+.tag-change, .tag-replace { color: var(--hold); }
+.tag-clear, .tag-drop { color: var(--reject); }
+.tag-re-verified { color: var(--t-rev-ink); }
+.facts { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+@media (max-width: 760px) { table.pair th:nth-child(1) { width: 26%; } table.pair { font-size: 13.5px; } }
 .chg { display: grid; grid-template-columns: minmax(6em, 11em) 1fr; gap: 3px 12px; align-items: baseline; }
 .chg .k { color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
 .chg .v { overflow-wrap: anywhere; }
@@ -227,3 +243,24 @@ dialog h4 { margin: 12px 0 4px; font-size: 14px; }
 .sform label { display: flex; align-items: center; gap: 6px; font-size: 13px; }
 .sform .sv { min-width: 26em; } .sform .sn { min-width: 16em; }
 .sform .sv-err { color: var(--t-low-ink); }
+.card h3.allitems { margin: 26px 0 0; font-size: 17px; border-top: 2px solid var(--line); padding-top: 10px; }
+.card h2 a.only { border-bottom-width: 1px; }
+/* change-type colours in the pair table: new (fill / added ref) green, changed amber, cleared red */
+:root { --c-fill: #C6EFCE; --c-fill-ink: #185c27; --c-change: #FFE0A3; --c-change-ink: #7a4a00; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-fill: #1e4a2a; --c-fill-ink: #b9f0c6; --c-change: #5a4210; --c-change-ink: #ffd98a; } }
+:root[data-theme="dark"] { --c-fill: #1e4a2a; --c-fill-ink: #b9f0c6; --c-change: #5a4210; --c-change-ink: #ffd98a; }
+.c-fill { background: var(--c-fill); color: var(--c-fill-ink); }
+.c-change { background: var(--c-change); color: var(--c-change-ink); }
+table.pair .newv.c-fill, table.pair .newref.c-fill { background: var(--c-fill); color: var(--c-fill-ink); font-weight: 600; }
+table.pair .newv.c-change { background: var(--c-change); color: var(--c-change-ink); font-weight: 600; }
+.bulkbar button.bulk { font-weight: 600; padding: 4px 14px; }
+.bulkbar button.b-accept { color: var(--accept); border-color: var(--accept); }
+.bulkbar button.b-hold { color: var(--hold); border-color: var(--hold); }
+/* current refs (the "now" column) are context: muted like the kept refs on the right */
+table.pair tr.ref td:nth-child(2) a { color: var(--muted); }
+/* pipeline name, context line and tabs stay pinned while the card scrolls */
+.card > .cardhead { position: sticky; top: -16px; z-index: 5; max-width: none; margin: -16px -24px 0; padding: 16px 24px 0;
+  background: var(--bg); border-bottom: 1px solid var(--line); }
+.cardhead > * { max-width: 52rem; }
+.cardhead .tabs { margin-bottom: 0; border-bottom: 0; }
+.card .line, .card .item, .card .segdiv { scroll-margin-top: 150px; }

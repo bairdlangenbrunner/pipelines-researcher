@@ -23,7 +23,17 @@ UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o`
 first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
 hidden by default. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
 person, or `in_backend` — while hold stays bright (still open); an item grays once it carries a
-reviewed call (same convention as the LNG carriers app). Tier colours are the workbook's (`docs/reference/workbook_conventions.md`).
+reviewed call (same convention as the LNG carriers app). Tier colours are the workbook's (`docs/reference/workbook_conventions.md`)
+and appear on the tier chip and the line's left border.
+
+**Line cards** show one now / proposed table per line: a row per paired value column (`value_cols`
+with anything on either side), then the `[ref]` row. Each row carries a tag for what the line does
+to that cell: `fill` (empty cell → value / refs; an empty cell is drawn empty), `change`, `clear`, `add` / `replace` / `drop` (refs),
+`re-verified`, or none when it is unchanged (the value is repeated, muted). New values and added
+refs are green, changed values amber, contested current values orange; each added URL gets one
+verification mark (`✓`, or the failed checks). Class, default, language, batch dir, notes and
+verification notes sit under "notes & record". Clicking the pipeline name (or the **Everything**
+tab) shows every line on the pipeline, filters ignored, then its items, on one page.
 
 - `review_data.py` turns one scope's pending staging dirs into `work/review_data.json`:
   one card per pipeline, with `lines` (ref / fill / status / oo / route / new_row: one
@@ -98,7 +108,7 @@ lines, the proposed `[ref]` cell text for ref lines; empty for routes) and **Not
 "Save suggestion" posts `decision: suggest` with `suggested_value` + `note` to `/api/decide`;
 Esc cancels. Either field may be empty but not both (400). The line then reads
 "suggested: <value> by <reviewer> <time>", counts as decided (a person's call: `store.reviewed`,
-the progress bar, the Decision filter's `suggest` chip), is skipped by every bulk action, and
+the progress bar, the Decision filter's `suggest` option), is skipped by every bulk action, and
 shows in the session summary ("decided lines by call", "this session"). Clicking the pressed
 button or `u` undoes it. Re-opening the form on a suggested line prefills the earlier suggestion.
 Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to an Update worklist.
@@ -138,7 +148,7 @@ kind takes `noted | todo | dismissed`. A wrong call is a 400. Item records are
 
 Three header-bar buttons (and `A` for the first) act on the CURRENT filtered queue and always
 confirm with the exact count and a per-kind breakdown: accept all defaults in view, hold all in
-view, accept all high in this pipeline. They skip lines locked by an open concern and lines a
+view, accept all high for this pipeline. They skip lines locked by an open concern and lines a
 person already decided, and send one `POST /api/decide`. The server is all-or-nothing: if any
 line is locked or invalid the request is refused (409/400) and nothing is written.
 
@@ -169,3 +179,14 @@ python -m pytest tests/ -q
 
 Without `--dirs` it discovers every staging dir for the scope, handoff packets included.
 The summary goes to stderr.
+
+## Suggested improvements (later)
+
+- The `independent` flag (second independent publisher) was dropped from the line card
+  (2026-09-30); if it is wanted again, a filter or a per-pipeline tally fits better than a chip on
+  every line.
+- The same Status proposal staged in two batch dirs shows as two identical-looking cards now that
+  the batch name is off the header; fold them like `covers`, or mark the duplicate.
+- A contested note (orange) still shows on a line after its concern has a call; it could drop once
+  the concern is decided.
+

@@ -46,7 +46,7 @@ OO_TAB = "operators_owners"
 LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
 ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag",
               "escalation", "unresolved", "confirmed", "other")
-_REF_CLASSES = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK"}
+_REF_CLASSES = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}
 _NO_COL = 10 ** 6          # sort position for a column the snapshot does not have
 _OO_OFFSET = 10 ** 4       # owners-tab columns sort after every tracker column
 SCOPE_PID = "scope"        # pseudo-card for escalations / pid-less flags
@@ -551,7 +551,7 @@ def _line(e, snap, own, stats):
     cell_text = _ref_cell_text(r) if (refs or r.get("class_out") == "REVERIFIED") else ""
     # in_backend: every proposed value already on the sheet AND every proposed URL already
     # in the current [ref] cell. A line with no proposed refs is judged on its values alone
-    # (status STALE, a no-ref fill); a ref line with no proposed URL (REVERIFIED/DEAD_LINK)
+    # (status STALE, a no-ref fill); a ref line with no proposed URL (REVERIFIED/DEAD_LINK/REF_*)
     # proposes nothing pasteable, so it is never "in backend".
     if kind in ("ref", "oo") and not vals and not refs:
         in_backend = False

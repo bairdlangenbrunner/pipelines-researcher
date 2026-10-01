@@ -24,14 +24,13 @@
 
 <section id="tab-queue" class="tabpanel">
   <form id="filters" class="filters" onsubmit="return false">
-    <div class="chiprow" id="cr-decision"><span class="cl">Decision</span><span class="chips"></span></div>
-    <div class="chiprow" id="cr-kind"><span class="cl">Kind</span><span class="chips"></span></div>
-    <div class="chiprow" id="cr-tier"><span class="cl">Tier</span><span class="chips"></span></div>
     <div class="row2">
+      <label>Decision <select id="f-decision"></select></label>
+      <label>Kind <select id="f-kind"></select></label>
+      <label>Tier <select id="f-tier"></select></label>
       <label class="grow">Search <input type="search" id="f-q" placeholder="name / ProjectID / country"></label>
       <label title="live sheet rows: one, a range, or a list, e.g. 357-400, 1141">Row <input type="search" id="f-row" placeholder="357-400, 1141"></label>
       <label class="check" title="lines on a column a validity concern contests"><input type="checkbox" id="f-contested"> contested</label>
-      <label class="check" title="status changes backed by fewer than 2 publishers (rule 4)"><input type="checkbox" id="f-single"> single-source status</label>
       <label class="check"><input type="checkbox" id="f-owners"> owners tab</label>
       <label class="check" title="lines whose value and refs the snapshot already holds are left out of the queue"><input type="checkbox" id="f-landed"> show lines already in the backend</label>
       <button type="button" id="f-more" class="ghost" aria-expanded="false" aria-controls="more-filters">More filters</button>
@@ -51,9 +50,9 @@
   </div>
   <div class="bulkbar" id="bulkbar">
     <span class="cl">Bulk (asks first)</span>
-    <button type="button" id="bulk-defaults" class="ghost" title="accept every undecided, unlocked line in view whose default is accept (A)">accept all defaults in view</button>
-    <button type="button" id="bulk-hold" class="ghost" title="hold every undecided, unlocked line in view">hold all in view</button>
-    <button type="button" id="bulk-pipe" class="ghost" title="accept every undecided, unlocked high-tier line on the open pipeline that the filters show">accept all high in this pipeline</button>
+    <button type="button" id="bulk-defaults" class="bulk b-accept" title="accept every undecided, unlocked line in view whose default is accept (A)">accept all defaults in view</button>
+    <button type="button" id="bulk-hold" class="bulk b-hold" title="hold every undecided, unlocked line in view">hold all in view</button>
+    <button type="button" id="bulk-pipe" class="bulk b-accept" title="accept every undecided, unlocked high-tier line on the open pipeline that the filters show">accept all high for this pipeline</button>
   </div>
   <div class="queue">
     <ol id="pipes" class="pipes" aria-label="Pipelines"></ol>

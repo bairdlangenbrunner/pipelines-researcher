@@ -70,11 +70,13 @@
                     concern: "concern", wikidiff: "wiki diff", routeqc: "route QC", route_suggestion: "route suggestion",
                     monitor: "monitor", flag: "flag", escalation: "escalation", unresolved: "unresolved",
                     confirmed: "confirmed", other: "other"};
+  // audit-trail records (the sweep's own "checked, still operating"): never listed, never asked for a call
+  var INFO_KINDS = {confirmed: 1};
   var DEC = ["undecided", "accept", "hold", "reject", "suggest"];
 
   function defaults() {
     return {decision: "undecided", kind: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
-            contested: false, single: false, owners: false, landed: false};
+            contested: false, owners: false, landed: false};
   }
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -95,6 +97,7 @@
   function gap(l) { return !!(cur(l) && l.uncovered && l.uncovered.length); }
   function dimmed(l) { return (settled(l) && !gap(l)) || !!l.in_backend; }
   function dstate(o) {
+    if (o._item && INFO_KINDS[o.kind]) return "info";
     var d = o._item ? o.call : cur(o);
     return d ? d : "undecided";
   }
@@ -217,7 +220,6 @@
     if (fs.dir && o.dir !== fs.dir) return false;
     if (fs.column && (item || o.column !== fs.column)) return false;
     if (fs.contested && !(item ? Object.keys(o.contested || {}).length : o._cont)) return false;
-    if (fs.single && (item || o.kind !== "status" || !(o.publishers < 2))) return false;
     if (fs.owners && (item || o.kind !== "oo")) return false;
     if (fs.row) {
       if (!ranges) return false;
@@ -272,25 +274,25 @@
     });
     return c;
   }
-  function chipRow(id, facet, values, labels, anyLabel, totals) {
-    var counts = facetCounts(facet, values), h = "";
-    if (anyLabel) h += '<button type="button" class="fchip" data-f="' + facet + '" data-v="" aria-pressed="' +
-      (FS[facet] === "") + '">' + anyLabel + "</button>";
+  // a facet dropdown: "any" plus one option per value with its live count ("accept (3)")
+  function facetSelect(id, facet, values, labels, totals) {
+    var counts = facetCounts(facet, values), h = '<option value="">any</option>';
     values.forEach(function (v) {
       if (totals && !totals[v] && FS[facet] !== v) return;      // a kind the scope does not have
-      h += '<button type="button" class="fchip' + (counts[v] ? "" : " zero") + '" data-f="' + facet + '" data-v="' + v +
-        '" aria-pressed="' + (FS[facet] === v) + '">' + esc(labels[v] || v) + ' <span class="n">' + counts[v] + "</span></button>";
+      h += '<option value="' + v + '"' + (FS[facet] === v ? " selected" : "") + ">" + esc(labels[v] || v) + " (" + counts[v] + ")</option>";
     });
-    document.querySelector("#" + id + " .chips").innerHTML = h;
+    var s = $(id);
+    s.innerHTML = h;
+    s.value = FS[facet];
   }
   function renderChips() {
     var lab = {};
-    chipRow("cr-decision", "decision", DEC, lab, "any");
+    facetSelect("f-decision", "decision", DEC, lab);
     var tot = {};
     LINES.forEach(function (l) { tot[l.kind] = 1; });
     ITEMS.forEach(function (i) { tot[i.kind] = 1; });
-    chipRow("cr-kind", "kind", LINE_KINDS.concat(ITEM_KINDS), KIND_LABEL, "", tot);
-    chipRow("cr-tier", "tier", ["high", "medium", "low", "untiered"], lab, "any");
+    facetSelect("f-kind", "kind", LINE_KINDS.concat(ITEM_KINDS), KIND_LABEL, tot);
+    facetSelect("f-tier", "tier", ["high", "medium", "low", "untiered"], lab);
   }
   function fillSelect(id, values) {
     var s = $(id);
@@ -307,19 +309,13 @@
     fillSelect("f-column", cols);
     fillSelect("f-dir", D.dirs);
     $("filters").addEventListener("click", function (e) {
-      var b = e.target.closest("button[data-f]");
-      if (b) {
-        var f = b.getAttribute("data-f"), v = b.getAttribute("data-v");
-        FS[f] = (FS[f] === v && v !== "") ? (f === "decision" ? "" : "") : v;
-        return changed();
-      }
       var c = e.target.closest("button[data-clear]");
       if (c) { clearOne(c.getAttribute("data-clear")); changed(); }
     });
-    ["class_out", "column", "dir"].forEach(function (f) {
+    ["decision", "kind", "tier", "class_out", "column", "dir"].forEach(function (f) {
       $("f-" + f).onchange = function () { FS[f] = this.value; changed(); };
     });
-    ["contested", "single", "owners", "landed"].forEach(function (f) {
+    ["contested", "owners", "landed"].forEach(function (f) {
       $("f-" + f).onchange = function () { FS[f] = this.checked; changed(); };
     });
     $("f-q").oninput = function () { FS.q = this.value; changed(true); };
@@ -344,7 +340,7 @@
       $("f-" + f).value = FS[f];
       if ($("f-" + f).value !== FS[f]) { FS[f] = ""; $("f-" + f).value = ""; }
     });
-    ["contested", "single", "owners", "landed"].forEach(function (f) { $("f-" + f).checked = FS[f]; });
+    ["contested", "owners", "landed"].forEach(function (f) { $("f-" + f).checked = FS[f]; });
     $("f-q").value = FS.q; $("f-row").value = FS.row;
   }
   // Every filter that is set is a removable chip, so a control tucked behind "More filters"
@@ -360,7 +356,6 @@
     if (FS.column) chip("column", "column: " + FS.column, true);
     if (FS.dir) chip("dir", "dir: " + dirLabel(FS.dir), true);
     if (FS.contested) chip("contested", "contested", false);
-    if (FS.single) chip("single", "single-source status", false);
     if (FS.owners) chip("owners", "owners tab", false);
     if (FS.landed) chip("landed", "incl. lines already in the backend", false);
     $("active-filters").innerHTML = chips.join(" ");
@@ -423,118 +418,116 @@
     return chip(t === "untiered" ? "untiered" : t, t === "untiered" ? "" : t,
       t === "untiered" ? "no confidence tier on this record: defaults to hold" : "confidence tier (rule 4)");
   }
-  function vchips(u, l) {
+  // One mark per proposed URL: ✓ when it loads, states the value and names the pipeline; else the failed checks.
+  function vmark(u, l) {
     var v = null;
     (l.verifications || []).forEach(function (x) { if (x.url === u) v = x; });
-    if (!v) return '<span class="vchips">' + chip("not checked", "", "no verification record for this URL") + "</span>";
-    function one(label, val) {
-      return chip((val ? "✓ " : "✗ ") + label, val ? "ok" : "bad");
-    }
-    var out = one("ok", !!v.ok) + one("contains value", !!v.contains_value) + one("names pipeline", !!v.name_found);
-    return '<span class="vchips"' + (v.note ? ' title="' + esc(v.note) + '"' : "") + ">" + out + "</span>";
+    if (!v) return chip("unchecked", "", "no verification record for this URL");
+    var bad = [];
+    if (!v.ok) bad.push("load");
+    if (!v.contains_value) bad.push("value");
+    if (!v.name_found) bad.push("name");
+    var tip = "loads " + (v.ok ? "✓" : "✗") + " · states value " + (v.contains_value ? "✓" : "✗") + " · names pipeline " + (v.name_found ? "✓" : "✗") +
+      (v.note ? "\n" + v.note : "");
+    return bad.length ? chip("✗ " + bad.join(", "), "bad", tip) : chip("✓", "ok", tip);
   }
-  // The tint of the cell a line would write: tier colour, or re-verified blue; never on an empty cell.
-  function tintClass(l) {
-    if (l.class_out === "REVERIFIED") return "tint-rev";
-    var t = tierOf(l);
-    return t === "untiered" ? "" : "tint-" + t;
+  // a URL shortened for the table: host + path, decoded, Wayback shown as "archive › <origin>"
+  function shortUrl(u) {
+    var s = String(u);
+    try { s = decodeURI(s); } catch (e) { /* keep as is */ }
+    s = s.replace(/^https?:\/\/(www\.)?/i, "");
+    var wb = s.match(/^web\.archive\.org\/web\/\d+[a-z_]*\/(?:https?:\/\/)?(?:www\.)?(.*)$/i);
+    if (wb) s = "archive › " + wb[1];
+    s = s.replace(/\/$/, "");
+    return s.length > 64 ? s.slice(0, 63) + "…" : s;
   }
-  function refBlock(l) {
-    var cur = splitUrls(l.current_ref), prop = l.proposed_refs || [];
-    var text = l.ref_cell_text || "";
-    if (l.kind === "status" && l.class_out === "STALE") {
-      return '<div class="refcell"><span class="k">[ref]</span> <span class="muted">none by design (stale-status flag)</span></div>';
-    }
-    var h = '<div class="refcell"><span class="k">[ref] now</span> ';
-    if (!cur.length) h += '<span class="blank">blank</span>';
-    else h += "<ul>" + cur.map(function (u) { return '<li class="was">' + urlLink(u) + "</li>"; }).join("") + "</ul>";
-    h += "</div>";
-    var cell = text ? splitUrls(text) : prop.slice();
-    if (!cell.length) {
-      var why = l.class_out === "DEAD_LINK" ? "current ref is a dead link, no replacement found"
-        : (l.class_out === "REVERIFIED" ? "current ref re-verified, nothing to change" : "no URL proposed");
-      return h + '<div class="refcell"><span class="k">[ref] would be</span> <span class="muted">' + esc(why) + "</span></div>";
-    }
-    h += '<div class="refcell"><span class="k">[ref] would be</span><div class="cellnew ' + tintClass(l) + '"><ul>' +
-      cell.map(function (u) {
-        var isNew = prop.indexOf(u) >= 0;
-        return '<li class="' + (isNew ? "" : "kept") + '">' + urlLink(u) + (isNew ? vchips(u, l) : ' <span class="faint">(kept)</span>') + "</li>";
-      }).join("") + "</ul></div></div>";
-    return h;
+  function shortLink(u) {
+    if (!/^https?:\/\//i.test(u)) return esc(u);
+    return '<a href="' + esc(u) + '" target="_blank" rel="noopener" title="' + esc(u) + '">' + esc(shortUrl(u)) + "</a>";
   }
+  function tag(t) { return t ? '<span class="tag tag-' + t + '">' + t + "</span>" : ""; }
   function concernNote(p, col, l) {
     var t = p._cont[col];
     if (l && agreeCols(l, p).indexOf(col) >= 0) {
-      return '<div class="concern-inline">' + chip("contested", "ok") + " concern agrees with this value \u2014 accepting it resolves the concern" + (t ? " (" + esc(t) + ")" : "") + "</div>";
+      return '<div class="concern-inline">concern agrees with this value: accepting resolves it' + (t ? " (" + esc(t) + ")" : "") + "</div>";
     }
-    return '<div class="concern-inline">' + chip("contested", "cont") + " " + (t ? esc(t) : "a validity concern contests this value (no detail recorded)") + "</div>";
+    return '<div class="concern-inline">concern: ' + (t ? esc(t) : "a validity concern contests this value (no detail recorded)") + "</div>";
   }
-  function changesHtml(l, p, skipCol) {
-    var pv = l.proposed_values || {}, cols = Object.keys(pv), cur = l.current || {};
-    if (!cols.length) {          // nothing proposed: show the current values this [ref] covers, for context
+  // one value row: field | now | proposed | tag. has=false means context only (not proposed).
+  function valueRow(l, p, c, was, now, has) {
+    var contested = (c in p._cont) && !blankv(was);
+    var wasH = blankv(was) ? "" : '<span class="' + (contested ? "tint-cont" : "") + '">' + esc(was) + "</span>";
+    var nowH, t = "", same = false;
+    if (!has || (!blankv(was) && String(was).trim() === String(now).trim())) { nowH = wasH; same = true; }
+    else if (blankv(now)) { nowH = '<span class="blank">(clear)</span>'; t = "clear"; }
+    else { t = blankv(was) ? "fill" : "change"; nowH = '<span class="newv c-' + t + '">' + esc(now) + "</span>"; }
+    var r = '<tr class="' + (same ? "same" : "") + '"><td class="f">' + esc(c) + "</td><td>" + wasH + "</td><td>" + nowH + '</td><td class="t">' + tag(t) + "</td></tr>";
+    if (contested) r += '<tr class="note"><td></td><td colspan="3">' + concernNote(p, c, l) + "</td></tr>";
+    return r;
+  }
+  function valueRows(l, p, skipCol) {
+    var pv = l.proposed_values || {}, cols = Object.keys(pv), cur = l.current || {}, ctx = false;
+    if (!cols.length) {          // nothing proposed: the current values this [ref] covers, for context
       cols = (l.value_cols || []).filter(function (c) { return !blankv(cur[c]); }).slice(0, 8);
+      ctx = true;
     }
-    var rows = [], extra = 0;
-    cols.forEach(function (c) {
-      if (c === skipCol) return;
-      var was = cur[c], has = c in pv, now = pv[c];
-      var contested = (c in p._cont) && !blankv(was);
-      var wasH = blankv(was) ? '<span class="blank">blank</span>'
-        : (contested ? '<span class="tint-cont">' + esc(was) + "</span>" : '<span class="was">' + esc(was) + "</span>");
-      var v;
-      if (!has) v = '<span class="' + (contested ? "" : "") + '">' + (blankv(was) ? wasH : (contested ? wasH : esc(was))) + "</span>";
-      else if (blankv(now) && blankv(was)) { extra++; return; }
-      else if (blankv(now)) v = wasH + '<span class="arrow">→</span><span class="blank">(clear)</span>';
-      else if (!blankv(was) && String(was).trim() === String(now).trim()) {
-        v = (contested ? wasH : esc(was)) + ' <span class="same">(unchanged)</span>';
-      } else v = wasH + '<span class="arrow">→</span><span class="newv">' + esc(now) + "</span>";
-      rows.push('<div class="k">' + esc(c) + '</div><div class="v">' + v + (contested ? concernNote(p, c, l) : "") + "</div>");
-    });
-    return rows.length ? '<div class="chg">' + rows.join("") + "</div>" : "";
+    return cols.map(function (c) {
+      if (c === skipCol) return "";
+      if (!ctx && blankv(pv[c]) && blankv(cur[c])) return "";
+      return valueRow(l, p, c, cur[c], pv[c], !ctx);
+    }).join("");
   }
-  function unitBox(label, inner) {
-    return '<div class="unit"><div class="ulabel">' + esc(label) + "</div>" + inner + "</div>";
+  // the [ref] row: the cell now, and the cell it would be (new URLs tinted with a check mark, kept ones muted)
+  function refRow(l) {
+    var col = l.ref_col || "[ref]";
+    var cur = splitUrls(l.current_ref), prop = l.proposed_refs || [];
+    var cell = l.ref_cell_text ? splitUrls(l.ref_cell_text) : prop.slice();
+    var nowH = cur.length ? "<ul>" + cur.map(function (u) {
+      return '<li class="' + (cell.length && cell.indexOf(u) < 0 ? "dropped" : "") + '">' + shortLink(u) + "</li>";
+    }).join("") + "</ul>" : "";
+    var propH, t;
+    if (l.kind === "status" && l.class_out === "STALE") { propH = '<span class="muted">none (stale-status flag)</span>'; t = ""; }
+    else if (!cell.length) {
+      propH = '<span class="muted">' + esc({DEAD_LINK: "link gone (404/410), no replacement found", REF_BLOCKED: "could not be fetched from here, no replacement found", REF_UNSUPPORTED: "page loads but does not support the value"}[l.class_out] || "no URL proposed") + "</span>";
+      t = "";
+    } else {
+      var added = cell.filter(function (u) { return cur.indexOf(u) < 0; });
+      var dropped = cur.filter(function (u) { return cell.indexOf(u) < 0; });
+      t = !cur.length ? "fill" : (dropped.length ? (added.length ? "replace" : "drop") : (added.length ? "add" : ""));
+      if (l.class_out === "REVERIFIED" && !added.length && !dropped.length) t = "re-verified";
+      propH = !added.length && !dropped.length ? "<ul>" + cell.map(function (u) { return '<li class="kept">' + shortLink(u) + "</li>"; }).join("") + "</ul>"
+        : "<ul>" + cell.map(function (u) {
+          var isNew = cur.indexOf(u) < 0;
+          return isNew ? '<li><span class="newref c-fill">' + shortLink(u) + "</span> " + vmark(u, l) + "</li>"
+                       : '<li class="kept">' + shortLink(u) + "</li>";
+        }).join("") + "</ul>";
+    }
+    return '<tr class="ref"><td class="f">' + esc(col) + "</td><td>" + nowH + "</td><td>" + propH + '</td><td class="t">' + tag(t) + "</td></tr>";
+  }
+  function pairTable(rows) {
+    return '<table class="pair"><thead><tr><th></th><th>now</th><th>proposed</th><th></th></tr></thead><tbody>' + rows + "</tbody></table>";
   }
   function lineCols(l) {
     var c = l.column || "";
-    var n = (l.value_cols || []).length;
     if (l.kind === "status") return "Status";
     if (l.kind === "route") return "Route";
-    if (l.kind === "oo") return c + (Object.keys(l.proposed_values || {}).length > 1 ? " +" + (Object.keys(l.proposed_values).length - 1) : "");
-    return c + (n > 1 ? " +" + (n - 1) : "");
+    return String(l.ref_col || c).replace(/\s*\[ref\]$/, "") || c;
   }
   function lineBody(l, p) {
     if (l.kind === "new_row") return newRowBody(l);
     if (l.kind === "route") return routeBody(l, p);
     if (l.kind === "status") return statusBody(l, p);
-    if (l.kind === "fill" || l.kind === "oo") return unitBox("value + [ref] together (decided as one)", changesHtml(l, p) + refBlock(l));
-    return (changesHtml(l, p) ? '<div class="unit">' + changesHtml(l, p) + "</div>" : "") + refBlock(l);   // ref
+    return pairTable(valueRows(l, p) + refRow(l));   // ref, fill, oo
   }
   function statusBody(l, p) {
     var cs = l.current_status || "", ps = l.proposed_status || "";
-    var cont = ("Status" in p._cont) && !blankv(cs);
-    var h = '<div class="bigstatus">Status: ' + (blankv(cs) ? '<span class="blank">blank</span>'
-      : (cont ? '<span class="tint-cont">' + esc(cs) + "</span>" : '<span class="was">' + esc(cs) + "</span>"));
-    if (!blankv(ps) && ps !== cs) h += '<span class="arrow">→</span><span class="newv">' + esc(ps) + "</span>";
-    else if (!blankv(ps)) h += ' <span class="same">(unchanged)</span>';
-    h += "</div>";
-    if (cont) h += concernNote(p, "Status");
+    var rows = valueRow(l, p, "Status", cs, ps, !blankv(ps)) + valueRows(l, p, "Status") + refRow(l);
     var facts = [];
-    if (l.verdict) facts.push(chip("verdict: " + l.verdict));
     if (l.evidence_date) facts.push(chip("evidence " + l.evidence_date));
     if (l.class_out === "STALE") facts.push(chip("stale flag", "warn"));
     if (l.publishers < 2) facts.push(chip("single source", "single", "fewer than 2 distinct publishers: a status change stays green only on 2+ (rule 4)"));
     else facts.push(chip(l.publishers + " publishers"));
-    h += '<div class="row1">' + facts.join(" ") + "</div>";
-    if (l.staleness_rule) h += '<div class="faint" style="margin:4px 0">' + esc(l.staleness_rule) + "</div>";
-    var cov = (l.covers || []).map(function (c) {
-      return '<div class="faint">also decides the refs-leg record for ' + esc(c.ref_col || "Status [ref]") + " (" + esc(KIND_LABEL[c.kind] || c.kind) + " \u00b7 " + esc(c.class_out || "?") +
-        (c.dir !== l.dir ? " \u00b7 " + esc(dirLabel(c.dir)) : "") + "): same value, its refs are shown here" +
-        ((c.tier || "") !== (l.tier || "") || !!c.independent !== !!l.independent
-          ? ". That record says tier " + esc(c.tier || "none") + ", independent " + (c.independent ? "yes" : "no") + "; this card shows the status review's"
-          : "") + "</div>";
-    }).join("");
-    return unitBox("status + [ref] together (decided as one)", changesHtml(l, p, "Status") + refBlock(l) + cov) .replace('<div class="ulabel">', h + '<div class="ulabel">');
+    return pairTable(rows) + '<div class="facts">' + facts.join(" ") + "</div>";
   }
   function routeBody(l, p) {
     var geo = l.geometry_file ? '/geo/' + encodeURI(String(l.dir).replace(/^batches\//, "") + "/" + l.geometry_file) : "";
@@ -544,7 +537,7 @@
       ["Sheet length", l.sheet_length_km == null ? "" : l.sheet_length_km + " km"],
       ["Ratio", l.length_ratio == null ? "" : String(l.length_ratio)]
     ].filter(function (r) { return r[1] !== ""; }).map(function (r) { return '<div class="k">' + r[0] + '</div><div class="v">' + esc(r[1]) + "</div>"; });
-    rows.push('<div class="k">RouteAccuracy</div><div class="v">' + (blankv(cur) ? '<span class="blank">blank</span>' : '<span class="was">' + esc(cur) + "</span>") +
+    rows.push('<div class="k">RouteAccuracy</div><div class="v">' + (blankv(cur) ? "" : '<span class="was">' + esc(cur) + "</span>") +
       (blankv(sug) ? "" : '<span class="arrow">→</span><span class="newv">' + esc(sug) + "</span>") + "</div>");
     rows.push('<div class="k">QC</div><div class="v">' + (l.qc_passed ? chip("✓ passed", "ok") : chip("✗ did not pass", "bad")) + "</div>");
     rows.push('<div class="k">Geometry</div><div class="v">' + (geo ? '<a href="' + esc(geo) + '" target="_blank" rel="noopener"><code>' + esc(l.geometry_file) + "</code> ↗</a>" : '<span class="muted">none</span>') + "</div>");
@@ -576,20 +569,25 @@
         d.push('<div class="dtxt"><span class="k">' + esc(v.url) + " (" + esc(c.ref_col || "refs") + " record):</span> " + esc(v.note) + "</div>");
       });
     });
-    var misc = ["class " + (l.class_in || "?") + " → " + (l.class_out || "?"),
+    if (l.staleness_rule) d.push('<div class="dtxt"><span class="k">staleness rule:</span> ' + esc(l.staleness_rule) + "</div>");
+    (l.covers || []).forEach(function (c) {
+      d.push('<div class="dtxt"><span class="k">also decides:</span> the refs-leg record for ' + esc(c.ref_col || "Status [ref]") + " (" +
+        esc(KIND_LABEL[c.kind] || c.kind) + " \u00b7 " + esc(c.class_out || "?") + (c.dir !== l.dir ? " \u00b7 " + esc(dirLabel(c.dir)) : "") +
+        (c.tier && c.tier !== l.tier ? " \u00b7 its tier " + esc(c.tier) : "") + "); its refs are in the table</div>");
+    });
+    var misc = ["batch " + dirLabel(l.dir), "class " + (l.class_in || "?") + " → " + (l.class_out || "?"),
+                "default " + (l.default || "hold"),
                 "link live: " + (l.link_live == null ? "unknown" : l.link_live)];
+    if (l.source_language) misc.push("lang " + l.source_language);
+    if (l.also_in && l.also_in.length) misc.push("also in " + l.also_in.map(dirLabel).join(", "));
     if (l.kind === "oo") misc.push("owners tab row " + l.sheet_row + (l.tracker_sheet_row ? ", tracker row " + l.tracker_sheet_row : ""));
     d.push('<div class="dtxt"><span class="k">record:</span> ' + esc(misc.join(" · ")) + "</div>");
-    return '<details data-more><summary>details (d)</summary>' + d.join("") + "</details>";
+    return '<details data-more><summary>notes &amp; record</summary>' + d.join("") + "</details>";
   }
   function lineHtml(l, p) {
-    var chips = [chip(KIND_LABEL[l.kind], l.kind === "new_row" ? "newrow" : (l.kind === "oo" ? "oo" : "")),
-                 l.kind === "new_row" ? chip(tierOf(l) === "untiered" ? "untiered" : tierOf(l), tierOf(l) === "untiered" ? "" : tierOf(l)) : tierChip(l)];
-    if (l.class_out && l.kind !== "new_row") chips.push(chip(l.class_out, l.class_out === "REVERIFIED" ? "rev" : ""));
-    if (l.kind !== "new_row" && l.kind !== "route") {
-      chips.push(chip(l.independent ? "independent" : "not independent", l.independent ? "ok" : "", "a second, independent publisher (preferred, never owed)"));
-      if (l.source_language) chips.push(chip("lang " + l.source_language));
-    }
+    var chips = [];
+    if (l.kind === "oo" || l.kind === "new_row") chips.push(chip(KIND_LABEL[l.kind], l.kind === "new_row" ? "newrow" : "oo"));
+    chips.push(l.kind === "new_row" ? chip(tierOf(l) === "untiered" ? "untiered" : tierOf(l), tierOf(l) === "untiered" ? "" : tierOf(l)) : tierChip(l));
     var lock = lockCols(l, p);
     var agree = agreeCols(l, p);
     if (l._cont) chips.push(chip("contested", "cont", "a validity concern contests a value on this line"));
@@ -599,21 +597,18 @@
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
     var title = l.kind === "new_row" ? (l.name || "candidate") : lineCols(l);
     var h = '<div class="row1"><span class="col">' + esc(title) + "</span> " + chips.join(" ") +
-      '<span class="where">' + esc(rowLabel(l)) + " &middot; " + esc(dirLabel(l.dir)) + "</span></div>";
+      '<span class="where">' + esc(rowLabel(l)) + "</span></div>";
     h += lineBody(l, p);
-    var foot = ["default: " + (l.default || "hold")];
-    if (l.also_in && l.also_in.length) foot.push("also in " + l.also_in.map(dirLabel).join(", "));
-    h += '<div class="faint">' + esc(foot.join(" · ")) + "</div>";
-    h += detailsHtml(l);
     var dis = !Store.caps.decide;
     h += '<div class="controls">' + [["accept", "a"], ["hold", "h"], ["reject", "r"]].map(function (b) {
       var off = dis || (b[0] === "accept" && lock.length);
       return '<button type="button" class="b-' + b[0] + '" data-decide="' + b[0] + '"' +
-        (off ? ' aria-disabled="true" title="' + esc(dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") + '"' : "") +
-        ' aria-pressed="' + (cur(l) === b[0]) + '">' + b[0] + " (" + b[1] + ")</button>";
-    }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true" title="' + esc(NOT_YET) + '"' : ' title="suggest a different value, with a note (s)"') +
-      ' aria-pressed="' + (cur(l) === "suggest") + '">suggest (s)</button><button type="button" class="ghost" data-undo="1"' + (cur(l) ? "" : " disabled") + ' title="back to undecided (u)">undo (u)</button>' +
+        ' title="' + esc(off ? (dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") : "key: " + b[1]) + '"' + (off ? ' aria-disabled="true"' : "") +
+        ' aria-pressed="' + (cur(l) === b[0]) + '">' + b[0] + "</button>";
+    }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true" title="' + esc(NOT_YET) + '"' : ' title="suggest a different value, with a note (key: s)"') +
+      ' aria-pressed="' + (cur(l) === "suggest") + '">suggest</button>' + (cur(l) ? '<button type="button" class="ghost" data-undo="1" title="back to undecided (key: u)">undo</button>' : "") +
       '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
+    h += detailsHtml(l);
     return h;
   }
 
@@ -622,9 +617,18 @@
               kind: 1, project_id: 1, wiki: 1, pipeline_name: 1, segment_name: 1, value_cols: 1, values: 1, primary_value_col: 1,
               primary_value: 1, _item: 1, _p: 1, countries: 1};
   var BODY = ["recommendation", "action", "detail", "summary", "monitor_reason", "researcher_notes", "staged_note", "staleness_rule", "corridor_desc"];
+  var CONCERN_ISSUE = {existence: "its existence is in doubt", duplicate: "it may duplicate another row",
+                       classification: "its classification may be wrong", attribution: "its owner / operator attribution may be wrong",
+                       spec: "a spec value (capacity, length, diameter, dates) may be off"};
+  function concernHead(it) {
+    var issue = CONCERN_ISSUE[it.concern_type], v = it.verdict || "";
+    if (!issue) return (it.concern_type || "concern") + (v ? " — " + v : "");
+    if (/^confirmed/.test(v)) return "Pipeline is real, but " + issue;
+    return "Open doubt: " + issue;
+  }
   function itemHead(it) {
     switch (it.kind) {
-      case "concern": return (it.concern_type || "concern") + (it.verdict ? " — " + it.verdict : "");
+      case "concern": return concernHead(it);
       case "confirmed": return (it.ref_col && it.ref_col.indexOf("__") !== 0 ? it.ref_col : "existence / status") + (it.verdict ? " — " + it.verdict : "");
       case "unresolved": return (it.primary_value_col || it.ref_col || "") + " unresolved";
       case "wikidiff": return (it.field || "wiki") + " — " + (it.class_out || "");
@@ -681,7 +685,7 @@
     var row = it.sheet_row == null ? "" : "row " + it.sheet_row + " &middot; ";
     var h = '<div class="item' + (ck.length ? " conts" : "") + (it.call && it.reviewed ? " done" : "") + '"><div class="row1">' + chip(KIND_LABEL[it.kind], "") +
       " <b>" + esc(itemHead(it)) + "</b>" + (it.tier ? " " + tierChip(it) : "") +
-      '<span class="where">' + row + esc(dirLabel(it.dir)) + (it.also_in && it.also_in.length ? " (also " + it.also_in.map(dirLabel).join(", ") + ")" : "") + "</span></div>";
+      '<span class="where">' + row.replace(/ &middot; $/, "") + "</span></div>";
     h += b.html;
     ck.forEach(function (c) {
       h += '<div class="concern-inline">' + chip("contested", "cont") + " <b>" + esc(c) + "</b>: " + (cont[c] ? esc(cont[c]) : "<i>no detail recorded</i>") + "</div>";
@@ -698,15 +702,16 @@
     var opts = '<option value="">no call</option>' + v.map(function (c) {
       return '<option value="' + c + '"' + (it.call === c ? " selected" : "") + ' title="' + esc(CALL_HELP[c] || "") + '">' + c.replace("_", " ") + "</option>";
     }).join("");
-    var hint = it.kind === "concern" ? '<span class="faint">any call releases the lines this concern holds (confirmed: it stands; dismissed: closed; needs research: to an Update worklist)</span>' : "";
-    return '<div class="icall"><label>Call <select data-icall="' + it._i + '"' + (dis ? ' disabled title="' + esc(NOT_YET) + '"' : "") + ">" + opts + "</select></label>" +
+    var hint = it.kind === "concern" ? "any call releases the lines this concern holds (confirmed: it stands; dismissed: closed; needs research: to an Update worklist)" : "";
+    return '<div class="icall"><label>Call <select data-icall="' + it._i + '"' + (dis ? ' disabled title="' + esc(NOT_YET) + '"' : (hint ? ' title="' + esc(hint) + '"' : "")) + ">" + opts + "</select></label>" +
       '<input type="text" data-inote="' + it._i + '" placeholder="note" value="' + esc(it.call_note || "") + '"' + (dis ? " disabled" : "") + ">" +
-      '<span class="dstat" id="istat-' + it._i + '" role="status">' + esc(itemStat(it)) + "</span>" + hint + "</div>";
+      '<span class="dstat" id="istat-' + it._i + '" role="status">' + esc(itemStat(it)) + "</span></div>";
   }
   function itemsHtml(p) {
-    if (!p.items.length) return '<div class="hiddennote">No items on this pipeline.</div>';
+    var ask = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
+    if (!ask.length) return '<div class="hiddennote">Nothing to decide on this pipeline.</div>';
     var by = {};
-    p.items.forEach(function (it) { (by[it.kind] = by[it.kind] || []).push(it); });
+    ask.forEach(function (it) { (by[it.kind] = by[it.kind] || []).push(it); });
     var h = '<section class="items">';
     ITEM_KINDS.forEach(function (k) {
       if (!by[k]) return;
@@ -734,23 +739,31 @@
     var segTxt = segs.length ? segs.map(function (s) { return "row " + s.sheet_row + (s.segment ? " (" + s.segment + ")" : ""); }).join(", ") : "";
     var ctx = ['<b>' + esc(isNew ? "new candidate, not in the sheet" : (isScope ? "scope-level" : segTxt || "no sheet row")) + "</b>",
                p.country && esc(p.country), p.status && "Status: " + esc(p.status),
-               p.wiki && '<a href="' + esc(p.wiki) + '" target="_blank" rel="noopener">wiki ↗</a> <span class="faint">context — never a ref</span>',
-               tierSummary(p), esc(open + " open · " + (p.lines.length - open) + " decided")]
+               p.wiki && '<a href="' + esc(p.wiki) + '" target="_blank" rel="noopener">wiki ↗</a>',
+               tierSummary(p)]
       .filter(Boolean).map(function (x) { return "<span>" + x + "</span>"; }).join("");
-    var h = "<h2>" + (isNew || isScope ? "" : '<span class="pid">' + esc(p.pid) + "</span>") + esc(p.name || "(no name)") + '</h2><div class="ctx">' + ctx + "</div>" +
-      '<div class="ctx2">current values from snapshot ' + esc(D.scope.snapshot) + "</div>";
-    var nOpenItems = p.items.filter(function (it) { return !it.call; }).length;
+    var h = '<div class="cardhead">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid">' + esc(p.pid) + "</span>") +
+      '<a href="#" class="only" data-tab="all" title="review everything on this pipeline: every line (filters ignored) and every item">' + esc(p.name || "(no name)") + "</a>" + '</h2><div class="ctx">' + ctx + "</div>";
+    var askItems = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
+    var nOpenItems = askItems.filter(function (it) { return !it.call; }).length;
+    // "(3 to decide)", "(1 of 3 to decide)", "(3, all decided)"
+    function todo(n, total) {
+      if (!total) return "(0)";
+      if (!n) return "(" + total + ", all decided)";
+      return "(" + (n === total ? n : n + " of " + total) + " to decide)";
+    }
     h += '<div class="tabs" role="tablist">' +
-      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">Lines (' + p.lines.length + ")</button>" +
-      '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '" title="i: switch to the Items tab">Items (' + p.items.length +
-      (nOpenItems ? ", " + nOpenItems + " without a call" : "") + ")</button></div>";
+      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">Lines ' + todo(open, p.lines.length) + "</button>" +
+      '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '" title="i: switch to the Items tab">Items ' + todo(nOpenItems, askItems.length) + "</button>" +
+      '<button type="button" role="tab" data-tab="all" aria-selected="' + (S.tab === "all") + '" title="every line (filters ignored) and every item on this pipeline; also: click the name">Everything</button></div></div>';
     if (S.tab === "items") {
       S.shown = []; S.line = -1;
       card.innerHTML = h + itemsHtml(p);
       return;
     }
     // lines the filter lets through, grouped by segment when the PID spans several sheet rows
-    var keep = p.lines.filter(function (l) { return match(l, p, FS, null, ranges, q); });
+    var all = S.tab === "all";
+    var keep = all ? p.lines.slice() : p.lines.filter(function (l) { return match(l, p, FS, null, ranges, q); });
     var hidden = p.lines.length - keep.length;
     if (S.pin === S.pipe && !keep.length) { keep = p.lines.slice(); hidden = 0; }
     var groups = [];
@@ -772,6 +785,7 @@
     if (hidden) h += '<div class="hiddennote">' + hidden + " more line" + (hidden === 1 ? "" : "s") + " on this pipeline " + (hidden === 1 ? "is" : "are") +
       ' hidden by the filter &mdash; <a href="#" class="only" data-showall="1">show all</a></div>';
     if (!keep.length && !hidden) h += '<div class="hiddennote">No lines on this pipeline.</div>';
+    if (all) h += '<h3 class="allitems">Items</h3>' + itemsHtml(p);
     card.innerHTML = h;
     if (S.line < 0 || S.shown.indexOf(S.line) < 0) S.line = S.shown.length ? S.shown[0] : -1;
     var el = S.line >= 0 && $("line-" + S.line);
@@ -1065,8 +1079,10 @@
       syncControls(); S.pin = keepPipe; refilter(true); writeRoute(false);
       return;
     }
-    var tb = e.target.closest("button[data-tab]");
+    var tb = e.target.closest("[data-tab]");
+    if (tb && tb.tagName === "A") e.preventDefault();
     if (tb) {
+      if (tb.getAttribute("data-tab") === "all") S.pin = S.pipe;   // deciding lines here must not drop the pipeline from the queue
       if (S.tab !== tb.getAttribute("data-tab")) { S.tab = tb.getAttribute("data-tab"); renderCard(); }
       return;
     }
@@ -1106,7 +1122,7 @@
     });
     return t;
   }
-  var BULK_TITLE = {defaults: "Accept all defaults in view", hold: "Hold all in view", "pipe-high": "Accept all high in this pipeline"};
+  var BULK_TITLE = {defaults: "Accept all defaults in view", hold: "Hold all in view", "pipe-high": "Accept all high for this pipeline"};
   function showBulk(mode) {
     if (!Store.caps.decide) return notYet();
     if (S.pipe < 0) return toast("nothing in view");
@@ -1151,7 +1167,7 @@
       var f = cur(l) ? "decided" : (l.in_backend ? "backend" : "open");
       bump(kinds, l.kind, f); bump(tiers, tierOf(l), f); bump(dirs, l.dir, f);
     });
-    ITEMS.forEach(function (it) { bump(ik, it.kind, it.call ? "decided" : "open"); });
+    ITEMS.forEach(function (it) { if (!INFO_KINDS[it.kind]) bump(ik, it.kind, it.call ? "decided" : "open"); });
     var sess = Object.keys(S.session).map(function (k) { return S.session[k]; }), sw = {}, sd = {};
     sess.forEach(function (r) { sw[r.what] = (sw[r.what] || 0) + 1; sd[r.dir] = (sd[r.dir] || 0) + 1; });
     var calls = {accept: 0, hold: 0, reject: 0, suggest: 0};
@@ -1253,7 +1269,7 @@
   // ---- routing: #/P0736 plus an optional ?query with the filters that differ from the defaults ----
   var ROUTING = false;
   var QK = {decision: "d", kind: "k", tier: "t", class_out: "c", dir: "dir", column: "col", q: "q", row: "row",
-            contested: "cont", single: "single", owners: "owners", landed: "landed"};
+            contested: "cont", owners: "owners", landed: "landed"};
   function routeHash() {
     var p = D.pipelines[S.pipe], d = defaults(), q = [];
     Object.keys(QK).forEach(function (f) {
