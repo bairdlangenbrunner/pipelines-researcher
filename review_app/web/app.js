@@ -5,9 +5,9 @@
   "use strict";
   var T0 = performance.now();
 
-  // ---- Store adapter (phase 1: local HTTP; phase 2 swaps in google.script.run) ----
+  // ---- Store adapter: local HTTP here; on the Google page gas.js (loaded first) supplies window.GasStore ----
   var NOT_YET = "this server cannot record decisions";
-  var Store = {
+  var Store = window.GasStore || {
     caps: {decide: false, refresh: false, push: false},
     _json: function (r) {
       return r.json().then(function (body) {
@@ -57,7 +57,7 @@
   var ITEM_BY_KEY = {};
   var ITEM_CALLS = {concern: ["confirmed", "dismissed", "needs_research"]};
   var OTHER_CALLS = ["noted", "todo", "dismissed"];
-  var CALL_HELP = {confirmed: "the concern stands", dismissed: "the concern is closed", needs_research: "goes to a research / Update worklist",
+  var CALL_HELP = {confirmed: "the concern stands", dismissed: "the concern is closed", needs_research: "goes to a research / update worklist",
                    noted: "seen, nothing to do", todo: "to do later"};
   var MACHINE = {"backend sync": 1, "push": 1};   // not people: their records never count as reviewed
   var LINE_BY_KEY = {};
@@ -76,7 +76,13 @@
 
   function defaults() {
     return {decision: "undecided", kind: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
-            contested: false, owners: false, landed: false};
+            contested: false, owners: false, landed: false, country: [], fuel: ["gas"], by: "", drift: false};
+  }
+  // distinct non-empty segment names of a pipeline, in sheet order
+  function segNames(p) {
+    var seen = {};
+    return p.segments.map(function (s) { return String(s.segment || "").trim(); })
+      .filter(function (n) { if (!n || seen[n]) return false; seen[n] = 1; return true; });
   }
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -101,7 +107,14 @@
     var d = o._item ? o.call : cur(o);
     return d ? d : "undecided";
   }
-  function timeOf(iso) { return String(iso || "").replace("T", " ").slice(11, 16); }
+  var TODAY = (function () {
+    try { return new Intl.DateTimeFormat("en-CA", {timeZone: "America/New_York"}).format(new Date()); } catch (e) { return ""; }
+  })();
+  // today's decisions show HH:MM, older ones their date too (the store keeps every decision ever made)
+  function timeOf(iso) {
+    var s = String(iso || "").replace("T", " ");
+    return !TODAY || s.slice(0, 10) === TODAY ? s.slice(11, 16) : s.slice(0, 16);
+  }
   function decisionText(l) {
     if (l.reviewed && l.decision === "suggest") {
       return "suggested: " + (blankv(l.suggested_value) ? "(note only)" : l.suggested_value) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at) +
@@ -154,18 +167,28 @@
   function segRow(l) { return l.tracker_sheet_row || l.sheet_row; }
 
   // ---- theme ----
+  // theme = a palette (dropdown; "" = the default look) x a mode (light / dark button; unset = follow the system).
+  // The page's data-theme is "light" / "dark" for the default palette, "<palette>-<mode>" for the others.
   function initTheme() {
+    var root = document.documentElement, pick = $("theme-pick"), mq = matchMedia("(prefers-color-scheme: dark)");
+    var pal = "", mode = "";
+    function store(k, v) { try { if (v) localStorage.setItem(k, v); else localStorage.removeItem(k); } catch (e) { /* ignore */ } }
+    function eff() { return mode || (mq.matches ? "dark" : "light"); }
+    function apply() {
+      if (!pal && !mode) root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", pal ? pal + "-" + eff() : mode);
+      pick.value = pal;
+    }
     try {
-      var t = localStorage.getItem("review-theme");
-      if (t) document.documentElement.setAttribute("data-theme", t);
+      pal = localStorage.getItem("review-palette") || "";
+      mode = localStorage.getItem("review-mode") || "";
+      var old = localStorage.getItem("review-theme");          // the pre-palette key: "light" / "dark"
+      if (old && !mode && (old === "light" || old === "dark")) mode = old;
     } catch (e) { /* storage blocked: follow the system theme */ }
-    $("theme").onclick = function () {
-      var cur = document.documentElement.getAttribute("data-theme") ||
-        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      var next = cur === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("review-theme", next); } catch (e) { /* ignore */ }
-    };
+    apply();
+    pick.onchange = function () { pal = this.value; store("review-palette", pal); apply(); };
+    $("theme").onclick = function () { mode = eff() === "dark" ? "light" : "dark"; store("review-mode", mode); apply(); };
+    if (mq.addEventListener) mq.addEventListener("change", function () { if (!mode) apply(); });
   }
 
   // ---- derived data, once per load ----
@@ -191,6 +214,8 @@
       p._hay = [p.name, p.pid, p.country, p.status].concat(p.segments.map(function (s) { return s.sheet_row + " " + s.segment; }))
         .join(" ").toLowerCase();
       p._rows = p.segments.map(function (s) { return s.sheet_row; });
+      p._countries = p.scope_countries || [];
+      p._commodity = p.commodity || D.scope.commodity;
     });
   }
 
@@ -209,6 +234,7 @@
   // One matcher for lines and items. `skip` names a facet to ignore (for faceted chip counts).
   function match(o, p, fs, skip, ranges, q) {
     var item = !!o._item;
+    if (item && INFO_KINDS[o.kind]) return false;
     if (!item && !fs.landed && o.in_backend) return false;
     if (skip !== "kind") {
       if (fs.kind) { if (o.kind !== fs.kind) return false; }
@@ -221,11 +247,15 @@
     if (fs.column && (item || o.column !== fs.column)) return false;
     if (fs.contested && !(item ? Object.keys(o.contested || {}).length : o._cont)) return false;
     if (fs.owners && (item || o.kind !== "oo")) return false;
+    if (fs.by && (o.reviewed ? o.decided_by : "") !== fs.by) return false;
+    if (fs.drift && (item || !o.drift)) return false;
     if (fs.row) {
       if (!ranges) return false;
       var rows = item ? (o.sheet_row != null ? [o.sheet_row] : []) : o._rows;
       if (!inRows(rows, ranges)) return false;
     }
+    if (skip !== "country" && fs.country.length && !p._countries.some(function (c) { return fs.country.indexOf(c) >= 0; })) return false;
+    if (fs.fuel.length && fs.fuel.indexOf(p._commodity) < 0) return false;
     if (q && p._hay.indexOf(q) < 0) return false;
     return true;
   }
@@ -285,29 +315,126 @@
     s.innerHTML = h;
     s.value = FS[facet];
   }
+  // the batch countries still shown; an all-decided country the build hid is listed apart (hiddenCountries)
+  function countryStatus() { return (D.scope && D.scope.country_status) || []; }
+  function hiddenCountries() { return countryStatus().filter(function (c) { return c.hidden; }).map(function (c) { return c.country; }); }
+  function countries() {
+    var hid = hiddenCountries();
+    return ((D.scope && D.scope.countries) || []).filter(function (c) { return hid.indexOf(c) < 0; });
+  }
+  // the batch countries as checkboxes (any ticked country matches; none ticked = every country),
+  // each with its live line + item count under the other filters
+  function renderCountries() {
+    var box = $("f-country"), all = countries(), hid = hiddenCountries();
+    renderFuel();
+    renderScope();
+    box.hidden = all.length < 2 && !hid.length;
+    if (box.hidden) return;
+    var ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase(), c = {};
+    all.forEach(function (k) { c[k] = 0; });
+    D.pipelines.forEach(function (p) {
+      var n = 0;
+      p.lines.forEach(function (l) { if (match(l, p, FS, "country", ranges, q)) n++; });
+      p.items.forEach(function (it) { if (match(it, p, FS, "country", ranges, q)) n++; });
+      p._countries.forEach(function (k) { if (k in c) c[k] += n; });
+    });
+    var was = box.querySelector("details"), open = was && was.open, n = FS.country.length;
+    box.innerHTML = '<details class="cdrop"' + (open ? " open" : "") + '><summary>country</summary><div class="cmenu"><input type="search" class="csearch" placeholder="find a country" value="' + esc(CQ) + '"><button type="button" class="ctoggle"></button>' + all.map(function (k) {
+      return '<label class="check"><input type="checkbox" value="' + esc(k) + '"' + (!n || FS.country.indexOf(k) >= 0 ? " checked" : "") +
+        "> " + esc(k) + " (" + c[k] + ")</label>";
+    }).join("") + "</div></details>" + (hid.length ? '<span class="cdone" title="every line and asked item in these countries has a decision, so the build left them out (review_data.py --include-done shows them)">all decided, hidden: ' +
+      esc(hid.join(", ")) + "</span>" : "");
+    filterCountryMenu();
+  }
+  // fuel: the same checkbox dropdown (none ticked = no filter in the data model, all ticked = same thing)
+  var FUELS = ["gas", "oil"];
+  function renderFuel() {
+    var box = $("f-fuel"), was = box.querySelector("details"), open = was && was.open, n = FS.fuel.length;
+    box.innerHTML = '<details class="cdrop fdrop"' + (open ? " open" : "") + '><summary>fuel</summary><div class="cmenu">' +
+      FUELS.map(function (k) {
+        return '<label class="check"><input type="checkbox" value="' + k + '"' + (!n || FS.fuel.indexOf(k) >= 0 ? " checked" : "") + "> " + k + "</label>";
+      }).join("") + "</div></details>";
+  }
+  // header: each batch country as a box (commodity is a filter; the snapshot name is in the tooltip)
+  function renderScope() {
+    var list = countries(); if (!list.length && D.scope.country) list = [D.scope.country];
+    if (FS.country.length) list = list.filter(function (k) { return FS.country.indexOf(k) >= 0; });   // only the selected ones
+    $("scope").innerHTML = FUELS.filter(function (k) { return !FS.fuel.length || FS.fuel.indexOf(k) >= 0; }).map(function (k) { return '<span class="cbox fbox" data-tip="fuel filter: ' + k + ' pipelines">' + k + "</span>"; }).join("") +
+      list.map(function (k) { return '<span class="cbox" data-tip="country filter: ' + esc(k) + ' pipelines (' + D.pipelines.filter(function (p) { return p._countries.indexOf(k) >= 0; }).length + ' in this batch)">' + esc(k) + "</span>"; }).join("");
+  }
+  var CQ = "";   // country-menu search text
+  var NO_COUNTRY = "(none)";   // FS.country sentinel: every box unticked, so nothing matches (empty = no filter)
+  // the (un)select-all button acts on the countries the search leaves visible
+  function toggleLabel() {
+    var b = document.querySelector("#f-country .ctoggle"); if (!b) return;
+    var boxes = Array.prototype.filter.call(document.querySelectorAll("#f-country .cmenu label:not([hidden]) input"), function () { return true; });
+    b.textContent = boxes.length && boxes.every(function (i) { return i.checked; }) ? "deselect all" : "select all";
+  }
+  function toggleCountries() {
+    var cur = countries(), sel = FS.country.length ? cur.filter(function (k) { return FS.country.indexOf(k) >= 0; }) : cur.slice();
+    var vis = Array.prototype.map.call(document.querySelectorAll("#f-country .cmenu label:not([hidden]) input"), function (i) { return i.value; });
+    var allOn = vis.length && vis.every(function (k) { return sel.indexOf(k) >= 0; });
+    sel = allOn ? sel.filter(function (k) { return vis.indexOf(k) < 0; }) : sel.concat(vis.filter(function (k) { return sel.indexOf(k) < 0; }));
+    FS.country = sel.length === cur.length ? [] : sel.length ? sel : [NO_COUNTRY];
+    changed();
+  }
+  function filterCountryMenu() {
+    var q = CQ.trim().toLowerCase();
+    Array.prototype.forEach.call(document.querySelectorAll("#f-country .cmenu label"), function (l) {
+      l.hidden = !!q && l.textContent.toLowerCase().indexOf(q) < 0;
+    });
+    toggleLabel();
+  }
+  document.addEventListener("click", function (e) {
+    Array.prototype.forEach.call(document.querySelectorAll("#f-country details, #f-fuel details"), function (d) {
+      if (d.open && !d.contains(e.target)) d.open = false;
+    });
+  });
+  // everyone with a live decision in this dataset (the list grows as other reviewers' calls arrive)
+  function fillBy() {
+    var seen = {}, s = $("f-by");
+    if (!s) return;
+    LINES.concat(ITEMS).forEach(function (o) { if (o.reviewed && o.decided_by) seen[o.decided_by] = (seen[o.decided_by] || 0) + 1; });
+    if (FS.by && !seen[FS.by]) seen[FS.by] = 0;
+    s.innerHTML = '<option value="">anyone</option>' + Object.keys(seen).sort().map(function (k) {
+      return '<option value="' + esc(k) + '">' + esc(k) + " (" + seen[k] + ")</option>";
+    }).join("");
+    s.value = FS.by;
+  }
   function renderChips() {
+    renderCountries();
+    fillBy();
     var lab = {};
     facetSelect("f-decision", "decision", DEC, lab);
     var tot = {};
     LINES.forEach(function (l) { tot[l.kind] = 1; });
     ITEMS.forEach(function (i) { tot[i.kind] = 1; });
-    facetSelect("f-kind", "kind", LINE_KINDS.concat(ITEM_KINDS), KIND_LABEL, tot);
-    facetSelect("f-tier", "tier", ["high", "medium", "low", "untiered"], lab);
+    facetSelect("f-kind", "kind", LINE_KINDS.concat(ITEM_KINDS.filter(function (k) { return !INFO_KINDS[k]; })), KIND_LABEL, tot);
+    var tt = {};
+    LINES.forEach(function (l) { tt[tierOf(l)] = 1; });
+    facetSelect("f-tier", "tier", ["high", "medium", "low", "untiered"], lab, tt);
   }
   function fillSelect(id, values) {
     var s = $(id);
-    values.forEach(function (v) { var o = document.createElement("option"); o.value = v; o.textContent = id === "f-dir" ? dirLabel(v) : v; s.appendChild(o); });
+    values.forEach(function (v) { var o = document.createElement("option"); o.value = v; o.textContent = id === "f-dir" ? dirLabel(v) : id === "f-class_out" ? classLabel(v) : v; s.appendChild(o); });
   }
+  function classLabel(v) { return String(v).toLowerCase().replace(/_/g, " "); }
   function uniq(arr) { return arr.filter(function (x, i) { return x && arr.indexOf(x) === i; }).sort(); }
-  function initFilters() {
-    fillSelect("f-class_out", uniq(LINES.map(function (l) { return l.class_out; }).concat(ITEMS.map(function (i) { return i.class_out; }))));
+  function fillFilters() {
+    ["f-class_out", "f-column", "f-dir"].forEach(function (id) { $(id).innerHTML = '<option value="">any</option>'; });
+    // only values some listed record carries: info items (confirmed) are never listed, so their classes / batches stay out
+    var ASK = ITEMS.filter(function (i) { return !INFO_KINDS[i.kind]; }), LISTED = LINES.concat(ASK);
+    fillSelect("f-class_out", uniq(LISTED.map(function (l) { return l.class_out; })));
     var cols = uniq(LINES.map(function (l) { return l.column; }));
     cols.sort(function (a, b) {
       var ia = D.columns.indexOf(a), ib = D.columns.indexOf(b);
       return (ia < 0 ? 9999 : ia) - (ib < 0 ? 9999 : ib);
     });
     fillSelect("f-column", cols);
-    fillSelect("f-dir", D.dirs);
+    fillSelect("f-dir", D.dirs.filter(function (d) { return LISTED.some(function (o) { return o.dir === d; }); }));
+  }
+  function initFilters() {
+    fillFilters();
     $("filters").addEventListener("click", function (e) {
       var c = e.target.closest("button[data-clear]");
       if (c) { clearOne(c.getAttribute("data-clear")); changed(); }
@@ -318,6 +445,26 @@
     ["contested", "owners", "landed"].forEach(function (f) {
       $("f-" + f).onchange = function () { FS[f] = this.checked; changed(); };
     });
+    $("f-fuel").onchange = function () {
+      FS.fuel = Array.prototype.map.call(this.querySelectorAll("input:checked"), function (i) { return i.value; });
+      if (FS.fuel.length === FUELS.length) FS.fuel = [];
+      else if (!FS.fuel.length) FS.fuel = [NO_COUNTRY];   // nothing ticked: nothing matches
+      changed();
+    };
+    $("f-country").onclick = function (e) { if (e.target.classList.contains("ctoggle")) { e.stopPropagation(); toggleCountries(); } };
+    $("f-country").oninput = function (e) {
+      if (e.target.classList.contains("csearch")) { CQ = e.target.value; filterCountryMenu(); }
+    };
+    $("f-country").onchange = function (e) {
+      if (e.target.classList.contains("csearch")) return;
+      FS.country = Array.prototype.map.call(this.querySelectorAll("input[type=checkbox]:checked"), function (i) { return i.value; });
+      if (FS.country.length === this.querySelectorAll("input[type=checkbox]").length) FS.country = [];
+      else if (!FS.country.length) FS.country = [NO_COUNTRY];   // all ticked = no filter
+      changed();
+    };
+    // "decided by" and "sheet changed" only ever match decided lines: leave the undecided-only default
+    $("f-by").onchange = function () { FS.by = this.value; if (FS.by && FS.decision === "undecided") FS.decision = ""; changed(); };
+    $("f-drift").onchange = function () { FS.drift = this.checked; if (FS.drift && FS.decision === "undecided") FS.decision = ""; changed(); };
     $("f-q").oninput = function () { FS.q = this.value; changed(true); };
     $("f-row").oninput = function () { FS.row = this.value; changed(true); };
     $("f-more").onclick = function () { toggleMore(); };
@@ -340,7 +487,8 @@
       $("f-" + f).value = FS[f];
       if ($("f-" + f).value !== FS[f]) { FS[f] = ""; $("f-" + f).value = ""; }
     });
-    ["contested", "owners", "landed"].forEach(function (f) { $("f-" + f).checked = FS[f]; });
+    ["contested", "owners", "landed", "drift"].forEach(function (f) { $("f-" + f).checked = FS[f]; });
+    fillBy();
     $("f-q").value = FS.q; $("f-row").value = FS.row;
   }
   // Every filter that is set is a removable chip, so a control tucked behind "More filters"
@@ -349,18 +497,20 @@
     var chips = [], n = 0;
     function chip(id, text, hidden) {
       chips.push('<span class="chip on">' + esc(text) + ' <button type="button" data-clear="' + id +
-        '" title="clear this filter" aria-label="clear ' + esc(text) + '">&times;</button></span>');
+        '" aria-label="clear ' + esc(text) + '">&times;</button></span>');
       if (hidden) n++;
     }
-    if (FS.class_out) chip("class_out", "class: " + FS.class_out, true);
+    if (FS.class_out) chip("class_out", "class: " + classLabel(FS.class_out), true);
     if (FS.column) chip("column", "column: " + FS.column, true);
-    if (FS.dir) chip("dir", "dir: " + dirLabel(FS.dir), true);
+    if (FS.dir) chip("dir", "batch: " + dirLabel(FS.dir), true);
+    if (FS.by) chip("by", "decided by: " + FS.by, true);
+    if (FS.drift) chip("drift", "sheet changed since decided", true);
     if (FS.contested) chip("contested", "contested", false);
     if (FS.owners) chip("owners", "owners tab", false);
     if (FS.landed) chip("landed", "incl. lines already in the backend", false);
     $("active-filters").innerHTML = chips.join(" ");
     $("active-filters").hidden = !chips.length;
-    $("f-more").textContent = ($("more-filters").hidden ? "More filters" : "Fewer filters") + (n ? " (" + n + ")" : "");
+    $("f-more").textContent = ($("more-filters").hidden ? "more filters" : "fewer filters") + (n ? " (" + n + ")" : "");
   }
   function renderProgress() {
     var total = 0, done = 0;
@@ -377,13 +527,15 @@
       var dots = {};
       p.lines.forEach(function (l) { dots[tierOf(l)] = 1; });
       var dd = ["high", "medium", "low"].filter(function (t) { return dots[t]; })
-        .map(function (t) { return '<span class="dot ' + t + '" title="' + t + '"></span>'; }).join("");
+        .map(function (t) { return '<span class="dot ' + t + '" data-tip="' + t + ' tier" role="img" aria-label="' + t + ' tier"></span>'; }).join("");
       var rows = p.segments.map(function (s) { return s.sheet_row; }).filter(function (x) { return x != null; });
       var where = p.pid.indexOf("new:") === 0 ? "new row" : (p.pid === "scope" ? "scope" :
         (rows.length ? "row " + rows[0] + (rows.length > 1 ? " +" + (rows.length - 1) : "") : "no row"));
-      var badge = p._todo ? '<span class="n todo" title="lines nobody has decided">' + p._todo + " to decide</span>"
+      var badge = p._todo ? '<span class="n todo">' + p._todo + " to decide</span>"
         : (p._n ? '<span class="n">' + p._n + " &middot; done</span>" : (p._ni ? '<span class="n">' + p._ni + " item" + (p._ni === 1 ? "" : "s") + "</span>" : '<span class="n"></span>'));
+      var sn = segNames(p);
       h.push('<li data-i="' + i + '"' + (i === S.pipe ? ' class="sel"' : "") + '><div class="pname">' + esc(p.name || "(no name)") +
+        (sn.length ? ' <span class="pseg">' + esc(sn[0]) + (sn.length > 1 ? " +" + (sn.length - 1) : "") + "</span>" : "") +
         '</div><div class="pmeta"><span>' + esc(p.pid.indexOf("new:") === 0 ? "candidate" : p.pid) + " &middot; " + esc(where) +
         '</span><span class="grow"></span>' + badge + '</div>' + (dd ? '<div class="dots">' + dd + "</div>" : "") + "</li>");
     });
@@ -405,13 +557,18 @@
   function urlLink(u, long) {
     var t = u.length > (long || 78) ? u.slice(0, (long || 78) - 1) + "…" : u;
     if (!/^https?:\/\//i.test(u)) return esc(u);
-    return '<a href="' + esc(u) + '" target="_blank" rel="noopener" title="' + esc(u) + '">' + esc(t) + " ↗</a>";
+    return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(t) + " ↗</a>";
   }
   function splitUrls(text) {
     return String(text || "").split(/,\s*(?=https?:\/\/)|\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
   }
-  function chip(text, cls, title) {
-    return '<span class="chip' + (cls ? " " + cls : "") + '"' + (title ? ' title="' + esc(title) + '"' : "") + ">" + esc(text) + "</span>";
+  // `tip` shows in the #tip popover on hover / keyboard focus; `note` (optional) scrolls under it when long
+  function chip(text, cls, tip, note) {
+    return '<span class="chip' + (cls ? " " + cls : "") + '"' + (tip ? ' tabindex="0"' + tipAttrs(tip, note) : "") + ">" + esc(text) + "</span>";
+  }
+  function tipAttrs(tip, note) {
+    return ' data-tip="' + esc(tip) + '"' + (note ? ' data-tip-note="' + esc(note) + '"' : "") +
+      ' aria-description="' + esc(tip + (note ? ". note: " + note : "")) + '"';
   }
   function tierChip(l) {
     var t = tierOf(l);
@@ -422,14 +579,16 @@
   function vmark(u, l) {
     var v = null;
     (l.verifications || []).forEach(function (x) { if (x.url === u) v = x; });
-    if (!v) return chip("unchecked", "", "no verification record for this URL");
+    if (!v) return chip("unchecked", "", "no verification record for this URL: url_verifier did not check it at staging, so whether it loads, states the value or names the pipeline is unknown");
     var bad = [];
     if (!v.ok) bad.push("load");
     if (!v.contains_value) bad.push("value");
     if (!v.name_found) bad.push("name");
-    var tip = "loads " + (v.ok ? "✓" : "✗") + " · states value " + (v.contains_value ? "✓" : "✗") + " · names pipeline " + (v.name_found ? "✓" : "✗") +
-      (v.note ? "\n" + v.note : "");
-    return bad.length ? chip("✗ " + bad.join(", "), "bad", tip) : chip("✓", "ok", tip);
+    var tip = "URL verifier checks:\n" +
+      (v.ok ? "✓" : "✗") + " loads: the page fetched and its text is readable\n" +
+      (v.contains_value ? "✓" : "✗") + " states value: the proposed value (or a unit equivalent) is on the page\n" +
+      (v.name_found ? "✓" : "✗") + " names pipeline: the pipeline's name is on the page";
+    return bad.length ? chip("✗ " + bad.join(", "), "bad", tip, v.note) : chip("✓", "ok", tip, v.note);
   }
   // a URL shortened for the table: host + path, decoded, Wayback shown as "archive › <origin>"
   function shortUrl(u) {
@@ -443,7 +602,7 @@
   }
   function shortLink(u) {
     if (!/^https?:\/\//i.test(u)) return esc(u);
-    return '<a href="' + esc(u) + '" target="_blank" rel="noopener" title="' + esc(u) + '">' + esc(shortUrl(u)) + "</a>";
+    return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(shortUrl(u)) + "</a>";
   }
   function tag(t) { return t ? '<span class="tag tag-' + t + '">' + t + "</span>" : ""; }
   function concernNote(p, col, l) {
@@ -531,17 +690,19 @@
   }
   function routeBody(l, p) {
     var geo = l.geometry_file ? '/geo/' + encodeURI(String(l.dir).replace(/^batches\//, "") + "/" + l.geometry_file) : "";
+    var geoA = !geo ? "" : (Store.showGeo ? '<a href="#" class="only" data-geo="' + esc(l.dir + "/" + l.geometry_file) + '">'
+      : '<a href="' + esc(geo) + '" target="_blank" rel="noopener">');
     var cur = l.current_route_accuracy, sug = l.suggested_route_accuracy;
     var rows = [
-      ["Candidate length", l.length_km == null ? "" : l.length_km + " km"],
-      ["Sheet length", l.sheet_length_km == null ? "" : l.sheet_length_km + " km"],
-      ["Ratio", l.length_ratio == null ? "" : String(l.length_ratio)]
+      ["candidate length", l.length_km == null ? "" : l.length_km + " km"],
+      ["sheet length", l.sheet_length_km == null ? "" : l.sheet_length_km + " km"],
+      ["ratio", l.length_ratio == null ? "" : String(l.length_ratio)]
     ].filter(function (r) { return r[1] !== ""; }).map(function (r) { return '<div class="k">' + r[0] + '</div><div class="v">' + esc(r[1]) + "</div>"; });
     rows.push('<div class="k">RouteAccuracy</div><div class="v">' + (blankv(cur) ? "" : '<span class="was">' + esc(cur) + "</span>") +
       (blankv(sug) ? "" : '<span class="arrow">→</span><span class="newv">' + esc(sug) + "</span>") + "</div>");
     rows.push('<div class="k">QC</div><div class="v">' + (l.qc_passed ? chip("✓ passed", "ok") : chip("✗ did not pass", "bad")) + "</div>");
-    rows.push('<div class="k">Geometry</div><div class="v">' + (geo ? '<a href="' + esc(geo) + '" target="_blank" rel="noopener"><code>' + esc(l.geometry_file) + "</code> ↗</a>" : '<span class="muted">none</span>') + "</div>");
-    return '<div class="chg">' + rows.join("") + '</div><div class="faint" style="margin-top:4px">Accepting records approval for the §8 apply; it writes no cell.</div>';
+    rows.push('<div class="k">geometry</div><div class="v">' + (geo ? geoA + "<code>" + esc(l.geometry_file) + "</code> ↗</a>" : '<span class="muted">none</span>') + "</div>");
+    return '<div class="chg">' + rows.join("") + '</div><div class="faint" style="margin-top:4px">accepting records approval for the §8 apply; it writes no cell.</div>';
   }
   function newRowBody(l) {
     var vals = l.proposed_values || {}, refs = l.proposed_refs || {};
@@ -594,6 +755,7 @@
     if (agree.length) chips.push(chip("resolves concern", "ok", "an open concern's contested value on " + agree.join(", ") + " equals this proposed value; accepting it records a dismissed call on the concern"));
     if (lock.length) chips.push(chip("held: concern open", "warn", "a validity concern contests " + lock.join(", ") + " and has no call yet; accept is refused until it does (hold / reject are still allowed)"));
     if (l.in_backend) chips.push(chip("in backend", "", "the snapshot already holds this value and these refs"));
+    if (l.drift && cur(l)) chips.push(chip("sheet changed since decided", "warn", "the backend cells this call was judged against have changed since (it was decided on " + (l.drift.decided_snapshot || "an earlier snapshot") + "): look again, then press the call again to confirm it against the current sheet"));
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
     var title = l.kind === "new_row" ? (l.name || "candidate") : lineCols(l);
     var h = '<div class="row1"><span class="col">' + esc(title) + "</span> " + chips.join(" ") +
@@ -603,10 +765,10 @@
     h += '<div class="controls">' + [["accept", "a"], ["hold", "h"], ["reject", "r"]].map(function (b) {
       var off = dis || (b[0] === "accept" && lock.length);
       return '<button type="button" class="b-' + b[0] + '" data-decide="' + b[0] + '"' +
-        ' title="' + esc(off ? (dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") : "key: " + b[1]) + '"' + (off ? ' aria-disabled="true"' : "") +
+        (off ? tipAttrs(dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") + ' aria-disabled="true"' : "") +
         ' aria-pressed="' + (cur(l) === b[0]) + '">' + b[0] + "</button>";
-    }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true" title="' + esc(NOT_YET) + '"' : ' title="suggest a different value, with a note (key: s)"') +
-      ' aria-pressed="' + (cur(l) === "suggest") + '">suggest</button>' + (cur(l) ? '<button type="button" class="ghost" data-undo="1" title="back to undecided (key: u)">undo</button>' : "") +
+    }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true"' + tipAttrs(NOT_YET) : "") +
+      ' aria-pressed="' + (cur(l) === "suggest") + '">suggest</button>' + (cur(l) ? '<button type="button" class="ghost" data-undo="1">undo</button>' : "") +
       '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
     h += detailsHtml(l);
     return h;
@@ -623,8 +785,8 @@
   function concernHead(it) {
     var issue = CONCERN_ISSUE[it.concern_type], v = it.verdict || "";
     if (!issue) return (it.concern_type || "concern") + (v ? " — " + v : "");
-    if (/^confirmed/.test(v)) return "Pipeline is real, but " + issue;
-    return "Open doubt: " + issue;
+    if (/^confirmed/.test(v)) return "pipeline is real, but " + issue;
+    return "open doubt: " + issue;
   }
   function itemHead(it) {
     switch (it.kind) {
@@ -703,13 +865,13 @@
       return '<option value="' + c + '"' + (it.call === c ? " selected" : "") + ' title="' + esc(CALL_HELP[c] || "") + '">' + c.replace("_", " ") + "</option>";
     }).join("");
     var hint = it.kind === "concern" ? "any call releases the lines this concern holds (confirmed: it stands; dismissed: closed; needs research: to an Update worklist)" : "";
-    return '<div class="icall"><label>Call <select data-icall="' + it._i + '"' + (dis ? ' disabled title="' + esc(NOT_YET) + '"' : (hint ? ' title="' + esc(hint) + '"' : "")) + ">" + opts + "</select></label>" +
+    return '<div class="icall"><label' + (dis ? tipAttrs(NOT_YET) : (hint ? tipAttrs(hint) : "")) + '>call <select data-icall="' + it._i + '"' + (dis ? " disabled" : "") + ">" + opts + "</select></label>" +
       '<input type="text" data-inote="' + it._i + '" placeholder="note" value="' + esc(it.call_note || "") + '"' + (dis ? " disabled" : "") + ">" +
       '<span class="dstat" id="istat-' + it._i + '" role="status">' + esc(itemStat(it)) + "</span></div>";
   }
   function itemsHtml(p) {
     var ask = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
-    if (!ask.length) return '<div class="hiddennote">Nothing to decide on this pipeline.</div>';
+    if (!ask.length) return '<div class="hiddennote">nothing to decide on this pipeline.</div>';
     var by = {};
     ask.forEach(function (it) { (by[it.kind] = by[it.kind] || []).push(it); });
     var h = '<section class="items">';
@@ -731,19 +893,20 @@
   }
   function renderCard() {
     var card = $("card");
-    if (S.pipe < 0) { card.innerHTML = '<div class="empty">Nothing matches the filters.</div>'; S.shown = []; return; }
+    if (S.pipe < 0) { card.innerHTML = '<div class="empty">nothing matches the filters.</div>'; S.shown = []; return; }
     var p = D.pipelines[S.pipe], ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
     var isNew = p.pid.indexOf("new:") === 0, isScope = p.pid === "scope";
     var segs = p.segments;
     var open = p.lines.filter(function (l) { return !cur(l); }).length;
-    var segTxt = segs.length ? segs.map(function (s) { return "row " + s.sheet_row + (s.segment ? " (" + s.segment + ")" : ""); }).join(", ") : "";
+    var segTxt = segs.length ? "row" + (segs.length > 1 ? "s " : " ") + segs.map(function (s) { return s.sheet_row; }).join(", ") : "";
     var ctx = ['<b>' + esc(isNew ? "new candidate, not in the sheet" : (isScope ? "scope-level" : segTxt || "no sheet row")) + "</b>",
-               p.country && esc(p.country), p.status && "Status: " + esc(p.status),
+               p.country && esc(p.country), p.status && "status: " + esc(p.status),
                p.wiki && '<a href="' + esc(p.wiki) + '" target="_blank" rel="noopener">wiki ↗</a>',
                tierSummary(p)]
       .filter(Boolean).map(function (x) { return "<span>" + x + "</span>"; }).join("");
-    var h = '<div class="cardhead">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid">' + esc(p.pid) + "</span>") +
-      '<a href="#" class="only" data-tab="all" title="review everything on this pipeline: every line (filters ignored) and every item">' + esc(p.name || "(no name)") + "</a>" + '</h2><div class="ctx">' + ctx + "</div>";
+    var h = '<div class="cardhead">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid"' + tipAttrs("click to copy the ProjectID") + '>' + esc(p.pid) + "</span>") +
+      '<a href="#" class="only" data-tab="all"' + tipAttrs("review everything on this pipeline: every line (filters ignored) and every item") + '>' + esc(p.name || "(no name)") + "</a>" +
+      (segNames(p).length ? '<span class="hseg">' + esc(segNames(p).join(" / ")) + "</span>" : "") + '</h2><div class="ctx">' + ctx + "</div>";
     var askItems = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
     var nOpenItems = askItems.filter(function (it) { return !it.call; }).length;
     // "(3 to decide)", "(1 of 3 to decide)", "(3, all decided)"
@@ -753,9 +916,9 @@
       return "(" + (n === total ? n : n + " of " + total) + " to decide)";
     }
     h += '<div class="tabs" role="tablist">' +
-      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">Lines ' + todo(open, p.lines.length) + "</button>" +
-      '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '" title="i: switch to the Items tab">Items ' + todo(nOpenItems, askItems.length) + "</button>" +
-      '<button type="button" role="tab" data-tab="all" aria-selected="' + (S.tab === "all") + '" title="every line (filters ignored) and every item on this pipeline; also: click the name">Everything</button></div></div>';
+      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">lines ' + todo(open, p.lines.length) + "</button>" +
+      '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '">items ' + todo(nOpenItems, askItems.length) + "</button>" +
+      '<button type="button" role="tab" data-tab="all" aria-selected="' + (S.tab === "all") + '"' + tipAttrs("every line (filters ignored) and every item on this pipeline; also: click the name") + '>everything</button></div></div>';
     if (S.tab === "items") {
       S.shown = []; S.line = -1;
       card.innerHTML = h + itemsHtml(p);
@@ -784,8 +947,8 @@
     });
     if (hidden) h += '<div class="hiddennote">' + hidden + " more line" + (hidden === 1 ? "" : "s") + " on this pipeline " + (hidden === 1 ? "is" : "are") +
       ' hidden by the filter &mdash; <a href="#" class="only" data-showall="1">show all</a></div>';
-    if (!keep.length && !hidden) h += '<div class="hiddennote">No lines on this pipeline.</div>';
-    if (all) h += '<h3 class="allitems">Items</h3>' + itemsHtml(p);
+    if (!keep.length && !hidden) h += '<div class="hiddennote">no lines on this pipeline.</div>';
+    if (all) h += '<h3 class="allitems">items</h3>' + itemsHtml(p);
     card.innerHTML = h;
     if (S.line < 0 || S.shown.indexOf(S.line) < 0) S.line = S.shown.length ? S.shown[0] : -1;
     var el = S.line >= 0 && $("line-" + S.line);
@@ -823,21 +986,22 @@
     return (refs && refs[0]) || splitUrls(l.current_ref)[0] || "";
   }
   function openFirstRef() {
-    var u = firstRef(LINES[S.line]);
+    var l = LINES[S.line], u = firstRef(l);
+    if (u && l.kind === "route" && Store.showGeo) return Store.showGeo(l.dir + "/" + l.geometry_file);
     if (u) window.open(u, "_blank", "noopener"); else toast("this line has no ref to open");
   }
   function notYet() { toast(NOT_YET); }
   function setStat(i, text, failed) {
     var e = $("dstat-" + i);
-    if (e) { e.textContent = text; e.className = "dstat" + (failed ? " err" : (text === "Saving…" ? " saving" : "")); }
+    if (e) { e.textContent = text; e.className = "dstat" + (failed ? " err" : (text === "saving…" ? " saving" : "")); }
   }
   // Save one line's call. The UI changes only after the server confirms; while it is in flight the
-  // line says "Saving…", then "accepted by <reviewer> <time>" (or the refusal). No confirm dialog.
+  // line says "saving…", then "accepted by <reviewer> <time>" (or the refusal). No confirm dialog.
   function save(l, rec, advance) {
     if (!Store.caps.decide) return notYet();
     if (S.saving[l.key]) return;
     S.saving[l.key] = true;
-    setStat(l._i, "Saving…");
+    setStat(l._i, "saving…");
     var pp = D.pipelines[l._p], before = lockedCount(pp);
     Store.decide([rec]).then(function (saved) {
       applySaved(saved);
@@ -849,8 +1013,8 @@
       if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
       if (advance && S.line === l._i) nextUndecided();
     }).catch(function (e) {
-      setStat(l._i, "Not saved: " + e.message, true);
-      toast("Not saved: " + e.message);
+      setStat(l._i, "not saved: " + e.message, true);
+      toast("not saved: " + e.message);
     }).then(function () { delete S.saving[l.key]; });
   }
   function applyRecord(r) {
@@ -862,13 +1026,44 @@
     l.decided_at = r.undecided ? null : r.ts;
     l.suggested_value = r.suggested_value || "";
     l.decision_note = r.note || "";
+    // a call made against other backend cells than this dataset shows (publish.py `basis`) is marked, never dropped
+    l.drift = (!r.undecided && r.basis && l.basis && r.basis !== l.basis) ? {decided_snapshot: r.snapshot || "", decided_basis: r.basis} : null;
     if (l.covers) {          // the server wrote the same call to every covered record
       l.covers.forEach(function (c) { c.decision = l.decision; c.decided_by = l.decided_by; c.decided_at = l.decided_at; });
       l.uncovered = [];
     }
     noteSession(r, "decision");
   }
+  var REMOTE = false;
+  // Records from the store that this page did not save (another reviewer, or another tab): applied
+  // to the data, not counted as this session's. Lines on the open card stay in view. -> how many applied.
+  function applyRemote(recs) {
+    var n = 0, open = D.pipelines[S.pipe];
+    REMOTE = true;
+    try {
+      (recs || []).forEach(function (r) {
+        var item = "call" in r, o = item ? ITEM_BY_KEY[r.key] : LINE_BY_KEY[r.key];
+        if (!o) return;                       // a cover record (its line carries it) or another dataset version
+        if (item) applyItemRecord(r); else applyRecord(r);
+        if (!item && open && D.pipelines[o._p] === open) S.stay[r.key] = true;
+        n++;
+      });
+    } finally { REMOTE = false; }
+    return n;
+  }
+  // true while a re-render would take something from under the reviewer's hands
+  function busy() {
+    var a = document.activeElement;
+    return $("dialog").open || !!document.querySelector("#card .sform") || Object.keys(S.saving).length > 0 ||
+      !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && $("card").contains(a));
+  }
+  function rerender() {
+    var keepLine = S.line;
+    refilter(true);
+    if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
+  }
   function noteSession(r, field) {
+    if (REMOTE) return;
     if (r.undecided) delete S.session[r.key];
     else if (!MACHINE[r.reviewer]) S.session[r.key] = {key: r.key, dir: r.dir, kind: r.kind, what: r[field]};
   }
@@ -900,7 +1095,7 @@
     if (S.saving[it.key]) return;
     S.saving[it.key] = true;
     var p = D.pipelines[it._p], before = lockedCount(p), el = $("istat-" + it._i);
-    if (el) { el.textContent = "Saving…"; el.className = "dstat saving"; }
+    if (el) { el.textContent = "saving…"; el.className = "dstat saving"; }
     Store.item([rec]).then(function (saved) {
       saved.forEach(applyItemRecord);
       banner("");
@@ -911,8 +1106,8 @@
     }).catch(function (e) {
       renderCard();
       var e2 = $("istat-" + it._i);
-      if (e2) { e2.textContent = "Not saved: " + e.message; e2.className = "dstat err"; }
-      toast("Not saved: " + e.message);
+      if (e2) { e2.textContent = "not saved: " + e.message; e2.className = "dstat err"; }
+      toast("not saved: " + e.message);
     }).then(function () { delete S.saving[it.key]; });
   }
   function onItemChange(e) {
@@ -977,9 +1172,9 @@
     var prior = l.reviewed && l.decision === "suggest";
     var f = document.createElement("form");
     f.className = "sform";
-    f.innerHTML = '<label>Suggested value <input type="text" class="sv" autocomplete="off"></label>' +
-      '<label>Note <input type="text" class="sn" autocomplete="off" placeholder="why"></label>' +
-      '<button type="submit" class="sv-save">Save suggestion</button><button type="button" class="ghost sv-cancel">Cancel (Esc)</button>' +
+    f.innerHTML = '<label>suggested value <input type="text" class="sv" autocomplete="off"></label>' +
+      '<label>note <input type="text" class="sn" autocomplete="off" placeholder="why"></label>' +
+      '<button type="submit" class="sv-save">save suggestion</button><button type="button" class="ghost sv-cancel">cancel (esc)</button>' +
       '<span class="faint sv-err" role="alert"></span>';
     var sv = f.querySelector(".sv"), sn = f.querySelector(".sn"), err = f.querySelector(".sv-err");
     sv.value = prior ? (l.suggested_value || "") : suggestPrefill(l);
@@ -1003,7 +1198,7 @@
         if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
         toast("suggestion saved");
       }).catch(function (e2) {
-        b.disabled = false; err.textContent = "Not saved: " + e2.message;
+        b.disabled = false; err.textContent = "not saved: " + e2.message;
       }).then(function () { delete S.saving[l.key]; });
     };
     var ctl = el.querySelector(".controls");
@@ -1025,7 +1220,7 @@
     a: function () { decideCurrent("accept", true); }, h: function () { decideCurrent("hold", true); },
     r: function () { decideCurrent("reject", true); }, s: suggestKey, u: undoCurrent,
     "/": function (e) { e.preventDefault(); $("f-q").focus(); $("f-q").select(); },
-    S: function () { showSummary(); },
+    S: function () { if (SHOW_SUMMARY) showSummary(); },
     A: function () { showBulk("defaults"); },
     i: toggleItemsTab,
     "?": showHelp
@@ -1037,16 +1232,16 @@
     if (S.tab === "items") { var s1 = document.querySelector("#card select[data-icall]"); if (s1) s1.focus(); }
   }
   var HELP = [["j / k", "next / previous line (runs on into the next pipeline)"], ["J / K", "next / previous pipeline"],
-              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value: inline form on the line (value + note; Enter saves, Esc cancels); routed to an Update worklist by update_seed.py"],
-              ["A", "accept every default-accept line in view (asks first, with the count)"], ["i", "switch the card between Lines and Items; calls save on change"],
+              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value: inline form on the line (value + note; enter saves, esc cancels); routed to an update worklist by update_seed.py"],
+              ["A", "accept every default-accept line in view (asks first, with the count)"], ["i", "switch the card between lines and items; calls save on change"],
               ["S", "session summary (counts, this session, copy as markdown)"],
               ["u", "undo: the line goes back to undecided"], ["o", "open the line's first ref (new tab)"], ["d", "show / hide the line's details"],
               ["/", "search"], ["?", "this help"]];
   function showHelp() {
     var dlg = $("dialog");
     dlg.setAttribute("data-kind", "help");
-    dlg.innerHTML = "<h3>Keyboard</h3><table>" + HELP.map(function (r) { return "<tr><td><kbd>" + r[0] + "</kbd></td><td>" + r[1] + "</td></tr>"; }).join("") +
-      '</table><div class="actions"><button type="button" id="dlg-close">Close</button></div>';
+    dlg.innerHTML = "<h3>keyboard</h3><table>" + HELP.map(function (r) { return "<tr><td><kbd>" + r[0] + "</kbd></td><td>" + r[1] + "</td></tr>"; }).join("") +
+      '</table><div class="actions"><button type="button" id="dlg-close">close</button></div>';
     $("dlg-close").onclick = function () { dlg.close(); };
     dlg.showModal();
   }
@@ -1072,6 +1267,10 @@
   function banner(msg) { var b = $("banner"); b.textContent = msg; b.hidden = !msg; }
 
   function onCardClick(e) {
+    var pidEl = e.target.closest(".pid");
+    if (pidEl) { copyText(pidEl.textContent, pidEl.textContent + " copied"); return; }
+    var ga = e.target.closest("[data-geo]");
+    if (ga) { e.preventDefault(); Store.showGeo(ga.getAttribute("data-geo")); return; }
     if (e.target.closest("[data-showall]")) {
       e.preventDefault();
       var keepPipe = S.pipe;
@@ -1122,7 +1321,7 @@
     });
     return t;
   }
-  var BULK_TITLE = {defaults: "Accept all defaults in view", hold: "Hold all in view", "pipe-high": "Accept all high for this pipeline"};
+  var BULK_TITLE = {defaults: "accept all defaults in view", hold: "hold all in view", "pipe-high": "accept all high for this pipeline"};
   function showBulk(mode) {
     if (!Store.caps.decide) return notYet();
     if (S.pipe < 0) return toast("nothing in view");
@@ -1134,12 +1333,12 @@
     dlg.setAttribute("data-kind", "bulk");
     dlg.innerHTML = "<h3>" + esc(BULK_TITLE[mode]) + "</h3><p><b>" + t.lines.length + " line" + (t.lines.length === 1 ? "" : "s") + "</b> will be " +
       (t.decision === "accept" ? "accepted" : "held") + " as " + esc(ME) + ", in one save:</p><table>" + kinds + "</table>" +
-      (skipTxt ? '<p class="faint">Skipped: ' + esc(skipTxt) + ".</p>" : "") +
-      '<p class="faint" id="bulk-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">Cancel</button>' +
-      '<button type="button" id="dlg-ok">' + (t.decision === "accept" ? "Accept " : "Hold ") + t.lines.length + "</button></div>";
+      (skipTxt ? '<p class="faint">skipped: ' + esc(skipTxt) + ".</p>" : "") +
+      '<p class="faint" id="bulk-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">cancel</button>' +
+      '<button type="button" id="dlg-ok">' + (t.decision === "accept" ? "accept " : "hold ") + t.lines.length + "</button></div>";
     $("dlg-cancel").onclick = function () { dlg.close(); };
     $("dlg-ok").onclick = function () {
-      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "Saving…";
+      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "saving…";
       var pbefore = {};
       t.lines.forEach(function (l) { pbefore[l._p] = lockedCount(D.pipelines[l._p]); });
       Store.decide(t.lines.map(function (l) { return {key: l.key, decision: t.decision}; })).then(function (saved) {
@@ -1151,8 +1350,8 @@
         toast((t.decision === "accept" ? "accepted " : "held ") + nl + " line" + (nl === 1 ? "" : "s"));
         Object.keys(pbefore).forEach(function (pi) { resolvedToast(saved, pbefore[pi], D.pipelines[pi]); });
       }).catch(function (e) {
-        ok.disabled = false; ok.textContent = "Retry";
-        $("bulk-err").textContent = "Not saved: " + e.message;
+        ok.disabled = false; ok.textContent = "retry";
+        $("bulk-err").textContent = "not saved: " + e.message;
         $("bulk-err").className = "err";
       });
     };
@@ -1193,19 +1392,20 @@
     var out = "## Review summary: " + D.scope.country + " " + D.scope.commodity + " (snapshot " + D.scope.snapshot + ")\n\nReviewer: " + ME +
       "  \nThis session: " + m.sessN + " saved (" + (Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + k; }).join(", ") || "none") + ")  \nDecided lines by call: " + callsText(m.calls) + "\n\n" +
       "### Lines by kind\n\n" + tab(["kind"].concat(H.slice(1)), kinds) + "\n### Lines by tier\n\n" + tab(["tier"].concat(H.slice(1)), tiers) +
-      "\n### Items\n\n" + tab(["kind", "with a call", "without"], items) + "\n### By staging dir\n\n" + tab(["dir", "decided", "open", "in backend", "this session"], dirs);
+      "\n### Items\n\n" + tab(["kind", "with a call", "without"], items) + "\n### By batch\n\n" + tab(["batch", "decided", "open", "in backend", "this session"], dirs);
     return out;
   }
-  function copyText(text) {
+  function copyText(text, msg) {
+    msg = msg || "summary copied";
     function fallback() {
       var ta = document.createElement("textarea");
       ta.value = text; document.body.appendChild(ta); ta.select();
       var ok = false;
       try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
       document.body.removeChild(ta);
-      toast(ok ? "summary copied" : "could not copy: select the text by hand");
+      toast(ok ? msg : "could not copy: select the text by hand");
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast("summary copied"); }, fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback);
     else fallback();
   }
   function showSummary() {
@@ -1218,13 +1418,13 @@
     var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
     var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
     dlg.setAttribute("data-kind", "summary");
-    dlg.innerHTML = "<h3>Session summary</h3><p>" + dec + " of " + tot + " lines decided &middot; " + bk + " in the backend &middot; " + (tot - dec - bk) + " open. " +
-      "<b>This session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".<br>Decided lines by call: " + callsText(m.calls) + ".</p>" +
-      "<h4>Lines by kind</h4>" + sumTable(["kind"].concat(L), sumRows(m.kinds, LINE_KINDS, KIND_LABEL)) +
-      "<h4>Lines by tier</h4>" + sumTable(["tier"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
-      "<h4>Items</h4>" + sumTable(["kind", "with a call", "without"], items) +
-      "<h4>By staging dir</h4>" + sumTable(["dir", "decided", "open", "in backend", "this session"], dirs) +
-      '<div class="actions"><button type="button" class="ghost" id="dlg-copy">Copy summary as markdown</button><button type="button" id="dlg-close">Close</button></div>';
+    dlg.innerHTML = "<h3>session summary</h3><p>" + dec + " of " + tot + " lines decided &middot; " + bk + " in the backend &middot; " + (tot - dec - bk) + " open. " +
+      "<b>this session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".<br>decided lines by call: " + callsText(m.calls) + ".</p>" +
+      "<h4>lines by kind</h4>" + sumTable(["kind"].concat(L), sumRows(m.kinds, LINE_KINDS, KIND_LABEL)) +
+      "<h4>lines by tier</h4>" + sumTable(["tier"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
+      "<h4>items</h4>" + sumTable(["kind", "with a call", "without"], items) +
+      "<h4>by batch</h4>" + sumTable(["batch", "decided", "open", "in backend", "this session"], dirs) +
+      '<div class="actions"><button type="button" class="ghost" id="dlg-copy">copy summary as markdown</button><button type="button" id="dlg-close">close</button></div>';
     $("dlg-close").onclick = function () { dlg.close(); };
     $("dlg-copy").onclick = function () { copyText(summaryMarkdown(m)); };
     dlg.showModal();
@@ -1235,12 +1435,12 @@
     if (!Store.caps.refresh) return toast("this server cannot refresh the backend (started with --no-build)");
     var dlg = $("dialog");
     dlg.setAttribute("data-kind", "refresh");
-    dlg.innerHTML = "<h3>Refresh backend</h3><p>This pulls the live sheet (read-only, about a minute), rebuilds this dataset from the new snapshot, " +
-      "and marks lines the sheet already holds as <i>in backend</i> (a machine record, not a review). Your decisions are kept.</p>" +
-      '<p class="faint" id="rf-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">Cancel</button><button type="button" id="dlg-ok">Pull and rebuild</button></div>';
+    dlg.innerHTML = "<h3>refresh backend</h3><p>this pulls the live sheet (read-only, about a minute), rebuilds this dataset from the new snapshot, " +
+      "and marks lines the sheet already holds as <i>in backend</i> (a machine record, not a review). your decisions are kept.</p>" +
+      '<p class="faint" id="rf-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">cancel</button><button type="button" id="dlg-ok">pull and rebuild</button></div>';
     $("dlg-cancel").onclick = function () { dlg.close(); };
     $("dlg-ok").onclick = function () {
-      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "Pulling…"; $("dlg-cancel").disabled = true;
+      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "pulling…"; $("dlg-cancel").disabled = true;
       var btn = $("sync"); btn.disabled = true;
       Store.refresh().then(function (r) {
         return Store.load().then(function (data) {
@@ -1249,8 +1449,8 @@
           toast("refreshed: snapshot " + r.snapshot + ", " + r.lines + " lines, " + r.synced + " newly in backend");
         });
       }).catch(function (e) {
-        ok.disabled = false; ok.textContent = "Retry"; $("dlg-cancel").disabled = false;
-        $("rf-err").textContent = "Refresh failed: " + e.message; $("rf-err").className = "err";
+        ok.disabled = false; ok.textContent = "retry"; $("dlg-cancel").disabled = false;
+        $("rf-err").textContent = "refresh failed: " + e.message; $("rf-err").className = "err";
       }).then(function () { btn.disabled = !Store.caps.refresh; });
     };
     dlg.showModal();
@@ -1259,38 +1459,47 @@
     var pid = D.pipelines[S.pipe] ? D.pipelines[S.pipe].pid : "";
     D = data;
     prepare();
+    if (Store.ready) Store.ready();
+    fillFilters(); syncControls();
     S.pin = -1; S.stay = {}; S.line = -1;
     S.pipe = -1;
     D.pipelines.forEach(function (p, i) { if (p.pid === pid) S.pipe = i; });
-    $("scope").textContent = D.scope.country + " " + D.scope.commodity + " · " + D.scope.snapshot;
+    renderScope();
     refilter(true);
   }
 
   // ---- routing: #/P0736 plus an optional ?query with the filters that differ from the defaults ----
   var ROUTING = false;
   var QK = {decision: "d", kind: "k", tier: "t", class_out: "c", dir: "dir", column: "col", q: "q", row: "row",
-            contested: "cont", owners: "owners", landed: "landed"};
+            contested: "cont", owners: "owners", landed: "landed", country: "cty", fuel: "fuel", by: "by", drift: "drift"};
   function routeHash() {
     var p = D.pipelines[S.pipe], d = defaults(), q = [];
     Object.keys(QK).forEach(function (f) {
-      if (FS[f] === d[f]) return;
       var v = FS[f];
+      if (Array.isArray(v)) {
+        if (v.join("|") === d[f].join("|")) return;      // the default (gas only for fuel)
+        v = v.length ? v.join("|") : "all";               // "all" = every box ticked
+      }
+      else if (v === d[f]) return;
       if (typeof v === "boolean") v = "1";
       else if (f === "decision" && v === "") v = "any";
       q.push(QK[f] + "=" + encodeURIComponent(v));
     });
     return "#/" + (p ? encodeURIComponent(p.pid) : "") + (q.length ? "?" + q.join("&") : "");
   }
+  var NAV = window.GasNav || null;
+  function curHash() { return NAV ? NAV.hash : (location.hash || ""); }
   function writeRoute(replace) {
     if (ROUTING || !D) return;
     var h = routeHash();
-    if (h === location.hash) return;
+    if (h === curHash()) return;
+    if (NAV) return NAV.write(h, replace);
     try { history[replace ? "replaceState" : "pushState"](null, "", h); } catch (e) { /* file:// or blocked */ }
   }
   function applyRoute() {
     ROUTING = true;
     try {
-      var m = /^#\/([^?]*)(?:\?(.*))?$/.exec(location.hash || ""), pid = "";
+      var m = /^#\/([^?]*)(?:\?(.*))?$/.exec(curHash()), pid = "";
       FS = defaults();
       if (m) {
         pid = decodeURIComponent(m[1]);
@@ -1299,7 +1508,8 @@
           var k = kv.slice(0, i), v = decodeURIComponent(kv.slice(i + 1));
           Object.keys(QK).forEach(function (f) {
             if (QK[f] !== k) return;
-            FS[f] = typeof FS[f] === "boolean" ? v === "1" : (f === "decision" && v === "any" ? "" : v);
+            FS[f] = Array.isArray(FS[f]) ? (v === "all" ? [] : v.split("|")).filter(function (c) { return c === NO_COUNTRY || (f === "fuel" ? FUELS : countries()).indexOf(c) >= 0; }) :
+              typeof FS[f] === "boolean" ? v === "1" : (f === "decision" && v === "any" ? "" : v);
           });
         });
       }
@@ -1323,18 +1533,21 @@
 
   // ---- boot ----
   window.ReviewApp = {
-    get data() { return D; }, state: S, filters: function () { return FS; }, refilter: refilter, Store: Store, timing: {}
+    get data() { return D; }, state: S, filters: function () { return FS; }, refilter: refilter, Store: Store, timing: {},
+    applyRemote: applyRemote, busy: busy, rerender: rerender, reload: reload, applyRoute: applyRoute, writeRoute: writeRoute,
+    banner: banner, toast: toast, esc: esc, copyText: copyText, et: et
   };
   function et(iso) { return String(iso || "").replace("T", " ").slice(0, 16) + " ET"; }
   function boot(reviewer, data) {
     D = data; ME = reviewer;
     var tLoaded = performance.now();
     prepare();
+    if (Store.ready) Store.ready();
     $("whoami").textContent = reviewer;
-    $("scope").textContent = D.scope.country + " " + D.scope.commodity + " · " + D.scope.snapshot;
-    $("scope").title = "built " + et(D.built) + " · " + D.dirs.length + " staging dir" + (D.dirs.length === 1 ? "" : "s") + ": " + D.dirs.map(dirLabel).join(", ");
+    renderScope();
+    document.querySelector(".top h1").dataset.tip = "built " + et(D.built) + " · " + D.dirs.length + " staging dir" + (D.dirs.length === 1 ? "" : "s") + ": " + D.dirs.map(dirLabel).join(", ") + " · " + D.scope.commodity + " · " + D.scope.snapshot;
     $("sync").disabled = !Store.caps.refresh;
-    $("sync").title = Store.caps.refresh ? "Pull the live sheet (~1 min), rebuild, and mark lines it already holds" : "this server was started with --no-build: it cannot refresh";
+    $("sync").dataset.tip = Store.caps.refresh ? "pull the live sheet (~1 min), rebuild, and mark lines it already holds" : "this server was started with --no-build: it cannot refresh";
     $("push").hidden = !Store.caps.push;
     initFilters();
     applyRoute();
@@ -1346,6 +1559,50 @@
   }
   initTheme();
   document.addEventListener("keydown", onKey);
+
+  // ---- tip popover (WCAG 1.4.13: shows on hover and focus, stays while hovered, Esc dismisses) ----
+  // for [data-tip] elements only; plain title tooltips are not used (tiny, unthemed, no keyboard access)
+  (function () {
+    var tip = document.createElement("div"), owner = null, hideT = 0, showT = 0;
+    tip.id = "tip"; tip.className = "tip"; tip.setAttribute("role", "tooltip"); tip.hidden = true;
+    document.body.appendChild(tip);
+    function show(el) {
+      clearTimeout(hideT);
+      owner = el; tip.innerHTML = '<div class="tip-head"></div>'; tip.firstChild.textContent = el.getAttribute("data-tip");
+      var note = el.getAttribute("data-tip-note");
+      if (note) { var n = document.createElement("div"); n.className = "tip-note"; n.textContent = "note: " + note; tip.appendChild(n); }
+      tip.hidden = false;
+      var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, m = 8;
+      var x = Math.min(Math.max(m, r.left), window.innerWidth - w - m);
+      var y = r.bottom + 6 + h > window.innerHeight - m ? r.top - 6 - h : r.bottom + 6;
+      tip.style.left = x + "px"; tip.style.top = Math.max(m, y) + "px";
+    }
+    function hide() { clearTimeout(showT); tip.hidden = true; owner = null; }
+    function later() { clearTimeout(hideT); hideT = setTimeout(hide, 150); }
+    document.addEventListener("mouseover", function (e) {
+      var el = e.target.closest && e.target.closest("[data-tip]");
+      if (owner && !owner.isConnected) hide();      // its element was re-rendered under the pointer
+      if (el) {
+        if (el === owner) { clearTimeout(hideT); return; }
+        clearTimeout(showT);
+        // instant when another tip is already open, else a short native-like delay
+        if (owner) show(el); else showT = setTimeout(function () { if (el.isConnected) show(el); }, 300);
+      } else {
+        clearTimeout(showT);
+        if (owner && !tip.contains(e.target)) later(); else if (tip.contains(e.target)) clearTimeout(hideT);
+      }
+    });
+    document.addEventListener("focusin", function (e) {
+      var t = e.target.closest && e.target.closest("[data-tip]");
+      if (t && e.target.matches(":focus-visible")) show(t);
+    });
+    document.addEventListener("focusout", function (e) { if (owner && owner.contains(e.target)) hide(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !tip.hidden) { hide(); e.stopPropagation(); } }, true);
+    document.documentElement.addEventListener("mouseleave", hide);
+    document.addEventListener("mousedown", function (e) { if (owner && !tip.contains(e.target) && !owner.contains(e.target)) hide(); });
+    window.addEventListener("blur", hide);
+    document.addEventListener("scroll", function (e) { if (owner && !tip.contains(e.target)) hide(); }, true);
+  })();
   $("card").addEventListener("click", onCardClick);
   $("pipes").addEventListener("click", function (e) {
     var li = e.target.closest("li[data-i]");
@@ -1353,6 +1610,9 @@
   });
   $("help-btn").onclick = showHelp;
   $("sync").onclick = refreshBackend;
+  // session summary is switched off for now (might come back): set SHOW_SUMMARY = true
+  var SHOW_SUMMARY = false;
+  $("summary-btn").hidden = !SHOW_SUMMARY;
   $("summary-btn").onclick = showSummary;
   $("bulk-defaults").onclick = function () { showBulk("defaults"); };
   $("bulk-hold").onclick = function () { showBulk("hold"); };
@@ -1363,5 +1623,5 @@
     if (d && d.classList && d.classList.contains("igroup")) S.igOpen[d.getAttribute("data-kind")] = d.open;
   }, true);
   Promise.all([Store.whoami(), Store.load()]).then(function (r) { boot(r[0], r[1]); })
-    .catch(function (e) { banner("Could not load the dataset: " + e.message); });
+    .catch(function (e) { banner("could not load the dataset: " + e.message); });
 })();

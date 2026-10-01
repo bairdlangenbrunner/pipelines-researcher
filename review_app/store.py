@@ -6,13 +6,15 @@ the two sidecars that live IN each staging dir and are committed with the batch:
     review_decisions.json   derived: {"generated": ts, "decisions": {key: latest record}}
 
 Record shape: {key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note,
-reviewer, ts, undecided}. An undo appends a record with `undecided: true`; nothing is ever
+reviewer, ts, undecided}; `reviewer` is a person's initials (initials()) or a machine
+reviewer. An undo appends a record with `undecided: true`; nothing is ever
 deleted from the log. A line that `covers` other staged records (a status line and the
 `Status [ref]` record folded into it) writes one more record per covered key, same call, with
 `via` = the line's key. Nothing here touches the sheet, the routes repo or staged_*.json.
 """
 import json
 import os
+import re
 import threading
 from datetime import datetime
 from pathlib import Path
@@ -28,6 +30,11 @@ DERIVED_NAME = "review_decisions.json"
 # (sync_backend, after a refresh) writes them today; `push` arrives in phase 1b.
 MACHINE_REVIEWERS = {"backend sync", "push"}
 SYNC_REVIEWER = "backend sync"
+# A person is recorded by their first and last initials, never their full name (Baird
+# 2026-10-01): "Baird Langenbrunner" and baird.langenbrunner@globalenergymonitor.org both
+# record as "BL". The private Google store keeps the full address (pull.py maps it back).
+_INITIALS_RE = re.compile(r"^[A-Z]{1,3}$")
+_EMAIL_RE = re.compile(r"^([^@\s]+)@[^@\s]+\.[^@\s]+$")
 LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
 ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
               "unresolved", "confirmed", "other")
@@ -40,6 +47,21 @@ OTHER_CALLS = ("noted", "todo", "dismissed")
 ITEM_CALLS = {k: (CONCERN_CALLS if k == "concern" else OTHER_CALLS) for k in ITEM_KINDS}
 
 _LOCK = threading.Lock()     # one process-wide lock around every read-modify-write of a sidecar
+
+
+def initials(who):
+    """A person -> their first + last initials, uppercased: "Baird Langenbrunner" -> "BL",
+    baird.langenbrunner@globalenergymonitor.org -> "BL" (the local part split on . _ - +), a
+    one-part name or address -> its first letter. A machine reviewer, a value already in initials
+    form, and an empty value come back unchanged, so applying it twice is a no-op."""
+    v = str(who or "").strip()
+    if not v or v in MACHINE_REVIEWERS or _INITIALS_RE.match(v):
+        return who
+    m = _EMAIL_RE.match(v)
+    parts = [t for t in re.split(r"[._+\-]+" if m else r"\s+", m.group(1) if m else v) if t[:1].isalpha()]
+    if not parts:
+        return who
+    return (parts[0][0] + (parts[-1][0] if len(parts) > 1 else "")).upper()
 
 
 class Invalid(ValueError):
@@ -293,14 +315,16 @@ def write_derived(d, ts):
     atomic_write(Path(d) / DERIVED_NAME, json.dumps(body, indent=1, ensure_ascii=False) + "\n")
 
 
-def _write(recs, dirs):
+def _write(recs, dirs, stamp=True):
     """Per touched dir (caller holds _LOCK): append to review_log.jsonl and regenerate
     review_decisions.json atomically; on failure roll every touched log back to its previous
-    byte length. `recs` already carry reviewer; ts is stamped here. Returns recs."""
+    byte length. `recs` already carry reviewer; ts is stamped here (`stamp=False` keeps the ts
+    each record already has: records mirrored from the Google store). Returns recs."""
     ts = now()
     by_dir = {}
     for r in recs:
-        r["ts"] = ts
+        if stamp:
+            r["ts"] = ts
         if r["dir"] not in dirs:
             raise Invalid(f"staging dir not known to the server: {r['dir']}")
         by_dir.setdefault(r["dir"], []).append(r)
@@ -332,6 +356,7 @@ def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
     writes a `dismissed` call on that concern ("resolved by accepted <col> fill") in the same
     transaction, so the concern's other contested columns unlock. Undoing the line accept does
     NOT re-open the concern; undo the item call by hand."""
+    reviewer = initials(reviewer)
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
         recs = validate(records, data, reviewer, enforce_lock)
@@ -353,6 +378,15 @@ def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
                                          "note": "resolved by accepted " + ", ".join(v) + " fill"}
                                         for k, v in cols.items()], data, reviewer)
         return _write(recs + items, dirs)
+
+
+def append_records(recs, dirs):
+    """Append records that were ALREADY decided elsewhere (the Google store, via pull.py) to
+    their staging dirs' sidecars, exactly as stored: reviewer, ts and every extra field are
+    kept, nothing is validated against a dataset or re-stamped. `dirs` is {label: Path}; a
+    record whose dir is not in it is refused (Invalid) and nothing is written."""
+    with _LOCK:
+        return _write(list(recs), dirs, stamp=False) if recs else []
 
 
 def validate_items(records, data, reviewer=None):
@@ -385,6 +419,7 @@ def record_items(records, data, reviewer, dirs=None, root=None):
     """Item calls into the SAME review_log.jsonl / review_decisions.json as line decisions (an item
     key and a line key never coincide). Shape: {key, dir, pid, kind, call, note, reviewer, ts,
     undecided}; an undo is a record with undecided: true. Returns the records written."""
+    reviewer = initials(reviewer)
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
         return _write(validate_items(records, data, reviewer), dirs)

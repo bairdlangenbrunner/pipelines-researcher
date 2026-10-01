@@ -216,3 +216,47 @@ def test_partner_with_another_status_or_another_cell_stays_its_own_card(tmp_path
     (tmp_path / "b").mkdir()
     data, stats, _ = _with_status_partner(tmp_path / "b", ref_col="StartYear1 [ref]")
     assert stats["status_covers"] == 0 and "covers" not in _find(data, "P9002", "status")[0]
+
+
+def test_multi_country_tags_cards_and_splits_scope_card(tmp_path):
+    s = make_scope(tmp_path)
+    one, _ = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    data, _ = rd.build([s["qc"], s["deep"]], ["Russia", "United States"], "gas", data_dir=s["data"],
+                       root=s["root"], dir_country={s["deep"]: "United States", s["qc"]: "Russia"})
+    assert data["scope"]["countries"] == ["Russia", "United States"]
+    assert all(p["scope_countries"] for p in data["pipelines"])
+    assert {c for p in data["pipelines"] for c in p["scope_countries"]} <= {"Russia", "United States"}
+    # same keys as the single-country build: decisions made before stay attached
+    keys = lambda d: sorted(o["key"] for p, o, _ in _all(d))
+    assert keys(data) == keys(one)
+    esc = [p for p in data["pipelines"] if p["pid"] == "scope"
+           and any(i["kind"] == "escalation" for i in p["items"])]
+    assert len(esc) == 1 and esc[0]["scope_countries"] == ["United States"]
+    assert all(p["scope_countries"] == ["Russia"] for p in rd.build(
+        [s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])[0]["pipelines"])
+
+
+def test_country_status_drops_only_all_decided_countries(tmp_path):
+    import json
+    s = make_scope(tmp_path)
+    dc = {s["deep"]: "United States", s["qc"]: "Russia"}
+    kw = dict(data_dir=s["data"], root=s["root"], dir_country=dc)
+    data, _ = rd.build([s["qc"], s["deep"]], ["Russia", "United States"], "gas", **kw)
+    cs = {c["country"]: c for c in data["scope"]["country_status"]}
+    assert not cs["Russia"]["done"] and not cs["United States"]["done"]
+    assert cs["Russia"]["open_lines"] + cs["Russia"]["open_items"] > 0
+    # a person decides every United States (deep dir) line and asked item
+    recs = [{"key": o["key"], "dir": o["dir"], "reviewer": "Baird",
+             **({"decision": "reject"} if g == "line" else {"call": "dismissed"})}
+            for p, o, g in _all(data) if o["dir"].endswith("deepsweep-x") and o["kind"] not in rd.INFO_KINDS]
+    (s["deep"] / "review_log.jsonl").write_text("".join(json.dumps(r) + "\n" for r in recs))
+    kept, stats = rd.build([s["qc"], s["deep"]], ["Russia", "United States"], "gas", drop_done=True, **kw)
+    cs = {c["country"]: c for c in kept["scope"]["country_status"]}
+    assert cs["United States"]["done"] and cs["United States"]["hidden"] and not cs["Russia"]["hidden"]
+    assert stats["done_dropped"] >= 1
+    # US-only cards go; a card Russia shares stays whole
+    assert kept["pipelines"] and all("Russia" in p["scope_countries"] for p in kept["pipelines"])
+    # without drop_done nothing goes; status is still reported
+    full, _ = rd.build([s["qc"], s["deep"]], ["Russia", "United States"], "gas", **kw)
+    assert len(full["pipelines"]) == len(kept["pipelines"]) + stats["done_dropped"]
+    assert not any(c["hidden"] for c in full["scope"]["country_status"])

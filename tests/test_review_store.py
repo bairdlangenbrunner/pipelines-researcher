@@ -48,7 +48,7 @@ def logrecs(path):
     return [json.loads(x) for x in path.read_text().splitlines()]
 
 
-def dec(s, recs, who="Baird"):
+def dec(s, recs, who="BL"):
     return store.decide(recs, s["dataset"], who, dirs=s["dirs"])
 
 
@@ -62,10 +62,20 @@ def test_decide_writes_both_sidecars_with_exact_shape(scope):
     assert tuple(r) == KEYS
     assert (r["pid"], r["sheet_row"], r["ref_col"], r["kind"]) == ("P9002", l["sheet_row"], l["ref_col"], "fill")
     assert r["decision"] == "hold" and r["note"] == "wait" and r["suggested_value"] == ""
-    assert r["reviewer"] == "Baird" and r["undecided"] is False
+    assert r["reviewer"] == "BL" and r["undecided"] is False
     assert r["ts"][-6] in "+-" and r["ts"][-3] == ":"                      # ISO-8601 with a timezone offset
     d = json.loads(derived.read_text())
     assert set(d) == {"generated", "decisions"} and d["decisions"] == {l["key"]: r}
+
+
+def test_a_person_is_recorded_by_initials_never_a_full_name(scope):
+    l = line(scope["dataset"], "P9002", "fill")
+    k = item_key(scope["dataset"], "concern")
+    a = dec(scope, [{"key": l["key"], "decision": "hold"}], who="Baird Langenbrunner")
+    b = store.record_items([{"key": k, "call": "dismissed"}], scope["dataset"],
+                           "baird.langenbrunner@globalenergymonitor.org", dirs=scope["dirs"])
+    assert [r["reviewer"] for r in a + b] == ["BL", "BL"]
+    assert "Langenbrunner" not in "".join(p.read_text() for p in sidecars(scope, l))
 
 
 def test_latest_wins_and_undo_unreviews(scope):
@@ -75,7 +85,7 @@ def test_latest_wins_and_undo_unreviews(scope):
     dec(scope, [{"key": l["key"], "decision": "reject"}])
     assert json.loads(derived.read_text())["decisions"][l["key"]]["decision"] == "reject"
     store.overlay(scope["dataset"], scope["dirs"])
-    assert (l["decision"], l["reviewed"], l["decided_by"]) == ("reject", True, "Baird") and l["decided_at"]
+    assert (l["decision"], l["reviewed"], l["decided_by"]) == ("reject", True, "BL") and l["decided_at"]
     dec(scope, [{"key": l["key"], "undo": True}])
     recs = logrecs(log)
     assert len(recs) == 3 and recs[-1]["undecided"] is True          # appended, nothing deleted
@@ -91,7 +101,7 @@ def test_machine_reviewer_is_not_reviewed(scope):
     assert not store.reviewed(store.latest(store.read_log(scope["dirs"][l["dir"]]))[l["key"]])
     store.overlay(scope["dataset"], scope["dirs"])
     assert l["reviewed"] is False and l["decision"] == "accept" and l["decided_by"] == "backend sync"
-    dec(scope, [{"key": l["key"], "decision": "accept"}], who="Baird")
+    dec(scope, [{"key": l["key"], "decision": "accept"}], who="BL")
     store.overlay(scope["dataset"], scope["dirs"])
     assert l["reviewed"] is True
 
@@ -151,7 +161,7 @@ def test_overlay_on_a_rebuilt_dataset(scope):
                                    data_dir=scope["data"], root=scope["root"])
     l2 = line(rebuilt, "P9002", "fill")
     assert (l2["decision"], l2["reviewed"]) == ("accept", True)
-    assert l2["decided_by"] == "Baird" and l2["decided_at"]
+    assert l2["decided_by"] == "BL" and l2["decided_at"]
     other = line(rebuilt, "P9001", "ref")
     assert (other["decision"], other["reviewed"], other["decided_by"]) == (None, False, None)
     for p in rebuilt["pipelines"]:
@@ -177,7 +187,7 @@ def test_contested_line_refuses_accept_but_allows_hold(scope):
 def live(scope, tmp_path):
     path = tmp_path / "review_data.json"
     path.write_text(json.dumps(scope["dataset"]), encoding="utf-8")
-    app = server.App(path, "tester", batches_root=scope["root"])
+    app = server.App(path, "TR", batches_root=scope["root"])
     httpd = server.make_server(app, "127.0.0.1", 0)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", scope
@@ -208,10 +218,10 @@ def test_api_decide_roundtrip_undo_and_server_side_stamps(live):
                                             "reviewer": "someone else", "ts": "1999-01-01"}])
     assert st == 200
     r = body["saved"][0]
-    assert r["reviewer"] == "tester" and r["ts"].startswith("20")
+    assert r["reviewer"] == "TR" and r["ts"].startswith("20")
     data = get_json(base + "/api/data")                      # reload shows the decision
     got = line(data, "P9002", "fill")
-    assert (got["decision"], got["reviewed"], got["decided_by"]) == ("accept", True, "tester")
+    assert (got["decision"], got["reviewed"], got["decided_by"]) == ("accept", True, "TR")
     assert get_json(base + "/api/decisions?dir=" + l["dir"])["decisions"][l["key"]] == r
     st, body = post(base + "/api/decide", [{"key": l["key"], "undo": True}])
     assert st == 200 and body["saved"][0]["undecided"] is True
@@ -265,7 +275,7 @@ def items_of(data, kind):
     return [i for p in data["pipelines"] for i in p["items"] if i["kind"] == kind]
 
 
-def call(s, recs, who="Baird"):
+def call(s, recs, who="BL"):
     return store.record_items(recs, s["dataset"], who, dirs=s["dirs"])
 
 
@@ -284,7 +294,7 @@ def test_item_call_writes_same_sidecars_with_item_shape(scope):
     d = json.loads(derived.read_text())["decisions"]
     assert d[it["key"]]["call"] == "todo" and d[l["key"]]["decision"] == "hold"
     store.overlay(scope["dataset"], scope["dirs"])
-    assert (it["call"], it["call_note"], it["reviewed"], it["decided_by"]) == ("todo", "check the wiki", True, "Baird")
+    assert (it["call"], it["call_note"], it["reviewed"], it["decided_by"]) == ("todo", "check the wiki", True, "BL")
     assert it["decided_at"]
 
 
@@ -377,7 +387,7 @@ def test_sync_backend_stamps_machine_records_only_where_no_person_decided(scope)
                and r["note"] == "already in backend after refresh GGIT_gas_snapshot_X.csv" for r in out)
     store.overlay(d, scope["dirs"])
     assert (held["decision"], held["reviewed"], held["decided_by"]) == ("accept", False, "backend sync")
-    assert (person["decision"], person["decided_by"]) == ("reject", "Baird")      # a person's call is never touched
+    assert (person["decision"], person["decided_by"]) == ("reject", "BL")      # a person's call is never touched
     assert store.sync_backend(d, scope["dirs"], "x") == []                        # idempotent
     dec(scope, [{"key": held["key"], "decision": "hold"}])                        # a person can still override
     store.overlay(d, scope["dirs"])
@@ -389,9 +399,9 @@ def test_api_item_roundtrip_and_errors(live):
     it = items_of(s["dataset"], "unresolved")[0]
     st, body = post(base + "/api/item", [{"key": it["key"], "call": "dismissed", "note": "n/a",
                                           "reviewer": "someone else"}])
-    assert st == 200 and body["saved"][0]["reviewer"] == "tester" and body["saved"][0]["call"] == "dismissed"
+    assert st == 200 and body["saved"][0]["reviewer"] == "TR" and body["saved"][0]["call"] == "dismissed"
     got = next(i for p in get_json(base + "/api/data")["pipelines"] for i in p["items"] if i["key"] == it["key"])
-    assert (got["call"], got["call_note"], got["reviewed"], got["decided_by"]) == ("dismissed", "n/a", True, "tester")
+    assert (got["call"], got["call_note"], got["reviewed"], got["decided_by"]) == ("dismissed", "n/a", True, "TR")
     st, body = post(base + "/api/item", [{"key": it["key"], "undo": True}])
     assert st == 200 and body["saved"][0]["undecided"] is True
     for bad in ([{"key": it["key"], "call": "confirmed"}], [{"key": "nope", "call": "noted"}],
@@ -455,7 +465,7 @@ def built_app(s, tmp_path, cmd):
     argv = ["--country", "Russia", "--commodity", "gas", "--dirs", str(s["qc"]), str(s["deep"]),
             "--batches-root", str(s["root"]), "--data-dir", str(s["data"]), "--out", str(path)]
     review_data.main(argv)
-    return server.App(path, "tester", batches_root=s["root"], build_argv=argv, refresh_cmd=cmd)
+    return server.App(path, "TR", batches_root=s["root"], build_argv=argv, refresh_cmd=cmd)
 
 
 def serve(app):
@@ -502,7 +512,7 @@ def test_refresh_failure_and_no_build(tmp_path):
     finally:
         httpd.shutdown()
         httpd.server_close()
-    nb = server.App(tmp_path / "review_data.json", "tester", batches_root=s["root"])
+    nb = server.App(tmp_path / "review_data.json", "TR", batches_root=s["root"])
     assert nb.whoami()["caps"]["refresh"] is False
     with pytest.raises(server.Refusal) as e:
         nb.refresh()
@@ -566,7 +576,7 @@ def test_accepting_the_resolving_line_dismisses_the_concern_and_unlocks_the_rest
     assert [r["key"] for r in saved] == [status["key"], c["key"]]
     item = saved[1]
     assert (item["kind"], item["call"], item["note"], item["reviewer"], item["undecided"]) == \
-        ("concern", "dismissed", "resolved by accepted Status fill", "Baird", False)
+        ("concern", "dismissed", "resolved by accepted Status fill", "BL", False)
     assert set(item) == {"key", "dir", "pid", "kind", "call", "note", "reviewer", "ts", "undecided"}
     assert logrecs(sidecars(scope, status)[0])[-1] == item
     store.overlay(d, scope["dirs"])                                   # the call is now live: owner unlocks
@@ -605,7 +615,7 @@ def test_bulk_with_a_self_resolving_line_and_two_lines_one_dismissal(scope):
 def _serve(scope, tmp_path):
     path = tmp_path / "review_data.json"
     path.write_text(json.dumps(scope["dataset"]), encoding="utf-8")
-    httpd = server.make_server(server.App(path, "tester", batches_root=scope["root"]), "127.0.0.1", 0)
+    httpd = server.make_server(server.App(path, "TR", batches_root=scope["root"]), "127.0.0.1", 0)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", scope
     httpd.shutdown()
@@ -619,7 +629,7 @@ def test_api_accept_self_resolving_line_returns_item_record_and_unlocks(scope, t
     assert post(base + "/api/decide", [{"key": owner["key"], "decision": "accept"}])[0] == 409
     st, body = post(base + "/api/decide", [{"key": status["key"], "decision": "accept"}])
     assert st == 200 and [("call" in r) for r in body["saved"]] == [False, True]
-    assert body["saved"][1]["call"] == "dismissed" and body["saved"][1]["reviewer"] == "tester"
+    assert body["saved"][1]["call"] == "dismissed" and body["saved"][1]["reviewer"] == "TR"
     assert post(base + "/api/decide", [{"key": owner["key"], "decision": "accept"}])[0] == 200
     got = next(i for p in get_json(base + "/api/data")["pipelines"] for i in p["items"] if i["kind"] == "concern")
     assert got["call"] == "dismissed" and got["call_note"] == "resolved by accepted Status fill"
@@ -651,11 +661,11 @@ def test_deciding_a_status_line_writes_the_covered_record_too(covered):
     mine, cov = saved
     assert tuple(mine) == KEYS and tuple(cov) == KEYS + ("via",)
     assert (cov["via"], cov["kind"], cov["ref_col"], cov["decision"], cov["reviewer"], cov["ts"]) == \
-        (st["key"], "fill", "Status [ref]", "accept", "Baird", mine["ts"])
+        (st["key"], "fill", "Status [ref]", "accept", "BL", mine["ts"])
     derived = json.loads(sidecars(covered, st)[1].read_text())["decisions"]
     assert derived[st["key"]]["decision"] == derived[c["key"]]["decision"] == "accept"
     store.overlay(d, covered["dirs"])
-    assert (c["decision"], c["decided_by"], st["uncovered"]) == ("accept", "Baird", [])
+    assert (c["decision"], c["decided_by"], st["uncovered"]) == ("accept", "BL", [])
     # the consumer-side reader sees a person's accept on BOTH staged records
     import decisions
     dx = decisions.Decisions(covered["dirs"][st["dir"]])
@@ -676,7 +686,7 @@ def test_a_call_made_before_the_fold_shows_as_uncovered_until_repeated(covered):
     # the record as it was written before the fold existed: the status key only
     store._write([{"key": st["key"], "dir": st["dir"], "pid": "P9002", "sheet_row": 5, "ref_col": "__STATUS__",
                    "kind": "status", "decision": "accept", "suggested_value": "", "note": "",
-                   "reviewer": "Baird", "ts": None, "undecided": False}], covered["dirs"])
+                   "reviewer": "BL", "ts": None, "undecided": False}], covered["dirs"])
     store.overlay(d, covered["dirs"])
     assert st["decision"] == "accept" and c["decision"] is None and st["uncovered"] == [c["key"]]
     dec(covered, [{"key": st["key"], "decision": "accept"}])

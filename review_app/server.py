@@ -1,13 +1,16 @@
 """
 Local review server: the phase 1 backend behind review_app/web/ (milestone 4: items, refresh).
 
-    python review_app/server.py --country Russia --commodity gas [--dirs DIR ...]
+    python review_app/server.py [--commodity gas] [--include-done]       # the review-app batch
+    python review_app/server.py --country Russia [--country "United States" ...] --commodity gas [--dirs DIR ...]
         [--exclude-pids P1,P2] [--data PATH] [--reviewer NAME] [--port 8766] [--no-open] [--no-build]
 
 Standard library only; binds 127.0.0.1 and refuses anything but loopback (the data is
 unreleased). Without --no-build it first runs review_data.main to (re)build the dataset
-for --country/--commodity into --data (default work/review_data.json); with --no-build it
-serves that file as it is.
+for --country/--commodity -- or, with no --country, for the countries the review-app batch
+includes (review_app/scopes.py; all-decided ones dropped) -- into --data (default
+work/review_data.json); with --no-build it serves that file as it is. /api/refresh rebuilds the
+same way, so countries added to the batch since startup come in on the next refresh.
 
     GET  /                 static front end (review_app/web/)
     GET  /api/data         the dataset JSON (gzip when the browser accepts it)
@@ -91,7 +94,7 @@ class App:
     def __init__(self, data_path, reviewer, batches_root=None, build_argv=None, refresh_cmd=None,
                  refresh_timeout=REFRESH_TIMEOUT):
         self.data_path = Path(data_path)
-        self.reviewer = reviewer
+        self.reviewer = store.initials(reviewer)     # people are recorded by initials
         self.batches_root = Path(batches_root) if batches_root else ROOT / "batches"
         self.build_argv = list(build_argv) if build_argv else None    # review_data.main args; None = --no-build
         self.refresh_cmd = list(refresh_cmd) if refresh_cmd else list(REFRESH_CMD)
@@ -285,12 +288,15 @@ def git_user():
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--country", help="required unless --no-build")
-    ap.add_argument("--commodity", choices=["gas", "oil"], help="required unless --no-build")
+    ap.add_argument("--country", action="append", default=None,
+                    help="repeat (or comma-separate) for several countries; omit for the review-app batch")
+    ap.add_argument("--commodity", choices=["gas", "oil"], help="required with --country; review-app batch default gas")
+    ap.add_argument("--include-done", action="store_true", help="review-app batch: keep all-decided countries")
     ap.add_argument("--dirs", nargs="*", default=None, help="explicit staging dirs (skips discovery)")
     ap.add_argument("--exclude-pids", default="", help="comma-separated ProjectIDs to drop")
     ap.add_argument("--data", default=None, help="dataset path (default work/review_data.json)")
-    ap.add_argument("--reviewer", default=None, help="default: git config user.name")
+    ap.add_argument("--reviewer", default=None,
+                    help="default: git config user.name; recorded as initials (store.initials)")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8766)
     ap.add_argument("--no-open", action="store_true", help="do not open the browser")
@@ -302,9 +308,12 @@ def main(argv=None):
         raise SystemExit(str(e))
     data_path = Path(args.data) if args.data else paths.work_dir() / "review_data.json"
     if not args.no_build:
-        if not (args.country and args.commodity):
-            raise SystemExit("--country and --commodity are required unless --no-build")
-        build = ["--country", args.country, "--commodity", args.commodity, "--out", str(data_path)]
+        if args.country and not args.commodity:
+            raise SystemExit("--commodity is required with --country")
+        build = [x for c in args.country or () for x in ("--country", c)]
+        build += ["--commodity", args.commodity or "gas", "--out", str(data_path)]
+        if args.include_done:
+            build += ["--include-done"]
         if args.dirs:
             build += ["--dirs", *args.dirs]
         if args.exclude_pids:

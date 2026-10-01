@@ -38,15 +38,15 @@ def test_suggest_and_concern_become_units(scope, capsys):
     d = scope["dataset"]
     fill, status, concern = _line(d, "P9002", "fill"), _line(d, "P9002", "status"), _item(d, "concern")
     store.decide([{"key": fill["key"], "decision": "suggest", "suggested_value": "8.0", "note": "use the 2025 figure"},
-                  {"key": status["key"], "decision": "accept"}], d, "Baird", dirs=scope["dirs"])
+                  {"key": status["key"], "decision": "accept"}], d, "BL", dirs=scope["dirs"])
     store.record_items([{"key": concern["key"], "call": "needs_research", "note": "check the twin"}],
-                       d, "Baird", dirs=scope["dirs"])
+                       d, "BL", dirs=scope["dirs"])
     seed = run(scope)
     by = {u["unit_type"]: u for u in seed["units"]}
     assert len(seed["units"]) == 2                        # the accepted status line is not a unit
     u = by["update"]
     assert (u["project_id"], u["sheet_row"], u["column"], u["ref_col"]) == ("P9002", 5, "Capacity", "Capacity [ref]")
-    assert (u["proposed_value"], u["suggested_value"], u["note"], u["reviewer"]) == ("7.5", "8.0", "use the 2025 figure", "Baird")
+    assert (u["proposed_value"], u["suggested_value"], u["note"], u["reviewer"]) == ("7.5", "8.0", "use the 2025 figure", "BL")
     assert u["source_dir"].endswith("deepsweep-x")
     r = by["research"]
     assert (r["project_id"], r["concern_type"], r["contested_columns"], r["call"], r["note"]) == \
@@ -63,15 +63,15 @@ def test_suggest_and_concern_become_units(scope, capsys):
 def test_dismissed_concern_undone_suggest_and_machine_record_are_not_units(scope):
     d = scope["dataset"]
     fill, concern = _line(d, "P9002", "fill"), _item(d, "concern")
-    store.decide([{"key": fill["key"], "decision": "suggest", "suggested_value": "8"}], d, "Baird", dirs=scope["dirs"])
-    store.decide([{"key": fill["key"], "undo": True}], d, "Baird", dirs=scope["dirs"])
-    store.record_items([{"key": concern["key"], "call": "dismissed"}], d, "Baird", dirs=scope["dirs"])
+    store.decide([{"key": fill["key"], "decision": "suggest", "suggested_value": "8"}], d, "BL", dirs=scope["dirs"])
+    store.decide([{"key": fill["key"], "undo": True}], d, "BL", dirs=scope["dirs"])
+    store.record_items([{"key": concern["key"], "call": "dismissed"}], d, "BL", dirs=scope["dirs"])
     assert run(scope)["units"] == []
 
 
 def test_confirmed_concern_is_a_research_unit(scope):
     d = scope["dataset"]
-    store.record_items([{"key": _item(d, "concern")["key"], "call": "confirmed"}], d, "Baird", dirs=scope["dirs"])
+    store.record_items([{"key": _item(d, "concern")["key"], "call": "confirmed"}], d, "BL", dirs=scope["dirs"])
     units = run(scope)["units"]
     assert [(u["unit_type"], u["call"]) for u in units] == [("research", "confirmed")]
 

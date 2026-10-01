@@ -3,19 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pipelines review</title>
+<title>pipelines reviewer</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="top">
-  <h1>Pipelines review</h1>
+  <h1>pipelines reviewer</h1>
   <span id="scope" class="scope"></span>
   <div class="who"><span id="whoami"></span>
-    <button id="summary-btn" class="ghost" title="Session summary (S)">summary</button>
-    <button id="sync" class="ghost" title="Refresh backend">&#8635; refresh backend</button>
-    <button id="push" class="ghost" hidden title="Write the accepted lines into the backend sheet">&#8682; push changes</button>
-    <button id="theme" class="ghost" title="Toggle light / dark">&#9680;</button>
-    <button id="help-btn" class="ghost" title="Keyboard shortcuts (?)">?</button>
+    <button id="summary-btn" class="ghost" hidden>summary</button>   <!-- off for now: flip SHOW_SUMMARY in app.js to bring it back -->
+    <button id="sync" class="ghost">&#8635; refresh backend</button>
+    <button id="push" class="ghost" hidden data-tip="write the accepted lines into the backend sheet">&#8682; push changes</button>
+    <select id="theme-pick" aria-label="colour theme">
+      <option value="">default</option><option value="solarized">solarized</option><option value="nord">nord</option>
+      <option value="gruvbox">gruvbox</option><option value="dracula">dracula</option><option value="sepia">sepia</option>
+    </select>
+    <button id="theme" class="ghost" aria-label="toggle light / dark">&#9680;</button>
+    <button id="help-btn" class="ghost" aria-label="keyboard shortcuts">?</button>
   </div>
 </header>
 
@@ -25,43 +29,48 @@
 <section id="tab-queue" class="tabpanel">
   <form id="filters" class="filters" onsubmit="return false">
     <div class="row2">
-      <label>Decision <select id="f-decision"></select></label>
-      <label>Kind <select id="f-kind"></select></label>
-      <label>Tier <select id="f-tier"></select></label>
-      <label class="grow">Search <input type="search" id="f-q" placeholder="name / ProjectID / country"></label>
-      <label title="live sheet rows: one, a range, or a list, e.g. 357-400, 1141">Row <input type="search" id="f-row" placeholder="357-400, 1141"></label>
-      <label class="check" title="lines on a column a validity concern contests"><input type="checkbox" id="f-contested"> contested</label>
+      <span id="f-fuel" class="countries" role="group" aria-label="fuel"></span>
+      <span id="f-country" class="countries" role="group" aria-label="country" hidden></span>
+      <label>decision <select id="f-decision"></select></label>
+      <label>kind <select id="f-kind"></select></label>
+      <label>tier <select id="f-tier"></select></label>
+      <label class="grow">search <input type="search" id="f-q" placeholder="name / project id / country"></label>
+      <label data-tip="live sheet rows: one, a range, or a list, e.g. 357-400, 1141">row <input type="search" id="f-row" aria-description="live sheet rows: one, a range, or a list" placeholder="357-400, 1141"></label>
+      <label class="check" data-tip="lines on a column a validity concern contests"><input type="checkbox" id="f-contested" aria-description="lines on a column a validity concern contests"> contested</label>
       <label class="check"><input type="checkbox" id="f-owners"> owners tab</label>
-      <label class="check" title="lines whose value and refs the snapshot already holds are left out of the queue"><input type="checkbox" id="f-landed"> show lines already in the backend</label>
-      <button type="button" id="f-more" class="ghost" aria-expanded="false" aria-controls="more-filters">More filters</button>
+      <label class="check" data-tip="lines whose value and refs the snapshot already holds are left out of the queue unless this is ticked"><input type="checkbox" id="f-landed" aria-description="lines the snapshot already holds are left out of the queue unless this is ticked"> show lines already in the backend</label>
+      <button type="button" id="f-more" class="ghost" aria-expanded="false" aria-controls="more-filters">more filters</button>
       <button type="button" id="f-reset" class="ghost">reset</button>
     </div>
     <div id="more-filters" class="more-filters" hidden>
-      <label>Class <select id="f-class_out"><option value="">any</option></select></label>
-      <label>Column <select id="f-column"><option value="">any</option></select></label>
-      <label>Dir <select id="f-dir"><option value="">any</option></select></label>
+      <label>class <select id="f-class_out"><option value="">any</option></select></label>
+      <label>column <select id="f-column"><option value="">any</option></select></label>
+      <label>batch <select id="f-dir"><option value="">any</option></select></label>
+      <label>decided by <select id="f-by"><option value="">anyone</option></select></label>
+      <label class="check" data-tip="decided lines whose backend cells have changed since the call was made"><input type="checkbox" id="f-drift" aria-description="decided lines whose backend cells have changed since the call was made"> sheet changed since decided</label>
     </div>
     <div id="active-filters" class="active-filters" hidden></div>
   </form>
   <div class="statusbar">
     <span id="count"></span>
-    <div class="progress" title="lines decided"><div id="progress-bar"></div></div>
+    <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
     <span id="progress-text"></span>
   </div>
   <div class="bulkbar" id="bulkbar">
-    <span class="cl">Bulk (asks first)</span>
-    <button type="button" id="bulk-defaults" class="bulk b-accept" title="accept every undecided, unlocked line in view whose default is accept (A)">accept all defaults in view</button>
-    <button type="button" id="bulk-hold" class="bulk b-hold" title="hold every undecided, unlocked line in view">hold all in view</button>
-    <button type="button" id="bulk-pipe" class="bulk b-accept" title="accept every undecided, unlocked high-tier line on the open pipeline that the filters show">accept all high for this pipeline</button>
+    <span class="cl">bulk (asks first)</span>
+    <button type="button" id="bulk-defaults" class="bulk b-accept" data-tip="accept every undecided, unlocked line in view whose default is accept (key: A)">accept all defaults in view</button>
+    <button type="button" id="bulk-hold" class="bulk b-hold" data-tip="hold every undecided, unlocked line in view">hold all in view</button>
+    <button type="button" id="bulk-pipe" class="bulk b-accept" data-tip="accept every undecided, unlocked high-tier line on the open pipeline that the filters show">accept all high for this pipeline</button>
   </div>
   <div class="queue">
-    <ol id="pipes" class="pipes" aria-label="Pipelines"></ol>
+    <ol id="pipes" class="pipes" aria-label="pipelines"></ol>
     <article id="card" class="card" aria-live="polite"></article>
   </div>
 </section>
 
 <dialog id="dialog"></dialog>
 
+<script src="gas.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

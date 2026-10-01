@@ -389,9 +389,26 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
 **Phase 1b** (ruling 1 passed): `push.py` + tests + CLAUDE.md wording; first push on a scope with
 < 50 accepted cells, backups committed.
 
-**Phase 2** (approved): the LNG Apps Script design as written in
-`lng-carriers-researcher/docs/plans/2026-09-21_review-app-phase2_handoff.md`; nothing changes
-except the dataset shape.
+**Phase 2** (approved; BUILT 2026-09-30, Google objects created and first dataset published the same day, web app NOT yet deployed): the LNG Apps Script design
+(`lng-carriers-researcher/docs/plans/2026-09-21_review-app-phase2_handoff.md`) on the pipelines
+dataset. As built: `review_app/publish.py` (dataset → Drive data folder, versioned parts + a
+validation index), `gas/Code.gs` (a port of `store.py`'s validation; appends to the store
+spreadsheet's `log` tab under the script lock; refuses a write when another reviewer's record for
+the key is newer than the page has seen), `web/gas.js` (the second `Store` adapter),
+`pull.py` (store → staging-dir sidecars, read-only on Google), `bundle.py`, and the local stand-in
+`gas_dev/`. Additions over the LNG design: every record carries `snapshot` + `basis` (a hash of
+the backend cells it was judged against), so a later publish reports decisions the backend has
+moved under (`drift`) and decisions whose key no longer exists (orphans). Detail:
+`review_app/README.md` → "Google version". Rulings (Baird 2026-09-30): a drifted decision
+STANDS (flagged, never reopened); a decision orphaned by a renumbered row is carried to the new
+key at publish when the match by staging dir + ProjectID + column is unique
+(`publish.carry_forward`), otherwise it stays an orphan; pulled logs hold the reviewer's
+initials (`BL`; Baird 2026-10-01 — every recorded reviewer is first + last initials, never a full
+name), never the address, and the store spreadsheet keeps the address.
+`gas_push.py` updates the Apps Script project through Drive, so clasp is not used. Still open:
+the web app deployment (a browser step only Baird can do), the milestone 0 identity spike, where
+the script project lives (it is in Baird's My Drive), protecting the store's `log` tab, and
+whether the loopback server stops recording decisions once the web app is live.
 
 ### Model guidance
 

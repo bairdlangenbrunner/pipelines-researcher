@@ -4,6 +4,18 @@ staging dirs.
 
     python review_app/review_data.py --country "Russia" --commodity gas \
         [--dirs DIR ...] [--exclude-pids P1,P2] [--snapshot PATH] [--out PATH]
+    python review_app/review_data.py --country Russia --country "United States" --commodity gas
+    python review_app/review_data.py [--commodity gas] [--include-done]    # the review-app batch
+
+With no --country the countries come from the review-app batch (batches/review-app/manifest.json,
+see review_app/scopes.py): every included country's staging dirs, discovered fresh, so a new batch
+for an included country comes in on the next build. A country whose every line and asked item has
+a person's decision (or whose lines are all in the backend already) is dropped from that dataset
+unless --include-done; `scope.country_status` lists every country either way.
+
+--country repeats (or takes a comma list): one dataset over every country's staging dirs, each
+pipeline card tagged with the batch countries it came from (`scope_countries`) so the UI can
+filter by country. Scope-level items get one card per country.
 
 Sources, per staging dir: staged_resolutions.json, staged_new.json, qc_flags.json,
 escalations.json. NEVER staged_actions.json (a render-only re-join of the same records:
@@ -37,6 +49,7 @@ for _p in (ROOT / "scripts", ROOT / "review_app"):
         sys.path.insert(0, str(_p))
 
 import paths  # noqa: E402
+import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
 from ref_pairs import OO_PRIMARY  # noqa: E402
@@ -49,6 +62,7 @@ ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "
 _REF_CLASSES = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}
 _NO_COL = 10 ** 6          # sort position for a column the snapshot does not have
 _OO_OFFSET = 10 ** 4       # owners-tab columns sort after every tracker column
+INFO_KINDS = {"confirmed"}  # items nobody is asked to call (web/app.js INFO_KINDS)
 SCOPE_PID = "scope"        # pseudo-card for escalations / pid-less flags
 COMMODITY_GLOB = {"gas": "GGIT_gas_snapshot_*.csv", "oil": "GOIT_oil_ngl_snapshot_*.csv"}
 
@@ -165,8 +179,8 @@ def _rel(d, root):
 # ---------------------------------------------------------------- classification
 # Older FILL records name value columns by shorthand that is not a snapshot header.
 # Display-only aliases so `current` / in_backend still resolve (Location has no 1:1 alias).
-_ALIAS = {"Length": "LengthKnown", "LengthUnits": "LengthKnownUnits",
-          "Start": "StartLocation", "End": "EndLocation"}
+# never alias bare Start/End: R4a/R5 used `Start` for the year, R4b for the location
+_ALIAS = {"Length": "LengthKnown", "LengthUnits": "LengthKnownUnits"}
 
 
 def _cell(row, col):
@@ -251,9 +265,10 @@ def _colid(r, kind):
 class Entry:
     """One reviewable object before dedupe/resolution."""
 
-    def __init__(self, group, kind, pid, rec, dirp, src, colid, order):
+    def __init__(self, group, kind, pid, rec, dirp, src, colid, order, country=""):
         self.group, self.kind, self.pid, self.rec = group, kind, pid, rec
         self.dir, self.src, self.colid, self.order = dirp, src, colid, order
+        self.country = country     # the batch scope country of the dir (not CountriesOrAreas)
         self.also_in = []
 
 
@@ -281,7 +296,7 @@ class _neg(str):
     def __ge__(self, o): return str.__le__(self, o)
 
 
-def _load_dir(d, root, order0):
+def _load_dir(d, root, order0, country=""):
     """-> (entries, recorded_csvs, recorded_owner_csvs)."""
     d = Path(d)
     dirp = _rel(d, root)
@@ -301,7 +316,7 @@ def _load_dir(d, root, order0):
             pid = r.get("project_id") or ""
             if not pid:
                 pid, group, kind = SCOPE_PID, "item", "other"
-            out.append(Entry(group, kind, pid, r, dirp, "resolutions", _colid(r, kind), order))
+            out.append(Entry(group, kind, pid, r, dirp, "resolutions", _colid(r, kind), order, country))
             order += 1
     f = d / "staged_new.json"
     if f.exists():
@@ -318,29 +333,33 @@ def _load_dir(d, root, order0):
             else:
                 group, kind = "item", "other"
             pid = c.get("matched_project_id") or c.get("project_id") or f"new:{slug}"
-            out.append(Entry(group, kind, pid, c, dirp, "new", f"new:{slug}", order))
+            out.append(Entry(group, kind, pid, c, dirp, "new", f"new:{slug}", order, country))
             order += 1
     f = d / "qc_flags.json"
     if f.exists():
         for fl in _read_json(f).get("flags", []):
             pid = fl.get("project_id") or SCOPE_PID
             cid = f"flag:{fl.get('check', '')}:{(fl.get('detail') or '')[:80]}"
-            out.append(Entry("item", "flag", pid, fl, dirp, "flag", cid, order))
+            out.append(Entry("item", "flag", pid, fl, dirp, "flag", cid, order, country))
             order += 1
     f = d / "escalations.json"
     if f.exists():
         for i, e in enumerate(_read_json(f)):
             out.append(Entry("item", "escalation", SCOPE_PID, e, dirp, "escalation",
-                             f"escalation:{(e.get('title') or str(i))[:120]}", order))
+                             f"escalation:{(e.get('title') or str(i))[:120]}", order, country))
             order += 1
     return out, csvs, owners
 
 
 # ---------------------------------------------------------------- build
 def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
-          exclude_pids=(), root=None):
+          exclude_pids=(), root=None, dir_country=None, drop_done=False):
     """-> (dataset, stats). `dirs` are staging dir paths; `root` is the batches root
-    (repo-relative dir labels are taken against root.parent)."""
+    (repo-relative dir labels are taken against root.parent). `country` is one name or a list;
+    `dir_country` maps a resolved dir path to its country (default: every dir -> the first).
+    `drop_done` drops the pipelines of countries with nothing left to decide (country_status)."""
+    countries = [country] if isinstance(country, str) else list(country)
+    dir_country = {Path(k).resolve(): v for k, v in (dir_country or {}).items()}
     root = Path(root or staged_store.BATCHES_ROOT)
     data_dir = Path(data_dir or ROOT / "data")
     exclude = set(exclude_pids)
@@ -353,10 +372,23 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         sc = staged_store._dir_scope(d)
         if sc is not None and sc[1] != commodity.lower():
             stats["warnings"].append(f"{d.name}: scope {sc} != commodity {commodity}")
-        es, c, o = _load_dir(d, root, i * 10 ** 7)
+        es, c, o = _load_dir(d, root, i * 10 ** 7, dir_country.get(d.resolve(), countries[0]))
         entries += es
         rec_csv += c
         rec_own += o
+
+    # A blank-note UNRESOLVED baseline is superseded by a line staged for the same cell in the
+    # same dir (the workbook's `_resolve_superseded` rule): the seeded MISSING_REF placeholder
+    # otherwise showed "SegmentCost unresolved" beside the accepted SegmentCost fill (P0760).
+    def _cell(e):
+        r = e.rec
+        return (e.dir, e.pid, str(r.get("sheet_row", "")), r.get("ref_col") or "")
+    line_cells = {_cell(e) for e in entries if e.group == "line"}
+    n0 = len(entries)
+    entries = [e for e in entries
+               if not (e.kind == "unresolved" and not (e.rec.get("researcher_notes") or "").strip()
+                       and _cell(e) in line_cells)]
+    stats["superseded_baselines"] = n0 - len(entries)
 
     recorded_snapshot = max((c for c in rec_csv if c), default="")   # what the staging dirs named
     snap_path = _pick_snapshot(commodity.lower(), rec_csv, data_dir, snapshot)
@@ -430,15 +462,20 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         primary.append(e)
 
     # ---- pipelines
+    # scope-level items get one card per country when several countries share the dataset
+    multi = len(countries) > 1
+    label_country = {_rel(d, root): dir_country.get(Path(d).resolve(), countries[0]) for d in ordered}
     cards = {}
     for e in primary:
-        card = cards.get(e.pid)
+        ck = (e.pid, e.country) if (multi and e.pid == SCOPE_PID) else e.pid
+        card = cards.get(ck)
         if card is None:
-            cards[e.pid] = card = {"pid": e.pid, "entries": []}
+            cards[ck] = card = {"pid": e.pid, "entries": []}
         card["entries"].append(e)
 
     pipelines = []
-    for pid, card in cards.items():
+    for card in cards.values():
+        pid = card["pid"]
         rows = snap.by_pid.get(pid, [])
         first = rows[0][1] if rows else {}
         rec0 = card["entries"][0].rec
@@ -446,6 +483,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
                 or rec0.get("title") or "")
         if pid == SCOPE_PID:
             name = "Scope-level items (escalations, flags with no ProjectID)"
+            if multi:
+                name += f" \u2014 {card['entries'][0].country}"
         segs = [{"sheet_row": sr, "segment": r.get("SegmentName", "")} for sr, r in rows
                 if r.get("Status", "").strip() != "N/A"]
         if not segs:
@@ -466,6 +505,9 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             "country": first.get("CountriesOrAreas", "") or rec0.get("countries", ""),
             "status": first.get("Status", ""),
             "wiki": first.get("Wiki", "") or rec0.get("wiki", ""),
+            "scope_countries": sorted({e.country for e in card["entries"]}
+                                      | {label_country.get(d, "") for e in card["entries"] for d in e.also_in}
+                                      - {""}),
             "lines": lines, "items": items,
         })
     pipelines.sort(key=lambda p: (p["pid"] == SCOPE_PID, p["pid"].startswith("new:"),
@@ -474,7 +516,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
 
     data = {
         "built": datetime.now(ZoneInfo("America/New_York")).isoformat(timespec="seconds"),
-        "scope": {"country": country, "commodity": commodity,
+        "scope": {"country": ", ".join(countries), "countries": countries, "commodity": commodity,
                   "snapshot": snap_path.name if snap_path else "",
                   "recorded_snapshot": recorded_snapshot},
         "dirs": [_rel(d, root) for d in sorted(ordered)],
@@ -482,8 +524,43 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         "pipelines": pipelines,
     }
     overlay_decisions(data, root)
+    data["scope"]["country_status"] = cs = country_status(data, label_country, countries)
+    if drop_done:
+        done = {c["country"] for c in cs if c["done"]}
+        keep = [p for p in data["pipelines"] if not set(p["scope_countries"] or countries[:1]) <= done]
+        stats["done_dropped"] = len(data["pipelines"]) - len(keep)
+        data["pipelines"] = keep
+        for c in cs:
+            c["hidden"] = c["done"]
     stats["owners_snapshot"] = own_path.name if own_path else ""
     return data, stats
+
+
+def country_status(data, label_country, countries):
+    """Per batch country: lines / items and how many are still open. A line is open until a
+    person decides it (machine records do not count) unless the backend already holds it; an
+    item is open until a person makes its call, except the info kinds nobody is asked about
+    (confirmed). done = nothing open (a country with nothing to decide at all is done too)."""
+    st = {c: {"country": c, "dirs": 0, "pipelines": 0, "lines": 0, "open_lines": 0,
+              "items": 0, "open_items": 0, "done": False, "hidden": False} for c in countries}
+    for c in label_country.values():
+        st[c]["dirs"] += 1
+    for p in data["pipelines"]:
+        for c in p["scope_countries"]:
+            st[c]["pipelines"] += 1
+        for l in p["lines"]:
+            s = st[label_country.get(l["dir"], countries[0])]
+            s["lines"] += 1
+            s["open_lines"] += not (l["reviewed"] or l.get("in_backend"))
+        for i in p["items"]:
+            if i["kind"] in INFO_KINDS:
+                continue
+            s = st[label_country.get(i["dir"], countries[0])]
+            s["items"] += 1
+            s["open_items"] += not i["reviewed"]
+    for s in st.values():
+        s["done"] = not (s["open_lines"] or s["open_items"])
+    return list(st.values())
 
 
 def overlay_decisions(data, root=None):
@@ -666,7 +743,18 @@ def summary(data, stats):
             inb += bool(l["in_backend"])
         for i in p["items"]:
             items[i["kind"]] += 1
-    out = [f"dirs: {len(data['dirs'])}  ({', '.join(Path(d).name for d in data['dirs'])})",
+    per = Counter(c for p in data["pipelines"] for c in p.get("scope_countries", []))
+    cs = {c["country"]: c for c in data["scope"].get("country_status", [])}
+
+    def _c(c):
+        s = cs.get(c)
+        if not s:
+            return f"{c} ({per[c]} pipelines)"
+        if s["hidden"]:
+            return f"{c} (all decided -- hidden)"
+        return f"{c} ({per[c]} pipelines, open {s['open_lines']}/{s['lines']} lines {s['open_items']}/{s['items']} items)"
+    out = [f"countries: " + ", ".join(_c(c) for c in data["scope"].get("countries", [])),
+           f"dirs: {len(data['dirs'])}  ({', '.join(Path(d).name for d in data['dirs'])})",
            f"snapshot: {data['scope']['snapshot']} (staging named {data['scope']['recorded_snapshot'] or 'none'})   owners: {stats.get('owners_snapshot', '')}",
            f"pipelines: {len(data['pipelines'])}",
            f"lines: {sum(lines.values())}  " + ", ".join(f"{k}={lines[k]}" for k in LINE_KINDS if lines[k]),
@@ -675,6 +763,8 @@ def summary(data, stats):
            f"Status [ref] records folded into their status line: {stats['status_covers']}",
            f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']})   "
            f"sheet_row moved: {stats['moved']}   not in snapshot: {stats['not_in_snapshot']}"]
+    if stats.get("done_dropped"):
+        out.append(f"pipelines of all-decided countries dropped: {stats['done_dropped']} (--include-done keeps them)")
     if stats["excluded"]:
         out.append(f"excluded by --exclude-pids: {stats['excluded']}")
     if stats["missing_cols"]:
@@ -683,10 +773,38 @@ def summary(data, stats):
     return "\n".join(out)
 
 
+def _country_dirs(countries, commodity, root, explicit=None):
+    """-> (dirs, {resolved dir: country}). Discovery runs per country; explicit --dirs are
+    assigned by their store scope (or scope-dir name), else to the first country."""
+    found = {}
+    for c in countries:
+        for d in staged_store.discover_staging_dirs(c, commodity, root=root, include_assembled=True):
+            found.setdefault(Path(d).resolve(), c)
+    if not explicit:
+        return [Path(d) for d in found], found
+    dirs, out = [Path(d) for d in explicit], {}
+    for d in dirs:
+        r = d.resolve()
+        c = found.get(r)
+        if c is None:
+            c = next((c for c in countries
+                      if d.parent.parent.name == staged_store.scope_dirname(c, commodity)), countries[0])
+            if len(countries) > 1 and r not in found:
+                print(f"WARN {d.name}: no country match, assigned to {c}", file=sys.stderr)
+        out[r] = c
+    return dirs, out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--country", required=True)
-    ap.add_argument("--commodity", required=True, choices=["gas", "oil"])
+    ap.add_argument("--country", action="append", default=None,
+                    help="repeat (or comma-separate) for a multi-country dataset; "
+                         "omit for the review-app batch (batches/review-app/manifest.json)")
+    ap.add_argument("--commodity", choices=["gas", "oil"], default=None,
+                    help="required with --country; default gas for the review-app batch")
+    ap.add_argument("--include-done", action="store_true",
+                    help="review-app batch: keep countries with nothing left to decide")
+    ap.add_argument("--manifest", default=None, help="review-app batch manifest (default batches/review-app/manifest.json)")
     ap.add_argument("--dirs", nargs="*", default=None, help="explicit staging dirs (skips discovery)")
     ap.add_argument("--exclude-pids", default="", help="comma-separated ProjectIDs to drop")
     ap.add_argument("--snapshot", default=None, help="tracker snapshot CSV (default: the newest data/ snapshot)")
@@ -696,16 +814,27 @@ def main(argv=None):
     ap.add_argument("--out", default=None, help="default: work/review_data.json")
     a = ap.parse_args(argv)
     root = Path(a.batches_root) if a.batches_root else staged_store.BATCHES_ROOT
-    if a.dirs:
-        dirs = [Path(d) for d in a.dirs]
+    batch = not a.country
+    if batch:
+        a.commodity = a.commodity or "gas"
+        countries = scopes.included(a.commodity, a.manifest)
+        if not countries:
+            sys.exit(f"the review-app batch includes no {a.commodity} countries: "
+                     "python review_app/scopes.py set --country C --commodity c yes")
     else:
-        dirs = staged_store.discover_staging_dirs(a.country, a.commodity, root=root,
-                                                  include_assembled=True)
+        if not a.commodity:
+            ap.error("--commodity is required with --country")
+        countries = list(dict.fromkeys(c.strip() for cs in a.country for c in cs.split(",") if c.strip()))
+    dirs, dir_country = _country_dirs(countries, a.commodity, root, a.dirs)
+    if batch:   # an included country with no staging dir left (archived) has nothing to show
+        have = set(dir_country.values())
+        countries = [c for c in countries if c in have]
     if not dirs:
-        sys.exit(f"no staging dirs found for {a.country} {a.commodity}")
-    data, stats = build(dirs, a.country, a.commodity, snapshot=a.snapshot, owners=a.owners,
+        sys.exit(f"no staging dirs found for {', '.join(countries)} {a.commodity}")
+    data, stats = build(dirs, countries, a.commodity, snapshot=a.snapshot, owners=a.owners,
                         data_dir=a.data_dir, exclude_pids=[p for p in a.exclude_pids.split(",") if p],
-                        root=root)
+                        root=root, dir_country=dir_country, drop_done=batch and not a.include_done)
+    data["scope"]["batch"] = batch
     out = Path(a.out) if a.out else paths.work_dir() / "review_data.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding="utf-8")

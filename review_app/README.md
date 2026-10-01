@@ -8,20 +8,49 @@ backend refresh; consumers `build_ref_workbook.py --decisions`, `apply_route_can
 --decisions`, `staged_summary.py` decided counts and `update_seed.py`. `push.py` (phase 1b) does
 not exist yet.**
 
+**The Google version (phase 2) is built and its Google objects exist, but it is NOT deployed yet**
+(section "Google version" below): the data folder, the store spreadsheet and the Apps Script
+project were created 2026-09-30 and the review-app gas batch was published once; the web app
+deployment (a browser step only Baird can do) and the identity check are still to do. Once it is
+deployed it is the review surface; the loopback server below stays as the build / debug tool.
+
 ```bash
-python review_app/server.py --country Russia --commodity gas        # builds the dataset, opens the browser
+python review_app/server.py                                         # the review-app batch (below), gas
+python review_app/server.py --country Russia --commodity gas        # one scope; builds the dataset, opens the browser
+python review_app/server.py --country Russia --country "United States" --commodity gas   # several countries, one queue
 python review_app/server.py --no-build --data work/review_r7.json   # serve an existing dataset
 ```
 
-Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). Flags: `--country`, `--commodity`
-(both required unless `--no-build`), `--dirs`, `--exclude-pids`, `--data`, `--reviewer` (default
-`git config user.name`), `--host` (loopback only), `--port`, `--no-open`, `--no-build`. The
+**The review-app batch** (`batches/review-app/manifest.json`, managed by `review_app/scopes.py`)
+says which researched countries the app shows when started without `--country`. It holds one
+yes / no / later answer per country+commodity and nothing else: the staged data stays in its
+staging dirs (they are the pending-state store, and every decision key names its dir). An included
+country's dirs are discovered fresh on every build, so a new batch for it comes in on the next
+start or `/api/refresh`. A country with nothing left to decide (every line decided by a person or
+already in the backend, every asked item called) is left out of that build and listed beside the
+country filter as "all decided, hidden"; `--include-done` keeps it, and a new batch brings it
+back. The researcher asks at each delivery (`docs/workflows.md`, "Review-app batch").
+
+```bash
+python review_app/scopes.py list                                     # every researched scope + its answer
+python review_app/scopes.py pending                                  # researched, never answered or "later"
+python review_app/scopes.py check --country Egypt --commodity gas    # exit 3 = ask
+python review_app/scopes.py set --country Egypt --commodity gas yes  # or no / later
+```
+
+Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). Flags: `--country` (repeatable or a
+comma list; omit for the review-app batch), `--commodity` (required with `--country`, else gas),
+`--include-done`, `--dirs`, `--exclude-pids`, `--data`, `--reviewer` (default
+`git config user.name`; recorded as initials, below), `--host` (loopback only), `--port`, `--no-open`, `--no-build`. The
 snapshot flag is `review_data.py --snapshot`, not a server flag.
 Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/decide`, `/api/item`,
 `/api/refresh`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
 first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
-hidden by default. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
+hidden by default. With several `--country` values the filter bar leads with one checkbox per
+country (multi-select; none ticked = all); it keys on the BATCH country of the staging dir a card
+came from (`scope_countries`), not `CountriesOrAreas`, and rides in the URL as `cty=Russia|United States`.
+Scope-level items get one card per country. Keys are unchanged, so decisions carry over. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
 person, or `in_backend` — while hold stays bright (still open); an item grays once it carries a
 reviewed call (same convention as the LNG carriers app). Tier colours are the workbook's (`docs/reference/workbook_conventions.md`)
 and appear on the tier chip and the line's left border.
@@ -56,7 +85,11 @@ Every staging dir gets two sidecars, committed with the batch:
   `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`
   (plus `via` on a record written through the line that covers it, below).
   `decision` is `accept|hold|reject|suggest`; `ts` is ISO-8601 with timezone, stamped by the
-  server along with `reviewer` (the client cannot set either).
+  server along with `reviewer` (the client cannot set either). **A person is recorded by first +
+  last initials, never a full name** (Baird 2026-10-01): `store.initials()` turns
+  "Baird Langenbrunner" and `baird.langenbrunner@globalenergymonitor.org` into `BL` on every
+  write (`decide`, `record_items`, the server's reviewer, `pull.py`); machine reviewers
+  (`backend sync`, `push`) stay as they are.
 - `review_decisions.json` is derived: `{generated, decisions: {key: latest record}}`, rewritten
   atomically after each append. If that write fails the log is rolled back byte for byte.
 
@@ -154,6 +187,8 @@ line is locked or invalid the request is refused (409/400) and nothing is writte
 
 ## Session summary
 
+**Switched off for now (might add later):** set `SHOW_SUMMARY = true` in `web/app.js` to bring back the button and the `S` key.
+
 `S` or the header "summary" button: decided / open / in-backend counts by kind, tier and staging
 dir, item calls, and what this reviewer saved in this page session, with "copy summary as
 markdown".
@@ -179,6 +214,128 @@ python -m pytest tests/ -q
 
 Without `--dirs` it discovers every staging dir for the scope, handoff packets included.
 The summary goes to stderr.
+
+## Google version (phase 2)
+
+An Apps Script web app, open to globalenergymonitor.org logins only, running as Baird
+(`gas/appsscript.json`: `access: DOMAIN`, `executeAs: USER_DEPLOYING`). Same front end
+(`web/app.js` with the `web/gas.js` store adapter), same decision records, three Google objects:
+
+| Object | What it is | Who writes it |
+|---|---|---|
+| Drive **data folder** | the published dataset: `scopes.json` + per scope and version `<id>.<ver>.part<k>.json.gz`, `<id>.<ver>.index.json`, optional `<id>.<ver>.geo.json.gz` | `publish.py --upload --yes` only (`gws-gem-write`; ask Baird before every run) |
+| **Store spreadsheet**, tab `log` | THE decision store while reviewing: append-only, one row per decision record; column `json` is the record, the other columns are for reading and filtering in Sheets | `gas/Code.gs` only, under a script lock. Reviewers need no access to it |
+| Apps Script project | `gas/Code.gs` + `gas/appsscript.json` + the generated `gas/index.html` and `gas/Config.gs` | `gas_push.py --yes` (ask Baird before every run), then a new deployment version in the browser |
+
+Where they are (IDs in `review_app/google.json`; created 2026-09-30):
+
+- Shared-drive folder "Pipeline reviewer app" (`1h2994w9SD1DwKCEiOXE3LN1BQdI8btYR`, in the shared
+  drive that holds the backend sheet) holds the data folder `data`
+  (`1A6G4O0FsiYQypsrQe214TPOqMF2ZNckp`) and the store spreadsheet "pipelines reviewer decision
+  store" (`1uz0v_FoZ7zU8tlQ1yNbWua1jWrwhAu8P6BeZZm5S82g`). **Every member of that shared drive can
+  open and edit both by hand.** Append-only is what the script does, not something Drive enforces:
+  nobody edits, sorts or deletes rows of the `log` tab (the app counts on row order), and the tab
+  is not protected (open question for Baird).
+- The Apps Script project "pipelines reviewer"
+  (`1QQmthEqS7HN4FiPyh7y3jjNHNfTku51XxKwdvagpVZlWIeqNWHW68fw6`) is in **Baird's My Drive**, not
+  the shared folder: a Drive import ignores a shared-drive parent for a script project. It is left
+  there on purpose until Baird rules: in the shared drive every member could edit code that runs
+  as Baird, and Baird's role there (content manager) cannot move a file back out.
+
+`Code.gs` opens only the store spreadsheet and the data folder (their IDs come from the generated
+`Config.gs`, which `bundle.py` writes from `google.json`; a Script Property `STORE_SHEET_ID` /
+`DATA_FOLDER_ID` overrides it), never the backend tracker sheet, never `UrlFetchApp`; scopes
+are `spreadsheets`, `drive.readonly`, `userinfo.email`. The page shows `caps = {decide: true,
+refresh: false, push: false}`: no refresh-backend and no push there.
+
+```bash
+python review_app/publish.py                  # build the review-app batch + write the local mirror work/review_publish/
+python review_app/publish.py --upload         # + list what Drive would change (writes nothing)
+python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
+python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
+python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
+python review_app/gas_push.py                 # list how the Apps Script project differs from gas/ (writes nothing)
+python review_app/gas_push.py --yes           # replace the project's files: ASK BAIRD FIRST, every run; then deploy a new version
+node review_app/gas_dev/dev_server.js         # local stand-in: http://127.0.0.1:8767/?user=you@globalenergymonitor.org
+```
+
+**The record.** A decision made on the Google page is one appended row: the same record
+`review_log.jsonl` holds, plus `id`, `scope`, `batch` (one id per request, so a bulk action is one
+batch), `snapshot` and `basis` (below) and `origin: "gas"`. `reviewer` is the Google login and `ts`
+the server clock; the client can set neither. Latest row per key wins; undo appends. `pull.py`
+copies rows it has not seen (by `id`) into the staging dir each record names and regenerates
+`review_decisions.json`. **The pulled logs hold initials, not the address** (Baird 2026-10-01, replacing the
+2026-09-30 `b*@domain` alias): `baird.langenbrunner@globalenergymonitor.org` is written as `BL`
+(`store.initials`: the local part split on `. _ - +`, first letter of the first and last parts;
+a one-part address gives one letter), because the staging dirs are committed. The store
+spreadsheet keeps the full address (Code.gs needs it for identity and the clash check) and is the
+authority on who decided what; two reviewers with the same initials share them in git, and the
+pull prints `SHARED INITIALS` when the store holds such a pair. `publish.py` puts the full address back into the dataset it
+sends to the private Drive folder, so the page and its "decided by" filter show one name per
+person. So the consumers (`--decisions`, `update_seed.py`, `staged_summary.py`)
+are unchanged and git holds the second copy of the history. **Pull before building a workbook from
+decisions.** Once a scope is published, decide on the Google page only: a decision clicked on the
+loopback server lands in the staging dir but not in the store, so nobody else sees it until the
+next publish bakes it in.
+
+**Two reviewers at once.** Every write runs under the script lock and carries the last store row
+the page has seen. If someone else's record for the same key landed after that row, the write is
+refused, nothing is saved, the page shows their call and a banner naming them; pressing again
+overrules it (both rows stay in the log). A bulk request is all-or-nothing. Open pages poll every
+45 s and show other reviewers' calls with a toast; "more filters > decided by" filters on reviewer.
+
+**The backend moving under a decision.** `publish.py` stamps each line with `basis`, a short hash
+of the backend cells the proposal was judged against (current value, current refs, current status,
+current route accuracy), and the script copies `basis` + `snapshot` into every record. At the next
+publish, a line whose latest person record has a different basis gets `drift` (chip on the card,
+"sheet changed since decided" filter, count in the publish report). **A drifted decision STANDS**
+(Baird 2026-09-30): it stays decided, counts as decided, and reaches the workbook like any other;
+the flag is the prompt to look again, and looking again is the reviewer's choice. Nothing is
+reopened or reverted by the app.
+
+**A renumbered row.** The decision key holds the sheet row, so a row inserted above a pipeline
+would leave its decisions matching nothing. At every publish, `publish.carry_forward` re-keys a
+person's orphaned decision when exactly one line or item of the new build has the same staging
+dir, ProjectID and column, nothing is recorded under that key yet, and no other orphan wants it:
+a copy of the record is appended to the log under the new key (`rekeyed_from` = the old key;
+reviewer, time, basis and snapshot kept; the old record is never rewritten) and the report counts
+it as "carried forward". Whatever does not meet that bar is reported as an **orphan** and left
+alone, to be re-decided by hand. Known limits: a ProjectID with several rows (segments) is
+ambiguous by nature, and a decision made on a page still showing the previous version, under the
+old key, is carried at the NEXT publish, not before.
+
+**Publish, versions, limits.** Each publish writes a new version of the scope's files, then
+rewrites `scopes.json` (the switch), then trashes that scope's versions older than the previous
+one. The script caches `scopes.json` for 60 s, so the app serves a publish within a minute, an
+open page reloads itself in place on its next poll, and two publishes of one scope inside a minute
+are to be avoided. A publish runs `pull.py` first and stores the cursor (last store row read) in
+the scope: the published dataset already holds every decision up to it and the app lays only later
+rows over it. Every write reads the store rows after that cursor, so republish every few thousand
+decisions to keep writes fast.
+
+**Deploying.** Done 2026-09-30: the data folder, the store spreadsheet (its `log` tab set up as
+the script would: plain-text cells, Calibri 10, bold frozen header), the Apps Script project
+(created by a Drive import of `bundle.py --project`'s JSON, no clasp and no paste), `google.json`
+filled but for `web_app_url`, and the first `publish.py --upload --yes` (review-app gas batch).
+**Still to do, in a browser, by Baird only:** open the project
+(`https://script.google.com/d/<script_id>/edit`), Deploy > New deployment > type Web app >
+Execute as "Me", Who has access "Anyone within Global Energy Monitor" > Deploy, approve the three
+permissions (see, edit, create and delete spreadsheets; view Drive files; see the email address),
+and copy the web app URL into `google.json` (`web_app_url`). **Milestone 0 next:** open `<web app
+url>?spike=1` as Baird and have a colleague open it too: it prints what `Session.getActiveUser()`
+returns for each (the script refuses every call with 403 when that is empty) and times a 1 MB
+round trip. Later code changes: `gas_push.py --yes` replaces the project's source (untested
+against a real project beyond the plan; the first real push should be watched), and the web app
+keeps serving its deployed version until Baird picks Deploy > Manage deployments > edit >
+Version: New version. clasp (Google's command-line uploader for Apps Script) is not needed.
+
+**Testing without Google.** `gas_dev/` runs the real `Code.gs` under fakes (`stubs.js`: the
+spreadsheet, the Drive folder, the cache, the lock, the session) and serves the real bundle;
+`?user=<email>` stands in for the login, `GET /store` shows the fake log, and nothing there
+reaches Google or the staging dirs. `tests/test_review_gas.py` holds the script to the Python
+store (same requests, same records), `tests/test_review_gas_e2e.py` drives two reviewers in a
+headless browser, `tests/test_review_publish.py` / `test_review_pull.py` / `test_review_bundle.py` /
+`test_review_gas_push.py` cover the rest. The script and browser tests skip without node / playwright.
 
 ## Suggested improvements (later)
 

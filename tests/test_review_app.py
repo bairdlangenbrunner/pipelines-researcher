@@ -18,7 +18,7 @@ def live(tmp_path):
     data, _ = review_data.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
     path = tmp_path / "review_data.json"
     path.write_text(json.dumps(data), encoding="utf-8")
-    app = server.App(path, "tester", batches_root=s["root"])
+    app = server.App(path, "Test Reviewer", batches_root=s["root"])
     httpd = server.make_server(app, "127.0.0.1", 0)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{httpd.server_address[1]}"
@@ -74,7 +74,7 @@ def test_whoami(live):
     base, _, _ = live
     st, body, _h = get(base + "/api/whoami")
     w = json.loads(body)
-    assert st == 200 and w["reviewer"] == "tester"
+    assert st == 200 and w["reviewer"] == "TR"      # a full name is served (and recorded) as initials
     assert w["caps"] == {"decide": True, "refresh": False, "push": False}
 
 
