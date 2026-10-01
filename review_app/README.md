@@ -337,11 +337,12 @@ decisions to keep writes fast.
 the script would: plain-text cells, Calibri 10, bold frozen header), the Apps Script project
 (created by a Drive import of `bundle.py --project`'s JSON, no clasp and no paste), `google.json`
 filled but for `web_app_url`, and the first `publish.py --upload --yes` (review-app gas batch).
-**Still to do, in a browser, by Baird only:** open the project
-(`https://script.google.com/d/<script_id>/edit`), Deploy > New deployment > type Web app >
-Execute as "Me", Who has access "Anyone within Global Energy Monitor" > Deploy, approve the three
-permissions (see, edit, create and delete spreadsheets; view Drive files; see the email address),
-and copy the web app URL into `google.json` (`web_app_url`). **Milestone 0 next:** open `<web app
+**Deployed 2026-10-01** by Baird in the browser (Deploy > New deployment > Web app, Execute as
+"Me", access "Anyone within Global Energy Monitor"; the three permissions approved); the web app
+URL is `google.json: web_app_url`. It is domain-restricted: an anonymous GET 302s to the GEM login.
+Reviewers need only a globalenergymonitor.org login and that URL — no repo, no `gws`, no access to
+the store spreadsheet. A code change needs `gas_push.py --yes` AND Deploy > Manage deployments >
+edit > Version: New version, or the page keeps serving the old build. **Milestone 0 next:** open `<web app
 url>?spike=1` as Baird and have a colleague open it too: it prints what `Session.getActiveUser()`
 returns for each (the script refuses every call with 403 when that is empty) and times a 1 MB
 round trip. Later code changes: `gas_push.py --yes` replaces the project's source (untested
