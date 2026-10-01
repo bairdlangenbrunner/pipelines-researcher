@@ -3,6 +3,11 @@ Push a person's CLICKED ACCEPTS from the review app to the live backend sheet (p
 
     python review_app/push.py                # PLAN only (reads the live sheet, gws-gem; writes a plan file)
     python review_app/push.py --apply PLAN   # write exactly that plan (gws-gem-write): ASK BAIRD FIRST, every run
+    python review_app/push.py --include-stale  # also plan lines whose backend cells changed since they were decided
+
+This is THE ONLY route from an accepted suggestion to the backend sheet, whichever door the decision
+came through (loopback server, served Google page, `ledger.py decide` from a chat): the decisions
+are read from the staging-dir sidecars, which mirror the Google decision store (run pull.py first).
 
 Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
   * only lines a PERSON accepted (kinds ref | fill | status | oo); machine records never push
@@ -14,9 +19,15 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     Status); several lines on one cell merge, two lines wanting different values abort
   * rows are re-located by ProjectID on the LIVE tab (never trust a recorded sheet_row); route
     columns, new rows and `=`-prefixed cells are out of scope
+  * STALE (Baird 2026-10-01): a line whose backend cells (review_data.BASIS_FIELDS: the current
+    values, `[ref]` text, Status) differ on the LIVE tab from what the reviewer saw when deciding --
+    the record's `basis` no longer matches, or the sheet moved since the snapshot -- is skipped with
+    "stale: <what changed>" and listed in the plan's `stale`; the decision still stands in the ledger
+    and the workbook. --include-stale pushes them anyway (the conflict rules above still apply).
   * apply: FORMULA pre-read (abort on any formula cell / changed cell), before/after backup CSV in
     notes/, valueInputOption RAW with cell-scoped ranges, re-read verify, `push` machine records
-    written into each line's staging dir log so the lines show as applied.
+    written to the Google decision store (review_app/ledger.py, origin 'push') and into each line's
+    staging dir log so the lines show as applied everywhere.
 """
 import argparse
 import csv
@@ -33,6 +44,8 @@ ROOT = HERE.parent
 for p in (HERE, ROOT / "scripts"):
     sys.path.insert(0, str(p))
 
+import ledger  # noqa: E402
+import pull  # noqa: E402
 import review_data  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
@@ -118,14 +131,41 @@ def accepted_lines(ds):
     return out
 
 
-def build_plan(commodity="gas", overwrite=()):
+def staleness(l, rec, tab, row):
+    """Why this accepted line is stale, or "" -- the backend cells it was judged against
+    (review_data.BASIS_FIELDS) as they are on the LIVE tab vs as the reviewer saw them. Two tests:
+    the record's `basis` against the line's (the snapshot moved under the decision; a record with
+    no basis -- pre-ledger -- is not judged on it), then every basis cell on the live tab against the
+    snapshot's (the sheet moved since the pull)."""
+    why = []
+    if rec and rec.get("basis") and l.get("basis") and rec["basis"] != l["basis"]:
+        why.append(f"decided against snapshot {rec.get('snapshot') or '?'}, cells differ now")
+    cells = dict(l.get("current") or {})
+    if l.get("ref_col"):
+        cells[l["ref_col"]] = l.get("current_ref") or ""
+    if "current_status" in l:
+        cells["Status"] = l.get("current_status") or ""
+    for c, was in cells.items():
+        if c not in tab.col:
+            continue
+        live = tab.cell(row, c)
+        if not same_value(live, was):
+            why.append(f"{c} was {str(was)[:40]!r}, live {str(live)[:40]!r}")
+    return "; ".join(why)
+
+
+def build_plan(commodity="gas", overwrite=(), include_stale=False):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
     dirs, dc = review_data._country_dirs(countries, commodity, root, None)
     ds, _ = review_data.build(dirs, countries, commodity, root=root, dir_country=dc)
-    store.overlay(ds, store.dir_paths(ds, root.parent))
+    ds["scope"]["batch"] = True
+    paths = store.dir_paths(ds, root.parent)
+    store.overlay(ds, paths)
+    logs = {d: store.latest(store.read_log(p)) for d, p in paths.items()}
     tabs = {"tracker": Tab(*TABS[("tracker", commodity)]), "oo": Tab(OO_TITLE, OO_HEADER)}
-    cells, skipped, meta = {}, [], {}          # (tab, row, col) -> {"after", "before", "pid", "lines": [keys]}
+    cells, skipped, meta, stale = {}, [], {}, []     # (tab, row, col) -> {"after", "before", "pid", "lines": [keys]}
+    meta["__scope__"] = dict(zip(("id", "snapshot"), ledger.scope_of(ds)))
     for pid, l in accepted_lines(ds):
         pid = pid or l["key"].split("::")[1].split("|")[0]
         tab = tabs["oo" if l["kind"] == "oo" else "tracker"]
@@ -170,6 +210,12 @@ def build_plan(commodity="gas", overwrite=()):
         if not writes:
             skipped.append((l["key"], "already in the backend"))
             continue
+        why = staleness(l, logs.get(l["dir"], {}).get(l["key"]), tab, row)
+        if why:
+            stale.append((l["key"], why))
+            if not include_stale:
+                skipped.append((l["key"], "stale: " + why))
+                continue
         meta[l["key"]] = {"kind": l["kind"], "sheet_row": row, "ref_col": rc or l.get("column") or ""}
         for c, v in writes.items():
             k = (tname, row, c)
@@ -189,6 +235,7 @@ def build_plan(commodity="gas", overwrite=()):
             sys.exit(f"ABORT: formula cell {tab.title}!{a1(tab.col[c])}{row}")
         plan.append({"tab": tab.title, "tabkey": tname, "column": c, "cell": f"{a1(tab.col[c])}{row}", "sheet_row": row,
                      "ProjectID": d["pid"], "before": d["before"], "after": d["after"], "lines": sorted(set(d["lines"]))})
+    meta["__stale__"] = stale
     return plan, skipped, meta
 
 
@@ -204,6 +251,9 @@ def show(plan, skipped):
     print(f"\n{len(plan)} cells in the plan; token {token(plan)}")
     for k, why in skipped:
         print(f"  skipped {k.split('::')[1]}: {why}")
+    n = sum(1 for _, why in skipped if why.startswith("stale:"))
+    if n:
+        print(f"  {n} stale line(s) skipped: the backend changed under the decision (--include-stale pushes them anyway)")
 
 
 def apply(plan_path):
@@ -253,17 +303,29 @@ def apply(plan_path):
     if bad:
         sys.exit(f"{bad} cells failed verification")
     print(f"verified: all {len(plan)} cells read back as planned")
-    # 5. `push` machine records (a machine record is not a click; the line shows as applied) + push_log
+    # 5. `push` machine records (a machine record is not a click; the line shows as applied): to the
+    #    decision store first (ledger, origin 'push'), then each staging dir's log; + push_log
     ts = datetime.now(ET).isoformat(timespec="seconds")
     meta, recs, dirs = pl["meta"], [], {}
+    sc = meta.get("__scope__") or {}
     for k, m in sorted(meta.items()):
+        if k.startswith("__"):
+            continue
         d = k.split("::")[0]
         dirs[d] = ROOT / d
         recs.append({"key": k, "dir": d, "pid": k.split("::")[1].split("|")[0], "sheet_row": m["sheet_row"],
                      "ref_col": m["ref_col"], "kind": m["kind"], "decision": "accept", "suggested_value": "",
-                     "note": f"written to the sheet by review_app/push.py {ts}", "reviewer": "push", "ts": None,
+                     "note": f"written to the sheet by review_app/push.py {ts}", "reviewer": "push", "ts": ts,
                      "undecided": False})
-    store._write(recs, dirs)
+    cfg = pull.config()
+    if cfg.get("store_sheet_id"):
+        led = ledger.Ledger(cfg["store_sheet_id"], sc.get("id") or f"review-app-{pl.get('commodity', 'gas')}",
+                            sc.get("snapshot") or "", "push")
+        store.append_records(recs, dirs, sink=led.sink)
+        print(f"push records in the decision store: rows {recs[0].get('row')}-{recs[-1].get('row')}")
+    else:
+        print("WARNING: no decision store configured; push records written to the staging dirs only", file=sys.stderr)
+        store.append_records(recs, dirs)
     for d in dirs:
         with (ROOT / d / "push_log.jsonl").open("a", encoding="utf-8") as f:
             for p in plan:
@@ -278,15 +340,18 @@ def main(argv=None):
     ap.add_argument("--commodity", default="gas")
     ap.add_argument("--overwrite", action="append", default=[], metavar="KEY",
                     help="let the accepted line whose key contains KEY overwrite a differing value (Baird names each)")
+    ap.add_argument("--include-stale", action="store_true",
+                    help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
     a = ap.parse_args(argv)
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity, a.overwrite)
+    plan, skipped, meta = build_plan(a.commodity, a.overwrite, a.include_stale)
     show(plan, skipped)
     out = ROOT / "work" / "push_plan.json"
     out.parent.mkdir(exist_ok=True)
-    out.write_text(json.dumps({"token": token(plan), "plan": plan, "meta": meta}, ensure_ascii=False, indent=1))
+    out.write_text(json.dumps({"token": token(plan), "commodity": a.commodity, "plan": plan, "meta": meta,
+                               "stale": meta.get("__stale__", [])}, ensure_ascii=False, indent=1))
     print("plan written:", out)
 
 
