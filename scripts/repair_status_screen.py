@@ -6,8 +6,8 @@ live page that describes a line carrying gas but never types the word "operating
 back `ok: False` — "200 but data value not found". That contradicts `url_verifier`'s own
 contract ("STATUS is inferable, not literal ... treat a status any_of miss as expected")
 and it propagated: `seed_resolutions_from_worklist` reads "not all live" and classes the
-unit DEAD_LINK, and the workbook paints the live URL red. A researcher then sees a
-working page presented as a dead link, which is exactly what the standing rule forbids.
+unit as needing attention (it used to be DEAD_LINK; now REF_UNSUPPORTED), and the workbook
+flagged a live URL. A researcher then saw a working page presented as a dead link, which is exactly what the standing rule forbids.
 
 This rewrites the stored `existing_ref_checks` for status units in place: a 200 whose
 only complaint was the missing status token flips to ok, tagged `status_token_absent`.

@@ -14,14 +14,13 @@ It records ONLY what the worklist already knows — the existing `[ref]` and its
 
 - HAS_REF, all existing links live + value-present  -> class_out REVERIFIED
   (proposed_refs = the live URLs, so the backend mirror shows them; colored blue)
-- HAS_REF, one or more dead / value-missing links   -> class_out DEAD_LINK
-  (proposed_refs empty — the deep-sweep Fills tab carries any replacement)
-  Each such record also carries `link_live`: True when every cited URL actually
-  LOADED and only the value-substring screen missed, False when a URL failed to
-  load at all. The distinction is the standing rule — only a page confirmed
-  deleted (404/410) may drop out of a `[ref]` cell, so a `link_live` DEAD_LINK is
-  "re-read this page", never "this ref is gone", and the workbook must not paint
-  it as a dead link.
+- HAS_REF, one or more links failing the screen      -> class_out by what happened to the
+  link (`ref_classes.attention_class`): DEAD_LINK only when every cited URL is GONE (404/410);
+  REF_BLOCKED when none could be fetched from here (401/403/timeout — may load for a person);
+  REF_UNSUPPORTED when a page LOADED and only the value/name screen missed ("re-read this
+  page"). proposed_refs empty — the deep-sweep Fills tab carries any replacement. Each record
+  also carries `link_live` (every cited URL loaded). Only a page confirmed deleted (404/410)
+  may drop out of a `[ref]` cell.
 - MISSING_REF                                        -> class_out UNRESOLVED
 - owner/operator units (kind owner/operator)         -> tab="operators_owners"
 
@@ -32,7 +31,11 @@ per staging dir, but refuses to clobber an existing staged_resolutions.json unle
 Usage:
     python scripts/seed_resolutions_from_worklist.py --staging batches/iraq-gas/staging/annual/
 """
-import argparse, json, os, collections
+import argparse, json, os, collections, sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ref_classes import attention_class  # noqa: E402
 
 
 def _commodity(scope):
@@ -104,7 +107,7 @@ def main():
                 class_out = "REVERIFIED"
                 proposed = [v["url"] for v in checks if v["ok"]]
             else:
-                class_out, proposed = "DEAD_LINK", []
+                class_out, proposed = attention_class(checks), []
         # Did every cited URL actually load? A 200 that merely failed the value
         # substring screen is not a dead link (standing rule: only 404/410 is).
         link_live = bool(checks) and all(

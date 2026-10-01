@@ -56,7 +56,8 @@ def load_scope_sheet(staging: Path):
     return load_sheet(wl.get("scope"))
 
 
-VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK"}
+VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK", "REF_BLOCKED",
+                   "REF_UNSUPPORTED"}
 
 
 def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
@@ -160,9 +161,9 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
         # turned ~110 sourced records into UNRESOLVED, and gate E noticed 26 of them on two
         # rows. `name_found` is the same failure one notch down: without it on any ok
         # verification the record ships "relevance unrecorded" and gate I' flags it (128
-        # units, same run). DEAD_LINK is included because its replacement/Wayback refs walk
+        # units, same run). The needs-attention classes are included because its replacement/Wayback refs walk
         # the same path.
-        if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() in (SOURCED_OUT | {"DEAD_LINK"}) \
+        if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() in (SOURCED_OUT | {"DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}) \
                 and f.get("proposed_refs"):
             vers = [v for v in (f.get("verifications") or []) if isinstance(v, dict)]
             refs = {str(u or "").strip() for u in f["proposed_refs"]}
@@ -376,7 +377,7 @@ def main() -> None:
                     hint = "blank cell — fill it or say what you searched"
                 else:                                    # HAS_REF — re-verify, don't refill
                     hint = (f"value {val!r} is already cited — re-verify the ref and emit "
-                            f"REVERIFIED, or DEAD_LINK on a confirmed 404/410")
+                            f"REVERIFIED, DEAD_LINK only on a confirmed 404/410, or REF_UNSUPPORTED when the page loads but does not state it")
                 print(f"     {u['ref_col']:24s} [{u['class']}] {hint}")
             for m in r["unmergeable"]:
                 print(f"     {str(m['ref_col'] or '(none)'):24s} [UNMERGEABLE] {m['why']} "

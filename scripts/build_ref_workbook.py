@@ -46,7 +46,9 @@ Sheets (commodity-prefixed; empty omitted; README first):
                            1:1 with the sheet for copy-paste).
   <Cmdty>_Refs_Added       MISSING_REF resolved — green validated / yellow caveat or 1-source status change
   <Cmdty>_Refs_Reverified  HAS_REF, links live + contain value (blue)
-  <Cmdty>_Refs_DeadLinks   HAS_REF with a dead/value-missing link + proposed replacement
+  <Cmdty>_Refs_DeadLinks   HAS_REF, every link 404/410 (gone) + proposed replacement
+  <Cmdty>_Refs_Blocked     HAS_REF, link could not be fetched from here (may load for a person)
+  <Cmdty>_Refs_Unsupported HAS_REF, link LOADS but the screen missed the value/name
   <Cmdty>_Refs_Unresolved  couldn't reach 2 working corroborating links → manual review
 
 The four *_Refs_* bucket tabs are supporting detail; the <Cmdty>_Backend tab is the one
@@ -114,16 +116,20 @@ _BUCKETS = {
                    "a status change needs 2+ independent); yellow = a caveat, or a 1-source status change."),
     "REVERIFIED": ("Refs_Reverified", "existing [ref] re-checked: all links live AND still contain "
                    "the value and name the pipeline. Blue = verified, no action needed."),
-    "DEAD_LINK": ("Refs_DeadLinks", "existing [ref] needs attention. RED current ref = a link that "
-                  "did not load (only a confirmed 404/410 may be dropped). AMBER = every link LOADED "
-                  "and only the value screen missed \u2014 re-read the page before touching the cell; "
-                  "prose and unit variants ('6 BCM annually' vs '6.00') read as misses, and STATUS is "
-                  "inferred from prose, never matched verbatim. Proposed ref(s) = a verified "
+    "DEAD_LINK": ("Refs_DeadLinks", "every existing link is GONE (HTTP 404/410). RED current ref. "
+                  "Only a confirmed 404/410 may drop out of a [ref] cell. Proposed ref(s) = a verified "
                   "replacement to swap in."),
+    "REF_BLOCKED": ("Refs_Blocked", "existing [ref] could NOT be fetched from here (403 / bot wall / "
+                    "timeout / geo-block) \u2014 it may load fine for a person. AMBER current ref. Open "
+                    "it yourself; never delete it over an access failure."),
+    "REF_UNSUPPORTED": ("Refs_Unsupported", "existing [ref] LOADS, but the automatic screen did not find "
+                        "the value or the pipeline name on the page. AMBER current ref. Re-read the page "
+                        "before touching the cell: prose, unit variants, ranges ('4.5\u201313.6 bn' for a "
+                        "9.05 midpoint) and inferred STATUS read as misses. The link is NOT dead."),
     "UNRESOLVED": ("Refs_Unresolved", "could not reach 2 working, independent, value-containing links "
                    "(red). Manual review — no fabricated URLs (standing rule 2)."),
 }
-_ORDER = ["REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"]
+_ORDER = ["REFS_ADDED", "REVERIFIED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED", "UNRESOLVED"]
 
 
 def _verif_summary(r: dict) -> str:
@@ -178,12 +184,10 @@ def _make_styler(columns, bucket: str):
             return
         ws.cell(rn, tier_c).fill = CONF_FILL.get(_tier_color(r), PatternFill())
         if bucket == "DEAD_LINK":
-            # Red means GONE. A record whose URLs all returned 200 and merely failed the
-            # value-substring screen is "re-read this page", not a deletion — painting it
-            # red told researchers a live page was dead (standing rule: only a confirmed
-            # 404/410 may drop out of a [ref] cell). Amber those instead.
-            ws.cell(rn, cur_ref_c).fill = (
-                CONF_FILL["yellow"] if r.get("link_live") else CONF_FILL["red"])
+            # Red means GONE (404/410) and nothing else.
+            ws.cell(rn, cur_ref_c).fill = CONF_FILL["red"]
+        elif bucket in ("REF_BLOCKED", "REF_UNSUPPORTED"):
+            ws.cell(rn, cur_ref_c).fill = CONF_FILL["yellow"]
         elif bucket == "UNRESOLVED":
             ws.cell(rn, tier_c).fill = CONF_FILL["red"]
     return styler
@@ -1934,7 +1938,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
 
     is_oo = _is_oo
     paste_refs = [r for r in own_refunits + ref_work
-                  if r.get("class_out") in ("REFS_ADDED", "DEAD_LINK")]
+                  if r.get("class_out") in ("REFS_ADDED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED")]
     # one paste surface: fills first so a fill wins any same-cell tie with ref-only work
     afb_res = sorted(
         [f for f in own_fills + pending_fills if not is_oo(f)] +
@@ -2015,7 +2019,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
         defs_a.append((t,
                        f"PASTE-READY ({len(afb_res)} cell units) — THE one paste surface for the "
                        "tracker tab: ALL corroborated fills AND all paste-ready reference work "
-                       "(new refs + dead-link replacements) for the scope, carried + this packet's "
+                       "(new refs + replacements for refs that need attention) for the scope, carried + this packet's "
                        "own, unified in the exact GEM backend layout: FULL column set in sheet "
                        "order, one row per touched segment, current values prefilled. No extra "
                        "locator column — every column aligns 1:1 with the sheet, so cells "
@@ -2148,7 +2152,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
         _write_sheet(wb_b, t, rw_cols, ref_detail, _refwork_styler(rw_cols))
         defs_b.append((t,
                        f"{len(ref_detail)} — per-ref evidence for the actions file's [ref] overlays: "
-                       "REFS_ADDED = blank [ref] filled; DEAD_LINK = red current ref with verified "
+                       "REFS_ADDED = blank [ref] filled; DEAD_LINK (gone, 404/410) = red, REF_BLOCKED / REF_UNSUPPORTED = amber, current ref with verified "
                        "replacement; UNRESOLVED = also listed on the actions OpenFlags tab. "
                        "REVERIFIED refs are counts-only in the README (no action)."))
     declined_n = 0
@@ -2344,7 +2348,7 @@ def _fill_readme(ws, meta, sheet_defs, handoff=False):
                       "ProjectID-keyed); the *_Refs_* tabs are supporting detail."),
         ("Color key", "[ref]-cell color = corroboration tier: green=validated (1 ref suffices; a status change "
                       "needs 2+ independent) / yellow=caveat or 1-source status change / red=low or none. Blue=re-verified existing ref (no action). On the "
-                      "*_Refs_DeadLinks tab, a red Current-ref cell = dead/value-missing link."),
+                      "*_Refs_DeadLinks tab, a red Current-ref cell = a link that is gone (404/410); amber on *_Refs_Blocked / *_Refs_Unsupported = it could not be fetched here / it loads but the screen missed the value."),
         ("Out of scope", "Route/geometry [ref] cells are NOT swept — pipeline geometry is reconciled against "
                          "the GOIT-GGIT-pipeline-routes repo (separate human branch+PR), not media [ref] URLs."),
         ("Standing rules", "Start from the row's gem.wiki page but NEVER cite gem.wiki/globalenergymonitor "
@@ -2661,7 +2665,7 @@ def main() -> None:
         sheet_defs.append((rw_title,
                            f"{len(ref_work)} — actionable ref work carried from prior staged packets "
                            f"({J([f'{k}={v}' for k, v in sorted(rw_counts.items())])}): REFS_ADDED = "
-                           "blank [ref] filled (tier-colored); DEAD_LINK = red current ref, verified "
+                           "blank [ref] filled (tier-colored); DEAD_LINK (gone, 404/410) = red, REF_BLOCKED / REF_UNSUPPORTED = amber, current ref, verified "
                            "replacement proposed; UNRESOLVED = red, manual review. REVERIFIED refs are "
                            "counts-only in the README (no action needed)."))
 

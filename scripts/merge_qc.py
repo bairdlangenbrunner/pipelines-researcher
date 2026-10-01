@@ -141,7 +141,7 @@ def independence_qc(refs, tier, independent, notes, high_min=1):
 STATUS_CHANGE_MIN_PUBLISHERS = 2
 
 
-def validated_tier(refs, verifs, tier, notes):
+def validated_tier(refs, verifs, tier, notes, cls=None, ref_col=None):
     """Rule 4 as of 2026-09-30: one validated ref is SUFFICIENT and shows green. A record
     the agent tiered `medium` (the old single-source label) is promoted to `high` when it
     carries >=1 surviving ref AND a verification that loaded and names the pipeline
@@ -150,8 +150,11 @@ def validated_tier(refs, verifs, tier, notes):
     judgment) is never promoted, and neither is a status change: call this only where
     `high_min` is 1. Run AFTER relevance_qc, which has already capped unnamed refs.
 
+    Nor is an `UNRESOLVED` record or a `__VALIDITY__` concern: a page that names the
+    pipeline but does not settle the unit validates nothing (pass `cls` / `ref_col`).
+
     Returns (tier, notes)."""
-    if tier != "medium" or not refs:
+    if tier != "medium" or not refs or cls == "UNRESOLVED" or ref_col == "__VALIDITY__":
         return tier, notes
     if not any(v.get("ok") and v.get("name_found") is True for v in (verifs or [])):
         return tier, notes

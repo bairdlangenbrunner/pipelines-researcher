@@ -308,7 +308,7 @@ def main():
                 f_tier, notes = relevance_qc(f.get("verifications", []), f_tier, notes)
                 if not f_stchg:
                     f_tier, notes = validated_tier(refs, f.get("verifications", []),
-                                                   f_tier, notes)
+                                                   f_tier, notes, cls=cls)
             f_values, notes, bad = screen_value_keys(f.get("values") or {}, sheet, notes,
                                                      ref_col=f.get("ref_col"))
             n_badkeys += len(bad)
@@ -377,7 +377,8 @@ def main():
                 refs, s.get("tier", ""), s.get("independent", False), notes,
                 high_min=STATUS_CHANGE_MIN_PUBLISHERS if s_chg else 1)
             if refs and not s_chg:
-                s_tier, notes = validated_tier(refs, s.get("verifications", []), s_tier, notes)
+                s_tier, notes = validated_tier(refs, s.get("verifications", []), s_tier, notes,
+                                              cls=cls)
             new_status.append({**ident,
                 "sheet_row": s.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": s.get("segment_name", ""),

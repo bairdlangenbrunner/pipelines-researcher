@@ -447,7 +447,10 @@ def _verify_existing(units: list[dict]) -> None:
         checked = _numericish(u["primary_value"])
         is_status = (not checked) and _is_status(u["primary_value"])
         any_of = surface_forms(u["primary_value"]) if (checked or is_status) else None
-        results = verify_many(urls, any_of=any_of, name=u.get("pipeline_name") or None)
+        # cost columns: a stated range whose midpoint is the value supports it (manual, Cost)
+        is_cost = checked and "cost" in (u.get("primary_value_col") or "").lower()
+        results = verify_many(urls, any_of=any_of, name=u.get("pipeline_name") or None,
+                              midpoint_of=u["primary_value"] if is_cost else None)
         u["existing_ref_checks"] = [
             {"url": url, **results.get(url, {"ok": False, "status": None, "reason": "not checked"})}
             for url in urls

@@ -11,8 +11,11 @@ and leaves every other record untouched.
 Merge-time QC (same spirit as merge_deepsweep_shards.py) — never let an orphan or
 unverified ref through:
 - Keep only proposed_refs whose verification is ok && contains_value.
-- REFS_ADDED / REVERIFIED with zero verified refs -> UNRESOLVED (MISSING_REF origin) or
-  DEAD_LINK (HAS_REF origin); a note records the drop.
+- REFS_ADDED / REVERIFIED with zero verified refs -> UNRESOLVED (MISSING_REF origin) or, for a
+  HAS_REF origin, the class that says what happened to the link (`ref_classes.attention_class`:
+  DEAD_LINK only for 404/410, REF_BLOCKED, REF_UNSUPPORTED); a note records the drop.
+- A shard's own DEAD_LINK / REF_* label is re-derived from its verifications (`status`), so a
+  page that loaded can never be staged as a dead link.
 - GEM / blocklisted URLs are stripped (defense in depth; the verifier already rejects them).
 
 Writes staged_resolutions.prior.json in place. Run AFTER research, BEFORE
@@ -26,10 +29,11 @@ import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ref_classes import ATTENTION_SET, attention_class  # noqa: E402
 from merge_qc import (verified_refs, iter_shards, qc_note, independence_qc,  # noqa: E402
                       relevance_qc, validated_tier)
 
-_VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
+_VALID_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED"} | ATTENTION_SET
 
 
 def main():
@@ -117,8 +121,11 @@ def main():
                 cls = "REFS_ADDED" if refs else "UNRESOLVED"
             notes = (u.get("researcher_notes") or "").strip()
 
+            if cls in ATTENTION_SET:      # the label is a claim; the verifications decide it
+                cls = attention_class(verifs or r.get("verifications"))
             if cls in ("REFS_ADDED", "REVERIFIED") and not refs:
-                cls = "DEAD_LINK" if r.get("class_in") == "HAS_REF" else "UNRESOLVED"
+                cls = (attention_class(list(verifs) + list(r.get("verifications") or []))
+                       if r.get("class_in") == "HAS_REF" else "UNRESOLVED")
                 notes = qc_note(notes, f"no verified corroborating ref -> {cls.lower()}.")
                 downgraded += 1
 
@@ -127,7 +134,7 @@ def main():
                 bool(u.get("independent", False)), notes)
             if refs:
                 tier, notes = relevance_qc(verifs, tier, notes)
-                tier, notes = validated_tier(refs, verifs, tier, notes)
+                tier, notes = validated_tier(refs, verifs, tier, notes, cls=cls)
             r["class_out"] = cls
             r["proposed_refs"] = refs
             r["verifications"] = verifs

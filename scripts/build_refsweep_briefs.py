@@ -2,7 +2,7 @@
 """Emit one per-PID research brief for a *targeted* ref-sweep research pass.
 
 Annual-update mode (§7) seeds a ref baseline from the worklist but runs no ref
-*research* — so blank/dead `[ref]` cells stay red (class_out UNRESOLVED / DEAD_LINK).
+*research* — so blank `[ref]` cells and refs needing attention stay red/amber (class_out UNRESOLVED / DEAD_LINK / REF_BLOCKED / REF_UNSUPPORTED).
 This script scopes a follow-up ref sweep to exactly those gap units and packages each
 pipeline's work into a brief a single research subagent can act on: the units needing a
 source (value + current dead ref) plus the gem.wiki outbound citations to start from.
@@ -12,7 +12,7 @@ It reads staged_resolutions.json (the merged baseline) + wiki_citations.json and
 Research is done by subagents; each writes `<staging>/ref_shards/<PID>.json`, which
 merge_ref_shards.py then folds back onto staged_resolutions.prior.json.
 
-Default scope = the gap classes (UNRESOLVED, DEAD_LINK). Pass --classes to widen (e.g.
+Default scope = the gap classes (UNRESOLVED, DEAD_LINK, REF_BLOCKED, REF_UNSUPPORTED). Pass --classes to widen (e.g.
 also re-verify REVERIFIED) or narrow.
 
 Each brief carries a `contract` block (standing rule 4e). The deep-sweep leg's per-unit
@@ -59,7 +59,7 @@ CONTRACT = [
     "does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned "
     "aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
     "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / "
-    "UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — "
+    "UNRESOLVED / DEAD_LINK / REF_BLOCKED / REF_UNSUPPORTED. Anything else is dropped without a word at workbook build — "
     "the research is done and vanishes.",
     "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left "
     "unreported and every record that cannot merge. It is blocking: do not finish red.",
@@ -69,7 +69,7 @@ CONTRACT = [
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--staging", required=True)
-    ap.add_argument("--classes", default="UNRESOLVED,DEAD_LINK",
+    ap.add_argument("--classes", default="UNRESOLVED,DEAD_LINK,REF_BLOCKED,REF_UNSUPPORTED",
                     help="comma list of class_out values to research (default gap classes)")
     ap.add_argument("--from-coverage", metavar="JSON",
                     help="recovery mode: scope to exactly the units `check_shard_coverage.py "
@@ -156,7 +156,7 @@ def main():
             "values": r.get("values", {}),
             "primary_value": r.get("primary_value", ""),
             "current_ref": r.get("current_ref", ""),
-            "class_out": r.get("class_out", ""),   # DEAD_LINK = had a ref that died; UNRESOLVED = never had one
+            "class_out": r.get("class_out", ""),   # DEAD_LINK = ref gone (404/410); REF_BLOCKED = couldn't fetch; REF_UNSUPPORTED = loads, value not found; UNRESOLVED = never had one
         } for r in rs]
         # Documents this row already yielded. A recovery agent that starts from a blank
         # search re-opens the FERC notice its predecessor already read; the dropped unit is

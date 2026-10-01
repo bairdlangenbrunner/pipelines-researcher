@@ -100,7 +100,7 @@ def _existence_support_flags(df, ctx) -> list[dict]:
 
 # ref_work classes worth a researcher's attention in the handoff (REVERIFIED
 # is counts-only — nothing to do)
-_ACTIONABLE_REF_CLASSES = {"REFS_ADDED", "DEAD_LINK", "UNRESOLVED"}
+_ACTIONABLE_REF_CLASSES = {"REFS_ADDED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED", "UNRESOLVED"}
 
 
 def _resolve_sheet_row(rec: dict, rows_by_pid: dict) -> dict:

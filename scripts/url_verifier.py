@@ -13,7 +13,7 @@ A FAIL is NOT proof the source is dead, and — critically — a "value not foun
 the page fails to support the data point. The substring check is a SCREEN, not the verdict; the
 agent reads the page and makes the final call. Two false-negative families:
 
-Liveness false-negatives (rule out before classing DEAD_LINK — Iraq gas sweep: 6 of 27 "dead
+Liveness false-negatives (rule out before calling a link blocked or unsupported; DEAD_LINK means 404/410 only — Iraq gas sweep: 6 of 27 "dead
 links" were false):
   * 401 bot-walls — live pages (e.g. iraq-businessnews.com) reject this UA; confirm manually and
     cite the Wayback snapshot (which passes) instead.
@@ -242,6 +242,55 @@ def _contains(text: str, needle: str) -> bool:
     if re.fullmatch(r"[\d][\d,.\s]*", n):
         return re.search(rf"(?<![\d.,]){re.escape(n)}(?![\d.,])", text) is not None
     return n in text
+
+
+# ---- range midpoint (cost columns only) -------------------------------------------------
+# The pipelines manual (Cost, CostUnits): "If a range of costs is given in a source, calculate
+# the average or midpoint ... and record that in the sheet." So a recorded cost is SUPPORTED by
+# a page that states the RANGE, never the midpoint itself (neftegaz 660602: «от 4,5 до 13,6 млрд
+# долл.» -> 9.05 bn recorded). A substring screen for the midpoint can never see that; this
+# looks for "A–B" / "from A to B" / "от A до B" pairs whose average is the value. Opt-in
+# (`midpoint_of=`), cost columns only: for years or lengths "2019 to 2021" would wrongly
+# support 2020.
+_NUM = r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:[.,]\d+)?"
+_RANGE_RE = re.compile(
+    rf"(?P<a>{_NUM})\s*(?P<ua>млрд|млн|тыс|billion|million|thousand|bn|mn|[bmk])?\.?\s*"
+    rf"(?:[-\u2010-\u2015]|\bto\b|\bthrough\b|\bдо\b|\band\b|\bи\b)\s*"
+    rf"(?P<b>{_NUM})\s*(?P<ub>млрд|млн|тыс|billion|million|thousand|bn|mn|[bmk])?\b",
+    re.I)
+_SCALE = {"млрд": 1e9, "billion": 1e9, "bn": 1e9, "b": 1e9, "млн": 1e6, "million": 1e6, "mn": 1e6,
+          "m": 1e6, "тыс": 1e3, "thousand": 1e3, "k": 1e3}
+
+
+def _num(tok: str) -> float:
+    if re.fullmatch(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?", tok):
+        return float(tok.replace(",", ""))
+    return float(tok.replace(",", "."))
+
+
+def range_midpoint_match(text: str, value, rel_tol: float = 0.005):
+    """The stated range ("4,5 до 13,6 млрд") whose midpoint equals `value` (a cost, in base
+    units), or None. The magnitude word after either end scales both ends; a pair with no
+    magnitude word is read at face value."""
+    try:
+        target = float(str(value).replace(",", ""))
+    except (TypeError, ValueError):
+        return None
+    if not target:
+        return None
+    for m in _RANGE_RE.finditer(text or ""):
+        try:
+            a, b = _num(m.group("a")), _num(m.group("b"))
+        except ValueError:
+            continue
+        unit = (m.group("ub") or m.group("ua") or "").lower()
+        scale = _SCALE.get(unit, 1.0)
+        if a == b or a <= 0 or b <= 0:
+            continue
+        mid = (a + b) / 2 * scale
+        if abs(mid - target) <= rel_tol * abs(target):
+            return m.group(0).strip()
+    return None
 
 
 def _fold(s: str) -> str:
@@ -507,7 +556,7 @@ def _sheet_text(content: bytes, max_cells: int = 400_000) -> tuple[str, str]:
 
 
 def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = True,
-               timeout: int = 20) -> dict:
+               timeout: int = 20, midpoint_of=None) -> dict:
     """Return {ok, status, reason}. The page must HTTP-200, contain ALL `expected`
     substrings (AND), and — if `any_of` is given — contain AT LEAST ONE of them (OR).
     Use `any_of` for a data value's surface forms (see `surface_forms`); use `expected`
@@ -516,7 +565,9 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     them). Pass a proper NAME via `name=` to require the page mention it with
     transliteration tolerance (`fuzzy`, default on: Chelavend matches a page's
     'Chelavand'). For STATUS, don't demand the status token as a substring — a status
-    `any_of` miss is expected; the agent infers status from the page's prose."""
+    `any_of` miss is expected; the agent infers status from the page's prose. `midpoint_of=<cost>`
+    (cost columns only) also lets a page that states a RANGE whose midpoint is that cost satisfy
+    `any_of` (`range_midpoint_match`); the result then carries `midpoint_range`."""
     low = (url or "").lower()
     if not low.startswith("http"):
         return {"ok": False, "status": None, "reason": "not an http(s) URL"}
@@ -720,7 +771,10 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         return _fin({"ok": False, "status": 200, "reason": f"200 but missing expected: {missing}"})
     if any_of:
         forms = [a for a in any_of if a]
-        if forms and not any(_contains(text, a) for a in forms):
+        mid_hit = None
+        if forms and not any(_contains(text, a) for a in forms) and midpoint_of not in (None, ""):
+            mid_hit = range_midpoint_match(text, midpoint_of)
+        if forms and not any(_contains(text, a) for a in forms) and not mid_hit:
             tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
             return _fin({"ok": False, "status": 200, "reason": f"200 but data value not found (none of {forms}){tail}"})
     # `text`, not `body` — a name must appear in prose too, not in an svg/style block.
@@ -746,8 +800,10 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         # Matched inside a stub is not to be trusted either — surface it, don't silently pass.
         return _fin({"ok": True, "status": 200, **named,
                 "reason": f"200 + content present, BUT body only {len(body.strip())} chars — verify against full text"})
-    return _fin({"ok": True, "status": 200, **named,
-                 "reason": "200 + expected content present" if checking else "200"})
+    mid = {"midpoint_range": mid_hit} if any_of and mid_hit else {}
+    return _fin({"ok": True, "status": 200, **named, **mid,
+                 "reason": (f"200 + a stated range ({mid_hit!r}) whose midpoint is the value"
+                            if mid else "200 + expected content present") if checking else "200"})
 
 
 def surface_forms(value) -> list[str]:
@@ -779,7 +835,7 @@ def surface_forms(value) -> list[str]:
 
 
 def verify_many(urls, expected=(), any_of=None, name=None, fuzzy: bool = True,
-                timeout: int = 20, max_workers: int = 6) -> dict:
+                timeout: int = 20, max_workers: int = 6, midpoint_of=None) -> dict:
     """Verify many URLs concurrently — bounded pool + per-domain politeness (≥
     `_MIN_INTERVAL`s between hits to the same host). Returns {url: verify_url result}.
     Deterministic per URL; ordering of hits within a domain is serialized for courtesy."""
@@ -801,7 +857,8 @@ def verify_many(urls, expected=(), any_of=None, name=None, fuzzy: bool = True,
         delay = sched - time.monotonic()
         if delay > 0:
             time.sleep(delay)
-        return u, verify_url(u, *expected, any_of=any_of, name=name, fuzzy=fuzzy, timeout=timeout)
+        return u, verify_url(u, *expected, any_of=any_of, name=name, fuzzy=fuzzy, timeout=timeout,
+                                midpoint_of=midpoint_of)
 
     out: dict[str, dict] = {}
     if not uniq:
