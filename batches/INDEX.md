@@ -205,19 +205,24 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## russia-gas
 
-- `staging/deepsweep-r1-fareast` — rows=32 fills=85 updates=0 status-pending=8 refs(REFS_ADDED=257, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=38) routes=0 new(none) decided 0a/0h/0r/0s of 399
+- `staging/deepsweep-r1-fareast` — rows=32 fills=85 updates=0 status-pending=8 refs(REFS_ADDED=257, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=38) routes=0 new(none) decided 1a/0h/1r/0s of 399
 - `staging/deepsweep-r2-nw-operating` — rows=28 fills=74 updates=0 status-pending=1 refs(REFS_ADDED=225, REF_BLOCKED=11, REF_UNSUPPORTED=16, REVERIFIED=4, UNRESOLVED=28) routes=0 new(none) decided 0a/0h/0r/0s of 334
 - `staging/deepsweep-r3-nw-indev` — rows=27 fills=63 updates=0 status-pending=7 refs(REFS_ADDED=174, REF_BLOCKED=4, REF_UNSUPPORTED=1, REVERIFIED=2, UNRESOLVED=60) routes=0 new(none) decided 0a/0h/0r/0s of 252
-- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 7a/0h/0r/0s of 175
+- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 0a/0h/0r/0s of 175
 - `staging/deepsweep-r4b-urals-south` — rows=23 fills=7 updates=0 status-pending=1 refs(REFS_ADDED=112, REF_UNSUPPORTED=6, UNRESOLVED=38) routes=0 new(none) decided 0a/0h/0r/0s of 128
 - `staging/deepsweep-r5-volga` — rows=31 fills=21 updates=0 status-pending=0 refs(REFS_ADDED=215, REF_UNSUPPORTED=1, UNRESOLVED=59) routes=0 new(none) decided —
 - `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 0a/0h/0r/0s of 100
-- `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 12a/0h/0r/0s of 329
+- `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 2a/0h/0r/0s of 329
+- `staging/discovery-d1-d4-merged-20260930` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=8, new_row=16) decided —
 - `staging/discovery-d1-fareast-20260930` — no store — invisible to discovery
 - `staging/discovery-d2-siberian-20260930` — no store — invisible to discovery
 - `staging/discovery-d3-ural-20260930` — no store — invisible to discovery
 - `staging/discovery-d4-northwest-20260930` — no store — invisible to discovery
+- `staging/discovery-d5-d6-merged-20260930` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=15, new_row=25) decided —
+- `staging/discovery-d5-volga-central-20260930` — no store — invisible to discovery
+- `staging/discovery-d6-south-caucasus-20260930` — no store — invisible to discovery
 - `staging/discovery-seeds-20260930` — no store — invisible to discovery
+- `staging/discovery-seeds-rerun-d2-d4-d5-20261001` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=34, new_row=5) decided —
 - `staging/recon-gulfpub-20260914` — recon inputs
 - `staging/recon-osm-20260930` — recon inputs
 - `staging/scoping-20260914` — no store — invisible to discovery
@@ -233,6 +238,9 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260930_1504_ET_russia-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r5-volga.xlsx`
 - `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r7-central-south.xlsx`
+- `deliverables/pipelines_batch_20260930_2116_ET_russia-gas_discovery-d1-d4.xlsx`
+- `deliverables/pipelines_batch_20260930_2155_ET_russia-gas_discovery-d5-d6.xlsx`
+- `deliverables/pipelines_batch_20261001_1237_ET_russia-gas_discovery-seeds-d2-d4-d5.xlsx`
 - `archive/` — 14 superseded/applied file(s)
 
 ## saudi-arabia-gas
@@ -279,7 +287,7 @@ applied). See docs/workflows.md "Batch artifacts".
 ## united-states-gas
 
 - `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided —
-- `staging/deepsweep-gulf-operating` — rows=50 fills=162 updates=0 status-pending=0 refs(REFS_ADDED=351, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none) decided —
+- `staging/deepsweep-gulf-operating` — rows=50 fills=162 updates=0 status-pending=0 refs(REFS_ADDED=351, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none) decided 5a/0h/1r/0s of 521
 - `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided —
 - `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=144 updates=0 status-pending=25 refs(REFS_ADDED=339, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided —
 - `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided —
@@ -288,10 +296,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=23 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided —
 - `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=92 updates=0 status-pending=6 refs(REFS_ADDED=283, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=67) routes=0 new(none) decided —
 - `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided —
-- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided —
+- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 0a/0h/0r/0s of 362
 - `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none) decided —
 - `staging/eia-crosswalk-20260910` — no store — invisible to discovery
-- `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
+- `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 0
 - `staging/recovery-20260909` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
 - `staging/state-audit-20260910` — no store — invisible to discovery
