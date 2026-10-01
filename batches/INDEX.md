@@ -24,8 +24,8 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/deepsweep-20260903` — rows=44 fills=94 updates=0 status-pending=8 refs(REFS_ADDED=194, REF_UNSUPPORTED=2, REVERIFIED=106, UNRESOLVED=109) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260902` — recon inputs
-- `deliverables/pipelines_batch_20260930_1455_ET_china-jiangxi-gas_deepsweep.xlsx`
-- `archive/` — 6 superseded/applied file(s)
+- `deliverables/pipelines_batch_20261001_1753_ET_china-jiangxi-gas_deepsweep.xlsx`
+- `archive/` — 7 superseded/applied file(s)
 
 ## china-trunks-gas
 

@@ -102,7 +102,7 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
 | Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260930_1455_ET_china-guangxi-gas_deepsweep.xlsx` (re-tiered 2026-09-30) (rebuilt 09-04 so open validity concerns render orange on `Gas_Backend`; 07-29/07-30 builds archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
-| Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v3 DELIVERED 2026-09-10, staged not applied** — SUPERSEDES v2, which supersedes v1. Built off MZ's 2026-09-03 feedback (`notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md`); delivery note `notes/delivery-2026-09-10-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20260930_1455_ET_china-jiangxi-gas_deepsweep.xlsx` (re-tiered 2026-09-30) (10 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260903/`. `deliverables/` holds exactly one file: v2 (workbook + `archive/deepsweep-v2-20260902/`), v1 (`archive/deepsweep-v1-20260826/`) and the two intermediate 09-10 rebuilds are all archived |
+| Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v3 DELIVERED 2026-09-10, staged not applied** — SUPERSEDES v2, which supersedes v1. Built off MZ's 2026-09-03 feedback (`notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md`); delivery note `notes/delivery-2026-09-10-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20261001_1753_ET_china-jiangxi-gas_deepsweep.xlsx` (re-tiered 2026-09-30; rebuilt 2026-10-01 with the three Phase II `Owner1` cells P4786/P4788/P4789 re-keyed to the ownership team's style `Jiangxi Natural Gas Group Co Ltd` — style only, no finding changed) (10 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260903/`. `deliverables/` holds exactly one file: v2 (workbook + `archive/deepsweep-v2-20260902/`), v1 (`archive/deepsweep-v1-20260826/`) and the two intermediate 09-10 rebuilds are all archived |
 
 ## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
 
@@ -198,7 +198,8 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   10 attribution. 89 fills. Baird reviews the workbook; nothing applied.
 - **Jiangxi v3 — DELIVERED 2026-09-10, staged not applied; SUPERSEDES v2 (which superseded
   v1).** ONE file to work:
-  `…_20260910_1154_ET_china-jiangxi-gas_deepsweep.xlsx` (10 tabs); staging
+  `…_20261001_1753_ET_china-jiangxi-gas_deepsweep.xlsx` (10 tabs; the 09-10 build re-tiered
+  09-30 and rebuilt 10-01 for the owner-style re-key, earlier builds in `archive/`); staging
   `batches/china-jiangxi-gas/staging/deepsweep-20260903/`; delivery note
   `notes/delivery-2026-09-10-china-jiangxi-gas-deepsweep-v3.md`. **ONE pending state** —
   v2's workbook and staging dir are archived (`archive/deepsweep-v2-20260902/`), as v1's
