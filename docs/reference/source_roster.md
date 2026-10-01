@@ -114,8 +114,14 @@ for that body's own audited register before dispatching per-row research — it 
 cheaper and better than anything per-row search will find (Pakistan/SNGPL 2026-08-10,
 India/PNGRB 2026-08-10).
 
-Oil and Gas Watch (`oilandgaswatch.org`) — digitized routes + permit tracking,
-useful as a primary-adjacent lead.
+Oil and Gas Watch (`oilandgaswatch.org`, Environmental Integrity Project) — digitized routes +
+permit tracking, useful as a primary-adjacent lead; 85 `/pipeline/<id>` refs across both
+trackers. The site is a JavaScript app: every page is the same empty shell and the record comes
+from `https://oilandgaswatch.org/api/01-01_PIPELINES/data/<id>` (JSON; answers only to a
+same-origin-looking request — browser UA, `Accept: application/json`, `Referer`/`Origin` on the
+site, `Sec-Fetch-Site: same-origin`, `Sec-Fetch-Mode: cors`, `Sec-Fetch-Dest: empty`).
+`url_verifier` reads that record for you (`fetch_route: oilandgaswatch data api …`); to read it
+by hand, `python scripts/fetch.py` on the page URL shows only the shell.
 
 **Egypt — GASCO publishes a machine-readable project register, and GEM's link to it is
 mistyped** (found 2026-08-27). **"National Natural Gas Grid Expansion Projects"**, 1 page,

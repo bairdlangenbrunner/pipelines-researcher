@@ -413,8 +413,9 @@ the backend cells it was judged against), so a later publish reports decisions t
 moved under (`drift`) and decisions whose key no longer exists (orphans). Detail:
 `review_app/README.md` → "Google version". Rulings (Baird 2026-09-30): a drifted decision
 STANDS (flagged, never reopened); a decision orphaned by a renumbered row is carried to the new
-key at publish when the match by staging dir + ProjectID + column is unique
-(`publish.carry_forward`), otherwise it stays an orphan; pulled logs hold the reviewer's
+key at publish when the match by staging dir + ProjectID + column(s) is unique
+(`publish.carry_forward`; a fill's key names every proposed value column, `+`-joined, since
+2026-10-01, and a legacy first-column key is carried onto it), otherwise it stays an orphan; pulled logs hold the reviewer's
 initials (`BL`; Baird 2026-10-01 — every recorded reviewer is first + last initials, never a full
 name), never the address, and the store spreadsheet keeps the address.
 `gas_push.py` updates the Apps Script project through Drive, so clasp is not used. Still open:

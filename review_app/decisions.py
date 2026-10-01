@@ -72,7 +72,15 @@ class Decisions:
         if kind is None:
             _, kind = classify(rec)
         colid = _colid(rec, kind)
-        return self.by_pid_col.get((pid, colid), [])
+        hit = self.by_pid_col.get((pid, colid), [])
+        if not hit and "+" in colid:
+            # a fill decided before 2026-10-01 was keyed by its first value column alone
+            # (`…|Capacity` for today's `…|Capacity+CapacityUnits`); a sidecar nobody has
+            # republished still holds that key, and the decision still applies to this record
+            # when exactly one of the fill's columns carries one.
+            legacy = [self.by_pid_col[(pid, c)] for c in colid.split("+") if (pid, c) in self.by_pid_col]
+            hit = legacy[0] if len(legacy) == 1 else []
+        return hit
 
     def for_record(self, rec, kind=None):
         """The live record for a staged record: unique (pid, colid) match, else the one whose

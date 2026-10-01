@@ -235,15 +235,30 @@ def classify(r):
     return "item", "other"
 
 
+def _fill_colid(r):
+    """A fill's column id: EVERY value column the record proposes a non-empty value for, joined
+    with `+` in `value_cols` order (`ProposalYear+ProposalMonth`); a single column stays bare
+    (`Capacity`). Until 2026-10-01 this was the first value column alone, so a fill whose only
+    changed column was ProposalMonth was logged under `…|ProposalYear` (P6011) and the ledger
+    could not say what had been accepted; `publish.carry_forward` maps those legacy keys onto the
+    new ones."""
+    vals = r.get("values") or {}
+    order = list(r.get("value_cols") or []) + [c for c in vals if c not in (r.get("value_cols") or [])]
+    cols = [c for c in order if str(vals.get(c) if vals.get(c) is not None else "").strip()]
+    if not cols:
+        return r.get("primary_value_col") or next(iter(vals), "") or (r.get("ref_col") or "")
+    return "+".join(cols)
+
+
 def _colid(r, kind):
-    """The last element of the dedupe key: ref_col, or the value column for a fill."""
+    """The last element of the dedupe key: ref_col, or the value column(s) for a fill."""
     rc = r.get("ref_col") or ""
     if kind == "status":
         return "__STATUS__"
     if kind == "route":
         return "__ROUTE__"
     if kind == "fill":
-        return r.get("primary_value_col") or next(iter(r.get("values") or {}), "") or rc
+        return _fill_colid(r)
     if kind == "oo":
         return "oo:" + (rc or r.get("primary_value_col") or "")
     if kind == "concern":
@@ -257,8 +272,8 @@ def _colid(r, kind):
     if kind == "route_suggestion":
         return f"__ROUTE__:{r.get('class_out', '')}"
     if kind in ("unresolved", "confirmed", "other") and r.get("class_in") == "FILL":
-        # same ref_col as the ref unit on that cluster; the fill is identified by its value col
-        return r.get("primary_value_col") or next(iter(r.get("values") or {}), "") or rc
+        # same ref_col as the ref unit on that cluster; the fill is identified by its value col(s)
+        return _fill_colid(r)
     return rc or r.get("primary_value_col") or ""
 
 

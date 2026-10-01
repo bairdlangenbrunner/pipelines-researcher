@@ -238,10 +238,22 @@ were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `REF_BLOCKED`/`
 hypothesis you still have to test by hand. **Standing rule (Baird, 2026-07-30): a once-working
 existing ref is NEVER dropped from its `[ref]` cell because it fails from here** — geo-blocks,
 anti-bot 403s/WAFs, and timeouts are access problems, not deletions; only a confirmed-deleted
-page (HTTP 404/410) may be replaced. The workbook builder enforces this mechanically
-(`_annotate_kept_refs` in `build_ref_workbook.py` keeps every not-proven-dead current URL in
-the cell ahead of the proposed refs), so a blocked origin gets its Wayback snapshot *added*,
+page (HTTP 404/410) may drop out of the cell. **And `[ref]` cells are additive (Baird
+2026-10-01):** a proposed ref is appended beside the existing one, never written in its place
+— so never describe an existing ref as "replaced" in `researcher_notes`, not even one that
+failed the value check; say what it fails and let the new ref sit beside it. The workbook
+builder enforces this mechanically (`_annotate_kept_refs` in `build_ref_workbook.py` keeps every
+not-proven-dead current URL in the cell ahead of the proposed refs; `review_app/push.py` keeps
+the live cell text verbatim and appends), so a blocked origin gets its Wayback snapshot *added*,
 never swapped in as a replacement:
+- **JavaScript application shells (2026-10-01).** A single-page app serves the same ~2 KB HTML
+  for every URL and loads the content afterwards, so the verifier sees a 200 with nothing in it.
+  `verify_url` now returns `js_shell: True` (not a content miss, not a deletion) and
+  `ref_classes` files it as `REF_BLOCKED`, never `REF_UNSUPPORTED`. For `oilandgaswatch.org`
+  `/pipeline/<id>` pages the verifier reads the site's own data record instead
+  (`/api/01-01_PIPELINES/data/<id>`; `fetch_route` says so), so the value check runs on real
+  content. Found on P6011: the existing Proposal ref was staged REF_UNSUPPORTED while its
+  record carried the open-season notice that supports the value.
 - **401 bot-walls.** Some live pages (e.g. `iraq-businessnews.com`) return HTTP 401 to the
   verifier's UA. Confirm the page manually / via a normal browser; if genuinely live, cite the
   **Wayback Machine** snapshot (`web.archive.org/web/…`) — which itself passes the verifier — and

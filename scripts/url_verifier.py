@@ -171,6 +171,93 @@ _NOISE_MARKUP_RE = re.compile(r"<(svg|style|template)\b.*?</\1\s*>", re.S | re.I
 # interstitial (false `blocked=True` on real, 40 KB articles).
 _SCRIPT_MARKUP_RE = re.compile(r"<(script|noscript)\b.*?</\1\s*>", re.S | re.I)
 
+# A JavaScript APPLICATION SHELL: the HTML a single-page app serves for every one of its URLs —
+# a <head>, a bundle (`<script type="module" src=…>`) and an empty mount (`<div id="app">`) —
+# with the page's actual content fetched by the browser afterwards from the site's data API.
+# It 200s, matches no block phrase and contains nothing to read, so a content check against it
+# is NOT a miss and the 200 is NOT a deletion: it is the PDF-with-no-text-layer case in HTML
+# clothing. Found 2026-10-01 on P6011 (Project Maple): oilandgaswatch.org serves a 1.9 KB Vue
+# shell for `/pipeline/6965`, the verifier read "200, '2023' not found" and the sweep staged the
+# ref REF_UNSUPPORTED — while the API record behind the page supports the value in full. Both
+# trackers hold 85 `/pipeline/<id>` refs to that site. The check needs BOTH signals: a bundle
+# script tag AND next to no visible text once <head>, scripts, styles and tags are gone.
+_TAG_RE = re.compile(r"<[^>]+>")
+_HEAD_RE = re.compile(r"<head\b.*?</head\s*>", re.S | re.I)
+_JS_SHELL_HINT_RE = re.compile(r"<script\b[^>]*\b(?:type=[\"']module[\"']|src=)", re.I)
+_JS_SHELL_MAX_CHARS = 200
+
+
+def _visible_text(body: str) -> str:
+    """What a reader without JavaScript would see: no head, scripts, styles or tags."""
+    t = _HEAD_RE.sub(" ", body or "")
+    t = _SCRIPT_MARKUP_RE.sub(" ", t)
+    t = _NOISE_MARKUP_RE.sub(" ", t)
+    return re.sub(r"\s+", " ", _TAG_RE.sub(" ", t)).strip()
+
+
+def _is_js_shell(body: str, ctype: str) -> bool:
+    b = body or ""
+    if "html" not in (ctype or "") and not b.lstrip()[:1] == "<":
+        return False
+    return bool(_JS_SHELL_HINT_RE.search(b)) and len(_visible_text(b)) < _JS_SHELL_MAX_CHARS
+
+
+# ---- app-data resolvers --------------------------------------------------------------
+# Sites whose pages are JS shells but whose record is one GET away. The resolver returns the
+# record as readable text; verify_url matches against THAT instead of the shell, and the result
+# says so in `fetch_route`. If the API refuses, verify_url falls through to the shell → `js_shell`.
+_OGW_PIPELINE_RE = re.compile(r"^https?://(?:www\.)?oilandgaswatch\.org/pipeline/(\d+)/?(?:[?#].*)?$", re.I)
+_OGW_API = "https://oilandgaswatch.org/api/01-01_PIPELINES/data/{id}"
+_OGW_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) "
+           "Chrome/120.0.0.0 Safari/537.36")
+
+
+def _json_prose(obj, prefix="") -> str:
+    """A JSON record as `key: value` lines, so a value check reads it like a page."""
+    if isinstance(obj, dict):
+        return "\n".join(_json_prose(v, f"{prefix}{k}") for k, v in obj.items())
+    if isinstance(obj, list):
+        return "\n".join(_json_prose(v, f"{prefix}[{i}]") for i, v in enumerate(obj))
+    return f"{prefix}: {'' if obj is None else obj}"
+
+
+def _app_data(url: str, timeout):
+    """(text, note) for a JS-shell page whose content the site's own data API hands out, or None.
+    oilandgaswatch.org (Environmental Integrity Project; Vue + Xata): `/pipeline/<id>` is served by
+    `/api/01-01_PIPELINES/data/<id>` (JSON). The API answers 403 "Access denied" unless the request
+    looks like the app's own same-origin XHR (browser UA, JSON Accept, Referer/Origin on the site,
+    Sec-Fetch-* cors/same-origin) — those headers are the app's, not a disguise."""
+    m = _OGW_PIPELINE_RE.match(url or "")
+    if not m:
+        return None
+    try:
+        import requests
+    except ImportError:
+        return None
+    oid = m.group(1)
+    api = _OGW_API.format(id=oid)
+    headers = {"User-Agent": _OGW_UA, "Accept": "application/json",
+               "Referer": f"https://oilandgaswatch.org/pipeline/{oid}", "Origin": "https://oilandgaswatch.org",
+               "Sec-Fetch-Site": "same-origin", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Dest": "empty"}
+    try:
+        r = requests.get(api, timeout=timeout, headers=headers)
+        if r.status_code != 200 or "json" not in (r.headers.get("Content-Type") or "").lower():
+            return None
+        text = _json_prose(r.json())
+    except Exception:
+        return None
+    return (text, f"oilandgaswatch data api {api}") if text.strip() else None
+
+
+class _TextResponse:
+    """A response-shaped stand-in for text a resolver fetched in place of the page."""
+
+    def __init__(self, url: str, text: str, note: str):
+        self.url, self.text, self.fetch_notes = url, text, note
+        self.content = text.encode("utf-8")
+        self.status_code, self.encoding, self.history = 200, "utf-8", []
+        self.headers = {"Content-Type": "text/plain; charset=utf-8"}
+
 # URL shapes that are navigation surfaces rather than documents — see the check in
 # `verify_url` for why these can never be a `[ref]`. Category/tag matching deliberately
 # requires the path to END at the listing (or at a /page/N/), so a real article that
@@ -240,7 +327,12 @@ def _contains(text: str, needle: str) -> bool:
     if not n:
         return True
     if re.fullmatch(r"[\d][\d,.\s]*", n):
-        return re.search(rf"(?<![\d.,]){re.escape(n)}(?![\d.,])", text) is not None
+        # Boundaries: no digit on either side, and no `.`/`,` that CONTINUES a number
+        # (`589.126229`, `1,262`, `12,620`). A `.` or `,` followed by a space or the end of
+        # the text is punctuation, so "in September 2023." and "2,023." still match — until
+        # 2026-10-01 the lookarounds rejected ANY adjacent `.`/`,`, and every sentence-final
+        # year on every English page read as "value not found".
+        return re.search(rf"(?<!\d)(?<!\d[.,]){re.escape(n)}(?!\d)(?![.,]\d)", text) is not None
     return n in text
 
 
@@ -617,24 +709,28 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # confirmed, so treat the page as live and readable, not as authenticated.
     insecure = False
     is_pdf = False
-    try:
-        r = _http_get(url, timeout, {"User-Agent": _UA})
-    except Exception as e:
-        is_ssl = "SSL" in type(e).__name__ or "certificate" in str(e).lower()
-        if not is_ssl:
-            return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}"}
+    app = _app_data(url, timeout)       # a JS-shell site whose record its own data API hands out
+    if app is not None:
+        r = _TextResponse(url, *app)
+    else:
         try:
-            import urllib3
-            urllib3.disable_warnings()
-        except Exception:
-            pass
-        try:
-            r = _http_get(url, timeout, {"User-Agent": _UA}, verify=False)
-            insecure = True
-        except Exception as e2:
-            return {"ok": False, "status": None,
-                    "reason": f"request failed: {type(e).__name__}; retry without cert "
-                              f"verification also failed: {type(e2).__name__}"}
+            r = _http_get(url, timeout, {"User-Agent": _UA})
+        except Exception as e:
+            is_ssl = "SSL" in type(e).__name__ or "certificate" in str(e).lower()
+            if not is_ssl:
+                return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}"}
+            try:
+                import urllib3
+                urllib3.disable_warnings()
+            except Exception:
+                pass
+            try:
+                r = _http_get(url, timeout, {"User-Agent": _UA}, verify=False)
+                insecure = True
+            except Exception as e2:
+                return {"ok": False, "status": None,
+                        "reason": f"request failed: {type(e).__name__}; retry without cert "
+                                  f"verification also failed: {type(e2).__name__}"}
     # The bans above are string tests on the SUBMITTED url, so any redirect — a
     # shortener, a vanity domain, an aggregator's own 301 — walks straight through them.
     # Re-apply them to where we actually landed, and to every hop on the way.
@@ -763,6 +859,15 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
                                f"(matched {blocked!r}), not the page — {tail}. NOT a deletion: "
                                f"keep the ref and ADD a Wayback snapshot alongside; only a "
                                f"confirmed 404/410 may drop a ref."})
+    # An empty application shell proves nothing either way (see _is_js_shell): never a content
+    # miss, never a deletion. Like the blocked case this does not depend on `checking` — a bare
+    # reachability pass on a shell used to return `ok=True, '200'` for a page nobody had read.
+    if not is_pdf and not is_sheet and _is_js_shell(body, ctype):
+        return _fin({"ok": False, "status": 200, "js_shell": True,
+                     "reason": "200 but the page is a JavaScript application shell — the content "
+                               "is loaded by the browser afterwards, so nothing here can be "
+                               "checked. NOT a content miss and NOT a deletion: open it in a "
+                               "browser or read the site's data record, keep the ref."})
     missing = [e for e in expected if e and not _contains(text, e)]
     if missing:
         if stub:

@@ -6,9 +6,12 @@
 else"). One home for the rule, imported by the seeder, the merge and the workbook builder:
 
   DEAD_LINK        every current ref is GONE — HTTP 404/410 (the only confirmed deletion).
-  REF_BLOCKED      no current ref could be fetched from here and at least one was not gone —
-                   401/403/WAF, timeout, connection or TLS error, no status. NOT a deletion:
-                   it may load fine for a person (keep the ref, add a Wayback snapshot).
+  REF_BLOCKED      no current ref could be READ from here and at least one was not gone —
+                   401/403/WAF, timeout, connection or TLS error, no status, or a 200 that is
+                   only a JavaScript application shell with no content in it (`js_shell`;
+                   oilandgaswatch.org, P6011 2026-10-01). NOT a deletion and NOT "the page
+                   does not support the value": it may load fine for a person (keep the ref,
+                   add a Wayback snapshot).
   REF_UNSUPPORTED  at least one current ref LOADED (HTTP 200) but the value/name screen or the
                    agent's read did not support the data point. Re-read the page.
 
@@ -33,8 +36,9 @@ def _status(v) -> int | None:
 
 
 def loaded(v: dict) -> bool:
-    """One verification: did the page itself load (HTTP 200, not an access-block page)?"""
-    if v.get("blocked") or v.get("non_citation"):
+    """One verification: did the page itself load (HTTP 200, not an access-block page, not an
+    empty JavaScript app shell)? Only a page we actually READ can fail to support a value."""
+    if v.get("blocked") or v.get("non_citation") or v.get("js_shell"):
         return False
     return _status(v) == 200
 

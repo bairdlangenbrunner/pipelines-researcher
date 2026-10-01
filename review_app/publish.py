@@ -158,20 +158,29 @@ def carry_forward(data, dirs, sink=None):
     Appends the copies to the logs (store.append_records: time and reviewer kept; `sink` = the
     ledger's, so the copies land in the decision store too) and returns them; the caller overlays
     the dataset again. Carried only when the match is beyond doubt:
-      - exactly one key of this build has the orphan's dir, ProjectID and full colid,
+      - exactly one key of this build has the orphan's dir, ProjectID and full colid — or, for a
+        fill decided before 2026-10-01 under its first value column alone (`…|ProposalYear`),
+        exactly one multi-column fill key of this build names that column
+        (`…|ProposalYear+ProposalMonth`; review_data._fill_colid),
       - no record at all sits under that key (a later decision or a backend sync wins),
       - no other orphan wants the same key."""
     rows = _rows(data)
-    by_ident = {}
+    by_ident, legacy = {}, {}
     for k in rows:
         s = _split(k)
-        if s:
-            by_ident.setdefault((s[0], s[1], s[3]), []).append(k)
+        if not s:
+            continue
+        by_ident.setdefault((s[0], s[1], s[3]), []).append(k)
+        base, _, suffix = s[3].partition("#")
+        if "+" in base:                         # a multi-column fill: reachable from any one of its columns
+            for col in base.split("+"):
+                legacy.setdefault((s[0], s[1], col + ("#" + suffix if suffix else "")), []).append(k)
     logs = _logs(data, dirs)
     want = {}                                   # target key -> [(dir, orphan record)]
     for d, r in _orphans(set(rows), logs, dirs):
         s = _split(r["key"])
-        cands = by_ident.get((s[0], s[1], s[3]), []) if s else []
+        ident = (s[0], s[1], s[3]) if s else None
+        cands = (by_ident.get(ident) or legacy.get(ident) or []) if ident else []
         if len(cands) == 1 and cands[0] not in logs.get(d, {}):
             want.setdefault(cands[0], []).append((d, r))
     moved = {rs[0][1]["key"]: k for k, rs in want.items() if len(rs) == 1}      # old key -> new key
@@ -209,6 +218,31 @@ def restore_reviewers(data, dirs, emails):
 
 # ---- the files -----------------------------------------------------------------------
 
+def make_watch(data):
+    """The backend cells each line was judged against, for the live drift check (Code.gs liveCheck):
+    {"tracker"|"oo": [[pid, sheet_row, {column: value}]]}, one entry per (tab, pid, row). The columns
+    are the ones `basis` hashes (value cols, the ref col, Status, RouteAccuracy) with the values the
+    line shows. Code.gs compares them with the sheet as it is NOW; the page matches changes to lines."""
+    seen = {}
+    for p in data.get("pipelines", []):
+        for l in p.get("lines", []):
+            if l.get("kind") == "new_row" or l.get("sheet_row") is None:
+                continue
+            tab = "oo" if l.get("tab") == review_data.OO_TAB else "tracker"
+            cells = {c: str(v if v is not None else "") for c, v in (l.get("current") or {}).items()}
+            if l.get("ref_col"):
+                cells[l["ref_col"]] = str(l.get("current_ref") or "")
+            if "current_status" in l:
+                cells["Status"] = str(l.get("current_status") or "")
+            if "current_route_accuracy" in l:
+                cells["RouteAccuracy"] = str(l.get("current_route_accuracy") or "")
+            seen.setdefault((tab, p["pid"], l["sheet_row"]), {}).update(cells)
+    out = {"tracker": [], "oo": []}
+    for (tab, pid, row), cells in seen.items():
+        out[tab].append([pid, row, cells])
+    return out
+
+
 def make_index(data):
     """What Code.gs needs to validate a request without the dataset: see the module docstring of
     review_app/gas/Code.gs. Column logic (line_cols / resolves) stays in store.py; this only
@@ -237,7 +271,7 @@ def make_index(data):
         for it in p.get("items", []):
             keys[it["key"]] = {"g": "i", "kind": it["kind"], "dir": it["dir"], "pid": p["pid"],
                                "call0": it.get("call") or ""}
-    return {"keys": keys}
+    return {"keys": keys, "watch": make_watch(data), "commodity": (data.get("scope") or {}).get("commodity", "")}
 
 
 def pack_index(index):
@@ -276,7 +310,7 @@ def pack_index(index):
             if e.get("lock"):
                 c["l"] = [[x["c"], x["held"], x["res"]] for x in e["lock"]]
         groups[dirs.index(d)][rest] = c
-    return {"v": 2, "dirs": dirs, "keys": groups}
+    return {"v": 2, "dirs": dirs, "keys": groups, "w": index.get("watch") or {}, "cmd": index.get("commodity") or ""}
 
 
 def _dump(obj):

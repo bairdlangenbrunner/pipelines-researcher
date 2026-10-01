@@ -57,3 +57,15 @@ def test_falls_back_to_log_when_derived_missing(tmp_path):
     s1 = {"project_id": "P1", "sheet_row": 1, "ref_col": "__STATUS__", "class_in": "STATUS", "class_out": "CHANGE_PROPOSED"}
     assert Decisions(tmp_path).decision(s1) == "reject"
     assert not Decisions(tmp_path / "nowhere")
+
+
+def test_a_legacy_first_column_fill_key_still_decides_the_multi_column_fill(tmp_path):
+    rec = {"project_id": "P1", "sheet_row": 357, "ref_col": "Capacity [ref]", "class_in": "FILL",
+           "class_out": "REFS_ADDED", "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+           "values": {"Capacity": "7.5", "CapacityUnits": "bcm/y"}, "proposed_refs": ["http://x"]}
+    _write(tmp_path, [_rec("d::P1|357|Capacity", "hold")])                 # keyed the pre-2026-10-01 way
+    assert Decisions(tmp_path).decision(rec) == "hold"
+    _write(tmp_path, [_rec("d::P1|357|Capacity+CapacityUnits", "accept")])  # today's key wins outright
+    assert Decisions(tmp_path).decision(rec) == "accept"
+    _write(tmp_path, [_rec("d::P1|357|Capacity", "hold"), _rec("d::P1|357|CapacityUnits", "reject")])
+    assert Decisions(tmp_path).decision(rec) is None                        # two legacy columns disagree: ambiguous

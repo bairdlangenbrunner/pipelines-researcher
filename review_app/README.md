@@ -99,7 +99,13 @@ Every staging dir gets two sidecars, committed with the batch:
 - `review_log.jsonl` is the mirror: append-only, one record per decision
   `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided, basis}`
   (plus `via` on a record written through the line that covers it, below; plus the ledger's
-  `id, scope, batch, snapshot, origin`). `basis` = `review_data.basis(line)`, the hash of the backend
+  `id, scope, batch, snapshot, origin`). `key` is `<dir>::<pid>|<sheet_row>|<colid>`; the colid is
+  the `[ref]` column for a ref line, `__STATUS__` / `__ROUTE__` / `__VALIDITY__:<type>` for the
+  others, and for a FILL **every value column the record proposes a value for, joined with `+`**
+  (`ProposalYear+ProposalMonth`; `review_data._fill_colid`) — so the ledger row says what was
+  accepted. Until 2026-10-01 a fill was keyed by its first value column alone, which logged
+  P6011's ProposalMonth 6 → 9 accept as `…|ProposalYear`; `carry_forward` and `decisions.py` still
+  understand that legacy form. `basis` = `review_data.basis(line)`, the hash of the backend
   cells the call was made against, which `publish.py` (drift) and `push.py` (stale) compare.
   `decision` is `accept|hold|reject|suggest`; `ts` is ISO-8601 with timezone, stamped by the
   server along with `reviewer` (the client cannot set either). **A person is recorded by first +
@@ -259,19 +265,13 @@ Where they are (IDs in `review_app/google.json`; created 2026-09-30):
   there on purpose until Baird rules: in the shared drive every member could edit code that runs
   as Baird, and Baird's role there (content manager) cannot move a file back out.
 
-`Code.gs` opens only the store spreadsheet and the data folder (their IDs come from the generated
+`Code.gs` opens the store spreadsheet and the data folder (their IDs come from the generated
 `Config.gs`, which `bundle.py` writes from `google.json`; a Script Property `STORE_SHEET_ID` /
 `DATA_FOLDER_ID` overrides it), plus the backend tracker sheet **read-only** for the live drift
 check (`google.json` `backend`: sheet id, tab gids, header rows); never `UrlFetchApp`; scopes
 are `spreadsheets`, `drive.readonly`, `userinfo.email`. The page shows `caps = {decide: true,
 refresh: false, push: false}`: no refresh-backend and no push there.
 
-```bash
-python review_app/publish.py                  # build the review-app batch + write the local mirror work/review_publish/
-python review_app/publish.py --upload         # + list what Drive would change (writes nothing)
-python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
-python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
-python review_app/ledger.py status            # store configured? writer address? row count
 **Live drift check (2026-10-01).** The dataset is still a snapshot (only `publish.py` rebuilds it),
 but the page now asks `Code.gs liveCheck` on load, and from the "check backend" button, whether the
 backend cells each line was judged against have changed since. `publish.py` writes the watch list
@@ -283,6 +283,12 @@ decided" filter. It flags; it never rebuilds a proposal or touches a decision. T
 (Baird) must be able to read the backend sheet. A scope published before this change has no watch
 list, so the check finds nothing until it is republished.
 
+```bash
+python review_app/publish.py                  # build the review-app batch + write the local mirror work/review_publish/
+python review_app/publish.py --upload         # + list what Drive would change (writes nothing)
+python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
+python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
+python review_app/ledger.py status            # store configured? writer address? row count
 python review_app/ledger.py decide --key KEY --decision accept|hold|reject|suggest [--note N]   # a chat's decision, same door
 python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale lines skipped by default
 python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
@@ -328,7 +334,9 @@ reopened or reverted by the app.
 **A renumbered row.** The decision key holds the sheet row, so a row inserted above a pipeline
 would leave its decisions matching nothing. At every publish, `publish.carry_forward` re-keys a
 person's orphaned decision when exactly one line or item of the new build has the same staging
-dir, ProjectID and column, nothing is recorded under that key yet, and no other orphan wants it:
+dir, ProjectID and column (or, for a fill decided under the pre-2026-10-01 single-column key,
+exactly one multi-column fill key naming that column), nothing is recorded under that key yet,
+and no other orphan wants it:
 a copy of the record is appended to the log under the new key (`rekeyed_from` = the old key;
 reviewer, time, basis and snapshot kept; the old record is never rewritten) and the report counts
 it as "carried forward". Whatever does not meet that bar is reported as an **orphan** and left

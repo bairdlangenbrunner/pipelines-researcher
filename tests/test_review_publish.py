@@ -346,3 +346,22 @@ def test_publish_carries_a_renumbered_decision_and_restores_the_address(scope, t
     assert (got["decision"], got["decided_by"], got["reviewed"]) == ("accept", ME, True)
     assert "carried forward" in publish.report(e, rep) and old in publish.report(e, rep)
     assert ME not in (dirs[l["dir"]] / "review_log.jsonl").read_text()
+
+
+def test_a_fill_decided_under_its_first_column_alone_carries_to_the_multi_column_key(scope):
+    # before 2026-10-01 a fill's key named its first value column only (`…|Capacity`); the
+    # decision made under that key moves to `…|Capacity+CapacityUnits`, once, by dir + pid + column
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = first(d, "P9002", "fill")
+    assert l["key"].endswith("|Capacity+CapacityUnits")
+    old = l["key"].replace("|Capacity+CapacityUnits", "|Capacity")
+    store.append_records([gas_record(l, "b", key=old, id="legacy1")], dirs)
+    assert [r["key"] for r in publish.orphans(d, dirs)] == [old]
+    got = publish.carry_forward(d, dirs)
+    assert [(r["key"], r["rekeyed_from"], r["id"]) for r in got] == [(l["key"], old, "legacy1~rekey")]
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"]) == ("accept", True)
+    assert publish.orphans(d, dirs) == [] and publish.carry_forward(d, dirs) == []
+    # a legacy key naming a column that no multi-column fill of this pid carries stays an orphan
+    store.append_records([gas_record(l, "b", key=old.replace("|Capacity", "|Length"), id="legacy2")], dirs)
+    assert publish.carry_forward(d, dirs) == [] and len(publish.orphans(d, dirs)) == 1

@@ -119,9 +119,9 @@ _BUCKETS = {
     "DEAD_LINK": ("Refs_DeadLinks", "every existing link is GONE (HTTP 404/410). RED current ref. "
                   "Only a confirmed 404/410 may drop out of a [ref] cell. Proposed ref(s) = a verified "
                   "replacement to swap in."),
-    "REF_BLOCKED": ("Refs_Blocked", "existing [ref] could NOT be fetched from here (403 / bot wall / "
-                    "timeout / geo-block) \u2014 it may load fine for a person. AMBER current ref. Open "
-                    "it yourself; never delete it over an access failure."),
+    "REF_BLOCKED": ("Refs_Blocked", "existing [ref] could NOT be read from here (403 / bot wall / "
+                    "timeout / geo-block / an empty JavaScript app shell) \u2014 it may load fine for a "
+                    "person. AMBER current ref. Open it yourself; never delete it over an access failure."),
     "REF_UNSUPPORTED": ("Refs_Unsupported", "existing [ref] LOADS, but the automatic screen did not find "
                         "the value or the pipeline name on the page. AMBER current ref. Re-read the page "
                         "before touching the cell: prose, unit variants, ranges ('4.5\u201313.6 bn' for a "

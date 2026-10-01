@@ -324,7 +324,9 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   `scripts/fetch.py` (curl → `curl_cffi` TLS impersonation → real-Chrome clearance cookie via
   `scripts/cf_clearance.py`; byte-identical with the two LNG repos, state in gitignored `work/`),
   and `python scripts/fetch.py <url> --head 2000` is the ad-hoc route. `LNGCT_NO_BROWSER=1`
-  keeps unattended runs from opening Chrome.
+  keeps unattended runs from opening Chrome. A 200 that is only a JavaScript app shell is
+  `js_shell` → `REF_BLOCKED`, never `REF_UNSUPPORTED` (2026-10-01; oilandgaswatch.org pages are
+  read through the site's data API instead — Sweep SOP, "JavaScript application shells").
 - **`[ref]` cells are ADDITIVE (Baird 2026-10-01).** A proposed ref is appended to the cell's
   existing URLs; it never replaces one — not even when the existing ref doesn't name the pipeline
   (sudact.ru on P0734 stays) or a validity note calls it "superseded". Only a page confirmed

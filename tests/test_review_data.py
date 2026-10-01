@@ -260,3 +260,18 @@ def test_country_status_drops_only_all_decided_countries(tmp_path):
     full, _ = rd.build([s["qc"], s["deep"]], ["Russia", "United States"], "gas", **kw)
     assert len(full["pipelines"]) == len(kept["pipelines"]) + stats["done_dropped"]
     assert not any(c["hidden"] for c in full["scope"]["country_status"])
+
+
+def test_fill_key_names_every_proposed_column(built):
+    # P9002 proposes Capacity AND CapacityUnits -> both in the key; P9005 proposes Capacity alone.
+    data, _, _ = built
+    assert _find(data, "P9002", "fill")[0]["key"].endswith("::P9002|5|Capacity+CapacityUnits")
+    assert _find(data, "P9005", "fill")[0]["key"].endswith("::P9005|9|Capacity")
+    # the column with the ONLY changed value is in the key even when it is not the primary one
+    r = {"ref_col": "Proposal [ref]", "value_cols": ["ProposalYear", "ProposalMonth"],
+         "primary_value_col": "ProposalYear", "values": {"ProposalYear": "", "ProposalMonth": "9"}}
+    assert rd._colid(r, "fill") == "ProposalMonth"
+    r["values"]["ProposalYear"] = "2023"
+    assert rd._colid(r, "fill") == "ProposalYear+ProposalMonth"
+    assert rd._colid(dict(r, class_in="FILL"), "unresolved") == "ProposalYear+ProposalMonth"
+    assert rd._colid(dict(r, values={}), "fill") == "ProposalYear"       # nothing proposed: the primary, as before
