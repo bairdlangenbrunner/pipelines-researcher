@@ -6,6 +6,8 @@ STORE = json.load(open(f'{ST}/discovery-seeds-20260930/store_leads.json'))
 SLICES = {
  'D2': ('discovery-d2-siberian-20260930', 'Siberian', 'SIBERIAN Federal District (Irkutsk, Krasnoyarsk, Kemerovo/Kuzbass, Novosibirsk, Omsk, Tomsk, Altai Krai/Republic, Khakassia, Tyva, Zabaykalsky/Buryatia only where they feed Siberia)',
    'Kovykta-Irkutsk extensions, Krasnoyarsk, Kuzbass, Altai (Power of Siberia 2 / Soyuz Vostok feeds), Tomsk/Omsk/Novosibirsk trunks and GRS spurs'),
+ 'D3': ('discovery-d3-ural-20260930', 'Ural', 'URAL Federal District (Yamalo-Nenets, Khanty-Mansi, Tyumen south, Sverdlovsk, Chelyabinsk, Kurgan; Perm/Orenburg only where they feed the Urals)',
+   'Arctic LNG 2 / Ob LNG feeds, Kharasavey, Tambey, Gydan, Yamal field-to-KS links, Sverdlovsk/Chelyabinsk GRS spurs >=25 km, Nizhnyaya Tura-Perm III'),
  'D4': ('discovery-d4-northwest-20260930', 'Northwestern', 'NORTHWESTERN Federal District (Leningrad, Novgorod, Pskov, Vologda, Arkhangelsk incl. Nenets, Komi, Karelia, Murmansk, Kaliningrad, St Petersburg)',
    'Ust-Luga complex feed, Volkhov-Murmansk, Kaliningrad, Karelia, Arkhangelsk, Nyuksenitsa-Arkhangelsk, Leningrad-Vyborg-border, Valday-Borovichi (GulfPub candidate), GRS spurs >=25 km'),
 }
