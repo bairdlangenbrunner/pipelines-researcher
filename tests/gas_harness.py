@@ -44,11 +44,13 @@ def read_parts(out, entry):
     return data
 
 
-def run(out, ops, sheets=None, now=NOW):
+def run(out, ops, sheets=None, now=NOW, backend=None):
     """-> (results, sheets, stats). `sheets` carries the fake store between runs."""
     job = {"dataDir": str(out), "now": now, "ops": ops}
     if sheets is not None:
         job["sheets"] = sheets
+    if backend is not None:
+        job["backend"] = backend
     p = subprocess.run([node(), str(RUN_JS)], input=json.dumps(job), capture_output=True, text=True, timeout=120)
     assert p.returncode == 0, p.stderr[-3000:]
     body = json.loads(p.stdout)

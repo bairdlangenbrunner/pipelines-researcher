@@ -310,3 +310,51 @@ def test_the_store_round_trips_through_pull_into_the_staging_dirs(pub):
     log = store.read_log(pub["dirs"][l["dir"]])
     assert {r["origin"] for r in log} == {"gas"} and all(r["id"] and r["batch"] and "row" not in r for r in log)
     assert [r["note"] for r in log if r["key"] == l["key"]] == ["ok"]
+
+
+def _backend(pub, mutate=None, shift=0):
+    """A fake backend tracker tab built from the published watch list (so it matches the dataset
+    exactly), optionally mutated; `shift` rows are inserted above the data."""
+    w = json.loads((pub["out"] / pub["entry"]["index"]).read_text(encoding="utf-8"))["w"]["tracker"]
+    cols = sorted({c for _, _, cells in w for c in cells})
+    rows = [[""] * len(cols) for _ in range(3)] + [["x"] * (len(cols) + 1) for _ in range(shift)]
+    rows[2] = ["ProjectID"] + cols
+    body = {}
+    for pid, r, cells in w:
+        body[pid] = ["" if c not in cells else cells[c] for c in cols]
+    for pid, vals in body.items():
+        rows.append([pid] + vals)
+    # the recorded rows are only honoured when they line up; the check matches on ProjectID either way
+    if mutate:
+        mutate(rows, cols)
+    oo = json.loads((pub["out"] / pub["entry"]["index"]).read_text(encoding="utf-8"))["w"]["oo"]
+    ocols = sorted({c for _, _, cells in oo for c in cells})
+    orows = [[""] * (len(ocols) + 1), ["ProjectID"] + ocols] + [[pid] + [cells.get(c, "") for c in ocols] for pid, _, cells in oo]
+    return {"id": "backend-sheet", "gids": {"gas": 1020144097, "oil": 456134080, "oo": 1489950650},
+            "header_row": {"tracker": 3, "oo": 2}, "tabs": {"1020144097": rows, "1489950650": orows}}, w
+
+
+def test_live_check_flags_changed_cells_by_pid(pub):
+    be, w = _backend(pub)
+    assert w, "publish wrote no watch list"
+    ok = H.run(pub["out"], [H.op(ME, "liveCheck", H.SID, H.VER)], backend=be)[0][0]
+    assert ok["ok"], ok
+    assert ok["checked"] >= len(w) and not ok["changed"] and not ok["gone"], ok
+
+    def edit(rows, cols):
+        i = next(i for i, r in enumerate(rows) if i > 2 and any(r[1:]))
+        j = next(j for j, v in enumerate(rows[i][1:], 1) if v != "")
+        rows[i][j] = rows[i][j] + " (edited)"
+        edit.hit = (rows[i][0], cols[j - 1])
+    be2, _ = _backend(pub, mutate=edit)
+    got = H.run(pub["out"], [H.op(ME, "liveCheck", H.SID, H.VER)], backend=be2)[0][0]
+    assert [(c["pid"], c["cols"][0][0]) for c in got["changed"] if c["cols"]] == [edit.hit]
+
+    be3, _ = _backend(pub, shift=5)        # rows inserted above: matched by ProjectID, nothing changed
+    moved = H.run(pub["out"], [H.op(ME, "liveCheck", H.SID, H.VER)], backend=be3)[0][0]
+    assert moved["ok"] and not [c for c in moved["changed"] if c["cols"]]
+
+    stale = H.run(pub["out"], [H.op(ME, "liveCheck", H.SID, "19990101T000000")], backend=be)[0][0]
+    assert stale["ok"] is False and stale["code"] == 409
+    anon = H.run(pub["out"], [H.op("", "liveCheck", H.SID, H.VER)], backend=be)[0][0]
+    assert anon["ok"] is False and anon["code"] == 403

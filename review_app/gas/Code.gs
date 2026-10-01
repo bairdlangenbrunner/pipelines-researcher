@@ -8,7 +8,9 @@
  *   DATA_FOLDER_ID  the folder review_app/publish.py writes. READ-ONLY here.
  *   STORE_SHEET_ID  the decision store spreadsheet. One tab, `log`: append-only, one row per
  *                   decision record, the same record review_log.jsonl holds locally.
- * It never opens the backend tracker sheet, never calls UrlFetchApp, never deletes or edits a row.
+ * The one other object it opens is the backend tracker sheet (CONFIG_.BACKEND), READ-ONLY, for
+ * liveCheck: it compares the cells each line was judged against with the sheet as it is now.
+ * It never writes the backend sheet, never calls UrlFetchApp, never deletes or edits a row.
  *
  * The validation here is a port of review_app/store.py (validate / validate_items / decide):
  * tests/test_review_gas.py runs both against the same requests and compares the records.
@@ -376,6 +378,59 @@ function getDecisions(scopeId, ver, after) {
 }
 function decide(scopeId, ver, records, cursor) { return write_(scopeId, ver, records, cursor, false); }
 function recordItems(scopeId, ver, records, cursor) { return write_(scopeId, ver, records, cursor, true); }
+
+/** Live drift check: the published watch list (index `w`, see publish.make_watch) against the backend
+ *  sheet as it is now. Read-only. Rows are matched by ProjectID (a row inserted above moves them), the
+ *  recorded row preferred when a PID has several. -> {checked, rows_read, changed: [{t, pid, row, now_row,
+ *  cols: [[column, was, now]]}] (a row that only moved is not a change), gone: [{t, pid, row}], missing_cols: [column]}. */
+function liveCheck(scopeId, ver) {
+  return answer_(function () {
+    me_();
+    var sc = scope_(scopeId);
+    if (sc.ver !== ver) throw refuse_(409, 'this scope was republished (' + sc.published + '): reload the page', {reload: true, ver: sc.ver});
+    var be = typeof CONFIG_ !== 'undefined' ? CONFIG_.BACKEND : null;
+    if (!be || !be.sheet_id) throw refuse_(501, 'no backend sheet is configured for the live check (google.json "backend")');
+    var I = index_(sc), w = I.w || {}, ss = SpreadsheetApp.openById(be.sheet_id), out = {checked: 0, rows_read: 0, changed: [], gone: [], missing_cols: []};
+    ['tracker', 'oo'].forEach(function (t) {
+      var watch = w[t] || [];
+      if (!watch.length) return;
+      var gid = Number(be.gids[t === 'oo' ? 'oo' : (I.cmd || 'gas')]), sh = null;
+      ss.getSheets().forEach(function (x) { if (x.getSheetId() === gid) sh = x; });
+      if (!sh) throw refuse_(500, 'the backend sheet has no tab with gid ' + gid);
+      var hrow = Number(be.header_row[t]), last = sh.getLastRow(), cols = sh.getLastColumn();
+      var vals = sh.getRange(hrow, 1, last - hrow + 1, cols).getDisplayValues(), head = vals[0], at = {}, i;
+      for (i = 0; i < head.length; i++) at[head[i]] = i;        // a repeated header: the last one wins, as in the CSV reader
+      var pidAt = at['ProjectID'], rows = {};
+      if (pidAt == null) throw refuse_(500, 'the backend tab has no ProjectID column');
+      for (i = 1; i < vals.length; i++) {
+        var pid = String(vals[i][pidAt]).trim();
+        if (pid) (rows[pid] = rows[pid] || []).push(hrow + i);
+      }
+      out.rows_read += vals.length - 1;
+      watch.forEach(function (e) {
+        var pid = e[0], row = e[1], cells = e[2], here = rows[pid], now = null;
+        out.checked++;
+        if (!here) { out.gone.push({t: t, pid: pid, row: row}); return; }
+        now = here.indexOf(row) >= 0 ? row : here[0];
+        var diff = [];
+        Object.keys(cells).forEach(function (c) {
+          if (at[c] == null) { if (out.missing_cols.indexOf(c) < 0) out.missing_cols.push(c); return; }
+          var v = String(vals[now - hrow][at[c]]);
+          if (!same_(cells[c], v)) diff.push([c, cells[c], v]);
+        });
+        if (diff.length) out.changed.push({t: t, pid: pid, row: row, now_row: now, cols: diff});
+      });
+    });
+    out.checked_at = now_();
+    return out;
+  });
+}
+function same_(a, b) {      // review_data._same: trimmed text, or equal numbers
+  a = String(a == null ? '' : a).trim(); b = String(b == null ? '' : b).trim();
+  if (a === b) return true;
+  var x = Number(a.replace(/,/g, '')), y = Number(b.replace(/,/g, ''));
+  return a !== '' && b !== '' && !isNaN(x) && !isNaN(y) && x === y;
+}
 
 // ---- milestone 0 spike: <web app url>?spike=1 --------------------------------------------
 // Shows what Session.getActiveUser() returns for whoever opens it, and times a 1 MB round trip.

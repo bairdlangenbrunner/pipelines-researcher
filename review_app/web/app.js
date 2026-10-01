@@ -248,7 +248,7 @@
     if (fs.contested && !(item ? Object.keys(o.contested || {}).length : o._cont)) return false;
     if (fs.owners && (item || o.kind !== "oo")) return false;
     if (fs.by && (o.reviewed ? o.decided_by : "") !== fs.by) return false;
-    if (fs.drift && (item || !o.drift)) return false;
+    if (fs.drift && (item || !(o.drift || o.live))) return false;
     if (fs.row) {
       if (!ranges) return false;
       var rows = item ? (o.sheet_row != null ? [o.sheet_row] : []) : o._rows;
@@ -756,6 +756,7 @@
     if (lock.length) chips.push(chip("held: concern open", "warn", "a validity concern contests " + lock.join(", ") + " and has no call yet; accept is refused until it does (hold / reject are still allowed)"));
     if (l.in_backend) chips.push(chip("in backend", "", "the snapshot already holds this value and these refs"));
     if (l.drift && cur(l)) chips.push(chip("sheet changed since decided", "warn", "the backend cells this call was judged against have changed since (it was decided on " + (l.drift.decided_snapshot || "an earlier snapshot") + "): look again, then press the call again to confirm it against the current sheet"));
+    if (l.live) chips.push(chip("sheet changed live", "warn", "the backend sheet, read just now, differs from what this line was judged against: " + l.live.map(function (c) { return c[0] + " was " + (c[1] || "blank") + ", is now " + (c[2] || "blank"); }).join("; ") + ". publish again to rebuild the proposal against the new values"));
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
     var title = l.kind === "new_row" ? (l.name || "candidate") : lineCols(l);
     var h = '<div class="row1"><span class="col">' + esc(title) + "</span> " + chips.join(" ") +
@@ -1455,6 +1456,25 @@
     };
     dlg.showModal();
   }
+  // live drift check (gas.js liveCheck): lines whose watched backend cells differ from the published ones
+  function setLive(res) {
+    var hit = {};
+    ((res && res.changed) || []).forEach(function (c) { if (c.cols.length) hit[c.t + "|" + c.pid + "|" + c.row] = c.cols; });
+    var n = 0;
+    D.pipelines.forEach(function (p) {
+      p.lines.forEach(function (l) {
+        l.live = null;
+        if (l.kind === "new_row" || l.sheet_row == null) return;
+        var cols = hit[(l.tab === "operators_owners" ? "oo" : "tracker") + "|" + p.pid + "|" + l.sheet_row];
+        if (!cols) return;
+        var mine = (l.value_cols || []).concat(l.ref_col ? [l.ref_col] : [], l.current_status !== undefined ? ["Status"] : [],
+                                               l.current_route_accuracy !== undefined ? ["RouteAccuracy"] : []);
+        var diff = cols.filter(function (c) { return mine.indexOf(c[0]) >= 0; });
+        if (diff.length) { l.live = diff; n++; }
+      });
+    });
+    return n;
+  }
   function reload(data) {
     var pid = D.pipelines[S.pipe] ? D.pipelines[S.pipe].pid : "";
     D = data;
@@ -1534,7 +1554,7 @@
   // ---- boot ----
   window.ReviewApp = {
     get data() { return D; }, state: S, filters: function () { return FS; }, refilter: refilter, Store: Store, timing: {},
-    applyRemote: applyRemote, busy: busy, rerender: rerender, reload: reload, applyRoute: applyRoute, writeRoute: writeRoute,
+    applyRemote: applyRemote, setLive: setLive, busy: busy, rerender: rerender, reload: reload, applyRoute: applyRoute, writeRoute: writeRoute,
     banner: banner, toast: toast, esc: esc, copyText: copyText, et: et
   };
   function et(iso) { return String(iso || "").replace("T", " ").slice(0, 16) + " ET"; }
@@ -1546,8 +1566,8 @@
     $("whoami").textContent = reviewer;
     renderScope();
     document.querySelector(".top h1").dataset.tip = "built " + et(D.built) + " · " + D.dirs.length + " staging dir" + (D.dirs.length === 1 ? "" : "s") + ": " + D.dirs.map(dirLabel).join(", ") + " · " + D.scope.commodity + " · " + D.scope.snapshot;
-    $("sync").disabled = !Store.caps.refresh;
-    $("sync").dataset.tip = Store.caps.refresh ? "pull the live sheet (~1 min), rebuild, and mark lines it already holds" : "this server was started with --no-build: it cannot refresh";
+    $("sync").hidden = !Store.caps.refresh;          // shipped hidden: the Google page and a --no-build server cannot refresh
+    $("sync").dataset.tip = "pull the live sheet (~1 min), rebuild, and mark lines it already holds";
     $("push").hidden = !Store.caps.push;
     initFilters();
     applyRoute();

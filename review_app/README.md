@@ -261,7 +261,8 @@ Where they are (IDs in `review_app/google.json`; created 2026-09-30):
 
 `Code.gs` opens only the store spreadsheet and the data folder (their IDs come from the generated
 `Config.gs`, which `bundle.py` writes from `google.json`; a Script Property `STORE_SHEET_ID` /
-`DATA_FOLDER_ID` overrides it), never the backend tracker sheet, never `UrlFetchApp`; scopes
+`DATA_FOLDER_ID` overrides it), plus the backend tracker sheet **read-only** for the live drift
+check (`google.json` `backend`: sheet id, tab gids, header rows); never `UrlFetchApp`; scopes
 are `spreadsheets`, `drive.readonly`, `userinfo.email`. The page shows `caps = {decide: true,
 refresh: false, push: false}`: no refresh-backend and no push there.
 
@@ -271,6 +272,17 @@ python review_app/publish.py --upload         # + list what Drive would change (
 python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
 python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
 python review_app/ledger.py status            # store configured? writer address? row count
+**Live drift check (2026-10-01).** The dataset is still a snapshot (only `publish.py` rebuilds it),
+but the page now asks `Code.gs liveCheck` on load, and from the "check backend" button, whether the
+backend cells each line was judged against have changed since. `publish.py` writes the watch list
+(`make_watch`: per tab, ProjectID, row and the value / ref / Status / RouteAccuracy cells as the line
+shows them) into the scope's index file (`w`); `liveCheck` reads those tabs with `getDisplayValues`,
+matches rows by ProjectID (a row inserted above only moves a row, it is not a change) and returns
+the differing cells. Matching lines get a "sheet changed live" chip and join the "sheet changed since
+decided" filter. It flags; it never rebuilds a proposal or touches a decision. The executing user
+(Baird) must be able to read the backend sheet. A scope published before this change has no watch
+list, so the check finds nothing until it is republished.
+
 python review_app/ledger.py decide --key KEY --decision accept|hold|reject|suggest [--note N]   # a chat's decision, same door
 python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale lines skipped by default
 python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)

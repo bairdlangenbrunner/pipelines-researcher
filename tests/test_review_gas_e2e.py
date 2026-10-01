@@ -107,7 +107,8 @@ def test_two_reviewers_share_one_store(browser, app):
     l1, l2 = fill_line(d, "P9002", 0), fill_line(d, "P9002", 1)
     a, b = open_page(browser, app, A, errors), open_page(browser, app, B, errors)
     assert a.inner_text("#whoami") == A and b.inner_text("#whoami") == B
-    assert a.evaluate("getComputedStyle(document.getElementById('sync')).display") == "none"      # no refresh, no push here
+    assert a.inner_text("#sync").strip().endswith("check backend")       # read-only live check, no refresh
+    assert a.evaluate("getComputedStyle(document.getElementById('push')).display") == "none"      # no push here
     assert a.evaluate("JSON.stringify(GasStore.caps)") == '{"decide":true,"refresh":false,"push":false}'
     assert "scope=russia-gas" in a.url
 

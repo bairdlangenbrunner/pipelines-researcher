@@ -143,12 +143,39 @@
     if (n) RA().toast(n + " new decision" + (n === 1 ? "" : "s") + " by " + Object.keys(names).join(", "));
   }
 
+  // ---- live drift check: the published cells against the backend sheet as it is now ----
+  function liveCheck(manual) {
+    var ra = RA(), sc = G.scope, btn = document.getElementById("sync");
+    if (!ra || !ra.data || !sc || G.liveBusy) return Promise.resolve();
+    G.liveBusy = true;
+    if (btn) { btn.disabled = true; btn.textContent = "checking…"; }
+    return call("liveCheck", sc.id, sc.ver).then(function (r) {
+      if (G.scope !== sc) return;
+      var n = ra.setLive(r);
+      ra.rerender();
+      var gone = r.gone.length ? ", " + r.gone.length + " no longer on the sheet" : "";
+      if (manual || n || r.gone.length) ra.toast("backend checked " + ra.et(r.checked_at) + ": " + n + " line" + (n === 1 ? "" : "s") + " changed since published" + gone);
+    }).catch(function (e) {
+      if (manual) ra.toast("backend check failed: " + e.message);
+      else if (window.console) console.warn("live check:", e.message);
+    }).then(function () {
+      G.liveBusy = false;
+      if (btn) { btn.disabled = false; btn.innerHTML = "&#8635; check backend"; }
+    });
+  }
+
   // ---- the header: scope picker, tip, what the page cannot do here ----
   function chrome() {
     var ra = RA(), D = ra && ra.data, sc = G.scope;
     if (!D || !sc) return;
     var sync = document.getElementById("sync");
-    if (sync) sync.hidden = true;                 // the dataset is rebuilt by publish.py, not from the page
+    if (sync) {                                   // the dataset is rebuilt by publish.py; the button only re-reads the sheet
+      sync.hidden = false; sync.disabled = false;
+      sync.innerHTML = "&#8635; check backend";
+      sync.dataset.tip = "read the live backend sheet (read-only) and flag lines whose cells changed since this was published";
+      sync.onclick = function () { liveCheck(true); };
+    }
+    if (G.liveVer !== sc.ver) { G.liveVer = sc.ver; liveCheck(false); }
     var label = document.getElementById("scope");
     label.dataset.tip = "published " + ra.et(sc.published) + " · built " + ra.et(D.built) + " · " + D.dirs.length + " staging dir" +
       (D.dirs.length === 1 ? "" : "s") + ": " + D.dirs.map(function (d) { return String(d).split("/").pop(); }).join(", ");

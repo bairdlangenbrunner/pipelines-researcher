@@ -16,7 +16,7 @@ const vm = require("vm");
 const crypto = require("crypto");
 
 const CODE = path.join(__dirname, "..", "gas", "Code.gs");
-const PUBLIC = ["whoami", "getPart", "getDecisions", "decide", "recordItems", "spike"];
+const PUBLIC = ["whoami", "getPart", "getDecisions", "decide", "recordItems", "spike", "liveCheck"];
 
 function makeWorld(dataDir, opts) {
   opts = opts || {};
@@ -25,6 +25,7 @@ function makeWorld(dataDir, opts) {
     sheets: opts.sheets || {},          // tab name -> {rows: [[text]], maxRows, maxCols, frozen}
     cache: new Map(),                   // key -> {v, until}
     props: Object.assign({DATA_FOLDER_ID: "dev-folder", STORE_SHEET_ID: "dev-store"}, opts.props || {}),
+    backend: opts.backend || null,      // {id, gids: {...}, header_row: {...}, tabs: {"<gid>": [[text]]}}: the READ-ONLY backend tracker sheet
     now: opts.now || null,              // fixed clock (ms) for tests
     effective: opts.effective || "deployer@example.org",
     stats: {driveReads: 0, appends: 0}
@@ -93,11 +94,34 @@ function fakeSheet(world, name) {
   };
 }
 
+function fakeBackend(b) {                // read-only: it has no setters, so a write in Code.gs throws
+  return {
+    getSheets: function () {
+      return Object.keys(b.tabs).map(function (gid) {
+        const rows = b.tabs[gid];
+        return {
+          getSheetId: function () { return Number(gid); },
+          getLastRow: function () { return rows.length; },
+          getLastColumn: function () { return rows.reduce(function (m, r) { return Math.max(m, r.length); }, 0); },
+          getRange: function (r, c, nr, nc) {
+            return {getDisplayValues: function () {
+              const out = [];
+              for (let i = 0; i < nr; i++) { const row = rows[r - 1 + i] || []; out.push(Array.from({length: nc}, function (_, j) { const v = row[c - 1 + j]; return v == null ? "" : String(v); })); }
+              return out;
+            }};
+          }
+        };
+      });
+    }
+  };
+}
+
 function services(world, user) {
   const clock = function () { return world.now != null ? new Date(world.now) : new Date(); };
   return {
     SpreadsheetApp: {
       openById: function (id) {
+        if (world.backend && id === world.backend.id) return fakeBackend(world.backend);
         if (id !== world.props.STORE_SHEET_ID) throw new Error("stub: Code.gs opened a spreadsheet other than the store: " + id);
         return {
           getSheetByName: function (n) { return world.sheets[n] ? fakeSheet(world, n) : null; },
@@ -187,7 +211,8 @@ function callGas(world, user, fn, args) {
   if (PUBLIC.indexOf(fn) < 0) throw new Error("not a function the page may call: " + fn);
   const mtime = fs.statSync(CODE).mtimeMs;
   if (!SCRIPT || mtime !== SCRIPT_MTIME) { SCRIPT = new vm.Script(fs.readFileSync(CODE, "utf8"), {filename: "Code.gs"}); SCRIPT_MTIME = mtime; }
-  const ctx = vm.createContext(Object.assign({__args: JSON.stringify(args || [])}, services(world, user)));
+  const ctx = vm.createContext(Object.assign({__args: JSON.stringify(args || [])}, services(world, user),
+    world.backend ? {CONFIG_: {BACKEND: {sheet_id: world.backend.id, gids: world.backend.gids, header_row: world.backend.header_row}}} : {}));
   SCRIPT.runInContext(ctx);
   const out = vm.runInContext("JSON.stringify(" + fn + ".apply(null, JSON.parse(__args)))", ctx);
   return out === undefined ? null : JSON.parse(out);

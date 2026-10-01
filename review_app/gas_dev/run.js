@@ -10,7 +10,7 @@ process.stdin.setEncoding("utf8");
 process.stdin.on("data", function (c) { input += c; });
 process.stdin.on("end", function () {
   const job = JSON.parse(input);
-  const world = stubs.makeWorld(job.dataDir, {now: job.now == null ? null : job.now, sheets: job.sheets, props: job.props});
+  const world = stubs.makeWorld(job.dataDir, {now: job.now == null ? null : job.now, sheets: job.sheets, props: job.props, backend: job.backend});
   const results = job.ops.map(function (op) {
     if (op.tick != null) { world.now = (world.now || 0) + op.tick; return null; }
     if (op.clearCache) { world.cache.clear(); return null; }
