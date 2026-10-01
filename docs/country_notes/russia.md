@@ -113,6 +113,33 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
 - **Discovery seeds (Step 0)** `staging/discovery-seeds-20260930/` — `seeds_by_district.{csv,json}` +
   `SUMMARY.md`: 88 seeds + 3 length-unknown store leads, 148 monitor, 53 already tracked; per slice D1–D6
   in the summary. Triage memo: `notes/triage-2026-09-30-russia-gas-discovery.md` → Step 0 results.
+- **Discovery D1–D4** (Far Eastern, Siberian, Ural, Northwestern; merged in `staging/discovery-d1-d4-merged-20260930/`)
+  — `deliverables/pipelines_batch_20260930_2116_ET_russia-gas_discovery-d1-d4.xlsx`, staged not applied: 16 new rows,
+  8 monitor, 6 matched existing.
+- **Discovery D5–D6** (Volga + Central, Southern + North Caucasian; merged in `staging/discovery-d5-d6-merged-20260930/`)
+  — `deliverables/pipelines_batch_20260930_2155_ET_russia-gas_discovery-d5-d6.xlsx`, staged not applied: 25 new rows
+  (D5 15, D6 10), 15 monitor, 6 matched existing. D6 queued 20 clusters (> the ~15 soft gate) but only 10 cleared the
+  add-threshold. Review flags: **Pochinki–Saransk** (206.8 km) may overlap P2371 Pochinki–Penza (same 720 mm / 2011 /
+  corridor; operator pages list them separately); **Anapa–Taman** (106 km) vs **Krasnodar Krai–Crimea** (358.7 km, first
+  GGIT row into Crimea, RU–UA) segment boundary — check the 358.7 doesn't include the mainland feeder; ChBS-1/ChBS-2 staged
+  as ONE row (string convention may want two); Owner left as the regional subsidiary on 6 rows (gazoraspredelenie,
+  transgaz Makhachkala, Chernomorneftegaz, LUKOIL-Nizhnevolzhskneft) — roll-up to Gazprom PJSC is a ruling, not done;
+  Solikamsk–Cherdyn has no sourced Owner. Matched-existing status leads: P4013 Borok–Breytovo commissioned 2026-09-18,
+  P2387 Belgorod bypass (44.3 km reroute). Three Crimea/Kherson-internal lines (Dzhankoi–Genichesk, Glebovka–Simferopol–
+  Sevastopol 102 km, Ochertay–Glebovka II 43.65 km) dropped as out of slice — leads for a Ukraine pass. Discovery cost:
+  D5 2.59 M / D6 2.54 M subagent tokens, 33 / 27 min.
+- **Discovery seed re-run D2/D4/D5** (`staging/discovery-seeds-rerun-d2-d4-d5-20261001/`) —
+  `deliverables/pipelines_batch_20261001_1237_ET_russia-gas_discovery-seeds-d2-d4-d5.xlsx`, staged not applied: all 53
+  seeds dispositioned (`Gas_SeedLedger`: 32 monitor, 8 queued, 7 matched, 6 already handled by D1–D6) → 5 new rows,
+  34 monitor, 6 matched existing. Closes the seed-coverage gap the D1–D6 runs left (the workflow had no per-seed ledger;
+  fixed — Discovery SOP → seed leads). Review flags: **Borovichi GRS branch** is new_row with NO LengthKnown (≥25 km
+  rests on a km-66.7 post in a 2021 tender — keep it new_row or demote to monitor is a call); **KS Voskresensk–KRP-11
+  (98.6 km), –KRP-16 (87.8 km), KGMO–KRP-13 (26.8 km)** are offtakes from the ring P2380, not ring sections — confirm
+  they are not already inside P2380's 365 km or P2321; Krutyanskaya–Voivozh and KRP-11 have no sourced Owner. GulfPub
+  Tuchevo–Tver stays monitor (no independent source); Valday–Borovichi merged into the Borovichi row. Matched: Omsk–
+  Novosibirsk + Proskokovo–Linevo → P5517, Leningrad–Vyborg 286 km trace → P2335 (longer than the row), Gryazovets–Vyborg
+  loops → P2313, Saratov–Gorky → P2383, Transbalkan → P0788 (OSM offers real geometry vs a 3-point schematic),
+  Stavropol–Moscow 2nd string → P0793. Cost 1.64 M subagent tokens, 25 min.
 
 ## Regulators / official data
 - **Gazprom PJSC** (`gazprom.ru`) — project pages, annual + sustainability reports, IFRS,

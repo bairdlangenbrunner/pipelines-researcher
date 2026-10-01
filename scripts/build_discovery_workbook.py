@@ -13,6 +13,8 @@ Sheets (commodity-prefixed; empty omitted; README first):
   <Cmdty>_MonitorList      below the add-threshold (Discovery SOP §3) — watch, don't add.
   <Cmdty>_MatchedExisting  candidates that matched an existing GEM row under another name —
                            OtherEnglishNames suggestions, NOT new rows.
+  <Cmdty>_SeedLedger       one row per seed lead (country-discovery args.seeds) with its final
+                           disposition — the proof every seed was adjudicated, not skipped.
 """
 from __future__ import annotations
 
@@ -283,6 +285,22 @@ def main() -> None:
         sheet_defs.append((title,
                            f"{len(matched)} — same physical pipe as an existing GEM row under another "
                            "name: add the candidate name to that row's OtherEnglishNames, no new row."))
+
+    ledger = meta.get("seed_ledger") or []
+    if ledger:
+        g = lambda k: (lambda r: r.get(k, ""))
+        cols = [("Seed id", g("seed_id"), 30), ("Seed name", g("name"), 34),
+                ("Disposition", g("disposition"), 14),
+                ("Slug / ProjectID", lambda r: r.get("matched_project_id") or r.get("slug", ""), 28),
+                ("Reason", g("reason"), 70),
+                ("Evidence", lambda r: J(_dedup([e.get("url", "") for e in (r.get("evidence") or [])
+                                                 if isinstance(e, dict) and e.get("url")])), 52)]
+        title = f"{prefix}_SeedLedger"
+        _write_sheet(wb, title, cols, ledger)
+        sheet_defs.append((title,
+                           f"{len(ledger)} seed leads, each with its final disposition "
+                           f"({J([f'{k}={v}' for k, v in (meta.get('seed_dispositions') or {}).items()])}). "
+                           "Audit trail only — act on the other tabs."))
 
     _fill_readme(readme, meta, sheet_defs)
     out.parent.mkdir(parents=True, exist_ok=True)

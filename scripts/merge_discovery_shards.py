@@ -9,6 +9,9 @@ Merge-time QC (subagents are not perfectly consistent; normalize deterministical
 - Downgrade a new_row with zero surviving refs to monitor (the add-threshold needs
   verifiable evidence).
 - Fold the consolidator's matched[] list (queue.json) in as matched_existing records.
+- Fold queue.json's seed_ledger (country-discovery args.seeds): `monitor` seeds become
+  monitor records and `matched` seeds matched_existing records (deduped by slug/PID), and
+  the full ledger rides in meta.seed_ledger so every seed's disposition stays visible.
 
 Run AFTER the country-discovery workflow and BEFORE build_discovery_workbook.py:
 
@@ -70,25 +73,52 @@ def main():
 
     # consolidator-level matches (never reached vetting) ride along as matched_existing
     q_path = os.path.join(S, "discovery", "queue.json")
-    if os.path.exists(q_path):
-        seen_matches = {c["matched_project_id"] for c in candidates if c["class"] == "matched_existing"}
-        for m in json.load(open(q_path)).get("matched", []) or []:
-            pid = m.get("matched_project_id", "")
-            if pid and pid in seen_matches:
-                continue
+    queue = json.load(open(q_path)) if os.path.exists(q_path) else {}
+    seen_matches = {c["matched_project_id"] for c in candidates if c["class"] == "matched_existing"}
+
+    def add_match(name, pid, notes):
+        if pid and pid in seen_matches:
+            return
+        seen_matches.add(pid)
+        candidates.append({
+            "slug": "", "class": "matched_existing", "name": name,
+            "matched_project_id": pid, "values": {}, "refs": {},
+            "verifications": [], "tier": "", "independent": False, "source_language": "en",
+            "monitor_reason": "", "researcher_notes": notes,
+        })
+
+    for m in queue.get("matched", []) or []:
+        add_match(m.get("name", ""), m.get("matched_project_id", ""),
+                  (m.get("reason", "") +
+                   (f" OtherEnglishNames suggestion: {m['other_names_suggestion']}"
+                    if m.get("other_names_suggestion") else "")).strip())
+
+    # seed ledger: a seed that never reached vetting still ends as a visible record
+    ledger = queue.get("seed_ledger", []) or []
+    slugs = {c["slug"] for c in candidates}
+    for e in ledger:
+        disp, sid = e.get("disposition", ""), e.get("seed_id", "")
+        tag = f"seed {sid}: {e.get('reason', '')}".strip()
+        if disp == "matched":
+            add_match(e.get("name", ""), e.get("matched_project_id", ""), tag)
+        elif disp == "monitor" and not (e.get("slug") and e["slug"] in slugs):
             candidates.append({
-                "slug": "", "class": "matched_existing", "name": m.get("name", ""),
-                "matched_project_id": pid, "values": {}, "refs": {},
-                "verifications": [], "tier": "", "independent": False, "source_language": "en",
-                "monitor_reason": "",
-                "researcher_notes": (m.get("reason", "") +
-                    (f" OtherEnglishNames suggestion: {m['other_names_suggestion']}"
-                     if m.get("other_names_suggestion") else "")).strip(),
+                "slug": e.get("slug", ""), "class": "monitor", "name": e.get("name", ""),
+                "matched_project_id": "", "values": {}, "refs": {},
+                "verifications": [], "tier": "", "independent": False, "source_language": "",
+                "monitor_reason": e.get("reason", ""), "researcher_notes": tag,
             })
+    unled = [e.get("seed_id") for e in ledger if e.get("disposition") == "queued"
+             and e.get("slug") and e["slug"] not in slugs]
+    if unled:
+        print(f"  WARN seed_ledger: {len(unled)} seeds 'queued' with no vetted shard: {unled}")
 
     meta = {"scope": scope,
             "class_counts": dict(collections.Counter(c["class"] for c in candidates)),
             "n_candidates": len(candidates)}
+    if ledger:
+        meta["seed_ledger"] = ledger
+        meta["seed_dispositions"] = dict(collections.Counter(e.get("disposition", "") for e in ledger))
     out_path = os.path.join(S, "staged_new.json")
     json.dump({"meta": meta, "candidates": candidates}, open(out_path, "w"), indent=1)
     print(f"wrote {out_path}: {meta['class_counts']}")

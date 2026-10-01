@@ -65,3 +65,24 @@ vetting agent per candidate → `merge_discovery_shards.py` → `build_discovery
 - **Corrections to the plan above:** the two GulfPub candidates are *not* D2 Siberian (Tuchevo–Tver → D5,
   Valday–Borovichi → D4); D1 has almost no OSM signal; 2,214 unnamed OSM candidates (74 ≥ 25 km) are outside the
   named-only seed rule.
+
+## Slice results (2026-09-30)
+- **D1–D4** merged → `deliverables/pipelines_batch_20260930_2116_ET_russia-gas_discovery-d1-d4.xlsx`: 16 new / 8 monitor /
+  6 matched existing.
+- **D5 + D6** merged (`staging/discovery-d5-d6-merged-20260930/`) →
+  `deliverables/pipelines_batch_20260930_2155_ET_russia-gas_discovery-d5-d6.xlsx`: 25 new (D5 15, D6 10) / 15 monitor /
+  6 matched existing. D6 queued 20 (> the ~15 soft gate), only 10 cleared the add-threshold, so not escalated. Owner
+  strings normalized to the tracker convention (`Gazprom PJSC [100.%]` / `[100.00%]`) on the merged shard copies; regional
+  subsidiaries left as researched. Review flags: country notes → Discovery D5–D6.
+- **Seed-coverage gap (engine defect, our own):** the workflow's search contract never requires a disposition per seed,
+  so the maps agent reports the seeds it finds citable and silently skips the rest. A rough name-token check finds no
+  trace of 3/3 D2, ~16/18 D4 and ~26/32 D5 seeds in any output (translit makes this an over-count, but Tuchevo–Tver (D5)
+  and Valday–Borovichi (D4) are Latin-named and absent). D1, D3, D6 look covered. Fix: a per-seed ledger (every seed →
+  matched PID / monitor-short / queued / dropped-with-reason, enforced at consolidate), then a seeds-only re-run of D2, D4, D5.
+- **Seed re-run (2026-10-01):** the ledger fix landed in the `country-discovery` workflow (`args.seeds` → dedicated seed
+  agents, `seed_ledger` in queue.json, consolidate-step coverage gate + one repair agent, `seeds_unadjudicated` in the
+  result; `seedsOnly` + `priorStaging` for coverage re-runs) and in `merge_discovery_shards.py` / the `<Cmdty>_SeedLedger`
+  tab. One combined seeds-only run over D2+D4+D5 (53 seeds incl. both GulfPub leads; prior = the five D-run dirs) →
+  53/53 dispositioned, repair agent not needed → `deliverables/pipelines_batch_20261001_1237_ET_russia-gas_discovery-seeds-d2-d4-d5.xlsx`:
+  5 new / 34 monitor / 6 matched. The gap was real but thin: most skipped seeds are GRS spurs with no sourced length
+  (monitor). Review flags: country notes → Discovery seed re-run.
