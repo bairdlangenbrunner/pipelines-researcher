@@ -123,7 +123,7 @@ parent-trunk rows and restate the aggregate-vs-segment rule for them.>`
  "proposed_refs":["https://…"],                // [] when unresolved
  "verifications":[{"url":"https://…","ok":true,"contains_value":true,"name_found":true,
                    "note":"the phrase on the page that states the value AND names the line"}],
- "class_out":"REFS_ADDED",                     // REFS_ADDED | REVERIFIED | UNRESOLVED | DEAD_LINK
+ "class_out":"REFS_ADDED",                     // REFS_ADDED | REVERIFIED | UNRESOLVED | DEAD_LINK (404/410 only) | REF_BLOCKED | REF_UNSUPPORTED
                                                // EXACTLY these four; anything else is DROPPED
                                                // silently by build_ref_workbook. "CONFIRMED" is
                                                // valid ONLY on a __VALIDITY__/__REDUNDANCY__/

@@ -5,7 +5,7 @@ applied.** Nothing has been written to the sheet or the routes repo.
 
 **THREE files to work** — the packet does NOT subsume the recons (`recon_actions = 0`):
 
-- `deliverables/pipelines_batch_20260827_0931_ET_uzbekistan-gas_handoff-{actions,evidence}.xlsx`
+- `deliverables/pipelines_batch_20260930_1455_ET_uzbekistan-gas_handoff-{actions,evidence}.xlsx` (re-tiered 2026-09-30)
 - `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-osm.xlsx`
 

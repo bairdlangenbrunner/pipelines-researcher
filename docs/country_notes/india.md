@@ -20,7 +20,7 @@ workbooks are separate review surfaces, as in Libya, Iraq and Pakistan.
 
 | File (`batches/india-gas/deliverables/`) | What it holds |
 |---|---|
-| `pipelines_batch_20260810_1851_ET_india-gas_handoff-actions.xlsx` | THE paste surface. 161 open decisions, 15 status changes, 469 backend paste units, 119 operators/owners units, 111 wiki updates, 209 open flags |
+| `pipelines_batch_20260930_1455_ET_india-gas_handoff-actions.xlsx` (re-tiered 2026-09-30) | THE paste surface. 161 open decisions, 15 status changes, 469 backend paste units, 119 operators/owners units, 111 wiki updates, 209 open flags |
 | `…_20260810_1851_ET_india-gas_handoff-evidence.xlsx` | Audit trail — 50 confirmed audits, 87 fill details, 672 ref details, 75 re-verified refs, 25 status confirms |
 | `…_20260810_1851_ET_india-gas_reconciliation-gulfpub.xlsx` | 74 overlaps / 84 additions / 22 status conflicts — **both escalation gates crossed** |
 | `…_20260810_1851_ET_india-gas_reconciliation-osm.xlsx` | 1 overlap / 60 additions (34 fragments, 25 discovery candidates) |

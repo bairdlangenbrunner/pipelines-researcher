@@ -125,7 +125,7 @@ What to look at first:
 ## Open items — gas (full pass rebuilt 2026-07-29; ALL staged, NOTHING applied)
 
 **FOUR files to work, and the packet does NOT subsume the recon two:**
-1. `batches/iraq-gas/deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-actions.xlsx`
+1. `batches/iraq-gas/deliverables/pipelines_batch_20260930_1455_ET_iraq-gas_handoff-actions.xlsx` (re-tiered 2026-09-30)
    (100 open decisions · 9 status changes · 265 backend paste units · 27 operator/owner units ·
    5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags) — start here.
 2. `…_20260729_1104_ET_iraq-gas_handoff-evidence.xlsx` — audit trail (37 confirmed audits ·

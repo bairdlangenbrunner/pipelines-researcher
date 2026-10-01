@@ -275,7 +275,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   value found, so they carry a row-level flag for human review, not a candidate.
 - **Staged, NOT applied (gas):** batch 2, `batches/united-states-gas/staging/deepsweep-gulf-operating/`
   (50 operating Gulf Coast rows — LA/MS/AL/FL + offshore GoM; deliverable
-  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-gulf.xlsx` (re-tiered 2026-09-30)). 926 records over
+  `pipelines_batch_20260930_1841_ET_united-states-gas_deepsweep-gulf.xlsx` (re-tiered 2026-09-30, rebuilt the same day with P4039 LengthKnown restaged as a value change 139.00 → 139.5 mi — SEC exhibit and FERC FEIS both state 139.5 — under the precise-value rule, Sweep SOP)). 926 records over
   the 715-unit worklist -> REFS_ADDED 244, REVERIFIED 9, DEAD_LINK 10, UNRESOLVED 184,
   326 fills, 153 validity findings (60 `concern` — spec 34, attribution 24, classification 1,
   duplicate 1). 90 orange contested cells across 39 of the 50 rows, concentrated in

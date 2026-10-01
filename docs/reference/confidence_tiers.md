@@ -31,7 +31,10 @@ Machine checks (`scripts/url_verifier.py`, run on every URL, every batch):
 Judgment checks (the agent's, recorded in the verification `note` / `researcher_notes`):
 7. it names THIS segment — not a terminus, not the parent trunk (corollary a);
 8. the value agrees — within rounding, with unit equivalence ("6 BCM annually" = 6 bcm/y),
-   and status by inference (an inauguration confirms `operating`); a verifier miss on
+   status by inference (an inauguration confirms `operating`), and **a cost recorded as the
+   midpoint of a range the page states** (manual, Cost: "4,5 до 13,6 млрд" supports 9.05 bn;
+   `url_verifier.range_midpoint_match`, applied to `*Cost` columns only — it would misfire on
+   years); a verifier miss on
    those is a screen artifact the agent overrides with the matched text. **But rounding
    only decides whether the ref counts, never which value survives:** when 2+ independent
    validated refs agree on one precise figure that differs from the sheet's uncited value,

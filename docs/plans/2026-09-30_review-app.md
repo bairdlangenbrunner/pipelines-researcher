@@ -158,7 +158,7 @@ Verified against the repo on 2026-09-30 (survey over all 142 staging dirs).
 
    | Kind | Selector | Accept = |
    |---|---|---|
-   | `ref` | real `[ref]` column, `class_out` ∈ REFS_ADDED, REVERIFIED, DEAD_LINK | write the `[ref]` cell text (`build_ref_workbook._ref_cell_text`) |
+   | `ref` | real `[ref]` column, `class_out` ∈ REFS_ADDED, REVERIFIED, DEAD_LINK, REF_BLOCKED, REF_UNSUPPORTED | write the `[ref]` cell text (`build_ref_workbook._ref_cell_text`) |
    | `fill` | `class_in = FILL` | write `values` **and** the `[ref]` together (rule: no orphan) |
    | `status` | `ref_col = __STATUS__`, `class_out` ∈ CHANGE_PROPOSED, STALE | write `values` (Status, ShelvedCancelledType, ShelvedYear, …) + `[ref]`; STALE has no ref by design |
    | `oo` | any of the above with `tab = operators_owners` (1,798 records) | same, on the owners tab by ProjectID |

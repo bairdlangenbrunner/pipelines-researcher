@@ -173,7 +173,7 @@ not the tracker tab.
 
 `batches/libya-gas/deliverables/` (all gitignored — regenerable from staging):
 
-1. `pipelines_batch_20260728_1235_ET_libya-gas_handoff-actions.xlsx` — **the main surface.**
+1. `pipelines_batch_20260930_1455_ET_libya-gas_handoff-actions.xlsx` (re-tiered 2026-09-30) — **the main surface.**
    Work from the ACTIONS file, not the per-leg workbooks: 89 open decisions, 229 paste-ready
    backend cell units, 65 operator/owner units, 1 new row, 97 wiki updates, 51 open flags.
    Both READMEs carry an `ESCALATIONS` row listing the five class-level rulings needed.

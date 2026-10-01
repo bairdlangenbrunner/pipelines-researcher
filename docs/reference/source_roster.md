@@ -44,7 +44,7 @@ link to original sources — use those.
 Three things to know before spending time on it:
 - **`adilet.zan.kz` serves an incomplete TLS chain.** `url_verifier` retries with verification
   off and returns `insecure_tls: True` — that verdict means the page IS live. Never class it
-  `DEAD_LINK` or drop an adilet ref over it.
+  `REF_BLOCKED`/`DEAD_LINK` or drop an adilet ref over it.
 - **The tracker's dominant Kazakh gas ref is Order of the Minister of Energy №350** (29.09.2023,
   "General Gasification Scheme of Kazakhstan 2023–2030", `adilet.zan.kz/rus/docs/G23JVM00350`) —
   about half of all Kazakhstan gas `[ref]` cells. It is **prose planning with no line-wise

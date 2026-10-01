@@ -161,7 +161,7 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   The Fills tab's **`Target tab` column** says where each fill pastes: `tracker`, or
   `operators/owners` for Operator/Owner fills (`_is_oo` — either marker; the SheetRow shown is the
   tracker locator, but the paste goes to the ProjectID-keyed oo tab).
-- **`<Cmdty>_Refs_Unresolved` / `_DeadLinks` never carry a superseded stub.** A seeded baseline
+- **`<Cmdty>_Refs_Unresolved` / `_DeadLinks` / `_Blocked` / `_Unsupported` never carry a superseded stub.** A seeded baseline
   whose cell a sourced FILL has since resolved is dropped when it was `MISSING_REF` (empty `[ref]`
   by definition) and kept-and-annotated `SUPERSEDED — …` when it was `HAS_REF` (the ref being
   replaced is information that lives nowhere else). Without this the same cell read "resolved, two
@@ -219,7 +219,7 @@ the scope, carried + this packet's own Leg-3 findings, high-concern rows sorted
 first; confirmed verdicts are NOT here) → `<Cmdty>_StatusChanges` (carried + own,
 verdict ≠ confirm; confirms are counts-only) → **`<Cmdty>_AllFillsBackend`** (THE
 one paste surface for the tracker tab: ALL corroborated fills AND all paste-ready
-ref work — REFS_ADDED + DEAD_LINK, carried + own — unified on the full backend
+ref work — REFS_ADDED + DEAD_LINK/REF_BLOCKED/REF_UNSUPPORTED, carried + own — unified on the full backend
 mirror; **no leading `SheetRow` locator** — every column aligns 1:1 with the sheet
 so cells copy-paste with no offset, rows located by ProjectID (unlike the sweep
 `<Cmdty>_Backend` mirror, which keeps the locator); a tier-colored VALUE cell = a

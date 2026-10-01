@@ -28,7 +28,7 @@ under the `deep` preset below). **`python scripts/check_shard_coverage.py --stag
 --pid <PID>` is blocking here too** — it reads `ref_shards/<PID>.json` `resolutions[]` as
 well as deep-sweep `fills[]`, so it gates a refs-leg shard unchanged, and it flags a record
 that cannot merge (no `ref_col`, or a `class_out` outside REFS_ADDED/REVERIFIED/UNRESOLVED/
-DEAD_LINK) separately from one that was never worked — re-key that record, don't re-research
+DEAD_LINK/REF_BLOCKED/REF_UNSUPPORTED) separately from one that was never worked — re-key that record, don't re-research
 it. `build_refsweep_briefs.py` writes this contract into each brief's `contract` block; pass
 it through to the subagent verbatim.
 
@@ -124,7 +124,7 @@ The **`deep` preset** adds `<Cmdty>_Validity`, `<Cmdty>_Fills`, `<Cmdty>_RouteSu
 builder.
 The **`in-dev` preset** leads with `<Cmdty>_StatusReview`.
 
-The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs remain as
+The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Blocked / _Unsupported / _Unresolved` bucket tabs remain as
 supporting detail (full verifications, current-ref, notes) but are not the primary view.
 
 ## Sequence
@@ -214,7 +214,7 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      and the `independent` field are all defined there); none verifiable = `UNRESOLVED` +
      `ResearcherNotes`, never a fabricated URL (standing rule 2).
 5. Stage one resolution per unit (`class_out` ∈ `REFS_ADDED` / `REVERIFIED` / `DEAD_LINK` /
-   `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
+   `REF_BLOCKED` / `REF_UNSUPPORTED` / `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
    `researcher_notes`, `harvested_from_wiki`; carry `tab` through for owner/operator units) into
    `batches/<scope>/staging/ref-sweep[-<qualifier>]/staged_resolutions.json`.
 6. **Build** — `scripts/build_ref_workbook.py --staging batches/<scope>/staging/ref-sweep[-<qualifier>]/
@@ -228,9 +228,9 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 value**. The substring check is a **screen, not the verdict** — *you* read the page and make the
 call. Two families of false negative:
 
-**Liveness false-negatives** (page is live; don't class `DEAD_LINK`). **Seven families now**, and
+**Liveness false-negatives** (page is live; never class `DEAD_LINK` — that means 404/410 ONLY; a page that loads is `REF_UNSUPPORTED`, one you could not fetch is `REF_BLOCKED`; `scripts/ref_classes.py` derives it from the verification statuses and the merge re-derives any shard label). **Eight families now**, and
 the hit rate is not marginal: the Iraq ref-gap re-pass (2026-07-28) found **33 of 41 "dead" refs
-were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `DEAD_LINK` classification as a
+were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `REF_BLOCKED`/`REF_UNSUPPORTED` classification as a
 hypothesis you still have to test by hand. **Standing rule (Baird, 2026-07-30): a once-working
 existing ref is NEVER dropped from its `[ref]` cell because it fails from here** — geo-blocks,
 anti-bot 403s/WAFs, and timeouts are access problems, not deletions; only a confirmed-deleted
@@ -273,6 +273,18 @@ never swapped in as a replacement:
   content miss" rather than a miss. This mattered immediately: EIA's
   `EIA-NaturalGasPipelineProjects_*.xlsx` is the most-cited document in the US gas cohort, and it
   was reporting `name_found: False` for pipelines listed by name in its own rows.
+- **A cost recorded as the MIDPOINT of a range the page states — handled automatically since
+  2026-09-30 (`*Cost` columns only).** The manual (Cost, CostUnits) says a range of costs is
+  recorded as its average, so the page states "4,5 до 13,6 млрд долл." and the sheet holds
+  9,050,000,000 — a value no substring screen can find. The page was live (200), the value check
+  missed, and the unit was classed `DEAD_LINK` (the old single class conflated "needs attention" with
+  "didn't load"; split 2026-09-30 into `DEAD_LINK` = 404/410 only, `REF_BLOCKED`, `REF_UNSUPPORTED`). The P0734 agent
+  then searched the page for the midpoint itself and wrote "page states no cost figure", filing a
+  false spec-accuracy concern. `verify_url(midpoint_of=…)` (`url_verifier.range_midpoint_match`,
+  wired in `build_ref_worklist.py` for `*Cost` primary columns) now accepts a range whose average
+  is the value, and stamps `midpoint_range`. For a cost miss on a live page, search the page for
+  the ENDPOINTS (any pair of figures near "cost/стоимость/оценк"), never the recorded figure alone.
+  Worklists built before this date may carry the same false flag on cost cells.
 - **A missing `name_found` is UNKNOWN, never `False`.** `relevance_qc` caps a unit at `low` when no
   ref names the pipeline, so treating "the verifier could not read the document" as "the document
   does not name it" turns a parser failure into a downgraded ref. Where a shard's verifications
@@ -839,7 +851,7 @@ the recovered refs, and `build_ref_workbook.py` refuses to overwrite, so take a 
 Subagents are not perfectly consistent; normalize deterministically at merge:
 - **Strip any `proposed_ref` whose verification is not `ok && contains_value`** (a
   live-but-non-matching page is not a valid ref — no orphan/unsupported refs).
-- **Downgrade to `UNRESOLVED`** any `REFS_ADDED`/`REVERIFIED`/`DEAD_LINK` record left with
+- **Downgrade to `UNRESOLVED`** any `REFS_ADDED`/`REVERIFIED` record (or a `DEAD_LINK`/`REF_*` one) left with
   zero valid refs after stripping; add a `[QC]` note.
 - **The converse of the strip rule is a shard-authoring requirement, and it is where evidence
   actually gets lost.** `verified_refs` reads the shard's OWN verification objects — it never
@@ -885,7 +897,7 @@ Subagents are not perfectly consistent; normalize deterministically at merge:
 ## Tier → color
 Applied to each `[ref]` cell on the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` tabs (and the tier cell on the bucket tabs):
 green = validated (one ref passing every check; a status change needs 2+ independent) · yellow = a caveat, or a single-source status change · red = low/none ·
-**blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = dead/value-missing.
+**blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = link gone (404/410) · amber (Blocked / Unsupported tabs) = could not be fetched here / loads but the screen missed the value.
 A residual red cell after the pass = no independent source supports the current GEM value
 (often a value disagreement), not merely unsearched.
 

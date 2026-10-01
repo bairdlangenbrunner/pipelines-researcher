@@ -111,7 +111,7 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 
 | Leg | What it stages |
 |---|---|
-| `refs` | fill blank `[ref]`s + re-verify filled ones (one validated ref per unit; a 2nd independent preferred) (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units). Every `MISSING_REF` unit is OWED a record — sources agreeing with the recorded value is a `REFS_ADDED` carrying that same value, never a no-op (standing rule 4e; gate L + `check_shard_coverage.py`) |
+| `refs` | fill blank `[ref]`s + re-verify filled ones (one validated ref per unit; a 2nd independent preferred) (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK` (gone, 404/410)/`REF_BLOCKED`/`REF_UNSUPPORTED`/`UNRESOLVED`; incl. operators/owners-tab units). Every `MISSING_REF` unit is OWED a record — sources agreeing with the recorded value is a `REFS_ADDED` carrying that same value, never a no-op (standing rule 4e; gate L + `check_shard_coverage.py`) |
 | `fills` | research blank *value* fields — the worklist's `MISSING_VALUE` units (`--owe-fills`), each owed a sourced `FILL` or an `UNRESOLVED` with a note; paired verified ref required (`class_in="FILL"`) |
 | `validity` | skeptical existence / duplicate / classification / attribution / spec check (`__VALIDITY__`, read-and-flag) |
 | `status-review` | per-segment-row status verdict confirm/change/stale/unclear (`__STATUS__`) |
@@ -191,7 +191,7 @@ python scripts/seed_resolutions_from_worklist.py --staging $STG/
 python scripts/merge_deepsweep_shards.py --staging $STG/
 ```
 
-Optional **ref-gap pass** (the seed leaves blank/dead-link refs red because the
+Optional **ref-gap pass** (the seed leaves blank refs and refs needing attention red/amber because the
 in-dev preset does no ref hunting; to fill those cells (one validated ref each, a 2nd preferred)
 in the SAME workbook):
 

@@ -17,20 +17,20 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
 
 ## Batches
 - **R1 `deepsweep-r1-fareast`** (32 rows / 484 units) — delivered 2026-09-15, staged not applied:
-  `deliverables/pipelines_batch_20260915_1851_ET_russia-gas_deepsweep-r1-fareast.xlsx`. 213 fills,
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r1-fareast.xlsx` (re-tiered 2026-09-30). 213 fills,
   257 refs added, 102 validity records (60 open concerns), 31 status reviews (22 confirm / 7 change /
   1 stale / 1 unresolved), 22 reverified, 18 dead links, 17 UNRESOLVED. Gates J and L PASS.
   Results + the two engine defects the pilot found: campaign memo §10. **Rebuilt at `_1851_ET`**
   for the three workbook defects in §11 (UNRESOLVED was 38 before the phantom-stub fix — no research
   changed); the `_1240_ET` and `_1844_ET` builds are in `archive/`.
 - **R2 `deepsweep-r2-nw-operating`** (28 rows) — delivered 2026-09-15, staged not applied:
-  `deliverables/pipelines_batch_20260915_1851_ET_russia-gas_deepsweep-r2-nw-operating.xlsx`. 190 fills,
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r2-nw-operating.xlsx` (re-tiered 2026-09-30). 190 fills,
   225 refs added, 58 validity records (25 open concerns), 28 status reviews (26 confirm / 1 change /
   1 unresolved), 4 reverified, 27 dead links (10 of them `link_live` — re-read, not delete),
   12 UNRESOLVED. Gates J and L PASS; I=2 (both P5540, honest residue). Results + the three workbook
   defects this packet exposed: campaign memo §11.
 - **R3 `deepsweep-r3-nw-indev`** (27 rows / 413 units) — delivered 2026-09-15, staged not applied:
-  `deliverables/pipelines_batch_20260915_2130_ET_russia-gas_deepsweep-r3-nw-indev.xlsx`. 222 fills,
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r3-nw-indev.xlsx` (re-tiered 2026-09-30). 222 fills,
   174 refs added, 62 validity records (30 open concerns), 27 status reviews (17 confirm / 7 change /
   3 unclear), 2 reverified, 5 dead links, 39 UNRESOLVED. Gates J, L, M and I' all PASS; advisory
   A=3 (Pskov отводы sourced only to `gazprommap.ru`), C=33 (decrees 816-р and 3302-р carry a third
@@ -40,7 +40,7 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   before those fixes, is in `archive/`.
 - **R5 `deepsweep-r5-volga`** (31 rows / 275 owed units of 467 — the LEAN-PASS PILOT,
   `docs/sops/lean_pass.md`) — delivered 2026-09-16, staged not applied:
-  `deliverables/pipelines_batch_20260916_1902_ET_russia-gas_deepsweep-r5-volga.xlsx`. 42 fills
+  `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r5-volga.xlsx` (re-tiered 2026-09-30; rebuilt the same day after the P2385 Length note was aligned with its staged 840 → 843 km value change under the precise-value rule). 42 fills
   (21 sourced, 21 unresolved), 236 refs added (215 on the tab after 21 baselines folded into sourced
   fills; 66 unique URLs), 39 validity records (22 open: 21 concern + 1 contested, on 17 rows),
   31 status reviews (29 confirm / 2 unclear / 0 change), 1 dead link (`link_live`), 59 UNRESOLVED
@@ -54,7 +54,7 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   read their shards. Full numbers: `staging/deepsweep-r5-volga/RUN.txt`; results memo §13.
 - **R4a `deepsweep-r4a-urals-yanao`** (30 rows / 183 owed units of 453 — lean pass; 23 operating,
   7 in-development) — delivered 2026-09-21, staged not applied:
-  `deliverables/pipelines_batch_20260921_1439_ET_russia-gas_deepsweep-r4a-urals-yanao.xlsx`. 24 fills
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r4a-urals-yanao.xlsx` (re-tiered 2026-09-30). 24 fills
   (13 sourced, 11 unresolved), 165 refs added (152 on the tab after folding; 68 unique URLs),
   50 validity records (19 concern open on 16 rows), 30 status reviews (27 confirm / 2 unclear /
   **1 change: P5404 Bovanenkovo–Ukhta VI construction → proposed**), 8 dead links, 22 UNRESOLVED with
@@ -68,7 +68,7 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   `staging/deepsweep-r4a-urals-yanao/RUN.txt`; results memo §14.
 - **R4b `deepsweep-r4b-urals-south`** (23 rows / 156 owed units of 345 — lean pass) — delivered
   2026-09-22, staged not applied:
-  `deliverables/pipelines_batch_20260922_1611_ET_russia-gas_deepsweep-r4b-urals-south.xlsx`. 28 fills,
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r4b-urals-south.xlsx` (re-tiered 2026-09-30). 28 fills,
   115 refs added (47 unique URLs on 22 rows), 31 validity records (13 concern open on 11 rows),
   23 status reviews (20 confirm / 2 unclear / **1 change: P3977 Shumikha–Almenevo proposed →
   operating**), 37 UNRESOLVED with notes. **189 units deferred** to
@@ -78,7 +78,7 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   in the batch's `DEFECTS.md` (one fixed). Full numbers: `RUN.txt`; results memo §15.
 - **R6 `deepsweep-r6-siberia`** (32 rows / 180 owed units of 483 — lean pass) — delivered
   2026-09-22, staged not applied:
-  `deliverables/pipelines_batch_20260922_1723_ET_russia-gas_deepsweep-r6-siberia.xlsx`. 60 fills,
+  `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r6-siberia.xlsx` (re-tiered 2026-09-30). 60 fills,
   78 refs added (48 unique URLs on 27 rows), 42 validity records (27 concern open on 22 rows),
   32 status reviews (20 confirm / 8 unclear / **4 change: P3980, P3981 proposed → operating, P3982
   construction → operating (Omsk отводы), P4056 proposed → construction**), 95 UNRESOLVED with notes.
@@ -89,7 +89,7 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   `RUN.txt`; results memo §16.
 - **R7 `deepsweep-r7-central-south`** (49 rows / 408 owed units of 732 — lean pass; Central + Southern +
   North Caucasus districts + the export trunks starting there) — delivered 2026-09-30, staged not applied:
-  `deliverables/pipelines_batch_20260930_1321_ET_russia-gas_deepsweep-r7-central-south.xlsx`. 19 fills,
+  `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r7-central-south.xlsx` (re-tiered 2026-09-30; rebuilt the same day with P2227 LengthKnown restaged as a value change 842 → 845 km — both validated refs state 845 — under the precise-value rule, Sweep SOP). 20 fills,
   301 refs added (126 unique URLs on 48 rows), 55 validity records (32 concern open), 49 status reviews
   (36 confirm / 4 unclear / **9 change: P3973, P3974, P3996, P3997, P4013 proposed → operating, P4130
   construction → operating, P3971, P4142 proposed → construction, P2227 mothballed → operating (contested —
@@ -113,7 +113,6 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
 - **Discovery seeds (Step 0)** `staging/discovery-seeds-20260930/` — `seeds_by_district.{csv,json}` +
   `SUMMARY.md`: 88 seeds + 3 length-unknown store leads, 148 monitor, 53 already tracked; per slice D1–D6
   in the summary. Triage memo: `notes/triage-2026-09-30-russia-gas-discovery.md` → Step 0 results.
-
 
 ## Regulators / official data
 - **Gazprom PJSC** (`gazprom.ru`) — project pages, annual + sustainability reports, IFRS,

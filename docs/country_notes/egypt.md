@@ -20,7 +20,7 @@ MENA deep-coverage country (GGIT gas focus so far). Gas packet legs:
   to drop the `SheetRow` locator from `Gas_AllFillsBackend` so all columns paste
   1:1; rebuilt again 2026-07-28 against `GGIT_gas_snapshot_20260728.csv` to fix 43
   stale `SheetRow` locators — 33 `Gas_Decisions` + 10 `Gas_ConfirmedAudit`)** — delivered
-  `pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx` +
+  `pipelines_batch_20260930_1455_ET_egypt-gas_handoff-actions.xlsx` (re-tiered 2026-09-30) +
   `…-evidence.xlsx` (same staging dir, `staged_actions.json` sidecar; supersedes
   the 2359 pair, now in `archive/`). Counts below are from the 07-28 rebuild;
   the fresher snapshot also refreshed the prefilled current values (57 newly

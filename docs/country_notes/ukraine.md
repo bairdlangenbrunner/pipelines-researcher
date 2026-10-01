@@ -10,7 +10,7 @@ Staged, not applied. Counts regenerate via
 
 **THREE files to work** — the packet does **not** subsume the recons (`recon_actions = 0`):
 
-- `pipelines_batch_20260815_1946_ET_ukraine-gas_handoff-actions.xlsx` (+ its `-evidence`
+- `pipelines_batch_20260930_1455_ET_ukraine-gas_handoff-actions.xlsx` (re-tiered 2026-09-30) (+ its `-evidence`
   twin) — 110 open decisions, 2 status changes, 239 backend paste units, 48 operators/owners
   units, 113 wiki updates, 149 open flags; evidence side 27 confirmed audits, 45 fill-detail
   and 376 ref-detail rows.

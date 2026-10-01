@@ -97,7 +97,7 @@ tracking at all — URL counting only, liveness stays the sweep's job), then:
   existence-audited).
 - Writes **`staged_actions.json`** — the full-ingestion sidecar: ALL carried
   concerns (every type, not just existence/duplicate), pending status changes,
-  corroborated fills, actionable ref work (REFS_ADDED/DEAD_LINK/UNRESOLVED;
+  corroborated fills, actionable ref work (REFS_ADDED/DEAD_LINK/REF_BLOCKED/REF_UNSUPPORTED/UNRESOLVED;
   REVERIFIED counts-only), route suggestions, and discovery candidates — every
   record with `source_dir` provenance, `sheet_row` re-resolved against THIS
   packet's snapshot, and `also_flagged` cross-references onto this run's own

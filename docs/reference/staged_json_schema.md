@@ -70,7 +70,7 @@ get `also_flagged` (this packet's own wiki/mechanical flags on the same
 (project_id, concern-type) — cross-reference, not duplication). `concerns` carries
 ALL concern types; `status_changes` only verdicts ≠ `confirm` (confirms are
 counted in `meta.counts.status_verdicts`); `ref_work` only actionable classes
-(`REFS_ADDED`/`DEAD_LINK`/`UNRESOLVED`; `REVERIFIED` is counts-only);
+(`REFS_ADDED`/`DEAD_LINK`/`REF_BLOCKED`/`REF_UNSUPPORTED`/`UNRESOLVED`; `REVERIFIED` is counts-only);
 `new_rows` all discovery classes. Version note (2026-07): `staged_actions.json`
 replaces the retired `existence_carryover.json` (which carried only
 existence/duplicate concerns); the workbook builder still renders a legacy
@@ -125,7 +125,7 @@ record left `UNRESOLVED` with no refs and no `researcher_notes` is a silent skip
 `sweep_gates.py` gate L and by `scripts/check_shard_coverage.py` before the shard is written.
 
 **Ref records** (`class_in` `HAS_REF` / `MISSING_REF`): `class_out` ∈ `REFS_ADDED` /
-`REVERIFIED` / `DEAD_LINK` / `UNRESOLVED`. Apply = paste `proposed_refs` into the
+`REVERIFIED` / `DEAD_LINK` (every link 404/410) / `REF_BLOCKED` (could not fetch) / `REF_UNSUPPORTED` (loads, screen missed the value) / `UNRESOLVED`. Apply = paste `proposed_refs` into the
 `ref_col` cell of `sheet_row` (or, when `tab="operators_owners"`, into that ProjectID's
 row on the operators/owners tab).
 
