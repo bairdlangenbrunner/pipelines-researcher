@@ -79,11 +79,28 @@ tab) shows every line on the pipeline, filters ignored, then its items, on one p
 
 ## Decisions
 
+**One ledger** (Baird 2026-10-01): every decision, whichever door it comes through, is appended
+to the `log` tab of the store spreadsheet (`google.json: store_sheet_id`) FIRST and to the staging
+dir's sidecars second — `review_app/ledger.py`, the same 19-column row Code.gs writes. Doors:
+the served Google page (Code.gs, origin `gas`), the loopback server (`store.decide(…, sink=Ledger.sink)`,
+origin `local`), a Claude chat (`python review_app/ledger.py decide --key K --decision accept`, origin
+`chat`), `push.py`'s `push` records, a refresh's `backend sync` records and a publish's carry-forwards.
+The store is the single source of truth; the sidecars are its committed mirror (`pull.py` fills in
+what the Google page wrote); the workbook, the push plan and the published dataset all read one
+history. A store that cannot be written **refuses the decision** (502 on the server, exit 2 on the
+CLI; nothing recorded anywhere) — there is no offline mode. `server.py --no-store` (dev/tests only)
+writes the sidecars alone and says so on every start. Appending to that tab is a standing
+authorization (CLAUDE.md → Hard requirements); it never touches the backend sheet, which only
+`push.py` writes, asked per run. The store keeps the reviewer's address (default: the
+`gws-gem-write` account's, `--reviewer-email` to override); the sidecars keep initials.
+
 Every staging dir gets two sidecars, committed with the batch:
 
-- `review_log.jsonl` is the truth: append-only, one record per decision
-  `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`
-  (plus `via` on a record written through the line that covers it, below).
+- `review_log.jsonl` is the mirror: append-only, one record per decision
+  `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided, basis}`
+  (plus `via` on a record written through the line that covers it, below; plus the ledger's
+  `id, scope, batch, snapshot, origin`). `basis` = `review_data.basis(line)`, the hash of the backend
+  cells the call was made against, which `publish.py` (drift) and `push.py` (stale) compare.
   `decision` is `accept|hold|reject|suggest`; `ts` is ISO-8601 with timezone, stamped by the
   server along with `reviewer` (the client cannot set either). **A person is recorded by first +
   last initials, never a full name** (Baird 2026-10-01): `store.initials()` turns
@@ -253,6 +270,9 @@ python review_app/publish.py                  # build the review-app batch + wri
 python review_app/publish.py --upload         # + list what Drive would change (writes nothing)
 python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
 python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
+python review_app/ledger.py status            # store configured? writer address? row count
+python review_app/ledger.py decide --key KEY --decision accept|hold|reject|suggest [--note N]   # a chat's decision, same door
+python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale lines skipped by default
 python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
 python review_app/gas_push.py                 # list how the Apps Script project differs from gas/ (writes nothing)
 python review_app/gas_push.py --yes           # replace the project's files: ASK BAIRD FIRST, every run; then deploy a new version
@@ -274,9 +294,9 @@ pull prints `SHARED INITIALS` when the store holds such a pair. `publish.py` put
 sends to the private Drive folder, so the page and its "decided by" filter show one name per
 person. So the consumers (`--decisions`, `update_seed.py`, `staged_summary.py`)
 are unchanged and git holds the second copy of the history. **Pull before building a workbook from
-decisions.** Once a scope is published, decide on the Google page only: a decision clicked on the
-loopback server lands in the staging dir but not in the store, so nobody else sees it until the
-next publish bakes it in.
+decisions.** The loopback server, a chat (`ledger.py decide`) and the Google page all append to the
+same `log` tab (→ Decisions, "One ledger"), so a decision made anywhere is in the store the moment
+it is made; a pull only brings home what the Google page wrote.
 
 **Two reviewers at once.** Every write runs under the script lock and carries the last store row
 the page has seen. If someone else's record for the same key landed after that row, the write is

@@ -181,7 +181,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
-| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; loopback server today; Google web app built, its Drive objects created and a first dataset published, deployment pending) | "review the batch", "start the review app", "decide the <country> lines", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions" | `review_app/README.md` (→ "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
+| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; every decision — loopback server, Google page, or a chat via `ledger.py decide` — lands in the store spreadsheet's `log` tab first (`review_app/ledger.py`), the sidecars mirror it; Google web app built, deployment pending) | "review the batch", "start the review app", "decide the <country> lines", "accept P1234's fill", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions", "push the accepts" | `review_app/README.md` (→ "Decisions" for the ledger, "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
@@ -299,7 +299,16 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   exception (Baird 2026-09-30): a review-app push of *clicked accepts* is the mechanical
   pre-verified write, authorized per push run (`python review_app/push.py` plans, `--apply PLAN`
   writes; built 2026-10-01, first run 48 cells; `docs/plans/2026-09-30_review-app.md` §5). Its
-  cell text is additive (below); a non-blank differing VALUE cell is a conflict it skips and reports. An
+  cell text is additive (below); a non-blank differing VALUE cell is a conflict it skips and reports,
+  and a line whose backend cells changed since it was decided is STALE and skipped unless
+  `--include-stale`. **`push.py` is the ONLY route from an accepted suggestion to the sheet** —
+  a decision I make in a chat is recorded with `python review_app/ledger.py decide --key K
+  --decision accept` and then goes through the same plan → ask → `--apply`, never a direct write.
+  **STANDING AUTHORIZATION (Baird 2026-10-01): appending rows to the `log` tab of the review-app
+  store spreadsheet (`review_app/google.json: store_sheet_id`) via `review_app/ledger.py` under
+  `gws-gem-write`** — it is the single source of truth every decision path writes first
+  (`review_app/README.md` → Decisions), so no per-write ask; this covers that one tab, append-only,
+  and nothing else in Drive. An
   authorized write must be **mechanical and pre-verified** (a fix whose correctness is
   established before writing, not a research judgment applied live), and must:
   (1) read the target range with `valueRenderOption: FORMULA` first and abort on any

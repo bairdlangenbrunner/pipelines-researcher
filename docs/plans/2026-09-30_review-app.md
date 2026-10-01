@@ -327,19 +327,31 @@ Generalizes `apply_route_candidates.py`; nothing new in mechanics.
 2. **Plan** = clicked accepts only, kinds `ref | fill | status | oo`; cell text is exactly
    `build_ref_workbook._ref_cell_text` / the value the workbook would paste. Skip: rows missing
    from the sheet, `=`-prefixed values, a non-blank differing value cell (conflict) unless the
-   line is a `status` change, a `[ref]` cell that already contains every proposed URL (`in_backend`).
+   line is a `status` change, a `[ref]` cell that already contains every proposed URL (`in_backend`),
+   and (2026-10-01) a **stale** line — the live basis cells (`review_data.BASIS_FIELDS`) differ
+   from what the reviewer saw (record `basis` ≠ line `basis`, or live ≠ snapshot); listed in the
+   plan's `stale`, pushed only with `--include-stale`. The decision stands in the ledger either way.
    Print the plan cell by cell; token = hash of the plan.
 3. **Pre-read** the exact ranges with `valueRenderOption=FORMULA`; abort on any formula cell or
    any ProjectID mismatch.
 4. **Backup** before-CSV of the touched cells to `notes/sheet-write-<date>-<scope>-before.csv`.
 5. **Write** `values.batchUpdate` RAW, cell-scoped ranges, chunked, under `gws-gem-write`.
 6. **Verify** by re-read; write the after-CSV; append `push_log.jsonl` (`{key, range, before,
-   after, ts, reviewer}`); write a `push` machine-reviewer record so the lines show `applied`.
+   after, ts, reviewer}`); write a `push` machine-reviewer record — through `ledger.py` (the store
+   `log` tab first, origin `push`, then the sidecars) — so the lines show `applied` everywhere.
 7. Every run is one explicit authorization from Baird; the server's `/api/push` requires the
    token from `/api/push/plan` and a typed confirm, as LNG does.
 
 Out of push scope, permanently: route columns (§8 apply script), new rows, contested values,
 wiki edits, anything on a row whose Status is `N/A`.
+
+**The ledger (2026-10-01).** Three decision paths (chat, loopback server, Google page) plus hand
+edits to the sheet had drifted apart. Ruling: the store spreadsheet's `log` tab is the single
+source of truth — `review_app/ledger.py` appends every record there first (Code.gs's exact row),
+the sidecars are the mirror, `pull.py` brings home the Google page's rows, a chat decides through
+`ledger.py decide` and reaches the sheet only through `push.py`, and a store write that fails
+refuses the decision. Hand edits to the sheet are detected, not reconciled: `push.py` skips the
+line as stale, `publish.py --refresh` reports it as drift, the decision stands.
 
 ### 6. Tests (`tests/`, new)
 

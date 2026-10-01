@@ -375,8 +375,10 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    python scripts/build_qc_staging.py … --sidecars-only     # refresh the sidecars
    ```
 6. **Review, then build.** Optional but preferred: decide the staged lines in the review app
-   first (`review_app/README.md`), then build from the decisions. Start the server (writes only
-   each staging dir's `review_log.jsonl` / `review_decisions.json`), decide in the browser, stop it:
+   first (`review_app/README.md`), then build from the decisions. Start the server (every click
+   goes to the Google decision store's `log` tab first — `review_app/ledger.py`, standing
+   authorization — then to the staging dir's `review_log.jsonl` / `review_decisions.json`; a
+   chat decides through `python review_app/ledger.py decide`), decide in the browser, stop it:
    ```bash
    python review_app/server.py --country Egypt --commodity gas      # http://127.0.0.1:8766/
    ```
