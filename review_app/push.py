@@ -275,9 +275,15 @@ def apply(plan_path):
             if str(cur) != str(p["before"]):
                 sys.exit(f"ABORT {title}!{p['cell']} changed since the plan: {cur!r} != {p['before']!r}")
     # 2. backup
-    stamp = datetime.now(ET).strftime("%Y-%m-%d")
+    # one file per push, never overwritten: the date-only name clobbered the morning's committed
+    # backup on the second push of 2026-10-01 (restored from git; that run's file is `-3`).
+    stamp = datetime.now(ET).strftime("%Y-%m-%d-%H%M")
     bk = ROOT / "notes" / f"sheet-write-{stamp}-review-app-push.csv"
-    with bk.open("w", newline="", encoding="utf-8") as f:
+    n = 2
+    while bk.exists():
+        bk = bk.with_name(f"sheet-write-{stamp}-review-app-push-{n}.csv")
+        n += 1
+    with bk.open("x", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["tab", "column", "cell", "sheet_row", "ProjectID", "before", "after"])
         for p in plan:
