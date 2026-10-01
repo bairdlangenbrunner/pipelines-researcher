@@ -418,6 +418,13 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 `docs/research_backlog.md`. "Recons standalone" = the handoff packet does NOT carry the
 §2 recon workbooks (`recon_actions=0`), so they are separate review surfaces.
 
+- **Owner-style normalization (tracker-wide, operators/owners tab; slice 1 staged 2026-10-01, not
+  applied):** `batches/owners-style/staging/update-owner-style-20261001/` — deliberately
+  UNSCOPED (`meta.country = ""`), so no country packet, `INDEX.md`, or review-app scope picks it
+  up; its one workbook is in `batches/owners-style/deliverables/`. 2,145 `Owner<N>` cells on
+  1,979 ProjectIDs re-spelled on exact/alias gazetteer hits; 373 held back by reason on
+  `OO_HeldBack` (slice 2 = `stem_medium` + `rules_only`; the rest need rulings). Style only,
+  no research. Re-run `stage_owner_style.py` after a fresh snapshot — never hand-edit the JSON.
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):** `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass 2026-07-28, rebuilt 2026-07-29, staged not applied — supersedes the 07-05
   packet; §8 routes APPLIED 2026-08-03; + oil open items; 4 files to work):** `docs/country_notes/iraq.md`.

@@ -93,7 +93,15 @@ No generic builder yet — recent update batches (`batches/united-states-oil/sta
 staged alongside the JSON: a backend-mirror tab of the touched rows (current values
 prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic
-`scripts/build_update_workbook.py`.
+`scripts/build_update_workbook.py`. A third instance,
+`batches/owners-style/staging/update-owner-style-20261001/` (2026-10-01), targets the
+operators/owners tab alone and is tracker-wide (`meta.country = ""`, so the store is
+invisible to country packets by design): tabs `README`, `OO_Names` (the decision surface —
+one line per distinct current spelling), `OO_OperatorsOwners` (leading `SheetRow` + the full
+44-column tab mirror for touched PIDs, changed `Owner<N>` cells green, the two formula columns
+left blank), `OO_Changes` (one line per cell), `OO_HeldBack` (would-change cells not in the
+slice, by reason). The review app reads deep-sweep stores only, so an update store is
+decided in its workbook.
 
 ## Discovery workbook (mode = `discovery`)
 
