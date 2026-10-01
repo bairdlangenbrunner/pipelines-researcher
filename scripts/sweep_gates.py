@@ -55,11 +55,21 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            `recommendation`, which the cell comment already carries. First
                            seen on US gas batch 5 (fixed by hand, commit 7e75f26), again on
                            Russia R2 P5539 -- hence the gate.
+  N  NOT A SHEET COLUMN -- a `values` (or validity `contested`) key that is not a header of
+                           the snapshot the store names (meta.scope.csv / owners_csv). A bare
+                           shorthand is ambiguous AND unpasteable: R4a/R5 staged the start
+                           YEAR as `Start` (its [ref] is `Start [ref]` -> StartYear1) while R4b
+                           staged `Start`/`End` as LOCATIONS; the review app aliased `Start`
+                           to StartLocation and showed a year proposed over a location
+                           (P6540, 2026-09-30), and the workbook silently dropped every such
+                           value (col_idx miss). Use the real header (StartYear1,
+                           StartLocation, LengthKnown, ...).
 """
 from __future__ import annotations
 
 import argparse
 import collections
+import csv
 import json
 import sys
 from pathlib import Path
@@ -315,15 +325,43 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
     M = []
     for r in res:
         for field in ("values", "contested"):
-            for col, val in (r.get(field) or {}).items():
+            for col, val in (r.get(field) if isinstance(r.get(field), dict) else {}).items():
                 why = prose_value(col, val)
                 if why:
                     M.append((r.get("project_id"), f"{r.get('ref_col')}/{field}:{col}",
                               str(val)[:110], why))
 
+    # N -- every values{} / contested{} key must be a real header of the snapshot the store names
+    N, N_skipped = [], None
+    meta_scope = (store.get("meta") or {}).get("scope") or {}
+    data_dir = Path(__file__).resolve().parent.parent / "data"
+    headers = set()
+    for key, hdr_row in (("csv", 2), ("owners_csv", 1)):
+        name = meta_scope.get(key)
+        if not name:
+            continue
+        f = data_dir / name
+        if not f.exists():
+            N_skipped = f"snapshot {name} not in data/"
+            continue
+        with f.open(newline="", encoding="utf-8") as fh:
+            for i, row in enumerate(csv.reader(fh)):
+                if i == hdr_row:
+                    headers |= {c.strip() for c in row}
+                    break
+    if not headers:
+        N_skipped = N_skipped or "store meta names no snapshot"
+    else:
+        for r in res:
+            for field in ("values", "contested"):
+                for col in (r.get(field) if isinstance(r.get(field), dict) else {}):
+                    if col not in headers and not (field == "contested" and "[ref]" in col):
+                        N.append((r.get("project_id"), r.get("ref_col"), field, col))
+
     return {
         "records": len(res), "rows": len(by_pid),
         "M_prose_in_value_cell": M,
+        "N_not_a_sheet_column": N, "N_skipped": N_skipped,
         "A_single_host_rows": A, "B_false_high": B, "C_dominant_document": C,
         "D_independence_flag": D, "E_orphan_refs": E, "F_banned_sources": F,
         "G_unopened_pool_on_unresolved_rows": G,
@@ -411,6 +449,12 @@ def report(out: dict, dominant_min: int) -> None:
         out["M_prose_in_value_cell"],
         "every proposed value is cell content, not a recommendation",
         lambda r: f"{r[0]} {r[1]} [{r[3]}]: {r[2]!r}", cap=20)
+    if out.get("N_skipped"):
+        print(f"\nN  skipped — {out['N_skipped']}")
+    else:
+        sec("N  values{} / contested{} key that is not a sheet column (ambiguous + dropped by the workbook)",
+            out["N_not_a_sheet_column"], "every proposed value names a real backend header",
+            lambda r: f"{r[0]} {r[1]} {r[2]}:{r[3]!r}")
     sec("K  REFS_ADDED on exactly one verified ref (informational: green, not yet independent)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",
         lambda r: f"{r[0]} {r[1]}", cap=10)
