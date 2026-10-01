@@ -181,12 +181,16 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
-| **Review a batch's decisions** (local review app: decide staged lines/items, then rebuild the workbook from the clicks) | "review the batch", "start the review app", "decide the <country> lines", "rebuild the actions workbook from the decisions" | `review_app/README.md` + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
+| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; loopback server today; Google web app built, its Drive objects created and a first dataset published, deployment pending) | "review the batch", "start the review app", "decide the <country> lines", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions" | `review_app/README.md` (→ "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
 
 Routing notes:
+- **Ask about the review-app batch at every delivery**: `review_app/scopes.py check` exit 3 →
+  ask Baird "Add <Country> <commodity> to the review app? Y / n / later" and `scopes.py set` the
+  answer (`workflows.md`, "Review-app batch"). `python review_app/server.py` with no `--country`
+  serves the included countries and hides ones with nothing left to decide.
 - **The handoff actions workbook honours `--decisions`** (`build_ref_workbook.py … --decisions`):
   person clicks only — accepted lines on the paste surfaces, rejects/suggests off the change
   lists (QC SOP → handoff contract). Review app decisions never write the sheet or routes repo.
@@ -293,8 +297,9 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   yes, *for that specific edit*. Approval never carries to the next task. Never write
   the sheet to "apply" a batch: batches go through the deliverable, always — with ONE
   exception (Baird 2026-09-30): a review-app push of *clicked accepts* is the mechanical
-  pre-verified write, authorized per push run, and produces the same cell text the
-  workbook would paste (`docs/plans/2026-09-30_review-app.md` §5; not built yet). An
+  pre-verified write, authorized per push run (`python review_app/push.py` plans, `--apply PLAN`
+  writes; built 2026-10-01, first run 48 cells; `docs/plans/2026-09-30_review-app.md` §5). Its
+  cell text is additive (below); a non-blank differing VALUE cell is a conflict it skips and reports. An
   authorized write must be **mechanical and pre-verified** (a fix whose correctness is
   established before writing, not a research judgment applied live), and must:
   (1) read the target range with `valueRenderOption: FORMULA` first and abort on any
@@ -311,6 +316,12 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   `scripts/cf_clearance.py`; byte-identical with the two LNG repos, state in gitignored `work/`),
   and `python scripts/fetch.py <url> --head 2000` is the ad-hoc route. `LNGCT_NO_BROWSER=1`
   keeps unattended runs from opening Chrome.
+- **`[ref]` cells are ADDITIVE (Baird 2026-10-01).** A proposed ref is appended to the cell's
+  existing URLs; it never replaces one — not even when the existing ref doesn't name the pipeline
+  (sudact.ru on P0734 stays) or a validity note calls it "superseded". Only a page confirmed
+  deleted (404/410) may drop out. A weak existing ref is flagged in `ResearcherNotes`, never removed
+  by a staged proposal; removing one is a separate, explicit call. `review_app/push.py` implements
+  this (live cell text kept verbatim + missing URLs appended).
 - **Never delete a once-working ref over an access failure.** Geo-blocks, anti-bot
   403s/WAFs, and timeouts are not deletions — only a page confirmed deleted (HTTP
   404/410) may drop out of a `[ref]` cell. A blocked origin gets its Wayback snapshot

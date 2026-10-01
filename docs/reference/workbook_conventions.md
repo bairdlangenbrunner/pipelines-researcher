@@ -127,7 +127,9 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   (Baird, 2026-07-30): geo-blocked / anti-bot 403 / timed-out URLs are access problems, not
   deletions — `_annotate_kept_refs` keeps every current URL not confirmed deleted (HTTP
   404/410 in the worklist's `existing_ref_checks`) ahead of the proposed refs, so a blocked
-  origin gets its Wayback snapshot *added*, never swapped in. **Open validity concerns ride
+  origin gets its Wayback snapshot *added*, never swapped in. **The rule is wider than access failures (Baird 2026-10-01): proposed refs are always ADDITIVE** — a
+  weak or non-naming existing ref (and one a validity note calls "superseded") stays in the cell; flag it in
+  `ResearcherNotes`, never drop it. **Open validity concerns ride
   here too, tinted orange** (Baird, 2026-09-04, on US-gas P0271/Transco: the sheet's Capacity
   was contradicted by its own cited ref and the researcher, working from this tab as the
   README tells them to, had no way to see it — validity records were filtered off the mirror

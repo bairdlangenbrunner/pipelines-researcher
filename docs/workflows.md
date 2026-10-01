@@ -43,6 +43,14 @@ lives under `batches/<country-slug>-<commodity>/` (e.g. `batches/egypt-gas/`):
   workbook is superseded by a regeneration, move the staging dir / old xlsx here.
   Anything still in `staging/`+`deliverables/` is live pending work, by definition.
 
+**Review-app batch — ask at every delivery.** `batches/review-app/manifest.json` lists which
+countries the review app shows (`review_app/README.md`). After delivering any batch (§2–§8) for a
+country+commodity, run `python review_app/scopes.py check --country <C> --commodity <c>`. Exit 3
+(never answered, or "later") → ask Baird in plain prose, "Add <C> <c> to the review app?
+Y / n / later", and record the answer with `scopes.py set … yes|no|later` (the manifest is a repo
+file: commit it with the batch). Exit 0 → don't ask: an included country's new staging dir comes
+in on its own, a declined one stays out.
+
 `batches/INDEX.md` is the whole-tree lookup — regenerate it with
 `python scripts/staged_summary.py --index` after adding/moving anything; never
 hand-edit it.
@@ -287,8 +295,13 @@ python scripts/build_discovery_context.py --tracker gas --country "<Country>" --
 #     (strategy fan-out → consolidate/match-to-existing → one vetting agent per candidate)
 #   (optional run-specific args: scopeRule = replaces the default transmission-only scope rule, e.g. a
 #     ≥25 km length floor; vetRule = extra rule text for every vetting agent; extra = context block for
-#     every search agent — territory naming, window, seed leads. Sliced runs: see
+#     every search agent — territory naming, window, thematic leads. Sliced runs: see
 #     batches/russia-gas/staging/discovery-seeds-20260930/build_slice_args.py)
+#   (structured leads — OSM/GulfPub recon features — go in args.seeds [{seed_id,name,km,kind,operator,
+#     name_hint}], NEVER as a list in `extra`: dedicated seed agents give every seed a disposition in
+#     queue.json's seed_ledger (queued/matched/monitor/dropped/already_handled), the consolidate step
+#     gates on full coverage with one repair agent, and the run returns seeds_unadjudicated.
+#     seedsOnly=true = a coverage re-run; priorStaging=[earlier run dirs] = don't re-research what they decided)
 python scripts/merge_discovery_shards.py --staging $STG/
 python scripts/build_discovery_workbook.py --staging $STG/ \
   --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_discovery.xlsx
