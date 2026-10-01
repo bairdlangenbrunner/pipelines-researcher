@@ -41,6 +41,13 @@ So a staged `Owner [ref]` is **dropped from the `<Cmdty>_NewRows` mirror but pre
 
 One pass per angle; the `country-discovery` workflow runs them as parallel agents.
 
+**Seed leads are owed a disposition each.** Unmatched reference-dataset features (OSM/GulfPub
+recon `DISCOVERY_CANDIDATE`s) are a list of named leads, not a search angle: a search agent handed
+the list reports the seeds it can cite and silently skips the rest (Russia D2/D4/D5 2026-09-30 —
+most seeds never surfaced). Pass them as the workflow's `args.seeds`; every one must end in the
+seed ledger as `queued`, `matched` (PID), `monitor`, `dropped` (with why) or `already_handled`,
+and the workbook's `<Cmdty>_SeedLedger` tab shows it. A seed with no disposition is unfinished work.
+
 1. **Company project pages** — the major operators' sites for pipeline projects under
    development.
 2. **Regulatory filings** — FERC, PHMSA, MARAD (US) or the national equivalent, for new
