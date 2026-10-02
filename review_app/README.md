@@ -88,9 +88,13 @@ tab) shows every line on the pipeline, filters ignored, then its items, on one p
 
 - `review_data.py` turns one scope's pending staging dirs into `work/review_data.json`:
   one card per pipeline, with `lines` (ref / fill / status / oo / route / new_row: one
-  decision each) and `items` (concern / wikidiff / routeqc / route_suggestion / monitor /
+  decision each) and `items` (concern / routeqc / route_suggestion / monitor /
   flag / escalation / unresolved / confirmed / other: a call plus a note). Records fitting
-  no kind become `other` and are counted in the summary.
+  no kind become `other` and are counted in the summary. **Sheet-vs-wiki diff records
+  (`__WIKIDIFF__`, from `scripts/wiki_alignment.py`) are left out on purpose** (Baird
+  2026-10-02): the wiki will be updated automatically and is expected to drift from the sheet,
+  so a disagreement is not something a reviewer decides here. They stay in the staging dirs
+  and the handoff workbooks; the summary line counts them as left out.
 - Reads only `staged_resolutions.json`, `staged_new.json`, `qc_flags.json`,
   `escalations.json` per dir; never `staged_actions.json` or `*.prior.json`.
   Read-only over `batches/` and `data/`.
@@ -224,6 +228,11 @@ the progress bar, the Decision filter's `suggest` option), is skipped by every b
 shows in the session summary ("decided lines by call", "this session"). Clicking the pressed
 button or `u` undoes it. Re-opening the form on a suggested line prefills the earlier suggestion.
 Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to an Update worklist.
+`push.py` also writes a person's suggestion (2026-10-02): the suggested value goes to the cell it names —
+type `Column=value; Column2=value2`, or a bare value on a line with one proposed column, a status line,
+or all URLs on a ref line; any other bare value is skipped as ambiguous. The line's proposed refs back it.
+A state / prefecture / country cell written beside an untouched location cell raises a concern (plan
+output + `notes/push_concerns.csv` on apply). Rival suggests stay Update items.
 
 ## Consumers
 
@@ -250,7 +259,9 @@ Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to a
 
 ## Items and calls
 
-The card's **Items** tab (`i` toggles changes/items) gives every item a call selector and a note;
+The card's **Items** tab (`i` toggles changes/items) groups items by kind; every group starts
+collapsed when a pipeline is opened (Baird 2026-10-02), and a group the reviewer opens stays
+open while that card is on screen. Every item has a call selector and a note;
 a change saves immediately (`POST /api/item`, same sidecars, same latest-wins and undo rules; "no
 call" undoes). Call vocabulary per kind: `concern` takes `confirmed | dismissed | needs_research`
 (confirmed: it stands; dismissed: closed; needs research: goes to an Update worklist); every other

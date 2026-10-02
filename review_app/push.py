@@ -10,15 +10,33 @@ came through (loopback server, served Google page, `ledger.py decide` from a cha
 are read from the staging-dir sidecars, which mirror the Google decision store (run pull.py first).
 
 Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
-  * only lines a PERSON accepted (kinds ref | fill | status | oo); machine records never push
+  * only lines a PERSON accepted OR SUGGESTED (kinds ref | fill | status | oo); machine records never push.
+    A SUGGEST (Baird 2026-10-02) writes the reviewer's own value instead of the proposal, to the one
+    cell it names: `Column=value; Column2=value2` names cells outright; a bare value goes to the line's
+    only proposed column (fill | oo), to Status (status), or -- if it is all URLs -- onto the `[ref]` cell
+    (ref). Any other bare value is skipped as ambiguous (a ref line proposes many columns), never
+    guessed. The line's proposed refs back the suggested value (the reviewer judged that line). A rival
+    suggest (a concern's candidate taken) stays an Update item. Writing a state / prefecture / country
+    cell next to a non-blank, unwritten location cell of the same Start/End group raises a CONCERN:
+    printed with the plan and, on apply, appended to notes/push_concerns.csv
   * a `[ref]` cell is ADDITIVE (Baird 2026-10-01): the cell's live text is kept verbatim and each
     proposed URL not already in it is appended, comma-separated. A proposal never replaces or
     drops a URL that is already there (staged `kept_current_refs`/"superseded" notes do not matter)
+  * a CLEAR (a blank proposed value over a filled cell, kind fill | status | oo -- never ref) writes ""
+    to that one cell (RAW); the backup CSV holds the before text. Its `[ref]` is cleared with it (no
+    orphan ref) unless a value of the same cluster stays. A value CHANGED to a different one likewise
+    replaces its `[ref]` with the proposed refs (the old ones supported the old value; none proposed =
+    skipped). `[ref]` is additive ONLY while the value it supports stays the same
   * a fill writes its value(s) and its `[ref]` together, or neither (no orphan refs); a non-blank
-    differing value cell is a conflict and the whole line is skipped (a `status` change may overwrite
-    Status); several lines on one cell merge, two lines wanting different values abort
+    differing value cell is OVERWRITTEN: accept is the authorization (Baird 2026-10-01) -- the
+    stale check guards it, the backup CSV keeps the old text; several lines on one cell merge, two lines wanting different values abort
   * rows are re-located by ProjectID on the LIVE tab (never trust a recorded sheet_row); route
     columns, new rows and `=`-prefixed cells are out of scope
+  * a line this script already wrote (its `push` record is newer than the person's call -> the
+    overlay's `applied.by == "push"`) is skipped as "already pushed"; the person's accept keeps
+    speaking for it (store.speaker), a push record never undecides a line. A plan entry whose
+    `before` is a non-blank value (not a `[ref]`) carries `replaces: true` -- the page and `show()`
+    flag it so the reviewer sees which accepts overwrite a value
   * STALE (Baird 2026-10-01): a line whose backend cells (review_data.BASIS_FIELDS: the current
     values, `[ref]` text, Status) differ on the LIVE tab from what the reviewer saw when deciding --
     the record's `basis` no longer matches, or the sheet moved since the snapshot -- is skipped with
@@ -98,6 +116,23 @@ def add_refs(current, urls):
     return (", ".join(have + new) if new else current), new
 
 
+def ref_write(cur_ref, proposed, cleared, changed, remaining):
+    """The text a line writes to its `[ref]` cell, or None for no write, or ("skip", why).
+    Additive only while the value the refs support stays put (Baird 2026-10-01): a value that is
+    CLEARED takes its refs with it (when no value of the cell's cluster remains), and a value that is
+    CHANGED to a different one takes its refs with it -- the old refs supported the old value -- so the
+    proposed refs replace them (none proposed = skip, no orphan value). Otherwise: append."""
+    if changed:
+        if not proposed:
+            return ("skip", "value changes but no proposed refs (the old refs supported the old value)")
+        text = ", ".join(dict.fromkeys(u.strip() for u in proposed if u.strip()))
+        return text if text != cur_ref.strip() else None
+    if cleared:
+        return "" if (not remaining and cur_ref.strip()) else None
+    text, new = add_refs(cur_ref, proposed)
+    return text if new else None
+
+
 def same_value(cur, v):
     """Equal as text, as numbers, or as a percent ('70.00%' vs the sheet's 0.7)."""
     a, b = str(cur).strip(), str(v).strip()
@@ -122,6 +157,8 @@ def coerce(v):
 
 
 def accepted_lines(ds):
+    """(pid, line) for every line a PERSON accepted (store.overlay: `reviewed`, the latest person
+    call; a push record after the accept marks it `applied`, it does not undecide it)."""
     out = []
     for p in ds["pipelines"]:
         for l in p["lines"]:
@@ -129,6 +166,86 @@ def accepted_lines(ds):
                     and l.get("decided_by") not in store.MACHINE_REVIEWERS:
                 out.append((p["pid"] if "pid" in p else p.get("project_id"), l))
     return out
+
+
+GEO_PARTS = ("Location", "Prefecture/District", "State/Province", "CountryOrArea")
+COARSE = ("Prefecture/District", "State/Province", "CountryOrArea")
+
+
+def parse_suggest(text, tab):
+    """`Col=value; Col2=value2` -> {col: value} when every Col is a column of the tab, else None."""
+    out = {}
+    for part in str(text or "").split(";"):
+        c, eq, v = part.partition("=")
+        if not eq or c.strip() not in tab.col:
+            return None
+        out[c.strip()] = v.strip()
+    return out or None
+
+
+def suggest_writes(l, text, tab):
+    """({col: value} the suggestion writes, why-not). A ref line takes URLs onto its `[ref]` cell
+    (returned as {}: the ref cell is handled by the caller from `proposed_refs`)."""
+    named = parse_suggest(text, tab)
+    if named:
+        return named, ""
+    text = str(text or "").strip()
+    if not text:
+        return None, "suggestion has no value (note only)"
+    if l["kind"] == "status":
+        return {"Status": text}, ""
+    if l["kind"] in ("fill", "oo"):
+        cols = [c for c, v in (l.get("proposed_values") or {}).items() if v not in (None, "")]
+        if len(cols) == 1:
+            return {cols[0]: text}, ""
+    if l["kind"] == "ref" and all(re.match(r"https?://", u.strip()) for u in text.split(",")):
+        return {}, ""
+    cols = ", ".join((l.get("value_cols") or [])[:4]) or "a column"
+    return None, f"suggested value {text[:30]!r} names no cell; resave as 'Column=value' (e.g. {cols.split(', ')[0]}=...)"
+
+
+def geo_concerns(pid, row, writes, tab):
+    """Concerns a suggest's geography writes raise: a coarser cell (state / prefecture / country)
+    written next to a non-blank location cell of the same Start/End group that stays as it was."""
+    out = []
+    for end in ("Start", "End"):
+        hit = [c for c in writes if c.startswith(end) and c[len(end):] in COARSE]
+        if not hit:
+            continue
+        stale = [f"{end}{p}" for p in GEO_PARTS if f"{end}{p}" in tab.col and f"{end}{p}" not in writes
+                 and p not in ("CountryOrArea",) and str(tab.cell(row, f"{end}{p}")).strip()]
+        if stale:
+            out.append({"pid": pid, "sheet_row": row, "written": {c: writes[c] for c in hit}, "check": stale,
+                        "text": f"{', '.join(hit)} set to {', '.join(repr(str(writes[c])) for c in hit)}, but "
+                                + "; ".join(f"{c} still reads {str(tab.cell(row, c))!r}" for c in stale)
+                                + " -- check it still fits"})
+    return out
+
+
+def pushable_lines(ds):
+    """(pid, line, decision) for every line a PERSON accepted or suggested a value for (not a rival)."""
+    out = []
+    for p in ds["pipelines"]:
+        for l in p["lines"]:
+            if l.get("reviewed") and l["kind"] in PUSH_KINDS and l.get("decided_by") not in store.MACHINE_REVIEWERS:
+                if l.get("decision") == "accept" or (l.get("decision") == "suggest" and not l.get("rival")):
+                    out.append((p["pid"] if "pid" in p else p.get("project_id"), l, l["decision"]))
+    return out
+
+
+def pushed(l):
+    """The push record's timestamp when push.py already wrote this line, else ''."""
+    a = l.get("applied") or {}
+    return (a.get("at") or "?") if a.get("by") == "push" else ""
+
+
+def newer(a, b):
+    """Record `a` was written after record `b` (ISO timestamps with offsets; text order as a fallback)."""
+    ta, tb = (a or {}).get("ts") or "", (b or {}).get("ts") or ""
+    try:
+        return datetime.fromisoformat(ta) > datetime.fromisoformat(tb)
+    except (TypeError, ValueError):
+        return ta > tb
 
 
 def staleness(l, rec, tab, row):
@@ -154,7 +271,7 @@ def staleness(l, rec, tab, row):
     return "; ".join(why)
 
 
-def build_plan(commodity="gas", overwrite=(), include_stale=False):
+def build_plan(commodity="gas", include_stale=False):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
     dirs, dc = review_data._country_dirs(countries, commodity, root, None)
@@ -162,11 +279,12 @@ def build_plan(commodity="gas", overwrite=(), include_stale=False):
     ds["scope"]["batch"] = True
     paths = store.dir_paths(ds, root.parent)
     store.overlay(ds, paths)
-    logs = {d: store.latest(store.read_log(p)) for d, p in paths.items()}
+    logs = {d: store.calls(store.read_log(p)) for d, p in paths.items()}
     tabs = {"tracker": Tab(*TABS[("tracker", commodity)]), "oo": Tab(OO_TITLE, OO_HEADER)}
     cells, skipped, meta, stale = {}, [], {}, []     # (tab, row, col) -> {"after", "before", "pid", "lines": [keys]}
     meta["__scope__"] = dict(zip(("id", "snapshot"), ledger.scope_of(ds)))
-    for pid, l in accepted_lines(ds):
+    concerns = []
+    for pid, l, dec in pushable_lines(ds):
         pid = pid or l["key"].split("::")[1].split("|")[0]
         tab = tabs["oo" if l["kind"] == "oo" else "tracker"]
         tname = "oo" if l["kind"] == "oo" else "tracker"
@@ -174,9 +292,24 @@ def build_plan(commodity="gas", overwrite=(), include_stale=False):
         if row is None:
             skipped.append((l["key"], "row not found / ambiguous on the live tab"))
             continue
+        prec, mrec = store.speaker(logs.get(l["dir"], {}), l["key"])
+        if pushed(l) and not (prec and mrec and newer(prec, mrec)):
+            skipped.append((l["key"], f"already pushed {pushed(l)}"))      # a newer person call re-plans it
+            continue
         writes, bad = {}, None
-        for c, v in (l.get("proposed_values") or {}).items():
+        values = l.get("proposed_values") or {}
+        if dec == "suggest":
+            values, why_not = suggest_writes(l, l.get("suggested_value"), tab)
+            if values is None:
+                skipped.append((l["key"], why_not))
+                continue
+        for c, v in values.items():
             if v in (None, ""):
+                # a blank proposal over a filled cell is a CLEAR (the page draws it "(clear)" and the
+                # reviewer accepted it as such); never on a ref-only line, where blanks are placeholders
+                if v is None or l["kind"] == "ref" or c not in tab.col or str(tab.cell(row, c)).strip() == "":
+                    continue
+                writes[c] = ""
                 continue
             if c not in tab.col:
                 bad = f"column {c} missing on the live tab"
@@ -186,15 +319,8 @@ def build_plan(commodity="gas", overwrite=(), include_stale=False):
                 writes[c] = coerce(v)
             elif same_value(cur, v):
                 continue
-            elif l["kind"] == "status" and c == "Status":
-                writes[c] = str(v)
-            elif any(o in l["key"] for o in overwrite):      # Baird named this line: overwrite the value
-                writes[c] = coerce(v)
-            elif l["kind"] == "fill" and c == "Status":
-                writes[c] = str(v)
-            else:
-                bad = f"conflict: {c} is {cur!r}, proposal {v!r}"
-                break
+            else:                       # an accepted change overwrites: the click is the authorization
+                writes[c] = coerce(v) if not (l["kind"] in ("status", "fill") and c == "Status") else str(v)
         if bad:
             skipped.append((l["key"], bad))
             continue
@@ -203,20 +329,33 @@ def build_plan(commodity="gas", overwrite=(), include_stale=False):
             if rc not in tab.col:
                 skipped.append((l["key"], f"column {rc} missing on the live tab"))
                 continue
-            cur = tab.cell(row, rc)
-            text, new = add_refs(cur, l.get("proposed_refs") or [])
-            if new:
-                writes[rc] = text
+            cleared, changed = [], []
+            for c, v in writes.items():
+                if c != rc and str(tab.cell(row, c)).strip() != "":
+                    (cleared if v == "" else changed).append(c)
+            remaining = [c for c in (l.get("value_cols") or []) if c in tab.col and c not in cleared
+                         and str(writes.get(c, tab.cell(row, c))).strip() != ""]
+            urls = l.get("proposed_refs") or []
+            if dec == "suggest" and not values:       # a URL suggestion: those URLs, additively
+                urls = [u.strip() for u in str(l["suggested_value"]).split(",") if u.strip()]
+            w = ref_write(tab.cell(row, rc), urls, cleared, changed, remaining)
+            if isinstance(w, tuple):
+                skipped.append((l["key"], w[1]))
+                continue
+            if w is not None:
+                writes[rc] = w
         if not writes:
             skipped.append((l["key"], "already in the backend"))
             continue
-        why = staleness(l, logs.get(l["dir"], {}).get(l["key"]), tab, row)
+        why = staleness(l, prec, tab, row)
         if why:
             stale.append((l["key"], why))
             if not include_stale:
                 skipped.append((l["key"], "stale: " + why))
                 continue
-        meta[l["key"]] = {"kind": l["kind"], "sheet_row": row, "ref_col": rc or l.get("column") or ""}
+        meta[l["key"]] = {"kind": l["kind"], "sheet_row": row, "ref_col": rc or l.get("column") or "", "decision": dec}
+        if dec == "suggest":
+            concerns += [dict(c, key=l["key"]) for c in geo_concerns(pid, row, writes, tab)]
         for c, v in writes.items():
             k = (tname, row, c)
             if k in cells and cells[k]["after"] != v:
@@ -234,8 +373,10 @@ def build_plan(commodity="gas", overwrite=(), include_stale=False):
         if str(d["before"]).startswith("="):
             sys.exit(f"ABORT: formula cell {tab.title}!{a1(tab.col[c])}{row}")
         plan.append({"tab": tab.title, "tabkey": tname, "column": c, "cell": f"{a1(tab.col[c])}{row}", "sheet_row": row,
-                     "ProjectID": d["pid"], "before": d["before"], "after": d["after"], "lines": sorted(set(d["lines"]))})
+                     "ProjectID": d["pid"], "before": d["before"], "after": d["after"], "lines": sorted(set(d["lines"])),
+                     "replaces": bool(str(d["before"]).strip()) and not c.endswith("[ref]")})
     meta["__stale__"] = stale
+    meta["__concerns__"] = concerns
     return plan, skipped, meta
 
 
@@ -248,18 +389,22 @@ def save_plan(plan, meta, commodity="gas"):
     out = ROOT / "work" / "push_plan.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps({"token": token(plan), "commodity": commodity, "plan": plan, "meta": meta,
-                               "stale": meta.get("__stale__", [])}, ensure_ascii=False, indent=1))
+                               "stale": meta.get("__stale__", []), "concerns": meta.get("__concerns__", [])}, ensure_ascii=False, indent=1))
     return out
 
 
-def show(plan, skipped):
+def show(plan, skipped, concerns=()):
     for p in plan:
         a = str(p["after"])
         b = str(p["before"])
-        print(f"{p['tab']}!{p['cell']:8} {p['ProjectID']} {p['column']:18} {b[:50]!r} -> {a[:110]!r}")
-    print(f"\n{len(plan)} cells in the plan; token {token(plan)}")
+        tag = "REPLACES " if p.get("replaces") else ""
+        print(f"{p['tab']}!{p['cell']:8} {p['ProjectID']} {p['column']:18} {tag}{b[:50]!r} -> {a[:110]!r}")
+    n_rep = sum(1 for p in plan if p.get("replaces"))
+    print(f"\n{len(plan)} cells in the plan ({n_rep} replace a value the reviewer saw); token {token(plan)}")
     for k, why in skipped:
         print(f"  skipped {k.split('::')[1]}: {why}")
+    for c in concerns:
+        print(f"  CONCERN {c['pid']} row {c['sheet_row']}: {c['text']}")
     n = sum(1 for _, why in skipped if why.startswith("stale:"))
     if n:
         print(f"  {n} stale line(s) skipped: the backend changed under the decision (--include-stale pushes them anyway)")
@@ -348,21 +493,29 @@ def apply(plan_path):
                     f.write(json.dumps({"keys": p["lines"], "range": f"{p['tab']}!{p['cell']}", "before": p["before"],
                                         "after": p["after"], "ts": ts}, ensure_ascii=False) + "\n")
     print(f"push records written for {len(recs)} lines in {len(dirs)} staging dirs")
+    if pl.get("concerns"):
+        cf = ROOT / "notes" / "push_concerns.csv"
+        new = not cf.exists()
+        with cf.open("a", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            if new:
+                w.writerow(["ts", "ProjectID", "sheet_row", "cells_to_check", "concern", "line_key"])
+            for c in pl["concerns"]:
+                w.writerow([ts, c["pid"], c["sheet_row"], "; ".join(c["check"]), c["text"], c["key"]])
+        print(f"{len(pl['concerns'])} concern(s) appended to {cf.relative_to(ROOT)}")
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--commodity", default="gas")
-    ap.add_argument("--overwrite", action="append", default=[], metavar="KEY",
-                    help="let the accepted line whose key contains KEY overwrite a differing value (Baird names each)")
     ap.add_argument("--include-stale", action="store_true",
                     help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
     a = ap.parse_args(argv)
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity, a.overwrite, a.include_stale)
-    show(plan, skipped)
+    plan, skipped, meta = build_plan(a.commodity, a.include_stale)
+    show(plan, skipped, meta.get("__concerns__", []))
     print("plan written:", save_plan(plan, meta, a.commodity))
 
 
