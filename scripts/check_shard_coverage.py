@@ -138,6 +138,41 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
         if f.get("class_out") not in VALID_CLASS_OUT:
             why.append(f"class_out={f.get('class_out')!r} is not one of "
                        f"{'/'.join(sorted(VALID_CLASS_OUT))} — dropped at workbook build")
+        # Length and capacity are staged in the unit the SOURCE states (Baird 2026-10-02): a
+        # record whose notes show a conversion INTO the staged unit ("246 miles = 395.9 km"
+        # staged as km, "CONVERSION DONE HERE") is not mergeable. The sheet's km / bcm/y
+        # columns are computed, so the conversion is never the researcher's job.
+        vals_ = f.get("values") or {}
+        notes_ = str(f.get("researcher_notes") or "")
+        if "LengthKnownUnits" in vals_ and str(vals_.get("LengthKnownUnits")) == "km" and re.search(
+                r"\b\d[\d,.]*\s*(?:miles?|mi)\b[^.;]{0,60}?(?:=|->|to|is)\s*[\d,.]+\s*km\b",
+                notes_, re.I) and not re.search(r"\bkm\b[^.;]{0,40}(?:states?|gives?|reports?)", notes_, re.I):
+            why.append("the notes show the source gives MILES but `LengthKnownUnits` is km — "
+                       "stage the source's own number and unit (`mi`); the km figure is computed")
+        if re.search(r"conversion done here", notes_, re.I):
+            why.append("notes say the figure was converted here — stage the source's own number "
+                       "and unit instead (length/capacity are never converted)")
+        for ucol_ in ("LengthKnownUnits", "CapacityUnits"):
+            if ucol_ in vals_ and re.fullmatch(r"[\d.,]+", str(vals_[ucol_]).strip()):
+                why.append(f"`{ucol_}` holds a number ({vals_[ucol_]!r}) — put the unit token there")
+        # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
+        # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
+        # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).
+        for ccol_, cucol_ in (("SegmentCost", "SegmentCostUnits"),
+                              ("ProjectLevelCost", "ProjectLevelCostUnits")):
+            if ccol_ not in vals_:
+                continue
+            try:
+                cval_ = float(str(vals_[ccol_]).replace(",", "").strip())
+            except ValueError:
+                continue
+            cunit_ = vals_.get(cucol_)
+            if cunit_ is None and sheet is not None:
+                cunit_ = sheet_value(sheet, pid, f.get("sheet_row"), cucol_)
+            if 0 < cval_ < 100000 and str(cunit_ or "").strip().upper() in ("", "USD"):
+                why.append(f"`{ccol_}` = {vals_[ccol_]} looks unscaled — costs are staged in full "
+                           "currency units (5100000000, not 5100); read the source's column "
+                           "header (EIA says `Cost (millions)`) and scale it")
         # A SOURCED record must carry the value its refs state, in `values` — standing rule
         # 4(e). With `values` empty the ref-only fold has nothing to compare to the sheet, so
         # the record stays a separate FILL: the ref lands orphaned (gate E) and the unit's
