@@ -57,7 +57,7 @@
     shown: [],               // line indexes drawn on the current card, in order
     stay: {},                // line keys decided this session: kept in view even if the filter would drop them
     saving: {},              // line / item keys with a save in flight
-    tab: "lines",            // the card's tab: "lines" | "items"
+    tab: "major",            // the card's tab: "major" | "minor" | "items" | "all"
     igOpen: {},              // item kind -> details open state (survives a re-render)
     session: {}              // key -> the latest non-undone record this reviewer saved in this page session
   };
@@ -80,11 +80,22 @@
   // audit-trail records (the sweep's own "checked, still operating"): never listed, never asked for a call
   var INFO_KINDS = {confirmed: 1};
   var DEC = ["undecided", "accept", "hold", "reject", "suggest"];
+  // severity (review_data.severity, Baird 2026-10-02): a MAJOR change moves a data point — fills a
+  // blank, clears a value the refs do not support, changes a value, or is a status / route / new-row
+  // decision; a MINOR change leaves the value as it is and only adds or re-verifies references.
+  // Severity is what the line does to the cells, never its kind or its rivals.
+  var SEV = ["major", "minor"];
+  var SEV_LABEL = {major: "major changes", minor: "minor changes"};
+  var SEV_TIP = {major: "major change: the data point moves — a blank is filled, a value is cleared or changed, or this is a status / route / new-row decision",
+                 minor: "minor change: the value stays as it is; the line only adds or re-verifies references"};
+  function sevOf(l) { return l.severity || "major"; }     // an older dataset without the field: look at it
 
   function defaults() {
-    return {decision: "undecided", kind: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
+    return {decision: "undecided", kind: "", severity: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
             contested: false, owners: false, landed: false, country: [], fuel: ["gas"], by: "", drift: false};
   }
+  // the tab a pipeline opens on: its major changes, or the minor ones when it has no major change
+  function defaultTab(p) { return p && p.lines.some(function (l) { return sevOf(l) === "major"; }) ? "major" : "minor"; }
   // distinct non-empty segment names of a pipeline, in sheet order
   function segNames(p) {
     var seen = {};
@@ -101,14 +112,17 @@
   function dirLabel(d) { return String(d || "").split("/").pop(); }
   function tierOf(l) { return l.tier === "high" || l.tier === "medium" || l.tier === "low" ? l.tier : "untiered"; }
   // a line is decided only by a person's latest record; a machine record (backend sync, push)
-  // leaves it undecided (the pre-fill is shown, nothing is pushed)
+  // with no person's call leaves it undecided (the pre-fill is shown, nothing is pushed), and one
+  // written AFTER a person's call (push.py's record) only marks the line `applied` (store.overlay)
   function cur(l) { return l.reviewed && l.decision ? l.decision : null; }
+  // the sheet already holds the line: the snapshot had it (in_backend) or push.py wrote it (applied by push)
+  function landed(l) { return !!l.in_backend || !!(l.applied && l.applied.by === "push"); }
   // drawn grayed once a person has decided it (hold stays bright — still open) or it is already in the backend
   function settled(l) { var d = cur(l); return d === "accept" || d === "reject" || d === "suggest"; }
   // a status line covers the Status [ref] record folded into it; the call is incomplete while one
   // of those records still says something else (decided before the fold: deciding again fixes it)
   function gap(l) { return !!(cur(l) && l.uncovered && l.uncovered.length); }
-  function dimmed(l) { return (settled(l) && !gap(l)) || !!l.in_backend; }
+  function dimmed(l) { return (settled(l) && !gap(l)) || landed(l); }
   function dstate(o) {
     if (o._item && INFO_KINDS[o.kind]) return "info";
     var d = o._item ? o.call : cur(o);
@@ -128,10 +142,17 @@
         (blankv(l.decision_note) ? "" : " \u2014 " + l.decision_note);
     }
     if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at) +
-      (gap(l) ? " \u2014 made before the Status [ref] record joined this card: press " + l.decision + " again to cover it" : "");
+      (gap(l) ? " \u2014 made before the Status [ref] record joined this card: press " + l.decision + " again to cover it" : "") + appliedText(l);
     if (l.decision && l.decided_by === "backend sync") return "in backend (synced by backend sync, not reviewed)";
+    if (l.decision && l.decided_by === "push") return "written to the sheet by push " + timeOf(l.decided_at) + " (the accept it wrote was undone or re-keyed since)";
     if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
     return "";
+  }
+  // the machine record that followed a person's call: a push wrote the line, or a refresh found it in the sheet
+  function appliedText(l) {
+    var a = l.applied;
+    if (!a) return "";
+    return a.by === "push" ? " \u00b7 written to the sheet " + timeOf(a.at) : " \u00b7 in backend " + timeOf(a.at);
   }
   // concern linking (review_data._attach_rivals): a validity concern with a candidate value on a
   // column this line proposes is folded onto the line. Where the candidate differs it is a RIVAL,
@@ -192,19 +213,16 @@
   function prepare() {
     LINES = []; ITEMS = []; LINE_BY_KEY = {}; ITEM_BY_KEY = {};
     D.pipelines.forEach(function (p, pi) {
+      // column -> the validity concerns naming it (context under a value row; never a label on the
+      // line: a proposal already disputes the current value, so "contested" is an ITEM's word)
       p._cont = {};
       p.items.forEach(function (it) {
         it._item = true; it._p = pi; it._i = ITEMS.length; ITEM_BY_KEY[it.key] = it;
-        var c = it.contested || {};
-        Object.keys(c).forEach(function (col) { if (!(col in p._cont) || c[col]) p._cont[col] = c[col] || ""; });
+        if (it.kind === "concern") Object.keys(it.contested || {}).forEach(function (col) { (p._cont[col] = p._cont[col] || []).push(it); });
         ITEMS.push(it);
       });
       p.lines.forEach(function (l) {
         l._p = pi; l._i = LINES.length; LINE_BY_KEY[l.key] = l;
-        var cols = [l.column].concat(l.value_cols || []);
-        if (l.kind === "status") cols.push("Status");
-        l._contCols = cols.filter(function (c, i) { return c && cols.indexOf(c) === i && (c in p._cont); });
-        l._cont = l._contCols.length > 0;
         l._rows = [l.sheet_row, l.tracker_sheet_row].filter(function (x) { return x != null; });
         LINES.push(l);
       });
@@ -228,21 +246,26 @@
   function inRows(rows, ranges) {
     return rows.some(function (r) { return ranges.some(function (g) { return r >= g[0] && r <= g[1]; }); });
   }
+  // a validity concern no change answers: it names columns, and no line proposes a value on them
+  function unanswered(it) {
+    return it.kind === "concern" && Object.keys(it.contested || {}).length > 0 && !(it.rival_lines || []).length;
+  }
   // One matcher for lines and items. `skip` names a facet to ignore (for faceted chip counts).
   function match(o, p, fs, skip, ranges, q) {
     var item = !!o._item;
     if (item && INFO_KINDS[o.kind]) return false;
-    if (!item && !fs.landed && o.in_backend) return false;
+    if (!item && !fs.landed && landed(o)) return false;
     if (skip !== "kind") {
       if (fs.kind) { if (o.kind !== fs.kind) return false; }
       else if (item) return false;
     }
     if (skip !== "decision" && fs.decision && dstate(o) !== fs.decision && !(!item && S.stay[o.key])) return false;
+    if (skip !== "severity" && fs.severity && (item || sevOf(o) !== fs.severity)) return false;
     if (skip !== "tier" && fs.tier && (item || tierOf(o) !== fs.tier)) return false;
     if (fs.class_out && o.class_out !== fs.class_out) return false;
     if (fs.dir && o.dir !== fs.dir) return false;
     if (fs.column && (item || o.column !== fs.column)) return false;
-    if (fs.contested && !(item ? Object.keys(o.contested || {}).length : o._cont)) return false;
+    if (fs.contested && !(item && unanswered(o))) return false;
     if (fs.owners && (item || o.kind !== "oo")) return false;
     if (fs.by && (o.reviewed ? o.decided_by : "") !== fs.by) return false;
     if (fs.drift && (item || !(o.drift || o.live))) return false;
@@ -257,14 +280,14 @@
     return true;
   }
   function pipeMatches(p, pi) {
-    var ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase(), n = 0, todo = 0, ni = 0;
+    var ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase(), n = 0, todo = 0, ni = 0, tsev = {major: 0, minor: 0};
     p.lines.forEach(function (l) {
       if (!match(l, p, FS, null, ranges, q)) return;
       n++;
-      if (!cur(l)) todo++;
+      if (!cur(l)) { todo++; tsev[sevOf(l)]++; }
     });
     p.items.forEach(function (it) { if (match(it, p, FS, null, ranges, q)) ni++; });
-    p._n = n; p._todo = todo; p._ni = ni;
+    p._n = n; p._todo = todo; p._ni = ni; p._tsev = tsev;
     return n + ni;
   }
   function refilter(keep) {
@@ -276,10 +299,10 @@
       nl += p._n; ni += p._ni;
       if (m || i === S.pin) S.visible.push(i);
     });
-    $("count").textContent = nl + " change" + (nl === 1 ? "" : "s") + (ni ? " + " + ni + " item" + (ni === 1 ? "" : "s") : "") +
+    S.countText = nl + " change" + (nl === 1 ? "" : "s") + (ni ? " + " + ni + " item" + (ni === 1 ? "" : "s") : "") +
       " on " + S.visible.length + " pipeline" + (S.visible.length === 1 ? "" : "s");
     if (S.visible.indexOf(S.pipe) < 0) S.pipe = S.visible.length ? S.visible[0] : -1;
-    if (D.pipelines[S.pipe] !== sel) { S.line = -1; S.tab = "lines"; }
+    if (D.pipelines[S.pipe] !== sel) { S.line = -1; S.tab = defaultTab(D.pipelines[S.pipe]); }
     renderChips();
     renderActive();
     renderProgress();
@@ -293,7 +316,7 @@
     function tally(o, p, v) { if (match(o, p, FS, facet, ranges, q) && v in c) c[v]++; }
     D.pipelines.forEach(function (p) {
       p.lines.forEach(function (l) {
-        tally(l, p, facet === "decision" ? dstate(l) : facet === "kind" ? l.kind : tierOf(l));
+        tally(l, p, facet === "decision" ? dstate(l) : facet === "kind" ? l.kind : facet === "severity" ? sevOf(l) : tierOf(l));
       });
       if (facet === "kind" || (facet === "decision" && isItemKind(FS.kind))) {
         p.items.forEach(function (it) { tally(it, p, facet === "kind" ? it.kind : dstate(it)); });
@@ -407,9 +430,10 @@
     LINES.forEach(function (l) { tot[l.kind] = 1; });
     ITEMS.forEach(function (i) { tot[i.kind] = 1; });
     facetSelect("f-kind", "kind", LINE_KINDS.concat(ITEM_KINDS.filter(function (k) { return !INFO_KINDS[k]; })), KIND_LABEL, tot);
+    facetSelect("f-severity", "severity", SEV, SEV_LABEL);
     var tt = {};
     LINES.forEach(function (l) { tt[tierOf(l)] = 1; });
-    facetSelect("f-tier", "tier", ["high", "medium", "low", "untiered"], lab, tt);
+    facetSelect("f-tier", "tier", ["high", "medium", "low", "untiered"], {untiered: "unrated"}, tt);
   }
   function fillSelect(id, values) {
     var s = $(id);
@@ -436,12 +460,14 @@
       var c = e.target.closest("button[data-clear]");
       if (c) { clearOne(c.getAttribute("data-clear")); changed(); }
     });
-    ["decision", "kind", "tier", "class_out", "column", "dir"].forEach(function (f) {
-      $("f-" + f).onchange = function () { FS[f] = this.value; changed(); };
+    ["decision", "kind", "severity", "tier", "class_out", "column", "dir"].forEach(function (f) {
+      $("f-" + f).onchange = function () { FS[f] = this.value; if (f === "kind" && FS.kind !== "concern") { FS.contested = false; $("f-contested").checked = false; } changed(); };
     });
-    ["contested", "owners", "landed"].forEach(function (f) {
+    ["owners", "landed"].forEach(function (f) {
       $("f-" + f).onchange = function () { FS[f] = this.checked; changed(); };
     });
+    // "unanswered concerns" is an item filter: it selects the concern kind (and clears when the kind leaves)
+    $("f-contested").onchange = function () { FS.contested = this.checked; if (FS.contested) FS.kind = "concern"; changed(); };
     $("f-fuel").onchange = function () {
       FS.fuel = Array.prototype.map.call(this.querySelectorAll("input:checked"), function (i) { return i.value; });
       if (FS.fuel.length === FUELS.length) FS.fuel = [];
@@ -463,7 +489,6 @@
     $("f-by").onchange = function () { FS.by = this.value; if (FS.by && FS.decision === "undecided") FS.decision = ""; changed(); };
     $("f-drift").onchange = function () { FS.drift = this.checked; if (FS.drift && FS.decision === "undecided") FS.decision = ""; changed(); };
     $("f-q").oninput = function () { FS.q = this.value; changed(true); };
-    $("f-row").oninput = function () { FS.row = this.value; changed(true); };
     $("f-more").onclick = function () { toggleMore(); };
     $("f-reset").onclick = function () { FS = defaults(); syncControls(); changed(); };
   }
@@ -486,7 +511,7 @@
     });
     ["contested", "owners", "landed", "drift"].forEach(function (f) { $("f-" + f).checked = FS[f]; });
     fillBy();
-    $("f-q").value = FS.q; $("f-row").value = FS.row;
+    $("f-q").value = FS.q;
   }
   // Every filter that is set is a removable chip, so a control tucked behind "More filters"
   // never filters silently.
@@ -502,18 +527,30 @@
     if (FS.dir) chip("dir", "batch: " + dirLabel(FS.dir), true);
     if (FS.by) chip("by", "decided by: " + FS.by, true);
     if (FS.drift) chip("drift", "sheet changed since decided", true);
-    if (FS.contested) chip("contested", "contested", false);
-    if (FS.owners) chip("owners", "owners tab", false);
+    if (FS.contested) chip("contested", "unanswered concerns", true);
+    if (FS.owners) chip("owners", "owners tab", true);
     if (FS.landed) chip("landed", "incl. changes already in the backend", false);
     $("active-filters").innerHTML = chips.join(" ");
     $("active-filters").hidden = !chips.length;
     $("f-more").textContent = ($("more-filters").hidden ? "more filters" : "fewer filters") + (n ? " (" + n + ")" : "");
   }
   function renderProgress() {
-    var total = 0, done = 0;
-    LINES.forEach(function (l) { if (!l.in_backend || FS.landed) { total++; if (cur(l)) done++; } });
-    $("progress-bar").style.width = total ? (100 * done / total) + "%" : "0";
-    $("progress-text").textContent = done + " of " + total + " changes decided";
+    var total = 0, done = 0, sev = {major: {done: 0, total: 0}, minor: {done: 0, total: 0}};
+    LINES.forEach(function (l) {
+      if (!landed(l) || FS.landed) { total++; sev[sevOf(l)].total++; if (cur(l)) { done++; sev[sevOf(l)].done++; } }
+    });
+    S.progress = {done: done, total: total, sev: sev};
+  }
+  function showProgress() {
+    var dlg = $("dialog"), g = S.progress || {done: 0, total: 0, sev: {major: {done: 0, total: 0}, minor: {done: 0, total: 0}}};
+    dlg.setAttribute("data-kind", "progress");
+    dlg.innerHTML = "<h3>progress</h3><p>" + esc(S.countText || "") + " in view</p>" +
+      '<div class="progress" aria-hidden="true"><div id="progress-bar" style="width:' + (g.total ? 100 * g.done / g.total : 0) + '%"></div></div>' +
+      "<p>" + g.done + " of " + g.total + " changes decided &middot; major " + g.sev.major.done + " of " + g.sev.major.total +
+      " &middot; minor " + g.sev.minor.done + " of " + g.sev.minor.total + "</p>" +
+      '<div class="actions"><button type="button" id="dlg-close">close</button></div>';
+    $("dlg-close").onclick = function () { dlg.close(); };
+    dlg.showModal();
   }
 
   // ---- queue ----
@@ -524,11 +561,12 @@
       var dots = {};
       p.lines.forEach(function (l) { dots[tierOf(l)] = 1; });
       var dd = ["high", "medium", "low"].filter(function (t) { return dots[t]; })
-        .map(function (t) { return '<span class="dot ' + t + '" data-tip="' + t + ' tier" role="img" aria-label="' + t + ' tier"></span>'; }).join("");
+        .map(function (t) { return '<span class="dot ' + t + '" data-tip="' + t + ' confidence" role="img" aria-label="' + t + ' confidence"></span>'; }).join("");
       var rows = p.segments.map(function (s) { return s.sheet_row; }).filter(function (x) { return x != null; });
       var where = p.pid.indexOf("new:") === 0 ? "new row" : (p.pid === "scope" ? "scope" :
         (rows.length ? "row " + rows[0] + (rows.length > 1 ? " +" + (rows.length - 1) : "") : "no row"));
-      var badge = p._todo ? '<span class="n todo">' + p._todo + " to decide</span>"
+      var ts = p._tsev || {}, parts = SEV.filter(function (s) { return ts[s]; }).map(function (s) { return ts[s] + " " + s; });
+      var badge = p._todo ? '<span class="n todo">' + (parts.length ? parts.join(" &middot; ") : p._todo) + " to decide</span>"
         : (p._n ? '<span class="n">' + p._n + " &middot; done</span>" : (p._ni ? '<span class="n">' + p._ni + " item" + (p._ni === 1 ? "" : "s") + "</span>" : '<span class="n"></span>'));
       var sn = segNames(p);
       h.push('<li data-i="' + i + '"' + (i === S.pipe ? ' class="sel"' : "") + '><div class="pname">' + esc(p.name || "(no name)") +
@@ -540,8 +578,10 @@
   }
   function selectPipe(i, lineIdx) {
     S.pipe = i;
-    S.tab = "lines";
+    S.tab = defaultTab(D.pipelines[i]);
     S.line = lineIdx == null ? -1 : lineIdx;
+    // a link straight to a line: open the tab that holds it
+    if (S.line >= 0 && LINES[S.line] && S.tab !== sevOf(LINES[S.line])) S.tab = sevOf(LINES[S.line]);
     var prev = $("pipes").querySelector("li.sel");
     if (prev) prev.classList.remove("sel");
     var li = $("pipes").querySelector('li[data-i="' + i + '"]');
@@ -569,8 +609,15 @@
   }
   function tierChip(l) {
     var t = tierOf(l);
-    return chip(t === "untiered" ? "untiered" : t, t === "untiered" ? "" : t,
-      t === "untiered" ? "no confidence tier on this record: defaults to hold" : "confidence tier (rule 4)");
+    return chip(t === "untiered" ? "unrated" : t, t === "untiered" ? "" : t,
+      t === "untiered" ? "no confidence rating on this record: defaults to hold" : "confidence level (rule 4)");
+  }
+  // "major · fill", "major · status, change", "minor · refs only", "minor · re-verified", "major · unsupported"
+  var VERDICT_LABEL = {REF_UNSUPPORTED: "unsupported", DEAD_LINK: "dead link", REF_BLOCKED: "blocked", REVERIFIED: "re-verified"};
+  function sevChip(l) {
+    var s = sevOf(l), ops = (l.ops || []).filter(function (o) { return o !== "refs"; });
+    var what = ops.length ? ops.join(", ").replace("new_row", "new row") : (VERDICT_LABEL[l.class_out] || "refs only");
+    return chip(s + " · " + what, s, SEV_TIP[s]);
   }
   // One mark per proposed URL: ✓ when it loads, states the value and names the pipeline; else the failed checks.
   function vmark(u, l) {
@@ -602,13 +649,29 @@
     return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(shortUrl(u)) + "</a>";
   }
   function tag(t) { return t ? '<span class="tag tag-' + t + '">' + t + "</span>" : ""; }
-  function concernNote(p, col, l) {
-    var t = p._cont[col];
-    if (l && agreesOn(l, col).length) {
-      return '<div class="concern-inline">concern agrees with this value: accepting resolves it' + (t ? " (" + esc(t) + ")" : "") + "</div>";
+  var CONCERN_BODY = ["recommendation", "action", "detail", "summary", "researcher_notes", "staged_note"];   // review_data._CONCERN_BODY
+  function concernText(it) {
+    for (var i = 0; i < CONCERN_BODY.length; i++) {
+      var t = it[CONCERN_BODY[i]];
+      if (typeof t === "string" && t.trim()) return t.length > 240 ? t.slice(0, 240) + "\u2026" : t;
     }
-    if (l && rivalsOf(l).some(function (r) { return col in r.cols; })) return "";   // the rival rows below say it
-    return '<div class="concern-inline">concern: ' + (t ? esc(t) : "a validity concern contests this value (no detail recorded)") + "</div>";
+    return "";
+  }
+  // Context under a value row: the validity concerns on `col` that the line's own chips do not
+  // already answer (a rival row or a "concern agrees" chip covers its concern) and that have no
+  // call yet. A change is a change; the concern stays an item, and this note only says it is there.
+  function concernNote(p, col, l) {
+    var covered = {};
+    ((l && l.rivals) || []).forEach(function (r) { if ((col in (r.cols || {})) || (r.agrees || []).indexOf(col) >= 0) covered[r.key] = 1; });
+    var open = (p._cont[col] || []).filter(function (it) { return !covered[it.key] && !it.call; });
+    var h = "";
+    if (l && agreesOn(l, col).length) h += '<div class="concern-inline">a validity concern offers this same value: accepting dismisses it</div>';
+    open.forEach(function (it) {
+      var cand = (it.contested || {})[col], t = concernText(it);
+      h += '<div class="concern-inline">a validity concern (' + esc(it.concern_type || "concern") + ") also questions this cell" +
+        (cand ? ", offering " + esc(cand) : "") + (t ? ": " + esc(t) : "") + " \u00b7 it stays an item to call</div>";
+    });
+    return h;
   }
   // the rival rows under a value row: the concern's candidate on `c`, then its reasoning
   function rivalRows(l, c) {
@@ -624,14 +687,13 @@
   }
   // one value row: field | now | proposed | tag. has=false means context only (not proposed).
   function valueRow(l, p, c, was, now, has) {
-    var contested = (c in p._cont) && !blankv(was);
-    var wasH = blankv(was) ? "" : '<span class="' + (contested ? "tint-cont" : "") + '">' + esc(was) + "</span>";
+    var wasH = blankv(was) ? "" : "<span>" + esc(was) + "</span>";
     var nowH, t = "", same = false;
     if (!has || (!blankv(was) && String(was).trim() === String(now).trim())) { nowH = wasH; same = true; }
     else if (blankv(now)) { nowH = '<span class="blank">(clear)</span>'; t = "clear"; }
     else { t = blankv(was) ? "fill" : "change"; nowH = '<span class="newv c-' + t + '">' + esc(now) + "</span>"; }
     var r = '<tr class="' + (same ? "same" : "") + '"><td class="f">' + esc(c) + "</td><td>" + wasH + "</td><td>" + nowH + '</td><td class="t">' + tag(t) + "</td></tr>";
-    if (contested) { var cn = concernNote(p, c, l); if (cn) r += '<tr class="note"><td></td><td colspan="3">' + cn + "</td></tr>"; }
+    if (c in p._cont) { var cn = concernNote(p, c, l); if (cn) r += '<tr class="note"><td></td><td colspan="3">' + cn + "</td></tr>"; }
     if (has) r += rivalRows(l, c);
     return r;
   }
@@ -745,7 +807,7 @@
     (l.covers || []).forEach(function (c) {
       d.push('<div class="dtxt"><span class="k">also decides:</span> the refs-leg record for ' + esc(c.ref_col || "Status [ref]") + " (" +
         esc(KIND_LABEL[c.kind] || c.kind) + " \u00b7 " + esc(c.class_out || "?") + (c.dir !== l.dir ? " \u00b7 " + esc(dirLabel(c.dir)) : "") +
-        (c.tier && c.tier !== l.tier ? " \u00b7 its tier " + esc(c.tier) : "") + "); its refs are in the table</div>");
+        (c.tier && c.tier !== l.tier ? " \u00b7 its confidence " + esc(c.tier) : "") + "); its refs are in the table</div>");
     });
     var misc = ["batch " + dirLabel(l.dir), "class " + (l.class_in || "?") + " → " + (l.class_out || "?"),
                 "default " + (l.default || "hold"),
@@ -759,13 +821,14 @@
   function lineHtml(l, p) {
     var chips = [];
     if (l.kind === "oo" || l.kind === "new_row") chips.push(chip(KIND_LABEL[l.kind], l.kind === "new_row" ? "newrow" : "oo"));
-    chips.push(l.kind === "new_row" ? chip(tierOf(l) === "untiered" ? "untiered" : tierOf(l), tierOf(l) === "untiered" ? "" : tierOf(l)) : tierChip(l));
+    chips.push(l.kind === "new_row" ? chip(tierOf(l) === "untiered" ? "unrated" : tierOf(l), tierOf(l) === "untiered" ? "" : tierOf(l)) : tierChip(l));
+    chips.push(sevChip(l));
     var rivals = liveRivals(l);
     var agree = (l.rivals || []).filter(function (r) { return r.agrees && r.agrees.length && agreesOn(l, r.agrees[0]).length; });
-    if (l._cont) chips.push(chip("contested", "cont", "a validity concern contests a value on this change"));
     if (agree.length) chips.push(chip("concern agrees", "ok", "an open concern's candidate on " + agree.map(function (r) { return r.agrees.join(", "); }).join("; ") + " equals this proposed value; accepting it records a dismissed call on the concern"));
     if (rivals.length) chips.push(chip("rival candidate", "cont", "a validity concern proposes a different value for this cell: take it with accept candidate (c), or accept the proposal and the concern is dismissed"));
     if (l.in_backend) chips.push(chip("in backend", "", "the snapshot already holds this value and these refs"));
+    if (l.applied && l.applied.by === "push") chips.push(chip("pushed " + timeOf(l.applied.at), "ok", "push.py wrote this line to the backend sheet (cells read back after the write); the next backend refresh shows it as in backend"));
     if (l.drift && cur(l)) chips.push(chip("sheet changed since decided", "warn", "the backend cells this call was judged against have changed since (it was decided on " + (l.drift.decided_snapshot || "an earlier snapshot") + "): look again, then press the call again to confirm it against the current sheet"));
     if (l.live) chips.push(chip("sheet changed live", "warn", "the backend sheet, read just now, differs from what this change was judged against: " + l.live.map(function (c) { return c[0] + " was " + (c[1] || "blank") + ", is now " + (c[2] || "blank"); }).join("; ") + ". publish again to rebuild the proposal against the new values"));
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
@@ -915,7 +978,7 @@
     var c = {high: 0, medium: 0, low: 0, untiered: 0};
     p.lines.forEach(function (l) { c[tierOf(l)]++; });
     return ["high", "medium", "low", "untiered"].filter(function (t) { return c[t]; })
-      .map(function (t) { return chip(c[t] + " " + t, t === "untiered" ? "" : t); }).join(" ");
+      .map(function (t) { return chip(c[t] + " " + (t === "untiered" ? "unrated" : t), t === "untiered" ? "" : t); }).join(" ");
   }
   function renderCard() {
     var card = $("card");
@@ -923,16 +986,30 @@
     var p = D.pipelines[S.pipe], ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
     var isNew = p.pid.indexOf("new:") === 0, isScope = p.pid === "scope";
     var segs = p.segments;
-    var open = p.lines.filter(function (l) { return !cur(l); }).length;
-    var segTxt = segs.length ? "row" + (segs.length > 1 ? "s " : " ") + segs.map(function (s) { return s.sheet_row; }).join(", ") : "";
-    var ctx = ['<b>' + esc(isNew ? "new candidate, not in the sheet" : (isScope ? "scope-level" : segTxt || "no sheet row")) + "</b>",
+    var ctx = [(isNew || isScope) && '<b>' + esc(isNew ? "new candidate, not in the sheet" : "scope-level") + "</b>",
                p.country && esc(p.country), p.status && "status: " + esc(p.status),
                p.wiki && '<a href="' + esc(p.wiki) + '" target="_blank" rel="noopener">wiki ↗</a>',
                tierSummary(p)]
       .filter(Boolean).map(function (x) { return "<span>" + x + "</span>"; }).join("");
-    var h = '<div class="cardhead">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid"' + tipAttrs("click to copy the ProjectID") + '>' + esc(p.pid) + "</span>") +
+    var h = '<div class="cardhead"><div class="headrow">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid"' + tipAttrs("click to copy the ProjectID") + '>' + esc(p.pid) + "</span>") +
       '<a href="#" class="only" data-tab="all"' + tipAttrs("review everything on this pipeline: every change (filters ignored) and every item") + '>' + esc(p.name || "(no name)") + "</a>" +
-      (segNames(p).length ? '<span class="hseg">' + esc(segNames(p).join(" / ")) + "</span>" : "") + '</h2><div class="ctx">' + ctx + "</div>";
+      (segNames(p).length ? '<span class="hseg">' + esc(segNames(p).join(" / ")) + "</span>" : "") + '</h2><div class="bulkbtns">' +
+      (function () {
+        var minor = p.lines.filter(function (l) { return sevOf(l) === "minor"; });
+        var on = minor.some(function (l) { return !cur(l); });
+        var why = !minor.length ? "no minor changes on this pipeline" : "every minor change is already decided";
+        return '<button type="button" class="bulk b-accept' + (on ? "" : " off") + '" data-bulk="pipe-minor"' + (on ? "" : ' aria-disabled="true" data-why="' + esc(why) + '"') +
+          tipAttrs(on ? "accept every undecided minor change on this pipeline (refs only, the values stand; rival candidates left to decide by hand) that the filters show" : why) + '>accept all minor changes</button>';
+      })() +
+      '<button type="button" class="bulk b-accept" data-bulk="pipe-high"' + tipAttrs("accept every undecided high-confidence change on this pipeline, major or minor (rival candidates left to decide by hand) that the filters show") + '>accept all high-confidence suggestions</button>' +
+      (function () {
+        var nonHigh = p.lines.filter(function (l) { return tierOf(l) !== "high"; });
+        var on = nonHigh.some(function (l) { return !cur(l); });
+        var why = !nonHigh.length ? "all suggestions are high-confidence" : "every medium- and low-confidence suggestion is already decided";
+        return '<button type="button" class="bulk b-hold' + (on ? "" : " off") + '" data-bulk="pipe-all"' + (on ? "" : ' aria-disabled="true" data-why="' + esc(why) + '"') +
+          tipAttrs(on ? "accept every undecided change on this pipeline, any confidence level (rival candidates left to decide by hand) that the filters show" : why) + '>accept all suggestions</button>';
+      })() +
+      '</div></div><div class="ctx">' + ctx + "</div>";
     var askItems = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
     var nOpenItems = askItems.filter(function (it) { return !it.call; }).length;
     // "(3 to decide)", "(1 of 3 to decide)", "(3, all decided)"
@@ -941,8 +1018,11 @@
       if (!n) return "(" + total + ", all decided)";
       return "(" + (n === total ? n : n + " of " + total) + " to decide)";
     }
-    h += '<div class="tabs" role="tablist">' +
-      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">changes ' + todo(open, p.lines.length) + "</button>" +
+    var bySev = {major: p.lines.filter(function (l) { return sevOf(l) === "major"; }), minor: p.lines.filter(function (l) { return sevOf(l) === "minor"; })};
+    h += '<div class="tabs" role="tablist">' + SEV.map(function (s) {
+      var openS = bySev[s].filter(function (l) { return !cur(l); }).length;
+      return '<button type="button" role="tab" data-tab="' + s + '" aria-selected="' + (S.tab === s) + '"' + tipAttrs(SEV_TIP[s]) + ">" + SEV_LABEL[s] + " " + todo(openS, bySev[s].length) + "</button>";
+    }).join("") +
       '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '">items ' + todo(nOpenItems, askItems.length) + "</button>" +
       '<button type="button" role="tab" data-tab="all" aria-selected="' + (S.tab === "all") + '"' + tipAttrs("every change (filters ignored) and every item on this pipeline; also: click the name") + '>everything</button></div></div>';
     if (S.tab === "items") {
@@ -952,9 +1032,10 @@
     }
     // lines the filter lets through, grouped by segment when the PID spans several sheet rows
     var all = S.tab === "all";
-    var keep = all ? p.lines.slice() : p.lines.filter(function (l) { return match(l, p, FS, null, ranges, q); });
-    var hidden = p.lines.length - keep.length;
-    if (S.pin === S.pipe && !keep.length) { keep = p.lines.slice(); hidden = 0; }
+    var base = bySev[S.tab] || p.lines;
+    var keep = all ? p.lines.slice() : base.filter(function (l) { return match(l, p, FS, null, ranges, q); });
+    var hidden = base.length - keep.length;
+    if (S.pin === S.pipe && !keep.length) { keep = base.slice(); hidden = 0; }
     var groups = [];
     if (segs.length > 1) {
       segs.forEach(function (s) { groups.push({seg: s, lines: keep.filter(function (l) { return segRow(l) === s.sheet_row; })}); });
@@ -973,7 +1054,7 @@
     });
     if (hidden) h += '<div class="hiddennote">' + hidden + " more change" + (hidden === 1 ? "" : "s") + " on this pipeline " + (hidden === 1 ? "is" : "are") +
       ' hidden by the filter &mdash; <a href="#" class="only" data-showall="1">show all</a></div>';
-    if (!keep.length && !hidden) h += '<div class="hiddennote">no changes on this pipeline.</div>';
+    if (!keep.length && !hidden) h += '<div class="hiddennote">no ' + (SEV_LABEL[S.tab] || "changes") + ' on this pipeline.</div>';
     if (all) h += '<h3 class="allitems">items</h3>' + itemsHtml(p);
     card.innerHTML = h;
     if (S.line < 0 || S.shown.indexOf(S.line) < 0) S.line = S.shown.length ? S.shown[0] : -1;
@@ -1045,6 +1126,13 @@
   function applyRecord(r) {
     var l = LINE_BY_KEY[r.key];
     if (!l) return;
+    if (MACHINE[r.reviewer]) {
+      // a machine record (push.py after a write, a backend sync) marks the line applied; a
+      // person's standing call keeps speaking for it (store.speaker). Only with no person's
+      // call does it fill the pre-fill display below.
+      l.applied = {by: r.reviewer, at: r.ts};
+      if (l.reviewed) return;
+    }
     l.decision = r.undecided ? null : r.decision;
     l.reviewed = !r.undecided && !MACHINE[r.reviewer];
     l.decided_by = r.undecided ? null : r.reviewer;
@@ -1254,13 +1342,12 @@
     c: function () { if (S.tab !== "items") acceptCandidate(LINES[S.line], null, true); },
     "/": function (e) { e.preventDefault(); $("f-q").focus(); $("f-q").select(); },
     S: function () { if (SHOW_SUMMARY) showSummary(); },
-    A: function () { showBulk("defaults"); },
     i: toggleItemsTab,
     "?": showHelp
   };
   function toggleItemsTab() {
     if (S.pipe < 0) return;
-    S.tab = S.tab === "items" ? "lines" : "items";
+    S.tab = S.tab === "items" ? defaultTab(D.pipelines[S.pipe]) : "items";
     renderCard();
     if (S.tab === "items") { var s1 = document.querySelector("#card select[data-icall]"); if (s1) s1.focus(); }
   }
@@ -1289,6 +1376,9 @@
     "<li><b>Left list:</b> pipelines with something to decide. Click one to open it.</li>" +
     "<li><b>Card:</b> that pipeline's proposed <b>changes</b>, one per cell. Each change shows the cell as it is <b>now</b> and the <b>proposed</b> value, " +
     "plus the source links (refs) that back it.</li>" +
+    "<li><b>Major / minor:</b> a <b>major change</b> moves a data point: it fills a blank, clears a value the sources do not support, changes a value, " +
+    "or is a status, route or new-row decision. A <b>minor change</b> leaves the value exactly as it is and only adds (or re-checks) source links. " +
+    "The card opens on the major changes; the minor ones have their own tab and an <b>accept all minor changes</b> button.</li>" +
     "<li><b>Color:</b> green means well sourced, yellow means one source or partial, and red means weak. Green changes default to accept; the rest default to hold.</li>" +
     "<li><b>Items</b> tab: concerns and notes the researcher raised. They take a call and a note, but they never write to the sheet.</li>" +
     "</ul>" +
@@ -1393,29 +1483,31 @@
     var ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
     var t = {lines: [], byKind: {}, decision: mode === "hold" ? "hold" : "accept", skip: {rival: 0, decided: 0, other: 0}};
     D.pipelines.forEach(function (p, pi) {
-      if (mode === "pipe-high" && pi !== S.pipe) return;
+      if (mode.indexOf("pipe-") === 0 && pi !== S.pipe) return;
       p.lines.forEach(function (l) {
         if (!match(l, p, FS, null, ranges, q)) return;
         if (cur(l)) { t.skip.decided++; return; }
         if (mode !== "hold" && liveRivals(l).length) { t.skip.rival++; return; }
-        if ((mode === "defaults" && (l.default || "hold") !== "accept") || (mode === "pipe-high" && tierOf(l) !== "high")) { t.skip.other++; return; }
+        if ((mode === "defaults" && (l.default || "hold") !== "accept") || (mode === "pipe-high" && tierOf(l) !== "high") ||
+            (mode === "pipe-minor" && sevOf(l) !== "minor")) { t.skip.other++; return; }
         t.lines.push(l);
         t.byKind[l.kind] = (t.byKind[l.kind] || 0) + 1;
       });
     });
     return t;
   }
-  var BULK_TITLE = {defaults: "accept all defaults in view", hold: "hold all in view", "pipe-high": "accept all high for this pipeline"};
+  var BULK_TITLE = {defaults: "accept all defaults in view", hold: "hold all in view", "pipe-minor": "accept all minor changes",
+                    "pipe-high": "accept all high-confidence suggestions", "pipe-all": "accept all suggestions"};
   function showBulk(mode) {
     if (!Store.caps.decide) return notYet();
     if (S.pipe < 0) return toast("nothing in view");
     var t = bulkTargets(mode), dlg = $("dialog"), sk = t.skip;
     var skipTxt = [sk.rival && sk.rival + " with a rival candidate (decide those by hand)", sk.decided && sk.decided + " already decided",
-                   sk.other && sk.other + (mode === "pipe-high" ? " not high tier" : " whose default is hold")].filter(Boolean).join(", ");
+                   sk.other && sk.other + (mode === "pipe-high" ? " not high confidence" : mode === "pipe-minor" ? " major (the value moves: decide those by hand)" : " whose default is hold")].filter(Boolean).join(", ");
     if (!t.lines.length) return toast("nothing to " + t.decision + " in view" + (skipTxt ? " (skipped: " + skipTxt + ")" : ""));
     var kinds = Object.keys(t.byKind).map(function (k) { return "<tr><td>" + esc(KIND_LABEL[k]) + "</td><td>" + t.byKind[k] + "</td></tr>"; }).join("");
     dlg.setAttribute("data-kind", "bulk");
-    dlg.innerHTML = "<h3>" + esc(BULK_TITLE[mode]) + "</h3><p><b>" + t.lines.length + " change" + (t.lines.length === 1 ? "" : "s") + "</b> will be " +
+    dlg.innerHTML = "<h3>" + esc(BULK_TITLE[mode]) + (mode.indexOf("pipe-") === 0 ? " (this pipeline)" : "") + "</h3><p><b>" + t.lines.length + " change" + (t.lines.length === 1 ? "" : "s") + "</b> will be " +
       (t.decision === "accept" ? "accepted" : "held") + " as " + esc(ME) + ", in one save:</p><table>" + kinds + "</table>" +
       (skipTxt ? '<p class="faint">skipped: ' + esc(skipTxt) + ".</p>" : "") +
       '<p class="faint" id="bulk-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">cancel</button>' +
@@ -1442,18 +1534,18 @@
 
   // ---- session summary ----
   function summaryModel() {
-    var kinds = {}, tiers = {}, dirs = {}, ik = {};
+    var kinds = {}, tiers = {}, sev = {}, dirs = {}, ik = {};
     function bump(m, k, f) { (m[k] = m[k] || {decided: 0, open: 0, backend: 0})[f]++; }
     LINES.forEach(function (l) {
-      var f = cur(l) ? "decided" : (l.in_backend ? "backend" : "open");
-      bump(kinds, l.kind, f); bump(tiers, tierOf(l), f); bump(dirs, l.dir, f);
+      var f = cur(l) ? "decided" : (landed(l) ? "backend" : "open");
+      bump(kinds, l.kind, f); bump(tiers, tierOf(l), f); bump(sev, sevOf(l), f); bump(dirs, l.dir, f);
     });
     ITEMS.forEach(function (it) { if (!INFO_KINDS[it.kind]) bump(ik, it.kind, it.call ? "decided" : "open"); });
     var sess = Object.keys(S.session).map(function (k) { return S.session[k]; }), sw = {}, sd = {};
     sess.forEach(function (r) { sw[r.what] = (sw[r.what] || 0) + 1; sd[r.dir] = (sd[r.dir] || 0) + 1; });
     var calls = {accept: 0, hold: 0, reject: 0, suggest: 0};
     LINES.forEach(function (l) { if (cur(l) && cur(l) in calls) calls[cur(l)]++; });
-    return {calls: calls, kinds: kinds, tiers: tiers, dirs: dirs, itemKinds: ik, sessWhat: sw, sessDirs: sd, sessN: sess.length};
+    return {calls: calls, kinds: kinds, tiers: tiers, sev: sev, dirs: dirs, itemKinds: ik, sessWhat: sw, sessDirs: sd, sessN: sess.length};
   }
   function callsText(c) { return c.accept + " accepted, " + c.hold + " held, " + c.reject + " rejected, " + c.suggest + " suggested"; }
   function sumRows(m, order, labels) {
@@ -1473,7 +1565,8 @@
     var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
     var out = "## Review summary: " + D.scope.country + " " + D.scope.commodity + " (snapshot " + D.scope.snapshot + ")\n\nReviewer: " + ME +
       "  \nThis session: " + m.sessN + " saved (" + (Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + k; }).join(", ") || "none") + ")  \nDecided changes by call: " + callsText(m.calls) + "\n\n" +
-      "### Changes by kind\n\n" + tab(["kind"].concat(H.slice(1)), kinds) + "\n### Changes by tier\n\n" + tab(["tier"].concat(H.slice(1)), tiers) +
+      "### Changes by kind\n\n" + tab(["kind"].concat(H.slice(1)), kinds) + "\n### Changes by severity\n\n" + tab(["severity"].concat(H.slice(1)), sumRows(m.sev, SEV)) +
+      "\n### Changes by confidence\n\n" + tab(["confidence"].concat(H.slice(1)), tiers) +
       "\n### Items\n\n" + tab(["kind", "with a call", "without"], items) + "\n### By batch\n\n" + tab(["batch", "decided", "open", "in backend", "this session"], dirs);
     return out;
   }
@@ -1495,7 +1588,7 @@
     if (dlg.open && dlg.getAttribute("data-kind") === "summary") return dlg.close();
     if (dlg.open) return;
     var m = summaryModel(), tot = LINES.length, dec = 0, bk = 0;
-    LINES.forEach(function (l) { if (cur(l)) dec++; else if (l.in_backend) bk++; });
+    LINES.forEach(function (l) { if (cur(l)) dec++; else if (landed(l)) bk++; });
     var L = ["decided", "open", "in backend"];
     var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
     var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
@@ -1503,7 +1596,8 @@
     dlg.innerHTML = "<h3>session summary</h3><p>" + dec + " of " + tot + " changes decided &middot; " + bk + " in the backend &middot; " + (tot - dec - bk) + " open. " +
       "<b>this session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".<br>decided changes by call: " + callsText(m.calls) + ".</p>" +
       "<h4>changes by kind</h4>" + sumTable(["kind"].concat(L), sumRows(m.kinds, LINE_KINDS, KIND_LABEL)) +
-      "<h4>changes by tier</h4>" + sumTable(["tier"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
+      "<h4>changes by severity</h4>" + sumTable(["severity"].concat(L), sumRows(m.sev, SEV)) +
+      "<h4>changes by confidence</h4>" + sumTable(["confidence"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
       "<h4>items</h4>" + sumTable(["kind", "with a call", "without"], items) +
       "<h4>by batch</h4>" + sumTable(["batch", "decided", "open", "in backend", "this session"], dirs) +
       '<div class="actions"><button type="button" class="ghost" id="dlg-copy">copy summary as markdown</button><button type="button" id="dlg-close">close</button></div>';
@@ -1556,13 +1650,14 @@
         $("dlg-close").onclick = function () { dlg.close(); };
         return;
       }
+      var nrep = pl.cells.filter(function (c) { return c.replaces; }).length;
       var rows = pl.cells.map(function (c) {
-        return "<tr><td>" + esc(c.ProjectID) + "</td><td>" + esc(c.column) + "</td><td>" + esc(c.cell) + "</td><td>" + esc(String(c.before).slice(0, 60)) +
+        return "<tr" + (c.replaces ? ' class="replaces" title="this cell holds the value the reviewer saw; the accepted change replaces it"' : "") + "><td>" + esc(c.ProjectID) + "</td><td>" + esc(c.column) + (c.replaces ? " <b>replaces</b>" : "") + "</td><td>" + esc(c.cell) + "</td><td>" + esc(String(c.before).slice(0, 60)) +
           "</td><td>" + esc(String(c.after).slice(0, 140)) + "</td></tr>";
       }).join("");
       dlg.innerHTML = "<h3>push " + n + " cell" + (n === 1 ? "" : "s") + " to the backend sheet</h3>" +
         "<p>this writes to the <b>live</b> sheet. a backup of the old values is saved first, and every cell is read back after. " +
-        "refs are added to a cell, never replacing what is there.</p>" +
+        "refs are added to a cell, never replacing what is there." + (nrep ? " <b>" + nrep + " cell" + (nrep === 1 ? "" : "s") + " replace a value</b> the reviewer saw and accepted a change to." : "") + "</p>" +
         (pl.skipped.length ? '<p class="faint">' + pl.skipped.length + " accepted change(s) skipped" + (pl.stale ? " (" + pl.stale + " stale: the sheet changed since they were decided)" : "") + ".</p>" : "") +
         '<div style="max-height:45vh;overflow:auto"><table class="sum"><thead><tr><th>project</th><th>column</th><th>cell</th><th>now</th><th>will be</th></tr></thead><tbody>' + rows + "</tbody></table></div>" +
         '<p class="faint" id="pu-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">cancel</button><button type="button" id="dlg-ok">write ' + n + " cell" + (n === 1 ? "" : "s") + "</button></div>";
@@ -1573,7 +1668,8 @@
           return Store.load().then(function (data) {
             dlg.close();
             reload(data);
-            toast("pushed " + r.cells + " cell" + (r.cells === 1 ? "" : "s") + " to the backend sheet");
+            toast("pushed " + r.cells + " cell" + (r.cells === 1 ? "" : "s") + " to the backend sheet" +
+                  (r.refresh_error ? " (backend refresh failed: " + r.refresh_error + ")" : r.refreshed ? "; backend refreshed" : ""));
           });
         }).then(function (x) { delete dlg.dataset.busy; return x; }, function (e) { delete dlg.dataset.busy; throw e; }).catch(function (e) {
           ok.disabled = true; ok.textContent = "not written"; $("dlg-cancel").disabled = false;
@@ -1618,7 +1714,7 @@
 
   // ---- routing: #/P0736 plus an optional ?query with the filters that differ from the defaults ----
   var ROUTING = false;
-  var QK = {decision: "d", kind: "k", tier: "t", class_out: "c", dir: "dir", column: "col", q: "q", row: "row",
+  var QK = {decision: "d", kind: "k", severity: "sev", tier: "t", class_out: "c", dir: "dir", column: "col", q: "q",
             contested: "cont", owners: "owners", landed: "landed", country: "cty", fuel: "fuel", by: "by", drift: "drift"};
   function routeHash() {
     var p = D.pipelines[S.pipe], d = defaults(), q = [];
@@ -1758,6 +1854,7 @@
   });
   $("help-btn").onclick = showHelp;
   $("info-btn").onclick = showInfo;
+  $("progress-btn").onclick = showProgress;
   $("sync").onclick = refreshBackend;
   $("push").onclick = pushChanges;
   // every popup shares #dialog: a click on the backdrop (outside the box) closes it, except mid-write
@@ -1770,9 +1867,12 @@
   var SHOW_SUMMARY = false;
   $("summary-btn").hidden = !SHOW_SUMMARY;
   $("summary-btn").onclick = showSummary;
-  $("bulk-defaults").onclick = function () { showBulk("defaults"); };
-  $("bulk-hold").onclick = function () { showBulk("hold"); };
-  $("bulk-pipe").onclick = function () { showBulk("pipe-high"); };
+  $("card").addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("button[data-bulk]");
+    if (!b) return;
+    if (b.getAttribute("aria-disabled") === "true") return toast(b.getAttribute("data-why"));
+    showBulk(b.getAttribute("data-bulk"));
+  });
   $("card").addEventListener("change", onItemChange);
   $("card").addEventListener("toggle", function (e) {
     var d = e.target;

@@ -619,6 +619,8 @@ def _line(e, snap, own, stats):
             "class": r.get("class") or "",
             "_sort": 0,
         })
+        base["ops"] = line_ops(base)
+        base["severity"] = severity(base)
         return base
 
     oo = kind == "oo"
@@ -652,7 +654,8 @@ def _line(e, snap, own, stats):
     if kind in ("ref", "oo") and not vals and not refs:
         in_backend = False
     else:
-        vals_ok = all(_same(_cell(srow, c), v) for c, v in vals.items() if v not in (None, ""))
+        vals_ok = all(_same(_cell(srow, c), v) if v not in (None, "") else str(_cell(srow, c) or "").strip() == ""
+                      for c, v in vals.items())
         refs_ok = all(u in current_ref for u in refs)
         in_backend = bool(srow) and vals_ok and refs_ok and (bool(vals) or bool(refs))
         if kind == "ref":
@@ -663,6 +666,8 @@ def _line(e, snap, own, stats):
         "ref_cell_text": cell_text, "verifications": r.get("verifications") or [],
         "in_backend": in_backend, "tab": OO_TAB if oo else "tracker",
     })
+    base["ops"] = line_ops(base)
+    base["severity"] = severity(base)
     if oo:
         base["tracker_sheet_row"] = e.tracker_row
     sort_col = "Status" if r.get("ref_col") == "__STATUS__" else (
@@ -686,6 +691,61 @@ def _line(e, snap, own, stats):
             "suggested_route_accuracy", "qc_passed")})
         base["current_route_accuracy"] = r.get("current_route_accuracy") or srow.get("RouteAccuracy", "")
     return base
+
+
+# ---------------------------------------------------------------- severity (Baird 2026-10-02)
+# What a line does to the cells, lifted to the line level. `ops` are the value-cell operations the
+# page's rows show (fill / change / clear), `refs` when URLs are added or re-verified, plus the
+# kinds that are a decision in themselves (status / route / new_row). Severity reads the ops,
+# never the kind: a fill-kind REFS_ADDED that proposes the sheet's own value (rule 4(e)
+# "confirmed as recorded") only adds refs and is MINOR; a ref-kind REF_UNSUPPORTED says the page
+# no longer supports the value and is MAJOR. REF_BLOCKED is an access failure, nothing changes:
+# minor. A rival candidate on a ref-only line never promotes it. The [ref] cell is additive on
+# push (push.ref_write) while the value stands, so a once-working URL the paste text leaves out
+# (a confirmed 404/410, or a dir with no worklist) is never a change the line makes.
+_MAJOR_KINDS = ("status", "route", "new_row")
+_MAJOR_VERDICTS = ("DEAD_LINK", "REF_UNSUPPORTED")
+
+
+def line_ops(line):
+    """Ordered, de-duplicated cell operations a line proposes."""
+    ops = []
+    if line.get("kind") in _MAJOR_KINDS:
+        ops.append(line["kind"])
+        if line["kind"] == "new_row":          # every cell is a fill; no existing cell to compare
+            return ops
+    cur = line.get("current") or {}
+    for c, v in (line.get("proposed_values") or {}).items():
+        was = str(cur.get(c) if cur.get(c) is not None else "").strip()
+        if v in (None, ""):
+            op = "clear" if was else None
+        elif not was:
+            op = "fill"
+        elif not _same(was, v):
+            op = "change"
+        else:
+            op = None
+        if op and op not in ops:
+            ops.append(op)
+    cell = _urls(line.get("ref_cell_text") or "") or list(line.get("proposed_refs") or [])
+    now = _urls(line.get("current_ref") or "")
+    if any(u not in now for u in cell) or line.get("class_out") == "REVERIFIED":
+        ops.append("refs")
+    return ops
+
+
+def severity(line):
+    """'major' when the line fills, clears or changes a value, is a status / route / new-row
+    decision, or is a no-URL DEAD_LINK / REF_UNSUPPORTED verdict; 'minor' when the value stands
+    and the line only adds or re-verifies references."""
+    ops = line.get("ops")
+    if ops is None:
+        ops = line_ops(line)
+    if any(o != "refs" for o in ops):
+        return "major"
+    if not ops and line.get("class_out") in _MAJOR_VERDICTS:
+        return "major"
+    return "minor"
 
 
 # The backend cells a line's proposal is judged against. `basis` is their hash: a decision record

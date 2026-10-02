@@ -48,21 +48,36 @@ Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/d
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
 first ref, `d` toggle details, `/` search, `?` help. The header's **how to** button opens a
 plain-language page (`INFO` in `web/app.js`): what a change is, the four calls, and that an accept is
-logged at once but reaches the backend sheet only through a later push. The local server's **push changes** button (needs the decision store) pulls the store, plans against the live sheet, lists every cell, and writes only after a click on "write N cells" (same `push.py` plan/apply, backup CSV and read-back). Clicking outside any popup closes it. Filters combine; `in_backend` lines are
+logged at once but reaches the backend sheet only through a later push. The local server's **push changes** button (needs the decision store) pulls the store, plans against the live sheet, lists every cell, and writes only after a click on "write N cells" (same `push.py` plan/apply, backup CSV and read-back), then refreshes the backend snapshot itself so pushed lines gray out as `in_backend` (a failed refresh is reported; the push stands). Clicking outside any popup closes it. Filters combine; `in_backend` lines are
 hidden by default. With several `--country` values the filter bar leads with one checkbox per
 country (multi-select; none ticked = all); it keys on the BATCH country of the staging dir a card
 came from (`scope_countries`), not `CountriesOrAreas`, and rides in the URL as `cty=Russia|United States`.
 Scope-level items get one card per country. Keys are unchanged, so decisions carry over. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
 person, or `in_backend` — while hold stays bright (still open); an item grays once it carries a
 reviewed call (same convention as the LNG carriers app). Tier colors are the workbook's (`docs/reference/workbook_conventions.md`)
-and appear on the tier chip and the line's left border.
+and appear on the confidence chip and the line's left border.
+
+**Major / minor changes** (Baird 2026-10-02). Every line has a `severity`, computed by
+`review_data.line_ops` / `severity` and shipped in the dataset (the page only reads it): a **major
+change** moves a data point — fills a blank, clears a value the refs do not support, changes a
+value, or is a status / route / new-row decision, or a no-replacement `REF_UNSUPPORTED` /
+`DEAD_LINK` verdict; a **minor change** leaves the value as it is and only adds or re-verifies
+references (`REF_BLOCKED` is minor: an access failure changes nothing; a once-working URL the
+paste text leaves out is not a change either — `push.ref_write` is additive while the value
+stands). Severity is what the line does to the cells, never its kind — a `fill`-kind `REFS_ADDED`
+proposing the sheet's own value is minor, a `ref`-kind `REF_UNSUPPORTED` is major — and a rival
+candidate never promotes a ref-only line. The card's tabs are **major changes · minor changes ·
+items · everything** (it opens on major, or minor when the pipeline has no major change; `i`
+toggles items); the queue badge reads `N major · M minor to decide`; a **severity** facet filter
+(`sev=` in the URL) and an **accept all minor changes** bulk button act on it; each line carries a
+`major · fill` / `minor · refs only` chip (`ops` after the dot).
 
 **Line cards** show one now / proposed table per line: a row per paired value column (`value_cols`
 with anything on either side), then the `[ref]` row. Each row carries a tag for what the line does
 to that cell: `fill` (empty cell → value / refs; an empty cell is drawn empty), `change`, `clear`, `add` / `replace` / `drop` (refs),
 `re-verified`, or none when it is unchanged (the value is repeated, muted). New values and added
-refs are green, changed values amber, contested current values orange (a concern's differing
-candidate is a third, orange "concern candidate" row with its own accept button); each added URL gets one
+refs are green, changed values amber (a concern's differing candidate is a third, orange "concern
+candidate" row with its own accept button); each added URL gets one
 verification mark (`✓`, or the failed checks). Class, default, language, batch dir, notes and
 verification notes sit under "notes & record". Clicking the pipeline name (or the **Everything**
 tab) shows every line on the pipeline, filters ignored, then its items, on one page.
@@ -125,8 +140,14 @@ Every staging dir gets two sidecars, committed with the batch:
   atomically after each append. If that write fails the log is rolled back byte for byte.
 
 Latest record wins. **Undo** (`u`, or clicking the pressed button) appends a record with
-`undecided: true`; nothing is deleted. A line is reviewed only when its latest record is by a
-person (not `backend sync` / `push`) and not undecided. `suggest` needs a `suggested_value` or a
+`undecided: true`; nothing is deleted. A line is reviewed only when its latest PERSON record is
+not undecided (`store.calls` / `store.speaker`): a machine record (`backend sync`, `push`) never
+undecides it — `push.py` appends its `push` record AFTER the accept it wrote, and that record
+becomes the line's `applied = {by, at}` (the page's "pushed HH:MM" chip; `landed` = `in_backend`
+or applied by push, grayed and filtered like `in_backend`). A machine record under a key nobody
+decided only pre-fills the display. A fill decided under its pre-2026-10-01 single-column key
+(`…|Capacity`) still speaks for today's `…|Capacity+CapacityUnits` line until a person decides the
+new key (`store.legacy_keys`). `suggest` needs a `suggested_value` or a
 note and applies to lines only; item keys are refused (use `/api/item`). `/api/data` re-overlays the
 sidecars on every request, so rebuilt datasets and reloads show decisions.
 
@@ -164,7 +185,17 @@ own, one of three ways:
   `proposed_values[col]` (`store.proposed_on`; a status line's `proposed_status`); a blank candidate
   never matches. Within one request, `confirmed` wins over `dismissed` for the same concern.
 - **Note only.** A concern with blank candidates (the current value is disputed, nothing offered)
-  or on columns no line proposes stays the inline orange note and an Items-tab call.
+  or on columns no line proposes stays an Items-tab call. Under a value row it is one line of
+  context ("a validity concern also questions this cell … it stays an item to call"), shown only
+  while the concern has no call and no rival row or "concern agrees" chip already answers it.
+
+**"Contested" is an item's word, never a line's (Baird 2026-10-01).** A proposed change disputes the
+current value by nature, so a line on a column a concern names carries no "contested" chip and no
+orange tint on its current value: it is a suggested change like any other, with a rival or agrees
+chip when the concern offers a candidate. The orange `contested` chip stays on the concern item,
+and the queue filter **unanswered concerns** lists the concerns nothing answers — a `contested`
+map on columns no line proposes a value on (`rival_lines` empty); ticking it selects the concern
+kind, and changing the kind clears it.
 
 `/api/decide` returns the item records after the line records (item records carry `call`). Only a
 person's decision writes a concern call: hold / reject / undo and machine reviewers never do, and
@@ -215,7 +246,7 @@ Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to a
 
 ## Items and calls
 
-The card's **Items** tab (`i` toggles Lines/Items) gives every item a call selector and a note;
+The card's **Items** tab (`i` toggles changes/items) gives every item a call selector and a note;
 a change saves immediately (`POST /api/item`, same sidecars, same latest-wins and undo rules; "no
 call" undoes). Call vocabulary per kind: `concern` takes `confirmed | dismissed | needs_research`
 (confirmed: it stands; dismissed: closed; needs research: goes to an Update worklist); every other
@@ -225,17 +256,16 @@ kind takes `noted | todo | dismissed`. A wrong call is a 400. Item records are
 
 ## Bulk
 
-Three header-bar buttons (and `A` for the first) act on the CURRENT filtered queue and always
-confirm with the exact count and a per-kind breakdown: accept all defaults in view, hold all in
-view, accept all high for this pipeline. The accept modes skip lines with a rival candidate (decide
-those by hand) and all modes skip lines a person already decided; one `POST /api/decide`. The
+Three header-bar buttons (right-aligned), "accept all minor changes" (refs only, the values stand), "accept all high-confidence suggestions" (major or minor) and "accept all suggestions" (any confidence level), act on the open pipeline's lines that the CURRENT filters show and always
+confirm with the exact count and a per-kind breakdown. They skip lines with a rival candidate (decide
+those by hand) and lines a person already decided; one `POST /api/decide`. The
 server is all-or-nothing: if any line is invalid the request is refused (400) and nothing is written.
 
 ## Session summary
 
 **Switched off for now (might add later):** set `SHOW_SUMMARY = true` in `web/app.js` to bring back the button and the `S` key.
 
-`S` or the header "summary" button: decided / open / in-backend counts by kind, tier and staging
+`S` or the header "summary" button: decided / open / in-backend counts by kind, confidence and staging
 dir, item calls, and what this reviewer saved in this page session, with "copy summary as
 markdown".
 
@@ -308,12 +338,15 @@ list, so the check finds nothing until it is republished.
 
 ```bash
 python review_app/publish.py                  # build the review-app batch + write the local mirror work/review_publish/
+                                              #   (pulls the store; carries and backend syncs go to the store first, then the sidecars)
+python review_app/publish.py --no-pull        # dry run: nothing read from or written to the store, carries only REPORTED
 python review_app/publish.py --upload         # + list what Drive would change (writes nothing)
 python review_app/publish.py --upload --yes   # do it: ASK BAIRD FIRST, every run
 python review_app/pull.py [--dry-run]         # store spreadsheet -> each staging dir's review_log.jsonl (read-only on Google)
 python review_app/ledger.py status            # store configured? writer address? row count
 python review_app/ledger.py decide --key KEY --decision accept|hold|reject|suggest [--note N]   # a chat's decision, same door
-python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale lines skipped by default
+python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale + already-pushed lines skipped;
+                                              #   REPLACES marks a cell whose value the reviewer saw and accepted a change to
 python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
 python review_app/gas_push.py                 # list how the Apps Script project differs from gas/ (writes nothing)
 python review_app/gas_push.py --yes           # replace the project's files: ASK BAIRD FIRST, every run; then deploy a new version
@@ -408,6 +441,4 @@ headless browser, `tests/test_review_publish.py` / `test_review_pull.py` / `test
   every line.
 - The same Status proposal staged in two batch dirs shows as two identical-looking cards now that
   the batch name is off the header; fold them like `covers`, or mark the duplicate.
-- A contested note (orange) still shows on a line after its concern has a call; it could drop once
-  the concern is decided (a rival row is struck through instead).
 

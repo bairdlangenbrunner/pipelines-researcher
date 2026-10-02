@@ -57,8 +57,10 @@ Size, as of 2026-09-30:
   pipeline's csv plus a suggestion record; suggestions are routed through a `fix` batch whose
   build re-runs the value↔ref gate. A reviewer never types a value that gets applied directly.
 - **One reviewer's decision settles a proposal**; every decision records who and when.
-- **`reviewed` = the latest record by a person.** Machine reviewers (`backend sync`, `§5 regrade`)
-  write records too but do not count as review, and an undo record un-reviews.
+- **`reviewed` = the latest PERSON record is not an undo.** Machine reviewers (`backend sync`,
+  `push`, `§5 regrade`) write records too but do not count as review and never undecide a person's
+  call (2026-10-01: a `push` record landing after an accept flipped 87 lines to "not reviewed" —
+  now it becomes the line's `applied` mark, `store.speaker`).
 - **Key** = `<batch_dir>::<id>` — ids collided across batches (36 of them), so the dir is part of
   the key.
 - **Linked pairs** (Name ↔ Other names; value ↔ its `[ref]`) prompt to decide together.
@@ -70,8 +72,7 @@ Size, as of 2026-09-30:
   flags) with their own `review_items.jsonl` and a free-text call.
 - **Push** writes only *clicked* accepts, never defaults: plan → token → confirm → fresh pull →
   refuse if stale → `values batchUpdate` RAW via `gws-gem-write` → re-pull verify →
-  `push_log.jsonl`. Skips new rows, missing rows, `=`-prefixed values, non-blank conflicting
-  cells. "Never forge a click": a directed write is attributed as a directed write.
+  `push_log.jsonl`. Skips new rows, missing rows, `=`-prefixed values. "Never forge a click": a directed write is attributed as a directed write.
 - **Defaults** (`accept` when derivable or green, else `hold`) are a display hint only.
 - UI: queue with filters that combine, hash routing, light/dark, keyboard
   `j/k/J/K/a/h/r/s/u/o/d/?`, session summary listing touched batch dirs to commit.
@@ -272,10 +273,12 @@ Everything from the LNG UI, with these pipelines changes:
   "single source" chip when publishers < 2** (rule 4: status change stays green only on 2+);
   `oo` carries an "owners tab" chip; `route` shows length vs sheet length, ratio, suggested
   accuracy, QC pass, and a link to the geojson; `new_row` shows the whole candidate row.
-- **Contested values** render orange on the *current* value, with the concern inline. *Changed
-  2026-10-01:* the lines on that column are never held (the LNG-style linked-pair lock is gone);
-  a differing candidate is a rival row on the line with its own accept (milestone 8).
-- **Filters**: decision state, kind, tier, class_out, dir, column, contested, single-source status,
+- **Contested is an item's word.** *Changed 2026-10-01:* a line on a column a concern names is
+  never held (the LNG-style linked-pair lock is gone) and is never labelled contested — a proposal
+  disputes the current value by nature; a differing candidate is a rival row on the line with its
+  own accept (milestone 8), an agreeing one a chip, a blank one a line of context under the row.
+  The orange chip stays on the concern item.
+- **Filters**: decision state, kind, tier, class_out, dir, column, unanswered concerns, single-source status,
   owners-tab, `in_backend`. Counts update live.
 - **Items tab**: per kind, with the call form (`agree | disagree | defer` + note for concerns and
   route suggestions; `noted | dismissed` for flags/wikidiff/unresolved/confirmed).
@@ -326,8 +329,7 @@ Generalizes `apply_route_candidates.py`; nothing new in mechanics.
    use the fresh row). Owners-tab lines located by ProjectID on that tab (header row 1).
 2. **Plan** = clicked accepts only, kinds `ref | fill | status | oo`; cell text is exactly
    `build_ref_workbook._ref_cell_text` / the value the workbook would paste. Skip: rows missing
-   from the sheet, `=`-prefixed values, a non-blank differing value cell (conflict) unless the
-   line is a `status` change, a `[ref]` cell that already contains every proposed URL (`in_backend`),
+   from the sheet, `=`-prefixed values, (2026-10-01: a non-blank differing value is no longer a conflict — the accept authorizes the overwrite/clear) a `[ref]` cell that already contains every proposed URL (`in_backend`),
    and (2026-10-01) a **stale** line — the live basis cells (`review_data.BASIS_FIELDS`) differ
    from what the reviewer saw (record `basis` ≠ line `basis`, or live ≠ snapshot); listed in the
    plan's `stale`, pushed only with `--include-stale`. The decision stands in the ledger either way.
@@ -409,6 +411,24 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
    and writes the same calls (`concernCalls_`). `update_seed` treats a concern whose candidate a
    live suggest took as answered (the update unit carries `rival_concern`/`rival_text`).
    Dict-shaped candidates (`{sheet_value, corrected_value}`, 5 lines) normalize at build time.
+9. **Minor / major changes** (Baird 2026-10-02): a line that leaves the data point as it is and
+   only adds (or re-verifies) references is a **minor change**; a line that fills IN a blank,
+   REMOVES a value the refs do not support, or CHANGES a value is a **major change**, as are
+   status changes, routes and new rows. Severity is what the line does to the cells, never its
+   kind: a `fill`-kind `REFS_ADDED` proposing the sheet's own value (rule 4(e) "confirmed as
+   recorded") is minor, a `ref`-kind `REF_UNSUPPORTED` is major. `review_data._line` is the
+   authority — it ships `ops` (`fill` / `change` / `clear` on the value cols, `refs` when URLs are
+   added or re-verified, `status` / `route` / `new_row` by kind) and `severity` on every line. A
+   once-working URL the paste text leaves out is not an op: `push.ref_write` is additive while the
+   value stands, so no ref-only line ever removes a URL from the sheet.
+   Rulings: the "high-confidence suggestions" card tab goes, replaced by **major changes · minor
+   changes** (tier stays a filter and a bulk button); `REF_UNSUPPORTED` and `DEAD_LINK` with no
+   replacement URL are major (the page no longer supports the value, so the reviewer must look),
+   `REF_BLOCKED` is minor (an access failure, nothing changes); a rival candidate never promotes
+   a ref-only line — the concern is a reason to read, not a change the line makes. The ledger,
+   store schema, `publish.make_index` and `push.py` are unchanged (severity is derivable from
+   the dataset); a `severity` facet filter and an "accept all minor changes" bulk button land in
+   the page, and the queue badge splits `N major · M minor`.
 
 **Phase 1b** (ruling 1 passed): `push.py` + tests + CLAUDE.md wording; first push on a scope with
 < 50 accepted cells, backups committed.

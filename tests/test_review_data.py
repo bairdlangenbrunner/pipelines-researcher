@@ -328,3 +328,73 @@ def test_agreeing_candidate_is_corroboration_and_differing_one_a_rival(tmp_path)
     assert (stats["rivals"], stats["corroborations"]) == (1, 1)
     assert rd.rival_value({"Owner1": "OldCo"}) == "OldCo"
     assert rd.rival_value({"Capacity": "7", "CapacityUnits": "bcm/y"}) == "Capacity=7; CapacityUnits=bcm/y"
+
+
+# ---- severity (milestone 9, Baird 2026-10-02): what the line does to the cells, never its kind ----
+def test_severity_is_what_the_line_does_to_the_cells(built):
+    data, stats, s = built
+    # a ref-kind REFS_ADDED proposing the sheet's own status: refs only -> minor
+    (st,) = _find(data, "P9001", "ref", column="Status")
+    assert (st["severity"], st["ops"]) == ("minor", ["refs"])
+    # a fill over a blank cell -> major, even though its refs ride along
+    (cap,) = _find(data, "P9002", "fill", column="Capacity")
+    assert cap["severity"] == "major" and cap["ops"][0] == "fill"
+    # status, route and new row are decisions in themselves
+    assert _find(data, "P9002", "status")[0]["severity"] == "major"
+    assert _find(data, "P9004", "route")[0]["severity"] == "major"
+    nrs = [o for p, o, _ in _all(data) if o["kind"] == "new_row"]
+    assert nrs and all((nr["severity"], nr["ops"]) == ("major", ["new_row"]) for nr in nrs)
+    # an owners-tab line that CHANGES Owner1 (OldCo -> NewCo) -> major
+    (oo,) = _find(data, "P9001", "oo")
+    assert oo["severity"] == "major" and "change" in oo["ops"]
+    # every line carries both fields
+    assert all("severity" in o and "ops" in o for p, o, g in _all(data) if g == "line")
+
+
+def test_severity_rival_never_promotes_a_ref_only_line(tmp_path):
+    # a concern on Status with a differing candidate rides as a rival; the line still only adds a ref
+    data, stats = _with_concern(tmp_path, {"Status": "mothballed", "Owner1": "OldCo"})
+    (st,) = _find(data, "P9001", "ref", column="Status")
+    assert st["rivals"] and st["rivals"][0]["value"] == "mothballed"
+    assert st["severity"] == "minor"
+
+
+@pytest.mark.parametrize("line, want", [
+    # same value confirmed as recorded (rule 4(e)) + a new ref: minor
+    ({"kind": "fill", "class_out": "REFS_ADDED", "current": {"Capacity": "7.5"}, "proposed_values": {"Capacity": "7.50"},
+      "current_ref": "", "proposed_refs": ["http://a/x"], "ref_cell_text": "http://a/x"}, ("minor", ["refs"])),
+    # blank -> value: major fill
+    ({"kind": "fill", "class_out": "REFS_ADDED", "current": {"Capacity": ""}, "proposed_values": {"Capacity": "7.5"},
+      "current_ref": "", "proposed_refs": ["http://a/x"], "ref_cell_text": "http://a/x"}, ("major", ["fill", "refs"])),
+    # value -> different value: major change
+    ({"kind": "fill", "class_out": "REFS_ADDED", "current": {"LengthKnown": "842"}, "proposed_values": {"LengthKnown": "845"},
+      "current_ref": "http://old/", "proposed_refs": ["http://a/x"], "ref_cell_text": "http://old/, http://a/x"}, ("major", ["change", "refs"])),
+    # value -> blank (clear): major
+    ({"kind": "fill", "class_out": "REFS_ADDED", "current": {"Diameter": "42"}, "proposed_values": {"Diameter": ""},
+      "current_ref": "", "proposed_refs": [], "ref_cell_text": ""}, ("major", ["clear"])),
+    # the page no longer supports the value and there is no replacement URL: major
+    ({"kind": "ref", "class_out": "REF_UNSUPPORTED", "current": {"Capacity": "7.5"}, "proposed_values": {},
+      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("major", [])),
+    ({"kind": "ref", "class_out": "DEAD_LINK", "current": {}, "proposed_values": {},
+      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("major", [])),
+    # an access failure changes nothing: minor
+    ({"kind": "ref", "class_out": "REF_BLOCKED", "current": {}, "proposed_values": {},
+      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("minor", [])),
+    # re-verified, nothing added or dropped: minor
+    ({"kind": "ref", "class_out": "REVERIFIED", "current": {}, "proposed_values": {},
+      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": "http://old/"}, ("minor", ["refs"])),
+    # the paste text leaves a once-working URL out (a confirmed 404/410, or a dir with no worklist):
+    # push is additive while the value stands, so the line still only adds a ref -> minor
+    ({"kind": "ref", "class_out": "REFS_ADDED", "current": {}, "proposed_values": {},
+      "current_ref": "http://old/", "proposed_refs": ["http://a/x"], "ref_cell_text": "http://a/x"}, ("minor", ["refs"])),
+    # every proposed URL is already in the cell (in_backend): nothing to do, minor
+    ({"kind": "ref", "class_out": "REFS_ADDED", "current": {}, "proposed_values": {},
+      "current_ref": "http://old/, http://a/x", "proposed_refs": ["http://a/x"], "ref_cell_text": "http://old/, http://a/x"}, ("minor", [])),
+    # status / route by kind, whatever the cells say
+    ({"kind": "status", "class_out": "STALE", "current": {"Status": "proposed"}, "proposed_values": {},
+      "current_ref": "", "proposed_refs": [], "ref_cell_text": ""}, ("major", ["status"])),
+])
+def test_severity_table(line, want):
+    ops = rd.line_ops(line)
+    assert (rd.severity(dict(line, ops=ops)), ops) == want
+    assert rd.severity(line) == want[0]        # without precomputed ops too
