@@ -256,7 +256,7 @@ kind takes `noted | todo | dismissed`. A wrong call is a 400. Item records are
 
 ## Bulk
 
-Three header-bar buttons (right-aligned), "accept all minor changes" (refs only, the values stand), "accept all high-confidence suggestions" (major or minor) and "accept all suggestions" (any confidence level), act on the open pipeline's lines that the CURRENT filters show and always
+Three header-bar buttons (right-aligned), "accept all minor changes" (refs only, the values stand), "accept all high-conf changes" (major or minor) and "accept all changes" (any confidence level), act on the open pipeline's lines that the CURRENT filters show and always
 confirm with the exact count and a per-kind breakdown. They skip lines with a rival candidate (decide
 those by hand) and lines a person already decided; one `POST /api/decide`. The
 server is all-or-nothing: if any line is invalid the request is refused (400) and nothing is written.

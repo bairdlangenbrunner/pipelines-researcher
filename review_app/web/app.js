@@ -88,7 +88,43 @@
   var SEV_LABEL = {major: "major changes", minor: "minor changes"};
   var SEV_TIP = {major: "major change: the data point moves — a blank is filled, a value is cleared or changed, or this is a status / route / new-row decision",
                  minor: "minor change: the value stays as it is; the line only adds or re-verifies references"};
-  function sevOf(l) { return l.severity || "major"; }     // an older dataset without the field: look at it
+  // Mirror of review_data.line_ops / severity, so a dataset built before the fields existed
+  // (or one still cached in a browser) classifies the same way the Python does.
+  var MAJOR_KINDS = ["status", "route", "new_row"], MAJOR_VERDICTS = ["DEAD_LINK", "REF_UNSUPPORTED"];
+  function sameVal(a, b) {
+    a = String(a == null ? "" : a).trim(); b = String(b == null ? "" : b).trim();
+    if (a === b) return true;
+    var x = Number(a.replace(/,/g, "")), y = Number(b.replace(/,/g, ""));   // Number("5abc") is NaN, like Python's float()
+    return a !== "" && b !== "" && !isNaN(x) && !isNaN(y) && x === y;
+  }
+  function urlsIn(text) {
+    if (typeof text !== "string") return [];
+    return text.replace(/\n/g, ",").split(",").map(function (u) { return u.trim(); }).filter(function (u) { return u.indexOf("http") === 0; });
+  }
+  function lineOps(l) {
+    if (Array.isArray(l.ops)) return l.ops;
+    var ops = [], kind = l.kind;
+    if (MAJOR_KINDS.indexOf(kind) >= 0) { ops.push(kind); if (kind === "new_row") return ops; }
+    var cur = l.current || {}, pv = l.proposed_values || {};
+    Object.keys(pv).forEach(function (c) {
+      var v = pv[c], was = String(cur[c] == null ? "" : cur[c]).trim(), op = null;
+      if (v == null || v === "") op = was ? "clear" : null;
+      else if (!was) op = "fill";
+      else if (!sameVal(was, v)) op = "change";
+      if (op && ops.indexOf(op) < 0) ops.push(op);
+    });
+    var cell = urlsIn(l.ref_cell_text || ""), now = urlsIn(l.current_ref || "");
+    if (!cell.length) cell = (l.proposed_refs || []).slice();
+    if (cell.some(function (u) { return now.indexOf(u) < 0; }) || l.class_out === "REVERIFIED") ops.push("refs");
+    return ops;
+  }
+  function sevOf(l) {
+    if (l.severity) return l.severity;
+    var ops = lineOps(l);
+    if (ops.some(function (o) { return o !== "refs"; })) return "major";
+    if (!ops.length && MAJOR_VERDICTS.indexOf(l.class_out) >= 0) return "major";
+    return "minor";
+  }
 
   function defaults() {
     return {decision: "undecided", kind: "", severity: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
@@ -615,7 +651,7 @@
   // "major · fill", "major · status, change", "minor · refs only", "minor · re-verified", "major · unsupported"
   var VERDICT_LABEL = {REF_UNSUPPORTED: "unsupported", DEAD_LINK: "dead link", REF_BLOCKED: "blocked", REVERIFIED: "re-verified"};
   function sevChip(l) {
-    var s = sevOf(l), ops = (l.ops || []).filter(function (o) { return o !== "refs"; });
+    var s = sevOf(l), ops = lineOps(l).filter(function (o) { return o !== "refs"; });
     var what = ops.length ? ops.join(", ").replace("new_row", "new row") : (VERDICT_LABEL[l.class_out] || "refs only");
     return chip(s + " · " + what, s, SEV_TIP[s]);
   }
@@ -1001,13 +1037,13 @@
         return '<button type="button" class="bulk b-accept' + (on ? "" : " off") + '" data-bulk="pipe-minor"' + (on ? "" : ' aria-disabled="true" data-why="' + esc(why) + '"') +
           tipAttrs(on ? "accept every undecided minor change on this pipeline (refs only, the values stand; rival candidates left to decide by hand) that the filters show" : why) + '>accept all minor changes</button>';
       })() +
-      '<button type="button" class="bulk b-accept" data-bulk="pipe-high"' + tipAttrs("accept every undecided high-confidence change on this pipeline, major or minor (rival candidates left to decide by hand) that the filters show") + '>accept all high-confidence suggestions</button>' +
+      '<button type="button" class="bulk b-accept" data-bulk="pipe-high"' + tipAttrs("accept every undecided high-confidence change on this pipeline, major or minor (rival candidates left to decide by hand) that the filters show") + '>accept all high-conf changes</button>' +
       (function () {
         var nonHigh = p.lines.filter(function (l) { return tierOf(l) !== "high"; });
         var on = nonHigh.some(function (l) { return !cur(l); });
         var why = !nonHigh.length ? "all suggestions are high-confidence" : "every medium- and low-confidence suggestion is already decided";
         return '<button type="button" class="bulk b-hold' + (on ? "" : " off") + '" data-bulk="pipe-all"' + (on ? "" : ' aria-disabled="true" data-why="' + esc(why) + '"') +
-          tipAttrs(on ? "accept every undecided change on this pipeline, any confidence level (rival candidates left to decide by hand) that the filters show" : why) + '>accept all suggestions</button>';
+          tipAttrs(on ? "accept every undecided change on this pipeline, any confidence level (rival candidates left to decide by hand) that the filters show" : why) + '>accept all changes</button>';
       })() +
       '</div></div><div class="ctx">' + ctx + "</div>";
     var askItems = p.items.filter(function (it) { return !INFO_KINDS[it.kind]; });
@@ -1020,8 +1056,10 @@
     }
     var bySev = {major: p.lines.filter(function (l) { return sevOf(l) === "major"; }), minor: p.lines.filter(function (l) { return sevOf(l) === "minor"; })};
     h += '<div class="tabs" role="tablist">' + SEV.map(function (s) {
-      var openS = bySev[s].filter(function (l) { return !cur(l); }).length;
-      return '<button type="button" role="tab" data-tab="' + s + '" aria-selected="' + (S.tab === s) + '"' + tipAttrs(SEV_TIP[s]) + ">" + SEV_LABEL[s] + " " + todo(openS, bySev[s].length) + "</button>";
+      // lines the sheet already holds are not waiting on a call (same rule as the progress count)
+      var live = bySev[s].filter(function (l) { return !landed(l) || FS.landed; });
+      var openS = live.filter(function (l) { return !cur(l); }).length;
+      return '<button type="button" role="tab" data-tab="' + s + '" aria-selected="' + (S.tab === s) + '"' + tipAttrs(SEV_TIP[s]) + ">" + SEV_LABEL[s] + " " + todo(openS, live.length) + "</button>";
     }).join("") +
       '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '">items ' + todo(nOpenItems, askItems.length) + "</button>" +
       '<button type="button" role="tab" data-tab="all" aria-selected="' + (S.tab === "all") + '"' + tipAttrs("every change (filters ignored) and every item on this pipeline; also: click the name") + '>everything</button></div></div>';
@@ -1497,7 +1535,7 @@
     return t;
   }
   var BULK_TITLE = {defaults: "accept all defaults in view", hold: "hold all in view", "pipe-minor": "accept all minor changes",
-                    "pipe-high": "accept all high-confidence suggestions", "pipe-all": "accept all suggestions"};
+                    "pipe-high": "accept all high-conf changes", "pipe-all": "accept all changes"};
   function showBulk(mode) {
     if (!Store.caps.decide) return notYet();
     if (S.pipe < 0) return toast("nothing in view");
