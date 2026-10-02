@@ -88,43 +88,12 @@
   var SEV_LABEL = {major: "major changes", minor: "minor changes"};
   var SEV_TIP = {major: "major change: the data point moves — a blank is filled, a value is cleared or changed, or this is a status / route / new-row decision",
                  minor: "minor change: the value stays as it is; the line only adds or re-verifies references"};
-  // Mirror of review_data.line_ops / severity, so a dataset built before the fields existed
-  // (or one still cached in a browser) classifies the same way the Python does.
-  var MAJOR_KINDS = ["status", "route", "new_row"], MAJOR_VERDICTS = ["DEAD_LINK", "REF_UNSUPPORTED"];
-  function sameVal(a, b) {
-    a = String(a == null ? "" : a).trim(); b = String(b == null ? "" : b).trim();
-    if (a === b) return true;
-    var x = Number(a.replace(/,/g, "")), y = Number(b.replace(/,/g, ""));   // Number("5abc") is NaN, like Python's float()
-    return a !== "" && b !== "" && !isNaN(x) && !isNaN(y) && x === y;
-  }
-  function urlsIn(text) {
-    if (typeof text !== "string") return [];
-    return text.replace(/\n/g, ",").split(",").map(function (u) { return u.trim(); }).filter(function (u) { return u.indexOf("http") === 0; });
-  }
-  function lineOps(l) {
-    if (Array.isArray(l.ops)) return l.ops;
-    var ops = [], kind = l.kind;
-    if (MAJOR_KINDS.indexOf(kind) >= 0) { ops.push(kind); if (kind === "new_row") return ops; }
-    var cur = l.current || {}, pv = l.proposed_values || {};
-    Object.keys(pv).forEach(function (c) {
-      var v = pv[c], was = String(cur[c] == null ? "" : cur[c]).trim(), op = null;
-      if (v == null || v === "") op = was ? "clear" : null;
-      else if (!was) op = "fill";
-      else if (!sameVal(was, v)) op = "change";
-      if (op && ops.indexOf(op) < 0) ops.push(op);
-    });
-    var cell = urlsIn(l.ref_cell_text || ""), now = urlsIn(l.current_ref || "");
-    if (!cell.length) cell = (l.proposed_refs || []).slice();
-    if (cell.some(function (u) { return now.indexOf(u) < 0; }) || l.class_out === "REVERIFIED") ops.push("refs");
-    return ops;
-  }
-  function sevOf(l) {
-    if (l.severity) return l.severity;
-    var ops = lineOps(l);
-    if (ops.some(function (o) { return o !== "refs"; })) return "major";
-    if (!ops.length && MAJOR_VERDICTS.indexOf(l.class_out) >= 0) return "major";
-    return "minor";
-  }
+  // The page only READS severity; the rule lives in review_data.line_ops / severity. A dataset
+  // built before the field existed parks its lines on the major tab, says so on the chip, and a
+  // sticky banner tells the reviewer to rebuild (STALE_SEVERITY, set in boot).
+  function sevOf(l) { return l.severity || "major"; }
+  var STALE_SEVERITY = "this dataset was built before line severity existed, so every line sits on the major tab. " +
+                       "Rebuild it: restart the server without --no-build, or republish the dataset for the Google page.";
 
   function defaults() {
     return {decision: "undecided", kind: "", severity: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
@@ -651,7 +620,8 @@
   // "major · fill", "major · status, change", "minor · refs only", "minor · re-verified", "major · unsupported"
   var VERDICT_LABEL = {REF_UNSUPPORTED: "unsupported", DEAD_LINK: "dead link", REF_BLOCKED: "blocked", REVERIFIED: "re-verified"};
   function sevChip(l) {
-    var s = sevOf(l), ops = lineOps(l).filter(function (o) { return o !== "refs"; });
+    if (!l.severity) return chip("severity unknown", "", "this line was staged before severity existed in the dataset: rebuild it (see the banner)");
+    var s = sevOf(l), ops = (l.ops || []).filter(function (o) { return o !== "refs"; });
     var what = ops.length ? ops.join(", ").replace("new_row", "new row") : (VERDICT_LABEL[l.class_out] || "refs only");
     return chip(s + " · " + what, s, SEV_TIP[s]);
   }
@@ -1470,7 +1440,9 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { t.hidden = true; }, 4000);
   }
-  function banner(msg) { var b = $("banner"); b.textContent = msg; b.hidden = !msg; }
+  // banner("") after a saved decision falls back to the sticky notice (a stale dataset) instead of hiding
+  var STICKY = "";
+  function banner(msg) { var b = $("banner"); msg = msg || STICKY; b.textContent = msg; b.hidden = !msg; }
 
   function onCardClick(e) {
     var pidEl = e.target.closest(".pid");
@@ -1741,6 +1713,7 @@
     var pid = D.pipelines[S.pipe] ? D.pipelines[S.pipe].pid : "";
     D = data;
     prepare();
+    STICKY = LINES.some(function (l) { return !l.severity; }) ? STALE_SEVERITY : ""; banner();
     if (Store.ready) Store.ready();
     fillFilters(); syncControls();
     S.pin = -1; S.stay = {}; S.line = -1;
@@ -1824,6 +1797,7 @@
     D = data; ME = reviewer;
     var tLoaded = performance.now();
     prepare();
+    STICKY = LINES.some(function (l) { return !l.severity; }) ? STALE_SEVERITY : ""; banner();
     if (Store.ready) Store.ready();
     $("whoami").textContent = reviewer;
     renderScope();

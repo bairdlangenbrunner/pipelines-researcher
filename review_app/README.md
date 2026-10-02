@@ -58,7 +58,9 @@ reviewed call (same convention as the LNG carriers app). Tier colors are the wor
 and appear on the confidence chip and the line's left border.
 
 **Major / minor changes** (Baird 2026-10-02). Every line has a `severity`, computed by
-`review_data.line_ops` / `severity` and shipped in the dataset (the page only reads it): a **major
+`review_data.line_ops` / `severity` and shipped in the dataset (the page only reads it and never
+re-derives it; a dataset built before the field existed parks every line on the major tab with a
+`severity unknown` chip and a sticky banner saying to rebuild): a **major
 change** moves a data point — fills a blank, clears a value the refs do not support, changes a
 value, or is a status / route / new-row decision, or a no-replacement `REF_UNSUPPORTED` /
 `DEAD_LINK` verdict; a **minor change** leaves the value as it is and only adds or re-verifies
