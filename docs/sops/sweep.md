@@ -221,6 +221,12 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    `REF_BLOCKED` / `REF_UNSUPPORTED` / `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
    `researcher_notes`, `harvested_from_wiki`; carry `tab` through for owner/operator units) into
    `batches/<scope>/staging/ref-sweep[-<qualifier>]/staged_resolutions.json`.
+   **A ref you cannot confirm is a concern, never a removal (Baird 2026-10-02).** `DEAD_LINK` /
+   `REF_BLOCKED` / `REF_UNSUPPORTED` with no `proposed_refs` means: the recorded ref could not be loaded
+   or read, or does not state the value, and no other ref backs the SAME value. Leave the value and
+   the ref alone, put what happened in `researcher_notes` in plain words, and expect a person to
+   open the ref. Never propose dropping it. A different ref that backs the same value is a minor
+   change (`REFS_ADDED`, value unchanged). Refs that back a NEW value are a major change.
 6. **Build** — `scripts/build_ref_workbook.py --staging batches/<scope>/staging/ref-sweep[-<qualifier>]/
    --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_refsweep.xlsx`; then `recalc.py`;
    present. Leads with the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` paste-ready tabs

@@ -62,12 +62,14 @@ and appear on the confidence chip and the line's left border.
 re-derives it; a dataset built before the field existed parks every line on the major tab with a
 `severity unknown` chip and a sticky banner saying to rebuild): a **major
 change** moves a data point — fills a blank, clears a value the refs do not support, changes a
-value, or is a status / route / new-row decision, or a no-replacement `REF_UNSUPPORTED` /
-`DEAD_LINK` verdict; a **minor change** leaves the value as it is and only adds or re-verifies
-references (`REF_BLOCKED` is minor: an access failure changes nothing; a once-working URL the
-paste text leaves out is not a change either — `push.ref_write` is additive while the value
-stands). Severity is what the line does to the cells, never its kind — a `fill`-kind `REFS_ADDED`
-proposing the sheet's own value is minor, a `ref`-kind `REF_UNSUPPORTED` is major — and a rival
+value, or is a status / route / new-row decision; a **minor change** leaves the value as it is and
+only adds or re-verifies references (a once-working URL the paste text leaves out is not a change:
+`push.ref_write` is additive while the value stands). Research never proposes removing a ref. A
+ref that does not state the value, is gone, or cannot be opened, with no replacement URL found,
+is not a line at all: it is a **concern** item (key `…|ref-check:<ref col>`, type `ref_unverified`)
+for a person to open and check, and the sheet keeps the ref. A different ref for the same value is
+minor; refs for a new value are major. Severity is what the line does to the cells, never its kind
+(a `fill`-kind `REFS_ADDED` proposing the sheet's own value is minor), and a rival
 candidate never promotes a ref-only line. The card's tabs are **major changes · minor changes ·
 items · everything** (it opens on major, or minor when the pipeline has no major change; `i`
 toggles items); the queue badge reads `N major · M minor to decide`; a **severity** facet filter

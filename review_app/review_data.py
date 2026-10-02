@@ -61,6 +61,18 @@ LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
 ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag",
               "escalation", "unresolved", "confirmed", "other")
 _REF_CLASSES = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}
+# A ref the checker could not read, or that does not state the value, with no replacement URL found.
+# Baird 2026-10-02: research never proposes removing a ref, so there is nothing to decide on a line;
+# it is a concern (a person opens the ref and checks) and the sheet keeps the ref.
+_NO_FIX_VERDICTS = {"DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}
+_REF_CHECK_TEXT = {
+    "REF_UNSUPPORTED": "The page loads, but the check did not find the value on it. The reference stays on the sheet. "
+                       "Please open it and check the value, or find another source that states it.",
+    "REF_BLOCKED": "The checker could not open this page. The reference stays on the sheet. "
+                   "Please open it and check that it states the value.",
+    "DEAD_LINK": "The page is gone and no replacement was found. The reference stays on the sheet. "
+                 "Please check the value, or find another source that states it.",
+}
 _NO_COL = 10 ** 6          # sort position for a column the snapshot does not have
 _OO_OFFSET = 10 ** 4       # owners-tab columns sort after every tracker column
 INFO_KINDS = {"confirmed"}  # items nobody is asked to call (web/app.js INFO_KINDS)
@@ -231,6 +243,8 @@ def classify(r):
     if ci in ("FILL", "MISSING_REF_NO_COLUMN") and co == "REFS_ADDED":
         return "line", "oo" if oo else "fill"
     if co in _REF_CLASSES and rc:
+        if co in _NO_FIX_VERDICTS and not _listish(r.get("proposed_refs")):
+            return "item", "concern"          # nothing to add: a person has to open the ref (Baird 2026-10-02)
         return "line", "oo" if oo else "ref"
     return "item", "other"
 
@@ -262,6 +276,8 @@ def _colid(r, kind):
     if kind == "oo":
         return "oo:" + (rc or r.get("primary_value_col") or "")
     if kind == "concern":
+        if rc and not rc.startswith("__"):     # a ref nobody could check, not a validity concern
+            return f"ref-check:{rc}"
         return f"__VALIDITY__:{r.get('concern_type', '')}"
     if kind == "confirmed" and (rc == "__VALIDITY__" or r.get("class_in") == "VALIDITY"):
         return "__VALIDITY__:none"
@@ -698,13 +714,14 @@ def _line(e, snap, own, stats):
 # page's rows show (fill / change / clear), `refs` when URLs are added or re-verified, plus the
 # kinds that are a decision in themselves (status / route / new_row). Severity reads the ops,
 # never the kind: a fill-kind REFS_ADDED that proposes the sheet's own value (rule 4(e)
-# "confirmed as recorded") only adds refs and is MINOR; a ref-kind REF_UNSUPPORTED says the page
-# no longer supports the value and is MAJOR. REF_BLOCKED is an access failure, nothing changes:
-# minor. A rival candidate on a ref-only line never promotes it. The [ref] cell is additive on
-# push (push.ref_write) while the value stands, so a once-working URL the paste text leaves out
-# (a confirmed 404/410, or a dir with no worklist) is never a change the line makes.
+# "confirmed as recorded") only adds refs and is MINOR. A ref the checker could not read or that
+# does not state the value, with no replacement URL, is not a line at all but a concern item
+# (classify, _NO_FIX_VERDICTS): research never proposes removing a ref. A different ref for the
+# SAME value is a minor refs line; refs for a NEW value are a major change line. A rival
+# candidate on a ref-only line never promotes it. The [ref] cell is additive on push
+# (push.ref_write) while the value stands, so a once-working URL the paste text leaves out is
+# never a change the line makes.
 _MAJOR_KINDS = ("status", "route", "new_row")
-_MAJOR_VERDICTS = ("DEAD_LINK", "REF_UNSUPPORTED")
 
 
 def line_ops(line):
@@ -736,14 +753,11 @@ def line_ops(line):
 
 def severity(line):
     """'major' when the line fills, clears or changes a value, is a status / route / new-row
-    decision, or is a no-URL DEAD_LINK / REF_UNSUPPORTED verdict; 'minor' when the value stands
-    and the line only adds or re-verifies references."""
+    decision; 'minor' when the value stands and the line only adds or re-verifies references."""
     ops = line.get("ops")
     if ops is None:
         ops = line_ops(line)
     if any(o != "refs" for o in ops):
-        return "major"
-    if not ops and line.get("class_out") in _MAJOR_VERDICTS:
         return "major"
     return "minor"
 
@@ -841,6 +855,9 @@ def _item(e):
     r = e.rec
     obj = {k: v for k, v in r.items() if v not in ("", None, [], {}, False)}
     obj.pop("project_id", None)
+    if e.kind == "concern" and e.colid.startswith("ref-check:"):
+        obj["concern_type"] = "ref_unverified"
+        obj.setdefault("recommendation", _REF_CHECK_TEXT.get(r.get("class_out"), ""))
     obj.update({
         "key": f"{e.dir}::{e.pid}|{e.sheet_row}|{e.colid}",
         "kind": e.kind, "dir": e.dir, "also_in": e.also_in, "sheet_row": e.sheet_row,

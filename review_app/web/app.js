@@ -617,8 +617,8 @@
     return chip(t === "untiered" ? "unrated" : t, t === "untiered" ? "" : t,
       t === "untiered" ? "no confidence rating on this record: defaults to hold" : "confidence level (rule 4)");
   }
-  // "major · fill", "major · status, change", "minor · refs only", "minor · re-verified", "major · unsupported"
-  var VERDICT_LABEL = {REF_UNSUPPORTED: "unsupported", DEAD_LINK: "dead link", REF_BLOCKED: "blocked", REVERIFIED: "re-verified"};
+  // "major · fill", "major · status, change", "minor · refs only", "minor · re-verified"
+  var VERDICT_LABEL = {REVERIFIED: "re-verified"};
   function sevChip(l) {
     if (!l.severity) return chip("severity unknown", "", "this line was staged before severity existed in the dataset: rebuild it (see the banner)");
     var s = sevOf(l), ops = (l.ops || []).filter(function (o) { return o !== "refs"; });
@@ -867,7 +867,8 @@
   var BODY = ["recommendation", "action", "detail", "summary", "monitor_reason", "researcher_notes", "staged_note", "staleness_rule", "corridor_desc"];
   var CONCERN_ISSUE = {existence: "its existence is in doubt", duplicate: "it may duplicate another row",
                        classification: "its classification may be wrong", attribution: "its owner / operator attribution may be wrong",
-                       spec: "a spec value (capacity, length, diameter, dates) may be off"};
+                       spec: "a spec value (capacity, length, diameter, dates) may be off",
+                       ref_unverified: "a recorded reference could not be checked against the value: a person should open it"};
   function concernHead(it) {
     var issue = CONCERN_ISSUE[it.concern_type], v = it.verdict || "";
     if (!issue) return (it.concern_type || "concern") + (v ? " — " + v : "");

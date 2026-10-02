@@ -372,14 +372,9 @@ def test_severity_rival_never_promotes_a_ref_only_line(tmp_path):
     # value -> blank (clear): major
     ({"kind": "fill", "class_out": "REFS_ADDED", "current": {"Diameter": "42"}, "proposed_values": {"Diameter": ""},
       "current_ref": "", "proposed_refs": [], "ref_cell_text": ""}, ("major", ["clear"])),
-    # the page no longer supports the value and there is no replacement URL: major
+    # a different ref for the SAME value is minor, whatever the verdict says about the old one
     ({"kind": "ref", "class_out": "REF_UNSUPPORTED", "current": {"Capacity": "7.5"}, "proposed_values": {},
-      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("major", [])),
-    ({"kind": "ref", "class_out": "DEAD_LINK", "current": {}, "proposed_values": {},
-      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("major", [])),
-    # an access failure changes nothing: minor
-    ({"kind": "ref", "class_out": "REF_BLOCKED", "current": {}, "proposed_values": {},
-      "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": ""}, ("minor", [])),
+      "current_ref": "http://old/", "proposed_refs": ["http://new/"], "ref_cell_text": "http://old/, http://new/"}, ("minor", ["refs"])),
     # re-verified, nothing added or dropped: minor
     ({"kind": "ref", "class_out": "REVERIFIED", "current": {}, "proposed_values": {},
       "current_ref": "http://old/", "proposed_refs": [], "ref_cell_text": "http://old/"}, ("minor", ["refs"])),
@@ -398,3 +393,19 @@ def test_severity_table(line, want):
     ops = rd.line_ops(line)
     assert (rd.severity(dict(line, ops=ops)), ops) == want
     assert rd.severity(line) == want[0]        # without precomputed ops too
+
+
+def test_unreadable_or_unsupported_ref_with_no_replacement_is_a_concern_not_a_line():
+    # Baird 2026-10-02: research never proposes removing a ref; with nothing to add, a person checks it
+    for co in ("REF_UNSUPPORTED", "REF_BLOCKED", "DEAD_LINK"):
+        r = {"project_id": "P9001", "ref_col": "Proposal [ref]", "class_in": "HAS_REF", "class_out": co,
+             "proposed_refs": [], "values": {"ProposalYear": "2013"}}
+        assert rd.classify(r) == ("item", "concern")
+        assert rd._colid(r, "concern") == "ref-check:Proposal [ref]"
+        r2 = dict(r, proposed_refs=["http://new/"])
+        assert rd.classify(r2) == ("line", "ref")          # a replacement URL keeps it a (minor) line
+    e = rd.Entry("item", "concern", "P9001", r, "d", "resolutions", "ref-check:Proposal [ref]", 0)
+    e.sheet_row, e.moved = 4, False
+    it = rd._item(e)
+    assert it["concern_type"] == "ref_unverified" and it["key"].endswith("|ref-check:Proposal [ref]")
+    assert "stays on the sheet" in it["recommendation"]

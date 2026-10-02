@@ -125,7 +125,7 @@ record left `UNRESOLVED` with no refs and no `researcher_notes` is a silent skip
 `sweep_gates.py` gate L and by `scripts/check_shard_coverage.py` before the shard is written.
 
 **Ref records** (`class_in` `HAS_REF` / `MISSING_REF`): `class_out` ∈ `REFS_ADDED` /
-`REVERIFIED` / `DEAD_LINK` (every link 404/410) / `REF_BLOCKED` (could not fetch) / `REF_UNSUPPORTED` (loads, screen missed the value) / `UNRESOLVED`. Apply = paste `proposed_refs` into the
+`REVERIFIED` / `DEAD_LINK` (every link 404/410) / `REF_BLOCKED` (could not fetch) / `REF_UNSUPPORTED` (loads, screen missed the value) / `UNRESOLVED`. The review app lists a `DEAD_LINK` / `REF_BLOCKED` / `REF_UNSUPPORTED` record with no `proposed_refs` as a concern for a person to open and check; research never proposes removing the existing ref (Baird 2026-10-02). Apply = paste `proposed_refs` into the
 `ref_col` cell of `sheet_row` (or, when `tab="operators_owners"`, into that ProjectID's
 row on the operators/owners tab).
 

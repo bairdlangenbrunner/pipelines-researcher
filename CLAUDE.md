@@ -333,6 +333,13 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   deleted (404/410) may drop out. A weak existing ref is flagged in `ResearcherNotes`, never removed
   by a staged proposal; removing one is a separate, explicit call. `review_app/push.py` implements
   this (live cell text kept verbatim + missing URLs appended).
+- **Never propose REMOVING an existing ref (Baird 2026-10-02).** If a recorded ref cannot be loaded
+  or read, or does not state the value, and no other ref backs the SAME value, the value and the
+  ref both stay and the unit is logged as a concern (`REF_UNSUPPORTED` / `REF_BLOCKED` / `DEAD_LINK`
+  with no `proposed_refs`) for a person to open and check. A different ref for the same value is a
+  minor change (a ref added). Refs for a NEW value are a major change (the value changes and the
+  new refs replace the old). The review app shows the first case as a concern item, never a
+  decision line.
 - **Never delete a once-working ref over an access failure.** Geo-blocks, anti-bot
   403s/WAFs, and timeouts are not deletions — only a page confirmed deleted (HTTP
   404/410) may drop out of a `[ref]` cell. A blocked origin gets its Wayback snapshot

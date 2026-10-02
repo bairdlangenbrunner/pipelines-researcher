@@ -416,15 +416,18 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
    REMOVES a value the refs do not support, or CHANGES a value is a **major change**, as are
    status changes, routes and new rows. Severity is what the line does to the cells, never its
    kind: a `fill`-kind `REFS_ADDED` proposing the sheet's own value (rule 4(e) "confirmed as
-   recorded") is minor, a `ref`-kind `REF_UNSUPPORTED` is major. `review_data._line` is the
+   recorded") is minor. `review_data._line` is the
    authority — it ships `ops` (`fill` / `change` / `clear` on the value cols, `refs` when URLs are
    added or re-verified, `status` / `route` / `new_row` by kind) and `severity` on every line. A
    once-working URL the paste text leaves out is not an op: `push.ref_write` is additive while the
    value stands, so no ref-only line ever removes a URL from the sheet.
    Rulings: the "high-confidence suggestions" card tab goes, replaced by **major changes · minor
-   changes** (tier stays a filter and a bulk button); `REF_UNSUPPORTED` and `DEAD_LINK` with no
-   replacement URL are major (the page no longer supports the value, so the reviewer must look),
-   `REF_BLOCKED` is minor (an access failure, nothing changes); a rival candidate never promotes
+   changes** (tier stays a filter and a bulk button). **Revised the same day (Baird 2026-10-02):**
+   a ref that does not state the value, is gone, or cannot be opened, with no replacement URL
+   found, is NOT a line: it is a `concern` item (`ref-check:<ref col>` key, `concern_type`
+   `ref_unverified`) for a person to open and check, and research never proposes removing a
+   ref. A different ref for the SAME value is a minor change; refs for a NEW value are a major
+   one. A rival candidate never promotes
    a ref-only line — the concern is a reason to read, not a change the line makes. The ledger,
    store schema, `publish.make_index` and `push.py` are unchanged (severity is derivable from
    the dataset); a `severity` facet filter and an "accept all minor changes" bulk button land in
