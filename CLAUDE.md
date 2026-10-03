@@ -316,6 +316,12 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   (3) use `valueInputOption: RAW` and cell-scoped ranges, never whole rows/columns;
   (4) re-read afterwards and verify against the plan. Use `gws-gem-write`
   (`gws-gem` is read-only and stays the default).
+- **Every sheet write that touches a specific row also updates that row's `Researcher` and
+  `LastUpdated` cells (Baird 2026-10-02): `Researcher` = `CB`, REPLACING the old value (never
+  appended), `LastUpdated` = today as a date serial (RAW integer keeps the date format). Both the Gas
+  and the Pipeline operators/owners tabs have the columns. `push.py` does it for every row it writes
+  (`stamp_cells`); any one-off write must too. The 2026-10-02 US gas push (1,470 cells, 121 PIDs)
+  predates this and was backfilled the same day (`push.py --stamp-from <push backup csv>`, 430 cells).
 - **Pull a fresh GEM CSV at the start of every batch**; re-derive the column map
   from the fresh header (schema drifts; don't hard-code offsets).
 - **Every URL passes `scripts/url_verifier.py` before going in the xlsx** — even

@@ -183,7 +183,7 @@ own, one of three ways:
   button names each value). Pressing it is stored as a `suggest` whose `suggested_value` is the
   candidate (request `{key, rival: <concern key>}`; the record carries `rival`), plus a `confirmed`
   call on the concern (note "candidate accepted on <cols>") in the same write — so it reaches the
-  Update seed like any confirmed concern and never `push.py`. Accept / hold / reject / your own
+  Update seed like any confirmed concern, and `push.py` writes the candidate's cells (the concern's `contested` columns, backed by the concern's refs) like any other suggest (Baird 2026-10-02). Accept / hold / reject / your own
   suggest stay available and leave the concern alone. A `rival` request with any other decision,
   on a line the concern has no differing candidate for, or naming an unknown key is refused (400,
   nothing written).
@@ -275,6 +275,18 @@ Three header-bar buttons (right-aligned), "accept all minor changes" (refs only,
 confirm with the exact count and a per-kind breakdown. They skip lines with a rival candidate (decide
 those by hand) and lines a person already decided; one `POST /api/decide`. The
 server is all-or-nothing: if any line is invalid the request is refused (400) and nothing is written.
+
+**Clean accept (Baird 2026-10-02).** The header buttons only skip rival candidates, so they are
+not safe for "accept everything nothing asks a person to judge". `python review_app/clean_accepts.py
+--country <C> --commodity <c>` plans it (read-only: `work/clean_accepts/clean_accepts.json` records +
+`clean_accepts_skipped.csv` with a reason per skipped line); then `ledger.py decide --records` on each
+`clean_accepts_NN.json` chunk (100 records; one call of 1,100 overflows the gws argument limit) records it as a chat batch, and `push.py` is still the only route to the sheet. A line is accepted
+when it is high confidence, undecided, not in the backend (major or minor both fine) and none of
+these applies: a rival candidate, a failed check on a proposed ref, class STALE / REF_UNSUPPORTED /
+REF_BLOCKED, an open concern on the pipeline (pipeline-wide types, or its column; attribution also
+blocks owner/operator lines; only `dismissed` closes one), an open QC flag other than
+WikiLink_health, or an escalation naming the pipeline. Unresolved notes and `confirmed` items never
+block. Anything unclear blocks. The rule is in the script's docstring; change it there.
 
 ## Session summary
 

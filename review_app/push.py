@@ -11,12 +11,11 @@ are read from the staging-dir sidecars, which mirror the Google decision store (
 
 Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
   * only lines a PERSON accepted OR SUGGESTED (kinds ref | fill | status | oo); machine records never push.
-    A SUGGEST (Baird 2026-10-02) writes the reviewer's own value instead of the proposal, to the one
+    A rival suggest (a concern's candidate taken) writes the concern's candidate cells, backed by the concern's refs. A SUGGEST (Baird 2026-10-02) writes the reviewer's own value instead of the proposal, to the one
     cell it names: `Column=value; Column2=value2` names cells outright; a bare value goes to the line's
     only proposed column (fill | oo), to Status (status), or -- if it is all URLs -- onto the `[ref]` cell
     (ref). Any other bare value is skipped as ambiguous (a ref line proposes many columns), never
-    guessed. The line's proposed refs back the suggested value (the reviewer judged that line). A rival
-    suggest (a concern's candidate taken) stays an Update item. Writing a state / prefecture / country
+    guessed. The line's proposed refs back the suggested value (the reviewer judged that line). Writing a state / prefecture / country
     cell next to a non-blank, unwritten location cell of the same Start/End group raises a CONCERN:
     printed with the plan and, on apply, appended to notes/push_concerns.csv
   * a `[ref]` cell is ADDITIVE (Baird 2026-10-01): the cell's live text is kept verbatim and each
@@ -53,7 +52,7 @@ import hashlib
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -75,6 +74,28 @@ TABS = {("tracker", "gas"): ("Gas pipelines", 2), ("tracker", "oil"): ("Oil/NGL 
 OO_TITLE, OO_HEADER = "Pipeline operators/owners", 1
 PUSH_KINDS = {"ref", "fill", "status", "oo"}
 NUM = re.compile(r"^-?\d+(\.\d+)?$")
+AGENT = "CB"            # the agent's own initials; REPLACES the Researcher cell, never appended (Baird 2026-10-02)
+
+
+def stamp_values():
+    """{Researcher: 'CB', LastUpdated: today's date serial}. LastUpdated holds date serials (a number
+    under a date format), so a RAW integer keeps the cell's format; a text date would not."""
+    today = datetime.now(ET).date()
+    return {"Researcher": AGENT, "LastUpdated": (today - date(1899, 12, 30)).days}
+
+
+def stamp_cells(rows, tabs, cells):
+    """Add the Researcher + LastUpdated cells for every (tab key, row) a push writes (Baird 2026-10-02:
+    any row-specific sheet write also stamps its row, on every tab that has the columns). `cells`
+    is the plan's {(tab, row, col): {...}} map; a stamp already equal to the live cell is not a write."""
+    for tname, row, pid in sorted(rows):
+        tab = tabs[tname]
+        for c, v in stamp_values().items():
+            if c not in tab.col:
+                sys.exit(f"ABORT: {tab.title} has no {c} column to stamp")
+            k = (tname, row, c)
+            if k not in cells and not same_value(tab.cell(row, c), v):
+                cells[k] = {"before": tab.cell(row, c), "after": v, "pid": pid, "lines": []}
 
 
 def read_tab(title, render="FORMULA"):
@@ -223,12 +244,14 @@ def geo_concerns(pid, row, writes, tab):
 
 
 def pushable_lines(ds):
-    """(pid, line, decision) for every line a PERSON accepted or suggested a value for (not a rival)."""
+    """(pid, line, decision) for every line a PERSON accepted or suggested a value for. A rival suggest
+    (a concern's candidate taken instead of the proposal) is included: build_plan writes the
+    concern's candidate cells (Baird 2026-10-02)."""
     out = []
     for p in ds["pipelines"]:
         for l in p["lines"]:
             if l.get("reviewed") and l["kind"] in PUSH_KINDS and l.get("decided_by") not in store.MACHINE_REVIEWERS:
-                if l.get("decision") == "accept" or (l.get("decision") == "suggest" and not l.get("rival")):
+                if l.get("decision") == "accept" or l.get("decision") == "suggest":
                     out.append((p["pid"] if "pid" in p else p.get("project_id"), l, l["decision"]))
     return out
 
@@ -298,7 +321,10 @@ def build_plan(commodity="gas", include_stale=False):
             continue
         writes, bad = {}, None
         values = l.get("proposed_values") or {}
-        if dec == "suggest":
+        rv = store.rival_of(l, l["rival"]) if dec == "suggest" and l.get("rival") else None
+        if rv:                          # a concern's candidate taken: its cells, backed by the concern's refs
+            values = dict(rv["cols"])
+        elif dec == "suggest":
             values, why_not = suggest_writes(l, l.get("suggested_value"), tab)
             if values is None:
                 skipped.append((l["key"], why_not))
@@ -335,7 +361,7 @@ def build_plan(commodity="gas", include_stale=False):
                     (cleared if v == "" else changed).append(c)
             remaining = [c for c in (l.get("value_cols") or []) if c in tab.col and c not in cleared
                          and str(writes.get(c, tab.cell(row, c))).strip() != ""]
-            urls = l.get("proposed_refs") or []
+            urls = (rv["refs"] if rv else l.get("proposed_refs")) or []
             if dec == "suggest" and not values:       # a URL suggestion: those URLs, additively
                 urls = [u.strip() for u in str(l["suggested_value"]).split(",") if u.strip()]
             w = ref_write(tab.cell(row, rc), urls, cleared, changed, remaining)
@@ -367,6 +393,7 @@ def build_plan(commodity="gas", include_stale=False):
             elif k not in cells:
                 cells[k] = {"before": tab.cell(row, c), "after": v, "pid": pid, "lines": []}
             cells[k]["lines"].append(l["key"])
+    stamp_cells({(t, r, d["pid"]) for (t, r, _), d in cells.items()}, tabs, cells)
     plan = []
     for (tname, row, c), d in sorted(cells.items(), key=lambda x: (x[0][0], x[0][1], tabs[x[0][0]].col[x[0][2]])):
         tab = tabs[tname]
@@ -410,6 +437,20 @@ def show(plan, skipped, concerns=()):
         print(f"  {n} stale line(s) skipped: the backend changed under the decision (--include-stale pushes them anyway)")
 
 
+def _read_cells(title, ps, render, chunk=100):
+    """Cell-scoped batchGet in chunks: the ranges ride in the query string, so ~1,400 of them
+    in one call return HTTP 400 (2026-10-02, the 1,470-cell US gas push)."""
+    out = []
+    for i in range(0, len(ps), chunk):
+        part = ps[i:i + chunk]
+        got = gws("gws-gem", "batchGet", "--params", json.dumps({
+            "spreadsheetId": SHEET_ID, "ranges": [f"'{title}'!{p['cell']}" for p in part],
+            "valueRenderOption": render, "majorDimension": "ROWS"}))["valueRanges"]
+        assert len(got) == len(part), f"got {len(got)} ranges, asked {len(part)}"
+        out += got
+    return out
+
+
 def apply(plan_path):
     pl = json.loads(Path(plan_path).read_text())
     plan = pl["plan"]
@@ -419,9 +460,7 @@ def apply(plan_path):
     for p in plan:
         by_tab.setdefault(p["tab"], []).append(p)
     for title, ps in by_tab.items():
-        got = gws("gws-gem", "batchGet", "--params", json.dumps({
-            "spreadsheetId": SHEET_ID, "ranges": [f"'{title}'!{p['cell']}" for p in ps],
-            "valueRenderOption": "FORMULA", "majorDimension": "ROWS"}))["valueRanges"]
+        got = _read_cells(title, ps, "FORMULA")
         for p, vr in zip(ps, got):
             cur = ((vr.get("values") or [[""]])[0] or [""])[0]
             if str(cur).startswith("="):
@@ -452,9 +491,7 @@ def apply(plan_path):
     # 4. verify
     bad = 0
     for title, ps in by_tab.items():
-        got = gws("gws-gem", "batchGet", "--params", json.dumps({
-            "spreadsheetId": SHEET_ID, "ranges": [f"'{title}'!{p['cell']}" for p in ps],
-            "valueRenderOption": "UNFORMATTED_VALUE", "majorDimension": "ROWS"}))["valueRanges"]
+        got = _read_cells(title, ps, "UNFORMATTED_VALUE")
         for p, vr in zip(ps, got):
             cur = ((vr.get("values") or [[""]])[0] or [""])[0]
             if str(cur) != str(p["after"]) and not (isinstance(p["after"], (int, float)) and float(cur) == float(p["after"])):
@@ -463,8 +500,14 @@ def apply(plan_path):
     if bad:
         sys.exit(f"{bad} cells failed verification")
     print(f"verified: all {len(plan)} cells read back as planned")
+    record_push(pl, plan)
+
+
+def record_push(pl, plan):
     # 5. `push` machine records (a machine record is not a click; the line shows as applied): to the
     #    decision store first (ledger, origin 'push'), then each staging dir's log; + push_log
+    if not pl.get("meta"):          # a stamp-only plan has no review lines to mark applied
+        return
     ts = datetime.now(ET).isoformat(timespec="seconds")
     meta, recs, dirs = pl["meta"], [], {}
     sc = meta.get("__scope__") or {}
@@ -481,7 +524,8 @@ def apply(plan_path):
     if cfg.get("store_sheet_id"):
         led = ledger.Ledger(cfg["store_sheet_id"], sc.get("id") or f"review-app-{pl.get('commodity', 'gas')}",
                             sc.get("snapshot") or "", "push")
-        store.append_records(recs, dirs, sink=led.sink)
+        for k in range(0, len(recs), 100):       # one gws call per 100: ~1,100 records overflow the argument limit
+            store.append_records(recs[k:k + 100], dirs, sink=led.sink)
         print(f"push records in the decision store: rows {recs[0].get('row')}-{recs[-1].get('row')}")
     else:
         print("WARNING: no decision store configured; push records written to the staging dirs only", file=sys.stderr)
@@ -511,7 +555,36 @@ def main(argv=None):
     ap.add_argument("--include-stale", action="store_true",
                     help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
+    ap.add_argument("--stamp-from", metavar="BACKUP_CSV",
+                    help="plan ONLY the Researcher + LastUpdated stamps for the rows an earlier push's backup CSV wrote")
+    ap.add_argument("--record-only", metavar="PLAN",
+                    help="step 5 alone: write the `push` records for a plan whose cells were already written and verified")
     a = ap.parse_args(argv)
+    if a.stamp_from:
+        rows = set()
+        tabs = {"tracker": Tab(*TABS[("tracker", a.commodity)]), "oo": Tab(OO_TITLE, OO_HEADER)}
+        by_title = {t.title: k for k, t in tabs.items()}
+        for r in csv.DictReader(open(a.stamp_from, encoding="utf-8")):
+            k = by_title[r["tab"]]
+            row = tabs[k].locate(r["ProjectID"], r["sheet_row"])
+            if row is None:
+                sys.exit(f"ABORT: {r['ProjectID']} row {r['sheet_row']} not found on {r['tab']}")
+            rows.add((k, row, r["ProjectID"]))
+        cells = {}
+        stamp_cells(rows, tabs, cells)
+        plan = []
+        for (tname, row, c), d in sorted(cells.items(), key=lambda x: (x[0][0], x[0][1], tabs[x[0][0]].col[x[0][2]])):
+            tab = tabs[tname]
+            if str(d["before"]).startswith("="):
+                sys.exit(f"ABORT: formula cell {tab.title}!{a1(tab.col[c])}{row}")
+            plan.append({"tab": tab.title, "tabkey": tname, "column": c, "cell": f"{a1(tab.col[c])}{row}", "sheet_row": row,
+                         "ProjectID": d["pid"], "before": d["before"], "after": d["after"], "lines": [], "replaces": False})
+        show(plan, [], [])
+        print("plan written:", save_plan(plan, {}, a.commodity))
+        return
+    if a.record_only:
+        pl = json.loads(Path(a.record_only).read_text())
+        return record_push(pl, pl["plan"])
     if a.apply:
         return apply(a.apply)
     plan, skipped, meta = build_plan(a.commodity, a.include_stale)
