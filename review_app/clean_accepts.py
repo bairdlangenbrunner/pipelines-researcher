@@ -15,8 +15,11 @@ in the backend, major or minor, AND none of these applies:
                   REF_BLOCKED
   concern open    (no call, confirmed, or needs_research; only `dismissed` closes one) on the
                   same pipeline that is
-                    - pipeline-wide: existence, duplicate, classification, status, naming,
-                      route-geometry, or any concern naming no column; or
+                    - pipeline-wide: existence or duplicate, or any other concern naming no
+                      column that SCOPE_PATS cannot scope (Baird 2026-10-02: status, naming,
+                      route-geometry and classification concerns, and Date_logic and
+                      Geo_consistency flags, block only the columns they can affect; an
+                      attribution concern with no column blocks only owner/operator lines); or
                       (a classification concern that only recommends a PipelineType change to
                       gathering or distribution is scoped to the PipelineType column instead:
                       Baird 2026-10-02, that is a change to suggest, not an issue); or
@@ -47,7 +50,16 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import review_data  # noqa: E402
 
 NONBLOCK_FLAGS = {"WikiLink_health", "Existence_support"}   # Existence_support: Baird 2026-10-02, too constraining
-WHOLE_PIPELINE = {"existence", "duplicate", "classification", "status", "naming", "route-geometry"}
+WHOLE_PIPELINE = {"existence", "duplicate"}   # Baird 2026-10-02: the rest are scoped by what they affect (SCOPE_PATS)
+# concern type / flag check -> columns it can affect, when it names no column of its own
+SCOPE_PATS = {
+    "status": r"Status|Year|Month|Shelved|Cancelled|Delay|Proposal|Construction|Start$|Stop",
+    "naming": r"Name",
+    "route-geometry": r"Location|State|Province|District|Country|Route|Length|Prefecture",
+    "classification": r"PipelineType|Fuel",
+    "Date_logic": r"Year|Month|Status|Shelved|Cancelled",
+    "Geo_consistency": r"Country|State|Province|Location|District|Prefecture",
+}
 BLOCK_CLASSES = {"STALE", "REF_UNSUPPORTED", "REF_BLOCKED"}
 CHUNK = 100
 NOTE = "clean accept: high confidence, no open concern or flag"
@@ -96,14 +108,20 @@ def blockers(pipes):
     out = {}
     esc = [i for p in pipes for i in p["items"] if i["kind"] == "escalation"]
     for p in pipes:
-        b = out.setdefault(p["pid"], {"whole": [], "cols": {}, "oo": []})
+        b = out.setdefault(p["pid"], {"whole": [], "cols": {}, "oo": [], "pats": []})
         for i in p["items"]:
             k = i["kind"]
             if k == "concern" and i.get("call") != "dismissed":
                 t = i.get("concern_type") or ""
                 cols = concern_cols(i)
                 why = f"concern:{t}:{i.get('call') or 'open'}"
-                if (t in WHOLE_PIPELINE and not type_only(i)) or not cols:
+                if t in WHOLE_PIPELINE and not type_only(i):
+                    b["whole"].append(why)
+                elif not cols and t == "attribution":
+                    b["oo"].append(why)
+                elif not cols and t in SCOPE_PATS:
+                    b["pats"].append((SCOPE_PATS[t], why))
+                elif not cols:
                     b["whole"].append(why)
                 else:
                     if t == "attribution":
@@ -111,7 +129,14 @@ def blockers(pipes):
                     for c in cols:
                         b["cols"].setdefault(c, why)
             elif k == "flag" and i.get("call") not in ("dismissed", "noted") and i.get("check") not in NONBLOCK_FLAGS:
-                b["whole"].append(f"flag:{i.get('check')}")
+                chk = i.get("check")
+                m = re.match(r"\s*(?:orphan ref: )?(\w+)", i.get("detail") or "")
+                if chk in SCOPE_PATS:
+                    b["pats"].append((SCOPE_PATS[chk], f"flag:{chk}"))
+                elif chk in ("OtherVocab", "BroadSweep_Misc") and m and m.group(1)[:1].isupper():
+                    b["pats"].append((re.escape(m.group(1)), f"flag:{chk}"))
+                else:
+                    b["whole"].append(f"flag:{chk}")
         for e in esc:
             if p["pid"] in f"{e.get('title', '')} {e.get('summary', '')}":
                 b["whole"].append("escalation")
@@ -131,6 +156,10 @@ def skip_reason(p, l, blk):
         return "pipeline-wide: " + b["whole"][0]
     if l.get("kind") == "oo" and b.get("oo"):
         return "owner/operator: " + b["oo"][0]
+    for pat, why in b.get("pats", []):
+        for c in sorted(line_cols(l)):
+            if re.search(pat, c):
+                return f"column {c}: {why}"
     hit = line_cols(l) & set(b.get("cols", {}))
     if hit:
         c = sorted(hit)[0]
