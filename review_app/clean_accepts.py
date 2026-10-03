@@ -17,11 +17,17 @@ in the backend, major or minor, AND none of these applies:
                   same pipeline that is
                     - pipeline-wide: existence, duplicate, classification, status, naming,
                       route-geometry, or any concern naming no column; or
+                      (a classification concern that only recommends a PipelineType change to
+                      gathering or distribution is scoped to the PipelineType column instead:
+                      Baird 2026-10-02, that is a change to suggest, not an issue); or
                     - attribution: also blocks every owner/operator line; or
                     - on a column the line proposes (contested columns, or the ref_check
                       column), compared without the ` [ref]` suffix
-  flag open       a QC flag on the pipeline (any check) other than WikiLink_health (a wiki
-                  URL's health says nothing about a data value); `noted`/`dismissed` closes one
+  flag open       a QC flag on the pipeline other than WikiLink_health (a wiki URL's health
+                  says nothing about a data value) and Existence_support (Baird 2026-10-02: a
+                  flag on the pipeline is not an issue raised on the line; it stays in the
+                  store and is listed in clean_accepts_flagged.csv); `noted`/`dismissed`
+                  closes one
   escalation      a scope escalation whose text names the pipeline's ProjectID
 An unresolved note or a `confirmed` (positive) item never blocks. Anything unclear blocks:
 the point is to leave every line a person might want to judge for a person.
@@ -40,6 +46,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import review_data  # noqa: E402
 
+NONBLOCK_FLAGS = {"WikiLink_health", "Existence_support"}   # Existence_support: Baird 2026-10-02, too constraining
 WHOLE_PIPELINE = {"existence", "duplicate", "classification", "status", "naming", "route-geometry"}
 BLOCK_CLASSES = {"STALE", "REF_UNSUPPORTED", "REF_BLOCKED"}
 CHUNK = 100
@@ -62,7 +69,22 @@ def line_cols(l):
     return {c for c in cols if c}
 
 
+TYPE_ONLY = re.compile(r"gather|distribut", re.I)
+TYPE_UNSURE = re.compile(r"human|confirm|consider|whether|verify", re.I)
+
+
+def type_only(i):
+    """A classification concern whose recommendation is just a PipelineType change to
+    gathering or distribution (Baird 2026-10-02): a CHANGE to suggest, not an issue that holds
+    the pipeline's other lines. Wording that asks a person to confirm stays a pipeline-wide block."""
+    r = i.get("recommendation") or ""
+    return (i.get("concern_type") == "classification" and "PipelineType" in r
+            and bool(TYPE_ONLY.search(r)) and not TYPE_UNSURE.search(r))
+
+
 def concern_cols(i):
+    if type_only(i):
+        return {"PipelineType"}
     cols = {stem(c) for c in (i.get("contested") or {})}
     if i.get("ref_col") and not str(i["ref_col"]).startswith("__"):
         cols.add(stem(i["ref_col"]))
@@ -81,14 +103,14 @@ def blockers(pipes):
                 t = i.get("concern_type") or ""
                 cols = concern_cols(i)
                 why = f"concern:{t}:{i.get('call') or 'open'}"
-                if t in WHOLE_PIPELINE or not cols:
+                if (t in WHOLE_PIPELINE and not type_only(i)) or not cols:
                     b["whole"].append(why)
                 else:
                     if t == "attribution":
                         b["oo"].append(why)
                     for c in cols:
                         b["cols"].setdefault(c, why)
-            elif k == "flag" and i.get("call") not in ("dismissed", "noted") and i.get("check") != "WikiLink_health":
+            elif k == "flag" and i.get("call") not in ("dismissed", "noted") and i.get("check") not in NONBLOCK_FLAGS:
                 b["whole"].append(f"flag:{i.get('check')}")
         for e in esc:
             if p["pid"] in f"{e.get('title', '')} {e.get('summary', '')}":
@@ -149,6 +171,14 @@ def main(argv=None):
     # one gws call per ledger append: ~1,100 records in one call overflows the argument limit
     for i in range(0, len(recs), CHUNK):
         (out / f"clean_accepts_{i // CHUNK:02d}.json").write_text(json.dumps(recs[i:i + CHUNK]), encoding="utf-8")
+    flagged = {p["pid"] for p in ds["pipelines"] for i in p["items"]
+               if i["kind"] == "flag" and i.get("check") == "Existence_support" and i.get("call") not in ("dismissed", "noted")}
+    with open(out / "clean_accepts_flagged.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["pid", "kind", "column", "key"])
+        for p, l, _ in take:
+            if p["pid"] in flagged:
+                w.writerow([p["pid"], l["kind"], l.get("column"), l["key"]])
     with open(out / "clean_accepts_skipped.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["pid", "kind", "severity", "column", "reason", "key"])

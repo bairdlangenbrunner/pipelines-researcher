@@ -3,7 +3,7 @@
 One scoped pass over existing rows (country + commodity + status filter) with
 **selectable legs** — `refs`, `fills`, `validity`, `status-review`, `routes`,
 `recon` (formerly `gulfpub`; now one pass per registered reference dataset —
-`gulfpub` AND `osm` in the `deep` preset) — staged into ONE dir per scope. Presets (`refs-only`, `deep`, `in-dev`)
+`gulfpub` only in the `deep` preset; `osm` paused 2026-10-02) — staged into ONE dir per scope. Presets (`refs-only`, `deep`, `in-dev`)
 and the command sequences: `docs/workflows.md §3`. This SOP is the operational
 rules: the `refs` leg first (the base every preset includes), then the further
 legs under "Legs beyond refs".
@@ -98,6 +98,10 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
   trailing short legal form, no punctuation, no trailing acronym (acronym → `researcher_notes` +
   `data/owner_aliases.json`), the team's own spelling on an exact/alias gazetteer hit.
   `check_shard_coverage.py` blocks an un-styled proposal; gate O reports them at delivery.
+  **`Owner<N>%` is optional (Baird 2026-10-01): leave it blank when no source states a share.**
+  A missing percentage never blocks proposing an owner — stage every owner the refs name (a
+  multi-party JV is `Owner1`/`Owner2`/`Owner3`) with `%` blank, and a recorded share the refs
+  contradict (`Owner1%` 100.00% on a JV) is staged as a blank clear. Don't guess a split.
 - **Route/geometry is OUT OF SCOPE.** `RouteType`/`RouteAccuracy`/`RouteNotes` → `Route [ref]`
   is dropped by `discover_ref_pairs` (`SKIP_REF_COLS`); **never research, fill, or re-verify a
   `Route [ref]`.** Pipeline geometry is reconciled against the `GOIT-GGIT-pipeline-routes` repo
@@ -388,6 +392,9 @@ misses it):
   inaugurated confirms `operating`, and a status `any_of` miss is **expected**, not
   disqualifying. Rule + the P5984/eurasianet worked example: `confidence_tiers.md` → "Status is
   inferred from context".
+- **Stage the source's own unit (Baird 2026-10-02).** Equivalence is for *checking* a ref against the sheet; the value you
+  PROPOSE is recorded as the source states it (1,750 miles = `1750` + `mi`, never `2816.35` + `km`), and `*Units` changes
+  with it. Put any conversion in `ResearcherNotes` only.
 - **VALUES are often phrased in prose / equivalent units — do the equivalence yourself.**
   "an additional 6 BCM of natural gas to be exported to Egypt annually" fully supports
   `Capacity = 6` + `CapacityUnits = bcm/y` — "annually" / "per year" / "a year" **is** the
@@ -546,8 +553,8 @@ Two further legs run on request (both were standing expectations for the Iraq ga
   (media URLs for `RouteType`/`RouteAccuracy`/`RouteNotes`) stay out of scope. See
   `docs/reference/route_conventions.md`.
 - **(d) Reference-dataset cross-comparison.** Fold in a reconcile pass against **every**
-  registered dataset in scope — GulfPub / PE World Map *and* OSM by default in the `deep`
-  preset — to catch pipelines GEM is **missing**, geometry GEM **lacks**, and rows where
+  registered dataset in scope — GulfPub / PE World Map by default in the `deep`
+  preset (OSM paused 2026-10-02: not reliable) — to catch pipelines GEM is **missing**, geometry GEM **lacks**, and rows where
   **GEM's data disagrees**. Delivered as one `<Cmdty>_<Source>` tab per dataset. Traps:
   a scraped **"addition" is often a mislabel, not a miss** (the 2 GulfPub-only Iraq gas additions
   were Iran pipelines with `country=Iraq` — verify the `country`/endpoints before treating an
@@ -593,8 +600,16 @@ per-value confirmation, take a skeptical pass on every pipeline and flag:
 - **duplicate** — likely the same physical pipe as another GEM row under a different name/relabel;
 - **classification** — not a transmission line at all, or wrong commodity (e.g. an NGL line
   recorded as dry gas, a gathering/process/feeder line recorded as a trunk transmission line);
+  **A gathering or distribution line is a CHANGE, not a concern (Baird 2026-10-02):** `PipelineType`
+  has `gathering` and `distribution`, so when the evidence says that is what the line is, stage a
+  `PipelineType` fill/change record with its refs, never a `__VALIDITY__` classification concern
+  (`review_app/clean_accepts.py` still treats a type-only classification concern as scoped to
+  `PipelineType` so it never holds the pipeline's other lines). Raise a concern only when the
+  question is genuinely open (a person must confirm, or it may not be pipe at all).
 - **attribution** — wrong owner/operator, province, FuelSource, or endpoint;
 - **spec** — length/diameter/capacity that independent sources contradict.
+  Not a spec concern: a past `FIDYear` on a `Pre-FID` row — `FIDYear` records planned years too
+  (`gem_schema.md`, FIDYear gotcha).
 
 ### Two follow-on passes the `validity` leg keeps generating (Libya + Iraq, 2026-07)
 
