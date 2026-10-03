@@ -177,11 +177,11 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 |---|---|---|
 | **Triage** (plan the batch; memo, no xlsx) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §1 + Triage SOP |
 | **Reconcile vs a scraped dataset** (per-source diff) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §2 + Reconciliation SOP |
-| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `recon` (gulfpub + osm); presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
+| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `recon` (gulfpub; osm paused 2026-10-02); presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
-| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; every decision — loopback server, Google page, or a chat via `ledger.py decide` — lands in the store spreadsheet's `log` tab first (`review_app/ledger.py`), the sidecars mirror it; Google web app built, deployment pending) | "review the batch", "start the review app", "decide the <country> lines", "accept P1234's fill", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions", "push the accepts" | `review_app/README.md` (→ "Decisions" for the ledger, "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
+| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; every decision — loopback server, Google page, or a chat via `ledger.py decide` — lands in the store spreadsheet's `log` tab first (`review_app/ledger.py`), the sidecars mirror it; Google web app built, deployment pending. **Sheet-vs-wiki diffs are NOT review-app items** (Baird 2026-10-02: the wiki will be updated automatically and is expected to drift; the sheet is what must be accurate) — they stay in the handoff workbooks only; the wiki is read to harvest its outbound citations as candidate refs, never cited) | "review the batch", "start the review app", "decide the <country> lines", "accept P1234's fill", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions", "push the accepts" | `review_app/README.md` (→ "Decisions" for the ledger, "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
@@ -299,7 +299,7 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   exception (Baird 2026-09-30): a review-app push of *clicked accepts* is the mechanical
   pre-verified write, authorized per push run (`python review_app/push.py` plans, `--apply PLAN`
   writes; built 2026-10-01, first run 48 cells; `docs/plans/2026-09-30_review-app.md` §5). Its
-  cell text is additive (below); a non-blank differing VALUE cell is a conflict it skips and reports,
+  cell text is additive (below); a clicked accept IS the authorization for the cell edit it shows (fill, change or clear — a differing value is overwritten, no per-line flag; Baird 2026-10-01),
   and a line whose backend cells changed since it was decided is STALE and skipped unless
   `--include-stale`. **`push.py` is the ONLY route from an accepted suggestion to the sheet** —
   a decision I make in a chat is recorded with `python review_app/ledger.py decide --key K
@@ -333,6 +333,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   deleted (404/410) may drop out. A weak existing ref is flagged in `ResearcherNotes`, never removed
   by a staged proposal; removing one is a separate, explicit call. `review_app/push.py` implements
   this (live cell text kept verbatim + missing URLs appended).
+  **Additive ONLY while the value they support stays the same (Baird 2026-10-01):** a value that is
+  CLEARED takes its `[ref]` with it (unless the cell's cluster keeps a value), and a value CHANGED to a
+  different one has its `[ref]` replaced by the proposed refs (the old ones supported the old value;
+  no proposed ref = the change is not pushed). `push.py` does both (`ref_write`).
 - **Never propose REMOVING an existing ref (Baird 2026-10-02).** If a recorded ref cannot be loaded
   or read, or does not state the value, and no other ref backs the SAME value, the value and the
   ref both stay and the unit is logged as a concern (`REF_UNSUPPORTED` / `REF_BLOCKED` / `DEAD_LINK`
@@ -351,6 +355,8 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   delta but defer the recommendation (verify, don't overwrite).
 - **No orphan `[ref]` cells** — never fill a `[ref]` without a paired data value,
   or leave a researched value without a `[ref]`.
+- **Length and capacity are staged in the ORIGINAL units the source states (Baird 2026-10-02).** A source that says 1,750 miles is staged as `LengthKnown = 1750`, `LengthKnownUnits = mi`; 105.12 million m3/day stays `105.12` + `mill.Sm3/day`. Never convert to the sheet's current unit (no mi to km, no per-day to per-year, no bcf to MMcf to bcm), and change the units cell along with the number when they differ. The sheet already carries `mi`, `km`, `MMcf/d`, `bcm/y`, `MMSCMD`, `mill.Sm3/day`, `Dth/d` and more, and its km column and `CapacityBcm/y` are computed from them. A conversion is allowed only as a note ("1,750 mi, about 2,816 km"), never as the staged value. Enforced by `scripts/check_shard_coverage.py` (blocks a record whose notes show a conversion into km, or a numeric units cell) and stated in the sweep brief and both workflow prompts.
+- **Costs are staged in full units of the currency (Baird 2026-10-02).** `SegmentCost` / `ProjectLevelCost` carry the whole number (`5100000000`, not `5100`); `*CostUnits` stays the bare code (`USD`). Read the source's column header before copying a figure: every EIA pipeline-projects workbook says `Cost (millions)`, so 5,100 there is $5.1 billion. The same goes for "$1.6 billion" or "0.1 billion" in a press release. P0155 and 33 other staged costs were staged unscaled and fixed 2026-10-02. Enforced by `scripts/check_shard_coverage.py` (blocks a USD or unit-less cost under 100,000).
 - **Expansion with no new physical pipe → `LengthKnown = 0`, `Diameter = blank`.**
 - **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner — **and
   write the owner the ownership team's way** (`entity_style.py`; `docs/reference/owner_style.md`):
@@ -400,7 +406,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    (`build_recon_crosswalk.py`; `build_gulfpub_crosswalk.py` is a deprecated shim). First
    standalone §2 workbooks 2026-07-28; most countries since ship recon standalone, and **a
    standalone §2 workbook is NOT picked up by a handoff packet** (read `recon_actions`; QC SOP
-   → handoff contract). OSM runs by default in the `deep` preset; unmatched reference records
+   → handoff contract). **OSM recon is PAUSED (Baird 2026-10-02: OSM is not reliable)** — the `deep`
+   preset runs `gulfpub` only for now; the seala.ru dataset Aiganym provided is also ok to use
+   (registered 2026-10-02 as `sources/seala/`, tier 4, the 31 Russia lines that diverge from GEM; scrape in `work/seala-20260917/`; never a ref, rights not established). Existing OSM runs are
+   not deleted; Russia's is parked in `batches/russia-gas/parked-osm/`. Unmatched reference records
    bucket by `disposition` (Reconciliation SOP §4). Shipped engine defects, each now a rule in
    the Reconciliation SOP → "Engine invariants the bugs taught":
    - GulfPub gas `length_units` was miles read as km — fixed 2026-07-29; a manifest unit is a
@@ -426,11 +435,14 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 §2 recon workbooks (`recon_actions=0`), so they are separate review surfaces.
 
 - **Owner-style normalization (tracker-wide, operators/owners tab; slice 1 staged 2026-10-01, not
-  applied):** `batches/owners-style/staging/update-owner-style-20261001/` — deliberately
+  applied; `Operator` column added to the same slice later that day):**
+  `batches/owners-style/staging/update-owner-style-20261001/` — deliberately
   UNSCOPED (`meta.country = ""`), so no country packet, `INDEX.md`, or review-app scope picks it
-  up; its one workbook is in `batches/owners-style/deliverables/`. 2,145 `Owner<N>` cells on
-  1,979 ProjectIDs re-spelled on exact/alias gazetteer hits; 373 held back by reason on
-  `OO_HeldBack` (slice 2 = `stem_medium` + `rules_only`; the rest need rulings). Style only,
+  up; its one workbook is in `batches/owners-style/deliverables/` (`20261001_1852_ET`; the
+  owner-only `1800_ET` build is archived). 2,304 cells (2,145 `Owner<N>` + 159 `Operator`) on
+  2,015 ProjectIDs re-spelled on exact/alias gazetteer hits; 574 held back by reason on
+  `OO_HeldBack` (slice 2 = `stem_medium` + `rules_only`; `multi_operator` = one `Operator` cell
+  listing several operators, a shape ruling; the rest need rulings). Style only,
   no research. Re-run `stage_owner_style.py` after a fresh snapshot — never hand-edit the JSON.
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):** `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass 2026-07-28, rebuilt 2026-07-29, staged not applied — supersedes the 07-05
