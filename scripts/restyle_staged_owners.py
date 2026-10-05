@@ -31,6 +31,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 import entity_style as ES  # noqa: E402
+from json_patch import patch_text  # noqa: E402
 
 NAME_COL = re.compile(r"Owner\d+|Operator")
 OO_REFS = ("Owner [ref]", "Operator [ref]")
@@ -96,15 +97,17 @@ def main() -> None:
     seen_equal = 0
     cache: dict[str, ES.StyleResult] = {}
 
-    def visit(rec: dict, dirp: str, fpath: Path, where: str) -> bool:
-        """Restyle one record in place; -> True if anything changed."""
+    def visit(rec: dict, dirp: str, fpath: Path, where: str, path: tuple, edits: list,
+              file_pid: str = "") -> bool:
+        """Restyle one record; -> True if anything changed. `path` locates the record in the
+        file; the edits are (path-to-string, new text) pairs applied without re-serializing."""
         nonlocal seen_equal
         if not isinstance(rec, dict) or not is_oo(rec):
             return False
         vals = rec.get("values")
         if not isinstance(vals, dict):
             return False
-        pid = rec.get("project_id") or ""
+        pid = rec.get("project_id") or file_pid or ""      # shard records carry no project_id
         cur = current.get(pid, {})
         touched = False
         for col, v in list(vals.items()):
@@ -132,42 +135,61 @@ def main() -> None:
             per_dir[dirp] += 1
             per_file[str(fpath.relative_to(REPO))] += 1
             if a.apply:
+                edits.append((path + ("values", col), res.styled))
                 vals[col] = res.styled
                 if rec.get("primary_value") == sv:
+                    edits.append((path + ("primary_value",), res.styled))
                     rec["primary_value"] = res.styled
                 nl = note_line(col, sv, res)
                 notes = str(rec.get("researcher_notes") or "").strip()
                 if nl not in notes:
-                    rec["researcher_notes"] = (notes + " " + nl).strip()
+                    notes = (notes + " " + nl).strip()
+                    rec["researcher_notes"] = notes
+                    edits[:] = [e for e in edits if e[0] != path + ("researcher_notes",)]
+                    edits.append((path + ("researcher_notes",), notes))
                 touched = True
         return touched
+
+    def write(fpath: Path, text: str, edits: list) -> None:
+        """Apply the string edits to the file's own text (formatting kept) and prove the result."""
+        if not edits:
+            return
+        new = patch_text(text, edits)
+        json.loads(new)                                     # must still parse
+        fpath.write_text(new, encoding="utf-8")
 
     for d in live_dirs():
         dirp = str(d.relative_to(REPO))
         f = d / "staged_resolutions.json"
         if f.exists():
-            data = json.loads(f.read_text(encoding="utf-8"))
-            recs = data.get("resolutions") if isinstance(data, dict) else data
-            t = False
-            for r in recs or []:
-                t |= visit(r, dirp, f, "resolutions")
-            if t and a.apply:
-                f.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+            text = f.read_text(encoding="utf-8")
+            data = json.loads(text)
+            edits: list = []
+            if isinstance(data, dict):
+                for i, r in enumerate(data.get("resolutions") or []):
+                    visit(r, dirp, f, "resolutions", ("resolutions", i), edits)
+            else:
+                for i, r in enumerate(data):
+                    visit(r, dirp, f, "resolutions", (i,), edits)
+            if a.apply:
+                write(f, text, edits)
         for rf in sorted((d / "rows").glob("*.json")) if (d / "rows").is_dir() else []:
             try:
-                data = json.loads(rf.read_text(encoding="utf-8"))
+                text = rf.read_text(encoding="utf-8")
+                data = json.loads(text)
             except json.JSONDecodeError:
                 continue
-            t = False
+            edits = []
             if isinstance(data, dict):
+                file_pid = str(data.get("project_id") or rf.stem)
                 for key in ("fills", "resolutions"):
-                    for r in data.get(key) or []:
-                        t |= visit(r, dirp, rf, key)
+                    for i, r in enumerate(data.get(key) or []):
+                        visit(r, dirp, rf, key, (key, i), edits, file_pid)
             elif isinstance(data, list):
-                for r in data:
-                    t |= visit(r, dirp, rf, "list")
-            if t and a.apply:
-                rf.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+                for i, r in enumerate(data):
+                    visit(r, dirp, rf, "list", (i,), edits, rf.stem)
+            if a.apply:
+                write(rf, text, edits)
 
     # report
     stem = REPO / "notes" / f"owner-restyle-staged-{today}"

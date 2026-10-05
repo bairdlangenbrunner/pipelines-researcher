@@ -320,7 +320,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   `LastUpdated` cells (Baird 2026-10-02): `Researcher` = `CB`, REPLACING the old value (never
   appended), `LastUpdated` = today as a date serial (RAW integer keeps the date format). Both the Gas
   and the Pipeline operators/owners tabs have the columns. `push.py` does it for every row it writes
-  (`stamp_cells`); any one-off write must too. The 2026-10-02 US gas push (1,470 cells, 121 PIDs)
+  (`stamp_cells`); any one-off write must too. **Exception (Baird 2026-10-05): a style-only write**
+  (an Owner<N>/Operator re-spelling with no research behind it) **updates `LastUpdated` only** and
+  leaves `Researcher` with the person who did the ownership research; `push.py` applies it to a row
+  whose every written line carries the `style_only` marker (the owner-style update store sets it). The 2026-10-02 US gas push (1,470 cells, 121 PIDs)
   predates this and was backfilled the same day (`push.py --stamp-from <push backup csv>`, 430 cells).
 - **Pull a fresh GEM CSV at the start of every batch**; re-derive the column map
   from the fresh header (schema drifts; don't hard-code offsets).
@@ -367,8 +370,13 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner — **and
   write the owner the ownership team's way** (`entity_style.py`; `docs/reference/owner_style.md`):
   `Gazprom PJSC`, not `PAO Gazprom`; no trailing acronym (it goes to `researcher_notes` +
-  `data/owner_aliases.json`); adopt the team's spelling on an exact/alias gazetteer match, never
-  on a fuzzy one. `check_shard_coverage.py` blocks an un-styled `Owner<N>` proposal.
+  `data/owner_aliases.json`); adopt the team's spelling on an exact/alias gazetteer match, a ruling
+  in `data/owner_rulings.json`, or a rules result whose flags are all mechanical
+  (`entity_style.adoptable()`), never on a fuzzy one. `Operator` is styled the same way (2026-10-05).
+  `check_shard_coverage.py` and gate O block an un-styled `Owner<N>`/`Operator` proposal (a value
+  equal to the newest snapshot is carried, not checked); `review_app/push.py` refuses a plan that
+  would write one (`--allow-unstyled` overrides); `scripts/restyle_staged_owners.py --apply`
+  re-spells pending staged work in place, keeping each file's formatting.
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
   separate human branch+PR against `GOIT-GGIT-pipeline-routes`; §8 candidate geometry
   (`ROUTE_CANDIDATE` `<PID>.geojson`) stays staged in this repo until a human PR or a

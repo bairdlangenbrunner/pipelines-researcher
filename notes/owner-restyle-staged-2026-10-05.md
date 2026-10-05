@@ -4,129 +4,85 @@ Mode: APPLIED. Sheet snapshot: `GEM_operators_owners_snapshot_20261005.csv`.
 
 Every pending staging dir was read. A proposed Owner or Operator value that differs from the sheet's current cell was run through the styler; the ones the policy allows (an exact gazetteer hit, a confirmed alias, a ruling, or a rules result with only mechanical flags) were rewritten, with the source's spelling kept in the researcher notes. The rest were left as they were and are listed below for a person.
 
-- cells rewritten: 820 (201 in staged_resolutions.json files, the rest in shard rows)
-- distinct re-spellings: 189
-- cells left as they were (a judgment, not a spelling): 36 — acronym_not_initials 16, fuzzy_candidates 10, alias_candidate 10
-- proposed values equal to the sheet (carried, not touched): 2272
+- cells rewritten: 403 (201 in staged_resolutions.json files, the rest in shard rows)
+- distinct re-spellings: 105
+- cells left as they were (a judgment, not a spelling): 32 — acronym_not_initials 16, fuzzy_candidates 10, alias_candidate 6
+- proposed values equal to the sheet (carried, not touched): 3654
 
 ## Rewritten, by staging dir
 
-- `batches/united-states-gas/staging/deepsweep-west-operating`: 71
-- `batches/united-states-gas/staging/deepsweep-gulf-operating`: 70
-- `batches/united-states-gas/staging/deepsweep-remainder`: 64
-- `batches/united-states-gas/staging/deepsweep-appalachian-operating`: 63
-- `batches/united-states-gas/staging/deepsweep-s2-gulf-indev`: 52
-- `batches/united-states-gas/staging/deepsweep-s2-west`: 51
 - `batches/india-gas/staging/qc`: 48
-- `batches/united-states-gas/staging/deepsweep-s2-northeast-alaska`: 46
-- `batches/united-states-gas/staging/deepsweep-s2-tx-midcon-operating`: 45
-- `batches/united-states-gas/staging/deepsweep-s2-gulf-se-operating`: 41
-- `batches/united-states-gas/staging/deepsweep-s2-appalachian-indev`: 28
-- `batches/united-states-gas/staging/deepsweep-s2-tx-indev`: 27
-- `batches/saudi-arabia-gas/staging/ref-sweep-critical`: 24
-- `batches/pakistan-gas/staging/ref-sweep-operating`: 22
-- `batches/saudi-arabia-gas/staging/ref-sweep-operating`: 20
-- `batches/iran-gas/staging/ref-sweep-operating`: 18
+- `batches/united-states-gas/staging/deepsweep-gulf-operating`: 44
+- `batches/united-states-gas/staging/deepsweep-remainder`: 38
+- `batches/united-states-gas/staging/deepsweep-west-operating`: 37
+- `batches/united-states-gas/staging/deepsweep-appalachian-operating`: 28
+- `batches/united-states-gas/staging/deepsweep-s2-gulf-indev`: 24
+- `batches/united-states-gas/staging/deepsweep-s2-tx-midcon-operating`: 23
+- `batches/united-states-gas/staging/deepsweep-s2-west`: 22
 - `batches/libya-gas/staging/qc`: 18
+- `batches/united-states-gas/staging/deepsweep-s2-appalachian-indev`: 18
+- `batches/united-states-gas/staging/deepsweep-s2-gulf-se-operating`: 18
+- `batches/united-states-gas/staging/deepsweep-s2-northeast-alaska`: 18
 - `batches/united-states-gas/staging/qc`: 18
-- `batches/united-states-gas/staging/deepsweep-tx-operating`: 14
-- `batches/iraq-gas/staging/ref-sweep-operating`: 13
-- `batches/india-gas/staging/annual`: 10
-- `batches/india-gas/staging/ref-sweep-operating`: 7
+- `batches/iran-gas/staging/ref-sweep-operating`: 15
 - `batches/russia-gas/staging/deepsweep-r3-nw-indev`: 6
-- `batches/iran-gas/staging/annual`: 5
-- `batches/iraq-gas/staging/annual`: 5
-- `batches/egypt-oil/staging/ref-sweep-all`: 4
-- `batches/india-gas/staging/cancelled-review`: 4
-- `batches/russia-gas/staging/deepsweep-r7-central-south`: 4
-- `batches/kazakhstan-gas/staging/cancelled-review`: 3
-- `batches/libya-gas/staging/ref-sweep-operating`: 3
-- `batches/pakistan-gas/staging/annual`: 3
+- `batches/iraq-gas/staging/ref-sweep-operating`: 5
+- `batches/iran-gas/staging/annual`: 4
+- `batches/saudi-arabia-gas/staging/ref-sweep-critical`: 3
+- `batches/saudi-arabia-gas/staging/ref-sweep-operating`: 3
 - `batches/egypt-gas/staging/qc`: 2
 - `batches/egypt-gas/staging/ref-sweep-operating`: 2
+- `batches/egypt-oil/staging/ref-sweep-all`: 2
+- `batches/india-gas/staging/annual`: 2
+- `batches/kazakhstan-gas/staging/cancelled-review`: 2
 - `batches/malaysia-gas/staging/qc`: 2
-- `batches/china-guangxi-gas/staging/deepsweep-pilot`: 1
-- `batches/egypt-gas/staging/annual`: 1
-- `batches/malaysia-gas/staging/deep-sweep-20260812`: 1
-- `batches/pakistan-gas/staging/cancelled-review`: 1
 - `batches/saudi-arabia-gas/staging/ref-sweep`: 1
-- `batches/ukraine-gas/staging/deepsweep-20261002`: 1
-- `batches/uzbekistan-gas/staging/ref-sweep-operating`: 1
 
 ## Re-spellings (cells)
 
-- 'GAIL (India) Ltd' -> 'GAIL Ltd' (60)
-- 'Kinder Morgan' -> 'Kinder Morgan Inc' (41)
-- 'Energy Transfer' -> 'Energy Transfer LP' (40)
-- 'Enbridge' -> 'Enbridge Inc' (39)
-- 'Saudi Aramco' -> 'Saudi Arabian Oil Co' (36)
-- 'Targa Resources' -> 'Targa Resources Corp' (31)
-- 'TC Energy' -> 'TC Energy Corp' (26)
-- 'Williams Companies' -> 'Williams Companies Inc' (21)
-- 'Iran Ministry of Petroleum' -> 'Ministry of Petroleum (Iran)' (18)
-- 'Sui Northern Gas Pipelines Ltd (SNGPL)' -> 'Sui Northern Gas Pipelines Ltd' (16)
-- 'Iraq Ministry of Oil' -> 'Ministry of Oil (Iraq)' (15)
-- 'DT Midstream' -> 'DT Midstream Inc' (14)
-- 'Enterprise Products Partners' -> 'Enterprise Products Partners LP' (12)
-- 'Florida Gas Transmission Company, LLC' -> 'Florida Gas Transmission Company LLC' (12)
-- 'Tallgrass Energy' -> 'Tallgrass Energy LP' (11)
+- 'GAIL (India) Ltd' -> 'GAIL Ltd' (44)
+- 'Energy Transfer' -> 'Energy Transfer LP' (22)
+- 'Targa Resources' -> 'Targa Resources Corp' (20)
+- 'Kinder Morgan' -> 'Kinder Morgan Inc' (14)
+- 'Iran Ministry of Petroleum' -> 'Ministry of Petroleum (Iran)' (13)
 - 'Mellitah Oil & Gas B.V.' -> 'Mellitah Oil & Gas BV' (10)
-- 'Aramco' -> 'Saudi Arabian Oil Co' (9)
-- 'Transcontinental Gas Pipe Line Company, LLC' -> 'Transcontinental Gas Pipe Line Company LLC' (9)
+- 'Florida Gas Transmission Company, LLC' -> 'Florida Gas Transmission Company LLC' (10)
 - 'Sirte Oil' -> 'Sirte Oil Co' (8)
-- 'Enbridge Inc.' -> 'Enbridge Inc' (8)
-- 'Algonquin Gas Transmission, LLC' -> 'Algonquin Gas Transmission LLC' (8)
-- 'Sui Southern Gas Co (SSGC)' -> 'Sui Southern Gas Co Ltd' (7)
-- 'Texas Eastern Transmission, LP' -> 'Texas Eastern Transmission LP' (7)
-- 'Natural Gas Pipeline Co of America LLC (NGPL)' -> 'Natural Gas Pipeline Co of America LLC' (7)
-- 'Great Basin Gas Transmission Company' -> 'Great Basin Gas Transmission Co' (7)
-- 'Southwest Gas Corporation' -> 'Southwest Gas Corp' (7)
 - 'National Iranian Gas Company (NIGC)' -> 'National Iranian Gas Co' (6)
 - 'Gazprom' -> 'Gazprom PJSC' (6)
-- 'EnLink Midstream' -> 'EnLink Midstream LLC' (6)
+- 'Enbridge Inc.' -> 'Enbridge Inc' (6)
+- 'DT Midstream' -> 'DT Midstream Inc' (6)
 - 'Florida Gas Transmission, LLC' -> 'Florida Gas Transmission LLC' (6)
 - 'Tennessee Gas Pipeline Company, L.L.C.' -> 'Tennessee Gas Pipeline Company LLC' (6)
 - 'Kinder Morgan, Inc.' -> 'Kinder Morgan Inc' (6)
 - 'Columbia Gas of Ohio, Inc.' -> 'Columbia Gas of Ohio Inc' (6)
 - 'Columbia Gulf Transmission, LLC' -> 'Columbia Gulf Transmission LLC' (6)
-- 'Kinder Morgan Energy Partners' -> 'Kinder Morgan Energy Partners LP' (5)
+- 'TC Energy' -> 'TC Energy Corp' (6)
+- 'Aramco' -> 'Saudi Arabian Oil Co' (5)
+- 'Transcontinental Gas Pipe Line Company, LLC' -> 'Transcontinental Gas Pipe Line Company LLC' (5)
 - 'Nile Valley Gas Company' -> 'Nile Valley Gas Co' (4)
+- 'Iraq Ministry of Oil' -> 'Ministry of Oil (Iraq)' (4)
 - 'Eastern Gas Transmission and Storage, Inc.' -> 'Eastern Gas Transmission and Storage Inc' (4)
-- 'Eastern Shore Natural Gas Company' -> 'Eastern Shore Natural Gas Co' (4)
 - 'Enstor Pipeline Holdings, LLC' -> 'Enstor Pipeline Holdings LLC' (4)
 - 'Mountain Valley Pipeline, LLC' -> 'Mountain Valley Pipeline LLC' (4)
 - 'Sabine Crossing Pipeline, LLC' -> 'Sabine Crossing Pipeline LLC' (4)
 - 'CE Pipeline, LLC' -> 'CE Pipeline LLC' (4)
-- 'Cheniere Energy' -> 'Cheniere Energy Inc' (4)
 - 'Gulf Run Transmission, LLC' -> 'Gulf Run Transmission LLC' (4)
-- 'ExxonMobil' -> 'Exxon Mobil Corp' (4)
-- 'Northern Natural Gas Company' -> 'Northern Natural Gas Co' (4)
-- 'ONGC Petro Additions Ltd' -> 'ONGC Petro additions Ltd' (3)
-- 'BOTAŞ' -> 'BOTAŞ AŞ' (3)
-- 'Kurdistan Regional Government' -> 'Government of Kurdistan Region' (3)
-- 'Uzbekneftegaz' -> 'Uzbekneftegaz JSC' (3)
-- 'Chesapeake Utilities' -> 'Chesapeake Utilities Corp' (3)
-- 'Gulfstream Natural Gas System, L.L.C.' -> 'Gulfstream Natural Gas System LLC' (3)
-- 'El Paso Natural Gas Company, L.L.C.' -> 'El Paso Natural Gas Company LLC' (3)
-- 'National Grid plc' -> 'National Grid PLC' (3)
-- 'ArcLight Capital Partners' -> 'ArcLight Capital Partners LLC' (3)
-- 'Brookfield Infrastructure Partners' -> 'Brookfield Infrastructure Partners LP' (3)
-- 'Equitrans Midstream Corporation' -> 'Equitrans Midstream Corp' (3)
-- 'Eversource' -> 'Eversource Energy' (3)
-- 'Glenfarne Alaska LNG, LLC' -> 'Glenfarne Alaska LNG LLC' (3)
-- 'Transwestern Pipeline Company, LLC' -> 'Transwestern Pipeline Company LLC' (3)
-- 'Alliance Pipeline L.P.' -> 'Alliance Pipeline LP' (3)
-- 'MIT Pipeline Investment Americas, Inc' -> 'MIT Pipeline Investment Americas Inc' (3)
+- 'Texas Eastern Transmission, LP' -> 'Texas Eastern Transmission LP' (4)
+- 'Great Basin Gas Transmission Company' -> 'Great Basin Gas Transmission Co' (4)
+- 'Southwest Gas Corporation' -> 'Southwest Gas Corp' (4)
+- 'EnLink Midstream' -> 'EnLink Midstream LLC' (3)
+- 'Enbridge' -> 'Enbridge Inc' (3)
 - 'WBI Energy Transmission, Inc.' -> 'WBI Energy Transmission Inc' (3)
-- 'Tuscarora Gas Transmission Company' -> 'Tuscarora Gas Transmission Co' (3)
 - 'Valley Crossing Pipeline, LLC' -> 'Valley Crossing Pipeline LLC' (3)
 - 'Petroleum Pipeline Company(PPC)' -> 'Petroleum Pipeline Co' (2)
-- 'Arab Petroleum Pipelines Co (SUMED)' -> 'Arab Petroleum Pipelines Co' (2)
 - 'Oil and Natural Gas Corp Ltd (ONGC)' -> 'Oil and Natural Gas Corp Ltd' (2)
+- 'ONGC Petro Additions Ltd' -> 'ONGC Petro additions Ltd' (2)
 - 'GSPL India Gasnet Ltd (GIGL)' -> 'GSPL India Gasnet Ltd' (2)
-- 'Gas Transmission System Operator of Ukraine; Gazprom; Intergas Central Asia' -> 'Gas Transmission System Operator of Ukraine; Gazprom PJSC; Intergas Central Asia' (2)
-- 'ConocoPhillips' -> 'ConocoPhillips Corp' (2)
+- 'Uzbekneftegaz' -> 'Uzbekneftegaz JSC' (2)
 - 'PETRONAS Carigali Sdn Bhd' -> 'Petronas Carigali Sdn Bhd' (2)
+- 'Saudi Aramco' -> 'Saudi Arabian Oil Co' (2)
+- 'Eastern Shore Natural Gas Company' -> 'Eastern Shore Natural Gas Co' (2)
 - 'Iroquois Pipeline Operating Company' -> 'Iroquois Pipeline Operating Co' (2)
 - 'TC Energy Corporation' -> 'TC Energy Corp' (2)
 - 'Duke Energy Ohio' -> 'Duke Energy Ohio Inc' (2)
@@ -134,128 +90,73 @@ Every pending staging dir was read. A proposed Owner or Operator value that diff
 - 'Dominion Transmission, Inc.' -> 'Dominion Transmission Inc' (2)
 - 'Vector Pipeline L.P.' -> 'Vector Pipeline LP' (2)
 - 'Eastern Gas Transmission & Storage, Inc.' -> 'Eastern Gas Transmission & Storage Inc' (2)
-- 'DTE Energy' -> 'DTE Energy Co' (2)
-- 'Duke Energy' -> 'Duke Energy Corp' (2)
-- 'Dominion Energy' -> 'Dominion Energy Inc' (2)
-- 'Columbia Gas Transmission, LLC' -> 'Columbia Gas Transmission LLC' (2)
 - 'Chandeleur Pipe Line, LLC' -> 'Chandeleur Pipe Line LLC' (2)
 - 'Third Coast Midstream, LLC' -> 'Third Coast Midstream LLC' (2)
 - 'BBT Midla, LLC' -> 'BBT Midla LLC' (2)
+- 'Gulfstream Natural Gas System, L.L.C.' -> 'Gulfstream Natural Gas System LLC' (2)
+- 'Enterprise Products Partners' -> 'Enterprise Products Partners LP' (2)
 - 'Natural Gas Pipeline Company of America, LLC' -> 'Natural Gas Pipeline Company of America LLC' (2)
 - 'RIGS Haynesville Partnership Co.' -> 'RIGS Haynesville Partnership Co' (2)
 - 'Kinetica Energy Express, LLC' -> 'Kinetica Energy Express LLC' (2)
 - 'UGI Energy Services Inc.' -> 'UGI Energy Services Inc' (2)
 - 'Capitol Energy Ventures Corp.' -> 'Capitol Energy Ventures Corp' (2)
+- 'Williams Companies' -> 'Williams Companies Inc' (2)
 - 'Nicor-Horizon, Inc.' -> 'Nicor-Horizon Inc' (2)
 - 'Midwestern Gas Transmission Company' -> 'Midwestern Gas Transmission Co' (2)
 - 'Ozark Gas Transmission, L.L.C.' -> 'Ozark Gas Transmission LLC' (2)
+- 'Natural Gas Pipeline Co of America LLC (NGPL)' -> 'Natural Gas Pipeline Co of America LLC' (2)
 - 'Natural Gas Pipeline Company of America LLC (NGPL)' -> 'Natural Gas Pipeline Company of America LLC' (2)
 - 'Enable Gas Transmission, LLC' -> 'Enable Gas Transmission LLC' (2)
-- 'Carolina Gas Transmission, LLC' -> 'Carolina Gas Transmission LLC' (2)
+- 'El Paso Natural Gas Company, L.L.C.' -> 'El Paso Natural Gas Company LLC' (2)
 - 'National Grid' -> 'National Grid PLC' (2)
+- 'National Grid plc' -> 'National Grid PLC' (2)
 - 'Venture Global Gator Express, LLC' -> 'Venture Global Gator Express LLC' (2)
 - 'Cheniere Creole Trail Pipeline, L.P.' -> 'Cheniere Creole Trail Pipeline LP' (2)
 - 'Cheniere Energy Partners, L.P.' -> 'Cheniere Energy Partners LP' (2)
 - 'Venture Global Delta Express, LLC' -> 'Venture Global Delta Express LLC' (2)
-- 'Tellurian' -> 'Tellurian Inc' (2)
-- 'Gulf South Pipeline Company, LLC' -> 'Gulf South Pipeline Company LLC' (2)
+- 'ArcLight Capital Partners' -> 'ArcLight Capital Partners LLC' (2)
+- 'Brookfield Infrastructure Partners' -> 'Brookfield Infrastructure Partners LP' (2)
 - 'Adelphia Gateway, LLC' -> 'Adelphia Gateway LLC' (2)
+- 'Equitrans Midstream Corporation' -> 'Equitrans Midstream Corp' (2)
+- 'Eversource' -> 'Eversource Energy' (2)
+- 'Algonquin Gas Transmission, LLC' -> 'Algonquin Gas Transmission LLC' (2)
+- 'Glenfarne Alaska LNG, LLC' -> 'Glenfarne Alaska LNG LLC' (2)
 - 'Harvest Alaska, LLC' -> 'Harvest Alaska LLC' (2)
 - 'Hilcorp Alaska, LLC' -> 'Hilcorp Alaska LLC' (2)
-- 'Fairbanks Pipeline Company' -> 'Fairbanks Pipeline Co' (2)
-- 'Kinetik' -> 'Kinetik Holdings Inc' (2)
-- 'Mirage Energy' -> 'Mirage Energy Corp' (2)
+- 'Alliance Pipeline L.P.' -> 'Alliance Pipeline LP' (2)
 - 'Trail West Pipeline, LLC' -> 'Trail West Pipeline LLC' (2)
 - 'Pacific Gas and Electric Company' -> 'Pacific Gas and Electric Co' (2)
 - 'PG&E Corporation' -> 'PG&E Corp' (2)
 - 'Carlsbad Gateway, LLC' -> 'Carlsbad Gateway LLC' (2)
 - 'WhiteWater Midstream, LLC' -> 'WhiteWater Midstream LLC' (2)
-- 'San Diego Gas & Electric' -> 'San Diego Gas & Electric Co' (2)
-- 'MDU Resources Group' -> 'MDU Resources Group Inc' (2)
-- 'Rockies Express Pipeline, LLC' -> 'Rockies Express Pipeline LLC' (2)
 - 'Kern River Gas Transmission Company' -> 'Kern River Gas Transmission Co' (2)
 - 'Mojave Pipeline Operating Company, LLC' -> 'Mojave Pipeline Operating Company LLC' (2)
 - 'Ruby Pipeline, L.L.C.' -> 'Ruby Pipeline LLC' (2)
+- 'Transwestern Pipeline Company, LLC' -> 'Transwestern Pipeline Company LLC' (2)
 - 'Montana-Dakota Utilities Co.' -> 'Montana-Dakota Utilities Co' (2)
+- 'Tallgrass Energy' -> 'Tallgrass Energy LP' (2)
 - 'Northern Border Pipeline Company' -> 'Northern Border Pipeline Co' (2)
 - 'Tallgrass NatGas Operator, LLC' -> 'Tallgrass NatGas Operator LLC' (2)
 - 'Northwest Natural Gas Company' -> 'Northwest Natural Gas Co' (2)
 - 'New Mexico Gas Company' -> 'New Mexico Gas Co' (2)
-- 'Xcel Energy' -> 'Xcel Energy Inc' (2)
+- 'Tuscarora Gas Transmission Company' -> 'Tuscarora Gas Transmission Co' (2)
 - 'El Paso Natural Gas Company' -> 'El Paso Natural Gas Co' (2)
-- 'PipeChina Guangdong Natural Gas Pipeline Company' -> 'PipeChina Guangdong Natural Gas Pipeline Co' (1)
-- 'Israel Natural Gas Lines' -> 'Israel Natural Gas Lines Ltd' (1)
-- 'Indradhanush Gas Grid Ltd (IGGL)' -> 'Indradhanush Gas Grid Ltd' (1)
-- 'Hindustan Petroleum' -> 'Hindustan Petroleum Corp Ltd' (1)
-- 'National Iranian Gas Company' -> 'National Iranian Gas Co' (1)
-- 'Occidental Petroleum' -> 'Occidental Petroleum Corp' (1)
-- 'OMV' -> 'OMV AG' (1)
-- 'Petronas' -> 'Petroliam Nasional Bhd' (1)
-- 'SOCAR' -> 'State Oil Company of Azerbaijan Republic' (1)
-- 'PJSC Lukoil' -> 'LUKOIL PJSC' (1)
-- 'NextEra Energy' -> 'NextEra Energy Inc' (1)
-- 'Empire Pipeline, Inc.' -> 'Empire Pipeline Inc' (1)
-- 'Iberdrola' -> 'Iberdrola SA' (1)
-- 'Consumers Energy' -> 'Consumers Energy Co' (1)
-- 'CMS Energy' -> 'CMS Energy Corp' (1)
-- 'Tallgrass Development' -> 'Tallgrass Development LP' (1)
-- 'Enterprise Products Partners L.P.' -> 'Enterprise Products Partners LP' (1)
-- 'Mississippi Canyon Gas Pipeline, LLC' -> 'Mississippi Canyon Gas Pipeline LLC' (1)
-- 'BBT AlaTenn, LLC' -> 'BBT AlaTenn LLC' (1)
-- 'Iroquois Gas Transmission System, L.P.' -> 'Iroquois Gas Transmission System LP' (1)
-- 'Tallgrass Development, LP' -> 'Tallgrass Development LP' (1)
-- 'Southern Natural Gas Company' -> 'Southern Natural Gas Co' (1)
-- 'Blackstone' -> 'Blackstone Inc' (1)
-- 'Commonwealth LNG, LLC' -> 'Commonwealth LNG LLC' (1)
-- 'Trunkline Gas Company, LLC' -> 'Trunkline Gas Company LLC' (1)
-- 'NextEra Energy Pipeline Holdings (Lowman), Inc.' -> 'NextEra Energy Pipeline Holdings (Lowman) Inc' (1)
-- 'American Midstream (Alabama Intrastate), LLC' -> 'American Midstream (Alabama Intrastate) LLC' (1)
-- 'Cheniere Creole Trail Pipeline, L.P' -> 'Cheniere Creole Trail Pipeline LP' (1)
-- 'Southern Natural Gas Company, L.L.C.' -> 'Southern Natural Gas Company LLC' (1)
-- 'Southern Natural Gas, L.L.C.' -> 'Southern Natural Gas LLC' (1)
-- 'Elba Express Company, L.L.C.' -> 'Elba Express Company LLC' (1)
-- 'High Island Offshore System, LLC' -> 'High Island Offshore System LLC' (1)
-- 'Genesis Energy' -> 'Genesis Energy LP' (1)
-- 'Stingray Pipeline Company, L.L.C.' -> 'Stingray Pipeline Company LLC' (1)
-- 'SCANA' -> 'SCANA ASA' (1)
-- 'BP plc' -> 'BP PLC' (1)
-- 'M&N Operating Company, LLC' -> 'M&N Operating Company LLC' (1)
-- 'Emera' -> 'Emera Inc' (1)
-- 'New Jersey Resources' -> 'New Jersey Resources Corp' (1)
-- 'Donlin Gold, LLC' -> 'Donlin Gold LLC' (1)
-- 'EQT Corporation' -> 'EQT Corp' (1)
-- 'Gulf Coast LNG Partners LP (GCLP)' -> 'Gulf Coast LNG Partners LP' (1)
-- 'Saguaro Connector Pipeline, LLC' -> 'Saguaro Connector Pipeline LLC' (1)
-- 'Gulf South Pipeline Company, LP' -> 'Gulf South Pipeline Company LP' (1)
-- 'MPLX' -> 'MPLX LP' (1)
-- 'Berkshire Hathaway Energy' -> 'Berkshire Hathaway Energy Co' (1)
-- 'Gulf South Pipeline Company' -> 'Gulf South Pipeline Co' (1)
-- 'Southern Star Central Gas Pipeline, Inc' -> 'Southern Star Central Gas Pipeline Inc' (1)
-- 'Producers Midstream II, LLC' -> 'Producers Midstream II LLC' (1)
-- 'Tailwater Capital' -> 'Tailwater Capital LLC' (1)
-- 'Double E Pipeline, LLC' -> 'Double E Pipeline LLC' (1)
-- 'MountainWest Pipeline, LLC' -> 'MountainWest Pipeline LLC' (1)
-- 'Cheyenne Connector, LLC' -> 'Cheyenne Connector LLC' (1)
-- 'East Cheyenne Gas Storage, LLC' -> 'East Cheyenne Gas Storage LLC' (1)
-- 'Westcoast Energy Inc.' -> 'Westcoast Energy Inc' (1)
-- 'Tallgrass Interstate Gas Transmission, LLC' -> 'Tallgrass Interstate Gas Transmission LLC' (1)
-- 'North Baja Pipeline, LLC' -> 'North Baja Pipeline LLC' (1)
-- 'Colorado Interstate Gas Company, L.L.C.' -> 'Colorado Interstate Gas Company LLC' (1)
+- 'Kurdistan Regional Government' -> 'Government of Kurdistan Region' (1)
 - 'Rio Bravo Pipeline Company, LLC' -> 'Rio Bravo Pipeline Company LLC' (1)
 - 'Roadrunner Gas Transmission, LLC' -> 'Roadrunner Gas Transmission LLC' (1)
 - 'Freeport LNG Development, L.P.' -> 'Freeport LNG Development LP' (1)
 
 ## Left as they were (a person decides)
 
-- 'Equitrans, L.P.' -> 'Equitrans LP'? alias_candidate (6)
 - 'H-Energy Private Limited' -> 'H-Energy Pvt Ltd'? fuzzy_candidates (4)
-- 'National Fuel Gas Supply Corporation' -> 'National Fuel Gas Supply Corp'? alias_candidate (4)
+- 'Equitrans, L.P.' -> 'Equitrans LP'? alias_candidate (4)
 - 'GASCO (Egyptian Natural Gas Company)' -> 'Egyptian Natural Gas Co'? acronym_not_initials (2)
 - 'Egyptian Natural Gas Company (Gasco)' -> 'Egyptian Natural Gas Co'? acronym_not_initials (2)
 - 'Egyptian Natural Gas Company (GASCO)' -> 'Egyptian Natural Gas Co'? acronym_not_initials (2)
 - 'Pipeline Infrastructure Limited' -> 'Pipeline Infrastructure Ltd'? fuzzy_candidates (2)
 - 'Indian Oil Corp (IOCL)' -> 'Indian Oil Corp'? acronym_not_initials (2)
 - 'Brooklyn Union Gas Company d/b/a National Grid NY (KEDNY)' -> 'Brooklyn Union Gas Company d/b/a National Grid NY'? acronym_not_initials (2)
+- 'National Fuel Gas Supply Corporation' -> 'National Fuel Gas Supply Corp'? alias_candidate (2)
 - 'NextEra Energy, Inc. (affiliate)' -> 'NextEra Energy Inc'? acronym_not_initials (2)
 - 'Con Edison Gas Pipeline and Storage, LLC (affiliate)' -> 'Con Edison Gas Pipeline and Storage LLC'? acronym_not_initials (2)
 - 'AltaGas Ltd. / RGC Resources, Inc. (affiliates)' -> 'AltaGas Ltd. / RGC Resources Inc'? acronym_not_initials (2)

@@ -50,6 +50,7 @@ them as `multi_operator`) and leaves the shape to a human.
 | "Company" **stays** when the form is LLC / LP | `Trail West Pipeline Company LLC` | `Trail West Pipeline Co LLC` |
 | Omit the form only when a quick search cannot find one | `Energy Transfer LP` (found) | a bare `Energy Transfer` |
 | **No trailing acronym / trade name in parentheses**; it goes to `researcher_notes` and `data/owner_aliases.json` | `Sui Northern Gas Pipelines Ltd` | `Sui Northern Gas Pipelines Ltd (SNGPL)` |
+| **A parenthesized legal name after a short all-caps token IS the name** (flag `acronym_lead`, 2026-10-05): the inner name is kept, the acronym goes to the alias file | `Energía Argentina SA` | `Enarsa (Energía Argentina SA)` |
 | Mid-name parentheticals that are part of the legal name **stay** | `GAIL (India) Ltd`¹, `Mettiki Coal (WV) LLC`, `PT Pertamina (Persero)` | |
 | Integral punctuation stays | `E.ON SE` | `EON SE` |
 | Dotted abbreviations lose the dots | `Chevron USA Inc` | `Chevron U.S.A. Inc.` |
@@ -67,16 +68,24 @@ adopts `GAIL Ltd`; the parenthetical rule itself keeps mid-name geography.
 Country names inside a state body follow the GEM naming conventions sheet
 (`docs/reference/gem_naming_conventions/`): `Türkiye`, `Russia`, `Iran`.
 
-## Adoption policy (Baird 2026-10-01: adopt on exact / alias, flag fuzzy)
+## Adoption policy (Baird 2026-10-01: adopt on exact / alias, flag fuzzy; 2026-10-05: plus rulings and mechanical rules)
 
 `style()` returns `styled`, `basis`, `confidence`, `entity_id`, `aliases`, `candidates`, `flags`.
+**`adoptable(res)` is the one policy every consumer calls** (the gates, `restyle_staged_owners.py`,
+`stage_owner_style.py`, `push.py`): true when nothing changed, on basis `exact` / `alias` /
+`ruling`, and on `rules` / `stem` when the styled form has no comma and every flag is in
+`MECHANICAL_FLAGS` (`form_punctuation`, `form_long`, `form_moved`, `form_russian`,
+`dots_stripped`, `acronym_dropped`, `acronym_lead`, `quotes_stripped`, `form_from_gazetteer`,
+`percent_stripped`, `whitespace`, `ruled`). `acronym_not_initials` always holds unless a ruling
+settles it.
 
 | basis | when | confidence | action |
 |---|---|---|---|
 | `exact` | the raw or rules-styled name IS a gazetteer name (also exact modulo legal-form spelling: `Kuwait Oil Company Ltd` for our `Kuwait Oil Co Ltd` — the team's spelling wins) | high | adopt, carry the `E…` id |
 | `alias` | a **confirmed** alias in `owner_aliases.json` (`Saudi Aramco` → `Saudi Arabian Oil Co`) | high | adopt |
+| `ruling` | Baird ruled on this raw name (or on this `<PID>/<column>` cell) in `data/owner_rulings.json` | high, flag `ruled` | adopt; a cell ruling may also `clear` the cell |
 | `stem` | no legal form on the input and the gazetteer has this exact stem under ONE form (`Petroleum Development Oman` → `… LLC`) | medium, flag `form_from_gazetteer` | adopt; confirm in a quick search |
-| `rules` | no gazetteer hit; the rule table applied | medium with a form, low without | use the styled form |
+| `rules` | no gazetteer hit; the rule table applied | medium with a form, low without | adopt when every flag is mechanical (a spelling, not a judgment), else a person decides |
 | `sentinel` / `passthrough` | sentinel value / non-Latin script / empty | high / low | as returned |
 
 Never adopted, always listed in `candidates` and flagged for a human:
@@ -120,11 +129,25 @@ JSON sorted by `canonical`. Nothing regenerates it.
 
 ## Where it runs
 
-- **Every staged `Owner<N>` value** that differs from the sheet's current cell:
+- **Every staged `Owner<N>` and `Operator` value** that differs from the sheet's current cell:
   `check_shard_coverage.py` lists an un-styled name as UNMERGEABLE (blocking, before the subagent
   finishes); `sweep_gates.py` gate O lists it per store at delivery, with O' (no legal form) and
   O'' (unadopted candidate) as sub-lists. A value equal to the sheet is carried, not proposed,
-  and is the lint's business.
+  and is the lint's business; "the sheet" means the worklist's snapshot OR the newest
+  operators/owners snapshot in `data/` (`entity_style.carried_on_sheet`), since a push after the
+  worklist's pull moves the sheet.
+- **`review_app/push.py`** lists every Owner<N>/Operator cell a plan would write in a spelling
+  `adoptable()` would change and refuses `--apply` until the staged record is restyled
+  (`--allow-unstyled` overrides, by hand). A plan line marked `style_only` stamps `LastUpdated`
+  only (Baird 2026-10-05).
+- **`scripts/restyle_staged_owners.py`** re-spells pending staged proposals in place (every live
+  `staged_resolutions.json` and shard `rows/*.json`), as string edits through
+  `scripts/json_patch.py` so each file keeps its formatting; the source's spelling goes to
+  `researcher_notes`; held cells are listed in `notes/owner-restyle-staged-<date>.md`. First run
+  2026-10-05: 403 cells, 105 re-spellings, 32 held.
+- **`data/owner_rulings.json`** holds Baird's rulings on names the styler cannot settle (`names`
+  by raw name; `cells` by `<PID>/<column>`, including `clear`). `style()` returns basis `ruling`
+  for a ruled name; `cell_ruling(pid, col)` for a ruled cell.
 - `scripts/entity_lookup.py "<name>"` prints the styled form, basis, id, aliases and unadopted
   candidates after its duplicate check — run it before staging any new owner.
 - The record: `values: {"Owner1": "<styled>", "Owner1%": "…"}`, `researcher_notes` carrying the

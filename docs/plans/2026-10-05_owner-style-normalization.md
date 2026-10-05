@@ -111,6 +111,28 @@ the apply, as a spelling-only pass.
     `python scripts/build_owner_gazetteer.py` (the ownership export and legal-forms list were
     last pulled 2026-10-01); check the export version string and note it in the batch meta.
 
+**Phase 0 results (done 2026-10-05, same session).**
+
+- 0.1 done. Both gates check `Owner\d+|Operator`. A value equal to the NEWEST operators/owners
+  snapshot is carried, not checked (`entity_style.carried_on_sheet`), because a push after the
+  worklist's pull moves the sheet (the 2026-10-02 US gas push did).
+- 0.2 done. `acronym_lead` in `entity_style.py`; `form_punctuation` is set whenever the legal
+  form's spelling moved; `adoptable()` is the one adoption policy (exact, alias, ruling, or a
+  rules result whose flags are all mechanical; `acronym_not_initials` always holds).
+- 0.3 done. `scripts/restyle_staged_owners.py --apply` over every live staging dir: 403 cells
+  rewritten (201 in `staged_resolutions.json` files, the rest in shard rows), 105 distinct
+  re-spellings, 32 cells held for a person (acronym_not_initials 16, fuzzy_candidates 10,
+  alias_candidate 6), 3,654 proposed values equal to the sheet carried untouched. Report:
+  `notes/owner-restyle-staged-2026-10-05.md` + `.csv`. Two defects in the first applies, both
+  undone from pre-apply copies and fixed before the final run: the JSON was re-serialized (fixed
+  with `scripts/json_patch.py`, string edits that keep each file's formatting), and carried shard
+  values were restyled because shard records carry no `project_id` (fixed by passing the file's
+  PID). Gate check after the apply: US west style findings 27 to 0, US gulf 36 to 0, India 28 to 4
+  (the 4 are by-design holds); no other finding moved.
+- 0.4 done. `push.py` lists unstyled Owner<N>/Operator cells on the plan and refuses `--apply`
+  unless `--allow-unstyled`; a line marked `style_only` stamps `LastUpdated` only (decision 2).
+- 0.5 done. Snapshots and gazetteer refreshed 2026-10-05 (`GEM_operators_owners_snapshot_20261005.csv`).
+
 ### Phase 1: apply slice 1 (exact and alias hits)
 
 1.1 **Re-stage** with `stage_owner_style.py --owners-csv <10-05 or later snapshot>` into a new
@@ -133,8 +155,7 @@ the apply, as a spelling-only pass.
     `push.py` stamps `Researcher = CB` and `LastUpdated` on every written row: about 2,000 rows
     on this tab. See decision 2.
 
-1.4 **Tell the ownership team** before 1.3 (decision 6), with the name list from the workbook's
-    name tab, so their raw-string diff is read as a spelling pass.
+1.4 ~~Tell the ownership team before 1.3~~ Dropped by decision 6.
 
 ### Phase 2a: the mechanical remainder (rules without a gazetteer hit)
 
@@ -175,7 +196,18 @@ either the same entity (promote to alias) or not (dismiss), and the lint already
 
 ### Phase 3: rulings only a person can make
 
-Short list, each with the cells it unlocks:
+**Ruled 2026-10-05 (pickers in the session; recorded in `data/owner_rulings.json`, which the
+staging and restyle scripts read, basis `ruling`):** form conflicts adopt the gazetteer form
+(`Sui Southern Gas Co Ltd`, `Titas Gas Transmission and Distribution Co Ltd`, `Anhui Province
+Natural Gas Development Co Ltd`, `Kuwait Oil Company Ltd`); non-initial acronyms (`SUMED`,
+`MIMI`, `Bapco`) drop to the alias file; a multi-operator cell keeps its list with each name
+styled; the Cyrillic operator becomes `Kazakhstan-China Pipeline LLP`; P1321 keeps `Plinacro doo`
+in Owner1 and Owner2 is cleared; subsidiaries (`Norsk Hydro Produksjon AS`, `ConocoPhillips
+Alaska Inc`) get punctuation fixes only, never a merge into the parent. Still open: whether the
+15 operators/owners rows removed from the tab between 10-01 and 10-05 (P1851, P1853, P6823 and
+12 others) were deleted on purpose.
+
+The list as it stood before the rulings, each with the cells it unlocks:
 
 - `form_conflict` (25 cells, 4 names): `Sui Southern Gas Co` vs the gazetteer's `Co Ltd`;
   `Titas Gas Transmission and Distribution Co` vs `Co Ltd`; `Anhui Province Natural Gas
@@ -218,10 +250,12 @@ Short list, each with the cells it unlocks:
 3. **Restyle the pending staged proposals in place** (0.3) before they are reviewed.
 4. **Stop at gazetteer plus mechanical rules for now.** Phase 2b (legal-form lookups for the
    337 form-less names and the 44 stem confirmations) is parked as a todo in Baird's Asana
-   gem-desk project, not scheduled.
+   gem-desk project, not scheduled:
+   https://app.asana.com/1/1200305284526705/project/1215778291279370/task/1219187334243631
 5. **Phase 3 rulings** are collected through pickers in the session and recorded in
-   `data/owner_rulings.json` (one entry per name: raw, ruling, styled form, date), which the
-   staging script reads so a ruled name is staged on the next run instead of held back.
+   `data/owner_rulings.json` (`names`: one entry per raw name with the styled form, aliases,
+   ruling and date; `cells`: per `<PID>/<column>` rulings, including `clear`), which the staging
+   and restyle scripts read so a ruled name is staged on the next run instead of held back.
 6. **The ownership team is not told ahead of the push.**
 
 ## Order and size

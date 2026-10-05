@@ -371,8 +371,9 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
 
     # O -- every PROPOSED Owner<N> or Operator name is written the way the ownership team writes entity
     # names (docs/reference/owner_style.md; scripts/entity_style.py). A value equal to the
-    # sheet's current cell is carried, not proposed, and is the lint report's business
-    # (owner_style_lint.py), not this gate's. Advisory like the rest; the blocking twin runs
+    # sheet's current cell — in the store's own snapshot or the newest one in data/ (a batch
+    # pushed since leaves its values on the sheet) — is carried, not proposed, and is the lint
+    # report's business (owner_style_lint.py), not this gate's. Advisory like the rest; the blocking twin runs
     # per shard in check_shard_coverage.py.
     O, O_noform, O_cand, O_skipped = [], [], [], None
     owners_cur: dict[str, dict] = {}
@@ -389,7 +390,7 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
     else:
         O_skipped = f"owners snapshot {oname or '(none named)'} not in data/ — owner cells compared without the sheet"
     try:
-        from entity_style import style as _style
+        from entity_style import carried_on_sheet as _carried, style as _style
     except ImportError as e:        # pragma: no cover
         _style, O_skipped = None, f"entity_style unavailable ({e})"
     if _style is not None:
@@ -404,8 +405,8 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                 if not _re.fullmatch(r"Owner\d+|Operator", str(col)) or not sval:
                     continue
                 cur = (owners_cur.get(pid) or {}).get(col)
-                if cur is not None and str(cur).strip() == sval:
-                    continue                      # carried from the sheet, not a proposal
+                if _carried(pid, col, sval, cur):
+                    continue                      # carried from the sheet (this snapshot or the newest), not a proposal
                 st = _style(sval)
                 if st.changed:
                     O.append((pid, col, sval, st.styled, st.basis, st.confidence))

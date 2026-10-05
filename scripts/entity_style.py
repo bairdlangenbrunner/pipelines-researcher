@@ -243,6 +243,41 @@ def cell_ruling(pid: str, col: str) -> dict | None:
 
 
 @lru_cache(maxsize=None)
+def current_owner_cells() -> dict[str, dict[str, str]]:
+    """The NEWEST operators/owners snapshot in data/ as {ProjectID: {column: value}}, or {}
+    when none is pulled. The gates decide whether a staged Owner<N>/Operator value is a
+    proposal by comparing it with the sheet; a worklist's own snapshot can be weeks old, and a
+    value pushed to the sheet since then (US gas, 2026-10-02) is carried, not proposed — so a
+    value equal to EITHER snapshot is carried. The tracker-wide owner-style batch, not a
+    staged record, re-spells what the sheet already holds (Baird 2026-10-05)."""
+    files = sorted((REPO / "data").glob("GEM_operators_owners_snapshot_*.csv"))
+    if not files:
+        return {}
+    with files[-1].open(newline="", encoding="utf-8") as fh:
+        rows = list(csv.reader(fh))
+    if len(rows) < 2:
+        return {}
+    idx = {c.strip(): i for i, c in enumerate(rows[1])}        # row 0 is the filter-view banner
+    pi = idx.get("ProjectID")
+    out: dict[str, dict[str, str]] = {}
+    for r in rows[2:]:
+        if pi is not None and pi < len(r) and r[pi].strip():
+            out.setdefault(r[pi].strip(), {c: (r[i].strip() if i < len(r) else "") for c, i in idx.items()})
+    return out
+
+
+def carried_on_sheet(pid: str, col: str, value: str, snapshot_value=None) -> bool:
+    """True when a staged Owner<N>/Operator value equals the sheet's cell in the worklist's
+    snapshot (`snapshot_value`, None = not located) or in the newest snapshot — i.e. it is
+    carried, not proposed, and the style gates leave it alone."""
+    sv = str(value or "").strip()
+    if snapshot_value is not None and str(snapshot_value).strip() == sv:
+        return True
+    cur = current_owner_cells().get(str(pid or "").strip())
+    return cur is not None and cur.get(col) == sv
+
+
+@lru_cache(maxsize=None)
 def gazetteer() -> dict[str, list[dict]]:
     """name_norm -> rows [{name, entity_id, kinds, n_rows}], best (most rows) first."""
     out: dict[str, list[dict]] = {}

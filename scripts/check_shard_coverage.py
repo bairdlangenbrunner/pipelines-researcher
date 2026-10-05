@@ -42,6 +42,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_qc import BLOCK, is_ref_only, load_sheet, off_schema_keys, sheet_value  # noqa: E402
 
 
+def _carried(pid, col, value, snapshot_value) -> bool:
+    """entity_style.carried_on_sheet, or the snapshot-only test when the styler is unavailable."""
+    try:
+        from entity_style import carried_on_sheet
+        return carried_on_sheet(pid, col, value, snapshot_value)
+    except Exception:       # pragma: no cover
+        return snapshot_value is not None and str(snapshot_value).strip() == str(value or "").strip()
+
+
 def _owner_style(name: str):
     """`entity_style.style(name)`, or None if the styler (or its data files) is unavailable —
     a missing gazetteer must not block a shard over a check it cannot run."""
@@ -253,7 +262,9 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
         # A proposed Owner<N> or Operator name is written the way the ownership team writes it
         # (docs/reference/owner_style.md): trailing short legal form, no punctuation, no
         # trailing acronym, team spelling on an exact/alias gazetteer hit. A value equal to
-        # the sheet's current cell is carried, not proposed, so it is not checked here.
+        # the sheet's current cell — in the worklist's snapshot OR the newest one in data/, since
+        # a batch pushed after the worklist was built leaves its values on the sheet — is
+        # carried, not proposed, so it is not checked here (entity_style.carried_on_sheet).
         if f.get("_leg") != "refs" and (f.get("tab") == "operators_owners"
                                         or f.get("ref_col") in ("Owner [ref]", "Operator [ref]")):
             restyle = []
@@ -262,8 +273,8 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 if not re.fullmatch(r"Owner\d+|Operator", str(c)) or not sv:
                     continue
                 cur = sheet_value(sheet, pid, f.get("sheet_row"), c) if sheet is not None else None
-                if cur is not None and str(cur).strip() == sv:
-                    continue
+                if _carried(pid, c, sv, cur):
+                    continue            # equal to the worklist's snapshot or the newest one
                 st = _owner_style(sv)
                 if st is not None and st.changed:
                     restyle.append(f"{c}: {sv!r} -> {st.styled!r}")

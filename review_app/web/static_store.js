@@ -381,6 +381,8 @@
       G.email = me.email || "";
       // the address first: the ledger derives initials from it, so the page and the store agree
       var who = initials(me.email) || initials(me.name);
+      // a one-word profile name gives one letter; the builder's own two initials complete it (always two: Baird 2026-10-05)
+      if (who.length === 1 && CFG.reviewer && CFG.reviewer.charAt(0) === who) who = CFG.reviewer;
       if (who) G.me = who;
       else { G.me = ""; Store.caps.decide = false; G.why = "The page could not tell who you are, so it cannot record decisions. Open it signed in to claude.ai."; }
       if (!v.db || !G.uid) { G.why2 = "the shared log is not available in this view"; return G.me; }

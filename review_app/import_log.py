@@ -115,6 +115,9 @@ def plan(docs, ds, dirs, emails=None):
             email = doc_email or (emails or {}).get(r["reviewer"]) or ""
             if not email:
                 raise SystemExit(f"{where}: the log of {r['reviewer']} carries no address: pass --reviewer {r['reviewer']}=EMAIL")
+            full = store.initials(email)         # a one-word profile name logs "B": record "BL" (Baird 2026-10-05)
+            if len(r["reviewer"]) < 2 and full.startswith(r["reviewer"]):
+                r["reviewer"] = full
             if people.setdefault(r["reviewer"], email) != email:
                 raise SystemExit(f"{where}: {r['reviewer']} appears under two addresses ({people[r['reviewer']]}, {email})")
             if r["key"] in last and last[r["key"]] > t:
