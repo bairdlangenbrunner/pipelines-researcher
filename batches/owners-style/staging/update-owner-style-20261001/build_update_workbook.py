@@ -4,11 +4,11 @@ builder, pattern of batches/united-states-oil/staging/update-delaware-express/).
 
 Tabs (README first; no wrap anywhere — clip):
   OO_Names           THE decision surface: one line per distinct current spelling -> styled form,
-                     with basis / entity id / dropped acronym / cells / PIDs. Reject a NAME here
-                     and every one of its cells drops out of the paste.
+                     with basis / entity id / dropped acronym / cells (Owner<N> + Operator) / PIDs.
+                     Reject a NAME here and every one of its cells drops out of the paste.
   OO_OperatorsOwners paste-ready mirror of the "Pipeline operators/owners" tab (GID 1489950650):
                      the FULL column set in sheet order, current values prefilled for every touched
-                     ProjectID, the re-spelled Owner<N> cells overlaid green (high), leading
+                     ProjectID, the re-spelled Operator / Owner<N> cells overlaid green (high), leading
                      SheetRow locator. Formula columns (AggregateOwners, Percentage Verification)
                      are left blank — never paste over the live formulas.
   OO_Changes         one line per cell: SheetRow, ProjectID, column, current, proposed, basis, evidence.
@@ -34,6 +34,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 sys.path.insert(0, str(REPO / "scripts"))
 from build_recon_workbook import CONF_FILL, HEADER_FILL, HEADER_FONT  # noqa: E402
+from stage_owner_style import col_order  # noqa: E402
 
 GREEN = CONF_FILL["green"]
 CLIP = Alignment(wrap_text=False, vertical="top")
@@ -93,8 +94,11 @@ def main() -> None:
         for col, ch in row["changes"].items():
             e = changed_names.setdefault(ch["old"], {"new": ch["new"], "basis": ch["basis"], "entity_id": ch["entity_id"],
                                                      "legal_form": ch["legal_form"], "aliases": ch["aliases"],
-                                                     "flags": ch["flags"], "cells": 0, "pids": set()})
+                                                     "flags": ch["flags"], "cells": 0, "operator_cells": 0,
+                                                     "pids": set()})
             e["cells"] += 1
+            if col == "Operator":
+                e["operator_cells"] += 1
             e["pids"].add(pid)
     n_changes = sum(len(r["changes"]) for r in rows.values())
     counts = meta["counts"]
@@ -106,7 +110,7 @@ def main() -> None:
     ws = wb.active
     ws.title = "README"
     readme = [
-        ["Owner-style normalization — existing Owner<N> cells, slice 1 (gazetteer-backed, high confidence)"],
+        ["Owner-style normalization — existing Operator + Owner<N> cells, slice 1 (gazetteer-backed, high confidence)"],
         [""],
         ["Mode", "update (style-only; no research, no URL changes)"],
         ["Scope", meta["scope"]["description"]],
@@ -117,24 +121,24 @@ def main() -> None:
         ["Slice", meta["slice"]],
         ["URL verification", meta["url_verification"]],
         [""],
-        ["WHAT THIS IS", "The ownership team writes an immediate owner as its full legal name plus a trailing short legal form, no punctuation, no trailing acronym (docs/reference/owner_style.md). These cells already name the right entity; only the SPELLING moves to the team's form — e.g. 'Sonatrach' -> 'Sonatrach SpA', 'Iraq Ministry of Oil' -> 'Ministry of Oil (Iraq)', 'Saudi Aramco' -> 'Saudi Arabian Oil Co'. Every proposed form is either the gazetteer's own spelling for that entity (exact match) or reached through a CONFIRMED alias in data/owner_aliases.json. Nothing fuzzy, nothing inferred."],
+        ["WHAT THIS IS", "The ownership team writes an immediate owner as its full legal name plus a trailing short legal form, no punctuation, no trailing acronym (docs/reference/owner_style.md). The Operator column is written the same way (Baird 2026-10-01) — it is the same kind of entity name, and on most rows the operator IS Owner1. These cells already name the right entity; only the SPELLING moves to the team's form — e.g. 'Sonatrach' -> 'Sonatrach SpA', 'Iraq Ministry of Oil' -> 'Ministry of Oil (Iraq)', 'Saudi Aramco' -> 'Saudi Arabian Oil Co'. Every proposed form is either the gazetteer's own spelling for that entity (exact match) or reached through a CONFIRMED alias in data/owner_aliases.json. Nothing fuzzy, nothing inferred."],
         ["HOW TO REVIEW", "Decide by NAME on OO_Names (one line per current spelling). A rejected name removes all of its cells from the paste; an accepted one is pasted from OO_OperatorsOwners by SheetRow/ProjectID. Dropped acronyms ('… (SNGPL)') are kept as aliases in data/owner_aliases.json, not lost."],
-        ["WHAT IS NOT HERE", f"{counts['held_back']} cells the styler would also change but this slice holds back, listed on OO_HeldBack by reason: " + ", ".join(f"{k}={v}" for k, v in counts["held_back"].items()) + ". stem_medium (one gazetteer stem match, form adopted at medium) and rules_only (punctuation / long-form rules, no gazetteer hit) are the natural slice 2; alias_candidate / form_conflict / acronym_not_initials need a ruling; row_collision = two slots on one row would become one name, so the shares must be merged by hand."],
-        ["NOT TOUCHED", "Owner [ref] (refs are additive and none is proposed), Owner<N>% (shares unchanged), Operator, LastUpdated, Researcher. AggregateOwners and the tracker's Owner / Parent columns are formulas and follow on their own — never paste those columns."],
+        ["WHAT IS NOT HERE", f"{sum(counts['held_back'].values())} cells the styler would also change but this slice holds back ({counts.get('held_back_operator', 0)} of them Operator), listed on OO_HeldBack by reason: " + ", ".join(f"{k}={v}" for k, v in counts["held_back"].items()) + ". stem_medium (one gazetteer stem match, form adopted at medium) and rules_only (punctuation / long-form rules, no gazetteer hit) are the natural slice 2; alias_candidate / form_conflict / acronym_not_initials need a ruling; row_collision = two Owner<N> slots on one row would become one name, so the shares must be merged by hand; multi_operator = one Operator cell lists several operators ('A; B') — the sheet has no Operator1..N, so the cell's shape is a ruling before its spelling. Comma-joined operator lists ('TC Energy, IEnova') are not split (a comma is also legal-name punctuation) and sit under rules_only."],
+        ["NOT TOUCHED", "Owner [ref] / Operator [ref] (refs are additive and none is proposed), Owner<N>% (shares unchanged), OperatorLocalLanguage, LastUpdated, Researcher. AggregateOwners and the tracker's Owner / Operator / Parent columns are formulas and follow on their own — never paste those columns."],
         [""],
         ["Headline", meta["summary"]],
-        ["", f"{len(changed_names)} distinct names -> {n_changes} cells on {len(rows)} ProjectIDs; {counts['cells_in']} non-blank owner cells / {counts['names_in']} distinct names in the snapshot."],
+        ["", f"{len(changed_names)} distinct names -> {n_changes} cells ({counts.get('changes_owner', n_changes)} Owner<N> + {counts.get('changes_operator', 0)} Operator) on {len(rows)} ProjectIDs; {counts['cells_in']} non-blank name cells / {counts['names_in']} distinct names in the snapshot."],
         [""],
         ["Color key"],
-        ["green", "high confidence — the proposed spelling (exact gazetteer entry or confirmed alias). Only re-spelled Owner<N> cells are coloured; everything else on the mirror is the current sheet value for context."],
+        ["green", "high confidence — the proposed spelling (exact gazetteer entry or confirmed alias). Only re-spelled Operator / Owner<N> cells are colored; everything else on the mirror is the current sheet value for context."],
         [""],
         ["Sheets"],
-        ["OO_Names", "decision surface — one line per current spelling: proposed form, basis, GEM entity id, legal form, dropped acronym / aliases, cells, PIDs"],
+        ["OO_Names", "decision surface — one line per current spelling: proposed form, basis, GEM entity id, legal form, dropped acronym / aliases, cells (and how many of them are Operator), PIDs"],
         ["OO_OperatorsOwners", "paste surface — full operators/owners column set in sheet order for every touched ProjectID, re-spelled cells green, leading SheetRow; formula columns left blank"],
         ["OO_Changes", "one line per re-spelled cell with its evidence"],
         ["OO_HeldBack", "would-change cells NOT in this slice, by reason (next slice + rulings)"],
         [""],
-        ["Known oddities to eyeball", "'Gaz-System' -> 'Operator Gazociagow Przesylowych GAZ-SYSTEM SP zoo' and 'GAIL (India) Ltd' -> 'GAIL Ltd' are the gazetteer's own spellings for those entity ids — adopted because that is the team's record, flagged here because they look unusual. 'Saudi Aramco' and 'Aramco' both -> 'Saudi Arabian Oil Co'; 'SNTGN Transgaz SA' and 'Transgaz' both -> 'Transgaz SA'; 'AB Amber Grid' and 'Amber Grid' both -> 'Amber Grid AB' (same entity, two current spellings)."],
+        ["Known oddities to eyeball", "'Gaz-System' -> 'Operator Gazociagow Przesylowych GAZ-SYSTEM SP zoo', 'GAIL (India) Ltd' -> 'GAIL Ltd', 'Dongying United Petroleum Chemical Co Ltd' -> 'Dongying UNITED Petroleum Chemical Co Ltd' and 'Petroperú' -> 'Petroperu' are the gazetteer's own spellings for those entity ids — adopted because that is the team's record, flagged here because they look unusual. 'Saudi Aramco' and 'Aramco' both -> 'Saudi Arabian Oil Co'; 'SNTGN Transgaz SA' and 'Transgaz' both -> 'Transgaz SA'; 'AB Amber Grid' and 'Amber Grid' both -> 'Amber Grid AB' (same entity, two current spellings). On the Operator column 'SOCAR' -> 'State Oil Company of Azerbaijan Republic' and 'Pemex' -> 'Petróleos Mexicanos EPE' are confirmed aliases, so the short trade name gives way to the team's legal name."],
         ["Orphan rows", "The sheet's own lookup columns (PipelineName … PCI6) show #N/A on " + ", ".join(sorted(orphans)) + " — their ProjectID has no match in the tracker tabs. Carried as blank here; the Owner<N> re-spelling still applies, but the rows themselves are a data-health question (deleted tracker row? mistyped id?)."],
         ["Review app", "This is an update store (staged_updates.json); the review app reads deep-sweep stores only, so this batch is decided in the workbook."],
     ]
@@ -148,15 +152,15 @@ def main() -> None:
     # OO_Names
     ws = wb.create_sheet("OO_Names")
     cols = ["Current spelling", "Proposed (team style)", "basis", "GEM entity id", "legal form",
-            "dropped acronym / aliases", "flags", "cells", "PIDs", "ProjectIDs"]
+            "dropped acronym / aliases", "flags", "cells", "of which Operator", "PIDs", "ProjectIDs"]
     ws.append(cols)
     for old, e in sorted(changed_names.items(), key=lambda kv: (-kv[1]["cells"], kv[0])):
         ws.append([_s(x) for x in [old, e["new"], e["basis"], e["entity_id"], e["legal_form"],
                                    " | ".join(e["aliases"]), " | ".join(e["flags"]), e["cells"],
-                                   len(e["pids"]), " ".join(sorted(e["pids"]))]])
+                                   e["operator_cells"], len(e["pids"]), " ".join(sorted(e["pids"]))]])
         ws.cell(ws.max_row, 2).fill = GREEN
     _hdr(ws, len(cols))
-    _widths(ws, [44, 44, 8, 16, 10, 36, 22, 7, 6, 80])
+    _widths(ws, [44, 44, 8, 16, 10, 36, 22, 7, 9, 6, 80])
     _clip_all(ws)
 
     # OO_OperatorsOwners (full mirror, touched PIDs)
@@ -193,14 +197,14 @@ def main() -> None:
     ws.append(cols)
     for pid in sorted(rows, key=lambda p: rows[p]["sheet_row"]):
         row = rows[pid]
-        for col in sorted(row["changes"], key=lambda c: int(c[5:])):
+        for col in sorted(row["changes"], key=col_order):
             ch = row["changes"][col]
             ws.append([_s(x) for x in [row["sheet_row"], pid, row["pipeline"], row["segment"], row["fuel"],
                                        row["countries"], col, ch["old"], ch["new"], ch["basis"],
                                        ch["entity_id"], " | ".join(ch["aliases"]), ch["evidence"]]])
             ws.cell(ws.max_row, 9).fill = GREEN
     _hdr(ws, len(cols))
-    _widths(ws, [9, 10, 34, 26, 6, 18, 8, 40, 40, 8, 16, 24, 70])
+    _widths(ws, [9, 10, 34, 26, 6, 18, 9, 40, 40, 8, 16, 24, 70])
     _clip_all(ws)
 
     # OO_HeldBack
@@ -213,7 +217,7 @@ def main() -> None:
                                    h["styled"], h["basis"], h["confidence"], h["entity_id"],
                                    " | ".join(h["flags"]), h.get("candidate", ""), h.get("note", "")]])
     _hdr(ws, len(cols))
-    _widths(ws, [20, 9, 10, 8, 44, 44, 8, 10, 16, 28, 40, 50])
+    _widths(ws, [20, 9, 10, 9, 44, 44, 8, 10, 16, 28, 40, 50])
     _clip_all(ws)
 
     a.output.parent.mkdir(parents=True, exist_ok=True)

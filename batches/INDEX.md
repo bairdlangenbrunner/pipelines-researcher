@@ -38,7 +38,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4) decided —
 - `staging/deepsweep-20260827` — rows=40 fills=9 updates=0 status-pending=0 refs(REFS_ADDED=46, REVERIFIED=202, UNRESOLVED=18) routes=0 new(none) decided —
 - `staging/map-traces-gasco` — no store — invisible to discovery
-- `staging/qc` [assembled packet: qc] — rows=57 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
+- `staging/qc` [assembled packet: qc] — rows=63 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260708` — recon inputs
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-gulfpub-20260827` — recon inputs
@@ -145,7 +145,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/annual` — rows=11 fills=5 updates=0 status-pending=3 refs(DEAD_LINK=1, REFS_ADDED=19, REF_BLOCKED=1, REF_UNSUPPORTED=34, REVERIFIED=65, UNRESOLVED=11) routes=0 new(none) decided —
 - `staging/cancelled-review` — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=12, UNRESOLVED=6) routes=0 new(none) decided —
-- `staging/qc` [assembled packet: handoff] — rows=48 fills=38 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
+- `staging/qc` [assembled packet: handoff] — rows=50 fills=38 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260811` — recon inputs
 - `staging/redundancy` [redundancy] — rows=28 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
@@ -160,7 +160,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/annual` — rows=6 fills=10 updates=0 status-pending=1 refs(REFS_ADDED=19, REVERIFIED=24, UNRESOLVED=3) routes=0 new(new_row=1) decided —
 - `staging/cancelled-review` [sweep] — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=9, REVERIFIED=1, UNRESOLVED=6) routes=0 new(none) decided —
-- `staging/qc` [assembled packet: handoff] — rows=38 fills=27 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
+- `staging/qc` [assembled packet: handoff] — rows=41 fills=27 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260728` — recon inputs
 - `staging/redundancy` [redundancy] — rows=16 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
@@ -188,6 +188,12 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260904_1355_ET_malaysia-gas_deepsweep.xlsx`
 - `archive/` — 1 superseded/applied file(s)
 
+## owners-style
+
+- `staging/update-owner-style-20261001` [update] — rows=2015 fills=0 updates=2304 status-pending=0 refs(none) routes=0 new(none) decided —
+- `deliverables/pipelines_batch_20261001_1852_ET_owners-style_update.xlsx`
+- `archive/` — 1 superseded/applied file(s)
+
 ## pakistan-gas
 
 - `staging/annual` — rows=6 fills=3 updates=0 status-pending=4 refs(REFS_ADDED=29, REF_BLOCKED=4, REF_UNSUPPORTED=5, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none) decided —
@@ -205,13 +211,13 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## russia-gas
 
-- `staging/deepsweep-r1-fareast` — rows=32 fills=85 updates=0 status-pending=8 refs(REFS_ADDED=257, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=38) routes=0 new(none) decided 1a/0h/1r/0s of 399
-- `staging/deepsweep-r2-nw-operating` — rows=28 fills=74 updates=0 status-pending=1 refs(REFS_ADDED=225, REF_BLOCKED=11, REF_UNSUPPORTED=16, REVERIFIED=4, UNRESOLVED=28) routes=0 new(none) decided 0a/0h/0r/0s of 334
-- `staging/deepsweep-r3-nw-indev` — rows=27 fills=63 updates=0 status-pending=7 refs(REFS_ADDED=174, REF_BLOCKED=4, REF_UNSUPPORTED=1, REVERIFIED=2, UNRESOLVED=60) routes=0 new(none) decided 0a/0h/0r/0s of 252
-- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 0a/0h/0r/0s of 175
-- `staging/deepsweep-r4b-urals-south` — rows=23 fills=7 updates=0 status-pending=1 refs(REFS_ADDED=112, REF_UNSUPPORTED=6, UNRESOLVED=38) routes=0 new(none) decided 0a/0h/0r/0s of 128
+- `staging/deepsweep-r1-fareast` — rows=32 fills=85 updates=0 status-pending=8 refs(REFS_ADDED=257, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=38) routes=0 new(none) decided 1a/0h/0r/0s of 380
+- `staging/deepsweep-r2-nw-operating` — rows=28 fills=74 updates=0 status-pending=1 refs(REFS_ADDED=225, REF_BLOCKED=11, REF_UNSUPPORTED=16, REVERIFIED=4, UNRESOLVED=28) routes=0 new(none) decided 0a/0h/0r/0s of 307
+- `staging/deepsweep-r3-nw-indev` — rows=27 fills=63 updates=0 status-pending=7 refs(REFS_ADDED=174, REF_BLOCKED=4, REF_UNSUPPORTED=1, REVERIFIED=2, UNRESOLVED=60) routes=0 new(none) decided 0a/0h/0r/0s of 247
+- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 0a/0h/0r/0s of 168
+- `staging/deepsweep-r4b-urals-south` — rows=23 fills=7 updates=0 status-pending=1 refs(REFS_ADDED=112, REF_UNSUPPORTED=6, UNRESOLVED=38) routes=0 new(none) decided 0a/0h/0r/0s of 122
 - `staging/deepsweep-r5-volga` — rows=31 fills=21 updates=0 status-pending=0 refs(REFS_ADDED=215, REF_UNSUPPORTED=1, UNRESOLVED=59) routes=0 new(none) decided —
-- `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 0a/0h/0r/0s of 100
+- `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 0a/0h/0r/0s of 94
 - `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 2a/0h/0r/0s of 329
 - `staging/discovery-d1-d4-merged-20260930` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=8, new_row=16) decided —
 - `staging/discovery-d1-fareast-20260930` — no store — invisible to discovery
@@ -224,7 +230,6 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/discovery-seeds-20260930` — no store — invisible to discovery
 - `staging/discovery-seeds-rerun-d2-d4-d5-20261001` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=34, new_row=5) decided —
 - `staging/recon-gulfpub-20260914` — recon inputs
-- `staging/recon-osm-20260930` — recon inputs
 - `staging/scoping-20260914` — no store — invisible to discovery
 - `staging/state-audit-20260914` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260914_1648_ET_russia-gas_reconciliation.xlsx`
@@ -235,7 +240,6 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r4b-urals-south.xlsx`
 - `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r6-siberia.xlsx`
 - `deliverables/pipelines_batch_20260930_1455_ET_russia-gas_deepsweep-r7-central-south.xlsx`
-- `deliverables/pipelines_batch_20260930_1504_ET_russia-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r5-volga.xlsx`
 - `deliverables/pipelines_batch_20260930_1841_ET_russia-gas_deepsweep-r7-central-south.xlsx`
 - `deliverables/pipelines_batch_20260930_2116_ET_russia-gas_discovery-d1-d4.xlsx`
@@ -266,18 +270,15 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## ukraine-gas
 
-- `staging/annual` — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=6, REF_UNSUPPORTED=1, REVERIFIED=4) routes=0 new(none) decided —
-- `staging/cancelled-review` — rows=6 fills=4 updates=0 status-pending=2 refs(REFS_ADDED=36, REF_UNSUPPORTED=1, UNRESOLVED=19) routes=0 new(none) decided —
-- `staging/qc` [assembled packet: handoff] — rows=47 fills=26 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
+- `staging/deepsweep-20261002` — rows=47 fills=39 updates=0 status-pending=0 refs(REFS_ADDED=276, UNRESOLVED=91) routes=0 new(none) decided —
+- `staging/discovery-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=4, monitor=24, new_row=2) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260812` — recon inputs
-- `staging/redundancy` [redundancy] — rows=23 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=39 fills=7 updates=0 status-pending=0 refs(REFS_ADDED=189, REF_BLOCKED=14, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=107) routes=0 new(none) decided —
 - `deliverables/pipelines_batch_20260812_1409_ET_ukraine-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260814_0120_ET_ukraine-gas_reconciliation-osm.xlsx`
-- `deliverables/pipelines_batch_20260930_1455_ET_ukraine-gas_handoff-actions.xlsx`
-- `deliverables/pipelines_batch_20260930_1455_ET_ukraine-gas_handoff-evidence.xlsx`
-- `archive/` — 3 superseded/applied file(s)
+- `deliverables/pipelines_batch_20261002_2032_ET_ukraine-gas_deepsweep.xlsx`
+- `deliverables/pipelines_batch_20261002_2038_ET_ukraine-gas_discovery.xlsx`
+- `archive/` — 5 superseded/applied file(s)
 
 ## united-arab-emirates-oil
 
@@ -286,36 +287,47 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## united-states-gas
 
-- `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided —
-- `staging/deepsweep-gulf-operating` — rows=50 fills=162 updates=0 status-pending=0 refs(REFS_ADDED=351, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none) decided 5a/0h/1r/0s of 521
-- `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided —
-- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=144 updates=0 status-pending=25 refs(REFS_ADDED=339, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided —
-- `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided —
-- `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=116 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=319, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=50) routes=0 new(none) decided —
-- `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided —
-- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=23 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided —
-- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=92 updates=0 status-pending=6 refs(REFS_ADDED=283, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=67) routes=0 new(none) decided —
-- `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided —
-- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 0a/0h/0r/0s of 362
-- `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none) decided —
+- `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided 0a/0h/2r/0s of 485
+- `staging/deepsweep-gulf-operating` — rows=50 fills=162 updates=0 status-pending=0 refs(REFS_ADDED=351, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none) decided 6a/0h/1r/0s of 520
+- `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided 1a/0h/0r/0s of 489
+- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=144 updates=0 status-pending=25 refs(REFS_ADDED=339, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 2a/0h/0r/0s of 540
+- `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 6a/0h/0r/0s of 587
+- `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=116 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=319, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=50) routes=0 new(none) decided 1a/0h/0r/0s of 462
+- `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided 1a/0h/1r/0s of 503
+- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=23 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 2a/0h/0r/0s of 427
+- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=92 updates=0 status-pending=6 refs(REFS_ADDED=283, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=67) routes=0 new(none) decided 1a/0h/0r/0s of 420
+- `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided 5a/0h/0r/0s of 514
+- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 1a/1h/0r/0s of 362
+- `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none) decided 3a/0h/0r/0s of 462
+- `staging/discovery-appalachian-se-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=28, new_row=45) decided —
+- `staging/discovery-gulf-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=7, monitor=18, new_row=36) decided —
+- `staging/discovery-midcon-north-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=4, monitor=15, new_row=37) decided —
+- `staging/discovery-seeds-20261002` — no store — invisible to discovery
+- `staging/discovery-tx-permian-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=3, monitor=17, new_row=41) decided —
+- `staging/discovery-west-ne-ak-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=11, monitor=18, new_row=60) decided —
 - `staging/eia-crosswalk-20260910` — no store — invisible to discovery
 - `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 0
 - `staging/recovery-20260909` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
 - `staging/state-audit-20260910` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-tx.xlsx`
-- `deliverables/pipelines_batch_20260930_1703_ET_united-states-gas_deepsweep-appalachian.xlsx`
-- `deliverables/pipelines_batch_20260930_1703_ET_united-states-gas_deepsweep-s2-northeast-alaska.xlsx`
 - `deliverables/pipelines_batch_20260930_1703_ET_united-states-gas_deepsweep-west.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-remainder.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-appalachian-indev.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-gulf-indev.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-gulf-se-operating.xlsx`
 - `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-tx-indev.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-tx-midcon-operating.xlsx`
-- `deliverables/pipelines_batch_20260930_1815_ET_united-states-gas_deepsweep-s2-west.xlsx`
-- `deliverables/pipelines_batch_20260930_1841_ET_united-states-gas_deepsweep-gulf.xlsx`
-- `archive/` — 40 superseded/applied file(s)
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-appalachian.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-gulf.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-remainder.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-appalachian-indev.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-gulf-indev.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-gulf-se-operating.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-northeast-alaska.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-tx-midcon-operating.xlsx`
+- `deliverables/pipelines_batch_20261002_1900_ET_united-states-gas_deepsweep-s2-west.xlsx`
+- `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-appalachian-se.xlsx`
+- `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-gulf.xlsx`
+- `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-midcon-north.xlsx`
+- `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-tx-permian.xlsx`
+- `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-west-ne-ak.xlsx`
+- `archive/` — 50 superseded/applied file(s)
 
 ## united-states-oil
 

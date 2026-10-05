@@ -24,7 +24,7 @@ import route_compare as RC                      # noqa: E402
 from rapidfuzz import fuzz                      # noqa: E402
 
 ST = 'batches/russia-gas/staging'
-OSM = f'{ST}/recon-osm-20260930'
+OSM = 'batches/russia-gas/parked-osm/staging/recon-osm-20260930'  # parked 2026-10-02
 GP = f'{ST}/recon-gulfpub-20260914'
 MIN_KM = 25.0
 COVER_BUF_KM = 1.5

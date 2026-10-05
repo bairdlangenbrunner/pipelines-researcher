@@ -1,0 +1,2 @@
+- sweep_gates.py gate J prints PASS on a lean pass; lean_pass.md says it reads "skipped, lean pass: N deferred". Doc or gate is out of step. (no row affected)
+- discovery seed monitor notes carry repo jargon ("seed gulfpub:gas:941", "Consolidator overruled the seed agent", "OSM trace" on GulfPub seeds) against the plain-notes rule; source is the country-discovery consolidator prompt. Rows: the 16 GulfPub seed monitor items in discovery-20261002.
