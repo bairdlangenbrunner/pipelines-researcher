@@ -7,7 +7,7 @@
 
   // ---- Store adapter: local HTTP here; on the Google page gas.js (loaded first) supplies window.GasStore ----
   var NOT_YET = "this server cannot record decisions";
-  var Store = window.GasStore || {
+  var Store = window.GasStore || window.StaticStore || {
     caps: {decide: false, refresh: false, push: false},
     _json: function (r) {
       return r.json().then(function (body) {
@@ -58,7 +58,7 @@
     stay: {},                // line keys decided this session: kept in view even if the filter would drop them
     saving: {},              // line / item keys with a save in flight
     tab: "major",            // the card's tab: "major" | "minor" | "items" | "all"
-    igOpen: {},              // item kind -> details open state (survives a re-render)
+    igOpen: {},              // item kind -> details open state (survives a re-render; reset per pipeline; all closed by default)
     session: {}              // key -> the latest non-undone record this reviewer saved in this page session
   };
   var ITEM_BY_KEY = {};
@@ -71,10 +71,10 @@
   var VERB = {accept: "accepted", hold: "held", reject: "rejected", suggest: "suggested"};
   var $ = function (id) { return document.getElementById(id); };
   var LINE_KINDS = ["ref", "fill", "status", "oo", "route", "new_row"];
-  var ITEM_KINDS = ["concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
+  var ITEM_KINDS = ["concern", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
                     "unresolved", "confirmed", "other"];
   var KIND_LABEL = {ref: "ref", fill: "fill", status: "status", oo: "owners tab", route: "route", new_row: "new row",
-                    concern: "concern", wikidiff: "wiki diff", routeqc: "route QC", route_suggestion: "route suggestion",
+                    concern: "concern", routeqc: "route QC", route_suggestion: "route suggestion",
                     monitor: "monitor", flag: "flag", escalation: "escalation", unresolved: "unresolved",
                     confirmed: "confirmed", other: "other"};
   // audit-trail records (the sweep's own "checked, still operating"): never listed, never asked for a call
@@ -221,6 +221,9 @@
       // column -> the validity concerns naming it (context under a value row; never a label on the
       // line: a proposal already disputes the current value, so "contested" is an ITEM's word)
       p._cont = {};
+      // a kind this app does not render is not asked: a dataset built before a kind was retired
+      // (wikidiff, 2026-10-02) would otherwise count items the Items tab never lists
+      p.items = p.items.filter(function (it) { return ITEM_KINDS.indexOf(it.kind) >= 0; });
       p.items.forEach(function (it) {
         it._item = true; it._p = pi; it._i = ITEMS.length; ITEM_BY_KEY[it.key] = it;
         if (it.kind === "concern") Object.keys(it.contested || {}).forEach(function (col) { (p._cont[col] = p._cont[col] || []).push(it); });
@@ -307,7 +310,7 @@
     S.countText = nl + " change" + (nl === 1 ? "" : "s") + (ni ? " + " + ni + " item" + (ni === 1 ? "" : "s") : "") +
       " on " + S.visible.length + " pipeline" + (S.visible.length === 1 ? "" : "s");
     if (S.visible.indexOf(S.pipe) < 0) S.pipe = S.visible.length ? S.visible[0] : -1;
-    if (D.pipelines[S.pipe] !== sel) { S.line = -1; S.tab = defaultTab(D.pipelines[S.pipe]); }
+    if (D.pipelines[S.pipe] !== sel) { S.line = -1; S.tab = defaultTab(D.pipelines[S.pipe]); S.igOpen = {}; }
     renderChips();
     renderActive();
     renderProgress();
@@ -582,6 +585,7 @@
     $("pipes").innerHTML = h.join("");
   }
   function selectPipe(i, lineIdx) {
+    if (S.pipe !== i) S.igOpen = {};          // item groups collapse again on a new pipeline
     S.pipe = i;
     S.tab = defaultTab(D.pipelines[i]);
     S.line = lineIdx == null ? -1 : lineIdx;
@@ -880,7 +884,6 @@
       case "concern": return concernHead(it);
       case "confirmed": return (it.ref_col && it.ref_col.indexOf("__") !== 0 ? it.ref_col : "existence / status") + (it.verdict ? " — " + it.verdict : "");
       case "unresolved": return (it.primary_value_col || it.ref_col || "") + " unresolved";
-      case "wikidiff": return (it.field || "wiki") + " — " + (it.class_out || "");
       case "routeqc": return (it.check || "route QC") + (it.severity ? " (" + it.severity + ")" : "");
       case "route_suggestion": return "route " + (it.class_out === "ROUTE_PARTIAL" ? "partial" : "suggested");
       case "monitor": return it.name || "monitor";
@@ -891,12 +894,6 @@
   }
   function itemBody(it) {
     var h = "", used = {};
-    if (it.kind === "wikidiff") {
-      h += '<div class="body">sheet: <b>' + (blankv(it.sheet_value) ? '<span class="blank">blank</span>' : esc(it.sheet_value)) + "</b> &middot; wiki: <b>" +
-        (blankv(it.wiki_value) ? '<span class="blank">blank</span>' : esc(it.wiki_value)) + "</b>" +
-        (it.staged_value ? " &middot; staged: <b>" + esc(it.staged_value) + "</b>" : "") + "</div>";
-      used.sheet_value = used.wiki_value = used.staged_value = 1;
-    }
     if (it.kind === "routeqc" && (it.measured || it.expected)) {
       h += '<div class="body">measured: ' + esc(it.measured || "") + " &middot; expected: " + esc(it.expected || "") + "</div>";
       used.measured = used.expected = 1;
@@ -973,7 +970,9 @@
     var h = '<section class="items">';
     ITEM_KINDS.forEach(function (k) {
       if (!by[k]) return;
-      var open = k in S.igOpen ? S.igOpen[k] : (k !== "unresolved" && k !== "confirmed");
+      // every kind group starts collapsed on a freshly opened pipeline (Baird 2026-10-02); a group
+      // the reviewer opens stays open across re-renders of the SAME card (igOpen resets in selectPipe)
+      var open = k in S.igOpen ? S.igOpen[k] : false;
       h += '<details class="igroup" data-kind="' + k + '"' + (open ? " open" : "") + "><summary>" + esc(KIND_LABEL[k]) + ' <span class="n">(' + by[k].length + ")</span></summary>" +
         by[k].map(itemHtml).join("") + "</details>";
     });
@@ -1104,7 +1103,7 @@
   function openFirstRef() {
     var l = LINES[S.line], u = firstRef(l);
     if (u && l.kind === "route" && Store.showGeo) return Store.showGeo(l.dir + "/" + l.geometry_file);
-    if (u) window.open(u, "_blank", "noopener"); else toast("this change has no ref to open");
+    if (u && Store.open) Store.open(u); else if (u) window.open(u, "_blank", "noopener"); else toast("this change has no ref to open");
   }
   function notYet() { toast(NOT_YET); }
   function setStat(i, text, failed) {
@@ -1717,7 +1716,7 @@
     STICKY = LINES.some(function (l) { return !l.severity; }) ? STALE_SEVERITY : ""; banner();
     if (Store.ready) Store.ready();
     fillFilters(); syncControls();
-    S.pin = -1; S.stay = {}; S.line = -1;
+    S.pin = -1; S.stay = {}; S.line = -1; S.igOpen = {};
     S.pipe = -1;
     D.pipelines.forEach(function (p, i) { if (p.pid === pid) S.pipe = i; });
     renderScope();

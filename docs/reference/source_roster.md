@@ -319,6 +319,7 @@ Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
 | **GulfPub** (PE World Map) | 2 | oil, gas | global | yes (WKT/GeoJSON) | `sources/gulfpub/manifest.yml` |
 | **OpenStreetMap** (Overpass) | 3 | oil, gas | per-country pulls (Libya gas today) | yes (ODbL) | `sources/osm/manifest.yml` |
 | **Malaysian Gas Map** (MGA, 2022 ed.) | 3 | gas | Malaysia only | yes (digitized) | `sources/malaysian_gas_map/manifest.yml` |
+| **Seala gas map** (seala.ru, divergent lines only) | 4 | gas | Russia only, 31 lines | rights not established; never a ref | `sources/seala/manifest.yml` |
 | **PPIS Energy Infrastructure Map 2025** (DGPC/PPIS/LMK) | 3 | gas, oil | Pakistan only | yes (digitized) | `sources/pakistan/manifest.yml` |
 
 To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-URL

@@ -130,8 +130,8 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 - **`in-dev`** = status-review + refs + validity, scope
   `--status proposed,construction,shelved` (the annual packet's leg A) →
   `…_annual-indev.xlsx`.
-- **`deep`** = refs + fills + validity + routes + recon (**gulfpub AND osm** — both
-  run by default; see §3's recon-leg block), any statuses — **operating rows are a
+- **`deep`** = refs + fills + validity + routes + recon (**gulfpub only — OSM recon is
+  PAUSED, Baird 2026-10-02, OSM is not reliable**; see §3's recon-leg block), any statuses — **operating rows are a
   prime target** (duplicate/existence hunting) → `…_deepsweep.xlsx`.
 - **`refs-only`** = refs alone → `…_refsweep.xlsx`.
 
@@ -243,7 +243,7 @@ python scripts/sweep_gates.py --staging $STG/            # gate L must read 0
 
 The `routes` leg is carried on the shards automatically (`routes[]` →
 `__ROUTE__` at merge). The `recon` leg runs **once per reference dataset** — in the
-`deep` preset that is **both `gulfpub` and `osm`**, not GulfPub alone. OSM needs a
+`deep` preset that is **`gulfpub` only while OSM recon is paused (2026-10-02)**. If OSM is ever resumed it needs a
 per-country Overpass pull first (see `sources/osm/NOTES.md`); GulfPub is a global
 extract already on disk.
 
@@ -301,7 +301,9 @@ python scripts/build_discovery_context.py --tracker gas --country "<Country>" --
 #     name_hint}], NEVER as a list in `extra`: dedicated seed agents give every seed a disposition in
 #     queue.json's seed_ledger (queued/matched/monitor/dropped/already_handled), the consolidate step
 #     gates on full coverage with one repair agent, and the run returns seeds_unadjudicated.
-#     seedsOnly=true = a coverage re-run; priorStaging=[earlier run dirs] = don't re-research what they decided)
+#     seedsOnly=true = a coverage re-run; priorStaging=[earlier run dirs] = don't re-research what they decided
+#     a non-OSM seed source sets seedIntro / seedSearch and a per-seed `length` label, e.g. the US EIA seeds:
+#     batches/united-states-gas/staging/discovery-seeds-20261002/build_slice_args.py)
 python scripts/merge_discovery_shards.py --staging $STG/
 python scripts/build_discovery_workbook.py --staging $STG/ \
   --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_discovery.xlsx
@@ -395,7 +397,10 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    python scripts/recalc.py batches/egypt-gas/deliverables/pipelines_batch_<stamp>_egypt-gas_handoff-evidence.xlsx
    python scripts/staged_summary.py --country Egypt --commodity gas   # drift check vs docs
    ```
-   gem.wiki is VISITED for the diff but NEVER cited as a source. No GulfPub route
+   gem.wiki is VISITED for the diff but NEVER cited as a source. Leg-1 wiki diffs never
+   reach the review app (Baird 2026-10-02; QC SOP → Wiki-alignment): they stay in the
+   workbooks only, and the wiki's value to research is its outbound references, not its
+   agreement with the sheet. No GulfPub route
    comparison in this pass (future work; see `docs/research_backlog.md`).
 
    **Class-level escalations** go in a `notes/escalation-*.md` memo AND

@@ -39,7 +39,7 @@ same way, so countries added to the batch since startup come in on the next refr
                            sheet, writes nothing there) -> {token, cells: [{tab, cell, ProjectID, column, before,
                            after}], skipped: [[key, why]], stale}. Only with a decision store (not --no-store).
     POST /api/push         {token} -> push.apply of exactly that plan (backup CSV, RAW cell-scoped write, read-back,
-                           `push` records) -> {cells, log}. 409 when the token is not the last plan or the sheet
+                           `push` records) -> {cells, log, refreshed|refresh_error}. 409 when the token is not the last plan or the sheet
                            moved since it; the page asks the person to confirm the cell list first.
 Accepted cells reach the sheet only through push.py's plan/apply, here or on the command line.
 
@@ -207,7 +207,7 @@ class App:
                 raise Refusal(502, f"could not plan the push: {e}")
             push.save_plan(plan, meta, commodity)
             return {"token": push.token(plan), "stale": len(meta.get("__stale__", [])), "skipped": skipped,
-                    "cells": [{k: p[k] for k in ("tab", "cell", "ProjectID", "column", "before", "after")} for p in plan]}
+                    "cells": [{k: p.get(k) for k in ("tab", "cell", "ProjectID", "column", "before", "after", "replaces")} for p in plan]}
         finally:
             self.pushing.release()
 
@@ -229,9 +229,16 @@ class App:
                 except SystemExit as e:
                     raise Refusal(409, f"nothing more was written: {e}")
             log = out.getvalue()
-            return {"cells": len(json.loads(plan_path.read_text())["plan"]), "log": log}
+            res = {"cells": len(json.loads(plan_path.read_text())["plan"]), "log": log}
         finally:
             self.pushing.release()
+        # the dataset's backend comparison is the pre-push snapshot until the sheet is re-pulled
+        if self.build_argv:
+            try:
+                res["refreshed"] = self.refresh()
+            except Refusal as e:
+                res["refresh_error"] = str(e)
+        return res
 
     def decisions(self, label):
         d = self.dirs().get(label)

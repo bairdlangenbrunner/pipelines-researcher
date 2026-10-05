@@ -32,9 +32,10 @@ they hold decisions ABOUT staged records and never change `staged_*.json`. A rec
   - Line record (`ref`, `fill`, `status`, `oo`, `route`, `new_row`): `{key, dir, pid, sheet_row,
     ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`; `decision` is
     `accept | hold | reject | suggest` (`suggest` needs a `suggested_value` or a `note`).
-  - Item record (`concern`, `wikidiff`, `routeqc`, `route_suggestion`, `monitor`, `flag`,
-    `escalation`, `unresolved`, `confirmed`, `other`): `{key, dir, pid, kind, call, note, reviewer,
-    ts, undecided}`; `call` is `confirmed | dismissed | needs_research` for `concern`,
+  - Item record (`concern`, `routeqc`, `route_suggestion`, `monitor`, `flag`,
+    `escalation`, `unresolved`, `confirmed`, `other`; `wikidiff` records exist in logs written
+    before 2026-10-02, when sheet-vs-wiki diffs left the review app): `{key, dir, pid, kind, call,
+    note, reviewer, ts, undecided}`; `call` is `confirmed | dismissed | needs_research` for `concern`,
     `noted | todo | dismissed` for the rest. Items never write a cell. Any call on a concern
     releases its contested-column lock; accepting a line whose proposed value equals a contested
     value also writes a `dismissed` item record ("resolved by accepted <col> fill").
@@ -211,6 +212,10 @@ concern covers the field), `action` (human next step), `severity` (`flag`/`info`
 independently, then fix the sheet) / `WIKI_STALE_VS_STAGED` (apply the staged packet
 first) / `UNPARSED` (no Wiki URL or unparseable page). The common-core ref fields are
 present but empty so merge/apply tooling passes these records through untouched.
+**Not a review-app item** (Baird 2026-10-02): `review_app/review_data.py` leaves these records
+out of its dataset and counts them in `stats["wikidiff_skipped"]`; the sheet is what must be
+accurate, and the wiki is expected to drift until it is updated automatically. They remain
+in the staging dir and the handoff workbooks.
 
 **Route-QC records** (`ref_col="__ROUTEQC__"`, `class_in="ROUTEQC"`,
 `class_out="ROUTE_FLAG"`; `scripts/route_integrity.py`): one per (pipeline, failed

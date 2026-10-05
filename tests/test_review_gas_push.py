@@ -59,3 +59,15 @@ def test_push_refuses_without_a_project_or_the_ids(tmp_path):
         gas_push.push({"data_folder_id": "F", "store_sheet_id": "S"}, tmp_path, gws=None)
     with pytest.raises(SystemExit, match="needs data_folder_id"):
         gas_push.push({"script_id": "X"}, tmp_path, gws=None)
+
+
+def test_ref_write_additive_only_while_the_value_stays():
+    import push
+    rw = push.ref_write
+    assert rw("a", ["a", "b"], [], [], ["V"]) == "a, b"          # same value: append
+    assert rw("a", ["a"], [], [], ["V"]) is None
+    assert rw("a, b", [], ["Cap"], [], []) == ""                  # cleared, nothing left: refs go
+    assert rw("a, b", [], ["Cap"], [], ["Units"]) is None         # cluster still has a value
+    assert rw("", [], ["Cap"], [], []) is None
+    assert rw("old", ["new"], [], ["Cap"], ["Cap"]) == "new"      # changed: replace
+    assert rw("old", [], [], ["Cap"], ["Cap"])[0] == "skip"

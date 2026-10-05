@@ -165,7 +165,8 @@ Verified against the repo on 2026-09-30 (survey over all 142 staging dirs).
    | `oo` | any of the above with `tab = operators_owners` (1,798 records) | same, on the owners tab by ProjectID |
    | `route` | `ref_col = __ROUTE__`, `class_out = ROUTE_CANDIDATE` (133) | record "approved for §8 apply"; no cell write |
    | `new_row` | `staged_new.json` `class` ∈ new_row (34), matched_existing (1) | record; no cell write in phase 1 (append is a separate ask) |
-   | *item* | `__VALIDITY__` concerns (3,752; `contested` on 2,312), `__WIKIDIFF__` (4,333), `__ROUTEQC__` (225), ROUTE_SUGGESTED/PARTIAL (225), `staged_new` monitor (8), `qc_flags.json`, `escalations.json`, and every UNRESOLVED (9,826) / CONFIRMED (537) record | a call + note; never a cell write |
+   | *item* | `__VALIDITY__` concerns (3,752; `contested` on 2,312), `__ROUTEQC__` (225), ROUTE_SUGGESTED/PARTIAL (225), `staged_new` monitor (8), `qc_flags.json`, `escalations.json`, and every UNRESOLVED (9,826) / CONFIRMED (537) record | a call + note; never a cell write |
+   | *left out* | `__WIKIDIFF__` (4,333) — sheet-vs-wiki diffs. Ruled out of the app 2026-10-02 (Baird): the wiki will be updated automatically and is expected to drift from the sheet; a disagreement is not a reviewer's decision. `review_data.py` skips and counts them. | nothing |
 
    Counts are tree-wide; the app loads one scope at a time.
 3. **A validity concern's `contested` values are never pushed.** They are research judgments
@@ -255,8 +256,9 @@ the line-kind rendering and `push.py` are pipelines-specific. Hoisting the gener
   Status lines add `current_status`, `proposed_status`, `verdict`, `evidence_date`,
   `staleness_rule`, `publishers`. Route lines add `geometry_file`, `length_km`,
   `sheet_length_km`, `length_ratio`, `suggested_route_accuracy`, `qc_passed`.
-  Each **item**: `key`, `kind` (`concern | wikidiff | routeqc | route_suggestion | monitor |
-  flag | escalation | unresolved | confirmed`), the record's own fields, `contested`, `call`.
+  Each **item**: `key`, `kind` (`concern | routeqc | route_suggestion | monitor |
+  flag | escalation | unresolved | confirmed`; `wikidiff` until 2026-10-02), the record's own
+  fields, `contested`, `call`.
 - Sorting: pipelines by SheetRow; lines within a card in sheet column order; items after lines.
 
 ### 2. `review_app/web/` — the front end
@@ -281,7 +283,8 @@ Everything from the LNG UI, with these pipelines changes:
 - **Filters**: decision state, kind, tier, class_out, dir, column, unanswered concerns, single-source status,
   owners-tab, `in_backend`. Counts update live.
 - **Items tab**: per kind, with the call form (`agree | disagree | defer` + note for concerns and
-  route suggestions; `noted | dismissed` for flags/wikidiff/unresolved/confirmed).
+  route suggestions; `noted | dismissed` for flags/unresolved/confirmed). Every kind group
+  starts collapsed when a pipeline is opened (2026-10-02).
 - **Suggest** on any line: proposed value pre-filled, editable, note required → recorded as
   `suggest` (stored as `reject` for consumers) and routed by `update_seed.py`.
 - Keyboard, hash routing (`#/P0736`), bulk with confirm, undo, session summary (dirs touched,

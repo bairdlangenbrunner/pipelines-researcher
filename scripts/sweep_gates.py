@@ -64,7 +64,7 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            (P6540, 2026-09-30), and the workbook silently dropped every such
                            value (col_idx miss). Use the real header (StartYear1,
                            StartLocation, LengthKnown, ...).
-  O  OWNER STYLE        -- a PROPOSED `Owner<N>` value (operators_owners records; differs
+  O  OWNER STYLE        -- a PROPOSED `Owner<N>` or `Operator` value (operators_owners records; differs
                            from the sheet's current cell) that `entity_style.style()` would
                            write differently: the ownership team's conventions (full legal
                            name + trailing short legal form, punctuation removed, no trailing
@@ -369,7 +369,7 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                     if col not in headers and not (field == "contested" and "[ref]" in col):
                         N.append((r.get("project_id"), r.get("ref_col"), field, col))
 
-    # O -- every PROPOSED Owner<N> name is written the way the ownership team writes entity
+    # O -- every PROPOSED Owner<N> or Operator name is written the way the ownership team writes entity
     # names (docs/reference/owner_style.md; scripts/entity_style.py). A value equal to the
     # sheet's current cell is carried, not proposed, and is the lint report's business
     # (owner_style_lint.py), not this gate's. Advisory like the rest; the blocking twin runs
@@ -396,12 +396,12 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
         import re as _re
         O_skipped = None
         for r in res:
-            if r.get("tab") != "operators_owners" and r.get("ref_col") != "Owner [ref]":
+            if r.get("tab") != "operators_owners" and r.get("ref_col") not in ("Owner [ref]", "Operator [ref]"):
                 continue
             pid = r.get("project_id")
             for col, val in (r.get("values") or {}).items():
                 sval = str(val or "").strip()
-                if not _re.fullmatch(r"Owner\d+", str(col)) or not sval:
+                if not _re.fullmatch(r"Owner\d+|Operator", str(col)) or not sval:
                     continue
                 cur = (owners_cur.get(pid) or {}).get(col)
                 if cur is not None and str(cur).strip() == sval:
@@ -516,7 +516,7 @@ def report(out: dict, dominant_min: int) -> None:
     if out.get("O_skipped"):
         print(f"\nO  skipped — {out['O_skipped']}")
     else:
-        sec("O  owner names not in the ownership team's style (proposed Owner<N> values; "
+        sec("O  owner names not in the ownership team's style (proposed Owner<N> / Operator values; "
             "docs/reference/owner_style.md)", out["O_owner_style"],
             "every proposed owner name is team-styled",
             lambda r: f"{r[0]} {r[1]}: {r[2]!r} -> {r[3]!r} [{r[5]}/{r[4]}]", cap=30)

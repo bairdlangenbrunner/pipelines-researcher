@@ -195,3 +195,44 @@ def test_changed_and_to_dict():
     d = r.to_dict()
     assert d["raw"] == "PAO Gazprom" and d["styled"] == "Gazprom PJSC"
     assert s("Gazprom PJSC").changed is False
+
+
+# --- leading acronym, rulings, adoption policy (2026-10-05) -----------------------------------
+
+@pytest.mark.parametrize("raw,want,alias", [
+    ("TGS (Transportadora de Gas del Sur SA)", "Transportadora de Gas del Sur SA", "TGS"),
+    ("NTS (Nova Transportadora do Sudeste SA)", "Nova Transportadora do Sudeste SA", "NTS"),
+])
+def test_leading_acronym_keeps_the_legal_name(raw, want, alias):
+    r = s(raw)
+    assert r.styled == want and "acronym_lead" in r.flags and r.aliases[0] == alias
+    assert ")" not in r.styled and "(" not in r.styled
+    assert ES.adoptable(r)
+
+
+def test_parenthetical_form_token_is_not_rewritten():
+    assert s("Acme (Private) Ltd").styled == "Acme (Private) Ltd"
+    assert s("US (Acme Pipelines Inc)").styled == "US (Acme Pipelines Inc)"      # a kept parenthetical lead
+
+
+def test_ruling_wins_and_is_adoptable():
+    r = s("Kuwait Oil Co (KOC)")
+    assert r.basis == "ruling" and r.styled == "Kuwait Oil Company Ltd" and "KOC" in r.aliases
+    assert ES.adoptable(r)
+    m = s("Enterprise Products Partners; Enbridge")
+    assert m.basis == "ruling" and m.styled == "Enterprise Products Partners LP; Enbridge Inc"
+    assert ES.cell_ruling("P1321", "Owner2", ) == ES.rulings()["cells"]["P1321/Owner2"]
+    assert ES.cell_ruling("P1321", "Owner9") is None
+
+
+def test_adoptable_policy():
+    assert ES.adoptable(s("Chubu Steel Plate Co., Ltd."))                 # punctuation only
+    lst = s("Enbridge Inc., Kinder Morgan, Inc.")
+    assert lst.changed and not ES.adoptable(lst)                        # a comma list
+    nf = s("Acme  Zeta Pipelines")
+    assert nf.changed and "no_legal_form" in nf.flags and not ES.adoptable(nf)   # no legal form, no hit
+    assert ES.adoptable(s("Acme Zeta Pipelines"))                        # unchanged is always fine
+    cl = s("Florida Gas Transmission Company, LLC")
+    assert cl.styled == "Florida Gas Transmission Company LLC" and "form_punctuation" in cl.flags and ES.adoptable(cl)
+    af = s("NextEra Energy, Inc. (affiliate)")
+    assert "acronym_not_initials" in af.flags and not ES.adoptable(af)   # a qualifier, not an acronym: a person reads it

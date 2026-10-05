@@ -42,6 +42,7 @@ REPO = Path(__file__).resolve().parent.parent
 GAZETTEER_CSV = REPO / "data" / "owner_gazetteer.csv"
 LEGAL_FORMS_CSV = REPO / "data" / "legal_forms.csv"
 ALIASES_JSON = REPO / "data" / "owner_aliases.json"
+RULINGS_JSON = REPO / "data" / "owner_rulings.json"     # Baird's per-name / per-cell rulings (basis `ruling`)
 COUNTRIES_CSV = REPO / "docs" / "reference" / "gem_naming_conventions" / "countries.csv"
 SUBDIVISIONS_CSV = REPO / "docs" / "reference" / "gem_naming_conventions" / "country_subdivisions.csv"
 
@@ -154,6 +155,10 @@ _PCT_TAIL = re.compile(r"\s*[\[(]\s*(?:\d+(?:[.,]\d+)?\s*%?|unknown\s*%?|[\d.]*\
 _FORMER_TAIL = re.compile(r"\s*\[\s*former\s*\]\s*$", re.I)
 # a trailing parenthetical: an acronym (YPFB), or a one-word trade name (Acme) — multi-word
 # parentheticals (`(Private)`, `(Persero)`, `(Hong Kong)`) are judged by the keep sets below
+# a LEADING acronym with the legal name in parentheses: `TGS (Transportadora de Gas del Sur SA)`.
+# The team's form is the inner legal name; the acronym goes to the alias file (flag acronym_lead).
+# Before 2026-10-05 the trailing-form rewrite ate the closing parenthesis of these.
+_ACRONYM_LEAD = re.compile(r"^([A-Z][A-Z0-9&\-]{1,7})\s*\(\s*([^()]*\s[^()]*)\)\s*$")
 _ACRONYM_TAIL = re.compile(r"\s*\(\s*([A-Za-z0-9][A-Za-z0-9&.\-]{1,13}(?: [A-Za-z]{2,12})?)\s*\)\s*$")
 # parenthetical words that are legal-name elements, never trade names
 PAREN_KEEP_WORDS = {"persero", "private", "public", "holding", "holdings", "group", "proprietary",
@@ -215,6 +220,26 @@ def legal_forms() -> dict[str, str]:
     out.setdefault("a s", out.get("a s", "A/S"))
     out.setdefault("sp zoo", "SP zoo")
     return out
+
+
+@lru_cache(maxsize=None)
+def rulings() -> dict:
+    """data/owner_rulings.json: {"names": {raw: {styled|clear, aliases, ruling, date}},
+    "cells": {"<PID>/<col>": {...}}} — Baird's rulings on names the rules cannot settle
+    (docs/plans/2026-10-05_owner-style-normalization.md, Phase 3). Keys are matched on the
+    collapsed spelling (normalize_name), so whitespace variants of a ruled name still hit."""
+    out = {"names": {}, "cells": {}}
+    if not RULINGS_JSON.exists():
+        return out
+    d = json.loads(RULINGS_JSON.read_text(encoding="utf-8"))
+    out["names"] = {normalize_name(k): dict(v, raw=k) for k, v in (d.get("names") or {}).items()}
+    out["cells"] = dict(d.get("cells") or {})
+    return out
+
+
+def cell_ruling(pid: str, col: str) -> dict | None:
+    """A ruling that names one cell (`P1321/Owner2` -> {"clear": true, ...}), else None."""
+    return rulings()["cells"].get(f"{pid}/{col}")
 
 
 @lru_cache(maxsize=None)
@@ -503,6 +528,18 @@ def style(raw: str, country: str | None = None) -> StyleResult:
         res.basis, res.confidence, res.note = "passthrough", "low", "empty"
         return res
 
+    ru = rulings()["names"].get(normalize_name(s))
+    if ru and ru.get("styled"):
+        res.styled = ru["styled"]
+        res.basis, res.confidence = "ruling", "high"
+        res.flags.append("ruled")
+        res.aliases = [a for a in (ru.get("aliases") or []) if a != res.styled]
+        if s != res.styled and s not in res.aliases:
+            res.aliases.append(s)
+        _, res.legal_form, _ = split_legal_form(res.styled)
+        res.note = f"ruled by Baird {ru.get('date', '')}: {ru.get('ruling', '')}".strip()
+        return res
+
     if ";" in s:
         parts = [p.strip() for p in s.split(";") if p.strip()]
         subs = [style(p) for p in parts]
@@ -559,6 +596,18 @@ def style(raw: str, country: str | None = None) -> StyleResult:
         t = _collapse(_QUOTES.sub("", t).strip("'"))
         res.flags.append("quotes_stripped")
 
+    ml = _ACRONYM_LEAD.match(t)
+    if ml and ml.group(1) not in PAREN_KEEP and ml.group(1) not in US_STATE_CODES \
+            and _form_key(ml.group(1)) not in legal_forms() and not _as_country(ml.group(1)):
+        acro, inner = ml.group(1), _collapse(ml.group(2))
+        t = inner
+        res.flags.append("acronym_lead")
+        res.aliases.insert(0, acro)
+        if s not in res.aliases:
+            res.aliases.append(s)
+        if not is_abbreviation_of(acro, inner):
+            res.flags.append("acronym_not_initials")
+
     m = _ACRONYM_TAIL.search(t)
     if m:
         acro = m.group(1)
@@ -602,6 +651,8 @@ def style(raw: str, country: str | None = None) -> StyleResult:
         return _finish(res, former)
 
     toks = _split_form_tokens(t.split(" "))
+    if " ".join(toks) != t:
+        res.flags.append("form_punctuation")      # `X Company, LLC` -> `X Company LLC`: the comma went
     forms = legal_forms()
 
     # dotted all-caps abbreviations lose their dots (U.S.A. -> USA, S.A. -> SA); `E.ON` is
@@ -660,8 +711,9 @@ def style(raw: str, country: str | None = None) -> StyleResult:
                 res.flags.append("form_check_registration")
             changed_form = True
             continue
-        if k in forms and i >= 1:
+        if k in forms and i >= 1 and not re.search(r"[()]", toks[i]):
             # only rewrite when it reads as a form: trailing, or followed only by form tokens
+            # (a token with a parenthesis is part of a parenthetical, never a bare form)
             rest = [_form_key(x) for x in toks[i + 1:]]
             if all(x in forms for x in rest):
                 # "Company" STAYS when the form is LLC / LP (guide): `X Company, L.L.C.` ->
@@ -671,7 +723,7 @@ def style(raw: str, country: str | None = None) -> StyleResult:
                 if new != toks[i]:
                     toks[i] = new
                     changed_form = True
-    if changed_form and "form_long" not in res.flags:
+    if changed_form and "form_long" not in res.flags and "form_punctuation" not in res.flags:
         res.flags.append("form_punctuation")
 
     styled = _collapse(" ".join(toks)).rstrip(",.")
@@ -739,6 +791,8 @@ def style(raw: str, country: str | None = None) -> StyleResult:
     bits = []
     if "acronym_dropped" in res.flags:
         bits.append(f"trailing acronym dropped (kept as alias: {res.aliases[0]!r})")
+    if "acronym_lead" in res.flags:
+        bits.append(f"leading acronym dropped, the legal name in parentheses kept (alias: {res.aliases[0]!r})")
     if "form_moved" in res.flags:
         bits.append("leading legal form moved to the end")
     if "form_russian" in res.flags:
@@ -754,13 +808,46 @@ def style(raw: str, country: str | None = None) -> StyleResult:
     return _finish(res, former)
 
 
+# Flags a mechanical re-spelling may carry and still be adopted without a person looking:
+# the entity is the same, only the team's spelling of it differs.
+MECHANICAL_FLAGS = frozenset({"whitespace", "form_punctuation", "form_long", "form_moved", "form_russian",
+                              "dots_stripped", "acronym_dropped", "acronym_lead", "quotes_stripped",
+                              "form_from_gazetteer", "percent_stripped", "ruled"})
+# Flags that make a re-spelling a judgment (who the entity is, which form it is registered under)
+JUDGMENT_FLAGS = frozenset({"fuzzy_candidates", "no_legal_form", "form_conflict", "form_ambiguous",
+                            "alias_candidate", "acronym_not_initials", "multi_owner", "non_latin",
+                            "form_check_registration", "state_body", "jv", "group", "former", "sentinel"})
+
+
+def adoptable(res: StyleResult) -> bool:
+    """May this styled form replace the raw one with no person looking? Yes on an exact
+    gazetteer hit, a confirmed alias or a ruling; yes on a rules/stem result whose flags are all
+    mechanical; no otherwise (docs/plans/2026-10-05_owner-style-normalization.md, Phase 0/2a).
+    A comma that survives styling in a rules-only value is a list of names the rules cannot see,
+    so no; a comma the styler removed before a legal form (`Co., Ltd.`, `Company, LLC`) is
+    punctuation and fine."""
+    if not res.changed:
+        return True
+    if "acronym_not_initials" in res.flags and res.basis != "ruling":
+        return False            # the dropped parenthetical ('affiliate', 'IOCL') may say something a
+                                # person should read, whatever the rest of the name matched
+    if res.basis in ("exact", "alias", "ruling"):
+        return True
+    if res.basis in ("rules", "stem"):
+        if "," in res.styled:
+            return False
+        return bool(res.flags) and set(res.flags) <= MECHANICAL_FLAGS
+    return False
+
+
 def _finish(res: StyleResult, former: bool) -> StyleResult:
     if former and not res.styled.endswith("[former]"):
         res.styled = f"{res.styled} [former]"
     # a gazetteer adoption rewrites the note; the dropped acronym must still be in it so the
     # researcher carries it into researcher_notes (Baird 2026-10-01: drop it, keep it in notes)
-    if "acronym_dropped" in res.flags and res.aliases and "acronym" not in res.note:
-        res.note = f"trailing acronym dropped (kept as alias: {res.aliases[0]!r}); {res.note}"
+    if ("acronym_dropped" in res.flags or "acronym_lead" in res.flags) and res.aliases \
+            and "acronym" not in res.note:
+        res.note = f"acronym dropped (kept as alias: {res.aliases[0]!r}); {res.note}"
     res.aliases = [a for a in dict.fromkeys(res.aliases) if a and a != res.styled]
     res.flags = list(dict.fromkeys(res.flags))
     return res

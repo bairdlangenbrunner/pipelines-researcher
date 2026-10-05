@@ -1,7 +1,9 @@
 # Owner names — the ownership team's style
 
 How an **immediate owner** (`Owner1..Owner11` on the operators/owners tab) is written, so that
-what this project stages reads like what GEM's ownership team writes. Parent research is the
+what this project stages reads like what GEM's ownership team writes. **The `Operator` column
+follows the same style** (Baird 2026-10-01): it is the same kind of entity name, and on most
+rows the operator is also `Owner1`, so the two must not drift apart. Parent research is the
 ownership team's job, not ours (Baird 2026-10-01): we style the immediate owner and leave the
 parent tree alone.
 
@@ -28,11 +30,14 @@ Rebuild the local copies: `python3 scripts/build_owner_gazetteer.py [--no-refres
 
 ## Which cells this touches
 
-On the operators/owners tab, `Owner1..Owner11` and `Owner1%..Owner11%` are **data**;
+On the operators/owners tab, `Operator`, `Owner1..Owner11` and `Owner1%..Owner11%` are **data**;
 `AggregateOwners` and `Percentage Verification` are formulas. On the tracker tabs `Owner`,
-`Parent` and `ParentEntityIDs` are INDEX/MATCH formulas off this tab. So a styled name is staged
-only into `Owner<N>` (with its `Owner<N>%`), via a record with `tab: "operators_owners"` and
-`ref_col: "Owner [ref]"` — never into the tracker's `Owner` column.
+`Operator`, `Parent` and `ParentEntityIDs` are INDEX/MATCH formulas off this tab. So a styled name
+is staged only into `Owner<N>` (with its `Owner<N>%`) or `Operator`, via a record with
+`tab: "operators_owners"` and `ref_col: "Owner [ref]"` / `"Operator [ref]"` — never into the
+tracker's `Owner` / `Operator` columns. `Operator` is ONE cell with no `Operator1..N`, and the
+sheet does hold `A; B` lists there; the styler flags those `multi_owner` (the style batch files
+them as `multi_operator`) and leaves the shape to a human.
 
 ## The rules (team examples where the guide gives one)
 

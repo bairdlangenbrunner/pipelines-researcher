@@ -112,6 +112,7 @@ def _deepsweep_records():
         # ITEMS
         _rec("P9001", 4, "__VALIDITY__", "VALIDITY", "UNRESOLVED", verdict="concern", concern_type="duplicate",
              recommendation="check", contested={"Status": ""}),
+        # a sheet-vs-wiki diff stays in the staging dir but is NOT a review-app item (2026-10-02)
         _rec("P9004", 7, "__WIKIDIFF__", "WIKIDIFF", "WIKI_UPDATE", field="Status", sheet_value="construction"),
         _rec("P9004", 8, "__ROUTEQC__", "ROUTEQC", "ROUTE_FLAG", check="length_ratio", detail="0.2"),
         _rec("P9004", 8, "__ROUTE__", "ROUTE", "ROUTE_SUGGESTED", start_name="A", end_name="B"),

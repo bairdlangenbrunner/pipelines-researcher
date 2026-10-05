@@ -102,9 +102,61 @@ def test_machine_reviewer_is_not_reviewed(scope):
     assert not store.reviewed(store.latest(store.read_log(scope["dirs"][l["dir"]]))[l["key"]])
     store.overlay(scope["dataset"], scope["dirs"])
     assert l["reviewed"] is False and l["decision"] == "accept" and l["decided_by"] == "backend sync"
+    assert l["applied"]["by"] == "backend sync" and l["applied"]["at"]
     dec(scope, [{"key": l["key"], "decision": "accept"}], who="BL")
     store.overlay(scope["dataset"], scope["dirs"])
     assert l["reviewed"] is True
+
+
+def push_record(l, ts="2026-10-01T18:31:00-04:00"):
+    return {"key": l["key"], "dir": l["dir"], "pid": "P9002", "sheet_row": l["sheet_row"], "ref_col": l["ref_col"],
+            "kind": l["kind"], "decision": "accept", "suggested_value": "", "note": "written to the sheet",
+            "reviewer": "push", "ts": ts, "undecided": False}
+
+
+def test_a_push_record_after_an_accept_marks_it_applied_and_keeps_the_person_speaking(scope):
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = line(d, "P9002", "fill")
+    dec(scope, [{"key": l["key"], "decision": "accept"}])
+    store.append_records([push_record(l)], dirs)
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"], l["decided_by"]) == ("accept", True, "BL")
+    assert l["applied"] == {"by": "push", "at": "2026-10-01T18:31:00-04:00"}
+    c = store.calls(store.read_log(dirs[l["dir"]]))[l["key"]]
+    assert (c["person"]["reviewer"], c["machine"]["reviewer"], c["last"]["reviewer"]) == ("BL", "push", "push")
+    # the person changes their mind after the push: the newer call speaks, the push stays as applied
+    dec(scope, [{"key": l["key"], "decision": "reject", "note": "wrong figure"}])
+    store.overlay(d, dirs)
+    assert (l["decision"], l["decided_by"], l["applied"]["by"]) == ("reject", "BL", "push")
+    # ... and an undo leaves the line undecided (not the push's accept) but still applied
+    dec(scope, [{"key": l["key"], "undo": True}])
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"], l["decided_by"], l["applied"]["by"]) == (None, False, None, "push")
+    # a line nobody ever decided, with only a push record: the pre-fill shows (as a backend sync does)
+    m = line(d, "P9001", "ref")
+    store.append_records([dict(push_record(m), pid="P9001")], dirs)
+    store.overlay(d, dirs)
+    assert (m["decision"], m["reviewed"], m["decided_by"]) == ("accept", False, "push")
+
+
+def test_legacy_single_column_fill_key_speaks_for_the_multi_column_line(scope):
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = line(d, "P9002", "fill")
+    multi = l["key"]                                                     # Capacity+CapacityUnits, as _fill_colid keys it today
+    head, colid = multi.rsplit("|", 1)
+    assert colid == "Capacity+CapacityUnits"
+    legacy = head + "|Capacity"                                          # the pre-2026-10-01 key: first column only
+    assert store.legacy_keys(multi) == [legacy, head + "|CapacityUnits"]
+    assert store.legacy_keys(multi + "#FILL2") == [k + "#FILL2" for k in store.legacy_keys(multi)]
+    assert store.legacy_keys(legacy) == [] and store.legacy_keys("nokey") == []
+    store.append_records([dict(push_record(l), key=legacy, reviewer="BL"),                   # decided under the legacy key
+                          dict(push_record(l), reviewer="backend sync", ts="2026-10-01T19:00:00-04:00")], dirs)  # a sync under the new key
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"], l["decided_by"], l["applied"]["by"]) == ("accept", True, "BL", "backend sync")
+    # a person record under the new key — even an undo — ends the fallback
+    store.append_records([dict(push_record(l), reviewer="BL", undecided=True, decision=None)], dirs)
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"]) == (None, False)
 
 
 def test_rollback_restores_log_byte_for_byte(scope, monkeypatch):
@@ -277,12 +329,12 @@ def call(s, recs, who="BL"):
 
 
 def test_item_call_writes_same_sidecars_with_item_shape(scope):
-    it = next(i for i in items_of(scope["dataset"], "wikidiff") if i["dir"].endswith("deepsweep-x"))
+    it = next(i for i in items_of(scope["dataset"], "routeqc") if i["dir"].endswith("deepsweep-x"))
     log, derived = sidecars(scope, it)
-    saved = call(scope, [{"key": it["key"], "call": "todo", "note": "check the wiki"}])
+    saved = call(scope, [{"key": it["key"], "call": "todo", "note": "check the route"}])
     recs = logrecs(log)
     assert recs == saved and tuple(recs[0]) == ITEM_KEYS
-    assert (recs[0]["pid"], recs[0]["kind"], recs[0]["call"], recs[0]["undecided"]) == (next(p["pid"] for p in scope["dataset"]["pipelines"] if it in p["items"]), "wikidiff", "todo", False)
+    assert (recs[0]["pid"], recs[0]["kind"], recs[0]["call"], recs[0]["undecided"]) == (next(p["pid"] for p in scope["dataset"]["pipelines"] if it in p["items"]), "routeqc", "todo", False)
     # a line decision in the same dir lands in the same file, keyed separately
     l = next(l for p in scope["dataset"]["pipelines"] for l in p["lines"]
              if l["dir"] == it["dir"] and not l["in_backend"])
@@ -291,7 +343,7 @@ def test_item_call_writes_same_sidecars_with_item_shape(scope):
     d = json.loads(derived.read_text())["decisions"]
     assert d[it["key"]]["call"] == "todo" and d[l["key"]]["decision"] == "hold"
     store.overlay(scope["dataset"], scope["dirs"])
-    assert (it["call"], it["call_note"], it["reviewed"], it["decided_by"]) == ("todo", "check the wiki", True, "BL")
+    assert (it["call"], it["call_note"], it["reviewed"], it["decided_by"]) == ("todo", "check the route", True, "BL")
     assert it["decided_at"]
 
 
@@ -301,9 +353,10 @@ def test_item_vocabulary_per_kind_enforced(scope):
     for k in store.ITEM_KINDS:
         if k != "concern":
             assert store.ITEM_CALLS[k] == ("noted", "todo", "dismissed")
-    concern, wiki = items_of(d, "concern")[0], items_of(d, "wikidiff")[0]
-    for bad in ({"key": concern["key"], "call": "noted"}, {"key": wiki["key"], "call": "confirmed"},
-                {"key": wiki["key"], "call": ""}, {"key": wiki["key"]}):
+    assert "wikidiff" not in store.ITEM_KINDS       # sheet-vs-wiki diffs left the app 2026-10-02
+    concern, rqc = items_of(d, "concern")[0], items_of(d, "routeqc")[0]
+    for bad in ({"key": concern["key"], "call": "noted"}, {"key": rqc["key"], "call": "confirmed"},
+                {"key": rqc["key"], "call": ""}, {"key": rqc["key"]}):
         with pytest.raises(store.Invalid, match="call"):
             call(scope, [bad])
     with pytest.raises(store.Invalid, match="is a line"):

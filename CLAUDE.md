@@ -181,7 +181,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
-| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; every decision — loopback server, Google page, or a chat via `ledger.py decide` — lands in the store spreadsheet's `log` tab first (`review_app/ledger.py`), the sidecars mirror it; Google web app built, deployment pending. **Sheet-vs-wiki diffs are NOT review-app items** (Baird 2026-10-02: the wiki will be updated automatically and is expected to drift; the sheet is what must be accurate) — they stay in the handoff workbooks only; the wiki is read to harvest its outbound citations as candidate refs, never cited) | "review the batch", "start the review app", "decide the <country> lines", "accept P1234's fill", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions", "push the accepts" | `review_app/README.md` (→ "Decisions" for the ledger, "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
+| **Review a batch's decisions** (review app: decide staged lines/items, then rebuild the workbook from the clicks; every decision — loopback server, Google page, or a chat via `ledger.py decide` — lands in the store spreadsheet's `log` tab first (`review_app/ledger.py`), the sidecars mirror it; Google web app built, deployment pending. A shareable claude.ai artifact version exists too: `build_static.py` builds the page, `import_log.py` brings its decisions back through the ledger. **Sheet-vs-wiki diffs are NOT review-app items** (Baird 2026-10-02: the wiki will be updated automatically and is expected to drift; the sheet is what must be accurate) — they stay in the handoff workbooks only; the wiki is read to harvest its outbound citations as candidate refs, never cited) | "review the batch", "start the review app", "decide the <country> lines", "accept P1234's fill", "rebuild the actions workbook from the decisions", "publish the review app", "pull the decisions", "push the accepts", "share the review app as an artifact", "import the artifact decisions" | `review_app/README.md` (→ "Decisions" for the ledger, "Artifact version" for `build_static.py` / `import_log.py`, "Google version" for `publish.py` / `pull.py` / `gas_push.py` / deploy) + `docs/plans/2026-09-30_review-app.md`; `workflows.md` §6 step 6 |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
@@ -450,6 +450,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `OO_HeldBack` (slice 2 = `stem_medium` + `rules_only`; `multi_operator` = one `Operator` cell
   listing several operators, a shape ruling; the rest need rulings). Style only,
   no research. Re-run `stage_owner_style.py` after a fresh snapshot — never hand-edit the JSON.
+  **Plan for the whole normalization (leak fix, apply route, slices 2a/2b, rulings):**
+  `docs/plans/2026-10-05_owner-style-normalization.md`. The 2026-10-02 US gas pushes wrote 113
+  unstyled operator/owner cells and 641 pending staged proposals would restyle — Phase 0 of the
+  plan (Operator style check, styler paren fix, restyle pending shards, push guard) comes before
+  any further push to the operators/owners tab.
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):** `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass 2026-07-28, rebuilt 2026-07-29, staged not applied — supersedes the 07-05
   packet; §8 routes APPLIED 2026-08-03; + oil open items; 4 files to work):** `docs/country_notes/iraq.md`.
@@ -478,7 +483,8 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **Malaysia (gas: first-ever full pass 2026-08-12, staged not applied; 5 files to work):**
   `docs/country_notes/malaysia.md`. Recons standalone; the headline is a SCOPE ruling (5 GEM rows vs
   ~150 in three sources) that gates everything else — nothing staged as Discovery until Baird rules.
-- **Ukraine (gas: first-ever full pass 2026-08-15, staged not applied; 3 files to work):**
+- **Ukraine (gas: lean re-sweep + discovery 2026-10-02, staged not applied, in the review app;
+  4 files to work; the August legs and handoffs are archived, so the 10-02 run is the only input):**
   `docs/country_notes/ukraine.md`. Recons standalone; 3.29% citation base — calibrate as the inverse
   of Kazakhstan: a blank means nobody looked.
 - **Uzbekistan (gas: first-ever full pass 2026-08-26, staged not applied; 3 files to work):**

@@ -26,6 +26,10 @@ sources/
 │   ├── manifest.yml
 │   ├── NOTES.md
 │   └── data/
+├── seala/                       # a real source (tier 4, Russia gas, the 31 lines that diverge from GEM; prepare.py from work/ scrape)
+│   ├── manifest.yml
+│   ├── NOTES.md
+│   └── prepare.py
 ├── malaysian_gas_map/           # a real source (tier 3, ONE digitized document — Malaysia gas only)
 │   ├── manifest.yml
 │   ├── NOTES.md

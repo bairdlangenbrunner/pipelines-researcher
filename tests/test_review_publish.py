@@ -215,8 +215,39 @@ def test_carry_forward_leaves_the_doubtful_ones_as_orphans(scope):
     m = first(d, "P9001", "ref")
     gone = m["key"].replace("|%s|" % m["sheet_row"], "|999|")
     store.append_records([gas_record(m, "b", key=gone, id="5"),
-                          gas_record(m, "b", id="6", reviewer=store.SYNC_REVIEWER)], dirs)     # the new key already holds a record
-    assert publish.carry_forward(d, dirs) == [] and gone in [r["key"] for r in publish.orphans(d, dirs)]
+                          gas_record(m, "b", id="6", reviewer=store.SYNC_REVIEWER)], dirs)     # the new key holds only a machine record
+    (got,) = publish.carry_forward(d, dirs)                       # ... which is not a decision: the orphan is carried
+    assert (got["key"], got["rekeyed_from"]) == (m["key"], gone) and gone not in [r["key"] for r in publish.orphans(d, dirs)]
+    store.overlay(d, dirs)
+    assert (m["decision"], m["decided_by"], m["applied"]["by"]) == ("accept", ME, store.SYNC_REVIEWER)
+    n = first(d, "P9001", "oo")
+    gone2 = n["key"].replace("|%s|" % n["sheet_row"], "|998|")
+    store.append_records([gas_record(n, "b", key=gone2, id="7"),
+                          gas_record(n, "b", id="8", decision="reject")], dirs)                # a PERSON decided the new key: it wins
+    assert publish.carry_forward(d, dirs) == [] and gone2 in [r["key"] for r in publish.orphans(d, dirs)]
+
+
+def test_carry_forward_dry_run_reports_without_writing(scope):
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = first(d, "P9002", "fill")
+    gone = l["key"].replace("|%s|" % l["sheet_row"], "|999|")
+    store.append_records([gas_record(l, "b", key=gone, id="9")], dirs)
+    before = store.read_log(dirs[l["dir"]])
+    (got,) = publish.carry_forward(d, dirs, write=False)
+    assert got["key"] == l["key"] and store.read_log(dirs[l["dir"]]) == before      # reported, nothing appended
+    assert gone in [r["key"] for r in publish.orphans(d, dirs)]
+    (got,) = publish.carry_forward(d, dirs)
+    assert store.read_log(dirs[l["dir"]])[-1]["key"] == l["key"]
+
+
+def test_drift_reads_the_persons_call_past_a_push_record(scope):
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = first(d, "P9002", "fill")
+    publish.stamp_basis(d, dirs)
+    store.append_records([gas_record(l, "0" * 12, id="a"),
+                          gas_record(l, "", id="b", reviewer="push", note="written")], dirs)
+    (hit,) = publish.stamp_basis(d, dirs)                          # the accept was made against other cells
+    assert hit is l and l["drift"]["decided_basis"] == "0" * 12
 
 
 def test_restore_reviewers_puts_the_address_back_for_the_private_dataset(scope):

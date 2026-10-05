@@ -39,8 +39,10 @@ SYNC_REVIEWER = "backend sync"
 _INITIALS_RE = re.compile(r"^[A-Z]{1,3}$")
 _EMAIL_RE = re.compile(r"^([^@\s]+)@[^@\s]+\.[^@\s]+$")
 LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
-ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
+ITEM_KINDS = ("concern", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
               "unresolved", "confirmed", "other")
+# "wikidiff" was an item kind until 2026-10-02 (sheet-vs-wiki diffs); review_data leaves those
+# records out now, so older `wikidiff` ledger records simply match nothing on overlay.
 # The call vocabulary per item kind. A concern's call settles the validity question
 # (confirmed = it stands, dismissed = closed, needs_research = goes to an Update worklist).
 # A concern never holds a line: a line it contests is decided on its own, and the two calls
@@ -105,8 +107,59 @@ def latest(records, field="key"):
     return out
 
 
+def is_machine(rec):
+    return bool(rec) and rec.get("reviewer") in MACHINE_REVIEWERS
+
+
+def calls(records):
+    """key -> {"person": the latest PERSON record (an undo included), "machine": the latest machine
+    record (backend sync / push), "last": the latest record of either}. A machine record never
+    replaces a person's call: `push.py` appends one AFTER the accept it wrote, and `speaker` keeps
+    the accept speaking for the line (the push becomes the line's `applied` mark)."""
+    out = {}
+    for r in records:
+        k = r.get("key")
+        if not k:
+            continue
+        c = out.setdefault(k, {"person": None, "machine": None, "last": None})
+        c["machine" if is_machine(r) else "person"] = r
+        c["last"] = r
+    return out
+
+
+def legacy_keys(key):
+    """The keys a multi-column fill (`…|ProposalYear+ProposalMonth`, `…|Capacity+CapacityUnits#FILL2`)
+    was logged under before 2026-10-01: its first value column alone — one per column, since which
+    column came first is not recoverable from the key. [] for any other key."""
+    d, sep, rest = str(key).partition("::")
+    parts = rest.split("|", 2)
+    if not sep or len(parts) != 3:
+        return []
+    base, _, suffix = parts[2].partition("#")
+    if "+" not in base:
+        return []
+    sfx = "#" + suffix if suffix else ""
+    return [f"{d}::{parts[0]}|{parts[1]}|{c}{sfx}" for c in base.split("+")]
+
+
+def speaker(calls_by_key, key):
+    """(the record that speaks for `key`, its latest machine record). A person's live call speaks
+    first: the key's own, or — when the key has NO person record at all and is a multi-column
+    fill — the ONE legacy single-column key (`legacy_keys`) that holds a live one. Otherwise the
+    latest record of any kind speaks (an undo, or a machine pre-fill: "in backend", "not reviewed")."""
+    c = calls_by_key.get(key) or {}
+    prec = c.get("person")
+    if prec is None:
+        leg = [calls_by_key[k]["person"] for k in legacy_keys(key)
+               if calls_by_key.get(k, {}).get("person") and not calls_by_key[k]["person"].get("undecided")]
+        if len(leg) == 1:
+            prec = leg[0]
+    live = prec if prec and not prec.get("undecided") else None
+    return (live or c.get("last")), c.get("machine")
+
+
 def reviewed(rec):
-    """True when the latest record is a person's call: not a machine's, not an undo."""
+    """True when the record is a person's call: not a machine's, not an undo."""
     return bool(rec) and rec.get("reviewer") not in MACHINE_REVIEWERS and not rec.get("undecided")
 
 
@@ -117,24 +170,32 @@ def dir_paths(data, root=None):
 
 
 def overlay(data, dirs=None, root=None):
-    """Fill `decision`, `reviewed`, `decided_by`, `decided_at` on every line and item of `data`
-    (in place; returns it) from each dir's review_log.jsonl. `decision` is the latest record's
-    call (None after an undo or with no record); `reviewed` says whether a person made it.
-    Items get `call` / `call_note` (the latest item call; None after an undo or with no record)
-    plus reviewed / decided_by / decided_at. Run this before `validate` sees the dataset: `decide`
+    """Fill `decision`, `reviewed`, `decided_by`, `decided_at` (lines: + `applied`) on every line and
+    item of `data` (in place; returns it) from each dir's review_log.jsonl. The record that speaks
+    for a key is its latest PERSON call when one is live (`speaker`; a legacy single-column fill
+    key counts), else its latest record: so `decision` is None after an undo or with no record,
+    `reviewed` says whether a person made it, and a machine record (backend sync, push) written
+    AFTER a person's accept leaves that accept standing and shows up as `applied`
+    ({by, at}: the sheet holds the line — a push wrote it, or a refresh found it there). Items
+    get `call` / `call_note` (the latest item call; None after an undo or with no record) plus
+    reviewed / decided_by / decided_at. Run this before `validate` sees the dataset: `decide`
     reads the overlaid `call` to know which concern calls an accept still owes."""
     dirs = dirs if dirs is not None else dir_paths(data, root)
     logs = {}
+
+    def speak(d, key):
+        if d not in logs:
+            logs[d] = calls(read_log(dirs[d])) if d in dirs else {}
+        return speaker(logs[d], key)
+
     for p in data.get("pipelines", []):
         for grp in ("lines", "items"):
             for o in p.get(grp, []):
-                d = o.get("dir")
-                if d not in logs:
-                    logs[d] = latest(read_log(dirs[d])) if d in dirs else {}
-                rec = logs[d].get(o["key"])
+                rec, mrec = speak(o.get("dir"), o["key"])
                 live = rec if rec and not rec.get("undecided") else None
                 if grp == "lines":
                     o["decision"] = live["decision"] if live else None
+                    o["applied"] = {"by": mrec.get("reviewer"), "at": mrec.get("ts")} if mrec else None
                 else:
                     o["call"] = live.get("call") if live else None
                     o["call_note"] = live.get("note", "") if live else None
@@ -153,10 +214,7 @@ def overlay(data, dirs=None, root=None):
                     # (the line was decided before the record was folded in, or the record
                     # was decided as its own card) until the line is decided again.
                     for c in o["covers"]:
-                        cd = c.get("dir")
-                        if cd not in logs:
-                            logs[cd] = latest(read_log(dirs[cd])) if cd in dirs else {}
-                        crec = logs[cd].get(c["key"])
+                        crec, _ = speak(c.get("dir"), c["key"])
                         clive = crec if crec and not crec.get("undecided") else None
                         c["decision"] = clive["decision"] if clive else None
                         c["decided_by"] = clive.get("reviewer") if clive else None

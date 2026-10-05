@@ -115,7 +115,7 @@ def test_hold_note_suggest_reject_and_undo_match_the_python_store(tmp_path):
 def test_bad_requests_are_refused_the_same_way(tmp_path):
     def steps(d):
         k, c = line(d, "P9002", "fill")["key"], concern(d)["key"]
-        w = item(d, "wikidiff")["key"]
+        w = item(d, "routeqc")["key"]
         return [("line", []), ("line", [{"key": "nope", "decision": "hold"}]), ("line", [{"key": k}]),
                 ("line", [{"key": k, "decision": "maybe"}]), ("line", [{"key": k, "decision": "suggest"}]),
                 ("line", [{"key": c, "decision": "hold"}]),

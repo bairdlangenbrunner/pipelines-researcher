@@ -40,7 +40,10 @@ def test_every_kind_once_with_the_right_key(built):
         ref["key"].endswith("::P9001|4|Status [ref]")
     assert _find(data, "P9002", "status")[0]["key"].endswith("::P9002|5|__STATUS__")
     assert _find(data, "P9004", "route")[0]["key"].endswith("|__ROUTE__")
-    assert _find(data, "P9004", "wikidiff", field="Status")[0]["key"].endswith("|__WIKIDIFF__:Status")
+    # sheet-vs-wiki diffs are not review-app items (Baird 2026-10-02): left out, counted
+    assert not _find(data, "P9004", "wikidiff") and not _find(data, "P9001", "wikidiff")
+    assert not any(i["kind"] == "wikidiff" for p in data["pipelines"] for i in p["items"])
+    assert stats["wikidiff_skipped"] == 3           # deepsweep-x P9004 + the qc dir's carried copy + P9001 Owner
     assert _find(data, "P9004", "routeqc", check="length_ratio")
     assert _find(data, "P9001", "concern")[0]["key"].endswith("|__VALIDITY__:duplicate")
     assert _find(data, "scope", "escalation")[0]["key"].split("::")[1].startswith("scope|")
@@ -53,10 +56,9 @@ def test_dedupe_puts_qc_dir_in_also_in(built):
     assert ref["dir"].endswith("deepsweep-x")            # primary is the non-assembled dir
     assert any(d.endswith("/qc") for d in ref["also_in"])
     # extras only the handoff carries stay with the qc dir
-    extra = _find(data, "P9001", "wikidiff", field="Owner")[0]
+    extra = _find(data, "P9004", "routeqc", check="null_geometry")[0]
     assert extra["dir"].endswith("/qc") and extra["also_in"] == []
-    assert _find(data, "P9004", "routeqc", check="null_geometry")[0]["dir"].endswith("/qc")
-    assert stats["deduped"] >= 4
+    assert stats["deduped"] >= 3        # ref, fill, concern carried into qc (the carried wiki diff is skipped before dedupe)
 
 
 def test_prior_and_actions_files_ignored(built):
@@ -409,3 +411,16 @@ def test_unreadable_or_unsupported_ref_with_no_replacement_is_a_concern_not_a_li
     it = rd._item(e)
     assert it["concern_type"] == "ref_unverified" and it["key"].endswith("|ref-check:Proposal [ref]")
     assert "stays on the sheet" in it["recommendation"]
+
+
+def test_routeqc_and_recon_dirs_are_left_out_by_default(tmp_path, monkeypatch):
+    monkeypatch.setattr(rd, "SKIP_ROUTEQC", True)
+    monkeypatch.setattr(rd, "SKIP_RECON_DIRS", True)
+    s = make_scope(tmp_path)
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    assert not _find(data, "P9004", "routeqc")
+    assert stats["routeqc_skipped"] > 0
+    recon = s["deep"].parent / "recon-gulfpub-20260101"
+    recon.mkdir()
+    es, _, _, skipped = rd._load_dir(recon, s["root"], 0)
+    assert es == [] and skipped["recon"] == 1

@@ -121,6 +121,7 @@ parent-trunk rows and restate the aggregate-vs-segment rule for them.>`
  "value_cols":["Status"],"values":{"Status":"operating"},
  "tab":"operators_owners",                     // ONLY for Operator/Owner units; else omit.
                                                // Owner<N> values in the ownership team's style
+                                               // Owner<N>% is OPTIONAL: blank when unsourced; never withhold an owner for want of one.
                                                // (docs/reference/owner_style.md): `Gazprom PJSC`,
                                                // not `PAO Gazprom`; acronym -> researcher_notes
  "proposed_refs":["https://…"],                // [] when unresolved
@@ -145,10 +146,15 @@ Also emit:
   not found. **Expansion with no new physical pipe → `LengthKnown = 0`, `Diameter` blank.**
 * **`__VALIDITY__`** — one per row where existence / duplication / classification is in question.
   Never recommend deleting a row off obscurity alone.
+  Never flag a past `FIDYear` on a `Pre-FID` row: `FIDYear` records planned years too.
 * **`__REDUNDANCY__`** — a suspected double count between two named PIDs.
 * **`__STATUS__`** — required for every non-`operating` row in your payload when the
   `status-review` leg is on; verdict in `researcher_notes`: `confirm` / `change` (name the new
   status) / `stale` / `unclear`.
+
+**UNITS: stage `LengthKnown` / `Capacity` in the unit the SOURCE states** (1,750 miles → `1750` + `LengthKnownUnits=mi`;
+105.12 million m3/day → `105.12` + `mill.Sm3/day`). Never convert to the sheet's current unit; change the `*Units` value too.
+A conversion may appear in `researcher_notes`, never in `values`.
 
 Controlled vocabulary is LOCKED and lowercase: `Status`, `RouteAccuracy`, `PipelineType`,
 `DelayType`, `ShelvedCancelledType`, `Delayed`, `Opposition`. Only `FIDStatus` is capitalized

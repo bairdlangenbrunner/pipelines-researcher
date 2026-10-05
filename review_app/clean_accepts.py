@@ -23,7 +23,9 @@ in the backend, major or minor, AND none of these applies:
                       (a classification concern that only recommends a PipelineType change to
                       gathering or distribution is scoped to the PipelineType column instead:
                       Baird 2026-10-02, that is a change to suggest, not an issue); or
-                    - attribution: also blocks every owner/operator line; or
+                    - attribution naming no column: blocks every owner/operator line (one that
+                      names columns, e.g. Owner1, blocks only those columns: Baird 2026-10-05,
+                      P0159's Owner1 concern said the Operator was unaffected); or
                     - on a column the line proposes (contested columns, or the ref_check
                       column), compared without the ` [ref]` suffix
   flag open       a QC flag on the pipeline other than WikiLink_health (a wiki URL's health
@@ -124,8 +126,6 @@ def blockers(pipes):
                 elif not cols:
                     b["whole"].append(why)
                 else:
-                    if t == "attribution":
-                        b["oo"].append(why)
                     for c in cols:
                         b["cols"].setdefault(c, why)
             elif k == "flag" and i.get("call") not in ("dismissed", "noted") and i.get("check") not in NONBLOCK_FLAGS:

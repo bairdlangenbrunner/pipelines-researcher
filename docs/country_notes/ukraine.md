@@ -5,15 +5,32 @@ composite: operating deep sweep (39 rows), in-development annual review (2), can
 mothballed review (6), a redundancy-cluster adjudication (8 clusters / 23 rows), GulfPub and
 OSM reconciliations, and the handoff packet. **Oil has not been swept.**
 
-Staged, not applied. Counts regenerate via
+**Gas re-swept 2026-10-02 (lean pass + discovery), staged not applied. FOUR files to work.**
+The new run is the only pending input: the August research legs (`annual`, `cancelled-review`,
+`qc`, `redundancy`, `ref-sweep-operating`) and both August handoff packets moved to
+`batches/ukraine-gas/archive/` on 2026-10-03. The open items below came from that pass and
+still stand where the new sweep did not revisit them (the P7817 / P7818 route sync and the
+shared P3381 / P3382 geojson were QC-leg findings). Ukraine gas is in the review app.
+
+- `pipelines_batch_20261002_2032_ET_ukraine-gas_deepsweep.xlsx`. All 47 rows. 267 of 357
+  uncited values now carry a ref (90 still unresolved), 39 of 105 fill records sourced, 47
+  status reviews with no change (23 unclear, mostly transit trunks idle since 1 January 2025),
+  33 validity concerns. Lean pass: 239 units deferred (fills_deferred 221,
+  has_ref_access_blocked 15, has_ref_cleared_by_script 3), in
+  `staging/deepsweep-20261002/deferred_units.json`. Length, capacity, diameter, start and
+  operator blanks were owed, not deferred.
+- `pipelines_batch_20261002_2038_ET_ukraine-gas_discovery.xlsx`. 26 seeds (23 GulfPub
+  candidates + 3 Crimea leads from the Russia pass): 2 new rows, 24 monitor, 4 matched to
+  existing rows. **Check new row "Dolyna-Uzhhorod-State Border II" (182 km, 1400 mm) against
+  P0774 / P0768 before adding.** It rests only on the VTG table, and the rowspan trap below
+  could make it the western tail of one of those systems. Most Crimea lines stay on monitor
+  for want of a sourced length. The 62 GulfPub near-miss records were not seeded and still
+  need hand adjudication.
+
+Counts regenerate via
 `python scripts/staged_summary.py --country Ukraine --commodity gas` — never hand-edit them.
+The recons are standalone (not carried by any packet):
 
-**THREE files to work** — the packet does **not** subsume the recons (`recon_actions = 0`):
-
-- `pipelines_batch_20260930_1455_ET_ukraine-gas_handoff-actions.xlsx` (re-tiered 2026-09-30) (+ its `-evidence`
-  twin) — 110 open decisions, 2 status changes, 239 backend paste units, 48 operators/owners
-  units, 113 wiki updates, 149 open flags; evidence side 27 confirmed audits, 45 fill-detail
-  and 376 ref-detail rows.
 - `pipelines_batch_20260812_1409_ET_ukraine-gas_reconciliation-gulfpub.xlsx`
 - `pipelines_batch_20260814_0120_ET_ukraine-gas_reconciliation-osm.xlsx` — the **re-run** after
   the Cyrillic name defect was fixed

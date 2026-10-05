@@ -283,8 +283,8 @@ not safe for "accept everything nothing asks a person to judge". `python review_
 `clean_accepts_NN.json` chunk (100 records; one call of 1,100 overflows the gws argument limit) records it as a chat batch, and `push.py` is still the only route to the sheet. A line is accepted
 when it is high confidence, undecided, not in the backend (major or minor both fine) and none of
 these applies: a rival candidate, a failed check on a proposed ref, class STALE / REF_UNSUPPORTED /
-REF_BLOCKED, an open concern on the pipeline (pipeline-wide types, or its column; attribution also
-blocks owner/operator lines; only `dismissed` closes one), an open QC flag other than
+REF_BLOCKED, an open concern on the pipeline (pipeline-wide types, or its column; an attribution concern naming no
+column blocks owner/operator lines; only `dismissed` closes one), an open QC flag other than
 WikiLink_health, or an escalation naming the pipeline. Unresolved notes and `confirmed` items never
 block. Anything unclear blocks. The rule is in the script's docstring; change it there.
 
@@ -317,6 +317,68 @@ python -m pytest tests/ -q
 
 Without `--dirs` it discovers every staging dir for the scope, handoff packets included.
 The summary goes to stderr.
+
+## Artifact version (the current way to share a batch; decisions save themselves)
+
+The same front end as one self-contained page, published as a claude.ai artifact. It needs no
+Google deployment, so it is the quick way to hand a batch to someone. Same model as the GOGPT
+review app's artifact (`../gogpt-researcher/review_app/README.md`); the rules below are shared.
+
+Live page (the gas batch, published 2026-10-05 from the work profile):
+https://claude.ai/artifact/31WzSbN54wUGHAaPirimcz. The first publish that day,
+https://claude.ai/artifact/7h6hWAcfA52bRPHxwV8YXQ, went out from the personal profile and is
+superseded: its shared log cannot be read from the work account, so do not share it.
+
+```bash
+python review_app/build_static.py                          # the review-app gas batch -> work/review_static/pipelines-reviewer.html
+python review_app/build_static.py --country Ukraine --commodity gas
+python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymonitor.org --dry-run
+python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymonitor.org
+```
+
+- **Build.** `build_static.py` pulls the decision store (read only), builds the dataset the way
+  `publish.py` does with `write=False`, and inlines it (gzip, base64) with `web/style.css`,
+  `web/static_store.js` and `web/app.js`. It writes no store row, no sidecar and nothing in Drive.
+  The page must stay under 16 MB (the gas batch is 8 MB); narrow it with `--country` if it grows.
+- **Publish from the work profile (`~/.claude-gem`), never the personal one.** With the Artifact
+  tool, capabilities `{db: {}, user: {scopes: ["profile"]}, downloads: true}`. The runtime's type
+  definitions describe an `email` scope that would give the page each viewer's address, but the
+  publish service refuses it ("unknown scope (use \"profile\")", 2026-10-05); try it again later. The shared log and
+  the download button only work for members of the publishing account's organization: the first
+  GOGPT page (2026-10-02) went out from the personal profile, Amalia Llano's accepts could not save
+  ("the page could not save to the artifact (invalid_argument)") and her download was refused, so
+  her calls were copied into the log from a screenshot. Publishing the same file from the same
+  conversation keeps the link; from another conversation pass the link as `url`.
+- **Share by email, as an editor**, from the page's Share menu. A viewer who can only view, or
+  who opens a link share, can still decide, but the banner tells them the page cannot save for
+  them and their decisions stay in their browser until they use **download decisions**. There
+  is no save indicator in the header; the banner speaks only when a save fails. The same banner appears when a write is refused with
+  `invalid_argument`, `not_granted` or `revoked`.
+- **The page is a snapshot.** Decisions already in the ledger are laid over it at build time;
+  decisions made elsewhere after the build do not show until it is rebuilt and published again
+  to the same link. A rebuilt page picks up the decisions a browser made on the earlier build
+  (the browser log is one key for every build), and the shared log is the same collection.
+- **Where decisions go.** `static_store.js` checks each decision against the dataset's key index
+  the way `gas/Code.gs` does, then keeps the record in the browser and in the artifact's shared
+  database (collection `logs`, one document per viewer id, device and 250 records). Reviewers see
+  each other's decisions arrive live. The page is told each reviewer's profile name, not their
+  address, and records them by initials (first and last word of the name, so a one-word profile
+  name gives one letter: set the claude.ai display name to first and last name). The GEM sheet is never touched: the artifact holds only the
+  proposed edits and the decisions.
+- **Bring them back**, from a Claude Code session on the work profile:
+  1. ArtifactData, action `list`, collection `logs`, with `out_dir` set to a scratch folder: one
+     `.json` file per reviewer and device lands in `<out_dir>/logs/`. The page's download is the
+     fallback (the same documents in one file).
+  2. `python review_app/import_log.py <out_dir>/logs/*.json --reviewer EMAIL --dry-run`, then
+     without `--dry-run` (one `--reviewer` per person; the page has no addresses). It goes through the ledger like every other decision path: store `log`
+     tab first (origin `artifact`, under the address given with `--reviewer`), sidecars second,
+     each record keeping the id and time the page gave it. Records already imported are skipped
+     by id, and a record is skipped as superseded when the log holds a later decision by a person
+     on the same key. A key that is no longer in the dataset stops the import before anything is
+     written.
+  3. Rebuild the page and publish it to the same link, so the reviewer sees the decisions as
+     recorded. Accepted cells reach the sheet only through `push.py` (plan, ask Baird, `--apply`).
+- The page has no refresh and no push. `push.py` stays the only route to the backend sheet.
 
 ## Google version (phase 2)
 

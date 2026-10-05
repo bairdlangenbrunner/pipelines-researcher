@@ -291,6 +291,7 @@ CURRENT value orange there with your finding attached. Omit it and a researcher 
 the cell you flagged. Name the EXACT backend column ("LengthKnownUnits", not "units"), give the
 candidate value where your evidence names one, and "" where it only establishes the current value is
 wrong. A concern about the row as a whole (existence/duplicate) may leave it {}.${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
+UNITS: stage LengthKnown and Capacity in the unit the SOURCE states (1,750 miles -> 1750 + LengthKnownUnits=mi; 90 MMcm/d -> 90 + MMSCMD). Never convert to km or bcm/y, and keep any conversion in the note only. The same goes for contested values.
 fills[].proposed_refs must have passed url_verifier (with --name). One fills[] object per
 WORKLIST UNIT in your slice -- MISSING_REF and MISSING_VALUE alike, sourced or honestly UNRESOLVED.
 A unit with no object is a defect the pre-delivery gates list. Before finishing, run

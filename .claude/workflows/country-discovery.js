@@ -40,10 +40,13 @@ const ROSTER = A.roster.join("\n")
 // 2026-09-30). args.seedsOnly = run only the seed agents (a coverage re-run).
 // args.priorStaging = earlier run dirs for the same scope: a seed already decided there is
 // recorded already_handled, not re-researched, and slugs must not collide with them.
+// The seed prompt defaults to OSM/Russia wording; a non-OSM seed source overrides it with
+// args.seedIntro (what a seed is), args.seedSearch (where to look in step 3) and per-seed
+// s.length (a free-text length label, e.g. "EIA: 41.7 mi", used instead of km).
 const SEEDS = Array.isArray(A.seeds) ? A.seeds : []
 const SEED_CHUNK = A.seedChunk || 8
 const PRIOR = Array.isArray(A.priorStaging) ? A.priorStaging : []
-const seedLine = (s) => `- ${s.seed_id} | ${s.name} | ${s.km ? `~${s.km} km merged OSM` : 'length unknown'}` +
+const seedLine = (s) => `- ${s.seed_id} | ${s.name} | ${s.length || (s.km ? `~${s.km} km merged OSM` : 'length unknown')}` +
   (s.kind ? ` | kind: ${s.kind}` : '') + (s.operator ? ` | operator: ${s.operator}` : '') +
   (s.name_hint ? ` | ${s.name_hint}` : '')
 const seedChunks = []
@@ -69,9 +72,9 @@ const LEDGER_SHAPE = `{ "seed_id": "<exact id from the list>", "name": "<seed na
     "evidence": [ { "url": "https://...verified...", "note": "..." } ] }`
 
 const seedContract = (chunk, n) => `You are a GEM pipeline discovery researcher adjudicating SEED LEADS for ${COUNTRY} (${COMMODITY}).
-Each seed below is a reference-dataset feature (e.g. an OpenStreetMap trace, merged by name) with no
+${A.seedIntro || `Each seed below is a reference-dataset feature (e.g. an OpenStreetMap trace, merged by name) with no
 GEM row. A reference route is presumptively REAL pipe — either geometry GEM is missing (an existing
-row under another name) or a pipeline GEM is missing. OSM/GulfPub is a LEAD source, never a [ref].
+row under another name) or a pipeline GEM is missing. OSM/GulfPub is a LEAD source, never a [ref].`}
 
 cd ${REPO} first.
 ${EXTRA}${priorNote}
@@ -87,8 +90,8 @@ ${ROSTER}
 2. matched: it is an existing roster row under another name, or a string/section/loop of one (the
    I/II/III string convention) → matched_project_id + reason (a separate string with its own sourced
    specs goes to Update as a split, still recorded matched with that note).
-3. Otherwise search for it (in-country language first: the Cyrillic name, "газопровод-отвод к ГРС …",
-   operator LPUMG pages, regional gasification programmes, Glavgosekspertiza, tender sites) for
+3. Otherwise search for it (${A.seedSearch || `in-country language first: the Cyrillic name, "газопровод-отвод к ГРС …",
+   operator LPUMG pages, regional gasification programmes, Glavgosekspertiza, tender sites`}) for
    length, sponsor/operator, status and year.
    - ${SCOPE_RULE}
    - sourced length >= 25 km and real evidence → candidate (write it to your found file, below)
@@ -103,7 +106,7 @@ focused search per seed when the first result settles it — don't over-research
 ## Output — write a file, then return a summary
 Write ${STAGING}/discovery/found_seeds-${n}.json EXACTLY shaped:
 { "strategy": "seeds-${n}",
-  "candidates": [ { "name": "...", "aka": ["<Cyrillic name>", "..."], "seed_ids": ["<seed_id>"],
+  "candidates": [ { "name": "...", "aka": ["<other / in-language name>", "..."], "seed_ids": ["<seed_id>"],
       "sponsor": "...", "from": "...", "to": "...", "status_guess": "...",
       "evidence": [ { "url": "https://...verified...", "date": "YYYY-MM", "note": "..." } ],
       "why_maybe_new": "..." } ],
@@ -236,6 +239,7 @@ EndLocation/EndState/Province/EndCountryOrArea, Capacity+CapacityUnits, LengthKn
 Diameter+DiameterUnits, Owner, Parent, ProposalYear, FIDStatus, ProjectLevelCost+Units,
 RouteType/RouteAccuracy/RouteNotes (route research per docs/reference/route_conventions.md —
 official GIS first; expansion with no new pipe -> LengthKnown=0, Diameter blank, 'no route').
+LengthKnown and Capacity go in the unit the source states, with the matching units cell (1,750 miles -> 1750 + mi). Never convert; the km and bcm/y columns are computed.
 Every filled value needs a verified ref in the matching "<X> [ref]" key — no orphan values, no
 orphan refs.
 

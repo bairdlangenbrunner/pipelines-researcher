@@ -250,16 +250,16 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                     why.append(f"UNRESOLVED but `values` changes {', '.join(moved)} from the "
                                "sheet — an unsourced proposal belongs in researcher_notes; "
                                "set values to the sheet's")
-        # A proposed Owner<N> name is written the way the ownership team writes it
+        # A proposed Owner<N> or Operator name is written the way the ownership team writes it
         # (docs/reference/owner_style.md): trailing short legal form, no punctuation, no
         # trailing acronym, team spelling on an exact/alias gazetteer hit. A value equal to
         # the sheet's current cell is carried, not proposed, so it is not checked here.
         if f.get("_leg") != "refs" and (f.get("tab") == "operators_owners"
-                                        or f.get("ref_col") == "Owner [ref]"):
+                                        or f.get("ref_col") in ("Owner [ref]", "Operator [ref]")):
             restyle = []
             for c, v in (f.get("values") or {}).items():
                 sv = str(v or "").strip()
-                if not re.fullmatch(r"Owner\d+", str(c)) or not sv:
+                if not re.fullmatch(r"Owner\d+|Operator", str(c)) or not sv:
                     continue
                 cur = sheet_value(sheet, pid, f.get("sheet_row"), c) if sheet is not None else None
                 if cur is not None and str(cur).strip() == sv:

@@ -1,0 +1,56 @@
+# Seala "Карта газовой отрасли" (seala.ru/lng/rossiyaeksport) -- ONLY the 31 Russia gas lines
+# whose geometry diverges from GEM's routes (class D). Read NOTES.md FIRST: the other 154
+# lines of the layer are GEM's own geometry and are deliberately not registered.
+#
+# Derived input: run  python sources/seala/prepare.py  to rebuild data/seala-ru-gas-divergent.geojson
+# from the scrape in work/seala-20260917 (re-pullable with scrape_seala_datalens.py). data/ is gitignored.
+
+source: seala
+display_name: "Seala gas map (seala.ru, Yandex DataLens), divergent lines only"
+source_tier: 4                 # independence of the divergent traces from GEM is unverified; weak until checked
+default_crs: "EPSG:4326"
+
+provenance:
+  origin_url: "https://seala.ru/lng/rossiyaeksport (iframes datalens.yandex/0ouafys4kjyom, chart f39eeofbf6z21)"
+  scraped_date: "2026-09-17"
+  oid_field: seala_id            # stamped by prepare.py from the layer index
+  oid_stability: unstable        # index in a live DataLens response, not a published id; a re-pull may renumber
+
+datasets:
+  - name: gas_ru_divergent
+    scraped_date: "2026-09-17"
+    commodity_default: gas
+    format: geojson
+    path: data/seala-ru-gas-divergent.geojson
+    geometry: feature
+    column_map:
+      name: name
+      status: status
+      owners: owner
+      length_raw: length_km
+      description: description
+      country_const: "Russia"
+      # No capacity, diameter or dates: the tooltips carry name, owner and status only.
+    units:
+      diameter_units: mm
+      length_units: km           # length_km is computed from the geometry, so geodesic/length is 1.0 by construction
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      construction: construction
+      idle: idle
+    dedup_keys: [seala_id]
+    ignore_garbage_fields: []
+
+matching:
+  # Coarse traces (3-20 vertices, many 8,000+ m off GEM's route by construction) and a third
+  # of the names generic ("Pipeline 2"): name and endpoints carry the match, geometry is a
+  # weak signal. Untuned beyond that; read meta.diagnostics before trusting any run.
+  name_weight: 0.40
+  endpoint_weight: 0.25
+  diameter_weight: 0.0
+  length_weight: 0.15
+  geometry_weight: 0.20
+  green_threshold: 0.75
+  yellow_threshold: 0.45
+  buffer_km_for_overlap: 10.0

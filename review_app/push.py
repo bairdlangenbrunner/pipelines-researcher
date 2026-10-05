@@ -41,6 +41,16 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     the record's `basis` no longer matches, or the sheet moved since the snapshot -- is skipped with
     "stale: <what changed>" and listed in the plan's `stale`; the decision still stands in the ledger
     and the workbook. --include-stale pushes them anyway (the conflict rules above still apply).
+  * OWNER STYLE GUARD (Baird 2026-10-05): an Owner<N> / Operator value about to be written is run through
+    scripts/entity_style.py; if the styler would re-spell it AND the policy allows adopting that spelling
+    with no person looking (entity_style.adoptable: exact gazetteer hit, confirmed alias, ruling, or a
+    rules result with only mechanical flags), the plan is REFUSED and the cells listed -- restyle the
+    staged record (scripts/restyle_staged_owners.py) and re-plan. --allow-unstyled writes them anyway.
+    The guard checks; it never rewrites a value the reviewer accepted. The 2026-10-02 pushes wrote 113
+    unstyled operator/owner cells before this existed (docs/plans/2026-10-05_owner-style-normalization.md)
+  * STYLE-ONLY lines (Baird 2026-10-05): a line flagged `style_only` (an owner-style batch: the entity is
+    unchanged, only its spelling moves) stamps LastUpdated but leaves Researcher as it is -- the person
+    who researched the ownership keeps the credit. A row with any non-style-only line is stamped in full
   * apply: FORMULA pre-read (abort on any formula cell / changed cell), before/after backup CSV in
     notes/, valueInputOption RAW with cell-scoped ranges, re-read verify, `push` machine records
     written to the Google decision store (review_app/ledger.py, origin 'push') and into each line's
@@ -68,6 +78,9 @@ import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
 from apply_route_candidates import SHEET_ID, a1, gws  # noqa: E402
+import entity_style  # noqa: E402
+
+NAME_COL = re.compile(r"Owner\d+|Operator")
 
 ET = ZoneInfo("America/New_York")
 TABS = {("tracker", "gas"): ("Gas pipelines", 2), ("tracker", "oil"): ("Oil/NGL pipelines", 2)}
@@ -84,13 +97,17 @@ def stamp_values():
     return {"Researcher": AGENT, "LastUpdated": (today - date(1899, 12, 30)).days}
 
 
-def stamp_cells(rows, tabs, cells):
+def stamp_cells(rows, tabs, cells, style_only_rows=()):
     """Add the Researcher + LastUpdated cells for every (tab key, row) a push writes (Baird 2026-10-02:
     any row-specific sheet write also stamps its row, on every tab that has the columns). `cells`
-    is the plan's {(tab, row, col): {...}} map; a stamp already equal to the live cell is not a write."""
+    is the plan's {(tab, row, col): {...}} map; a stamp already equal to the live cell is not a write.
+    A row in `style_only_rows` (every line on it is a spelling-only owner-style line) gets LastUpdated
+    alone: Researcher stays with the person who did the ownership research (Baird 2026-10-05)."""
     for tname, row, pid in sorted(rows):
         tab = tabs[tname]
         for c, v in stamp_values().items():
+            if c == "Researcher" and (tname, row, pid) in style_only_rows:
+                continue
             if c not in tab.col:
                 sys.exit(f"ABORT: {tab.title} has no {c} column to stamp")
             k = (tname, row, c)
@@ -294,7 +311,21 @@ def staleness(l, rec, tab, row):
     return "; ".join(why)
 
 
-def build_plan(commodity="gas", include_stale=False):
+def unstyled_names(writes):
+    """[(col, value, styled)] for the Owner<N> / Operator cells a line would write in a spelling the
+    ownership team would not use, where adopting the team's spelling needs no person (see module doc)."""
+    out = []
+    for c, v in writes.items():
+        sv = str(v or "").strip()
+        if not NAME_COL.fullmatch(str(c)) or not sv:
+            continue
+        st = entity_style.style(sv)
+        if st.changed and entity_style.adoptable(st):
+            out.append((c, sv, st.styled))
+    return out
+
+
+def build_plan(commodity="gas", include_stale=False, allow_unstyled=False):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
     dirs, dc = review_data._country_dirs(countries, commodity, root, None)
@@ -307,6 +338,8 @@ def build_plan(commodity="gas", include_stale=False):
     cells, skipped, meta, stale = {}, [], {}, []     # (tab, row, col) -> {"after", "before", "pid", "lines": [keys]}
     meta["__scope__"] = dict(zip(("id", "snapshot"), ledger.scope_of(ds)))
     concerns = []
+    unstyled = []                       # (line key, col, value, styled) -- the owner-style guard
+    row_lines = {}                      # (tab, row, pid) -> [style_only flags of the lines on it]
     for pid, l, dec in pushable_lines(ds):
         pid = pid or l["key"].split("::")[1].split("|")[0]
         tab = tabs["oo" if l["kind"] == "oo" else "tracker"]
@@ -373,6 +406,7 @@ def build_plan(commodity="gas", include_stale=False):
         if not writes:
             skipped.append((l["key"], "already in the backend"))
             continue
+        unstyled += [(l["key"],) + u for u in unstyled_names(writes)]
         why = staleness(l, prec, tab, row)
         if why:
             stale.append((l["key"], why))
@@ -393,7 +427,17 @@ def build_plan(commodity="gas", include_stale=False):
             elif k not in cells:
                 cells[k] = {"before": tab.cell(row, c), "after": v, "pid": pid, "lines": []}
             cells[k]["lines"].append(l["key"])
-    stamp_cells({(t, r, d["pid"]) for (t, r, _), d in cells.items()}, tabs, cells)
+            row_lines.setdefault((tname, row, pid), []).append(bool(l.get("style_only")))
+    if unstyled:
+        print(f"OWNER STYLE: {len(unstyled)} cell(s) would be written in a spelling the ownership team "
+              "would not use (restyle the staged record with scripts/restyle_staged_owners.py and re-plan):",
+              file=sys.stderr)
+        for key, c, v, st in unstyled:
+            print(f"  {key} {c}: {v!r} -> {st!r}", file=sys.stderr)
+        if not allow_unstyled:
+            sys.exit("REFUSED: unstyled owner/operator names in the plan (--allow-unstyled overrides)")
+    style_only_rows = {k for k, flags in row_lines.items() if flags and all(flags)}
+    stamp_cells({(t, r, d["pid"]) for (t, r, _), d in cells.items()}, tabs, cells, style_only_rows)
     plan = []
     for (tname, row, c), d in sorted(cells.items(), key=lambda x: (x[0][0], x[0][1], tabs[x[0][0]].col[x[0][2]])):
         tab = tabs[tname]
@@ -404,6 +448,8 @@ def build_plan(commodity="gas", include_stale=False):
                      "replaces": bool(str(d["before"]).strip()) and not c.endswith("[ref]")})
     meta["__stale__"] = stale
     meta["__concerns__"] = concerns
+    meta["__unstyled__"] = unstyled
+    meta["__style_only_rows__"] = sorted(f"{t}:{r}:{p}" for t, r, p in style_only_rows)
     return plan, skipped, meta
 
 
@@ -555,6 +601,8 @@ def main(argv=None):
     ap.add_argument("--include-stale", action="store_true",
                     help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
+    ap.add_argument("--allow-unstyled", action="store_true",
+                    help="plan even when an Owner<N>/Operator value is not in the ownership team's style (default: refuse)")
     ap.add_argument("--stamp-from", metavar="BACKUP_CSV",
                     help="plan ONLY the Researcher + LastUpdated stamps for the rows an earlier push's backup CSV wrote")
     ap.add_argument("--record-only", metavar="PLAN",
@@ -587,7 +635,7 @@ def main(argv=None):
         return record_push(pl, pl["plan"])
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity, a.include_stale)
+    plan, skipped, meta = build_plan(a.commodity, a.include_stale, a.allow_unstyled)
     show(plan, skipped, meta.get("__concerns__", []))
     print("plan written:", save_plan(plan, meta, a.commodity))
 

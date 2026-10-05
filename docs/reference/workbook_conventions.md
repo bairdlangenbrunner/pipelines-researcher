@@ -95,12 +95,13 @@ prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic
 `scripts/build_update_workbook.py`. A third instance,
 `batches/owners-style/staging/update-owner-style-20261001/` (2026-10-01), targets the
-operators/owners tab alone and is tracker-wide (`meta.country = ""`, so the store is
-invisible to country packets by design): tabs `README`, `OO_Names` (the decision surface —
-one line per distinct current spelling), `OO_OperatorsOwners` (leading `SheetRow` + the full
-44-column tab mirror for touched PIDs, changed `Owner<N>` cells green, the two formula columns
-left blank), `OO_Changes` (one line per cell), `OO_HeldBack` (would-change cells not in the
-slice, by reason). The review app reads deep-sweep stores only, so an update store is
+operators/owners tab alone (`Operator` + `Owner1..Owner11`) and is tracker-wide
+(`meta.country = ""`, so the store is invisible to country packets by design): tabs `README`,
+`OO_Names` (the decision surface — one line per distinct current spelling, with how many of its
+cells are `Operator`), `OO_OperatorsOwners` (leading `SheetRow` + the full 44-column tab mirror
+for touched PIDs, changed `Operator` / `Owner<N>` cells green, the two formula columns left
+blank), `OO_Changes` (one line per cell), `OO_HeldBack` (would-change cells not in the slice,
+by reason). The review app reads deep-sweep stores only, so an update store is
 decided in its workbook.
 
 ## Discovery workbook (mode = `discovery`)
@@ -137,7 +138,7 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   404/410 in the worklist's `existing_ref_checks`) ahead of the proposed refs, so a blocked
   origin gets its Wayback snapshot *added*, never swapped in. **The rule is wider than access failures (Baird 2026-10-01): proposed refs are always ADDITIVE** — a
   weak or non-naming existing ref (and one a validity note calls "superseded") stays in the cell; flag it in
-  `ResearcherNotes`, never drop it. **Open validity concerns ride
+  `ResearcherNotes`, never drop it — *unless the value itself is cleared or changed: refs follow the value they support (clear → refs cleared; change → proposed refs replace; `review_app/push.py` `ref_write`)*. **Open validity concerns ride
   here too, tinted orange** (Baird, 2026-09-04, on US-gas P0271/Transco: the sheet's Capacity
   was contradicted by its own cited ref and the researcher, working from this tab as the
   README tells them to, had no way to see it — validity records were filtered off the mirror

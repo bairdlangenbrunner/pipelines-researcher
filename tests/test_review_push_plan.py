@@ -199,3 +199,31 @@ def test_geo_concerns_flag_a_location_left_behind_by_a_state_change():
     out = push.geo_concerns("P1", 11, {"EndState/Province": "Massachusetts"}, T())
     assert len(out) == 1 and out[0]["check"] == ["EndLocation"] and "Westchester County" in out[0]["text"]
     assert push.geo_concerns("P1", 11, {"EndLocation": "Boston"}, T()) == []     # a finer cell raises nothing
+
+
+def test_a_rival_suggest_pushes_the_concerns_candidate_cell_with_the_concerns_refs(world):
+    import json
+    p9001 = next(p for p in world["dataset"]["pipelines"] if p["pid"] == "P9001")
+    ln = next(l for l in p9001["lines"] if l["kind"] == "ref" and l["column"] == "Status")
+    col = "Status"
+    for d in (world["deep"], world["qc"]):
+        f = d / "staged_resolutions.json"
+        doc = json.loads(f.read_text())
+        for r in doc["resolutions"]:
+            if r.get("ref_col") == "__VALIDITY__" and r["project_id"] == "P9001":
+                r["contested"] = {col: "Rival value"}
+                r["proposed_refs"] = ["https://example.org/rival"]
+        f.write_text(json.dumps(doc))
+    data, _ = review_data.build([world["qc"], world["deep"]], "Russia", "gas", data_dir=world["data"], root=world["root"])
+    data["scope"]["batch"] = True
+    world["dataset"] = data
+    ln = next(l for p in data["pipelines"] if p["pid"] == "P9001" for l in p["lines"] if l["key"] == ln["key"])
+    rv = store.rival_of(ln, ln["rivals"][0]["key"])
+    store.decide([{"key": ln["key"], "rival": rv["key"]}], data, "BL", dirs=world["dirs"])
+    mine, why, _ = plan_for(world, ln["key"])
+    assert why is None
+    cell = next(p for p in mine if p["column"] == col)
+    assert cell["after"] == "Rival value"
+    assert not any(p["column"] in ln["proposed_values"] for p in mine if p["column"] not in (col, ln["ref_col"]))
+    if ln.get("ref_col"):
+        assert "https://example.org/rival" in next(p for p in mine if p["column"] == ln["ref_col"])["after"]

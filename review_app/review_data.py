@@ -24,11 +24,18 @@ those four exact filenames are opened, so both stay ignored by construction.
 
 Kinds (docs/plans/2026-09-30_review-app.md, "Facts" item 2):
   lines  ref / fill / status / oo / route / new_row   (one decision each; push candidates)
-  items  concern / wikidiff / routeqc / route_suggestion / monitor / flag / escalation /
+  items  concern / routeqc / route_suggestion / monitor / flag / escalation /
          unresolved / confirmed / other              (a call + note, never a cell write)
 `oo` is a modifier: a ref/fill/status record with tab == "operators_owners" is kind "oo"
 and its current values come from the owners snapshot by ProjectID. A record that fits
-no kind becomes an item of kind "other" and is counted -- never dropped.
+no kind becomes an item of kind "other" and is counted -- never dropped. The ONE deliberate
+exception: sheet-vs-wiki diff records (`__WIKIDIFF__`, scripts/wiki_alignment.py) are left
+out of the dataset and counted in `stats["wikidiff_skipped"]` (Baird 2026-10-02: the wiki
+will be updated automatically and is expected to drift from the sheet; a disagreement is not
+a decision for a reviewer). Also left out for now (Baird 2026-10-02): route-QC records
+(`__ROUTEQC__`) and every recon staging dir (`recon-*`, e.g. Iraq's recon-gulfpub-followup),
+counted in `stats["routeqc_skipped"]` / `stats["recon_skipped"]`. Re-enable by setting
+`SKIP_ROUTEQC` / `SKIP_RECON_DIRS` to False.
 
 Read-only over batches/ and data/. Deterministic apart from `built`.
 """
@@ -58,8 +65,11 @@ from build_ref_workbook import J, _annotate_kept_refs, _ref_cell_text  # noqa: E
 
 OO_TAB = "operators_owners"
 LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
-ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag",
+ITEM_KINDS = ("concern", "routeqc", "route_suggestion", "monitor", "flag",
               "escalation", "unresolved", "confirmed", "other")
+SKIP_ROUTEQC = True        # route-QC records stay out of the app for now (Baird 2026-10-02)
+SKIP_RECON_DIRS = True     # recon-* staging dirs stay out of the app for now (Baird 2026-10-02)
+SKIP = "skip"              # classify() group for records the app leaves out on purpose (wiki diffs)
 _REF_CLASSES = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "REF_BLOCKED", "REF_UNSUPPORTED"}
 # A ref the checker could not read, or that does not state the value, with no replacement URL found.
 # Baird 2026-10-02: research never proposes removing a ref, so there is nothing to decide on a line;
@@ -213,15 +223,15 @@ def _is_oo(r):
 
 
 def classify(r):
-    """-> ('line'|'item', kind) for a staged_resolutions record."""
+    """-> ('line'|'item'|SKIP, kind) for a staged_resolutions record."""
     rc, ci, co = r.get("ref_col") or "", r.get("class_in") or "", r.get("class_out") or ""
     oo = _is_oo(r)
     if rc == "__VALIDITY__" or ci == "VALIDITY":
         return "item", ("confirmed" if (r.get("concern_type") or "none") == "none" else "concern")
     if rc == "__WIKIDIFF__" or ci == "WIKIDIFF":
-        return "item", "wikidiff"
+        return SKIP, "wikidiff"            # not a review-app item (module docstring)
     if rc == "__ROUTEQC__" or ci == "ROUTEQC":
-        return "item", "routeqc"
+        return (SKIP if SKIP_ROUTEQC else "item"), "routeqc"
     if rc == "__ROUTE__" or ci == "ROUTE":
         if co == "ROUTE_CANDIDATE":
             return "line", "route"
@@ -281,8 +291,6 @@ def _colid(r, kind):
         return f"__VALIDITY__:{r.get('concern_type', '')}"
     if kind == "confirmed" and (rc == "__VALIDITY__" or r.get("class_in") == "VALIDITY"):
         return "__VALIDITY__:none"
-    if kind == "wikidiff":
-        return f"__WIKIDIFF__:{r.get('field', '')}"
     if kind == "routeqc":
         return f"__ROUTEQC__:{r.get('check', '')}"
     if kind == "route_suggestion":
@@ -329,10 +337,14 @@ class _neg(str):
 
 
 def _load_dir(d, root, order0, country=""):
-    """-> (entries, recorded_csvs, recorded_owner_csvs)."""
+    """-> (entries, recorded_csvs, recorded_owner_csvs, skipped Counter by kind; a whole
+    skipped recon dir counts once under "recon")."""
     d = Path(d)
     dirp = _rel(d, root)
-    out, csvs, owners = [], [], []
+    out, csvs, owners, skipped = [], [], [], Counter()
+    if SKIP_RECON_DIRS and d.name.startswith("recon-"):
+        skipped["recon"] += 1
+        return out, csvs, owners, skipped
     order = order0
     f = d / "staged_resolutions.json"
     if f.exists():
@@ -345,6 +357,9 @@ def _load_dir(d, root, order0, country=""):
         _annotate_kept_refs(recs, d)          # stamps kept_current_refs for _ref_cell_text
         for r in recs:
             group, kind = classify(r)
+            if group == SKIP:
+                skipped[kind] += 1
+                continue
             pid = r.get("project_id") or ""
             if not pid:
                 pid, group, kind = SCOPE_PID, "item", "other"
@@ -380,7 +395,7 @@ def _load_dir(d, root, order0, country=""):
             out.append(Entry("item", "escalation", SCOPE_PID, e, dirp, "escalation",
                              f"escalation:{(e.get('title') or str(i))[:120]}", order, country))
             order += 1
-    return out, csvs, owners
+    return out, csvs, owners, skipped
 
 
 # ---------------------------------------------------------------- build
@@ -397,7 +412,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     exclude = set(exclude_pids)
     stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
              "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": [],
-             "rivals": 0, "corroborations": 0}
+             "rivals": 0, "corroborations": 0, "wikidiff_skipped": 0,
+             "routeqc_skipped": 0, "recon_skipped": 0}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
     entries, rec_csv, rec_own = [], [], []
@@ -405,10 +421,13 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         sc = staged_store._dir_scope(d)
         if sc is not None and sc[1] != commodity.lower():
             stats["warnings"].append(f"{d.name}: scope {sc} != commodity {commodity}")
-        es, c, o = _load_dir(d, root, i * 10 ** 7, dir_country.get(d.resolve(), countries[0]))
+        es, c, o, skipped = _load_dir(d, root, i * 10 ** 7, dir_country.get(d.resolve(), countries[0]))
         entries += es
         rec_csv += c
         rec_own += o
+        stats["wikidiff_skipped"] += skipped["wikidiff"]
+        stats["routeqc_skipped"] += skipped["routeqc"]
+        stats["recon_skipped"] += skipped["recon"]
 
     # A blank-note UNRESOLVED baseline is superseded by a line staged for the same cell in the
     # same dir (the workbook's `_resolve_superseded` rule): the seeded MISSING_REF placeholder
@@ -952,6 +971,12 @@ def summary(data, stats):
            f"concern candidates folded onto lines as rivals: {stats['rivals']} (corroborating: {stats['corroborations']})",
            f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']})   "
            f"sheet_row moved: {stats['moved']}   not in snapshot: {stats['not_in_snapshot']}"]
+    if stats.get("wikidiff_skipped"):
+        out.append(f"sheet-vs-wiki diff records left out (not review-app items): {stats['wikidiff_skipped']}")
+    if stats.get("routeqc_skipped"):
+        out.append(f"route-QC records left out for now: {stats['routeqc_skipped']}")
+    if stats.get("recon_skipped"):
+        out.append(f"recon staging dirs left out for now: {stats['recon_skipped']}")
     if stats.get("done_dropped"):
         out.append(f"pipelines of all-decided countries dropped: {stats['done_dropped']} (--include-done keeps them)")
     if stats["excluded"]:

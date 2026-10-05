@@ -88,7 +88,13 @@ basis = review_data.basis          # review_data.build stamps it on every line; 
 
 
 def _logs(data, dirs):
-    return {d: store.latest(store.read_log(p)) for d, p in dirs.items()}
+    """{dir label: store.calls(its log)} — read through `store.speaker`, so a machine record written
+    after a person's call (a push) never hides that call."""
+    return {d: store.calls(store.read_log(p)) for d, p in dirs.items()}
+
+
+def _rec(logs, d, key):
+    return store.speaker(logs.get(d) or {}, key)[0]
 
 
 def stamp_basis(data, dirs):
@@ -100,7 +106,7 @@ def stamp_basis(data, dirs):
         for l in p.get("lines", []):
             l["basis"] = basis(l)
             l.pop("drift", None)
-            rec = logs.get(l.get("dir"), {}).get(l["key"])
+            rec = _rec(logs, l.get("dir"), l["key"])
             if not store.reviewed(rec) or not rec.get("basis") or rec["basis"] == l["basis"] or l.get("in_backend"):
                 continue
             l["drift"] = {"decided_snapshot": rec.get("snapshot", ""), "decided_basis": rec["basis"]}
@@ -141,9 +147,12 @@ def _orphans(keys, logs, dirs):
     """[(dir label, record)]: latest live PERSON records whose key is not in `keys` and that were
     not already carried to another key (some record in the log names them in `rekeyed_from`)."""
     out = []
-    for d, latest in logs.items():
+    for d, by_key in logs.items():
         carried = {r["rekeyed_from"] for r in store.read_log(dirs[d]) if r.get("rekeyed_from")}
-        out += [(d, r) for k, r in latest.items() if k not in keys and k not in carried and store.reviewed(r)]
+        for k in by_key:
+            r = _rec(logs, d, k)
+            if k not in keys and k not in carried and store.reviewed(r):
+                out.append((d, r))
     return out
 
 
@@ -153,7 +162,7 @@ def orphans(data, dirs):
     return [r for _, r in _orphans(known_keys(data), _logs(data, dirs), dirs)]
 
 
-def carry_forward(data, dirs, sink=None):
+def carry_forward(data, dirs, sink=None, write=True):
     """Re-key the person decisions that a renumbered sheet row orphaned (module docstring, step 5).
     Appends the copies to the logs (store.append_records: time and reviewer kept; `sink` = the
     ledger's, so the copies land in the decision store too) and returns them; the caller overlays
@@ -162,8 +171,11 @@ def carry_forward(data, dirs, sink=None):
         fill decided before 2026-10-01 under its first value column alone (`…|ProposalYear`),
         exactly one multi-column fill key of this build names that column
         (`…|ProposalYear+ProposalMonth`; review_data._fill_colid),
-      - no record at all sits under that key (a later decision or a backend sync wins),
-      - no other orphan wants the same key."""
+      - no PERSON record sits under that key (a later decision wins; a machine record there — a
+        backend sync, a push — is not a decision and does not block the carry),
+      - no other orphan wants the same key.
+    `write=False` (a --no-pull dry run against a configured store) only reports the carries: a
+    sidecar-only record would put the sidecars ahead of the store, the single source of truth."""
     rows = _rows(data)
     by_ident, legacy = {}, {}
     for k in rows:
@@ -181,7 +193,7 @@ def carry_forward(data, dirs, sink=None):
         s = _split(r["key"])
         ident = (s[0], s[1], s[3]) if s else None
         cands = (by_ident.get(ident) or legacy.get(ident) or []) if ident else []
-        if len(cands) == 1 and cands[0] not in logs.get(d, {}):
+        if len(cands) == 1 and not (logs.get(d, {}).get(cands[0]) or {}).get("person"):
             want.setdefault(cands[0], []).append((d, r))
     moved = {rs[0][1]["key"]: k for k, rs in want.items() if len(rs) == 1}      # old key -> new key
     new = []
@@ -192,7 +204,7 @@ def carry_forward(data, dirs, sink=None):
         if r.get("via") in moved:
             r["via"] = moved[r["via"]]
         new.append(r)
-    if new:
+    if new and write:
         store.append_records(new, dirs, sink=sink)
     return new
 
@@ -208,7 +220,7 @@ def restore_reviewers(data, dirs, emails):
         for grp in ("lines", "items"):
             for o in p.get(grp, []):
                 for x in [o] + list(o.get("covers") or []):
-                    rec = logs.get(x.get("dir"), {}).get(x["key"])
+                    rec = _rec(logs, x.get("dir"), x["key"])
                     full = emails.get(str((rec or {}).get("id") or "").split("~")[0])
                     if full and x.get("decided_by") == rec.get("reviewer"):
                         x["decided_by"] = full
@@ -497,12 +509,14 @@ def upload(out, entry, cfg, yes=False, gws=pull_mod.gws, say=print):
 
 def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None, sid=None, cursor=1,
             batches_root=None, data_dir=None, sync=False, ver=None, target=PART_BYTES, batch=False,
-            include_done=False, emails=None, led=None):
+            include_done=False, emails=None, led=None, write=True):
     """Build, overlay, stamp, write the mirror. -> (entry, report dict). No network unless `led`
     (a ledger.Ledger): then the records this run writes -- backend syncs, carried-forward
     decisions -- go to the decision store first, and the store cursor advances past them.
     `batch` = the countries are the review-app batch: all-decided ones are dropped (unless
-    `include_done`), exactly as review_data.main does for the local server."""
+    `include_done`), exactly as review_data.main does for the local server. `write=False` = a dry
+    run: carries are reported, not appended, and no backend sync runs (nothing lands in a sidecar
+    that the decision store does not hold)."""
     root = Path(batches_root) if batches_root else staged_store.BATCHES_ROOT
     ds, dir_country = review_data._country_dirs(countries, commodity, root, dirs)
     if batch:   # an included country with no staging dir left (archived) has nothing to show
@@ -521,15 +535,15 @@ def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None
         led.scope, led.snapshot = ledger.scope_of(data)
         sink = led.sink
     synced = []
-    if sync:
+    if sync and write:
         if led is not None:
             led.origin = "sync"
         synced = store.sync_backend(data, paths_by_label, data.get("scope", {}).get("snapshot", ""), sink=sink)
         store.overlay(data, paths_by_label)
     if led is not None:
         led.origin = "publish"
-    carried = carry_forward(data, paths_by_label, sink=sink)
-    if carried:
+    carried = carry_forward(data, paths_by_label, sink=sink, write=write)
+    if carried and write:
         store.overlay(data, paths_by_label)
     if led is not None and led.last_row:
         cursor = max(int(cursor), led.last_row)      # the page lays only rows AFTER this dataset over it
@@ -543,6 +557,7 @@ def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None
     entry = write_scope(data, out, sid, cursor, base, ver=ver, build=build, target=target, label=label)
     write_scopes(out, merge_scopes(read_scopes(Path(out) / "scopes.json"), entry))
     rep = {"summary": review_data.summary(data, stats), "drift": drifted, "orphans": lost, "carried": carried, "synced": len(synced),
+           "dry": not write,
            "decided": sum(1 for p in data["pipelines"] for l in p["lines"] if l.get("reviewed")),
            "files": {n: (Path(out) / n).stat().st_size for n in entry["parts"] + [entry["index"]] + ([entry["geo"]] if entry["geo"] else [])}}
     return entry, rep
@@ -558,7 +573,8 @@ def report(entry, rep):
         out.append(f"  backend sync: {rep['synced']} machine records written for lines the sheet already holds")
     out.append(f"  drift (decided against backend cells that have since changed): {len(rep['drift'])}")
     out += [f"    {l['key']}  decided by {l.get('decided_by')} on {l['drift'].get('decided_snapshot') or '?'}" for l in rep["drift"][:25]]
-    out.append(f"  carried forward (a person's decision moved to its line's new sheet row): {len(rep['carried'])}")
+    out.append(f"  carried forward (a person's decision moved to its line's new sheet row): {len(rep['carried'])}"
+               + ("  -- DRY RUN (--no-pull): reported, not written; run without --no-pull to carry them" if rep.get("dry") and rep["carried"] else ""))
     out += [f"    {r['rekeyed_from']}  ->  row {r['sheet_row']}  {r.get('decision') or r.get('call')}  {r.get('reviewer')}"
             for r in rep["carried"][:25]]
     out.append(f"  orphans (a person's decision whose key matches no line of this build): {len(rep['orphans'])}")
@@ -623,7 +639,8 @@ def main(argv=None):
         entry, rep = publish(countries, a.commodity, out, dirs=a.dirs,
                              exclude_pids=[p for p in a.exclude_pids.split(",") if p], snapshot=a.snapshot,
                              sid=a.scope_id, cursor=cursor, batches_root=a.batches_root, data_dir=a.data_dir,
-                             sync=a.refresh, batch=batch, include_done=a.include_done, emails=emails, led=led)
+                             sync=a.refresh, batch=batch, include_done=a.include_done, emails=emails, led=led,
+                             write=not (a.no_pull and cfg.get("store_sheet_id")))
     except ledger.StoreError as e:
         raise SystemExit(f"{e}\nnothing published: the records this run would write could not reach the decision store")
     print(report(entry, rep))

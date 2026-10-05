@@ -123,8 +123,24 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
 3. ~~In-dev / status-review leg~~ — **retired for US gas**: slice 2's deep + `--status-review`
    covers the 134 proposed/construction/shelved and 52 cancelled rows (the other 14 cancelled
    were reviewed in batch 5). Do not stage a second pass over the same cells.
-4. **Discovery (§4)** — never run for the US. Must be sliced like the sweep; whole-country
-   trips the >5-candidate-cluster escalation gate immediately.
+4. **Discovery (§4)** — launched 2026-10-02, five regional slices run in parallel
+   (`staging/discovery-<region>-20261002/`: `tx-permian`, `gulf`, `appalachian-se`, `midcon-north`,
+   `west-ne-ak`). Baird's rulings 2026-10-02: **all history** (operating lines GEM never captured,
+   any build year, plus in-dev and cancelled); **>= 25 km of new pipe**, shorter and compression-only
+   projects to monitor; an expansion adding >= 25 km with no row of its own is a new row in the
+   parent-system/SegmentName shape. Seeds = the 333 EIA projects >= 15.5 mi that the crosswalk matched
+   to no GEM row (`staging/discovery-seeds-20261002/`: `build_seeds.py`, `build_slice_args.py`,
+   `seeds_by_region.json`; 543 below-floor projects in `below_floor.csv`, not seeded). Aguirre LNG
+   Pipeline (Puerto Rico, 42 mi) and Union Gas 2006 Expansion (Ontario) were left out as out of scope.
+   **Delivered 2026-10-02, staged not applied: 219 new rows, 96 monitor, 31 matched to existing rows**
+   (tx-permian 41/17/3, gulf 36/18/7, appalachian-se 45/28/6, midcon-north 37/15/4, west-ne-ak
+   60/18/11); every seed adjudicated; ~31.4M subagent tokens, ~20 min per slice. One workbook per
+   slice, `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-<region>.xlsx`.
+   Post-merge gate: `scripts/check_discovery_staged.py` (0 findings on all five after fixes). Agents
+   wrote non-sheet keys (`StartState`, `StartYear`, `ProjectLevelCostCurrency`, `End [ref]`, refs keyed
+   by the bare column name) that the workbook builder silently drops from the mirror; they were
+   remapped to the sheet columns in staged JSON, so a re-merge of the shards would need the same
+   remap. 23 owner names were restyled to the ownership team's spelling.
 5. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
    `Unavailable`) and reconciliation.
 

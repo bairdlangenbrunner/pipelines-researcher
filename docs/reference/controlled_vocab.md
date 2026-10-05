@@ -50,6 +50,12 @@ the word **`inferred`**, not `Presumed`, which appears nowhere in either tracker
 | `Delayed` | `yes` | leave **blank** if not delayed — do **not** enter `no`. Live: 254 gas / 78 oil, all lowercase |
 | `Opposition` | `yes`, `no` | **the sheet is genuinely inconsistent here** — gas holds `no` 66 / `Yes` 46 / `yes` 29 / `No` 26, oil is uniformly lowercase. Write lowercase; do not mass-restyle existing cells without Baird's say-so |
 
+## Length and capacity units (`LengthKnownUnits`, `CapacityUnits`)
+
+Record the **unit the source states** (Baird 2026-10-02): `mi` for a source in miles, `km` for kilometres,
+`MMcf/d`, `bcm/y`, `MMSCMD`, `mill.Sm3/day`, `Dth/d` and the other tokens already on the sheet as written. Never convert
+the number to the cell's current unit; change the units cell with it. The km and bcm/y columns are computed.
+
 ## Cost units (all `*CostUnits` fields)
 
 `ProjectLevelCostUnits` / `SegmentCostUnits` / `H2CostUnits` hold a **bare

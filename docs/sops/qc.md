@@ -34,6 +34,18 @@ tab for Operator). **The wiki is VISITED for the diff but NEVER cited as a sourc
 (standing rule 1) — the fetch is read-only, cached under `<staging>/wiki_html/`,
 polite-interval, browser UA.
 
+**Standing (Baird 2026-10-02): wiki diffs are NOT review-app items and are not a priority
+finding.** The sheet is the record that must be accurate; the wiki will be updated from it
+automatically in time and is expected to drift, so "the wiki disagrees" is low-value news.
+`review_app/review_data.py` leaves every `__WIKIDIFF__` record out of the dataset (counted
+in its summary as left out); nobody is asked to call them. The leg itself stays: its records
+still land in `staged_resolutions.json` and the handoff workbooks (`<Cmdty>_WikiUpdates`,
+`<Cmdty>_WikiAlignment`) for the day wiki alignment is tackled, and `SHEET_SUSPECT` diffs
+still seed the Leg-3 worklist because they question the SHEET. What stays genuinely useful
+about reading the wiki is its **references**: a page's outbound citations are farmed as
+candidate refs for data points whose `[ref]` cells are blank
+(`scripts/harvest_wiki_citations.py`, Sweep SOP step 3), visited but never cited.
+
 Parser: walks the "Project details" `<h2>` collecting `<li><b>Label:</b> value`
 bullets; multi-segment pages (per-segment `<h3>` sections) merge — agreeing values
 collapse, Diameter/Owner/Operator/Parent union across segments, disagreeing scalars

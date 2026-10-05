@@ -17,6 +17,7 @@ staging dir's review_log.jsonl directly now writes HERE FIRST and the sidecars s
     a Claude chat       -> `ledger.py decide`              (origin 'chat'; then review_app/push.py)
     push.py             -> `push` machine records          (origin 'push')
     refresh / publish   -> `backend sync`, carry-forward   (origin 'sync' / 'publish')
+    artifact page       -> import_log.py (the page's download or shared log; origin 'artifact')
 
 so the store holds every decision, the sidecars are its committed mirror (pull.py fills in whatever
 was written by the Google page), and the workbook, the push plan and the published dataset all read
@@ -58,7 +59,7 @@ import store  # noqa: E402
 COLS = ["ts", "reviewer", "rec", "pid", "sheet_row", "ref_col", "kind", "decision", "call", "suggested_value",
         "note", "undecided", "via", "batch", "snapshot", "key", "id", "scope", "json"]
 LOG_TAB = pull.LOG_TAB
-ORIGINS = ("gas", "local", "chat", "push", "sync", "publish")
+ORIGINS = ("gas", "local", "chat", "push", "sync", "publish", "artifact")
 MAX_JSON = 49000          # Code.gs refuses a longer record; a cell holds 50k chars
 _FORMULA = re.compile(r"^[=+\-@]")
 _RANGE = re.compile(r"^'?(?P<tab>[^'!]+)'?!(?P<c1>[A-Z]+)(?P<r1>\d+)(?::(?P<c2>[A-Z]+)(?P<r2>\d+))?$")

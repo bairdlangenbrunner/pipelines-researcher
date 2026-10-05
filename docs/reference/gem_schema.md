@@ -147,7 +147,10 @@ Save Page Now instruction endpoint `web.archive.org/save/<url>` — see the Wayb
   `"40/42/48"`, `"56,10,16"`, even `"30, 32, 46, 48, 30, 40, 42"`. Parse on
   `[,/;]`+whitespace into a set; compare by set membership, never equality.
   Diameter mismatches are **review flags, not auto-rejections**.
-- Length lives in `LengthKnown` / `LengthKnownUnits` (and a km-normalized column).
+- Length lives in `LengthKnown` / `LengthKnownUnits` (and a km-normalized column, `LengthKnownKm`, which is computed).
+  **Stage length and capacity in the source's own unit** (Baird 2026-10-02): a 1,750-mile source is `1750` + `mi`, not
+  `2816.35` + `km`; change `*Units` with the number. Same for `Capacity` (`105.12` + `mill.Sm3/day`, not `38.37` + `bcm/y`).
+  Conversion goes in the note only.
   For a capacity expansion with **no new physical pipe**: `LengthKnown = 0`,
   `Diameter = blank` (see `docs/sops/update.md`).
 
@@ -170,6 +173,14 @@ Notes: `ResearcherNotes`, `Background` (+ `[ref]`).
 
 The gas sheet mirrors this with gas-specific extras. Re-derive the exact column
 list from the fresh header each run.
+
+### Gotcha — `FIDYear` is a planned year too; a past one on a `Pre-FID` row is not a defect
+`FIDYear` records the *planned or targeted* FID year as well as the year one was taken (Baird
+2026-10-01). A `Pre-FID` row whose `FIDYear` is in the past (AKLNG: `Pre-FID`, `2025`) is a
+missed target, not an error. Never raise a validity concern, blank it, or move it to another column
+for being past-dated or "not a decision". Only the pairing is checkable: `FID` needs a `FIDYear`
+that is the year it was taken, and a `FIDYear` that no source supports as either a target or a
+decision is the one ordinary `spec` concern.
 
 ### Gotcha — `FuelSource` (gas sheet) is the upstream field/plant, not a fuel type
 `FuelSource` (+ `[ref]`) names the **upstream gas source feeding the line** — a field,
