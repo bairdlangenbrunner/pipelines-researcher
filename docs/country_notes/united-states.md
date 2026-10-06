@@ -132,7 +132,16 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    to no GEM row (`staging/discovery-seeds-20261002/`: `build_seeds.py`, `build_slice_args.py`,
    `seeds_by_region.json`; 543 below-floor projects in `below_floor.csv`, not seeded). Aguirre LNG
    Pipeline (Puerto Rico, 42 mi) and Union Gas 2006 Expansion (Ontario) were left out as out of scope.
-   **Delivered 2026-10-02, staged not applied: 219 new rows, 96 monitor, 31 matched to existing rows**
+   **Delivered 2026-10-02: 219 new rows, 96 monitor, 31 matched to existing rows. The 219 new rows
+   were APPENDED to the live sheet 2026-10-05 on Baird's authorization** (`scripts/append_new_rows.py`;
+   P8091–P8099 took the nine buffer rows, P8100–P8309 were inserted as rows 4355–4564; one matching
+   operators/owners row per ProjectID with Owner1/Owner [ref]; Researcher CB; backups
+   `notes/sheet-write-2026-10-05-1959-append-new-rows-gas.csv` + the `-2003-…-diameter-text.csv` retype;
+   plan + receipt in `archive/append-new-rows-20261005/`). The candidates carry `applied` in
+   `staged_new.json` and no longer show in the review app or the discovery workbooks; the 96 monitor
+   items and 31 OtherEnglishNames matches are still pending review. Owner stakes were written only where
+   the staged owner stated one (16 rows); `Parent` has no cell and went into ResearcherNotes.
+   One diameter is a range ("14-24", P8194) left as staged. Original counts:
    (tx-permian 41/17/3, gulf 36/18/7, appalachian-se 45/28/6, midcon-north 37/15/4, west-ne-ak
    60/18/11); every seed adjudicated; ~31.4M subagent tokens, ~20 min per slice. One workbook per
    slice, `deliverables/pipelines_batch_20261002_2053_ET_united-states-gas_discovery-<region>.xlsx`.

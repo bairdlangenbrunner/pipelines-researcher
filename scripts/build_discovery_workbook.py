@@ -201,6 +201,7 @@ def _fill_readme(ws, meta, sheet_defs):
         ("Country", scope.get("country", "")),
         ("GEM CSV", scope.get("csv", "")),
         ("Counts", J([f"{k}={v}" for k, v in meta.get("class_counts", {}).items()])),
+        ("Already on the sheet", meta.get("_applied_note") or "none"),
         ("", ""),
         ("Work from", "the _NewRows tab (exact tracker header; green cells = staged values/refs). "
                       "MonitorList = below the add-threshold, watch only. MatchedExisting = "
@@ -242,6 +243,13 @@ def main() -> None:
     candidates = data.get("candidates", [])
     prefix = (meta.get("scope", {}).get("tracker") or "gas").capitalize()
 
+    applied = [c for c in candidates if c.get("applied")]
+    candidates = [c for c in candidates if not c.get("applied")]   # already on the live sheet (append_new_rows.py)
+    if applied:
+        meta["_applied_note"] = (f"{len(applied)} new rows were written to the live sheet by scripts/append_new_rows.py "
+                                 f"({', '.join(sorted({a['applied'].get('date', '') for a in applied}))}; ProjectIDs "
+                                 f"{min(a['applied']['project_id'] for a in applied)}..{max(a['applied']['project_id'] for a in applied)}) "
+                                 "and are not repeated here.")
     new_rows = [c for c in candidates if c.get("class") == "new_row"]
     monitor = [c for c in candidates if c.get("class") == "monitor"]
     matched = [c for c in candidates if c.get("class") == "matched_existing"]

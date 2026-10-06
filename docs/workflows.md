@@ -316,6 +316,23 @@ green on `<Cmdty>_NewRows`; >5 candidate clusters in one country → escalate fi
 
 ---
 
+**Appending the new rows to the live sheet (per-batch authorization only; first run US gas
+2026-10-05, 219 rows):**
+
+```bash
+python scripts/append_new_rows.py --commodity gas --staging $STG1 --staging $STG2 ...   # PLAN (gws-gem, read-only)
+#   219 rows: the tab's blank-name BUFFER rows first (their P-IDs kept), then rows inserted after the grid
+#   with the next free P-IDs (checked against every tab with a ProjectID column); the 19 tracker + 13
+#   operators/owners FORMULA columns are copied down from the last buffer row (re-rowed, self-tested);
+#   refs consolidate onto the real [ref] columns (REF_ALIAS); the owner (+ a bracketed stake) goes to the
+#   operators/owners tab as Owner<N>/Owner<N>%, Parent into ResearcherNotes; Researcher=CB, LastUpdated=today
+python scripts/append_new_rows.py --apply $STG/../append-new-rows-<date>/plan.json          # ASK BAIRD; gws-gem-write
+#   preconditions re-read → notes/sheet-write-<stamp>-append-new-rows-<cmdty>.csv → insertDimension →
+#   RAW values + USER_ENTERED formulas → full read-back → candidates marked `applied` in staged_new.json
+#   (the review app, the discovery workbook and staged_store then stop offering them); move the plan dir
+#   to archive/ afterwards. Diameter is written as TEXT (DiameterInMm regexmatches it); costs/lengths numeric.
+```
+
 ## §5 Update (targeted fixes)
 
 Small, specific batches: named rows, recon value-disagreements, fixes detected by a

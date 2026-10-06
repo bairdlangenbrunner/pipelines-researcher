@@ -476,6 +476,8 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   rebuilt on the rule-4(e) recovery pass, batch 5 closed slice 1; all US deep-sweep workbooks re-tiered 2026-09-30 (`20260930_1455_ET`). Campaign order fixed
   2026-09-10: batch 5 -> slice 2 -> in-dev/status-review -> discovery -> maybe routes/recon.
   **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
+  **Discovery's 219 new rows were APPENDED to the live sheet 2026-10-05** (P8091–P8309, gas + operators/owners
+  tabs, `scripts/append_new_rows.py`, Baird-authorized; 96 monitor + 31 matched items still pending).
   batches and the deepwater-export item just wait):** `docs/country_notes/united-states.md`.
   Sliced, never whole-country; recon legs deliberately off (GulfPub has 10 US gas / 0 US oil
   features — nothing to diff).

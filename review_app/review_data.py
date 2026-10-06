@@ -389,6 +389,9 @@ def _load_dir(d, root, order0, country=""):
             cid = f"flag:{fl.get('check', '')}:{(fl.get('detail') or '')[:80]}"
             out.append(Entry("item", "flag", pid, fl, dirp, "flag", cid, order, country))
             order += 1
+            if c.get("applied"):
+                skipped["new_row_applied"] += 1     # already on the sheet (scripts/append_new_rows.py)
+                continue
     f = d / "escalations.json"
     if f.exists():
         for i, e in enumerate(_read_json(f)):
@@ -474,6 +477,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
                     e.tracker_row, e.sheet_row, e.moved = sr_rec, orow[0], False
                 else:
                     e.in_snapshot = False
+        stats["updates_skipped"] += skipped["updates"]
+        stats["new_row_applied"] = stats.get("new_row_applied", 0) + skipped["new_row_applied"]
             elif tr is not None:
                 e.sheet_row, e.moved = tr[0], tr[2]
             else:

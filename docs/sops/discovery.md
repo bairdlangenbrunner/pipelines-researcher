@@ -36,7 +36,10 @@ home; the original 4-phase methodology doc is archived in `docs/archive/`). Comm
 **Owner/operator refs on a new row have no tab home.** Owner/operator `[ref]`s live on the
 ProjectID-keyed operators/owners tab, which doesn't yet have a row for a not-created discovery.
 So a staged `Owner [ref]` is **dropped from the `<Cmdty>_NewRows` mirror but preserved in
-`staged_new.json`** — Baird adds it to the operators/owners tab after the new row gets a ProjectID.
+`staged_new.json`**. When a batch is authorized for `scripts/append_new_rows.py` (`workflows.md` §4),
+the script creates the operators/owners row with the new ProjectID and writes `Owner1` (+ `Owner1%`
+when the staged owner carries a bracketed stake, `Name [60%]; Name2 [40%]`) and `Owner [ref]` there;
+otherwise Baird adds it by hand after the new row gets a ProjectID.
 
 ## Search strategies
 

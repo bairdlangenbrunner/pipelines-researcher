@@ -320,6 +320,11 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
                            "tier": ch.get("tier", ""),
                            "refs": ch.get("refs") or [],
                            "evidence": ch.get("evidence", ""),
+                if c.get("applied"):
+                    # written to the live sheet by scripts/append_new_rows.py (the candidate carries
+                    # its ProjectID + sheet row); no longer pending work for any workbook or the review app
+                    ctx.setdefault("new_rows_applied", []).append(dict(c, source_dir=label))
+                    continue
                            "source_dir": label}
                     ctx["updates"].append(rec)
                     if ch.get("new") not in (None, ""):

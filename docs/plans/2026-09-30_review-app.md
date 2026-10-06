@@ -164,7 +164,7 @@ Verified against the repo on 2026-09-30 (survey over all 142 staging dirs).
    | `status` | `ref_col = __STATUS__`, `class_out` ∈ CHANGE_PROPOSED, STALE | write `values` (Status, ShelvedCancelledType, ShelvedYear, …) + `[ref]`; STALE has no ref by design |
    | `oo` | any of the above with `tab = operators_owners` (1,798 records) | same, on the owners tab by ProjectID |
    | `route` | `ref_col = __ROUTE__`, `class_out = ROUTE_CANDIDATE` (133) | record "approved for §8 apply"; no cell write |
-   | `new_row` | `staged_new.json` `class` ∈ new_row (34), matched_existing (1) | record; no cell write in phase 1 (append is a separate ask) |
+   | `new_row` | `staged_new.json` `class` ∈ new_row (34), matched_existing (1) | record; no cell write by push.py — the append is a separate per-batch ask, done by `scripts/append_new_rows.py` (first run US gas 2026-10-05, 219 rows); an appended candidate carries `applied` and leaves the app |
    | *item* | `__VALIDITY__` concerns (3,752; `contested` on 2,312), `__ROUTEQC__` (225), ROUTE_SUGGESTED/PARTIAL (225), `staged_new` monitor (8), `qc_flags.json`, `escalations.json`, and every UNRESOLVED (9,826) / CONFIRMED (537) record | a call + note; never a cell write |
    | *left out* | `__WIKIDIFF__` (4,333) — sheet-vs-wiki diffs. Ruled out of the app 2026-10-02 (Baird): the wiki will be updated automatically and is expected to drift from the sheet; a disagreement is not a reviewer's decision. `review_data.py` skips and counts them. | nothing |
 
