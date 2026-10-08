@@ -480,3 +480,36 @@ def test_style_store_sits_beside_country_dirs_in_one_dataset(tmp_path):
     style = [l for p in data["pipelines"] if p["pid"] == "name:OldCo" for l in p["lines"]]
     assert len(style) == 1 and style[0]["pid"] == "P9001"
     assert {c["country"] for c in data["scope"]["country_status"]} == {"Russia", "*"}
+
+
+def test_ref_line_echoing_its_research_snapshot_is_dropped_once_the_sheet_moved(tmp_path):
+    """A HAS_REF / MISSING_REF record copies the value it checked. When that value was the sheet's at
+    research time and the sheet has since moved, the line would offer a change BACK (P5905 StartYear1
+    2027 -> 2026); it is dropped. A ref record whose value differed at research time is a real
+    proposal and stays."""
+    import csv
+    import json
+    from review_fixture import SCOPE, _rec
+    s = make_scope(tmp_path)
+    old = "GGIT_gas_snapshot_20980101.csv"            # research-time snapshot, older than the current one
+    rows = list(csv.reader(open(s["data"] / SNAP_NAME, encoding="utf-8", newline="")))
+    cap, pid = rows[2].index("Capacity"), rows[2].index("ProjectID")
+    for r in rows[3:]:
+        if r[pid] == "P9001":
+            r[cap] = "8"                               # the sheet said 8 then, says 10 now
+    with open(s["data"] / old, "w", encoding="utf-8", newline="") as f:
+        csv.writer(f).writerows(rows)
+    d = s["root"] / "russia-gas" / "staging" / "deepsweep-y"
+    d.mkdir(parents=True)
+    recs = [_rec("P9001", 4, "Capacity [ref]", "HAS_REF", "REFS_ADDED", value_cols=["Capacity"],
+                 primary_value_col="Capacity", values={"Capacity": "8"}, proposed_refs=["http://echo.example/c"],
+                 tier="high"),
+            _rec("P9002", 5, "Capacity [ref]", "MISSING_REF", "REFS_ADDED", value_cols=["Capacity"],
+                 primary_value_col="Capacity", values={"Capacity": "3"}, proposed_refs=["http://real.example/c"],
+                 tier="high")]
+    (d / "staged_resolutions.json").write_text(json.dumps({"meta": {"mode": "deepsweep", "commodity": "gas",
+        "scope": dict(SCOPE, csv=old), "generated": "2099-01-02"}, "resolutions": recs}))
+    data, stats = rd.build([d], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    assert stats["value_moved"] == 1
+    assert not _find(data, "P9001", "ref")
+    assert [l["proposed_values"] for l in _find(data, "P9002", "ref")] == [{"Capacity": "3"}]

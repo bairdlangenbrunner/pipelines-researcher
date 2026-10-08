@@ -312,6 +312,7 @@ class Entry:
         self.dir, self.src, self.colid, self.order = dirp, src, colid, order
         self.country = country     # the batch scope country of the dir (not CountriesOrAreas)
         self.also_in = []
+        self.rec_csv = self.rec_owners = ""   # snapshots the dir was researched on (meta.scope)
 
 
 def _dir_rank(d):
@@ -365,7 +366,9 @@ def _load_dir(d, root, order0, country=""):
             pid = r.get("project_id") or ""
             if not pid:
                 pid, group, kind = SCOPE_PID, "item", "other"
-            out.append(Entry(group, kind, pid, r, dirp, "resolutions", _colid(r, kind), order, country))
+            e = Entry(group, kind, pid, r, dirp, "resolutions", _colid(r, kind), order, country)
+            e.rec_csv, e.rec_owners = sc.get("csv") or "", sc.get("owners_csv") or ""
+            out.append(e)
             order += 1
     f = d / "staged_updates.json"
     if f.exists():
@@ -568,6 +571,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         by_key[k] = e
         primary.append(e)
 
+    research_snaps = _SnapCache(data_dir)
+
     # ---- pipelines
     # scope-level items get one card per country when several countries share the dataset
     multi = len(countries) > 1
@@ -613,12 +618,16 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         if not segs and ng is None:
             sr0 = next((e.sheet_row for e in card["entries"] if e.sheet_row), None)
             segs = [{"sheet_row": sr0, "segment": rec0.get("segment_name", "")}] if sr0 else []
-        lines, items, recs = [], [], {}
+        lines, items, recs, ents = [], [], {}, {}
         for e in card["entries"]:
             obj = _line(e, snap, own, stats) if e.group == "line" else _item(e)
             (lines if e.group == "line" else items).append(obj)
-            recs[obj["key"]] = e.rec
+            recs[obj["key"]], ents[obj["key"]] = e.rec, e
         lines = _fold_status_covers(lines, recs, stats)
+        echoes = {l["key"] for l in lines if echo_moved(l, ents[l["key"]], research_snaps)}
+        if echoes:
+            stats["value_moved"] = stats.get("value_moved", 0) + len(echoes)
+            lines = [l for l in lines if l["key"] not in echoes]
         _attach_rivals(lines, items, stats)
         lines.sort(key=lambda l: (l["_sort"], l["key"]))
         for l in lines:
@@ -849,6 +858,48 @@ def line_ops(line):
     return ops
 
 
+# A ref record that checked an EXISTING value (class_in HAS_REF / MISSING_REF) usually copies the
+# sheet's value at research time into `values`: an echo, not a proposal. Once the sheet moves (a
+# sibling fill or status line pushed), the echo reads as a change BACK to the old value -- P5905
+# StartYear1 2027 -> 2026 after the 2026-10-02 push. Its refs backed the old value, so the line is
+# dropped, never offered (2026-10-08). Only a value that matched the snapshot the dir was researched
+# on is an echo: some ref records do carry a real proposal (an Operator filled on a blank cell, an
+# owner re-spelled), and those stay. No research snapshot on disk -> not provably an echo, kept.
+ECHO_CLASSES = ("HAS_REF", "MISSING_REF")
+
+
+class _SnapCache:
+    """Research-time snapshots by file name, loaded once each (None when not on disk)."""
+
+    def __init__(self, data_dir):
+        self.data_dir, self.cache = Path(data_dir), {}
+
+    def get(self, name, header_idx):
+        name = Path(name or "").name
+        if name not in self.cache:
+            p = self.data_dir / name
+            self.cache[name] = Snapshot(p, header_idx) if name and p.exists() else None
+        return self.cache[name]
+
+
+def echo_moved(line, entry, snaps):
+    """True for a ref-only line that echoes the value its dir was researched on, now off the sheet."""
+    if line.get("kind") not in ("ref", "oo") or line.get("class_in") not in ECHO_CLASSES:
+        return False
+    if not any(o in ("fill", "change", "clear") for o in (line.get("ops") or line_ops(line))):
+        return False
+    oo = line.get("kind") == "oo"
+    snap = snaps.get(entry.rec_owners if oo else entry.rec_csv, 1 if oo else 2)
+    rows = snap.by_pid.get(entry.pid) if snap else None
+    if not rows:
+        return False
+    was = rows[0][1]
+    if not oo:
+        was = next((r for sr, r in rows if sr == entry.rec.get("sheet_row")), was)
+    vals = line.get("proposed_values") or {}
+    return bool(vals) and all(c in was and _same(was[c], v) for c, v in vals.items())
+
+
 def severity(line):
     """'major' when the line fills, clears or changes a value, is a status / route / new-row
     decision; 'minor' when the value stands and the line only adds or re-verifies references."""
@@ -1058,6 +1109,8 @@ def summary(data, stats):
         out.append(f"recon staging dirs left out for now: {stats['recon_skipped']}")
     if stats.get("updates_skipped"):
         out.append(f"country-scoped update stores left out (handoff workbook only): {stats['updates_skipped']}")
+    if stats.get("value_moved"):
+        out.append(f"ref-only lines dropped, the value they checked has since changed on the sheet: {stats['value_moved']}")
     if stats.get("done_dropped"):
         out.append(f"pipelines of all-decided countries dropped: {stats['done_dropped']} (--include-done keeps them)")
     if stats["excluded"]:
