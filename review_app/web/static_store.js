@@ -497,7 +497,19 @@
     pb.textContent = "push to ledger";
     pb.dataset.tip = "save your decisions to the shared log and ask Claude to import them into the ledger and plan the sheet push (Baird approves the write)";
     pb.onclick = requestPush;
-    who.insertBefore(pb, before);
+    var url = CFG && CFG.ledger_url;
+    if (url) {   // hovering (or tabbing to) the button reveals a link to the ledger sheet
+      var wrap = document.createElement("span");
+      wrap.className = "ledger-wrap"; wrap.style.cssText = "position:relative;display:inline-block";
+      var lk = document.createElement("a");
+      lk.href = url; lk.target = "_blank"; lk.rel = "noopener"; lk.textContent = "open the ledger \u2197";
+      lk.style.cssText = "display:none;position:absolute;right:0;top:100%;z-index:50;padding:6px 10px;white-space:nowrap;" +
+        "background:var(--panel,#fff);color:var(--link,#1a56db);border:1px solid var(--line,#ccc);border-radius:6px;font-size:12px";
+      wrap.onmouseenter = wrap.onfocusin = function () { lk.style.display = "block"; };
+      wrap.onmouseleave = wrap.onfocusout = function () { lk.style.display = "none"; };
+      wrap.appendChild(pb); wrap.appendChild(lk);
+      who.insertBefore(wrap, before);
+    } else who.insertBefore(pb, before);
     var label = document.getElementById("scope");
     if (label && RA() && RA().data) label.dataset.tip = "built " + RA().et(G.built) + " from snapshot " + G.snapshot + ". Decisions made elsewhere since then are not shown.";
     if (!G.db) state("local", G.why2 || "this copy was opened outside claude.ai");

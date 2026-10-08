@@ -97,7 +97,9 @@ def render(data, index, reviewer="", web=WEB):
     left = re.findall(r'<(?:script|link)[^>]+(?:src|href)="(?!https?:)[^"]*"', body)
     if left:
         raise SystemExit(f"index.html still references local files the page cannot load: {left}")
-    cfg = json.dumps({"reviewer": reviewer or "", "built": data.get("built", "")}).replace("</", "<\\/")
+    sheet = (pull_mod.config(None) or {}).get("store_sheet_id") or ""
+    cfg = json.dumps({"reviewer": reviewer or "", "built": data.get("built", ""),
+                      "ledger_url": f"https://docs.google.com/spreadsheets/d/{sheet}/edit" if sheet else ""}).replace("</", "<\\/")
     return (f"<title>{m.group(1).strip()}</title>\n<style>\n{css.rstrip()}\n</style>\n"
             f"{body.strip()}\n"
             f'<script type="application/octet-stream" id="{BLOB_ID}">{blob(data, index)}</script>\n'
