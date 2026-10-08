@@ -478,7 +478,7 @@
         reviewer: G.me, uid: G.uid, device: G.device, requested: now(), records: G.own.length,
         built: G.built, snapshot: G.snapshot, seq: Date.now(), status: "requested"});
     }).then(function () {
-      ra.toast("push to ledger requested: " + G.own.length + " record" + (G.own.length === 1 ? "" : "s") + " are in the shared log");
+      ra.toast("push to log requested: " + G.own.length + " record" + (G.own.length === 1 ? "" : "s") + " saved");
     }, function (e) {
       ra.toast("the request did not go through (" + ((e && (e.code || e.message)) || "unknown") + ")");
     });
@@ -494,11 +494,11 @@
     who.insertBefore(btn, before);
     var pb = document.createElement("button");
     pb.id = "ledger-btn"; pb.type = "button"; pb.className = "ghost";
-    pb.textContent = "push to ledger";
-    pb.dataset.tip = "save your decisions to the shared log and ask Claude to import them into the ledger and plan the sheet push (Baird approves the write)";
+    pb.textContent = "push to log";
+    pb.dataset.tip = "save your decisions and ask Claude to add them to the log and plan the sheet push (Baird approves the write)";
     pb.onclick = requestPush;
     var url = CFG && CFG.ledger_url;
-    if (url) { pb.dataset.tipHref = url; pb.dataset.tipHrefLabel = "open the ledger \u2197"; }   // the info box carries the link
+    if (url) { pb.dataset.tipHref = url; pb.dataset.tipHrefLabel = "open the log \u2197"; }   // the info box carries the link
     who.insertBefore(pb, before);
     var label = document.getElementById("scope");
     if (label && RA() && RA().data) label.dataset.tip = "built " + RA().et(G.built) + " from snapshot " + G.snapshot + ". Decisions made elsewhere since then are not shown.";
