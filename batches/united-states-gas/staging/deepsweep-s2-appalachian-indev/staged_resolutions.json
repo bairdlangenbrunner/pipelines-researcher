@@ -877,18 +877,34 @@
     "StartLocation": "Harrison County",
     "StartState/Province": "West Virginia",
     "StartCountryOrArea": "United States",
-    "EndLocation": "Robeson County",
+    "EndLocation": "Pembroke",
     "EndState/Province": "North Carolina",
     "EndCountryOrArea": "United States"
    },
    "primary_value": "Harrison County",
    "current_ref": "",
-   "class_in": "MISSING_REF",
+   "class_in": "FILL",
    "class_out": "REFS_ADDED",
    "proposed_refs": [
+    "https://www.robesonian.com/news/100995/pipeline-seeking-permit",
+    "https://appvoices.org/2018/04/11/robie-goins/",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
    ],
    "verifications": [
+    {
+     "url": "https://www.robesonian.com/news/100995/pipeline-seeking-permit",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "The Robesonian, 15 July 2017: the Atlantic Coast Pipeline starts in Harrison County, West Virginia, and 'will end near Pembroke'; the company sought a Robeson County permit for a utilities station and tower there"
+    },
+    {
+     "url": "https://appvoices.org/2018/04/11/robie-goins/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Appalachian Voices, 11 April 2018: 'Robeson County is the designated southern terminus of the ACP'; the metering station and tower were planned 'just outside the town of Pembroke' on N.C. 710, on land owned by Piedmont Natural Gas"
+    },
     {
      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
      "ok": true,
@@ -899,9 +915,9 @@
    ],
    "link_live": false,
    "tier": "high",
-   "independent": false,
+   "independent": true,
    "source_language": "en",
-   "researcher_notes": "EIA and Duke announcements confirm WV origin (Harrison County area, Appalachian Basin) and NC terminal (eastern NC, Robeson County area). Note: EIA lists states = WV,VA,NC, indicating project routed through Virginia. Current sheet shows only WV->NC, missing Virginia in the sequence. This may be correct if row represents the final transmission segment only, or may be incomplete if it represents the full trunk. Route geometry should clarify. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin. [QC] tier medium -> high (one validated ref is sufficient, rule 4).",
+   "researcher_notes": "The sheet records the end location as Robeson County. Two independent sources place the end point at the town of Pembroke, inside Robeson County. The Robesonian, the county newspaper, reported on 15 July 2017 that the pipeline will end near Pembroke, where the company sought a county permit for a utilities station. Appalachian Voices reported on 11 April 2018 that Robeson County is the designated southern terminus and that the metering station was planned just outside the town of Pembroke on N.C. 710, on land owned by Piedmont Natural Gas. Pembroke is more specific than the county, so the end location is staged as Pembroke. The old value was Robeson County. No source names Lumberton as the end point. An earlier note on this row said some sources did, and that was wrong. The EIA January 2021 pipeline projects workbook supports the start state West Virginia and the end state North Carolina, and lists the project as passing through Virginia, which the sheet does not show between the two end states. Harrison County stays as the start location.",
    "wiki": "https://www.gem.wiki/Atlantic_Coast_Gas_Pipeline"
   },
   {
@@ -31995,19 +32011,21 @@
    "class_out": "UNRESOLVED",
    "verdict": "confirmed (caveat)",
    "concern_type": "spec",
-   "recommendation": "StartYear1 should be blank (pipeline cancelled before construction); verify location endpoint (Robeson County vs Lumberton); verify Virginia presence vs market.",
-   "researcher_notes": "Atlantic Coast Pipeline (ACP) is a real, certificated project (FERC docket CP15-554) proposed as a 550-600 mile interstate natural gas transmission line from Harrison County, WV through Virginia to eastern North Carolina. Cancelled 2020-07-05 by Duke Energy and Dominion Energy after years of environmental and legal battles.\n\nEXISTENCE: Confirmed. The pipeline reached detailed environmental review (FERC issued Environmental Impact Statement) and received FERC certificate in 2017 (CP15-554). Multiple sections were surveyed. However, it never entered construction before cancellation.\n\nCLASSIFICATION: Correct - natural gas interstate transmission pipeline.\n\nSPECS VERIFICATION:\n- Capacity: 1500 MMcf/d confirmed by EIA 2021-01 release (additional_capacity_mmcf_d: 1500)\n- Length: 600 mi confirmed by EIA; Duke initial press said 550 mi (design refinement noted)\n- Diameter: 20, 36, 42 in confirmed by EIA 2021-01 (pipeline_diameter_inches: 42,36,20)\n- Status: Cancelled 2020-07-05 confirmed by CNN, Duke Energy, and EIA (status changed Construction->Cancelled between 2020-03 and 2021-01 EIA releases)\n- Fuel: Natural gas (interstate transmission) \u2713\n- FuelSource: Utica and Marcellus shales (standard Appalachian sources) - correct for project designed to move Basin production\n\nCONCERN - StartYear1 = 2022: A cancelled project (2020) cannot have an in-service year of 2022. This appears to be a target date from early project timelines. Should be blank. Proposed: StartYear1 = blank (MISSING_VALUE).\n\nLOCATION CONCERNS:\n- End location: Sheet shows Robeson County, NC but multiple sources cite the eastern NC terminus as Lumberton area (also Robeson County) or the proposed delivery points to Duke customer areas. FERC order and project maps needed to pinpoint exact termini. The route should define this.\n- Virginia: Duke announcement and EIA show project routing THROUGH Virginia, and location shows EndState = North Carolina only. However, the full project scope is WV->VA->NC. Per the scope guidance, this is a multi-state trunk, not a segment. Potential issue: if this row is the FULL pipeline, EndState should list VA and NC; if it's a segment ending at Virginia border, it's correct.\n\nSOURCES: EIA 2021-01 (last updated 2020-07-06), CNN cancellation (2020-07-05), Duke Energy announcement, project FERC docket CP15-554.",
+   "recommendation": "StartYear1 should be blank (pipeline cancelled before construction); the end location refinement from Robeson County to Pembroke is staged as a change on the Location line; verify Virginia presence vs market.",
+   "researcher_notes": "Atlantic Coast Pipeline (ACP) is a real, certificated project (FERC docket CP15-554) proposed as a 550-600 mile interstate natural gas transmission line from Harrison County, WV through Virginia to eastern North Carolina. Cancelled 2020-07-05 by Duke Energy and Dominion Energy after years of environmental and legal battles.\n\nEXISTENCE: Confirmed. The pipeline reached detailed environmental review (FERC issued Environmental Impact Statement) and received FERC certificate in 2017 (CP15-554). Multiple sections were surveyed. However, it never entered construction before cancellation.\n\nCLASSIFICATION: Correct - natural gas interstate transmission pipeline.\n\nSPECS VERIFICATION:\n- Capacity: 1500 MMcf/d confirmed by EIA 2021-01 release (additional_capacity_mmcf_d: 1500)\n- Length: 600 mi confirmed by EIA; Duke initial press said 550 mi (design refinement noted)\n- Diameter: 20, 36, 42 in confirmed by EIA 2021-01 (pipeline_diameter_inches: 42,36,20)\n- Status: Cancelled 2020-07-05 confirmed by CNN, Duke Energy, and EIA (status changed Construction->Cancelled between 2020-03 and 2021-01 EIA releases)\n- Fuel: Natural gas (interstate transmission) \u2713\n- FuelSource: Utica and Marcellus shales (standard Appalachian sources) - correct for project designed to move Basin production\n\nCONCERN - StartYear1 = 2022: A cancelled project (2020) cannot have an in-service year of 2022. This appears to be a target date from early project timelines. Should be blank. Proposed: StartYear1 = blank (MISSING_VALUE).\n\nLOCATION CONCERNS:\n- End location: the sheet shows Robeson County. The Robesonian (15 July 2017) and Appalachian Voices (11 April 2018) both place the end point near the town of Pembroke, in Robeson County, at a Piedmont Natural Gas interconnect and metering station. Pembroke is staged as the end location on the Location line. No source names Lumberton.\n- Virginia: Duke announcement and EIA show project routing THROUGH Virginia, and location shows EndState = North Carolina only. However, the full project scope is WV->VA->NC. Per the scope guidance, this is a multi-state trunk, not a segment. Potential issue: if this row is the FULL pipeline, EndState should list VA and NC; if it's a segment ending at Virginia border, it's correct.\n\nSOURCES: EIA 2021-01 (last updated 2020-07-06), CNN cancellation (2020-07-05), Duke Energy announcement, project FERC docket CP15-554.",
    "proposed_refs": [
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
     "https://www.cnn.com/2020/07/05/us/duke-dominion-energy-cancel-atlantic-coast-pipeline/index.html",
-    "https://news.duke-energy.com/releases/duke-energy-piedmont-natural-gas-select-dominion-to-build-550-mile-atlantic-coast-pipeline-to-transport-natural-gas-from-west-virginia-to-eastern-north-carolina"
+    "https://news.duke-energy.com/releases/duke-energy-piedmont-natural-gas-select-dominion-to-build-550-mile-atlantic-coast-pipeline-to-transport-natural-gas-from-west-virginia-to-eastern-north-carolina",
+    "https://www.robesonian.com/news/100995/pipeline-seeking-permit",
+    "https://appvoices.org/2018/04/11/robie-goins/"
    ],
    "verifications": [],
    "tier": "high",
    "independent": true,
    "contested": {
     "StartYear1": "",
-    "EndLocation": "verify if Robeson County is the actual pipeline terminus or a market endpoint"
+    "EndLocation": "Pembroke"
    },
    "promoted_from": "",
    "source_language": "en"
