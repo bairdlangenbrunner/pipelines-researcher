@@ -59,7 +59,8 @@
     saving: {},              // line / item keys with a save in flight
     tab: "major",            // the card's tab: "major" | "minor" | "items" | "all"
     igOpen: {},              // item kind -> details open state (survives a re-render; reset per pipeline; all closed by default)
-    session: {}              // key -> the latest non-undone record this reviewer saved in this page session
+    session: {},             // key -> the latest non-undone record this reviewer saved in this page session
+    notes: {}                // line key -> note typed in the line's note box, not saved yet (goes with the next call)
   };
   var ITEM_BY_KEY = {};
   var ITEM_CALLS = {concern: ["confirmed", "dismissed", "needs_research"]};
@@ -864,6 +865,8 @@
         ' aria-pressed="' + on + '">accept candidate' + (rivals.length > 1 ? " " + esc(r.value) : "") + "</button>";
     }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true"' + tipAttrs(NOT_YET) : "") +
       ' aria-pressed="' + (cur(l) === "suggest" && !l.rival) + '">suggest</button>' + (cur(l) ? '<button type="button" class="ghost" data-undo="1">undo</button>' : "") +
+      '<input type="text" class="dnote" data-dnote="' + l._i + '" autocomplete="off" placeholder="note: why (optional)" aria-label="note on this call, optional"' +
+      ' value="' + esc(noteOf(l)) + '"' + (dis ? " disabled" : "") + ">" +
       '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
     h += detailsHtml(l);
     return h;
@@ -1130,6 +1133,7 @@
     setStat(l._i, "saving…");
     Store.decide([rec]).then(function (saved) {
       applySaved(saved);
+      delete S.notes[l.key];
       S.stay[l.key] = true;
       banner("");
       var keepLine = S.line;
@@ -1242,6 +1246,7 @@
     }).then(function () { delete S.saving[it.key]; });
   }
   function onItemChange(e) {
+    if (onNoteChange(e)) return;
     var sel = e.target.closest("select[data-icall]"), inp = e.target.closest("input[data-inote]");
     var t = sel || inp;
     if (!t) return;
@@ -1252,11 +1257,41 @@
     if (inp && call === it.call && note === (it.call_note || "")) return;
     saveItem(it, {key: it.key, call: call, note: note});
   }
+  // The note box on a line: optional, goes into the ledger with the call. Typed before a call it
+  // waits in S.notes and rides along with the next accept / hold / reject / candidate / suggest;
+  // edited after a call it re-saves that same call with the new note.
+  function noteOf(l) { return l.key in S.notes ? S.notes[l.key] : (cur(l) ? l.decision_note || "" : ""); }
+  function onNoteInput(e) {
+    var t = e.target.closest("input[data-dnote]");
+    if (!t) return false;
+    var l = LINES[+t.getAttribute("data-dnote")];
+    if (l) S.notes[l.key] = t.value;
+    return true;
+  }
+  function onNoteChange(e) {
+    var t = e.target.closest("input[data-dnote]");
+    if (!t) return false;
+    var l = LINES[+t.getAttribute("data-dnote")], d = l && cur(l);
+    if (!l) return true;
+    S.notes[l.key] = t.value;
+    if (!d) { setStat(l._i, blankv(t.value) ? "" : "the note saves with your call"); return true; }
+    if (t.value === (l.decision_note || "")) { delete S.notes[l.key]; return true; }
+    if (d === "suggest" && !l.rival && blankv(l.suggested_value) && blankv(t.value)) { setStat(l._i, "a suggestion with no value needs a note", true); return true; }
+    var rec = {key: l.key, decision: d, note: t.value};
+    if (d === "suggest") { if (l.rival) rec.rival = l.rival; else rec.suggested_value = l.suggested_value || ""; }
+    // a short wait: when the box loses focus because a call button was pressed, that call saves
+    // the note instead (dropNoteSave), so the two saves never race
+    dropNoteSave();
+    S.noteSave = {key: l.key, timer: setTimeout(function () { S.noteSave = null; save(l, rec, false); }, 250)};
+    return true;
+  }
+  function dropNoteSave() { if (S.noteSave) { clearTimeout(S.noteSave.timer); S.noteSave = null; } }
   function decideCurrent(decision, advance) {
     var l = LINES[S.line];
     if (S.tab === "items") return toast("the Items tab takes calls, not change decisions: press i to go back to the changes");
     if (!l) return;
-    save(l, {key: l.key, decision: decision}, advance);
+    dropNoteSave();
+    save(l, {key: l.key, decision: decision, note: noteOf(l)}, advance);
   }
   // take a concern's candidate instead of the proposal: a suggest with that value + a confirmed
   // call on the concern, in one save (store.decide)
@@ -1269,12 +1304,14 @@
       if (rivals.length > 1) return toast("two concerns offer candidates here: click the one to take");
       rk = rivals[0].key;
     }
-    save(l, {key: l.key, decision: "suggest", rival: rk}, advance);
+    dropNoteSave();
+    save(l, {key: l.key, decision: "suggest", rival: rk, note: noteOf(l)}, advance);
   }
   function undoCurrent() {
     var l = LINES[S.line];
     if (S.tab === "items" || !l) return;
     if (!cur(l)) return toast("nothing to undo on this change");
+    dropNoteSave();
     save(l, {key: l.key, undo: true}, false);
   }
   function nextUndecided() {       // after a keypress decision: the next open line, then the next pipeline
@@ -1307,17 +1344,18 @@
     var el = $("line-" + l._i);
     if (!el) return;
     closeSuggest();
+    dropNoteSave();
     setLine(l._i, true);
     var prior = l.reviewed && l.decision === "suggest";
     var f = document.createElement("form");
     f.className = "sform";
     f.innerHTML = '<label>suggested value <input type="text" class="sv" autocomplete="off"></label>' +
       '<label>note <input type="text" class="sn" autocomplete="off" placeholder="why"></label>' +
-      '<button type="submit" class="sv-save">save suggestion</button><button type="button" class="ghost sv-cancel">cancel (esc)</button>' +
+      '<button type="submit" class="sv-save">save suggestion</button><button type="button" class="sv-cancel">cancel (esc)</button>' +
       '<span class="faint sv-err" role="alert"></span>';
     var sv = f.querySelector(".sv"), sn = f.querySelector(".sn"), err = f.querySelector(".sv-err");
     sv.value = prior ? (l.suggested_value || "") : suggestPrefill(l);
-    sn.value = prior ? (l.decision_note || "") : "";
+    sn.value = noteOf(l);
     f.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeSuggest(); }
     });
@@ -1330,6 +1368,7 @@
       S.saving[l.key] = true;
       Store.decide([{key: l.key, decision: "suggest", suggested_value: sv.value, note: sn.value}]).then(function (saved) {
         applySaved(saved);
+        delete S.notes[l.key];
         S.stay[l.key] = true;
         banner("");
         var keepLine = S.line;
@@ -1439,7 +1478,7 @@
       return;
     }
     var t = e.target;
-    if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) { if (e.key === "Escape") t.blur(); return; }
+    if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) { if (e.key === "Escape" || (e.key === "Enter" && t.matches(".dnote"))) t.blur(); return; }
     var f = KEYS[e.key];
     if (f) f(e);
   }
@@ -1838,6 +1877,8 @@
       owner = el; tip.innerHTML = '<div class="tip-head"></div>'; tip.firstChild.textContent = el.getAttribute("data-tip");
       var note = el.getAttribute("data-tip-note");
       if (note) { var n = document.createElement("div"); n.className = "tip-note"; n.textContent = "note: " + note; tip.appendChild(n); }
+      var href = el.getAttribute("data-tip-href");
+      if (href) { var a = document.createElement("a"); a.className = "tip-link"; a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = el.getAttribute("data-tip-href-label") || href; a.style.cssText = "display:block;margin-top:8px"; tip.appendChild(a); }
       tip.hidden = false;
       var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, m = 8;
       var x = Math.min(Math.max(m, r.left), window.innerWidth - w - m);
@@ -1870,6 +1911,11 @@
     window.addEventListener("blur", hide);
     document.addEventListener("scroll", function (e) { if (owner && !tip.contains(e.target)) hide(); }, true);
   })();
+  // A press anywhere outside the open suggest form closes it, same as cancel.
+  document.addEventListener("mousedown", function (e) {
+    var f = document.querySelector("#card .sform");
+    if (f && !f.contains(e.target)) closeSuggest();
+  });
   $("card").addEventListener("click", onCardClick);
   $("pipes").addEventListener("click", function (e) {
     var li = e.target.closest("li[data-i]");
@@ -1897,6 +1943,7 @@
     showBulk(b.getAttribute("data-bulk"));
   });
   $("card").addEventListener("change", onItemChange);
+  $("card").addEventListener("input", onNoteInput);
   $("card").addEventListener("toggle", function (e) {
     var d = e.target;
     if (d && d.classList && d.classList.contains("igroup")) S.igOpen[d.getAttribute("data-kind")] = d.open;
