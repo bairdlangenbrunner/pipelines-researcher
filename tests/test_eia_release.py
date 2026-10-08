@@ -21,7 +21,7 @@ def test_latest_is_the_newest_recorded_release():
     assert lt["url"].startswith(B)
 
 
-def test_older_release_alone_is_stale_beside_the_newest_is_fine(monkeypatch):
+def test_only_a_value_change_on_an_older_release_alone_is_stale(monkeypatch):
     monkeypatch.setattr(er, "latest", lambda: {"file": NEW.rsplit("/", 1)[-1], "release": "2026-08",
                                                "url": NEW, "label": "August 2026"})
     assert er.stale_refs({"proposed_refs": [OLD]}) == [OLD]
@@ -29,7 +29,22 @@ def test_older_release_alone_is_stale_beside_the_newest_is_fine(monkeypatch):
     assert er.stale_refs({"proposed_refs": [NEW, OLD]}) == []          # history beside the newest
     assert er.stale_refs({"proposed_refs": [NEW]}) == []
     assert er.stale_refs({"proposed_refs": ["http://ferc.example/x"]}) == []
-    # the newest release does not list the project, and the note says so in words
-    note = "The project is not listed in the August 2026 EIA release. The January 2021 release gives 36 in."
-    assert er.stale_refs({"proposed_refs": [OLD], "researcher_notes": note}) == []
-    assert er.stale_refs({"proposed_refs": [OLD], "researcher_notes": "The August 2026 release gives 36 in."}) == [OLD]
+    # a ref on the sheet's own value: an older release that states it is fine, the newest not owed
+    assert er.stale_refs({"proposed_refs": [OLD]}, changes_value=False) == []
+    # a note does not excuse a change: the newest release no longer listing it means no change
+    note = "The project is not listed in the August 2026 EIA release."
+    assert er.stale_refs({"proposed_refs": [OLD], "researcher_notes": note}) == [OLD]
+
+
+def test_dropped_skips_renamed_split_and_docket_successors():
+    row = lambda k, n, rel, st="TX", dk="": {"project_key": k, "project_name": n, "last_release": rel,
+                                             "state_s": st, "docket_number": dk}
+    lat = [row("a", "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II", "2026-08"),
+           row("b", "Warrior Pipeline", "2024-10"),                                   # renamed
+           row("c", "Kosciusko Junction Pipeline Project", "2026-08", "MS"),
+           row("d", "Kosci Junction Project", "2025-07", "MS", "PF25-6-000"),         # respelled
+           row("e", "Evangeline Pass Expansion Project (Phase 1)", "2026-08", "LA", "CP20-50-000"),
+           row("f", "Evangeline Pass Expansion Project", "2024-01", "LA", "CP20-50"),  # split, same docket
+           row("g", "Project Maple", "2026-01", "NY,MA"),                             # gone
+           row("h", "Magnum Gas Storage Project", "2026-05", "UT", "CP25-233-000")]   # gone
+    assert er.dropped(lat) == {"g": "2026-01", "h": "2026-05"}

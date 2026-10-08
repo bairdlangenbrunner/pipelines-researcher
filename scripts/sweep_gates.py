@@ -75,11 +75,12 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            parent, fuzzy, same stem under another form) — decide by hand,
                            never auto-flatten (SPV ruling, gem_schema.md). Blocking twin:
                            check_shard_coverage.py. Rules: docs/reference/owner_style.md.
-  P  EIA RELEASE        -- a record citing an OLDER EIA pipeline-projects release without the
-                           newest one beside it, and no note saying the newest does not list the
-                           project (Baird 2026-10-08: EIA values come from the newest release;
-                           P5905's start year read from an older one would have overwritten
-                           2027 with 2026). Blocking twin: check_shard_coverage.py.
+  P  EIA RELEASE        -- a record that CHANGES a sheet value (vs the snapshot the store names)
+                           citing an OLDER EIA pipeline-projects release without the newest one
+                           (Baird 2026-10-08: change a value from EIA only when the newest release
+                           states a different one; P5905's start year read from an older release
+                           would have overwritten 2027 with 2026). Refs added to the sheet's own
+                           value are not judged. Blocking twin: check_shard_coverage.py.
 """
 from __future__ import annotations
 
@@ -422,9 +423,20 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
 
     try:
         from eia_release import latest as _eia_latest, stale_refs as _eia_stale
-        P = [(r.get("project_id"), r.get("ref_col"), sorted({u.rsplit("/", 1)[-1] for u in _eia_stale(r)}))
-             for r in res if _eia_stale(r)]
-        P_newest = _eia_latest().get("file")
+        from merge_qc import is_ref_only as _ref_only, load_sheet as _load_sheet, sheet_value as _sv
+        _sheet = _load_sheet(meta_scope)
+        P = []
+        for r in res:
+            vals = r.get("values") or {}
+            if _sheet is None or not vals or (r.get("ref_col") or "").startswith("__"):
+                continue
+            cur = {c: _sv(_sheet, r.get("project_id"), r.get("sheet_row"), c) for c in vals}
+            if None in cur.values() or _ref_only(vals, cur):
+                continue                  # a ref on the sheet's own value, or a cell the snapshot can't place
+            old = _eia_stale(r, changes_value=True)
+            if old:
+                P.append((r.get("project_id"), r.get("ref_col"), sorted({u.rsplit("/", 1)[-1] for u in old})))
+        P_newest = _eia_latest().get("file") + ("" if _sheet is not None else " (no snapshot: not judged)")
     except Exception as e:      # pragma: no cover -- vintages.csv absent
         P, P_newest = [], f"(eia_release unavailable: {e})"
 
@@ -541,8 +553,8 @@ def report(out: dict, dominant_min: int) -> None:
         sec("O'' owner names with an unadopted canonical candidate (alias / fuzzy / form conflict — decide by hand)",
             out["O_owner_candidates_not_adopted"], "no unadopted candidates",
             lambda r: f"{r[0]} {r[1]}: {r[2]!r} ~ {r[3]!r}", cap=20)
-    sec(f"P  older EIA release cited without the newest ({out.get('P_newest_eia')})",
-        out.get("P_older_eia_release", []), "every EIA ref is to the newest release (or says the newest omits the project)",
+    sec(f"P  value changed on an older EIA release without the newest ({out.get('P_newest_eia')})",
+        out.get("P_older_eia_release", []), "every EIA-based value change cites the newest release",
         lambda r: f"{r[0]} {r[1]}: {', '.join(r[2])}", cap=30)
     sec("K  REFS_ADDED on exactly one verified ref (informational: green, not yet independent)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",

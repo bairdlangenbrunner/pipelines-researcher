@@ -161,6 +161,8 @@ def main():
     latest["_dk"] = latest["docket_number"].map(dockets)
     latest["_st"] = latest["state_s"].map(lambda s: {x.strip().upper() for x in re.split(r"[,;/ ]+", str(s)) if x.strip()})
     eia = latest.to_dict("records")
+    newest_rel = max(e["last_release"] for e in eia)
+    gone = eia_release.dropped(eia)      # missing from the newest release, no successor there
 
     df = pd.read_csv(a.csv, header=2, low_memory=False, keep_default_na=False, na_values=[])
     df = df[df["CountriesOrAreas"].str.contains("United States") & (df["Status"] != "N/A")]
@@ -231,9 +233,12 @@ def main():
                  "diameter_in": e["pipeline_diameter_inches"], "cost_musd": e["cost_millions"],
                  "docket": e["docket_number"], "first_release": e["first_release"],
                  "last_release": e["last_release"], "cite_url": BASE_URL + e["last_file"],
-                 "sheet": e["last_sheet"], "excel_row": e["last_excel_row"], "notes": e["notes_latest"][:400]}
+                 "sheet": e["last_sheet"], "excel_row": e["last_excel_row"], "notes": e["notes_latest"][:400],
+                 "in_newest": e["last_release"] == newest_rel, "dropped": e["project_key"] in gone}
             rec_c.append(c)
-        best = next((c for c in rec_c if c["tier"] in ("docket", "strong")), None)
+        # Values are compared only against a project the NEWEST release lists (Baird 2026-10-08):
+        # an older release's value never proposes a change.
+        best = next((c for c in rec_c if c["tier"] in ("docket", "strong") and c["in_newest"]), None)
         if best:
             def add(field, gem, eia, verdict):
                 comps.append({"field": field, "gem": gem, "eia": eia, "verdict": verdict,
@@ -267,8 +272,13 @@ def main():
                 if c["verdict"] != "agree":
                     disagreements.append({"ProjectID": pid, "PipelineName": r["PipelineName"],
                                           "SegmentName": r["SegmentName"], **c})
+        # A docket/strong project that dropped off the list (EIA keeps even cancelled projects
+        # listed) is an existence question for this row, unless another match is still listed.
+        dropped_from_newest = [] if best else [c["project_name"] for c in rec_c
+                                               if c["tier"] in ("docket", "strong") and c["dropped"]]
         out_rows[pid] = {"pipeline": r["PipelineName"], "segment": r["SegmentName"],
-                         "gem_dockets": sorted(dk), "candidates": rec_c, "compare": comps}
+                         "gem_dockets": sorted(dk), "candidates": rec_c, "compare": comps,
+                         "dropped_from_newest": dropped_from_newest}
 
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -284,8 +294,10 @@ def main():
     for v in out_rows.values():
         t = v["candidates"][0]["tier"]
         tiers[t] = tiers.get(t, 0) + 1
+    n_drop = sum(bool(v["dropped_from_newest"]) for v in out_rows.values())
     print(f"{len(df)} rows in scope; {len(out_rows)} with EIA candidates (best tier: {tiers}); "
-          f"{len(disagreements)} non-agree comparisons -> {out}")
+          f"{len(disagreements)} non-agree comparisons; {n_drop} rows whose EIA project dropped off "
+          f"the newest release -> {out}")
 
     if a.md_dir:
         md = Path(a.md_dir)
@@ -295,6 +307,7 @@ def main():
 
 
 def render_md(pid, v, releases) -> str:
+    label = eia_release.latest().get("label")
     L = [f"## EIA Natural Gas Pipeline Projects — pre-matched candidates for {pid} "
          f"({len(releases)} releases, {releases[0]} .. {releases[-1]})",
          "",
@@ -310,12 +323,14 @@ def render_md(pid, v, releases) -> str:
          "without checking scope); `possible` = weaker name match with state + operator support. "
          "These are CANDIDATES from docket / name / operator / state matching. Confirm each is really "
          "this row's project (an operating mainline matches its own expansions; an expansion's capacity "
-         "is INCREMENTAL, not the line's total) before using it. All EIA releases are ONE origin. Read every "
-         f"value from the NEWEST release, {eia_release.latest().get('file')}, and cite that file (rule, "
-         "2026-10-08); an older release may be cited BESIDE it for history (the year a project first "
-         "showed Completed), never instead of it. When a candidate's `cite` below is an older file, the "
-         f"newest release does not list that project: say so in the notes (\"not listed in the "
-         f"{eia_release.latest().get('label')} EIA release\"). Name sheet + Excel row in `note`, and run url_verifier with "
+         "is INCREMENTAL, not the line's total) before using it. All EIA releases are ONE origin. Change a "
+         f"sheet value from EIA ONLY when the NEWEST release, {eia_release.latest().get('file')}, states a "
+         "different value, and cite that file (rule, 2026-10-08). When the newest release states the sheet's "
+         "value, or no longer lists the project, change nothing and add no ref for it; an older release may "
+         "be cited BESIDE the newest for history (the year a project first showed Completed), never instead "
+         "of it. A candidate marked DROPPED below is missing from the newest release with no renamed entry "
+         "there. EIA keeps even cancelled projects listed, so a drop-off is an existence question: look for "
+         "why and stage a validity concern (a possible deletion) with what you found. Name sheet + Excel row in `note`, and run url_verifier with "
          "`--name` carrying the EIA project name as an alias. A `differs` line below is OWED a finding: a "
          "spec concern with `contested` and the value your sources support, or a record of why EIA is the "
          "wrong comparison (different scope/phase). A `missing_on_sheet` line is a fill candidate.",
@@ -330,9 +345,15 @@ def render_md(pid, v, releases) -> str:
                  f"{c['capacity_mmcfd'] or '-'} MMcf/d; ${c['cost_musd'] or '-'}M; docket {c['docket'] or '-'}; "
                  f"releases {c['first_release']}..{c['last_release']}; cite {c['cite_url']} "
                  f"sheet '{c['sheet']}' row {c['excel_row']}"
+                 + (f" -- **DROPPED: not in the {label} release, no renamed entry there**" if c.get("dropped")
+                    else f" -- not in the {label} release under this name (a renamed or split entry is listed)"
+                    if c.get("in_newest") is False else "")
                  + (f"\n  notes: {c['notes']}" if c["notes"] else ""))
+    if v.get("dropped_from_newest"):
+        L += ["", f"**Existence question:** {', '.join(v['dropped_from_newest'])} dropped off the {label} "
+                  "release. Owed a validity finding."]
     if v["compare"]:
-        L += ["", "Comparison against the best docket/strong candidate:"]
+        L += ["", f"Comparison against the best docket/strong candidate the {label} release lists:"]
         for c in v["compare"]:
             L.append(f"- {c['field']}: sheet {c['gem']} vs EIA {c['eia']} -> **{c['verdict']}**")
     return "\n".join(L) + "\n"

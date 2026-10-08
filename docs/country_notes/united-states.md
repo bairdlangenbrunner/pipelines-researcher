@@ -15,7 +15,7 @@ any country — use it for both attributes and routes.
   `sources/eia_pipeline_projects/` (NOTES.md there: file-name quirks, citing a dated release,
   one-origin rule). `scripts/eia_crosswalk.py` pre-matches every US gas row to EIA projects and
   diffs the values; sweep prompts carry its per-PID block (from slice 2 onward — refresh the
-  releases and re-run it at the start of each US gas batch). It pulls any new release first (`scripts/eia_release.py`), and every EIA value is read from and cited to the newest release (August 2026 as of 2026-10-08).
+  releases and re-run it at the start of each US gas batch). It pulls any new release first (`scripts/eia_release.py`). A value changes on EIA only when the newest release (August 2026 as of 2026-10-08) states a different one; a project that dropped off the newest release is flagged `DROPPED` as an existence question.
 
 ## Routing / GIS tips
 - NPMS, Texas RRC, and BOEM give traceable routes (`high`/`medium`).

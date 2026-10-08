@@ -134,20 +134,23 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
         # hard-stopped the jiangxi v3 chain on 80 "unmergeable" records that were all fine.
         # The `silent UNRESOLVED` check above deliberately still applies: a sentinel with no
         # `researcher_notes` really does say nothing.
-        # EIA values come from the NEWEST pipeline-projects release (Baird 2026-10-08,
-        # eia_release.py): an older release cited without it is blocked. Checked before the
-        # sentinel exemption below, because a status re-read cites EIA too.
-        try:
-            from eia_release import stale_reason
-            eia_why = stale_reason(f)
-        except Exception:       # pragma: no cover -- vintages.csv absent on a bare checkout
-            eia_why = None
         if (f.get("ref_col") or "").strip().startswith("__"):
-            if eia_why:
-                malformed.append({"ref_col": f.get("ref_col"), "why": eia_why})
             continue
-        if eia_why:
-            why.append(eia_why)
+        # A value CHANGED on EIA comes from the NEWEST pipeline-projects release (Baird
+        # 2026-10-08, eia_release.py): an older release cited without it is blocked. A ref added
+        # to the sheet's own value is not a change, so an older release that states it is fine.
+        # Unknown when the snapshot can't place the cell, and then not judged.
+        vals_eia = f.get("values") or {}
+        if sheet is not None and vals_eia:
+            cur_eia = {c: sheet_value(sheet, pid, f.get("sheet_row"), c) for c in vals_eia}
+            if None not in cur_eia.values() and not is_ref_only(vals_eia, cur_eia):
+                try:
+                    from eia_release import stale_reason
+                    eia_why = stale_reason(f, changes_value=True)
+                except Exception:       # pragma: no cover -- vintages.csv absent on a bare checkout
+                    eia_why = None
+                if eia_why:
+                    why.append(eia_why)
         # A handful of tracker value columns have no paired `[ref]` column at all
         # (OtherEnglishNames, the OtherLanguage* names). A fill on one of those is
         # legitimately ref-less and merges fine as a FILL carrying only values — it is

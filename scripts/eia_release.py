@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """The newest EIA Natural Gas Pipeline Projects release, and refs that cite an older one.
 
-RULE (Baird 2026-10-08): a value researched from EIA's pipeline-projects workbook is read from,
-and cited to, the NEWEST release. An older release may sit beside the newest one (history: the
-first release showing `Completed` bounds the in-service year), never in place of it. The one
-exception is a project the newest release does not list at all; the note then says so in words,
-naming that release ("not listed in the August 2026 EIA release"). P5905 Blackfin showed why:
-a start year read from an older release (2026) would have overwritten the Aug-2026 value (2027).
+RULE (Baird 2026-10-08): a sheet value is CHANGED on EIA's pipeline-projects workbook only when
+the NEWEST release states a different value, and the change cites that release. When the newest
+release states the sheet's value, or no longer lists the project, nothing changes and no ref is
+owed. An older release may sit beside the newest one (history: the first release showing
+`Completed` bounds the in-service year), never in place of it. P5905 Blackfin showed why: a start
+year read from an older release (2026) would have overwritten the Aug-2026 value (2027).
+
+A project that DROPS OFF the list is itself a finding: EIA keeps even cancelled projects listed,
+so one missing from the newest release with no renamed successor there (`dropped()`) is an
+existence question for its GEM row (a validity concern, possibly a deletion), never silence.
 
     python scripts/eia_release.py            # newest local release, and whether EIA has a newer one
     python scripts/eia_release.py --fetch    # download any newer release, record it, re-run prepare.py
     python scripts/eia_release.py --offline  # local only, no network
+    python scripts/eia_release.py --dropped  # projects missing from the newest release with no successor there
 
 Exit 1 when EIA lists a release that is not in sources/eia_pipeline_projects/raw/ (without --fetch).
 Imported by check_shard_coverage.py (blocking), sweep_gates.py (gate P) and eia_crosswalk.py
@@ -82,46 +87,88 @@ def latest() -> dict:
             "label": f"{_MONTH_NAMES[int(m) - 1]} {y}"}
 
 
-def _says_not_in_latest(notes: str, lt: dict) -> bool:
-    """The note says, in words, that the newest release does not list the project."""
-    if not lt:
-        return False
-    y, m = lt["release"].split("-")
-    name = _MONTH_NAMES[int(m) - 1]
-    when = rf"(?:{name}|{name[:3]})\.?\s*{y}"
-    for sent in re.split(r"(?<=[.;])\s+", notes or ""):
-        if re.search(when, sent, re.I) and re.search(
-                r"\b(?:not|no longer|absent|missing|drops?|dropped|omits?|omitted)\b", sent, re.I):
-            return True
-    return False
-
-
-def stale_refs(rec: dict) -> list[str]:
-    """Refs on a record that cite an OLDER EIA release with the newest one not cited beside them
-    and no note saying the newest release does not list the project. [] when the record is fine."""
+def stale_refs(rec: dict, changes_value: bool = True) -> list[str]:
+    """Older-release EIA refs on a record that CHANGES a sheet value without citing the newest
+    release. A record that only adds a ref to the sheet's own value is never stale: an older
+    release that states that value is a fine ref, and the newest one is not owed. [] when fine."""
     lt = latest()
-    if not lt:
+    if not lt or not changes_value:
         return []
     refs = [u for u in (rec.get("proposed_refs") or []) if isinstance(u, str)]
     cited = {release_of_url(u) for u in refs} - {None}
     if not cited or lt["release"] in cited:
         return []
-    old = [u for u in refs if (release_of_url(u) or "9999") < lt["release"]]
-    if not old or _says_not_in_latest(str(rec.get("researcher_notes") or ""), lt):
-        return []
-    return old
+    return [u for u in refs if (release_of_url(u) or "9999") < lt["release"]]
 
 
-def stale_reason(rec: dict) -> str | None:
+def stale_reason(rec: dict, changes_value: bool = True) -> str | None:
     """The blocking message for check_shard_coverage.py, or None."""
-    old = stale_refs(rec)
+    old = stale_refs(rec, changes_value)
     if not old:
         return None
     lt = latest()
     names = ", ".join(sorted({u.rsplit("/", 1)[-1] for u in old}))
-    return (f"cites an older EIA release ({names}) without the newest, {lt['file']} -- read the value "
-            f"from the {lt['label']} release and cite {lt['url']} (an older release may sit beside it "
-            f"for history); if the {lt['label']} release does not list the project, say so in the notes")
+    return (f"changes a sheet value on an older EIA release ({names}) without the newest, {lt['file']}. "
+            f"Change a value from EIA only when the {lt['label']} release states a different value from the "
+            f"sheet; then stage that value and cite {lt['url']}. If the {lt['label']} release states the "
+            f"sheet's value or no longer lists the project, nothing changes (a project that dropped off the "
+            f"list is an existence question: stage a validity concern). If another source supports the "
+            f"change, cite that source and leave the older EIA release out")
+
+
+_NAME_NOISE = re.compile(r"\b(?:project|pipeline|expansion|the|phase|formerly|see|and)\b|[^a-z0-9 ]")
+_GENERIC = {"gas", "natural", "lateral", "loop", "storage", "header", "compressor", "station", "line",
+            "system", "upgrade", "interconnect", "connector", "extension", "mainline", "energy", "hub",
+            "i", "ii", "iii", "north", "south", "east", "west", "texas", "louisiana", "new", "co", "llc"}
+
+
+def _clean(s: str) -> str:
+    """Lowercased name without noise words; parenthesized text is KEPT ("(formerly Warrior Pipeline)")."""
+    return " ".join(_NAME_NOISE.sub(" ", str(s or "").lower()).split())
+
+
+def _dockets(s: str) -> set[str]:
+    return {re.sub(r"\s|-000$", "", d.upper()) for d in re.findall(r"\b(?:CP|RP|PF)\s?\d{2}-\d+(?:-000)?", str(s or ""), re.I)}
+
+
+def _states(s: str) -> set[str]:
+    return {x.strip().upper() for x in re.split(r"[,;/ ]+", str(s or "")) if x.strip()}
+
+
+def _same_project(a: str, b: str) -> bool:
+    """Near-identical names, or one name's distinctive words all inside the other's."""
+    from rapidfuzz import fuzz
+    if not a or not b:
+        return False
+    if fuzz.ratio(a, b) >= 85:                      # Kosci Junction ~ Kosciusko Junction
+        return True
+    ta, tb = set(a.split()) - _GENERIC, set(b.split()) - _GENERIC
+    small, big = sorted((ta, tb), key=len)
+    return bool(small) and small <= big            # Warrior ~ Hugh Brinson (formerly Warrior)
+
+
+def dropped(lat=None) -> dict:
+    """{project_key: last_release} for EIA projects missing from the newest release with no
+    successor there: no project in the newest release shares a FERC docket, or a near-identical
+    name in an overlapping state. EIA re-keys rows constantly ("Warrior Pipeline" became "Hugh
+    Brinson Pipeline (formerly Warrior Pipeline)", "Kosci Junction" became "Kosciusko Junction",
+    a project splits into phases), so a plain key diff overstates drop-offs about tenfold.
+    `lat` is data/eia_projects_latest.csv as records (read when None)."""
+    if lat is None:
+        with (SRC / "data" / "eia_projects_latest.csv").open(newline="", encoding="utf-8") as f:
+            lat = list(csv.DictReader(f))
+    newest = max(r["last_release"] for r in lat)
+    cur = [(_clean(r["project_name"]), _states(r["state_s"])) for r in lat if r["last_release"] == newest]
+    cur_dk = set().union(*(_dockets(r["docket_number"]) for r in lat if r["last_release"] == newest))
+    out = {}
+    for r in lat:
+        if r["last_release"] == newest or _dockets(r["docket_number"]) & cur_dk:
+            continue
+        q, st = _clean(r["project_name"]), _states(r["state_s"])
+        if any(_same_project(q, n) and (not st or not s or st & s) for n, s in cur):
+            continue
+        out[r["project_key"]] = r["last_release"]
+    return out
 
 
 # ---------------------------------------------------------------- remote
@@ -209,7 +256,19 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--fetch", action="store_true", help="download any newer release and re-run prepare.py")
     ap.add_argument("--offline", action="store_true", help="report the newest local release only")
+    ap.add_argument("--dropped", action="store_true",
+                    help="list projects missing from the newest release with no successor there")
     a = ap.parse_args()
+    if a.dropped:
+        with (SRC / "data" / "eia_projects_latest.csv").open(newline="", encoding="utf-8") as f:
+            lat = {r["project_key"]: r for r in csv.DictReader(f)}
+        d = dropped(list(lat.values()))
+        for k, last in sorted(d.items(), key=lambda t: t[1], reverse=True):
+            r = lat[k]
+            print(f"{last}\t{r['status']}\t{r['project_name']} -- {r['pipeline_operator_name']} "
+                  f"({r['state_s']}; docket {r['docket_number'] or '-'})")
+        print(f"{len(d)} projects missing from {latest().get('label')} with no successor", file=sys.stderr)
+        return 0
     if a.offline:
         print(latest().get("file") or "no local release recorded")
         return 0

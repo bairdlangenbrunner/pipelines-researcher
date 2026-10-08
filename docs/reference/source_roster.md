@@ -220,7 +220,7 @@ miles, diameter, in-service year, status and FERC docket. **Every release from M
 2018 on is checked into `sources/eia_pipeline_projects/raw/`** — don't re-download
 the undated `EIA-NaturalGasPipelineProjects.xlsx` per row; read the local file and
 cite the *dated* release URL that states the value, with sheet + Excel row in the
-note. **Values come from the NEWEST release (Baird 2026-10-08):** run `python scripts/eia_release.py --fetch` first to pull anything EIA has posted since, read the value from the newest release, and cite it; an older release only sits beside it for history. `prepare.py` builds a long table plus a latest-with-history table (the release
+note. **Values change only on the NEWEST release (Baird 2026-10-08):** run `python scripts/eia_release.py --fetch` first to pull anything EIA has posted since; change a sheet value only when the newest release states a different one, and cite it (an older release only sits beside it for history). A project that drops off the newest release is an existence question, not silence. `prepare.py` builds a long table plus a latest-with-history table (the release
 a project first shows `Completed`/`Cancelled` bounds its year), and
 `scripts/eia_crosswalk.py` pre-matches GEM US gas rows to EIA projects and lists the
 value disagreements — run it at the start of each US gas batch. **All releases are
