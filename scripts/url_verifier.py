@@ -45,6 +45,7 @@ from __future__ import annotations
 import argparse
 import codecs
 import difflib
+import os
 import re
 import sys
 import unicodedata
@@ -84,14 +85,14 @@ _UA = "Mozilla/5.0 (compatible; pipelines-researcher/1.0)"
 
 # UA for fetching gem.wiki itself (harvest_wiki_citations.py, wiki_alignment.py) —
 # NOT for external sites, which need the browser-ish _UA above to get past their own
-# bot walls. The leading "baird-wiki" token is GEM's firewall identity for this
-# traffic, and the WAF-bypass key whenever the zone runs Cloudflare Under Attack Mode
-# (it did 2026-08-07 → ~08-11; off again since, but the token stays — if gem.wiki
-# starts 403ing "cf-mitigated: challenge", check the UA first). Deliberately
-# byte-identical to goit-ggit-data-ops/gem-wiki/gemwiki.py's USER_AGENT so both repos
-# present as one client in GEM's firewall logs — keep them in sync, and see that repo's
-# gem-wiki/README.md → Auth for the full writeup.
-WIKI_UA = "baird-wiki/1.0 (baird.langenbrunner@globalenergymonitor.org)"
+# bot walls. GEM's infra admin recognizes a specific leading token in this string in
+# the firewall logs (a Cloudflare rule keyed on it let this traffic through Under Attack
+# Mode, 2026-08-07 to 08-11). That token is a credential, so it is never committed: it is
+# read from the GEMWIKI_USER_AGENT env var, the same one goit-ggit-data-ops/gem-wiki/
+# gemwiki.py reads, so both repos present as one client. Ask Baird for the value. With
+# the variable unset, fetches still work while Cloudflare is quiet; if gem.wiki starts
+# 403ing "cf-mitigated: challenge", set it first.
+WIKI_UA = os.environ.get("GEMWIKI_USER_AGENT", "pipelines-researcher/1.0 (gem.wiki client)")
 
 # per-domain politeness floor for verify_many (seconds between hits to one host)
 _MIN_INTERVAL = 1.0
@@ -775,10 +776,10 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # family as the insecure_tls retry above — not evidence the filing is gone — so retry
     # once, loudly labeled, instead of leaving every SEC citation in the US batch unusable.
     sec_retry = False
-    if r.status_code == 403 and "sec.gov" in (url or "").lower():
+    _sec_ua = os.environ.get("GEM_SEC_UA", "").strip()   # each user's own name + email; never committed
+    if r.status_code == 403 and "sec.gov" in (url or "").lower() and _sec_ua:
         try:
-            r2 = requests.get(url, timeout=timeout,
-                               headers={"User-Agent": "pipelines-researcher (research contact: baird.langenbrunner@globalenergymonitor.org)"})
+            r2 = requests.get(url, timeout=timeout, headers={"User-Agent": _sec_ua})
             if r2.status_code == 200:
                 r = r2
                 sec_retry = True

@@ -98,7 +98,7 @@ def fetch_page(url: str, cache_dir: Path, pid: str, refetch: bool = False) -> di
         return {"ok": False, "reason": "no wiki URL", "cached": False}
     try:
         import requests
-        # WIKI_UA, not _UA: on gem.wiki the "baird-wiki" token is our
+        # WIKI_UA, not _UA: on gem.wiki the agreed leading token is our
         # firewall identity. See url_verifier.WIKI_UA.
         r = requests.get(url, timeout=25, headers={"User-Agent": WIKI_UA})
     except Exception as e:  # noqa: BLE001

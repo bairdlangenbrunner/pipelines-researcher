@@ -51,7 +51,7 @@ def harvest_page(url: str, timeout: int = 25) -> dict:
     except ImportError as e:
         return {"ok": False, "status": None, "reason": f"missing dep: {e.name} (pip install -r requirements.txt)", "citations": []}
     try:
-        # WIKI_UA, not _UA: this fetches gem.wiki, where the "baird-wiki"
+        # WIKI_UA, not _UA: this fetches gem.wiki, where the agreed
         # token is our firewall identity. See url_verifier.WIKI_UA.
         r = requests.get(url, timeout=timeout, headers={"User-Agent": WIKI_UA})
     except Exception as e:

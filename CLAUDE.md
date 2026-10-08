@@ -147,17 +147,8 @@ For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
 `docs/reference/gem_schema.md`.
 
 ### Fetching gem.wiki needs a specific User-Agent
-
-`harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it —
-standing rule 1). The gem.wiki zone ran Cloudflare **Under Attack Mode** 2026-08-07
-→ ~08-11 (every non-`baird-wiki` UA got `403` `cf-mitigated: challenge`); UAM is
-**off again** (verified 2026-08-11), but the `baird-wiki` UA token stays — it is the
-identity GEM's infra admin knows in the firewall logs, and the WAF-bypass key if UAM
-returns. If gem.wiki fetches start 403ing again, check the UA first.
-
-- Use `url_verifier.WIKI_UA` for gem.wiki. It is **byte-identical** to
-  `USER_AGENT` in `goit-ggit-data-ops/gem-wiki/gemwiki.py`, deliberately: both repos
-  present as one client in GEM's firewall logs. **Change one, change the other.**
+`harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it, standing rule 1). The gem.wiki zone ran Cloudflare **Under Attack Mode** 2026-08-07 to about 08-11, and the sanctioned way through was a User-Agent carrying a token GEM's infra admin recognizes. UAM is **off again** (verified 2026-08-11), but that token stays the identity the admin knows in the firewall logs. It is a credential and is never committed: `url_verifier.WIKI_UA` reads it from the `GEMWIKI_USER_AGENT` env var (ask Baird for the value). If gem.wiki fetches start 403ing `cf-mitigated: challenge`, check that the variable is set.
+- `goit-ggit-data-ops/gem-wiki/gemwiki.py` reads the same variable, so both repos present as one client in GEM's firewall logs.
 - Do **not** use `WIKI_UA` for external sites — they need the browser-ish `_UA`, and
   the token means nothing off GEM's zone.
 - GEM's infra admin asked for ~5 req/sec against gem.wiki (part of the standing

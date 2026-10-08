@@ -5,9 +5,9 @@
 **Severity:** degraded two committed workflow legs; no data was wrong as a result.
 
 > **STATUS — read this first.** Fixed 2026-08-10; Under Attack Mode itself was switched
-> off by 2026-08-11 (any UA passes again), but keep the `baird-wiki` UA — it is the
+> off by 2026-08-11 (any UA passes again), but keep the the agreed token UA — it is the
 > firewall identity and the bypass if UAM returns. During the incident the gem.wiki zone
-> ran Cloudflare in Under Attack Mode, and a WAF rule keyed on a leading **`baird-wiki`**
+> ran Cloudflare in Under Attack Mode, and a WAF rule keyed on a leading the agreed token
 > User-Agent token was what let a script through — no allowlist or token needed, just the
 > right UA. Added
 > as `url_verifier.WIKI_UA` and wired into `harvest_wiki_citations.py` and
@@ -72,7 +72,7 @@ Two committed legs depend on fetching gem.wiki:
 ## Recommended next steps (Baird's call) — item 3 still stands
 
 1. ~~**Confirm whether this is intentional.**~~ **Answered:** it is deliberate (Under
-   Attack Mode), and the sanctioned way through is the `baird-wiki` UA token, already
+   Attack Mode), and the sanctioned way through is the the agreed token UA token, already
    in use by the sibling `goit-ggit-data-ops` repo. No allowlist request needed.
 2. ~~Authenticated MediaWiki API fallback~~ — not needed.
 3. **Still worth doing: make both scripts fail loudly.** A well-formed all-`UNPARSED`

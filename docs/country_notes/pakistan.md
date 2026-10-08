@@ -138,7 +138,7 @@ the cancelled review recommends NIGEC, and possibly ISGS on the Pakistan side.
   `inferred`/`confirmed`. Corrected repo-wide 2026-08-07;
   `notes/escalation-2026-08-07-shelvedcancelledtype-vocab.md`.
 - **gem.wiki 403'd for the 08-07 pass and was re-read on 08-10** (the WAF passes a UA
-  leading with the `baird-wiki` token — `WIKI_UA`, shared by `url_verifier.py`,
+  leading with an agreed token — `WIKI_UA`, read from `GEMWIKI_USER_AGENT` and shared by `url_verifier.py`,
   `wiki_alignment.py` and `harvest_wiki_citations.py`, and deliberately byte-identical to
   `goit-ggit-data-ops/gem-wiki/gemwiki.py`; keep the two in sync). Both wiki legs were
   re-run and the packet carries the real results — **99 records over 70 rows**

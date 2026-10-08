@@ -269,7 +269,7 @@ auto-update and must never be written.
   stripped). Backup: `notes/sheet-write-2026-08-07-libya-gas-intisar-wikilinks.csv`.
   - The moves were blocked for most of the day by Cloudflare **Under Attack Mode** on the
     gem.wiki zone (a traffic flood took the site down earlier that week). Fix was a WAF
-    bypass keyed on the User-Agent token **`baird-wiki`** — the UA string is load-bearing,
+    bypass keyed on an agreed User-Agent token (from `GEMWIKI_USER_AGENT`, never committed) — the UA string is load-bearing,
     full writeup in `goit-ggit-data-ops/gem-wiki/README.md` → Auth. `move_page()` was
     added to `gemwiki.py` in the same pass.
   - **Page bodies still say "Intesar"** — a move renames only. The bolded lead sentence

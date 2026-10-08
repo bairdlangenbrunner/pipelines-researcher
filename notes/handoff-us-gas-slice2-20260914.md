@@ -845,7 +845,7 @@ the entry stays as the record of what was searched.
   changes the session cwd). Foreground `sleep` is blocked - use `run_in_background`.
 - Gas snapshot `data/GGIT_gas_snapshot_20260910.csv` (**header=2**); operators tab
   `data/GEM_operators_owners_snapshot_20260910.csv` (**header=1**).
-- SEC EDGAR is never blocked: UA `Baird Langenbrunner baird.langenbrunner@globalenergymonitor.org`
+- SEC EDGAR is never blocked: UA from `GEM_SEC_UA` (your own name + email, set in the shell)
   (url_verifier already retries with it). Pipeline:
   `data.sec.gov/submissions/CIK##########.json` -> `filings.recent` ->
   `sec.gov/Archives/edgar/data/<int(cik)>/<accession-no-dashes>/index.json` -> fetch,
