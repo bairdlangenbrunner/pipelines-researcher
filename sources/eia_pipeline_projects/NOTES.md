@@ -34,6 +34,8 @@ geometry, so it has no `manifest.yml`, and `reconcile.py` does not run on it. It
 
 EIA posts a new file roughly quarterly at `https://www.eia.gov/naturalgas/pipelines/<file>`.
 
+**Run `python scripts/eia_release.py --fetch` before any EIA research.** It reads the release links on EIA's natural gas data page (`https://www.eia.gov/naturalgas/data.php`), downloads any release newer than the newest in `raw/`, records it in `vintages.csv` (and refreshes the undated twin), and re-runs `prepare.py`. Without `--fetch` it only reports, and exits 1 when EIA has a release we lack. `eia_crosswalk.py` calls it before matching. The steps below are what it does, for a manual pull.
+
 **File names are irregular.** Check EIA's pipelines page for the real link rather than guessing:
 - most follow `EIA-NaturalGasPipelineProjects_<Mon><YYYY>.xlsx`
 - `_July2019` and `_March2020` spell the month out
@@ -50,9 +52,7 @@ After downloading, re-run `python sources/eia_pipeline_projects/prepare.py`.
 
 - **One origin.** Every release is EIA. Two releases agreeing is not two sources: pair EIA with a
   FERC filing or an operator/regulator document for rule 4's second source.
-- **Cite the dated release that states the value.** Use a specific file URL, not the undated
-  one (it changes every quarter). Put the sheet and Excel row in `note`, and pass `--name` with
-  the EIA project name to `url_verifier` (it reads xlsx cell text).
+- **Read and cite the NEWEST release (Baird 2026-10-08).** Every value taken from EIA comes from the newest dated release (August 2026 as of 2026-10-08) and cites that file's URL, not the undated one (it changes every quarter). An older release may be cited beside the newest for history, never instead of it. If the newest release does not list the project or does not give the value, say so in the notes, naming that release ("not listed in the August 2026 EIA release"). `scripts/eia_release.py` holds the check; `check_shard_coverage.py` blocks an older release cited alone, and `sweep_gates.py` gate P reports it at delivery. Put the sheet and Excel row in `note`, and pass `--name` with the EIA project name to `url_verifier` (it reads xlsx cell text).
 - **History is the point.**
   - The first release showing `Completed` or `Cancelled` bounds the in-service or cancellation
     year.

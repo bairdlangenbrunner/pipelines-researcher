@@ -75,6 +75,11 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            parent, fuzzy, same stem under another form) — decide by hand,
                            never auto-flatten (SPV ruling, gem_schema.md). Blocking twin:
                            check_shard_coverage.py. Rules: docs/reference/owner_style.md.
+  P  EIA RELEASE        -- a record citing an OLDER EIA pipeline-projects release without the
+                           newest one beside it, and no note saying the newest does not list the
+                           project (Baird 2026-10-08: EIA values come from the newest release;
+                           P5905's start year read from an older one would have overwritten
+                           2027 with 2026). Blocking twin: check_shard_coverage.py.
 """
 from __future__ import annotations
 
@@ -415,8 +420,17 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                 if st.candidates and st.basis in ("rules", "stem"):
                     O_cand.append((pid, col, st.styled, st.candidates[0]["name"]))
 
+    try:
+        from eia_release import latest as _eia_latest, stale_refs as _eia_stale
+        P = [(r.get("project_id"), r.get("ref_col"), sorted({u.rsplit("/", 1)[-1] for u in _eia_stale(r)}))
+             for r in res if _eia_stale(r)]
+        P_newest = _eia_latest().get("file")
+    except Exception as e:      # pragma: no cover -- vintages.csv absent
+        P, P_newest = [], f"(eia_release unavailable: {e})"
+
     return {
         "records": len(res), "rows": len(by_pid),
+        "P_older_eia_release": P, "P_newest_eia": P_newest,
         "M_prose_in_value_cell": M,
         "N_not_a_sheet_column": N, "N_skipped": N_skipped,
         "O_owner_style": O, "O_owner_no_legal_form": O_noform,
@@ -527,6 +541,9 @@ def report(out: dict, dominant_min: int) -> None:
         sec("O'' owner names with an unadopted canonical candidate (alias / fuzzy / form conflict — decide by hand)",
             out["O_owner_candidates_not_adopted"], "no unadopted candidates",
             lambda r: f"{r[0]} {r[1]}: {r[2]!r} ~ {r[3]!r}", cap=20)
+    sec(f"P  older EIA release cited without the newest ({out.get('P_newest_eia')})",
+        out.get("P_older_eia_release", []), "every EIA ref is to the newest release (or says the newest omits the project)",
+        lambda r: f"{r[0]} {r[1]}: {', '.join(r[2])}", cap=30)
     sec("K  REFS_ADDED on exactly one verified ref (informational: green, not yet independent)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",
         lambda r: f"{r[0]} {r[1]}", cap=10)

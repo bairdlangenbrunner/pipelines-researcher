@@ -22,6 +22,7 @@ import csv
 import datetime as dt
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -29,6 +30,7 @@ import pandas as pd
 from rapidfuzz import fuzz
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import eia_release  # noqa: E402
 from normalize import gem_diameter_set, parse_diameter_set, parse_number  # noqa: E402
 
 SRC = Path(__file__).resolve().parent.parent / "sources" / "eia_pipeline_projects"
@@ -138,7 +140,17 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--pids")
     ap.add_argument("--md-dir")
+    ap.add_argument("--offline", action="store_true", help="skip the check of EIA's site for a newer release")
     a = ap.parse_args()
+
+    # EIA values come from the NEWEST release (Baird 2026-10-08): fetch one EIA has posted
+    # since the last pull, and rebuild data/ when it predates the newest local release.
+    newest = eia_release.ensure_current(do_fetch=not a.offline, quiet=True) if not a.offline else eia_release.latest()
+    lat_csv = SRC / "data" / "eia_projects_latest.csv"
+    if newest and (not lat_csv.exists() or newest["release"] not in set(
+            pd.read_csv(lat_csv, usecols=["last_release"], dtype=str)["last_release"])):
+        subprocess.run([sys.executable, str(SRC / "prepare.py")], check=True)
+    print(f"EIA newest release: {newest.get('file')}", file=sys.stderr)
 
     latest = pd.read_csv(SRC / "data" / "eia_projects_latest.csv", keep_default_na=False,
                          na_values=[], dtype=str)
@@ -298,9 +310,12 @@ def render_md(pid, v, releases) -> str:
          "without checking scope); `possible` = weaker name match with state + operator support. "
          "These are CANDIDATES from docket / name / operator / state matching. Confirm each is really "
          "this row's project (an operating mainline matches its own expansions; an expansion's capacity "
-         "is INCREMENTAL, not the line's total) before using it. All EIA releases are ONE origin. Cite the "
-         "SPECIFIC dated release whose row states the value (the `cite_url` below, or an older release's "
-         "file for a historical value), name sheet + Excel row in `note`, and run url_verifier with "
+         "is INCREMENTAL, not the line's total) before using it. All EIA releases are ONE origin. Read every "
+         f"value from the NEWEST release, {eia_release.latest().get('file')}, and cite that file (rule, "
+         "2026-10-08); an older release may be cited BESIDE it for history (the year a project first "
+         "showed Completed), never instead of it. When a candidate's `cite` below is an older file, the "
+         f"newest release does not list that project: say so in the notes (\"not listed in the "
+         f"{eia_release.latest().get('label')} EIA release\"). Name sheet + Excel row in `note`, and run url_verifier with "
          "`--name` carrying the EIA project name as an alias. A `differs` line below is OWED a finding: a "
          "spec concern with `contested` and the value your sources support, or a record of why EIA is the "
          "wrong comparison (different scope/phase). A `missing_on_sheet` line is a fill candidate.",
