@@ -155,7 +155,9 @@ Every staging dir gets two sidecars, committed with the batch:
   P6011's ProposalMonth 6 → 9 accept as `…|ProposalYear`; `carry_forward` and `decisions.py` still
   understand that legacy form. `basis` = `review_data.basis(line)`, the hash of the backend
   cells the call was made against, which `publish.py` (drift) and `push.py` (stale) compare.
-  `decision` is `accept|hold|reject|suggest`; `ts` is ISO-8601 with timezone, stamped by the
+  `decision` is `accept|hold|reject|suggest`; `note` is the reviewer's optional why: a note box appears
+  beside the buttons once a line has an accept, hold, reject or taken candidate, and editing it
+  re-saves that call (a suggestion takes its note in its own form); `ts` is ISO-8601 with timezone, stamped by the
   server along with `reviewer` (the client cannot set either). **A person is recorded by first +
   last initials, never a full name** (Baird 2026-10-01): `store.initials()` turns
   "Baird Langenbrunner" and `baird.langenbrunner@globalenergymonitor.org` into `BL` on every
@@ -396,6 +398,7 @@ python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymo
   3. Rebuild the page and publish it to the same link, so the reviewer sees the decisions as
      recorded. Accepted cells reach the sheet only through `push.py` (plan, ask Baird, `--apply`).
 - **push to log (2026-10-08).** The header button (labeled "push to log"; its info box links to the store spreadsheet) saves the viewer's decisions to the shared log and writes one request document, `requests/<uid>~<device>~push` (`status: "requested"`, `seq`, `records`). It never touches the ledger or the sheet itself. A Claude Code session on the work profile checks the `requests` collection (ArtifactData `list`), and for a request newer than the last one handled it runs the three steps above (list `logs`, `import_log.py` dry run then real, `push.py` plan), shows Baird the plan, and runs `push.py --apply` only after Baird says yes for that plan. The watcher only exists while a session runs it (a session cron); with none running, say "pull" in a session. Rebuilding and republishing is still a separate step.
+- **Filters survive a reload (2026-10-08).** The route (filters plus the open item) is kept in this browser's localStorage per scope (`review-route:<scope>`) and restored on load when the URL carries no route, because a published artifact's frame does not keep the hash. A link with a route in it still wins. Takes effect on the next build and publish.
 - The page has no refresh and no sheet push. `push.py` stays the only route to the backend sheet.
 
 ## Google version (phase 2)

@@ -865,8 +865,8 @@
         ' aria-pressed="' + on + '">accept candidate' + (rivals.length > 1 ? " " + esc(r.value) : "") + "</button>";
     }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true"' + tipAttrs(NOT_YET) : "") +
       ' aria-pressed="' + (cur(l) === "suggest" && !l.rival) + '">suggest</button>' + (cur(l) ? '<button type="button" class="ghost" data-undo="1">undo</button>' : "") +
-      '<input type="text" class="dnote" data-dnote="' + l._i + '" autocomplete="off" placeholder="note: why (optional)" aria-label="note on this call, optional"' +
-      ' value="' + esc(noteOf(l)) + '"' + (dis ? " disabled" : "") + ">" +
+      (noteBox(l) ? '<input type="text" class="dnote" data-dnote="' + l._i + '" autocomplete="off" placeholder="note: why (optional)" aria-label="note on this call, optional"' +
+      ' value="' + esc(noteOf(l)) + '"' + (dis ? " disabled" : "") + ">" : "") +
       '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
     h += detailsHtml(l);
     return h;
@@ -1257,9 +1257,10 @@
     if (inp && call === it.call && note === (it.call_note || "")) return;
     saveItem(it, {key: it.key, call: call, note: note});
   }
-  // The note box on a line: optional, goes into the ledger with the call. Typed before a call it
-  // waits in S.notes and rides along with the next accept / hold / reject / candidate / suggest;
-  // edited after a call it re-saves that same call with the new note.
+  // The note box on a line: optional, it appears once the line has an accept / hold / reject or a
+  // taken candidate (a suggestion has the note in its own form). Edited, it re-saves that call with
+  // the new note; text still in it when another call is pressed (S.notes) goes with that call.
+  function noteBox(l) { var d = cur(l); return d === "accept" || d === "hold" || d === "reject" || (d === "suggest" && !!l.rival); }
   function noteOf(l) { return l.key in S.notes ? S.notes[l.key] : (cur(l) ? l.decision_note || "" : ""); }
   function onNoteInput(e) {
     var t = e.target.closest("input[data-dnote]");
@@ -1274,7 +1275,7 @@
     var l = LINES[+t.getAttribute("data-dnote")], d = l && cur(l);
     if (!l) return true;
     S.notes[l.key] = t.value;
-    if (!d) { setStat(l._i, blankv(t.value) ? "" : "the note saves with your call"); return true; }
+    if (!d) return true;
     if (t.value === (l.decision_note || "")) { delete S.notes[l.key]; return true; }
     if (d === "suggest" && !l.rival && blankv(l.suggested_value) && blankv(t.value)) { setStat(l._i, "a suggestion with no value needs a note", true); return true; }
     var rec = {key: l.key, decision: d, note: t.value};
@@ -1291,7 +1292,7 @@
     if (S.tab === "items") return toast("the Items tab takes calls, not change decisions: press i to go back to the changes");
     if (!l) return;
     dropNoteSave();
-    save(l, {key: l.key, decision: decision, note: noteOf(l)}, advance);
+    save(l, {key: l.key, decision: decision, note: noteBox(l) ? noteOf(l) : ""}, advance);
   }
   // take a concern's candidate instead of the proposal: a suggest with that value + a confirmed
   // call on the concern, in one save (store.decide)
@@ -1305,7 +1306,7 @@
       rk = rivals[0].key;
     }
     dropNoteSave();
-    save(l, {key: l.key, decision: "suggest", rival: rk, note: noteOf(l)}, advance);
+    save(l, {key: l.key, decision: "suggest", rival: rk, note: noteBox(l) ? noteOf(l) : ""}, advance);
   }
   function undoCurrent() {
     var l = LINES[S.line];
@@ -1794,9 +1795,16 @@
   }
   var NAV = window.GasNav || null;
   function curHash() { return NAV ? NAV.hash : (location.hash || ""); }
+  // The route (filters + open pipeline) is also kept in this browser, because a published artifact's
+  // frame does not keep the URL hash across a reload. Per scope; restored only when the URL carries no route.
+  function routeKey() { return "review-route:" + (D && D.scope ? [D.scope.id || "", D.scope.country || "", D.scope.commodity || ""].join("|") : ""); }
+  function savedRoute() { try { return localStorage.getItem(routeKey()) || ""; } catch (e) { return ""; } }
+  function saveRoute(h) { try { localStorage.setItem(routeKey(), h); } catch (e) { /* storage blocked */ } }
+  var RESTORED = false;
   function writeRoute(replace) {
     if (ROUTING || !D) return;
     var h = routeHash();
+    saveRoute(h);
     if (h === curHash()) return;
     if (NAV) return NAV.write(h, replace);
     try { history[replace ? "replaceState" : "pushState"](null, "", h); } catch (e) { /* file:// or blocked */ }
@@ -1804,7 +1812,9 @@
   function applyRoute() {
     ROUTING = true;
     try {
-      var m = /^#\/([^?]*)(?:\?(.*))?$/.exec(curHash()), pid = "";
+      var hash = curHash();
+      if (!RESTORED) { RESTORED = true; if (!/^#\/./.test(hash) && /^#\//.test(savedRoute())) hash = savedRoute(); }
+      var m = /^#\/([^?]*)(?:\?(.*))?$/.exec(hash), pid = "";
       FS = defaults();
       if (m) {
         pid = decodeURIComponent(m[1]);

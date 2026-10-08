@@ -23,6 +23,8 @@ in the backend, major or minor, AND none of these applies:
                       (a classification concern that only recommends a PipelineType change to
                       gathering or distribution is scoped to the PipelineType column instead:
                       Baird 2026-10-02, that is a change to suggest, not an issue); or
+                    - attribution naming PipelineName (a row filed under the wrong pipeline): blocks
+                      every owner/operator line too (Baird 2026-10-08, P7814); and
                     - attribution naming no column: blocks every owner/operator line (one that
                       names columns, e.g. Owner1, blocks only those columns: Baird 2026-10-05,
                       P0159's Owner1 concern said the Operator was unaffected); or
@@ -128,6 +130,11 @@ def blockers(pipes):
                 else:
                     for c in cols:
                         b["cols"].setdefault(c, why)
+                    if t == "attribution" and "PipelineName" in cols:
+                        # a row filed under the wrong pipeline (Baird 2026-10-08, P7814: a Rockies Express
+                        # project on a Transco row): the concern may not name Operator, but every
+                        # owner/operator line on that row is suspect
+                        b["oo"].append(why + ":PipelineName")
             elif k == "flag" and i.get("call") not in ("dismissed", "noted") and i.get("check") not in NONBLOCK_FLAGS:
                 chk = i.get("check")
                 m = re.match(r"\s*(?:orphan ref: )?(\w+)", i.get("detail") or "")

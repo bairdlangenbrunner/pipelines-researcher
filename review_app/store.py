@@ -204,10 +204,11 @@ def overlay(data, dirs=None, root=None):
                 o["decided_at"] = rec.get("ts") if live else None
                 if live and live.get("decision") == "suggest" and grp == "lines":
                     o["suggested_value"] = live.get("suggested_value", "")
-                    o["decision_note"] = live.get("note", "")
                     o["rival"] = live.get("rival") or None
                 elif grp == "lines":
                     o["rival"] = None
+                if grp == "lines":      # the note a person gave with any call (never a machine record's)
+                    o["decision_note"] = live.get("note", "") if live and o["reviewed"] else ""
                 if grp == "lines" and o.get("covers"):
                     # a covered record (review_data._fold_status_covers) is decided with its
                     # line; `uncovered` names the ones whose own record says something else
