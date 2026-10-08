@@ -606,7 +606,7 @@ per-value confirmation, take a skeptical pass on every pipeline and flag:
   (`review_app/clean_accepts.py` still treats a type-only classification concern as scoped to
   `PipelineType` so it never holds the pipeline's other lines). Raise a concern only when the
   question is genuinely open (a person must confirm, or it may not be pipe at all).
-- **attribution** — wrong owner/operator, province, FuelSource, or endpoint;
+- **attribution** — wrong owner/operator, province, FuelSource, or endpoint. When the evidence supports a specific corrected value (an owner that was acquired, a wrong province), ALSO stage the change as its own FILL record with its refs and the old value in `researcher_notes`, so the reviewer can accept it as a major change next to the item; a concern with the fix only in its `recommendation` leaves nothing to accept (Baird 2026-10-08, P0164 Owner2). The same holds for any concern type whose evidence names the corrected value.
 - **spec** — length/diameter/capacity that independent sources contradict.
   Not a spec concern: a past `FIDYear` on a `Pre-FID` row — `FIDYear` records planned years too
   (`gem_schema.md`, FIDYear gotcha).
