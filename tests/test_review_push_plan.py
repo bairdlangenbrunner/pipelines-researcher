@@ -227,3 +227,61 @@ def test_a_rival_suggest_pushes_the_concerns_candidate_cell_with_the_concerns_re
     assert not any(p["column"] in ln["proposed_values"] for p in mine if p["column"] not in (col, ln["ref_col"]))
     if ln.get("ref_col"):
         assert "https://example.org/rival" in next(p for p in mine if p["column"] == ln["ref_col"])["after"]
+
+
+# ---------------------------------------------------------------- owner-style (tracker-wide) lines
+@pytest.fixture
+def style_world(world, monkeypatch):
+    """The review-app batch with the tracker-wide owner-style scope included beside Russia gas."""
+    s = world
+    dirs = [s["qc"], s["deep"], s["style"]]
+    dc = {s["qc"].resolve(): "Russia", s["deep"].resolve(): "Russia", s["style"].resolve(): "*"}
+    monkeypatch.setattr(push.scopes, "included", lambda commodity, _c: ["*", "Russia"])
+    monkeypatch.setattr(push.review_data, "_country_dirs", lambda *a, **k: (dirs, dc))
+    real_build = review_data.build
+    monkeypatch.setattr(push.review_data, "build", lambda dirs_, c, cm, root=None, dir_country=None, data_dir=None:
+                        real_build(dirs_, c, cm, data_dir=s["data"], root=root, dir_country=dir_country))
+    data, _ = real_build(dirs, ["Russia", "*"], "gas", data_dir=s["data"], root=s["root"], dir_country=dc)
+    data["scope"]["batch"] = True
+    s["dataset"], s["dirs"] = data, store.dir_paths(data, s["tmp"])
+    return s
+
+
+def _style_line(data, pid, col):
+    for p in data["pipelines"]:
+        if p["pid"].startswith("name:"):
+            for l in p["lines"]:
+                if l["pid"] == pid and l["column"] == col:
+                    return l
+    raise AssertionError((pid, col))
+
+
+def test_style_line_writes_its_own_pid_row_and_stamps_lastupdated_only(style_world):
+    w = style_world
+    l = _style_line(w["dataset"], "P9001", "Owner1")
+    assert push.build_plan("gas")[0] == []
+    accept(w, l)
+    plan, skipped, meta = push.build_plan("gas")
+    assert dict(skipped).get(l["key"]) is None
+    mine = [p for p in plan if l["key"] in p["lines"]]
+    assert [(p["tabkey"], p["sheet_row"], p["ProjectID"], p["column"], p["before"], p["after"], p["replaces"]) for p in mine] == \
+        [("oo", 3, "P9001", "Owner1", "OldCo", "OldCo Ltd", True)]              # the owners-tab row of P9001, the value alone
+    stamps = {p["column"]: p for p in plan if p["tabkey"] == "oo" and p["sheet_row"] == 3 and not p["lines"]}
+    assert "LastUpdated" in stamps and "Researcher" not in stamps               # style-only: the researcher stays
+    assert meta["__style_only_rows__"] == ["oo:3:P9001"] and meta["__unstyled__"] == []
+    # the clear: an accepted blank over the duplicate Owner2 empties the cell
+    c = _style_line(w["dataset"], "P9002", "Owner2")
+    accept(w, c)
+    plan, skipped, meta = push.build_plan("gas")
+    cell = next(p for p in plan if c["key"] in p["lines"])
+    assert (cell["sheet_row"], cell["column"], cell["before"], cell["after"]) == (4, "Owner2", "Dup Co", "")
+
+
+def test_style_line_is_stale_when_the_live_spelling_moved(style_world):
+    w = style_world
+    l = _style_line(w["dataset"], "P9001", "Owner1")
+    accept(w, l)
+    w["edits"][("P9001", "Owner1")] = "Old Company"
+    plan, skipped, meta = push.build_plan("gas")
+    assert not [p for p in plan if l["key"] in p["lines"]]
+    assert dict(skipped)[l["key"]].startswith("stale: Owner1 was 'OldCo', live 'Old Company'")

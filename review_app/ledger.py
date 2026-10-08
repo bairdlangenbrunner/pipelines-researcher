@@ -75,7 +75,8 @@ def scope_id(countries, commodity, batch=False):
     import staged_store
     if batch:
         return f"review-app-{commodity.lower()}"
-    slugs = [staged_store.scope_dirname(c, commodity)[: -len(commodity) - 1] for c in countries]
+    slugs = ["tracker-wide" if c == staged_store.TRACKER_WIDE else
+             staged_store.scope_dirname(c, commodity)[: -len(commodity) - 1] for c in countries]
     return "-".join(slugs) + "-" + commodity.lower()
 
 

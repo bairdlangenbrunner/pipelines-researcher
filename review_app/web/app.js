@@ -182,7 +182,8 @@
   function rowLabel(l) {
     if (l.kind === "new_row") return "new row";
     if (l.kind === "oo") {
-      return "owners tab row " + (l.sheet_row == null ? "?" : l.sheet_row) +
+      return (l.style_only ? l.pid + (l.pipeline_name ? " " + l.pipeline_name : "") + " \u00b7 " : "") +
+        "owners tab row " + (l.sheet_row == null ? "?" : l.sheet_row) +
         (l.tracker_sheet_row ? " (tracker row " + l.tracker_sheet_row + ")" : "");
     }
     return l.sheet_row == null ? "row not in snapshot" : "row " + l.sheet_row;
@@ -235,6 +236,8 @@
         LINES.push(l);
       });
       p._hay = [p.name, p.pid, p.country, p.status].concat(p.segments.map(function (s) { return s.sheet_row + " " + s.segment; }))
+        .concat(p.name_card ? p.lines.map(function (l) { return l.pid + " " + (l.pipeline_name || "") + " " + (l.countries || ""); })
+          .concat(p.name_card.aliases || [], p.name_card.entity_id || [], p.name_card.basis || []) : [])
         .join(" ").toLowerCase();
       p._rows = p.segments.map(function (s) { return s.sheet_row; });
       p._countries = p.scope_countries || [];
@@ -283,7 +286,7 @@
       if (!inRows(rows, ranges)) return false;
     }
     if (skip !== "country" && fs.country.length && !p._countries.some(function (c) { return fs.country.indexOf(c) >= 0; })) return false;
-    if (fs.fuel.length && fs.fuel.indexOf(p._commodity) < 0) return false;
+    if (fs.fuel.length && p._commodity !== "both" && fs.fuel.indexOf(p._commodity) < 0) return false;
     if (q && p._hay.indexOf(q) < 0) return false;
     return true;
   }
@@ -346,6 +349,8 @@
   // the batch countries still shown; an all-decided country the build hid is listed apart (hiddenCountries)
   function countryStatus() { return (D.scope && D.scope.country_status) || []; }
   function hiddenCountries() { return countryStatus().filter(function (c) { return c.hidden; }).map(function (c) { return c.country; }); }
+  // the tracker-wide scope is the country "*" (owner-style stores: one card per spelling, both trackers)
+  function cname(k) { return k === "*" ? "tracker-wide (owner spellings)" : k; }
   function countries() {
     var hid = hiddenCountries();
     return ((D.scope && D.scope.countries) || []).filter(function (c) { return hid.indexOf(c) < 0; });
@@ -369,9 +374,9 @@
     var was = box.querySelector("details"), open = was && was.open, n = FS.country.length;
     box.innerHTML = '<details class="cdrop"' + (open ? " open" : "") + '><summary>country</summary><div class="cmenu"><input type="search" class="csearch" placeholder="find a country" value="' + esc(CQ) + '"><button type="button" class="ctoggle"></button>' + all.map(function (k) {
       return '<label class="check"><input type="checkbox" value="' + esc(k) + '"' + (!n || FS.country.indexOf(k) >= 0 ? " checked" : "") +
-        "> " + esc(k) + " (" + c[k] + ")</label>";
+        "> " + esc(cname(k)) + " (" + c[k] + ")</label>";
     }).join("") + "</div></details>" + (hid.length ? '<span class="cdone" title="every change and asked item in these countries has a decision, so the build left them out (review_data.py --include-done shows them)">all decided, hidden: ' +
-      esc(hid.join(", ")) + "</span>" : "");
+      esc(hid.map(cname).join(", ")) + "</span>" : "");
     filterCountryMenu();
   }
   // fuel: the same checkbox dropdown (none ticked = no filter in the data model, all ticked = same thing)
@@ -388,7 +393,7 @@
     var list = countries(); if (!list.length && D.scope.country) list = [D.scope.country];
     if (FS.country.length) list = list.filter(function (k) { return FS.country.indexOf(k) >= 0; });   // only the selected ones
     $("scope").innerHTML = FUELS.filter(function (k) { return !FS.fuel.length || FS.fuel.indexOf(k) >= 0; }).map(function (k) { return '<span class="cbox fbox" data-tip="fuel filter: ' + k + ' pipelines">' + k + "</span>"; }).join("") +
-      list.map(function (k) { return '<span class="cbox" data-tip="country filter: ' + esc(k) + ' pipelines (' + D.pipelines.filter(function (p) { return p._countries.indexOf(k) >= 0; }).length + ' in this batch)">' + esc(k) + "</span>"; }).join("");
+      list.map(function (k) { return '<span class="cbox" data-tip="country filter: ' + esc(cname(k)) + ' pipelines (' + D.pipelines.filter(function (p) { return p._countries.indexOf(k) >= 0; }).length + ' in this batch)">' + esc(cname(k)) + "</span>"; }).join("");
   }
   var CQ = "";   // country-menu search text
   var NO_COUNTRY = "(none)";   // FS.country sentinel: every box unticked, so nothing matches (empty = no filter)
@@ -572,14 +577,15 @@
         .map(function (t) { return '<span class="dot ' + t + '" data-tip="' + t + ' confidence" role="img" aria-label="' + t + ' confidence"></span>'; }).join("");
       var rows = p.segments.map(function (s) { return s.sheet_row; }).filter(function (x) { return x != null; });
       var where = p.pid.indexOf("new:") === 0 ? "new row" : (p.pid === "scope" ? "scope" :
-        (rows.length ? "row " + rows[0] + (rows.length > 1 ? " +" + (rows.length - 1) : "") : "no row"));
+        (p.name_card ? p.name_card.cells + " cell" + (p.name_card.cells === 1 ? "" : "s") + " on " + p.name_card.pids + " pipeline" + (p.name_card.pids === 1 ? "" : "s") :
+        (rows.length ? "row " + rows[0] + (rows.length > 1 ? " +" + (rows.length - 1) : "") : "no row")));
       var ts = p._tsev || {}, parts = SEV.filter(function (s) { return ts[s]; }).map(function (s) { return ts[s] + " " + s; });
       var badge = p._todo ? '<span class="n todo">' + (parts.length ? parts.join(" &middot; ") : p._todo) + " to decide</span>"
         : (p._n ? '<span class="n">' + p._n + " &middot; done</span>" : (p._ni ? '<span class="n">' + p._ni + " item" + (p._ni === 1 ? "" : "s") + "</span>" : '<span class="n"></span>'));
       var sn = segNames(p);
       h.push('<li data-i="' + i + '"' + (i === S.pipe ? ' class="sel"' : "") + '><div class="pname">' + esc(p.name || "(no name)") +
         (sn.length ? ' <span class="pseg">' + esc(sn[0]) + (sn.length > 1 ? " +" + (sn.length - 1) : "") + "</span>" : "") +
-        '</div><div class="pmeta"><span>' + esc(p.pid.indexOf("new:") === 0 ? "candidate" : p.pid) + " &middot; " + esc(where) +
+        '</div><div class="pmeta"><span>' + esc(p.pid.indexOf("new:") === 0 ? "candidate" : (p.name_card ? "owner spelling" : p.pid)) + " &middot; " + esc(where) +
         '</span><span class="grow"></span>' + badge + '</div>' + (dd ? '<div class="dots">' + dd + "</div>" : "") + "</li>");
     });
     $("pipes").innerHTML = h.join("");
@@ -990,14 +996,19 @@
     var card = $("card");
     if (S.pipe < 0) { card.innerHTML = '<div class="empty">nothing matches the filters.</div>'; S.shown = []; return; }
     var p = D.pipelines[S.pipe], ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
-    var isNew = p.pid.indexOf("new:") === 0, isScope = p.pid === "scope";
+    var isNew = p.pid.indexOf("new:") === 0, isScope = p.pid === "scope", nc = p.name_card;
     var segs = p.segments;
     var ctx = [(isNew || isScope) && '<b>' + esc(isNew ? "new candidate, not in the sheet" : "scope-level") + "</b>",
+               nc && '<b>owner spelling, tracker-wide</b>',
+               nc && esc(nc.cells + " cell" + (nc.cells === 1 ? "" : "s") + " on " + nc.pids + " pipeline" + (nc.pids === 1 ? "" : "s") + (nc.clears ? ", " + nc.clears + " cleared" : "")),
+               nc && nc.basis.length && "basis: " + esc(nc.basis.join(", ")),
+               nc && nc.entity_id.length && "entity: " + esc(nc.entity_id.join(", ")),
+               nc && nc.aliases.length && "aliases: " + esc(nc.aliases.join(", ")),
                p.country && esc(p.country), p.status && "status: " + esc(p.status),
                p.wiki && '<a href="' + esc(p.wiki) + '" target="_blank" rel="noopener">wiki ↗</a>',
                tierSummary(p)]
       .filter(Boolean).map(function (x) { return "<span>" + x + "</span>"; }).join("");
-    var h = '<div class="cardhead"><div class="headrow">' + "<h2>" + (isNew || isScope ? "" : '<span class="pid"' + tipAttrs("click to copy the ProjectID") + '>' + esc(p.pid) + "</span>") +
+    var h = '<div class="cardhead"><div class="headrow">' + "<h2>" + (isNew || isScope || nc ? "" : '<span class="pid"' + tipAttrs("click to copy the ProjectID") + '>' + esc(p.pid) + "</span>") +
       '<a href="#" class="only" data-tab="all"' + tipAttrs("review everything on this pipeline: every change (filters ignored) and every item") + '>' + esc(p.name || "(no name)") + "</a>" +
       (segNames(p).length ? '<span class="hseg">' + esc(segNames(p).join(" / ")) + "</span>" : "") + '</h2><div class="bulkbtns">' +
       (function () {
@@ -1699,7 +1710,7 @@
       p.lines.forEach(function (l) {
         l.live = null;
         if (l.kind === "new_row" || l.sheet_row == null) return;
-        var cols = hit[(l.tab === "operators_owners" ? "oo" : "tracker") + "|" + p.pid + "|" + l.sheet_row];
+        var cols = hit[(l.tab === "operators_owners" ? "oo" : "tracker") + "|" + (l.pid || p.pid) + "|" + l.sheet_row];
         if (!cols) return;
         var mine = (l.value_cols || []).concat(l.ref_col ? [l.ref_col] : [], l.current_status !== undefined ? ["Status"] : [],
                                                l.current_route_accuracy !== undefined ? ["RouteAccuracy"] : []);

@@ -3,6 +3,9 @@ batches root with two staging dirs, a 6-row tracker snapshot and a tiny owners s
 
   batches/russia-gas/staging/deepsweep-x   primary research: every line kind + every item kind
   batches/russia-gas/staging/qc            handoff packet: carries some of them again + extras
+  batches/owners-style/staging/update-owner-style-x   an owner-style update store (tracker-wide "*"):
+                                           P9001 Owner1 OldCo -> OldCo Ltd; P9002 Owner1 Dup Co ->
+                                           Dup Co Ltd and its duplicate Owner2 cleared
   data/GGIT_gas_snapshot_20990101.csv      banner, banner, real header, 6 rows
   data/GEM_operators_owners_snapshot_20990101.csv
 
@@ -66,10 +69,11 @@ def _write_snapshot(data_dir):
         w = csv.writer(f)
         w.writerow([""] * len(oh))
         w.writerow(oh)
-        for pid, nm, owner in (("P9001", "Alpha Pipeline", "OldCo"), ("P9002", "Beta Pipeline", "")):
+        # owners-tab rows (1-based file record number): P9001 = 3, P9002 = 4
+        for pid, nm, owner, owner2 in (("P9001", "Alpha Pipeline", "OldCo", ""), ("P9002", "Beta Pipeline", "Dup Co", "Dup Co")):
             r = [""] * len(oh)
             r[oh.index("ProjectID")], r[oh.index("PipelineName")] = pid, nm
-            r[oh.index("Owner1")] = owner
+            r[oh.index("Owner1")], r[oh.index("Owner2")] = owner, owner2
             r[oh.index("Owner [ref]")] = "http://owners-old.example/x" if owner else ""
             w.writerow(r)
 
@@ -126,6 +130,38 @@ def _write(d, name, obj):
     (d / name).write_text(json.dumps(obj))
 
 
+def _style_change(old, new, action="change", tier="high", basis="alias", **kw):
+    ch = {"old": old, "new": new, "action": action, "tier": tier, "basis": basis, "confidence": tier,
+          "entity_id": kw.pop("entity_id", "E1" if basis != "rules" else ""), "legal_form": "Ltd",
+          "aliases": kw.pop("aliases", []), "flags": [], "refs": [],
+          "evidence": kw.pop("evidence", f"'{old}' is spelled '{new}' in the ownership team's gazetteer.")}
+    ch.update(kw)
+    return ch
+
+
+def _write_style_store(d):
+    """An owner-style update store (scripts/stage_owner_style.py shape): tracker-wide, no country,
+    sheet_row = the OWNERS-tab row."""
+    _write(d, "staged_updates.json", {
+        "meta": {"batch": "update-owner-style-x", "mode": "update", "tracker": "both", "country": "",
+                 "style_only": True, "group_by": "name", "owners_csv": OWN_NAME, "generated": "2099-01-01",
+                 "scope": {"tab": "operators_owners", "columns": ["Operator", "Owner1", "Owner2"],
+                           "description": "every non-blank Operator and Owner<N> cell"}},
+        "names": {"OldCo": {"styled": "OldCo Ltd", "changed": True, "basis": "alias", "cells": 1, "pids": ["P9001"]},
+                  "Dup Co": {"styled": "Dup Co Ltd", "changed": True, "basis": "rules", "cells": 2, "pids": ["P9002"]}},
+        "rows": {
+            "P9001": {"pipeline": "Alpha Pipeline", "segment": "", "fuel": "gas", "countries": "Russia",
+                      "sheet_row": 3, "tab": "operators_owners",
+                      "changes": {"Owner1": _style_change("OldCo", "OldCo Ltd", aliases=["OC"])}},
+            "P9002": {"pipeline": "Beta Pipeline", "segment": "", "fuel": "gas", "countries": "Russia",
+                      "sheet_row": 4, "tab": "operators_owners",
+                      "changes": {"Owner1": _style_change("Dup Co", "Dup Co Ltd", tier="medium", basis="rules"),
+                                  "Owner2": _style_change("Dup Co", "", action="clear", basis="ruling",
+                                                          evidence="Owner2 repeats Owner1; per Baird's ruling the duplicate is cleared.")}},
+        },
+        "held_back": []})
+
+
 def relink(data):
     """Re-run review_data._attach_rivals after a test changed a concern's `contested` on a built
     dataset (rivals are attached at build time). -> the stats counters."""
@@ -145,8 +181,10 @@ def make_scope(tmp_path):
     root, data = tmp_path / "batches", tmp_path / "data"
     deep = root / "russia-gas" / "staging" / "deepsweep-x"
     qc = root / "russia-gas" / "staging" / "qc"
-    for d in (deep, qc, data):
+    style = root / "owners-style" / "staging" / "update-owner-style-x"
+    for d in (deep, qc, style, data):
         d.mkdir(parents=True)
+    _write_style_store(style)
     _write_snapshot(data)
 
     recs = _deepsweep_records()
@@ -180,4 +218,4 @@ def make_scope(tmp_path):
     ]
     _write(qc, "staged_resolutions.json", {"meta": {"mode": "handoff", "commodity": "gas", "scope": SCOPE},
            "resolutions": carried + extra})
-    return {"root": root, "data": data, "deep": deep, "qc": qc, "tmp": tmp_path}
+    return {"root": root, "data": data, "deep": deep, "qc": qc, "style": style, "tmp": tmp_path}

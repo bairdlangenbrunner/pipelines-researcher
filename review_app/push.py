@@ -202,7 +202,7 @@ def accepted_lines(ds):
         for l in p["lines"]:
             if l.get("reviewed") and l.get("decision") == "accept" and l["kind"] in PUSH_KINDS \
                     and l.get("decided_by") not in store.MACHINE_REVIEWERS:
-                out.append((p["pid"] if "pid" in p else p.get("project_id"), l))
+                out.append((l.get("pid") or (p["pid"] if "pid" in p else p.get("project_id")), l))
     return out
 
 
@@ -269,7 +269,8 @@ def pushable_lines(ds):
         for l in p["lines"]:
             if l.get("reviewed") and l["kind"] in PUSH_KINDS and l.get("decided_by") not in store.MACHINE_REVIEWERS:
                 if l.get("decision") == "accept" or l.get("decision") == "suggest":
-                    out.append((p["pid"] if "pid" in p else p.get("project_id"), l, l["decision"]))
+                    # a name card's lines each carry their own ProjectID (review_data._line)
+                    out.append((l.get("pid") or (p["pid"] if "pid" in p else p.get("project_id")), l, l["decision"]))
     return out
 
 

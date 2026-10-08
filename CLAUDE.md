@@ -448,21 +448,22 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 `docs/research_backlog.md`. "Recons standalone" = the handoff packet does NOT carry the
 §2 recon workbooks (`recon_actions=0`), so they are separate review surfaces.
 
-- **Owner-style normalization (tracker-wide, operators/owners tab; slice 1 staged 2026-10-01, not
-  applied; `Operator` column added to the same slice later that day):**
-  `batches/owners-style/staging/update-owner-style-20261001/` — deliberately
-  UNSCOPED (`meta.country = ""`), so no country packet, `INDEX.md`, or review-app scope picks it
-  up; its one workbook is in `batches/owners-style/deliverables/` (`20261001_1852_ET`; the
-  owner-only `1800_ET` build is archived). 2,304 cells (2,145 `Owner<N>` + 159 `Operator`) on
-  2,015 ProjectIDs re-spelled on exact/alias gazetteer hits; 574 held back by reason on
-  `OO_HeldBack` (slice 2 = `stem_medium` + `rules_only`; `multi_operator` = one `Operator` cell
-  listing several operators, a shape ruling; the rest need rulings). Style only,
-  no research. Re-run `stage_owner_style.py` after a fresh snapshot — never hand-edit the JSON.
-  **Plan for the whole normalization (leak fix, apply route, slices 2a/2b, rulings):**
-  `docs/plans/2026-10-05_owner-style-normalization.md`. The 2026-10-02 US gas pushes wrote 113
-  unstyled operator/owner cells and 641 pending staged proposals would restyle — Phase 0 of the
-  plan (Operator style check, styler paren fix, restyle pending shards, push guard) comes before
-  any further push to the operators/owners tab.
+- **Owner-style normalization (tracker-wide, operators/owners tab; slice 1 re-staged 2026-10-05,
+  not applied):** `batches/owners-style/staging/update-owner-style-20261005/` — deliberately
+  UNSCOPED (`meta.country = ""`, `meta.style_only = true`), so no country packet picks it up; the
+  review app reads it as the **tracker-wide scope** (country `*`, commodity `both`;
+  `staged_store.trackerwide_dirs`, `scopes.py check --country '*' --commodity both`), one name
+  card per current spelling so a reviewer decides each name once. Workbook
+  `batches/owners-style/deliverables/…20261005_1948_ET…` (`scripts/build_owner_style_workbook.py`);
+  the 10-01 store and both 10-01 workbooks are in `batches/owners-style/archive/`. 2,878 cells
+  (2,457 `Owner<N>` + 421 `Operator`; 1 cleared) on 2,334 ProjectIDs, 397 names, high 2,381 /
+  medium 497; 131 held back by reason on `OO_HeldBack`. Style only, no research; the staging and
+  restyle scripts read Baird's rulings from `data/owner_rulings.json`. Re-run
+  `scripts/stage_owner_style.py` after a fresh snapshot — never hand-edit the JSON. Apply route =
+  review-app decisions then `push.py`; a style-only line stamps `LastUpdated` only (never
+  `Researcher`). **Plan + decisions:** `docs/plans/2026-10-05_owner-style-normalization.md`
+  (Phase 0 and 1.1–1.2 done 2026-10-05; next: include the scope, click, push; Phase 2b parked in
+  Asana gem-desk).
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):** `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass 2026-07-28, rebuilt 2026-07-29, staged not applied — supersedes the 07-05
   packet; §8 routes APPLIED 2026-08-03; + oil open items; 4 files to work):** `docs/country_notes/iraq.md`.
@@ -475,9 +476,9 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **United States (gas: slice 1 batches 1-5 staged not applied, 5 files to work — batches 1-4
   rebuilt on the rule-4(e) recovery pass, batch 5 closed slice 1; all US deep-sweep workbooks re-tiered 2026-09-30 (`20260930_1455_ET`). Campaign order fixed
   2026-09-10: batch 5 -> slice 2 -> in-dev/status-review -> discovery -> maybe routes/recon.
-  **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
   **Discovery's 219 new rows were APPENDED to the live sheet 2026-10-05** (P8091–P8309, gas + operators/owners
   tabs, `scripts/append_new_rows.py`, Baird-authorized; 96 monitor + 31 matched items still pending).
+  **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
   batches and the deepwater-export item just wait):** `docs/country_notes/united-states.md`.
   Sliced, never whole-country; recon legs deliberately off (GulfPub has 10 US gas / 0 US oil
   features — nothing to diff).

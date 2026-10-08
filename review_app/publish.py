@@ -248,7 +248,7 @@ def make_watch(data):
                 cells["Status"] = str(l.get("current_status") or "")
             if "current_route_accuracy" in l:
                 cells["RouteAccuracy"] = str(l.get("current_route_accuracy") or "")
-            seen.setdefault((tab, p["pid"], l["sheet_row"]), {}).update(cells)
+            seen.setdefault((tab, l.get("pid") or p["pid"], l["sheet_row"]), {}).update(cells)
     out = {"tracker": [], "oo": []}
     for (tab, pid, row), cells in seen.items():
         out[tab].append([pid, row, cells])
@@ -266,7 +266,7 @@ def make_index(data):
         concerns = [it for it in p.get("items", [])
                     if it.get("kind") == "concern" and isinstance(it.get("contested"), dict)]
         for l in p.get("lines", []):
-            e = {"g": "l", "kind": l["kind"], "dir": l["dir"], "pid": p["pid"], "sheet_row": l.get("sheet_row"),
+            e = {"g": "l", "kind": l["kind"], "dir": l["dir"], "pid": l.get("pid") or p["pid"], "sheet_row": l.get("sheet_row"),
                  "ref_col": l.get("ref_col") or l.get("column") or "", "def": l.get("default") or "hold",
                  "basis": l.get("basis") or basis(l)}
             covers = [{"key": c["key"], "dir": c["dir"], "sheet_row": c.get("sheet_row"),

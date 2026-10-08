@@ -68,7 +68,10 @@ with no store file, minus known working-material kinds (`route-creation*` with o
 "N dirs not readable"; `scopes.py list` prints them. `staged_summary.py --index` already labels
 these "no store, invisible to discovery": keep the label, link it to this contract.
 
-**A4. Read the update store.** `review_data._load_dir` opens only four files; `staged_updates.json`
+**A4. Read the update store.** *Partly done 2026-10-05: the reader exists for style-only update
+stores (`meta.style_only`, the owner-style batch), one `oo` line per `changes` cell grouped into
+name cards; country-scoped update stores are still left out and counted in the summary.*
+`review_data._load_dir` opens only four files; `staged_updates.json`
 (Update SOP step 6 shape: `rows[pid] = {pipeline, sheet_row, changes, research}`) is not one of
 them, so every Update-mode batch, including the US oil one-offs, is invisible even when scoped.
 Add a reader: each `changes` entry becomes a `fill` / `status` / `oo` line with the same key
@@ -77,7 +80,9 @@ tier from the record (default `medium`); each `research` entry becomes a `concer
 `update_seed.py` already emits this shape, so the reader doubles as its consumer.
 (`store.sync_backend`, `push.py` and `basis` need no change: they work on built lines.)
 
-**A5. Tracker-wide batches.** The owners-style batch is unscoped on purpose
+**A5. Tracker-wide batches.** *Done 2026-10-05: country `*`, commodity `both`, found by
+`staged_store.trackerwide_dirs`; `scopes.py` lists, checks and sets it; the ledger slugs it
+`tracker-wide`; the page shows it as "tracker-wide (owner spellings)".* The owners-style batch is unscoped on purpose
 (`meta.country = ""`). Give the manifest a `tracker-wide` entry (country `*`, commodity `both`)
 that the batch build includes when answered yes, rendered under its own country checkbox and
 never merged into a country's view. Optional; decide with Baird (question 4 below).
@@ -197,6 +202,7 @@ the routing note on `disposition`.
 2. Phase C v1 skips `ambiguous`; agree?
 3. A value change with one source or no stated old value defaults to `hold` even at tier high (B4), and caps at `medium` (B3). Agree?
 4. A `tracker-wide` manifest entry for the owners-style batch (A5), or leave it outside the app?
+   *Answered 2026-10-05 (owner-style plan, decision 1): in the app, as the tracker-wide scope.*
 5. Archive the superseded recon dirs by move (C2)?
 
 ## Order and size

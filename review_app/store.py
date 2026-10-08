@@ -333,7 +333,7 @@ def validate(records, data, reviewer=None):
             sv = sv.strip() or rv["value"]
         if decision == "suggest" and not undo and not (sv.strip() or note.strip()):
             raise Invalid(f"record {i}: a suggestion needs a suggested_value or a note")
-        rec = {"key": key, "dir": obj["dir"], "pid": pipe["pid"], "sheet_row": obj.get("sheet_row"),
+        rec = {"key": key, "dir": obj["dir"], "pid": obj.get("pid") or pipe["pid"], "sheet_row": obj.get("sheet_row"),
                "ref_col": obj.get("ref_col") or obj.get("column") or "", "kind": obj["kind"],
                "decision": decision, "suggested_value": sv, "note": note,
                "reviewer": reviewer, "ts": None, "undecided": undo}
@@ -557,7 +557,7 @@ def sync_backend(data, dirs, snapshot="", sink=None):
                 rec = logs[d].get(l["key"])
                 if rec and not rec.get("undecided"):       # a person's call, or already synced
                     continue
-                mine = {"key": l["key"], "dir": d, "pid": p["pid"], "sheet_row": l.get("sheet_row"),
+                mine = {"key": l["key"], "dir": d, "pid": l.get("pid") or p["pid"], "sheet_row": l.get("sheet_row"),
                         "ref_col": l.get("ref_col") or l.get("column") or "", "kind": l["kind"],
                         "decision": "accept", "suggested_value": "", "note": note,
                         "reviewer": SYNC_REVIEWER, "ts": None, "undecided": False}

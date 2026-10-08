@@ -67,6 +67,11 @@ BATCHES_ROOT = REPO_ROOT / "batches"
 _STORE_FILES = ("staged_resolutions.json", "staged_new.json",
                 "staged_updates.json")
 
+# the tracker-wide scope: update stores with NO country (owner-style normalization over the whole
+# operators/owners tab, scripts/stage_owner_style.py). Invisible to _dir_scope / discover_staging_dirs
+# (no country), found by trackerwide_dirs(); the review app lists it under this country name.
+TRACKER_WIDE = "*"
+
 # meta.mode values that mark a dir as an ASSEMBLED packet, not primary research
 _ASSEMBLED_MODES = {"qc", "handoff"}
 
@@ -131,6 +136,23 @@ def _dir_scope(d: Path) -> tuple[str, str] | None:
         if country and commodity:
             return N.normalize_country(country), commodity.lower()
     return None
+
+
+def trackerwide_dirs(root: str | Path = BATCHES_ROOT) -> list[Path]:
+    """Staging dirs of the tracker-wide scope: a `staged_updates.json` whose meta says
+    `style_only` and names no country."""
+    out = []
+    for d in sorted(Path(root).glob("*/staging/*")):
+        f = d / "staged_updates.json"
+        if not d.is_dir() or not f.exists():
+            continue
+        try:
+            meta = json.loads(f.read_text()).get("meta", {})
+        except (json.JSONDecodeError, OSError):
+            continue
+        if meta.get("style_only") and not (meta.get("country") or (meta.get("scope") or {}).get("country")):
+            out.append(d)
+    return out
 
 
 def _dir_mode(d: Path) -> str:
@@ -298,6 +320,11 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
             data = json.loads(f.read_text())
             loaded = True
             for c in data.get("candidates", []):
+                if c.get("applied"):
+                    # written to the live sheet by scripts/append_new_rows.py (the candidate carries
+                    # its ProjectID + sheet row); no longer pending work for any workbook or the review app
+                    ctx.setdefault("new_rows_applied", []).append(dict(c, source_dir=label))
+                    continue
                 cand = dict(c)
                 cand["source_dir"] = label
                 ctx["new_rows"].append(cand)
@@ -320,11 +347,6 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
                            "tier": ch.get("tier", ""),
                            "refs": ch.get("refs") or [],
                            "evidence": ch.get("evidence", ""),
-                if c.get("applied"):
-                    # written to the live sheet by scripts/append_new_rows.py (the candidate carries
-                    # its ProjectID + sheet row); no longer pending work for any workbook or the review app
-                    ctx.setdefault("new_rows_applied", []).append(dict(c, source_dir=label))
-                    continue
                            "source_dir": label}
                     ctx["updates"].append(rec)
                     if ch.get("new") not in (None, ""):

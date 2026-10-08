@@ -157,6 +157,32 @@ the apply, as a spelling-only pass.
 
 1.4 ~~Tell the ownership team before 1.3~~ Dropped by decision 6.
 
+**Phase 1 results (1.1 and 1.2 done 2026-10-05, same session; 1.3 pending).**
+
+- 1.1 done. `scripts/stage_owner_style.py --owners-csv data/GEM_operators_owners_snapshot_20261005.csv`
+  wrote `batches/owners-style/staging/update-owner-style-20261005/` (the script moved from the
+  10-01 staging dir to `scripts/`, the workbook builder to `scripts/build_owner_style_workbook.py`;
+  the 10-01 store and workbooks are in `batches/owners-style/archive/`). 2,878 cells (2,457
+  `Owner<N>` + 421 `Operator`; 1 cleared, P1321 Owner2) on 2,334 PIDs, 397 names; basis alias
+  2,059 / rules 363 / exact 278 / stem 134 / ruling 44; tier high 2,381 / medium 497; 131 held
+  back (fuzzy_candidates 73, no_legal_form 42, comma_list 8, alias_candidate 4, group 2,
+  state_body 1, acronym_not_initials 1). More than the 2,300 expected because the Phase 3
+  rulings and the mechanical-rules basis joined the slice. Workbook `20261005_1948_ET`.
+- 1.2 done. The review app reads a `staged_updates.json` with `meta.style_only` (and no other
+  update store): one `oo` line per cell, key `<dir>::<PID>|<owners row>|oo:<col>:style`, no
+  `ref_col`; lines grouped by current spelling into name cards (`pid = "name:<spelling>"`) so each
+  name is decided once and fans out. The tracker-wide scope (country `*`, commodity `both`) is
+  found by `staged_store.trackerwide_dirs`, handled by `scopes.py` (`check`/`set --country '*'
+  --commodity both`), slugged `tracker-wide` in the ledger, and shown under its own checkbox; it
+  joins both commodities' batch builds once included. `push.py`, `publish.py` and `store.py`
+  take the line's own `pid`; a style-only line stamps `LastUpdated` only. Tests: 4 new tests
+  (data, scopes, push plan), 268 passing. Live build: 397 cards, 2,877 lines (1 cell dropped
+  because P3966 is `Status = N/A`), 1 clear, 0 moved rows, 4.6 MB; the 1,056 oil-PID lines have
+  no tracker row in the gas snapshot, which is harmless because the push locates the owners tab
+  by PID + owners row. `scopes.py check --country '*' --commodity both` exits 3 until Baird
+  answers.
+- 1.3 pending: include the scope, decide the name cards, `push.py` plan → ask → `--apply`, chunked.
+
 ### Phase 2a: the mechanical remainder (rules without a gazetteer hit)
 
 Same staging script, a second adoption class: basis `rules`, confidence `medium`, and the flag

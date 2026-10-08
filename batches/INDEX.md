@@ -195,9 +195,9 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## owners-style
 
-- `staging/update-owner-style-20261001` [update] — rows=2015 fills=0 updates=2304 status-pending=0 refs(none) routes=0 new(none) decided —
-- `deliverables/pipelines_batch_20261001_1852_ET_owners-style_update.xlsx`
-- `archive/` — 1 superseded/applied file(s)
+- `staging/update-owner-style-20261005` [update] — rows=2334 fills=0 updates=2878 status-pending=0 refs(none) routes=0 new(none) decided —
+- `deliverables/pipelines_batch_20261005_1948_ET_owners-style_update.xlsx`
+- `archive/` — 2 superseded/applied file(s)
 
 ## pakistan-gas
 
@@ -295,21 +295,21 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided 0a/0h/2r/0s of 485
 - `staging/deepsweep-gulf-operating` — rows=50 fills=162 updates=0 status-pending=0 refs(REFS_ADDED=351, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none) decided 6a/0h/1r/0s of 520
 - `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided 4a/0h/0r/0s of 489
-- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=144 updates=0 status-pending=25 refs(REFS_ADDED=339, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 5a/0h/0r/0s of 540
+- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=144 updates=0 status-pending=25 refs(REFS_ADDED=339, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 4a/0h/0r/0s of 540
 - `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 9a/0h/0r/0s of 587
 - `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=116 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=319, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=50) routes=0 new(none) decided 2a/0h/0r/0s of 462
 - `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided 1a/0h/1r/0s of 503
 - `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=23 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 3a/0h/0r/0s of 427
-- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=92 updates=0 status-pending=6 refs(REFS_ADDED=278, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=72) routes=0 new(none) decided 1a/0h/0r/0s of 415
+- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=92 updates=0 status-pending=6 refs(REFS_ADDED=278, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=72) routes=0 new(none) decided 0a/0h/0r/0s of 415
 - `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided 5a/0h/0r/0s of 514
-- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 1a/1h/0r/0s of 362
-- `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none) decided 3a/0h/0r/0s of 462
-- `staging/discovery-appalachian-se-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=28, new_row=45) decided —
-- `staging/discovery-gulf-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=7, monitor=18, new_row=36) decided —
-- `staging/discovery-midcon-north-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=4, monitor=15, new_row=37) decided —
+- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 0a/1h/0r/0s of 362
+- `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none) decided 2a/0h/0r/0s of 462
+- `staging/discovery-appalachian-se-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=6, monitor=28) decided —
+- `staging/discovery-gulf-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=7, monitor=18) decided —
+- `staging/discovery-midcon-north-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=4, monitor=15) decided —
 - `staging/discovery-seeds-20261002` — no store — invisible to discovery
-- `staging/discovery-tx-permian-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=3, monitor=17, new_row=41) decided —
-- `staging/discovery-west-ne-ak-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=11, monitor=18, new_row=60) decided —
+- `staging/discovery-tx-permian-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=3, monitor=17) decided —
+- `staging/discovery-west-ne-ak-20261002` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=11, monitor=18) decided —
 - `staging/eia-crosswalk-20260910` — no store — invisible to discovery
 - `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 0
 - `staging/recovery-20260909` — no store — invisible to discovery

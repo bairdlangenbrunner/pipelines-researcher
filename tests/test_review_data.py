@@ -424,3 +424,59 @@ def test_routeqc_and_recon_dirs_are_left_out_by_default(tmp_path, monkeypatch):
     recon.mkdir()
     es, _, _, skipped = rd._load_dir(recon, s["root"], 0)
     assert es == [] and skipped["recon"] == 1
+
+
+# ---------------------------------------------------------------- owner-style update stores (tracker-wide)
+def test_style_store_is_tracker_wide_and_invisible_to_country_discovery(tmp_path):
+    s = make_scope(tmp_path)
+    dirs, dc = rd._country_dirs(["Russia"], "gas", s["root"])
+    assert s["style"].resolve() not in {d.resolve() for d in dirs}          # no country: never a Russia dir
+    dirs, dc = rd._country_dirs(["Russia", "*"], "gas", s["root"])
+    assert dc[s["style"].resolve()] == "*" and dc[s["deep"].resolve()] == "Russia"
+    dirs, dc = rd._country_dirs(["*"], "oil", s["root"])                     # either commodity finds it
+    assert [d.resolve() for d in dirs] == [s["style"].resolve()]
+
+
+def test_style_store_builds_name_cards_of_oo_lines(tmp_path):
+    s = make_scope(tmp_path)
+    data, stats = rd.build([s["style"]], "*", "gas", data_dir=s["data"], root=s["root"])
+    assert stats["owners_snapshot"] == OWN_NAME and stats["updates_skipped"] == 0
+    cards = {p["pid"]: p for p in data["pipelines"]}
+    assert list(cards) == ["name:Dup Co", "name:OldCo"]                       # most cells first
+    old = cards["name:OldCo"]
+    assert old["name"] == "OldCo \u2192 OldCo Ltd" and old["segments"] == [] and old["country"] == ""
+    assert old["commodity"] == "both" and old["scope_countries"] == ["*"]
+    assert old["name_card"] == {"from": "OldCo", "to": ["OldCo Ltd"], "cells": 1, "pids": 1, "clears": 0,
+                                "basis": ["alias"], "entity_id": ["E1"], "aliases": ["OC"], "columns": ["Owner1"]}
+    (l,) = old["lines"]
+    assert l["kind"] == "oo" and l["style_only"] and l["pid"] == "P9001" and l["tab"] == "operators_owners"
+    assert l["key"].endswith("update-owner-style-x::P9001|3|oo:Owner1:style")
+    assert (l["sheet_row"], l["tracker_sheet_row"], l["sheet_row_moved"]) == (3, 4, False)   # owners row, tracker row
+    assert l["current"] == {"Owner1": "OldCo"} and l["proposed_values"] == {"Owner1": "OldCo Ltd"}
+    assert not l.get("ref_col") and l["proposed_refs"] == []                   # a spelling carries no URL
+    assert l["tier"] == "high" and l["default"] == "accept" and l["severity"] == "major"
+    assert l["pipeline_name"] == "Alpha Pipeline" and l["name_group"] == "OldCo" and l["action"] == "change"
+    dup = cards["name:Dup Co"]
+    assert dup["name_card"]["cells"] == 2 and dup["name_card"]["clears"] == 1 and dup["name_card"]["to"] == ["Dup Co Ltd"]
+    by_col = {l["column"]: l for l in dup["lines"]}
+    assert by_col["Owner1"]["proposed_values"] == {"Owner1": "Dup Co Ltd"} and by_col["Owner1"]["tier"] == "medium"
+    clear = by_col["Owner2"]
+    assert clear["proposed_values"] == {"Owner2": ""} and clear["current"] == {"Owner2": "Dup Co"}
+    assert clear["action"] == "clear" and "clear" in clear["ops"] and "fill" not in clear["ops"]
+    assert clear["notes"].startswith("The cell is cleared.")
+    assert data["scope"]["countries"] == ["*"]
+    assert rd.summary(data, stats)                                             # prints without a KeyError
+
+
+def test_style_store_sits_beside_country_dirs_in_one_dataset(tmp_path):
+    s = make_scope(tmp_path)
+    dirs, dc = rd._country_dirs(["Russia", "*"], "gas", s["root"])
+    data, stats = rd.build(dirs, ["Russia", "*"], "gas", data_dir=s["data"], root=s["root"], dir_country=dc)
+    pids = [p["pid"] for p in data["pipelines"]]
+    assert "P9001" in pids and "name:OldCo" in pids and pids.index("P9001") < pids.index("name:OldCo")
+    # the deep sweep's Owner1 line on P9001 and the style line on the same cell are two lines, not one
+    oo = _find(data, "P9001", "oo")
+    assert len(oo) == 1 and oo[0]["proposed_values"] == {"Owner1": "NewCo"}
+    style = [l for p in data["pipelines"] if p["pid"] == "name:OldCo" for l in p["lines"]]
+    assert len(style) == 1 and style[0]["pid"] == "P9001"
+    assert {c["country"] for c in data["scope"]["country_status"]} == {"Russia", "*"}

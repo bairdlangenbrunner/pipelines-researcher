@@ -93,16 +93,19 @@ No generic builder yet — recent update batches (`batches/united-states-oil/sta
 staged alongside the JSON: a backend-mirror tab of the touched rows (current values
 prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic
-`scripts/build_update_workbook.py`. A third instance,
-`batches/owners-style/staging/update-owner-style-20261001/` (2026-10-01), targets the
-operators/owners tab alone (`Operator` + `Owner1..Owner11`) and is tracker-wide
-(`meta.country = ""`, so the store is invisible to country packets by design): tabs `README`,
-`OO_Names` (the decision surface — one line per distinct current spelling, with how many of its
-cells are `Operator`), `OO_OperatorsOwners` (leading `SheetRow` + the full 44-column tab mirror
-for touched PIDs, changed `Operator` / `Owner<N>` cells green, the two formula columns left
-blank), `OO_Changes` (one line per cell), `OO_HeldBack` (would-change cells not in the slice,
-by reason). The review app reads deep-sweep stores only, so an update store is
-decided in its workbook.
+`scripts/build_update_workbook.py`. A third instance, the owner-style normalization store
+(`batches/owners-style/staging/update-owner-style-<date>/`, staged by `scripts/stage_owner_style.py`,
+workbook by `scripts/build_owner_style_workbook.py`; current run 2026-10-05, the 10-01 run archived),
+targets the operators/owners tab alone (`Operator` + `Owner1..Owner11`) and is tracker-wide
+(`meta.country = ""`, `meta.style_only = true`, so no country packet carries it): tabs `README`,
+`OO_Names` (the decision surface — one line per distinct current spelling, with `tier`, basis,
+entity id, aliases, and how many of its cells are `Operator`), `OO_OperatorsOwners` (leading
+`SheetRow` + the full 44-column tab mirror for touched PIDs, changed `Operator` / `Owner<N>` cells
+tier-colored, the two formula columns left blank), `OO_Changes` (one line per cell, with `tier`
+and basis), `OO_HeldBack` (would-change cells not in the slice, by reason). A country-scoped
+update store is decided in its workbook; the style-only store is ALSO read by the review app as
+the tracker-wide scope (one name card per spelling; `review_app/README.md`), which is its apply
+route (Baird 2026-10-05).
 
 ## Discovery workbook (mode = `discovery`)
 

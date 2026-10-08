@@ -31,11 +31,18 @@ already in the backend, every asked item called) is left out of that build and l
 country filter as "all decided, hidden"; `--include-done` keeps it, and a new batch brings it
 back. The researcher asks at each delivery (`docs/workflows.md`, "Review-app batch").
 
+One scope is not a country: **tracker-wide** (country `*`, commodity `both`) stands for the
+owner-style normalization store (`batches/owners-style/staging/update-owner-style-<date>/`, an
+unscoped `staged_updates.json` with `meta.style_only`; found by `staged_store.trackerwide_dirs`,
+never by country discovery). Once answered yes it joins both the gas and the oil batch build under
+its own "tracker-wide (owner spellings)" checkbox and is never merged into a country's view.
+
 ```bash
 python review_app/scopes.py list                                     # every researched scope + its answer
 python review_app/scopes.py pending                                  # researched, never answered or "later"
 python review_app/scopes.py check --country Egypt --commodity gas    # exit 3 = ask
 python review_app/scopes.py set --country Egypt --commodity gas yes  # or no / later
+python review_app/scopes.py check --country '*' --commodity both      # the tracker-wide owner-style scope
 ```
 
 Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). Flags: `--country` (repeatable or a
@@ -96,8 +103,18 @@ tab) shows every line on the pipeline, filters ignored, then its items, on one p
   so a disagreement is not something a reviewer decides here. They stay in the staging dirs
   and the handoff workbooks; the summary line counts them as left out.
 - Reads only `staged_resolutions.json`, `staged_new.json`, `qc_flags.json`,
-  `escalations.json` per dir; never `staged_actions.json` or `*.prior.json`.
+  `escalations.json` per dir, plus a `staged_updates.json` whose `meta.style_only` is set (the
+  owner-style store); never `staged_actions.json`, `*.prior.json`, or a country-scoped update
+  store (those are decided in their workbook and counted as left out in the summary).
   Read-only over `batches/` and `data/`.
+- **Owner-style stores become name cards.** Every `changes` cell of the style store is one `oo`
+  line (key `<dir>::<PID>|<owners-tab row>|oo:<column>:style`, no `[ref]` column: the value cell
+  is written alone), and the lines are grouped by the CURRENT spelling into one card per name
+  (`pid = "name:<spelling>"`, `name_card` with the styled form, cell and PID counts, basis, entity
+  id and aliases) so a reviewer decides `Enbridge` to `Enbridge Inc` once and the decision fans
+  out to every cell. Each line still carries its own `pid`, pipeline name, countries and fuel, and
+  `push.py` plans it by PID + owners row; a `style_only` line stamps `LastUpdated` only, never
+  `Researcher` (Baird 2026-10-05). A line whose live spelling has moved since staging is stale.
 - `default` is `accept` iff tier is `high`, else `hold`; items have no default.
   `overlay_decisions` (via `store.overlay`) stamps each line with the sidecar decision.
 - Snapshot default is the NEWEST `data/<commodity>` snapshot (`--snapshot` overrides).

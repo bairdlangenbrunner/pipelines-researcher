@@ -20,6 +20,12 @@ A scope that is researched (it has a staging dir with store metadata) but has no
 "new". At delivery the researcher runs `check`; exit 3 (new / later) means ask Baird
 "add <Country> <commodity> to the review app? Y / n / later" and record the answer with `set`.
 
+The tracker-wide scope is the country "*" with commodity "both": the owner-style update stores
+(scripts/stage_owner_style.py; no country, and both trackers share the operators/owners tab).
+Included, it joins every commodity's batch dataset (one ledger either way):
+
+    python review_app/scopes.py set --country '*' --commodity both yes
+
 An included country whose every line and asked item has a person's decision is hidden from the
 built dataset automatically (review_data.py --include-done shows it); it is not removed here,
 so a new batch for it brings it back without asking.
@@ -78,6 +84,9 @@ def researched(root=None, commodity=None):
             continue
         ent = out.setdefault(sc, {"country": _display(d) or sc[0].title(), "dirs": []})
         ent["dirs"].append(d)
+    tw = staged_store.trackerwide_dirs(root)
+    if tw:          # the tracker-wide scope joins every commodity's batch, so it is listed whatever the filter
+        out[(staged_store.TRACKER_WIDE, "both")] = {"country": staged_store.TRACKER_WIDE, "dirs": tw}
     return out
 
 
@@ -105,8 +114,9 @@ def state(m, country, commodity):
 
 def included(commodity, path=None):
     """Display names of the included countries for one commodity, manifest order."""
+    # a "both" scope (the tracker-wide "*", owner-style stores) is included for either commodity
     return [s["country"] for s in load(path)["scopes"]
-            if s["commodity"] == commodity.lower() and s["state"] == "included"]
+            if s["commodity"] in (commodity.lower(), "both") and s["state"] == "included"]
 
 
 def set_state(country, commodity, answer, path=None, root=None, by=""):
@@ -129,7 +139,7 @@ def main(argv=None):
     ap.add_argument("cmd", choices=["list", "pending", "check", "set"])
     ap.add_argument("answer", nargs="?", choices=sorted(ANSWERS), help="set only")
     ap.add_argument("--country")
-    ap.add_argument("--commodity", choices=["gas", "oil"])
+    ap.add_argument("--commodity", choices=["gas", "oil", "both"], help="both = the tracker-wide scope '*'")
     ap.add_argument("--manifest", default=None)
     ap.add_argument("--batches-root", default=None)
     a = ap.parse_intermixed_args(argv)

@@ -49,7 +49,9 @@ country+commodity, run `python review_app/scopes.py check --country <C> --commod
 (never answered, or "later") → ask Baird in plain prose, "Add <C> <c> to the review app?
 Y / n / later", and record the answer with `scopes.py set … yes|no|later` (the manifest is a repo
 file: commit it with the batch). Exit 0 → don't ask: an included country's new staging dir comes
-in on its own, a declined one stays out.
+in on its own, a declined one stays out. The owner-style normalization store is the one scope that
+is not a country: `scopes.py check --country '*' --commodity both` (tracker-wide; it joins both
+commodities' builds once included).
 
 `batches/INDEX.md` is the whole-tree lookup — regenerate it with
 `python scripts/staged_summary.py --index` after adding/moving anything; never
@@ -314,8 +316,6 @@ Apply the add-threshold (sponsor + geography + concrete step); below → `monito
 `url_verifier.py` every URL; `entity_lookup.py` every new owner. New rows render
 green on `<Cmdty>_NewRows`; >5 candidate clusters in one country → escalate first.
 
----
-
 **Appending the new rows to the live sheet (per-batch authorization only; first run US gas
 2026-10-05, 219 rows):**
 
@@ -333,13 +333,17 @@ python scripts/append_new_rows.py --apply $STG/../append-new-rows-<date>/plan.js
 #   to archive/ afterwards. Diameter is written as TEXT (DiameterInMm regexmatches it); costs/lengths numeric.
 ```
 
+---
+
 ## §5 Update (targeted fixes)
 
 Small, specific batches: named rows, recon value-disagreements, fixes detected by a
 handoff packet. (Whole-country "re-verify everything" work is a §3 sweep, not an
 Update.) 1. Fresh pull. 2. Confirm scope (Update SOP). 3. Research per methodology
 Phase 2 → stage `batches/<scope>/staging/<run>/staged_updates.json` (its `meta`
-must carry the scope country + tracker so discovery finds it). 4.
+must carry the scope country + tracker so discovery finds it; the one exception is the
+owner-style store, unscoped with `meta.style_only`, which the review app reads as the
+tracker-wide scope — every other update store is decided in its workbook). 4.
 `url_verifier.py` every URL; `entity_lookup.py` every new owner. 5. Build
 `…_<scope>_update.xlsx` (changed cells red); `recalc.py`; present.
 

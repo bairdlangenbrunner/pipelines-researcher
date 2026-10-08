@@ -87,6 +87,8 @@ _NO_COL = 10 ** 6          # sort position for a column the snapshot does not ha
 _OO_OFFSET = 10 ** 4       # owners-tab columns sort after every tracker column
 INFO_KINDS = {"confirmed"}  # items nobody is asked to call (web/app.js INFO_KINDS)
 SCOPE_PID = "scope"        # pseudo-card for escalations / pid-less flags
+NAME_PID = "name:"         # card id prefix for a NAME card: one card per current owner spelling (a style store)
+TRACKER_WIDE = staged_store.TRACKER_WIDE   # the "*" country of the tracker-wide scope (style stores)
 COMMODITY_GLOB = {"gas": "GGIT_gas_snapshot_*.csv", "oil": "GOIT_oil_ngl_snapshot_*.csv"}
 
 
@@ -365,12 +367,31 @@ def _load_dir(d, root, order0, country=""):
                 pid, group, kind = SCOPE_PID, "item", "other"
             out.append(Entry(group, kind, pid, r, dirp, "resolutions", _colid(r, kind), order, country))
             order += 1
+    f = d / "staged_updates.json"
+    if f.exists():
+        data = _read_json(f)
+        meta = data.get("meta", {})
+        if meta.get("style_only"):
+            # an owner-style store (scripts/stage_owner_style.py): one oo line per re-spelled cell,
+            # grouped on the page by the CURRENT spelling (name cards); country-scoped update
+            # stores are not read here (they reach the sheet through the handoff workbook)
+            owners.append(meta.get("owners_csv") or "")
+            for pid, row in (data.get("rows") or {}).items():
+                for col, ch in (row.get("changes") or {}).items():
+                    r = _style_record(pid, row, col, ch)
+                    out.append(Entry("line", "oo", pid, r, dirp, "updates", f"oo:{col}:style", order, country))
+                    order += 1
+        else:
+            skipped["updates"] += 1
     f = d / "staged_new.json"
     if f.exists():
         data = _read_json(f)
         sc = data.get("meta", {}).get("scope") or {}
         csvs.append(sc.get("csv") or "")
         for i, c in enumerate(data.get("candidates", [])):
+            if c.get("applied"):
+                skipped["new_row_applied"] += 1     # already on the sheet (scripts/append_new_rows.py)
+                continue
             cls = c.get("class") or ""
             slug = c.get("slug") or (c.get("name") or f"cand{i}").lower().replace(" ", "-")
             if cls == "monitor":
@@ -389,9 +410,6 @@ def _load_dir(d, root, order0, country=""):
             cid = f"flag:{fl.get('check', '')}:{(fl.get('detail') or '')[:80]}"
             out.append(Entry("item", "flag", pid, fl, dirp, "flag", cid, order, country))
             order += 1
-            if c.get("applied"):
-                skipped["new_row_applied"] += 1     # already on the sheet (scripts/append_new_rows.py)
-                continue
     f = d / "escalations.json"
     if f.exists():
         for i, e in enumerate(_read_json(f)):
@@ -399,6 +417,34 @@ def _load_dir(d, root, order0, country=""):
                              f"escalation:{(e.get('title') or str(i))[:120]}", order, country))
             order += 1
     return out, csvs, owners, skipped
+
+
+def _style_record(pid, row, col, ch):
+    """The line record for one owner-style cell of a style store (`rows[pid].changes[col]`), in the
+    shape _line reads: an oo FILL/REFS_ADDED on the operators/owners tab whose `sheet_row` is already
+    the OWNERS-tab row (`oo_sheet_row`), with NO ref_col -- a spelling carries no URL, so push.py
+    writes the value cell alone -- and `style_only`, so push.py stamps LastUpdated only. A `clear`
+    proposes the empty string (the page draws it as a clear; push.py empties the cell)."""
+    clear = ch.get("action") == "clear"
+    note = str(ch.get("evidence") or "")
+    if clear:
+        note = ("The cell is cleared. " + note).strip()
+    return {"project_id": pid, "sheet_row": row.get("sheet_row"), "tab": OO_TAB, "oo_sheet_row": True,
+            "pipeline_name": row.get("pipeline") or "", "segment_name": row.get("segment") or "",
+            "countries": row.get("countries") or "", "fuel": row.get("fuel") or "",
+            "class_in": "FILL", "class_out": "REFS_ADDED", "primary_value_col": col, "value_cols": [col],
+            "values": {col: "" if clear else ch.get("new", "")}, "proposed_refs": [], "verifications": [],
+            "tier": ch.get("tier") or "", "independent": False, "researcher_notes": note,
+            "style_only": True, "name_group": ch.get("old", ""), "styled": ch.get("new", ""),
+            "style_basis": ch.get("basis") or "", "entity_id": ch.get("entity_id") or "",
+            "aliases": list(ch.get("aliases") or []), "action": "clear" if clear else "change"}
+
+
+def _card_sort(p):
+    name_card = p["pid"].startswith(NAME_PID)
+    return (p["pid"] == SCOPE_PID, p["pid"].startswith("new:"), name_card,
+            -len(p["lines"]) if name_card else 0,
+            p["segments"][0]["sheet_row"] if p["segments"] else _NO_COL, p["pid"])
 
 
 # ---------------------------------------------------------------- build
@@ -416,7 +462,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
              "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": [],
              "rivals": 0, "corroborations": 0, "wikidiff_skipped": 0,
-             "routeqc_skipped": 0, "recon_skipped": 0}
+             "routeqc_skipped": 0, "recon_skipped": 0, "updates_skipped": 0}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
     entries, rec_csv, rec_own = [], [], []
@@ -431,6 +477,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         stats["wikidiff_skipped"] += skipped["wikidiff"]
         stats["routeqc_skipped"] += skipped["routeqc"]
         stats["recon_skipped"] += skipped["recon"]
+        stats["updates_skipped"] += skipped["updates"]
+        stats["new_row_applied"] = stats.get("new_row_applied", 0) + skipped["new_row_applied"]
 
     # A blank-note UNRESOLVED baseline is superseded by a line staged for the same cell in the
     # same dir (the workbook's `_resolve_superseded` rule): the seeded MISSING_REF placeholder
@@ -471,14 +519,16 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
                 stats["dropped_na"] += 1
                 continue
             if e.kind == "oo":
-                if orow is not None:
+                if orow is None:
+                    e.in_snapshot = False
+                elif rec.get("oo_sheet_row"):
+                    # a style-store record names the OWNERS-tab row itself (a differing number IS
+                    # drift there); its tracker row is whatever the tracker snapshot has
+                    e.tracker_row, e.sheet_row, e.moved = (tr[0] if tr is not None else None), orow[0], orow[2]
+                else:
                     # the record's sheet_row is the TRACKER row; the owners tab has its own
                     # row numbering, so a differing number is not drift
                     e.tracker_row, e.sheet_row, e.moved = sr_rec, orow[0], False
-                else:
-                    e.in_snapshot = False
-        stats["updates_skipped"] += skipped["updates"]
-        stats["new_row_applied"] = stats.get("new_row_applied", 0) + skipped["new_row_applied"]
             elif tr is not None:
                 e.sheet_row, e.moved = tr[0], tr[2]
             else:
@@ -524,10 +574,14 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     label_country = {_rel(d, root): dir_country.get(Path(d).resolve(), countries[0]) for d in ordered}
     cards = {}
     for e in primary:
-        ck = (e.pid, e.country) if (multi and e.pid == SCOPE_PID) else e.pid
+        ng = e.rec.get("name_group") if (e.group == "line" and e.rec.get("style_only")) else None
+        if ng is not None:          # a style store: one NAME card per current spelling, tracker-wide
+            ck = ("name", ng)
+        else:
+            ck = (e.pid, e.country) if (multi and e.pid == SCOPE_PID) else e.pid
         card = cards.get(ck)
         if card is None:
-            cards[ck] = card = {"pid": e.pid, "entries": []}
+            cards[ck] = card = {"pid": (NAME_PID + ng) if ng is not None else e.pid, "entries": [], "name_group": ng}
         card["entries"].append(e)
 
     pipelines = []
@@ -542,9 +596,21 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             name = "Scope-level items (escalations, flags with no ProjectID)"
             if multi:
                 name += f" \u2014 {card['entries'][0].country}"
-        segs = [{"sheet_row": sr, "segment": r.get("SegmentName", "")} for sr, r in rows
-                if r.get("Status", "").strip() != "N/A"]
-        if not segs:
+        ng = card.get("name_group")
+        name_card = None
+        if ng is not None:
+            ents = card["entries"]
+            styled = sorted({e.rec.get("styled") or "" for e in ents if e.rec.get("action") != "clear"})
+            name = f"{ng} \u2192 {', '.join(styled) if styled else '(cleared)'}"
+            name_card = {"from": ng, "to": styled, "cells": len(ents), "pids": len({e.pid for e in ents}),
+                         "clears": sum(1 for e in ents if e.rec.get("action") == "clear"),
+                         "basis": sorted({e.rec.get("style_basis") or "" for e in ents} - {""}),
+                         "entity_id": sorted({e.rec.get("entity_id") or "" for e in ents} - {""}),
+                         "aliases": sorted({a for e in ents for a in (e.rec.get("aliases") or [])}),
+                         "columns": sorted({e.rec.get("primary_value_col") or "" for e in ents} - {""})}
+        segs = [] if ng is not None else [{"sheet_row": sr, "segment": r.get("SegmentName", "")}
+                                          for sr, r in rows if r.get("Status", "").strip() != "N/A"]
+        if not segs and ng is None:
             sr0 = next((e.sheet_row for e in card["entries"] if e.sheet_row), None)
             segs = [{"sheet_row": sr0, "segment": rec0.get("segment_name", "")}] if sr0 else []
         lines, items, recs = [], [], {}
@@ -559,19 +625,20 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             del l["_sort"]
             l["basis"] = basis(l)
         items.sort(key=lambda i: (ITEM_KINDS.index(i["kind"]), i["key"]))
-        pipelines.append({
+        card_out = {
             "pid": pid, "name": name, "segments": segs,
-            "country": first.get("CountriesOrAreas", "") or rec0.get("countries", ""),
-            "status": first.get("Status", ""),
-            "wiki": first.get("Wiki", "") or rec0.get("wiki", ""),
+            "country": "" if name_card else (first.get("CountriesOrAreas", "") or rec0.get("countries", "")),
+            "status": "" if name_card else first.get("Status", ""),
+            "wiki": "" if name_card else (first.get("Wiki", "") or rec0.get("wiki", "")),
             "scope_countries": sorted({e.country for e in card["entries"]}
                                       | {label_country.get(d, "") for e in card["entries"] for d in e.also_in}
                                       - {""}),
             "lines": lines, "items": items,
-        })
-    pipelines.sort(key=lambda p: (p["pid"] == SCOPE_PID, p["pid"].startswith("new:"),
-                                  p["segments"][0]["sheet_row"] if p["segments"] else _NO_COL,
-                                  p["pid"]))
+        }
+        if name_card:       # a name card spans both trackers (the owners tab is shared)
+            card_out.update({"name_card": name_card, "commodity": "both"})
+        pipelines.append(card_out)
+    pipelines.sort(key=_card_sort)
 
     data = {
         "built": datetime.now(ZoneInfo("America/New_York")).isoformat(timespec="seconds"),
@@ -645,7 +712,14 @@ def _line(e, snap, own, stats):
         "notes": r.get("researcher_notes") or "",
         "default": "accept" if tier == "high" else "hold",
         "decision": None, "reviewed": False,
+        "pid": e.pid,       # the line's own ProjectID (a name card's lines span many; store/push read this)
     }
+    if r.get("style_only"):
+        base.update({"style_only": True, "pipeline_name": r.get("pipeline_name") or "",
+                     "countries": r.get("countries") or "", "fuel": r.get("fuel") or "",
+                     "name_group": r.get("name_group") or "", "style_basis": r.get("style_basis") or "",
+                     "entity_id": r.get("entity_id") or "", "aliases": r.get("aliases") or [],
+                     "action": r.get("action") or ""})
     if kind == "new_row":
         vals = r.get("values") or {}
         refs = r.get("refs") or {}
@@ -982,6 +1056,8 @@ def summary(data, stats):
         out.append(f"route-QC records left out for now: {stats['routeqc_skipped']}")
     if stats.get("recon_skipped"):
         out.append(f"recon staging dirs left out for now: {stats['recon_skipped']}")
+    if stats.get("updates_skipped"):
+        out.append(f"country-scoped update stores left out (handoff workbook only): {stats['updates_skipped']}")
     if stats.get("done_dropped"):
         out.append(f"pipelines of all-decided countries dropped: {stats['done_dropped']} (--include-done keeps them)")
     if stats["excluded"]:
@@ -997,6 +1073,10 @@ def _country_dirs(countries, commodity, root, explicit=None):
     assigned by their store scope (or scope-dir name), else to the first country."""
     found = {}
     for c in countries:
+        if c == TRACKER_WIDE:       # the tracker-wide scope: unscoped style stores, any commodity
+            for d in staged_store.trackerwide_dirs(root):
+                found.setdefault(Path(d).resolve(), c)
+            continue
         for d in staged_store.discover_staging_dirs(c, commodity, root=root, include_assembled=True):
             found.setdefault(Path(d).resolve(), c)
     if not explicit:
@@ -1006,8 +1086,8 @@ def _country_dirs(countries, commodity, root, explicit=None):
         r = d.resolve()
         c = found.get(r)
         if c is None:
-            c = next((c for c in countries
-                      if d.parent.parent.name == staged_store.scope_dirname(c, commodity)), countries[0])
+            c = next((c for c in countries if c != TRACKER_WIDE
+                      and d.parent.parent.name == staged_store.scope_dirname(c, commodity)), countries[0])
             if len(countries) > 1 and r not in found:
                 print(f"WARN {d.name}: no country match, assigned to {c}", file=sys.stderr)
         out[r] = c
