@@ -73,6 +73,7 @@ tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owne
   `Ministry of Oil (Iraq)`). Rules, adoption policy and the alias file:
   `docs/reference/owner_style.md`; `scripts/entity_style.py` applies them. Only `Owner1..11` and
   `Owner1%..11%` are data on this tab — `AggregateOwners` / `Percentage Verification` are formulas.
+- **`Owner<N>%` cells are fractions under a percent format (`0.75`), never the text `"75.00%"`, and every tracker `*Month` cell is the integer 1-12, never a month name (Baird 2026-10-08).** Text in either is invisible to `Percentage Verification`, `AggregateOwners` and the date formulas. `review_app/push.py` coerces on write; `scripts/fix_text_numbers.py` repairs.
 - **Columns A–E are FORMULAS, not data** — `PipelineNetworkContainer`, `PipelineName`,
   `SegmentName`, `Countries`, `Wiki` are each an `iferror(xlookup(F<row>, 'Gas pipelines'!F:F,
   …), xlookup(F<row>, 'Oil/NGL pipelines'!F:F, …))` keyed on `ProjectID` in column **F**, so

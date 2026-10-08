@@ -285,3 +285,21 @@ def test_style_line_is_stale_when_the_live_spelling_moved(style_world):
     plan, skipped, meta = push.build_plan("gas")
     assert not [p for p in plan if l["key"] in p["lines"]]
     assert dict(skipped)[l["key"]].startswith("stale: Owner1 was 'OldCo', live 'Old Company'")
+
+
+def test_a_percent_is_written_as_a_fraction_not_text():
+    # RAW input stores '75.00%' as a text string; the owners tab needs the number 0.75
+    assert push.coerce("75.00%") == 0.75
+    assert push.coerce("100%") == 1.0
+    assert push.coerce("12.5%") == 0.125
+    assert push.coerce("2027") == 2027
+    assert push.coerce("Tallgrass Energy LP") == "Tallgrass Energy LP"
+
+
+def test_a_month_is_written_as_a_number_not_text():
+    assert push.coerce("July", "ProposalMonth") == 7
+    assert push.coerce("Mar", "ConstructionMonth") == 3
+    assert push.coerce("Sept.", "StartMonth1") == 9
+    assert push.coerce("11", "StartMonth1") == 11
+    assert push.month_number("Ma") is None and push.month_number("13") is None
+    assert push.coerce("July", "ResearcherNotes") == "July"

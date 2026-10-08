@@ -179,6 +179,13 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
         for ucol_ in ("LengthKnownUnits", "CapacityUnits"):
             if ucol_ in vals_ and re.fullmatch(r"[\d.,]+", str(vals_[ucol_]).strip()):
                 why.append(f"`{ucol_}` holds a number ({vals_[ucol_]!r}) — put the unit token there")
+        # Month columns hold the NUMBER 1-12 (Baird 2026-10-08): "July" or "Sept" pasted or
+        # written RAW lands as text the date formulas can't read.
+        for mcol_, mval_ in vals_.items():
+            if "Month" in str(mcol_) and str(mval_).strip() and not re.fullmatch(
+                    r"(?:[1-9]|1[0-2])(?:\.0+)?", str(mval_).strip()):
+                why.append(f"`{mcol_}` = {mval_!r} — month columns take the number 1-12, never "
+                           "the month name or text")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).

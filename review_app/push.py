@@ -87,6 +87,7 @@ TABS = {("tracker", "gas"): ("Gas pipelines", 2), ("tracker", "oil"): ("Oil/NGL 
 OO_TITLE, OO_HEADER = "Pipeline operators/owners", 1
 PUSH_KINDS = {"ref", "fill", "status", "oo"}
 NUM = re.compile(r"^-?\d+(\.\d+)?$")
+PCT = re.compile(r"^-?\d+(\.\d+)?%$")
 AGENT = "CB"            # the agent's own initials; REPLACES the Researcher cell, never appended (Baird 2026-10-02)
 
 
@@ -186,8 +187,30 @@ def same_value(cur, v):
     return na is not None and nb is not None and abs(na - nb) < 1e-9
 
 
-def coerce(v):
+MONTHS = {m: i for i, m in enumerate(("january", "february", "march", "april", "may", "june", "july", "august",
+                                      "september", "october", "november", "december"), 1)}
+
+
+def month_number(v):
+    """1-12 for 'July', 'Mar', 'Sept.', '11' or 11; None when it is not a month. Month columns hold
+    the NUMBER, never the name or a number stored as text (Baird 2026-10-08)."""
+    s = str(v).strip().lower().rstrip(".")
+    if re.fullmatch(r"\d{1,2}(\.0+)?", s):
+        n = int(float(s))
+        return n if 1 <= n <= 12 else None
+    if len(s) >= 3:
+        hits = [n for m, n in MONTHS.items() if m.startswith(s)]
+        if len(hits) == 1:
+            return hits[0]
+    return None
+
+
+def coerce(v, col=""):
     s = str(v).strip()
+    if "Month" in str(col) and month_number(s) is not None:
+        return month_number(s)
+    if PCT.match(s):        # '75.00%' -> 0.75; under RAW the string would land as text the % columns can't sum
+        return round(float(s[:-1]) / 100, 10)
     if NUM.match(s):
         f = float(s)
         return int(f) if f == int(f) and "." not in s else f
@@ -376,11 +399,11 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False):
                 break
             cur = tab.cell(row, c)
             if str(cur).strip() == "":
-                writes[c] = coerce(v)
+                writes[c] = coerce(v, c)
             elif same_value(cur, v):
                 continue
             else:                       # an accepted change overwrites: the click is the authorization
-                writes[c] = coerce(v) if not (l["kind"] in ("status", "fill") and c == "Status") else str(v)
+                writes[c] = coerce(v, c) if not (l["kind"] in ("status", "fill") and c == "Status") else str(v)
         if bad:
             skipped.append((l["key"], bad))
             continue
