@@ -395,7 +395,8 @@ python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymo
      written.
   3. Rebuild the page and publish it to the same link, so the reviewer sees the decisions as
      recorded. Accepted cells reach the sheet only through `push.py` (plan, ask Baird, `--apply`).
-- The page has no refresh and no push. `push.py` stays the only route to the backend sheet.
+- **push to ledger (2026-10-08).** The header button saves the viewer's decisions to the shared log and writes one request document, `requests/<uid>~<device>~push` (`status: "requested"`, `seq`, `records`). It never touches the ledger or the sheet itself. A Claude Code session on the work profile checks the `requests` collection (ArtifactData `list`), and for a request newer than the last one handled it runs the three steps above (list `logs`, `import_log.py` dry run then real, `push.py` plan), shows Baird the plan, and runs `push.py --apply` only after Baird says yes for that plan. The watcher only exists while a session runs it (a session cron); with none running, say "pull" in a session. Rebuilding and republishing is still a separate step.
+- The page has no refresh and no sheet push. `push.py` stays the only route to the backend sheet.
 
 ## Google version (phase 2)
 

@@ -461,6 +461,28 @@
       ra.toast(n + " record" + (n === 1 ? "" : "s") + " saved as " + name);
     } catch (e) { ra.toast("the download did not go through: " + e.message); }
   }
+  // "push to ledger": make sure the shared log is current, then leave a request document in the
+  // `requests` collection. A Claude Code session watching the artifact sees it, imports the
+  // decisions into the ledger, plans the sheet push and asks Baird (review_app/README.md).
+  function requestPush() {
+    var ra = RA();
+    if (!G.db) return ra.toast("the shared log is not available here, so a push cannot be requested. Use download decisions.");
+    if (!count()) return ra.toast("no decisions have been made on this page yet");
+    G.seq = (G.seq || 0) + 1;
+    var p = Promise.resolve();
+    G.own.length && (p = new Promise(function (ok) {
+      (function wait(i) { if (!G.syncing || i > 40) return ok(); setTimeout(function () { wait(i + 1); }, 250); })(0);
+    }));
+    p.then(function () {
+      return G.db.doc("requests/" + prefix() + "push").set({
+        reviewer: G.me, uid: G.uid, device: G.device, requested: now(), records: G.own.length,
+        built: G.built, snapshot: G.snapshot, seq: Date.now(), status: "requested"});
+    }).then(function () {
+      ra.toast("push to ledger requested: " + G.own.length + " record" + (G.own.length === 1 ? "" : "s") + " are in the shared log");
+    }, function (e) {
+      ra.toast("the request did not go through (" + ((e && (e.code || e.message)) || "unknown") + ")");
+    });
+  }
   function chrome() {
     var who = document.querySelector("header .who"), before = document.getElementById("theme-pick");
     if (!who || document.getElementById("export-btn")) return;
@@ -470,6 +492,12 @@
     btn.dataset.tip = "save every decision this page knows of as one file, to hand to whoever runs review_app/import_log.py";
     btn.onclick = download;
     who.insertBefore(btn, before);
+    var pb = document.createElement("button");
+    pb.id = "ledger-btn"; pb.type = "button"; pb.className = "ghost";
+    pb.textContent = "push to ledger";
+    pb.dataset.tip = "save your decisions to the shared log and ask Claude to import them into the ledger and plan the sheet push (Baird approves the write)";
+    pb.onclick = requestPush;
+    who.insertBefore(pb, before);
     var label = document.getElementById("scope");
     if (label && RA() && RA().data) label.dataset.tip = "built " + RA().et(G.built) + " from snapshot " + G.snapshot + ". Decisions made elsewhere since then are not shown.";
     if (!G.db) state("local", G.why2 || "this copy was opened outside claude.ai");
