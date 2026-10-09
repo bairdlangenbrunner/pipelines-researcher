@@ -42,6 +42,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_qc import BLOCK, is_ref_only, load_sheet, off_schema_keys, sheet_value  # noqa: E402
 
 
+SCOPE_MISMATCH = re.compile(
+    r"documents only|only the [^.]{0,60}(lateral|phase|increment|segment|system)|not the (mainline|system|whole)"
+    r"|flag for the orchestrator|worth a human check|different (event|entity)|reads as if", re.I)
+
+
 def _carried(pid, col, value, snapshot_value) -> bool:
     """entity_style.carried_on_sheet, or the snapshot-only test when the styler is unavailable."""
     try:
@@ -260,7 +265,17 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                            "with the matched name in `note`")
         # `values{}` keys land in real cells: a key that is no backend / owners-tab column
         # (R6: `Owner`, `Start`, `Construction` -- ref-column stems) reaches no paste surface.
-        if sheet is not None and f.get("_leg") != "refs":
+        # The labels (`value_cols`, `primary_value_col`) must be real headers too, and the refs leg
+        # is no exception (P4039 `StartState`, P4040 `Operator1`, P0168 `ConstructionYear1`,
+        # Iraq P7459 `LengthUnits`: 2026-10-09; repair with scripts/fix_staged_columns.py).
+        if sheet is not None:
+            named = [c for c in list(f.get("value_cols") or []) + [f.get("primary_value_col")]
+                     if c and c not in sheet.columns]
+            if named:
+                why.append(f"value_cols / primary_value_col {', '.join(map(repr, sorted(set(named))))} "
+                           "are not sheet columns — use the exact backend/owners-tab header "
+                           "(scripts/fix_staged_columns.py lists and repairs them)")
+        if sheet is not None:
             bad = off_schema_keys(sheet, f.get("ref_col"), f.get("values"))
             if bad:
                 allowed = sorted(sheet.pairs.get(f.get("ref_col") or "") or [])
@@ -271,7 +286,7 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                            + " — use the exact backend/owners-tab header")
             # An UNRESOLVED record has no sourced value, so it carries the sheet's own; a
             # proposal there is pasted as if researched (R6 P2705, P3604). Put it in notes.
-            if (f.get("class_out") or "").upper() == "UNRESOLVED":
+            if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() == "UNRESOLVED":
                 row = f.get("sheet_row")
                 moved = [c for c, v in (f.get("values") or {}).items()
                          if (cur := sheet_value(sheet, pid, row, c)) is not None
@@ -305,6 +320,16 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                            + "; ".join(restyle)
                            + " (use the styled form in `values`; keep the source's spelling "
                              "and any dropped acronym in researcher_notes)")
+        # A high-tier record whose own notes say the ref covers a different thing than the row
+        # (one lateral, one phase, a parent system, a different event or entity) is not high
+        # (Baird 2026-10-09, P0168: two 10-Ks for the High Plains lateral's 2008 in-service date
+        # were staged high as the start year of the whole 1928 system). Re-scope the value, find
+        # a ref that states it for this row, or drop the tier to low and say why.
+        if (f.get("tier") or "").lower() == "high" and f.get("proposed_refs") \
+                and (f.get("class_out") or "").upper() != "UNRESOLVED" \
+                and (m := SCOPE_MISMATCH.search(f.get("researcher_notes") or "")):
+            why.append(f"tier is high but the notes say the ref covers something other than this "
+                       f"row ({m.group(0)!r}) — fix the value or ref, or set tier low")
         if why:
             malformed.append({"ref_col": f.get("ref_col"), "why": "; ".join(why)})
     return unreported, silent, malformed

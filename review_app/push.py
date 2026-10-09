@@ -259,6 +259,11 @@ def suggest_writes(l, text, tab):
         cols = [c for c, v in (l.get("proposed_values") or {}).items() if v not in (None, "")]
         if len(cols) == 1:
             return {cols[0]: text}, ""
+    if l["kind"] == "ref" and not all(re.match(r"https?://", u.strip()) for u in text.split(",")):
+        # a ref line whose one value column is a real cell (P0147 FuelSource): a bare value goes there
+        cols = [c for c in (l.get("value_cols") or []) if c in tab.col and not c.endswith("[ref]")]
+        if len(cols) == 1:
+            return {cols[0]: text}, ""
     if l["kind"] == "ref" and all(re.match(r"https?://", u.strip()) for u in text.split(",")):
         return {}, ""
     cols = ", ".join((l.get("value_cols") or [])[:4]) or "a column"

@@ -46,6 +46,7 @@ operational sequence.
 - Optional `--status` filter (default: **all** statuses, incl. operating).
 - Decision for the current program (Baird 2026-09-30): **a single validated source is
   sufficient**; a second is preferred, not owed, so don't spend a search chasing one.
+- **Exception: a lone ref that fails a check.** A single ref that FAILS one of the three core checks (it loads, it names this pipeline, it states the value) owes one bounded search for an alternate ref that passes all three (Baird 2026-10-09): one or two quick searches plus the documents already open, never a big spend. Found: the passing ref closes the unit at high, and the partial ref stays beside it when the two mostly agree (drop a proposed partial ref that contradicts the value; an existing one is never removed). Not found: keep the partial ref at its capped tier and say in a short note what was searched.
 - **Transit countries share ROWS, so the second scope swept must exclude the first's.** A
   trunk crossing Uzbekistan and Kazakhstan is ONE row that both `--country` scopes select —
   Uzbekistan gas overlaps Kazakhstan gas on **13 of its 31 rows** (the CAC, CA–China,
@@ -98,6 +99,7 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
   trailing short legal form, no punctuation, no trailing acronym (acronym → `researcher_notes` +
   `data/owner_aliases.json`), the team's own spelling on an exact/alias gazetteer hit.
   `check_shard_coverage.py` blocks an un-styled proposal; gate O reports them at delivery.
+- **Every column a staged record names must be a real header (Baird 2026-10-09).** Each `values` key, `value_cols` entry and `primary_value_col` is an exact backend or owners-tab column, in every leg. `ConstructionYear1`, `LengthUnits`, `StartState` and `Operator1` do not exist (the real ones are `ConstructionYear`, `LengthKnownUnits`, `StartState/Province`, `Operator`); there is no `Operator1%`. Read the names from the snapshot header, never from memory. `check_shard_coverage.py` blocks a bad one, and `python scripts/fix_staged_columns.py` lists the bad ones across all batches and `--apply` repairs the known slips.
   **`Owner<N>%` is optional (Baird 2026-10-01): leave it blank when no source states a share.**
   A missing percentage never blocks proposing an owner — stage every owner the refs name (a
   multi-party JV is `Owner1`/`Owner2`/`Owner3`) with `%` blank, and a recorded share the refs
@@ -211,6 +213,7 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      it to be green. `sweep_gates.py`
      gate K counts the single-source `REFS_ADDED` (informational, not debt); gates A/C still
      flag a row or a batch resting on one origin.
+   - **A lone ref that fails a check owes one bounded search for an alternate (Baird 2026-10-09).** A single ref that FAILS one of the three core checks (it loads, it names this pipeline, it states the value) owes one bounded search for an alternate ref that passes all three (Baird 2026-10-09): one or two quick searches plus the documents already open, never a big spend. Found: the passing ref closes the unit at high, and the partial ref stays beside it when the two mostly agree (drop a proposed partial ref that contradicts the value; an existing one is never removed). Not found: keep the partial ref at its capped tier and say in a short note what was searched.
    - **Search in the country's language(s), not just English.** Seed from the row's
      `OtherLanguage*` name columns and transliterations (Saudi → Arabic: Aramco Arabic
      press, Argaam, SPA). Foreign pages still pass `url_verifier`; the "contains the value"
