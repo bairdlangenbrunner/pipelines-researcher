@@ -2,7 +2,7 @@
 Plan a "clean accept": accept every high-confidence line that nothing asks a person to judge.
 
     python review_app/clean_accepts.py --country "United States" --commodity gas [--out DIR]
-    for f in DIR/clean_accepts_??.json; do python review_app/ledger.py decide --records $f; done   # record them, 100 per call
+    python review_app/ledger.py decide --records DIR/clean_accepts.json   # record them (the ledger appends 100 per gws call)
 
 Plan only: reads the dataset, writes `clean_accepts.json` (records for `ledger.py decide
 --records`) and `clean_accepts_skipped.csv` (every open high line left alone, with the reason)

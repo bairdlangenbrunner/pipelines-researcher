@@ -3,6 +3,7 @@ Push a person's CLICKED ACCEPTS from the review app to the live backend sheet (p
 
     python review_app/push.py                # PLAN only (reads the live sheet, gws-gem; writes a plan file)
     python review_app/push.py --apply PLAN   # write exactly that plan (gws-gem-write): ASK BAIRD FIRST, every run
+    python review_app/push.py --country "United States"   # PLAN only one country's accepts
     python review_app/push.py --include-stale  # also plan lines whose backend cells changed since they were decided
 
 This is THE ONLY route from an accepted suggestion to the backend sheet, whichever door the decision
@@ -354,9 +355,13 @@ def unstyled_names(writes):
     return out
 
 
-def build_plan(commodity="gas", include_stale=False, allow_unstyled=False):
+def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, country=None):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
+    if country:                         # one country's accepts only (it must be in the review-app batch)
+        if country not in countries:
+            sys.exit(f"ABORT: {country!r} is not in the review-app batch for {commodity}: {countries}")
+        countries = [country]
     dirs, dc = review_data._country_dirs(countries, commodity, root, None)
     ds, _ = review_data.build(dirs, countries, commodity, root=root, dir_country=dc)
     ds["scope"]["batch"] = True
@@ -627,6 +632,7 @@ def record_push(pl, plan):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--commodity", default="gas")
+    ap.add_argument("--country", help="plan only this country's accepts (default: every country in the review-app batch)")
     ap.add_argument("--include-stale", action="store_true",
                     help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
@@ -664,7 +670,7 @@ def main(argv=None):
         return record_push(pl, pl["plan"])
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity, a.include_stale, a.allow_unstyled)
+    plan, skipped, meta = build_plan(a.commodity, a.include_stale, a.allow_unstyled, a.country)
     show(plan, skipped, meta.get("__concerns__", []))
     print("plan written:", save_plan(plan, meta, a.commodity))
 

@@ -135,13 +135,32 @@ def _range_rows(rng):
     return r1, int(m.group("r2") or r1)
 
 
+APPEND_CHUNK = 100     # rows per gws call: the rows ride on the command line, and 2,323 of them overflow it (2026-10-14)
+
+
 def append(recs, sheet_id, gws=pull.gws, profile=pull.WRITE_PROFILE, read_profile=pull.READ_PROFILE, retries=1):
+    """Append the records to the store's `log` tab, APPEND_CHUNK per call (see _append_chunk).
+    -> (first row, last row). A failure part way raises StoreError naming the chunks already in
+    the store; those rows stand (the store is the source of truth, a pull brings them home)."""
+    if not recs:
+        return None
+    first = last = None
+    for i in range(0, len(recs), APPEND_CHUNK):
+        try:
+            f, last = _append_chunk(recs[i:i + APPEND_CHUNK], sheet_id, gws, profile, read_profile, retries)
+        except StoreError as e:
+            if i:
+                raise StoreError(f"{e} (records 1-{i} of {len(recs)} are already in the store, rows {first}-{last})") from e
+            raise
+        first = f if first is None else first
+    return first, last
+
+
+def _append_chunk(recs, sheet_id, gws, profile, read_profile, retries):
     """Append the records to the store's `log` tab (one RAW row each, after the last row) and
     verify by re-reading the `id` column of the rows the API reports. -> (first row, last row).
     Raises StoreError (nothing to clean up: a failed append wrote nothing we can rely on, and a
     verified-mismatch means our rows were overwritten, so the retry appends again)."""
-    if not recs:
-        return None
     rows = [row_for(r) for r in recs]
     ids = [r["id"] for r in recs]
     idc = pull._col_letter(COLS.index("id"))
