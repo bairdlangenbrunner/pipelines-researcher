@@ -71,7 +71,6 @@ ALIAS = {
     ("P0205", "Iroquois Eastchester Extension"): (OEN, "Iroquois Eastchester Extension; Eastchester Extension"),
     ("P0246", "Entrega Gas Pipeline"): (OEN, "Entrega Gas Pipeline"),
     ("P0208", "KM KN Interstate Pony Express"): (OEN, "KM KN Interstate Pony Express"),
-    ("P0207", "KR Mainline 2001 System Expansion"): (OEN, "KR Mainline 2001 System Expansion"),
     ("P2553", "Line 1600 Replacement Project"): (OEN, "Line 1600 Replacement Project"),
     ("P0212", "Maritimes & Northeast Phase II (ME)"): (OEN, "Maritimes & Northeast Phase II"),
     ("P7454", "Ninilchik Pipeline"): (OEN, "Ninilchik Pipeline"),
