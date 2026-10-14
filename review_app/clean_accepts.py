@@ -15,6 +15,8 @@ in the backend, major or minor, AND none of these applies:
                   REF_BLOCKED
   concern open    (no call, confirmed, or needs_research; only `dismissed` closes one) on the
                   same pipeline that is
+                    - a spec concern that names no column and proposes no change ("flagging only")
+                      blocks only length lines (Baird 2026-10-14, P0213); or
                     - pipeline-wide: existence or duplicate, or any other concern naming no
                       column that SCOPE_PATS cannot scope (Baird 2026-10-02: status, naming,
                       route-geometry and classification concerns, and Date_logic and
