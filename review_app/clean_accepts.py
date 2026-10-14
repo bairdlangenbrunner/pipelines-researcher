@@ -85,6 +85,7 @@ def line_cols(l):
     return {c for c in cols if c}
 
 
+FLAG_ONLY = re.compile(r"no (?:value )?change proposed|flagging only", re.I)
 TYPE_ONLY = re.compile(r"gather|distribut", re.I)
 TYPE_UNSURE = re.compile(r"human|confirm|consider|whether|verify", re.I)
 
@@ -123,6 +124,11 @@ def blockers(pipes):
                     b["whole"].append(why)
                 elif not cols and t == "attribution":
                     b["oo"].append(why)
+                elif not cols and t == "spec" and FLAG_ONLY.search(i.get("recommendation") or ""):
+                    # a spec concern that proposes no change and names no column is a note on the
+                    # figure it discusses (Baird 2026-10-14, P0213's 515 vs 510 mi length remark),
+                    # not an issue with the whole pipeline: it holds only length lines
+                    b["pats"].append((r"Length", why))
                 elif not cols and t in SCOPE_PATS:
                     b["pats"].append((SCOPE_PATS[t], why))
                 elif not cols:
