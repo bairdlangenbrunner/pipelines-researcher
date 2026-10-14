@@ -15,7 +15,7 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 |---|---|
 | `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` — **plus `N/A`, which is an EXCLUSION MARKER, not a status** (see below) |
 | `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)`. **Unbuilt rows cap at `medium`** — see below |
-| `PipelineType` | `transmission`, `gathering`, `distribution` |
+| `PipelineType` | `transmission`, `gathering`, `distribution`, or a combination of two (`both transmission and gathering`, `both transmission and distribution`) | Baird 2026-10-14: never add a new type. `lateral`, `expansion`, `interstate`, `intrastate`, `pipeline` and `natural gas` are not types (a lateral is `transmission`); `check_shard_coverage.py` blocks them unless equal to the sheet's own value |
 
 ### `Status = N/A` means "do not research this row"
 

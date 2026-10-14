@@ -82,6 +82,8 @@ def load_scope_sheet(staging: Path):
 
 
 GAS_FUEL_VALUES = {"Gas", "Hydrogen", "Gas and hydrogen", "Coke oven gas"}
+PIPELINE_TYPE_VALUES = {"transmission", "gathering", "distribution", "both transmission and gathering",
+                        "both transmission and distribution", "both gathering and distribution"}
 VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK", "REF_BLOCKED",
                    "REF_UNSUPPORTED"}
 
@@ -199,6 +201,15 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
             if str(vals_["Fuel"]).strip() != str(cur_fuel or "").strip():
                 why.append(f"`Fuel` = {vals_['Fuel']!r} — the gas tab takes only "
                            + ", ".join(sorted(GAS_FUEL_VALUES)) + " (a plain gas pipeline is `Gas`)")
+        # `PipelineType` takes transmission / gathering / distribution or a combination of two (Baird
+        # 2026-10-14): never lateral, expansion, interstate, intrastate (EIA's labels) or free text.
+        if "PipelineType" in vals_ and str(vals_["PipelineType"]).strip() \
+                and str(vals_["PipelineType"]).strip() not in PIPELINE_TYPE_VALUES:
+            cur_pt = sheet_value(sheet, pid, f.get("sheet_row"), "PipelineType") if sheet is not None else None
+            if str(vals_["PipelineType"]).strip() != str(cur_pt or "").strip():
+                why.append(f"`PipelineType` = {vals_['PipelineType']!r} — only "
+                           + ", ".join(sorted(PIPELINE_TYPE_VALUES)) + " (a lateral or an expansion of a "
+                           "transmission line is `transmission`; EIA's interstate/intrastate is not a type)")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).
