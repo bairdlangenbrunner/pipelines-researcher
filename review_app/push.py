@@ -64,6 +64,7 @@ import json
 import re
 import sys
 from datetime import date, datetime
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -174,7 +175,11 @@ def ref_write(cur_ref, proposed, cleared, changed, remaining):
 
 
 def same_value(cur, v):
-    """Equal as text, as numbers, or as a percent ('70.00%' vs the sheet's 0.7)."""
+    """Equal as text, as numbers, or as a percent ('70.00%' vs the sheet's 0.7) -- and a staged
+    figure equal to the live one rounded to the staged figure's decimals is the same value: the
+    snapshot CSV carries the sheet's 2-decimal display, so a line copied from it ('56.33', '32.57%')
+    would otherwise write the rounding back over the precise live cell (56.327, 0.32565) and, on a
+    ref line, swap the cell's refs for its own (P2578, P3170, P0392, 2026-10-14)."""
     a, b = str(cur).strip(), str(v).strip()
     if a == b:
         return True
@@ -185,7 +190,19 @@ def same_value(cur, v):
         except ValueError:
             return None
     na, nb = num(a), num(b)
-    return na is not None and nb is not None and abs(na - nb) < 1e-9
+    if na is None or nb is None:
+        return False
+    if abs(na - nb) < 1e-9:
+        return True
+    m = re.fullmatch(r"-?[\d,]*\.(\d+)(%?)", b)
+    if not m or len(m.group(1)) > 6:
+        return False
+    try:
+        live = Decimal(a.rstrip("%")) / (100 if a.endswith("%") else 1) * (100 if m.group(2) else 1)
+        shown = live.quantize(Decimal(1).scaleb(-len(m.group(1))), rounding=ROUND_HALF_UP)
+        return shown == Decimal(b.rstrip("%").replace(",", ""))
+    except InvalidOperation:
+        return False
 
 
 MONTHS = {m: i for i, m in enumerate(("january", "february", "march", "april", "may", "june", "july", "august",
@@ -410,7 +427,7 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             cur = tab.cell(row, c)
             if str(cur).strip() == "":
                 writes[c] = coerce(v, c)
-            elif same_value(cur, v):
+            elif same_value(cur, v) or same_value(cur, coerce(v, c)):     # 'February' is the live 2
                 continue
             else:                       # an accepted change overwrites: the click is the authorization
                 writes[c] = coerce(v, c) if not (l["kind"] in ("status", "fill") and c == "Status") else str(v)

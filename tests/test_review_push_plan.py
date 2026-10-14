@@ -296,6 +296,14 @@ def test_a_percent_is_written_as_a_fraction_not_text():
     assert push.coerce("Tallgrass Energy LP") == "Tallgrass Energy LP"
 
 
+def test_a_figure_rounded_from_the_snapshot_display_is_the_live_value():
+    # the snapshot CSV shows 2 decimals; writing them back would round the live cell (2026-10-14)
+    assert push.same_value("56.327", "56.33") and push.same_value("101.411", "101.41")
+    assert push.same_value("0.32565", "32.57%") and push.same_value("0.32435", "32.44%")
+    assert not push.same_value("56.327", "56.34") and not push.same_value("290", "290.5")
+    assert not push.same_value("12.5", "13")
+
+
 def test_a_month_is_written_as_a_number_not_text():
     assert push.coerce("July", "ProposalMonth") == 7
     assert push.coerce("Mar", "ConstructionMonth") == 3
