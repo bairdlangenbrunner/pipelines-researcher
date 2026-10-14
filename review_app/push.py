@@ -412,6 +412,7 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             continue
         writes, bad = {}, None
         values = l.get("proposed_values") or {}
+        own_urls = None                 # refs the reviewer named in their own suggestion
         rv = store.rival_of(l, l["rival"]) if dec == "suggest" and l.get("rival") else None
         if rv:                          # a concern's candidate taken: its cells, backed by the concern's refs
             values = dict(rv["cols"])
@@ -420,6 +421,8 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             if values is None:
                 skipped.append((l["key"], why_not))
                 continue
+            if l.get("ref_col") in values:      # `Capacity=5.8; Capacity [ref]=URL`: their ref backs their value
+                own_urls = [u.strip() for u in str(values.pop(l["ref_col"])).split(",") if u.strip()]
         for c, v in values.items():
             if v in (None, ""):
                 # a blank proposal over a filled cell is a CLEAR (the page draws it "(clear)" and the
@@ -453,6 +456,8 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             remaining = [c for c in (l.get("value_cols") or []) if c in tab.col and c not in cleared
                          and str(writes.get(c, tab.cell(row, c))).strip() != ""]
             urls = (rv["refs"] if rv else l.get("proposed_refs")) or []
+            if own_urls:
+                urls = own_urls
             if dec == "suggest" and not values:       # a URL suggestion: those URLs, additively
                 urls = [u.strip() for u in str(l["suggested_value"]).split(",") if u.strip()]
             w = ref_write(tab.cell(row, rc), urls, cleared, changed, remaining)

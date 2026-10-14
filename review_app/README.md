@@ -247,7 +247,7 @@ button or `u` undoes it. Re-opening the form on a suggested line prefills the ea
 Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to an Update worklist.
 `push.py` also writes a person's suggestion (2026-10-02): the suggested value goes to the cell it names —
 type `Column=value; Column2=value2`, or a bare value on a line with one proposed column, a status line,
-or all URLs on a ref line; any other bare value is skipped as ambiguous. The line's proposed refs back it.
+or all URLs on a ref line; any other bare value is skipped as ambiguous. Name the line's own `[ref]` column in the suggestion (`Capacity=5.8; CapacityUnits=Bcf/d; Capacity [ref]=URL`) and those URLs back the value in place of the line's proposed refs. The line's proposed refs back it.
 A state / prefecture / country cell written beside an untouched location cell raises a concern (plan
 output + `notes/push_concerns.csv` on apply). Rival suggests stay Update items.
 
