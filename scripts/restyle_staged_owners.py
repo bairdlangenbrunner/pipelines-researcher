@@ -120,14 +120,15 @@ def main() -> None:
             res = cache.get(sv)
             if res is None:
                 res = cache[sv] = ES.style(sv)
-            if not res.changed:
-                continue
+            if not res.changed and not ES.needs_person(res):
+                continue                # an unchanged multi-owner cell is still held (2026-10-14)
             row = {"dir": dirp, "file": str(fpath.relative_to(REPO)), "where": where, "project_id": pid,
                    "sheet_row": rec.get("sheet_row"), "column": col, "raw": sv, "styled": res.styled,
                    "basis": res.basis, "confidence": res.confidence, "flags": ",".join(res.flags),
                    "class_out": rec.get("class_out") or ""}
-            if not ES.adoptable(res):
-                row["reason"] = next((f for f in res.flags if f in ES.JUDGMENT_FLAGS),
+            if not res.changed or not ES.adoptable(res):
+                row["reason"] = next((f for f in res.flags if f in ES.HOLD_FLAGS),
+                                     None) or next((f for f in res.flags if f in ES.JUDGMENT_FLAGS),
                                      "comma_list" if "," in res.styled else res.basis)
                 held_rows.append(row)
                 continue

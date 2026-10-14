@@ -414,7 +414,7 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                 if _carried(pid, col, sval, cur):
                     continue                      # carried from the sheet (this snapshot or the newest), not a proposal
                 st = _style(sval)
-                if st.changed:
+                if st.changed or ("multi_owner" in st.flags and st.basis != "ruling"):
                     O.append((pid, col, sval, st.styled, st.basis, st.confidence))
                 if "no_legal_form" in st.flags:
                     O_noform.append((pid, col, st.styled))

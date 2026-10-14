@@ -60,7 +60,8 @@ them as `multi_operator`) and leaves the shape to a human.
 | Sentinels, lowercase | `unknown`, `small shareholder(s)`, `natural person(s)` | `Unknown`, `Various` |
 | Former owner | `X Corp [former]` | |
 | Share belongs in `Owner<N>%`, not the name | `Acme Corp` + `55.00%` | `Acme Corp [55%]` |
-| One owner per `Owner<N>` cell | | `Energy Transfer; Enbridge` |
+| One owner per `Owner<N>` cell; a spaced slash is a list too (`A/S`, `I/S` are not) | | `Energy Transfer; Enbridge`, `AltaGas Ltd / RGC Resources Inc` |
+| No stake note in the name: `(affiliate)`, `(via …)`, `(parent)`, `(member)` and the like go to `researcher_notes`, and the JV company itself is `Owner1` (`gem_schema.md`, SPV ruling 2026-09-15) | `Mountain Valley Pipeline LLC` | `NextEra Energy, Inc. (affiliate)`, `EQT Corporation (via Midstream Joint Venture)` |
 
 ¹ `GAIL (India) Ltd` is a confirmed alias of the team's canonical `GAIL Ltd`, so the styler
 adopts `GAIL Ltd`; the parenthetical rule itself keeps mid-name geography.
@@ -76,8 +77,7 @@ Country names inside a state body follow the GEM naming conventions sheet
 `ruling`, and on `rules` / `stem` when the styled form has no comma and every flag is in
 `MECHANICAL_FLAGS` (`form_punctuation`, `form_long`, `form_moved`, `form_russian`,
 `dots_stripped`, `acronym_dropped`, `acronym_lead`, `quotes_stripped`, `form_from_gazetteer`,
-`percent_stripped`, `whitespace`, `ruled`). `acronym_not_initials` always holds unless a ruling
-settles it.
+`percent_stripped`, `whitespace`, `ruled`). The `HOLD_FLAGS` (`acronym_not_initials`, `owner_qualifier` for a stripped stake note, `multi_owner` for a `;` or spaced-slash list) always hold unless a ruling settles the name. `needs_person(res)` is true for a ruled-free value with a hold flag, changed or not, and for any changed value that is not adoptable; `held_names(values)` lists those cells (2026-10-14, after P7829 Mountain Valley).
 
 | basis | when | confidence | action |
 |---|---|---|---|
@@ -136,15 +136,11 @@ JSON sorted by `canonical`. Nothing regenerates it.
   and is the lint's business; "the sheet" means the worklist's snapshot OR the newest
   operators/owners snapshot in `data/` (`entity_style.carried_on_sheet`), since a push after the
   worklist's pull moves the sheet.
-- **`review_app/push.py`** lists every Owner<N>/Operator cell a plan would write in a spelling
-  `adoptable()` would change and refuses `--apply` until the staged record is restyled
-  (`--allow-unstyled` overrides, by hand). A plan line marked `style_only` stamps `LastUpdated`
-  only (Baird 2026-10-05).
+- **`review_app/push.py`** lists every Owner<N>/Operator cell a plan would write in a spelling `adoptable()` would change, and every cell `needs_person()` holds, and refuses `--apply` until the staged record is fixed (`--allow-unstyled` overrides, by hand). A plan line marked `style_only` stamps `LastUpdated` only (Baird 2026-10-05). The review app shows a line with a held name as low tier, default hold, with the reason first in its notes (`owner_style_held`, 2026-10-14).
 - **`scripts/restyle_staged_owners.py`** re-spells pending staged proposals in place (every live
   `staged_resolutions.json` and shard `rows/*.json`), as string edits through
   `scripts/json_patch.py` so each file keeps its formatting; the source's spelling goes to
-  `researcher_notes`; held cells are listed in `notes/owner-restyle-staged-<date>.md`. First run
-  2026-10-05: 403 cells, 105 re-spellings, 32 held.
+  `researcher_notes`; held cells are listed in `notes/owner-restyle-staged-<date>.md`, including a value the styler leaves unchanged but still holds, such as a multi-owner cell (2026-10-14). First run 2026-10-05: 403 cells, 105 re-spellings, 32 held.
 - **`data/owner_rulings.json`** holds Baird's rulings on names the styler cannot settle (`names`
   by raw name; `cells` by `<PID>/<column>`, including `clear`). `style()` returns basis `ruling`
   for a ruled name; `cell_ruling(pid, col)` for a ruled cell.

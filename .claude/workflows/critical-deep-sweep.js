@@ -105,6 +105,10 @@ DEFERRED into deferred_units.json on purpose; they are not your job this pass. S
   only if the document at hand or one quick search offers it; never spend searches chasing one --
   EXCEPT for a proposed status change, where a second independent source is worth one search (it is
   what makes the change high).
+- A LONE REF THAT FAILS A CHECK (does not load, does not name this pipeline, or does not state the value)
+  owes ONE bounded search (one or two queries) for an alternate that passes all three. Found: it closes the
+  unit at high; keep the partial ref beside it if they mostly agree. Not found: keep the partial ref at its
+  capped tier and say in the note what you searched.
 - Validity: judge existence / duplicate / classification from the documents you already opened
   and the roster. Open a dedicated search only when the row's own sources fail to name the
   pipeline, or the scope guidance names this row as a duplicate/existence candidate.
@@ -193,6 +197,10 @@ only 12-15.
    or a status change on one publisher; low = weak/partial/conflicting. Take a second source when it
    is cheap -- the document at hand or one quick search, a different publisher and document class --
    it sets independent=true (and a status change needs it); never hold a unit open for one. Search in the country's languages too where English is thin.
+   EXCEPTION: when your ONLY ref fails one of the three core checks (loads / names this pipeline / states the
+   value), spend one bounded search (one or two queries) for an alternate that passes all three. Found: it
+   closes the unit at high, and the partial ref stays beside it when the two mostly agree. Not found: keep the
+   partial ref at its capped tier and say in the note what you searched.
 5. Read every document you open TO EXHAUSTION, for every column and every sibling row. A source
    found for one cell is a source for every fact on its page: if the approval notice you found for
    Status also states length, diameter, investment, construction start and commissioning date, stage

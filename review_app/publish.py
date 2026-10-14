@@ -650,6 +650,11 @@ def main(argv=None):
             upload(out, entry, cfg, yes=a.yes)
         except pull_mod.GwsError as e:
             raise SystemExit(f"upload failed: {e}")
+        if a.yes and batch:      # record what the live Google page was built from (review_app/artifacts.json)
+            import build_all
+            pub = build_all.mark_google(a.commodity)
+            if pub:
+                print(f"artifacts.json: Google page marked published ({pub['profile']} profile)")
     return entry, rep
 
 

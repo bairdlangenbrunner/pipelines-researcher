@@ -235,4 +235,38 @@ def test_adoptable_policy():
     cl = s("Florida Gas Transmission Company, LLC")
     assert cl.styled == "Florida Gas Transmission Company LLC" and "form_punctuation" in cl.flags and ES.adoptable(cl)
     af = s("NextEra Energy, Inc. (affiliate)")
-    assert "acronym_not_initials" in af.flags and not ES.adoptable(af)   # a qualifier, not an acronym: a person reads it
+    assert "owner_qualifier" in af.flags and not ES.adoptable(af)        # a qualifier, not an acronym: a person reads it
+
+
+@pytest.mark.parametrize("raw,want", [
+    ("NextEra Energy, Inc. (affiliate)", "NextEra Energy Inc"),
+    ("Con Edison Gas Pipeline and Storage, LLC (affiliate)", "Con Edison Gas Pipeline and Storage LLC"),
+    ("EQT Corporation (via Midstream Joint Venture)", "EQT Corp"),
+    ("Acme Pipeline Corp (parent)", "Acme Pipeline Corp"),
+    ("Acme Pipeline Corp (indirectly, through Acme Holdings LLC)", "Acme Pipeline Corp"),
+])
+def test_stake_qualifier_stripped_and_held(raw, want):
+    # P7829 MVP (2026-10-14): a note on how the stake is held is not part of the name, and it
+    # usually means the cell names a parent rather than the immediate owner, so a person decides
+    r = s(raw)
+    assert r.styled == want and "owner_qualifier" in r.flags
+    assert not ES.adoptable(r) and ES.needs_person(r)
+
+
+def test_spaced_slash_is_several_owners():
+    r = s("AltaGas Ltd. / RGC Resources, Inc. (affiliates)")
+    assert r.styled == "AltaGas Ltd; RGC Resources Inc" and "multi_owner" in r.flags
+    assert ES.needs_person(r)
+    for name in ("A/S Norske Shell", "HMN Naturgas I/S", "Deutsch/Dänische Erdgastransport-Gesellschaft mbH"):
+        assert "multi_owner" not in s(name).flags                      # an unspaced slash is part of the name
+
+
+def test_needs_person_and_held_names():
+    assert not ES.needs_person(s("Mountain Valley Pipeline LLC"))
+    assert not ES.needs_person(s("Chubu Steel Plate Co., Ltd."))       # the styler re-spells it on its own
+    assert ES.needs_person(s("Enbridge Inc., Kinder Morgan, Inc."))
+    ruled = s("Enterprise Products Partners; Enbridge").styled
+    assert not ES.needs_person(s(ruled))                               # a ruled list re-checks clean
+    held = ES.held_names({"Owner1": "Mountain Valley Pipeline LLC", "Owner1%": "1",
+                          "Owner3": "NextEra Energy, Inc. (affiliate)", "Operator": ""})
+    assert [(c, st) for c, _, st, _ in held] == [("Owner3", "NextEra Energy Inc")]

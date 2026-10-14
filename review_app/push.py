@@ -48,7 +48,11 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     rules result with only mechanical flags), the plan is REFUSED and the cells listed -- restyle the
     staged record (scripts/restyle_staged_owners.py) and re-plan. --allow-unstyled writes them anyway.
     The guard checks; it never rewrites a value the reviewer accepted. The 2026-10-02 pushes wrote 113
-    unstyled operator/owner cells before this existed (docs/plans/2026-10-05_owner-style-normalization.md)
+    unstyled operator/owner cells before this existed (docs/plans/2026-10-05_owner-style-normalization.md).
+    It also REFUSES a value the styler holds for a person (entity_style.needs_person: a stake note such
+    as `(affiliate)` or `(via ...)`, several owners in one cell, a judgment-flagged re-spelling); before
+    2026-10-14 those passed silently (P7829 MVP). Fix the line with a suggest, or rule on the name in
+    data/owner_rulings.json, and re-plan.
   * STYLE-ONLY lines (Baird 2026-10-05): a line flagged `style_only` (an owner-style batch: the entity is
     unchanged, only its spelling moves) stamps LastUpdated but leaves Researcher as it is -- the person
     who researched the ownership keeps the credit. A row with any non-style-only line is stamped in full
@@ -359,16 +363,19 @@ def staleness(l, rec, tab, row):
 
 
 def unstyled_names(writes):
-    """[(col, value, styled)] for the Owner<N> / Operator cells a line would write in a spelling the
-    ownership team would not use, where adopting the team's spelling needs no person (see module doc)."""
+    """[(col, value, styled, why)] for the Owner<N> / Operator cells a line would write in a spelling the
+    ownership team would not use: `why` is "restyle" where adopting the team's spelling needs no person,
+    else the styler's flags for a cell it holds for a person (see module doc)."""
     out = []
     for c, v in writes.items():
         sv = str(v or "").strip()
         if not NAME_COL.fullmatch(str(c)) or not sv:
             continue
         st = entity_style.style(sv)
-        if st.changed and entity_style.adoptable(st):
-            out.append((c, sv, st.styled))
+        if entity_style.needs_person(st):
+            out.append((c, sv, st.styled, "held: " + ", ".join(st.flags)))
+        elif st.changed and entity_style.adoptable(st):
+            out.append((c, sv, st.styled, "restyle"))
     return out
 
 
@@ -481,10 +488,10 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             row_lines.setdefault((tname, row, pid), []).append(bool(l.get("style_only")))
     if unstyled:
         print(f"OWNER STYLE: {len(unstyled)} cell(s) would be written in a spelling the ownership team "
-              "would not use (restyle the staged record with scripts/restyle_staged_owners.py and re-plan):",
-              file=sys.stderr)
-        for key, c, v, st in unstyled:
-            print(f"  {key} {c}: {v!r} -> {st!r}", file=sys.stderr)
+              "would not use (restyle: scripts/restyle_staged_owners.py; held: suggest the right value "
+              "or rule on the name in data/owner_rulings.json; then re-plan):", file=sys.stderr)
+        for key, c, v, st, why in unstyled:
+            print(f"  {key} {c}: {v!r} -> {st!r} [{why}]", file=sys.stderr)
         if not allow_unstyled:
             sys.exit("REFUSED: unstyled owner/operator names in the plan (--allow-unstyled overrides)")
     style_only_rows = {k for k, flags in row_lines.items() if flags and all(flags)}

@@ -6,11 +6,7 @@ Build the review app as ONE self-contained page, for a claude.ai artifact (or to
       [--commodity gas|oil] [--include-done] [--dirs DIR ...] [--exclude-pids P1,P2] [--snapshot CSV]
       [--no-pull] [--reviewer BL] [--out FILE]
 
-The page is review_app/web/ (index.html, style.css, static_store.js, app.js) with the dataset inside
-it: the same dataset publish.py builds for the Google page (review_data.build, the decision overlay,
-`basis` stamps), gzipped with its key index into one inline block. There is no server behind it.
-web/static_store.js checks each decision against the index the way gas/Code.gs does and keeps the
-records in the reviewer's browser and, on a published artifact, in the artifact's shared database.
+The page is built by the shared builder in ../gem-review-app (review_core/build_static.py): the shared page (review_core/web: index.html, style.css, static_store.js, app.js) and the pipelines extension (trackers/pipelines/web: ext.css, ext.js), with the dataset inside it: the same dataset publish.py builds for the Google page (review_data.build, the decision overlay, `basis` stamps), gzipped with its key index into one inline block. There is no server behind it. The page store (static_store.js plus the pipelines checks in ext.js) checks each decision against the index the way gas/Code.gs does and keeps the records in the reviewer's browser and, on a published artifact, in the artifact's shared database.
 
 What it does, in order:
   1. pull.py: mirror the Google decision store into the staging dirs' review_log.jsonl, so the page
@@ -30,10 +26,8 @@ Decisions come back through review_app/import_log.py (store `log` tab first, sid
 Nothing here writes the decision store, the backend sheet, Drive, the routes repo or staged_*.json.
 """
 import argparse
-import base64
 import gzip
 import json
-import re
 import subprocess
 import sys
 import tempfile
@@ -45,17 +39,18 @@ for p in (ROOT / "scripts", HERE):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-import bundle  # noqa: E402
 import paths  # noqa: E402
 import publish  # noqa: E402
 import pull as pull_mod  # noqa: E402
 import scopes  # noqa: E402
 import store  # noqa: E402
+from review_core import build_static as core  # noqa: E402
 
-WEB = HERE / "web"
-SCRIPTS = ("static_store.js", "app.js")
-MAX_BYTES = 16 * 1024 * 1024          # the Artifact tool's page limit
-BLOB_ID = "review-blob"
+WEB = core.CORE_WEB                   # the shared page; the pipelines extension is store.CONFIG.web_dir
+SCRIPTS = core.CORE_SCRIPTS           # ("static_store.js", "app.js"), inlined in this order, then ext.js
+MAX_BYTES = core.MAX_BYTES            # the Artifact tool's page limit
+BLOB_ID = core.BLOB_ID
+blob = core.blob
 
 
 def read_scope(out, entry):
@@ -72,39 +67,14 @@ def read_scope(out, entry):
     return data, index
 
 
-def blob(data, index):
-    raw = json.dumps({"data": data, "index": index}, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-    return base64.b64encode(gzip.compress(raw, 9, mtime=0)).decode("ascii")
+def ledger_url(cfg=None):
+    sheet = (cfg if cfg is not None else pull_mod.config(None) or {}).get("store_sheet_id") or ""
+    return f"https://docs.google.com/spreadsheets/d/{sheet}/edit" if sheet else ""
 
 
-def render(data, index, reviewer="", web=WEB):
-    """The page: title and style first, the app's body, the dataset block, then the two scripts."""
-    web = Path(web)
-    html = (web / "index.html").read_text(encoding="utf-8")
-    css = (web / "style.css").read_text(encoding="utf-8")
-    if "</style" in css.lower():
-        raise SystemExit("style.css: contains '</style'")
-    m = re.search(r"<title>(.*?)</title>", html, re.S)
-    b = re.search(r"<body[^>]*>(.*)</body>", html, re.S)
-    if not m or not b:
-        raise SystemExit("index.html: no <title> or no <body>")
-    body = b.group(1)
-    for name in bundle.SCRIPTS:
-        tag = f'<script src="{name}"></script>'
-        if body.count(tag) != 1:
-            raise SystemExit(f"index.html: expected exactly one {tag}")
-        body = body.replace(tag, "")
-    left = re.findall(r'<(?:script|link)[^>]+(?:src|href)="(?!https?:)[^"]*"', body)
-    if left:
-        raise SystemExit(f"index.html still references local files the page cannot load: {left}")
-    sheet = (pull_mod.config(None) or {}).get("store_sheet_id") or ""
-    cfg = json.dumps({"reviewer": reviewer or "", "built": data.get("built", ""),
-                      "ledger_url": f"https://docs.google.com/spreadsheets/d/{sheet}/edit" if sheet else ""}).replace("</", "<\\/")
-    return (f"<title>{m.group(1).strip()}</title>\n<style>\n{css.rstrip()}\n</style>\n"
-            f"{body.strip()}\n"
-            f'<script type="application/octet-stream" id="{BLOB_ID}">{blob(data, index)}</script>\n'
-            f"<script>window.REVIEW_STATIC = {cfg};</script>\n"
-            + "\n".join(bundle._inline_js(n, web) for n in SCRIPTS) + "\n")
+def render(data, index=None, reviewer=""):
+    """The page: title and style first, the app's body, the dataset block, then the scripts (review_core.build_static.render with the pipelines config). `index` defaults to the shared packer, which builds the same index publish.make_index does."""
+    return core.render(data, reviewer, store.CONFIG, index=index, ledger_url=ledger_url(), root=store.ROOT)
 
 
 def git_initials():

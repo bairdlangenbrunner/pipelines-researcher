@@ -66,6 +66,7 @@ Downloads (`curl -o`, saved PDFs, `pdftotext` output) go in `work/` under this d
   search; a different publisher AND document class) — it sets `independent`, and a status change
   needs it for `high`. Don't spend
   searches chasing one.
+* **EXCEPT when your only ref fails a check.** A single ref that FAILS one of the three core checks (it loads, it names this pipeline, it states the value) owes one bounded search for an alternate ref that passes all three (Baird 2026-10-09): one or two quick searches plus the documents already open, never a big spend. Found: the passing ref closes the unit at high, and the partial ref stays beside it when the two mostly agree (drop a proposed partial ref that contradicts the value; an existing one is never removed). Not found: keep the partial ref at its capped tier and say in a short note what was searched.
 
 ## The comprehensiveness bar
 
@@ -154,6 +155,7 @@ Also emit:
 
 **UNITS: stage `LengthKnown` / `Capacity` in the unit the SOURCE states** (1,750 miles → `1750` + `LengthKnownUnits=mi`;
 105.12 million m3/day → `105.12` + `mill.Sm3/day`). Never convert to the sheet's current unit; change the `*Units` value too.
+**Restore miles:** if the ref states the length in miles and the sheet holds a km conversion of it, stage a change back to the ref's figure + `mi` (old km value in `researcher_notes`); no second ref needed.
 A conversion may appear in `researcher_notes`, never in `values`.
 
 Controlled vocabulary is LOCKED and lowercase: `Status`, `RouteAccuracy`, `PipelineType`,

@@ -56,6 +56,7 @@ for _p in (ROOT / "scripts", ROOT / "review_app"):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 
+import entity_style  # noqa: E402
 import paths  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
@@ -85,7 +86,7 @@ _REF_CHECK_TEXT = {
 }
 _NO_COL = 10 ** 6          # sort position for a column the snapshot does not have
 _OO_OFFSET = 10 ** 4       # owners-tab columns sort after every tracker column
-INFO_KINDS = {"confirmed"}  # items nobody is asked to call (web/app.js INFO_KINDS)
+INFO_KINDS = {"confirmed"}  # items nobody is asked to call (the page's INFO_KINDS, from the shared config)
 SCOPE_PID = "scope"        # pseudo-card for escalations / pid-less flags
 NAME_PID = "name:"         # card id prefix for a NAME card: one card per current owner spelling (a style store)
 TRACKER_WIDE = staged_store.TRACKER_WIDE   # the "*" country of the tracker-wide scope (style stores)
@@ -707,6 +708,28 @@ def overlay_decisions(data, root=None):
 
 
 # ---------------------------------------------------------------- line / item objects
+_HELD_WHY = (   # first matching flag explains a held name, in words a reviewer can act on
+    ("owner_qualifier", "A note such as affiliate or via is not part of a name. It usually means the "
+                        "cell names a parent company, and Owner1 should hold the company that owns the "
+                        "pipeline itself."),
+    ("multi_owner", "The cell names more than one company. Each owner goes in its own cell. Several "
+                    "operators in one cell is a call for a person."),
+    ("acronym_not_initials", "The short name in brackets does not match the initials of the full name. "
+                             "Check which company is meant."),
+)
+
+
+def _held_note(held):
+    """Plain-English reason, first in the notes, for a line whose names the styler holds."""
+    out = ["Names not in the ownership team's style. Fix with suggest, or reject."]
+    for c, v, st, fl in held:
+        why = next((w for f, w in _HELD_WHY if f in fl),
+                   "The styler's spelling is a near match to a known name, not a sure one.")
+        fix = f" A styled spelling would be {st!r}." if st != v and "multi_owner" not in fl else ""
+        out.append(f"{c} {v!r}: {why}{fix}")
+    return "\n".join(out)
+
+
 def _line(e, snap, own, stats):
     r = e.rec
     kind = e.kind
@@ -789,6 +812,26 @@ def _line(e, snap, own, stats):
         "ref_cell_text": cell_text, "verifications": r.get("verifications") or [],
         "in_backend": in_backend, "tab": OO_TAB if oo else "tracker",
     })
+    # a proposed value change with no proposed URL is not a suggestion anyone can check: low,
+    # held (Baird 2026-10-09). Only value lines that have a [ref] pair and really differ.
+    if (ref_col and not refs and vals and kind != "ref" and not in_backend
+            and any(not _same(current.get(c), v) for c, v in vals.items() if v not in (None, ""))):
+        base["tier"] = "low"
+        base["default"] = "hold"
+        base["no_ref_demoted"] = True
+    # an owner or operator name the styler holds for a person (a stake note such as `(affiliate)`,
+    # several owners in one cell, a judgment-flagged re-spelling) is low and held, with the reason
+    # first in the notes; push.py refuses to write one (P7829 MVP, 2026-10-14). A style store's
+    # lines are already decided name by name, so they are left alone.
+    if not r.get("style_only") and not in_backend:
+        held = entity_style.held_names({c: v for c, v in vals.items() if not _same(current.get(c), v)})
+        if held:
+            base["tier"] = "low"
+            base["default"] = "hold"
+            base["owner_style_held"] = [{"column": c, "value": v, "styled": st, "flags": fl}
+                                        for c, v, st, fl in held]
+            base["notes"] = _held_note(held) + "\n\n" + base["notes"]
+
     base["ops"] = line_ops(base)
     base["severity"] = severity(base)
     if oo:

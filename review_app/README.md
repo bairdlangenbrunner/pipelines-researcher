@@ -2,17 +2,15 @@
 
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
+**The page, the decision log, the loopback server and the single-file builder live in the sibling repo `../gem-review-app`** (shared with gogpt-researcher since 2026-10-08; `GEM_REVIEW_APP` in the environment overrides the location). Its `review_core/` holds the page (`web/index.html`, `app.js`, `style.css`), the browser-side stores (`web/static_store.js` for the single-file and artifact page, `web/gas.js` for the Apps Script page) and the generic store, server and builder; `trackers/pipelines/` holds the pipelines config (kinds, calls, concerns as rivals, the backend sync, the refresh and push routes, the page index fields) and the page extension (`web/ext.js`, `web/ext.css`). Any interface change is made there, never here. `store.py`, `server.py` and `build_static.py` here are thin shims that bind it to this repo; the refresh, the push, the dataset (`review_data.py`), the ledger, `publish.py` and the Apps Script side (`bundle.py`, `gas/`) stay here.
+
 **After milestone 6: data builder + server/UI with line decisions (accept / hold / reject /
 suggest, undo), item calls, bulk with confirm, concerns as rivals / self-resolving, session summary and
 backend refresh; consumers `build_ref_workbook.py --decisions`, `apply_route_candidates.py
 --decisions`, `staged_summary.py` decided counts and `update_seed.py`. `push.py` (phase 1b) does
 not exist yet.**
 
-**The Google version (phase 2) is built and its Google objects exist, but it is NOT deployed yet**
-(section "Google version" below): the data folder, the store spreadsheet and the Apps Script
-project were created 2026-09-30 and the review-app gas batch was published once; the web app
-deployment (a browser step only Baird can do) and the identity check are still to do. Once it is
-deployed it is the review surface; the loopback server below stays as the build / debug tool.
+**The claude.ai artifact is the main way to see the app** (section "Artifact version" below). The Google web app (section "Google version") is parked as of 2026-10-09: it is not republished and not tracked in `artifacts.json`, and its code stays in place. The Google decision store (the `log` tab) is still the ledger every path writes first. The loopback server stays as the build / debug tool.
 
 ```bash
 python review_app/server.py                                         # the review-app batch (below), gas
@@ -54,7 +52,7 @@ Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/d
 `/api/refresh`, `/api/push/plan`, `/api/push`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
 first ref, `d` toggle details, `/` search, `?` help. The header's **how to** button opens a
-plain-language page (`INFO` in `web/app.js`): what a change is, the four calls, and that an accept is
+plain-language page (`info` in gem-review-app `trackers/pipelines/web/ext.js`): what a change is, the four calls, and that an accept is
 logged at once but reaches the backend sheet only through a later push. The local server's **push changes** button (needs the decision store) pulls the store, plans against the live sheet, lists every cell, and writes only after a click on "write N cells" (same `push.py` plan/apply, backup CSV and read-back), then refreshes the backend snapshot itself so pushed lines gray out as `in_backend` (a failed refresh is reported; the push stands). Clicking outside any popup closes it. Filters combine; `in_backend` lines are
 hidden by default. With several `--country` values the filter bar leads with one checkbox per
 country (multi-select; none ticked = all); it keys on the BATCH country of the staging dir a card
@@ -309,7 +307,7 @@ block. Anything unclear blocks. The rule is in the script's docstring; change it
 
 ## Session summary
 
-**Switched off for now (might add later):** set `SHOW_SUMMARY = true` in `web/app.js` to bring back the button and the `S` key.
+**Not in the shared app:** this summary was switched off before the move to gem-review-app (2026-10-08) and was not carried over; the text below describes it for when it comes back.
 
 `S` or the header "summary" button: decided / open / in-backend counts by kind, confidence and staging
 dir, item calls, and what this reviewer saved in this page session, with "copy summary as
@@ -340,7 +338,7 @@ The summary goes to stderr.
 ## Artifact version (the current way to share a batch; decisions save themselves)
 
 The same front end as one self-contained page, published as a claude.ai artifact. It needs no
-Google deployment, so it is the quick way to hand a batch to someone. Same model as the GOGPT
+Google deployment and is the main way to see and share a batch. Same model as the GOGPT
 review app's artifact (`../gogpt-researcher/review_app/README.md`); the rules below are shared.
 
 Live page (the gas batch, published 2026-10-05 from the work profile):
@@ -355,9 +353,18 @@ python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymo
 python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymonitor.org
 ```
 
+- **Is the live page current? `python review_app/build_all.py --check`.** A page is a snapshot, so
+  `artifacts.json` lists each live page (the artifact above) with a `published` block
+  recording what it was built from, and the check says which are stale and why (interface, builder, newest snapshot,
+  included countries, staged work, a new or gone staging dir, decisions). It exits 1 unless every page is fresh and
+  makes no network call. To refresh the artifact: `build_all.py` (builds the stale or unmarked artifact pages; `--all`
+  for every one) -> publish the printed file to its url from the work profile -> `build_all.py --mark-published
+  gas-batch` (refused if the inputs changed since the build). Hooks in `.claude/settings.json` run the check at session start and on a changed
+  prompt, and block a stop once when this session changed a page's inputs without republishing.
+  Logic: `../gem-review-app/review_core/pages.py`; plan: `../gem-review-app/docs/refresh.md`.
 - **Build.** `build_static.py` pulls the decision store (read only), builds the dataset the way
-  `publish.py` does with `write=False`, and inlines it (gzip, base64) with `web/style.css`,
-  `web/static_store.js` and `web/app.js`. It writes no store row, no sidecar and nothing in Drive.
+  `publish.py` does with `write=False`, and inlines it (gzip, base64) with the shared page from gem-review-app (`review_core/web`: `style.css`,
+  `static_store.js`, `app.js`) and the pipelines extension (`trackers/pipelines/web`: `ext.css`, `ext.js`). It writes no store row, no sidecar and nothing in Drive.
   The page must stay under 16 MB (the gas batch is 8 MB); narrow it with `--country` if it grows.
 - **Publish from the work profile (`~/.claude-gem`), never the personal one.** With the Artifact
   tool, capabilities `{db: {}, user: {scopes: ["profile"]}, downloads: true}`. The runtime's type
@@ -397,15 +404,17 @@ python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymo
      written.
   3. Rebuild the page and publish it to the same link, so the reviewer sees the decisions as
      recorded. Accepted cells reach the sheet only through `push.py` (plan, ask Baird, `--apply`).
-- **push to log (2026-10-08).** The header button (labeled "push to log"; its info box links to the store spreadsheet) saves the viewer's decisions to the shared log and writes one request document, `requests/<uid>~<device>~push` (`status: "requested"`, `seq`, `records`). It never touches the ledger or the sheet itself. A Claude Code session on the work profile checks the `requests` collection (ArtifactData `list`), and for a request newer than the last one handled it runs the three steps above (list `logs`, `import_log.py` dry run then real, `push.py` plan), shows Baird the plan, and runs `push.py --apply` only after Baird says yes for that plan. The watcher only exists while a session runs it (a session cron); with none running, say "pull" in a session. Rebuilding and republishing is still a separate step.
+- **push to log (2026-10-08).** The header button (labeled "push to log"; its info box links to the store spreadsheet) saves the viewer's decisions to the shared log and writes one request document, `requests/<uid>~<device>~push` (`status: "requested"`, `seq`, `records`: this browser's calls the log does not have yet, `total`: every call in this browser's log). Since 2026-10-09 a call counts only when the log does not already hold it: the build embeds the ids of page records already imported (`logged`, from `review_core.build_static.logged_ids`), a call older than a person's decision already shown on its line is left out, and the calls this browser already pushed are kept in localStorage under `review-pushed:<dirs>`. With nothing new the page sends nothing. The import still skips records already in the log by id, so a push only ever adds new calls. It never touches the ledger or the sheet itself. A Claude Code session on the work profile checks the `requests` collection (ArtifactData `list`), and for a request newer than the last one handled it runs the three steps above (list `logs`, `import_log.py` dry run then real, `push.py` plan), shows Baird the plan, and runs `push.py --apply` only after Baird says yes for that plan. The watcher only exists while a session runs it (a session cron); with none running, say "pull" in a session. Rebuilding and republishing is still a separate step.
 - **Filters survive a reload (2026-10-08).** The route (filters plus the open item) is kept in this browser's localStorage per scope (`review-route:<scope>`) and restored on load when the URL carries no route, because a published artifact's frame does not keep the hash. A link with a route in it still wins. Takes effect on the next build and publish.
 - The page has no refresh and no sheet push. `push.py` stays the only route to the backend sheet.
 
-## Google version (phase 2)
+## Google version (phase 2) — PARKED 2026-10-09
+
+Not part of the workflow right now: the artifact above is the main surface. Nothing here is deleted. If it is revived, add a `kind: google` entry back to `artifacts.json` so the freshness check covers it again, and republish with `publish.py --upload --yes` (ask Baird first).
 
 An Apps Script web app, open to globalenergymonitor.org logins only, running as Baird
 (`gas/appsscript.json`: `access: DOMAIN`, `executeAs: USER_DEPLOYING`). Same front end
-(`web/app.js` with the `web/gas.js` store adapter), same decision records, three Google objects:
+(gem-review-app's `review_core/web/app.js` with its `gas.js` store adapter, plus `trackers/pipelines/web/ext.js`), same decision records, three Google objects:
 
 | Object | What it is | Who writes it |
 |---|---|---|
@@ -458,7 +467,7 @@ python review_app/ledger.py decide --key KEY --decision accept|hold|reject|sugge
 python review_app/push.py [--include-stale]   # the ONLY route to the backend sheet; stale + already-pushed lines skipped;
 python review_app/push.py --country "United States"   # plan one country's accepts only (another country's refused line no longer blocks it)
                                               #   REPLACES marks a cell whose value the reviewer saw and accepted a change to
-python review_app/bundle.py [--check]         # web/ + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
+python review_app/bundle.py [--check]         # gem-review-app web files + google.json -> gas/index.html + gas/Config.gs (generated, gitignored)
 python review_app/gas_push.py                 # list how the Apps Script project differs from gas/ (writes nothing)
 python review_app/gas_push.py --yes           # replace the project's files: ASK BAIRD FIRST, every run; then deploy a new version
 node review_app/gas_dev/dev_server.js         # local stand-in: http://127.0.0.1:8767/?user=you@globalenergymonitor.org

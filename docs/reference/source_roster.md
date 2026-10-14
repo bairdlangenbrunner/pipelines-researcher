@@ -258,6 +258,8 @@ Offshore / Offshore Technology, Rigzone, MEED, Hart Energy, S&P Global Commodity
 Insights / Platts, Argus Media, Kpler, RBN Energy, East Daley, Wood Mackenzie,
 Interfax, Reuters/Bloomberg energy.
 
+**Rextag (`rextag.com`) — good-quality pipeline data, check it when a page exists (Baird 2026-10-09).** Its per-system pages (`rextag.com/pages/<system-slug>`, e.g. `/pages/enable-mississippi-river-transmission`) carry a header naming the owner, the operator, miles of pipeline, system capacity, storage and compressor stations, then a prose system description; they cite cleanly as a ref for Owner, Operator, Length, Capacity and Location. Coverage is mostly US interstate gas systems. Two cautions: figures can lag the operator's newest annual report by a few years (Transco, `docs/research_backlog.md`), so a newer 10-K wins on capacity and mileage; and the owner field can carry an old parent name ("Energy Transfer Partners, LP" years after the rename), so read it as the owning company named, not proof of the current corporate parent.
+
 ## Tier 3 — Regional / specialized press (corroborators, not standalone)
 Tehran Times, Mehr News Agency, Saudipedia, country business press; conference
 press (ADIPEC, Gastech); NGO/opposition research (Earthjustice, Sierra Club,

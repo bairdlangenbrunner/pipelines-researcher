@@ -46,6 +46,7 @@ the word **`inferred`**, not `Presumed`, which appears nowhere in either tracker
 |---|---|---|
 | `DelayType` | `inferred`, `confirmed` | live counts: 114/138 gas, 37/41 oil (one stray `Assumed` in gas is a data error) |
 | `ShelvedCancelledType` | `inferred`, `confirmed` | `inferred` for a GEM-rule dormancy change (no fabricated URL); `confirmed` when a source states it. Live: 84/83 gas, 63/52 oil |
+| `Fuel` (gas tab) | `Gas`, `Hydrogen`, `Gas and hydrogen`, `Coke oven gas` | Baird 2026-10-09: never `natural gas` / `Natural Gas` / lowercase `gas`. `check_shard_coverage.py` blocks anything else unless it equals the sheet's own value (the sheet still carries 8 `Gas and Hydrogen` and 2 `Oil` rows) |
 | `FIDStatus` | `Pre-FID`, `FID` | only populated when `Status = proposed`; genuinely capitalized like this |
 | `Delayed` | `yes` | leave **blank** if not delayed — do **not** enter `no`. Live: 254 gas / 78 oil, all lowercase |
 | `Opposition` | `yes`, `no` | **the sheet is genuinely inconsistent here** — gas holds `no` 66 / `Yes` 46 / `yes` 29 / `No` 26, oil is uniformly lowercase. Write lowercase; do not mass-restyle existing cells without Baird's say-so |

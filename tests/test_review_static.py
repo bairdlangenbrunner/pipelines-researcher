@@ -61,11 +61,29 @@ def test_the_page_is_one_file_the_artifact_tool_can_wrap(scope, tmp_path):
     assert not (scope["deep"] / store.LOG_NAME).exists()         # building the page wrote no sidecar
 
 
+def test_the_shared_packer_builds_the_index_publish_builds(scope, tmp_path):
+    """The shared builder (gem-review-app, with the pipelines config's index_entry and index_extras) and
+    publish.py pack the same index, so the page store and Code.gs read the same fields."""
+    from review_core.build_static import pack_index
+    d = scope["dataset"]
+    concern = next(i for p in d["pipelines"] if p["pid"] == "P9001" for i in p["items"] if i["kind"] == "concern")
+    concern["contested"] = {"Status": "operating", "Owner1": "OldCo"}
+    review_fixture.relink(d)
+    publish.stamp_basis(d, scope["dirs"])
+    want = publish.pack_index(publish.make_index(d))
+    assert sum(1 for g in want["keys"] for e in g.values() if e.get("x")) >= 2 and want["w"] and want["cmd"] == "gas"
+    assert pack_index(d, store.CONFIG) == want
+    entry, _ = publish.publish(["Russia"], "gas", tmp_path / "out", batches_root=scope["root"],
+                               data_dir=scope["data"], write=False)
+    data, index = build_static.read_scope(tmp_path / "out", entry)
+    assert pack_index(data, store.CONFIG) == index
+
+
 def test_app_js_takes_the_static_store_only_when_the_google_one_is_absent():
     js = (bundle.WEB / "app.js").read_text(encoding="utf-8")
     assert "window.GasStore || window.StaticStore ||" in js
     assert "REVIEW_STATIC" in (bundle.WEB / "static_store.js").read_text(encoding="utf-8")
-    assert "static_store.js" not in bundle.bundle()               # the Google bundle is unchanged
+    assert "window.StaticStore = " not in bundle.bundle()         # the Google bundle is unchanged
 
 
 # ---- the import --------------------------------------------------------------------------
@@ -130,3 +148,41 @@ def test_a_store_failure_writes_nothing_locally(scope):
     with pytest.raises(ledger.StoreError):
         import_log.write(pl, ds, dirs, cfg={"store_sheet_id": "S"}, gws=FakeStore(fail=ledger.pull.GwsError))
     assert not any((d / store.LOG_NAME).exists() for d in dirs.values())
+
+
+def test_build_all_check_unmarked_and_mark_roundtrip(tmp_path, monkeypatch, capsys):
+    """The page registry: the batch pages start unmarked (exit 1); marking records the inputs and the check goes fresh."""
+    import json
+    import build_all
+    from review_core import pages
+    reg = json.loads(build_all.REGISTRY.read_text(encoding="utf-8"))
+    for e in reg["pages"]:
+        e.pop("published", None)
+    # the Google page is parked and has no real entry; keep its code path covered with a fixture one
+    reg["pages"].append({"name": "review-app-gas", "kind": "google", "scope": {"batch": True, "commodity": "gas"}})
+    path = tmp_path / "artifacts.json"
+    path.write_text(json.dumps(reg), encoding="utf-8")
+    monkeypatch.setattr(build_all, "REGISTRY", path)
+    monkeypatch.setattr(build_all, "LAST_BUILD", tmp_path / "last.json")
+    with pytest.raises(SystemExit) as e:
+        build_all.main(["--check"])
+    assert e.value.code == 1 and "unmarked" in capsys.readouterr().out
+    build_all.mark("gas-batch")
+    by = {r["name"]: r["status"] for r in build_all.reports()}
+    assert by == {"gas-batch": "fresh", "review-app-gas": "unmarked"}
+    assert build_all.mark_google("gas")["fingerprint"]
+    assert {r["status"] for r in build_all.reports()} == {"fresh"}
+
+
+def test_build_all_dirs_follow_the_review_app_batch(monkeypatch, tmp_path):
+    import build_all
+    monkeypatch.setattr(build_all.scopes, "included", lambda commodity, path=None: ["Ukraine"])
+    seen = {}
+
+    def fake(countries, commodity, root, explicit=None):
+        seen["countries"] = countries
+        return [tmp_path / "x"], {}
+    monkeypatch.setattr(build_all.review_data, "_country_dirs", fake)
+    assert build_all._dirs({"scope": {"batch": True, "commodity": "gas"}}) == [tmp_path / "x"]
+    assert seen["countries"] == ["Ukraine"]
+    assert build_all._dirs({"dirs": ["batches/a/staging"]}) == [build_all.ROOT / "batches/a/staging"]

@@ -69,6 +69,8 @@ Pacific Pipeline = Lines 901/903 = CA-324/CA-325 = Las Flores Pipeline System = 
 Pipeline System) lists them all in `OtherEnglishNames`, semicolon-separated
 (`gem_schema.md`).
 
+**A candidate that is probably part of, or another name for, an existing row is never a new row** (Baird 2026-10-14). Stage it as an `OtherEnglishNames` fill on the matched row (existing text kept, new name appended) and say in the note that there is a chance it is a different pipeline. After a merge, `python scripts/convert_matched_to_alias.py --apply` does this for every `matched_existing` record (alias map inside the script; originals are kept under `converted_to_alias` in `staged_new.json`). Non-English names go to `OtherLanguageAlternativePipelineNames`.
+
 ## Route / map research
 
 For every new pipeline, a dedicated route search, in this order:

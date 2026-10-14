@@ -222,8 +222,10 @@ ${priorNote}
    Save any downloaded file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\` (gitignored),
    never the repo root.
 3. One validated source (names the pipeline, states the value) suffices; >=2 INDEPENDENT preferred (not one wire story reprinted). Search in-country languages.
+   If your only source fails a check (doesn't name the pipeline or doesn't state the value), spend one or two quick searches for one that passes; keep both if they mostly agree.
 4. RE-CHECK match-to-existing yourself before anything else — if this is really an existing GEM row
    under another name, class it matched_existing and STOP researching a new row.
+   A matched_existing record is an alias finding, never a new row: put the name it would add in researcher_notes ("OtherEnglishNames suggestion: <name>") and say there is a chance it is a different pipeline. After the merge, scripts/convert_matched_to_alias.py stages it as an OtherEnglishNames fill on the matched row.
 5. New owner/operator entities: \`python scripts/entity_lookup.py "<owner>" "${COUNTRY}"\` first.
 
 ## The add-threshold (Discovery SOP §3) — ALL THREE or it is monitor, not new_row:
@@ -233,7 +235,7 @@ ${A.vetRule || ''}
 
 ## For a qualifying new_row, research the GEM columns
 Use EXACT GEM column names (header row 3 of data/<csv named in discovery_context.json>):
-PipelineName, SegmentName, OtherEnglishNames, Status (controlled vocab, lowercase), Fuel,
+PipelineName, SegmentName, OtherEnglishNames, Status (controlled vocab, lowercase), Fuel (gas tab: exactly one of Gas, Hydrogen, Gas and hydrogen, Coke oven gas; never "natural gas"),
 PipelineType, CountriesOrAreas, StartLocation/StartState/Province/StartCountryOrArea,
 EndLocation/EndState/Province/EndCountryOrArea, Capacity+CapacityUnits, LengthKnown+LengthKnownUnits,
 Diameter+DiameterUnits, Owner, Parent, ProposalYear, FIDStatus, ProjectLevelCost+Units,

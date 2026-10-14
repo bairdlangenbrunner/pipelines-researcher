@@ -81,6 +81,7 @@ def load_scope_sheet(staging: Path):
     return load_sheet(wl.get("scope"))
 
 
+GAS_FUEL_VALUES = {"Gas", "Hydrogen", "Gas and hydrogen", "Coke oven gas"}
 VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK", "REF_BLOCKED",
                    "REF_UNSUPPORTED"}
 
@@ -191,6 +192,13 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                     r"(?:[1-9]|1[0-2])(?:\.0+)?", str(mval_).strip()):
                 why.append(f"`{mcol_}` = {mval_!r} — month columns take the number 1-12, never "
                            "the month name or text")
+        # `Fuel` on the gas tab takes one of four values (Baird 2026-10-09): never "natural gas",
+        # "Natural Gas" or lowercase "gas". A value equal to the sheet's own is carried, not checked.
+        if "Fuel" in vals_ and str(vals_["Fuel"]).strip() not in GAS_FUEL_VALUES:
+            cur_fuel = sheet_value(sheet, pid, f.get("sheet_row"), "Fuel") if sheet is not None else None
+            if str(vals_["Fuel"]).strip() != str(cur_fuel or "").strip():
+                why.append(f"`Fuel` = {vals_['Fuel']!r} — the gas tab takes only "
+                           + ", ".join(sorted(GAS_FUEL_VALUES)) + " (a plain gas pipeline is `Gas`)")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).
@@ -313,8 +321,13 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 if _carried(pid, c, sv, cur):
                     continue            # equal to the worklist's snapshot or the newest one
                 st = _owner_style(sv)
-                if st is not None and st.changed:
-                    restyle.append(f"{c}: {sv!r} -> {st.styled!r}")
+                # an unchanged value can still be unfit: several owners in one cell
+                if st is not None and (st.changed or ("multi_owner" in st.flags and st.basis != "ruling")):
+                    restyle.append(f"{c}: {sv!r} -> {st.styled!r}"
+                                   + (" (one owner per cell)" if "multi_owner" in st.flags else "")
+                                   + (" (the bracketed note is not part of the name; it may mean "
+                                      "this is a parent, and Owner1 holds the SPV)"
+                                      if "owner_qualifier" in st.flags else ""))
             if restyle:
                 why.append("owner name(s) not in the ownership team's style — "
                            + "; ".join(restyle)

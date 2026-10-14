@@ -53,6 +53,8 @@ in on its own, a declined one stays out. The owner-style normalization store is 
 is not a country: `scopes.py check --country '*' --commodity both` (tracker-wide; it joins both
 commodities' builds once included).
 
+Then run `python review_app/build_all.py --check` and rebuild and republish whatever it lists as stale or unmarked before the delivery note goes out (`review_app/README.md`, "Artifact version"). Hooks in `.claude/settings.json` run the same check at session start and before a stop.
+
 `batches/INDEX.md` is the whole-tree lookup — regenerate it with
 `python scripts/staged_summary.py --index` after adding/moving anything; never
 hand-edit it.

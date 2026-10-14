@@ -160,6 +160,19 @@ _FORMER_TAIL = re.compile(r"\s*\[\s*former\s*\]\s*$", re.I)
 # Before 2026-10-05 the trailing-form rewrite ate the closing parenthesis of these.
 _ACRONYM_LEAD = re.compile(r"^([A-Z][A-Z0-9&\-]{1,7})\s*\(\s*([^()]*\s[^()]*)\)\s*$")
 _ACRONYM_TAIL = re.compile(r"\s*\(\s*([A-Za-z0-9][A-Za-z0-9&.\-]{1,13}(?: [A-Za-z]{2,12})?)\s*\)\s*$")
+# a trailing note about HOW the entity holds its stake: `(affiliate)`, `(via Midstream Joint
+# Venture)`, `(parent)`. Not part of any name, and it usually means the cell names a parent rather
+# than the immediate owner (the SPV ruling), so it is stripped and the cell held for a person
+# (flag owner_qualifier; P7829 MVP, 2026-10-14). Before this the styler read `(affiliate)` as a
+# trade name and `(via …)` as part of the name.
+_QUALIFIER_TAIL = re.compile(
+    r"\s*\(\s*(?:an?\s+|the\s+)?(?:affiliates?|subsidiar(?:y|ies)|(?:ultimate\s+|former\s+)?parent|"
+    r"via\b[^()]*|through\b[^()]*|indirect(?:ly)?\b[^()]*|(?:jv\s+|joint[\s-]venture\s+)?partners?|"
+    r"members?|sponsors?|operator|owner|shareholders?|stakeholders?|majority\b[^()]*|minority\b[^()]*|"
+    r"held\b[^()]*|owned\b[^()]*|on behalf of\b[^()]*)\s*\)\s*$", re.I)
+# several owners in one cell joined by a spaced slash (`AltaGas Ltd. / RGC Resources, Inc.`);
+# an unspaced slash is part of a name or a form (`A/S`, `I/S`, `Deutsch/Dänische …`)
+_SLASH_LIST = re.compile(r"\s+/\s*|\s*/\s+")
 # parenthetical words that are legal-name elements, never trade names
 PAREN_KEEP_WORDS = {"persero", "private", "public", "holding", "holdings", "group", "proprietary",
                     "pty", "pvt", "tbk", "national", "international", "overseas", "offshore",
@@ -233,6 +246,11 @@ def rulings() -> dict:
         return out
     d = json.loads(RULINGS_JSON.read_text(encoding="utf-8"))
     out["names"] = {normalize_name(k): dict(v, raw=k) for k, v in (d.get("names") or {}).items()}
+    # the ruled form itself is ruled too, so a cell already written that way re-checks clean
+    # (a kept multi-operator list would otherwise be held again as multi_owner)
+    for v in list(out["names"].values()):
+        if v.get("styled"):
+            out["names"].setdefault(normalize_name(v["styled"]), v)
     out["cells"] = dict(d.get("cells") or {})
     return out
 
@@ -575,8 +593,8 @@ def style(raw: str, country: str | None = None) -> StyleResult:
         res.note = f"ruled by Baird {ru.get('date', '')}: {ru.get('ruling', '')}".strip()
         return res
 
-    if ";" in s:
-        parts = [p.strip() for p in s.split(";") if p.strip()]
+    if ";" in s or _SLASH_LIST.search(s):
+        parts = [p.strip() for p in re.split(r";|" + _SLASH_LIST.pattern, s) if p.strip()]
         subs = [style(p) for p in parts]
         res.styled = "; ".join(x.styled for x in subs)
         res.flags.append("multi_owner")
@@ -595,6 +613,18 @@ def style(raw: str, country: str | None = None) -> StyleResult:
     if _PCT_TAIL.search(s):
         s = _PCT_TAIL.sub("", s).strip()
         res.flags.append("percent_stripped")
+    mq = _QUALIFIER_TAIL.search(s)
+    if mq and s[:mq.start()].strip():
+        qualifier = mq.group(0).strip()
+        s = s[:mq.start()].strip()
+        res.flags.append("owner_qualifier")
+        out = style(s, country)
+        out.raw = res.raw
+        out.flags = list(dict.fromkeys(res.flags + out.flags))
+        out.note = (f"{qualifier} is a note about how the stake is held, not part of the name: it goes "
+                    "in researcher_notes, and the cell may name a parent instead of the immediate "
+                    f"owner (Owner1 holds the SPV); {out.note}")
+        return _finish(out, former)
 
     low = s.lower()
     if low in SENTINELS:
@@ -851,7 +881,37 @@ MECHANICAL_FLAGS = frozenset({"whitespace", "form_punctuation", "form_long", "fo
 # Flags that make a re-spelling a judgment (who the entity is, which form it is registered under)
 JUDGMENT_FLAGS = frozenset({"fuzzy_candidates", "no_legal_form", "form_conflict", "form_ambiguous",
                             "alias_candidate", "acronym_not_initials", "multi_owner", "non_latin",
-                            "form_check_registration", "state_body", "jv", "group", "former", "sentinel"})
+                            "form_check_registration", "state_body", "jv", "group", "former", "sentinel",
+                            "owner_qualifier"})
+# Flags that hold a cell for a person whatever else matched, and that make an UNCHANGED value
+# unfit to write too: the cell says something about the stake (`(affiliate)`) or holds several
+# owners, which no re-spelling fixes.
+HOLD_FLAGS = frozenset({"acronym_not_initials", "owner_qualifier", "multi_owner"})
+OWNER_COL = re.compile(r"Owner\d+|Operator")
+
+
+def needs_person(res: StyleResult) -> bool:
+    """Is this value not in the ownership team's style, with no re-spelling the styler may adopt on
+    its own? The cells push.py and the review app hold back, beside the ones it re-spells."""
+    if res.basis == "ruling":
+        return False
+    if set(res.flags) & HOLD_FLAGS:
+        return True
+    return res.changed and not adoptable(res)
+
+
+def held_names(values: dict) -> list[tuple[str, str, str, list[str]]]:
+    """[(col, value, styled, flags)] for each Owner<N> / Operator value in `values` that
+    needs_person(); the caller passes only the cells it would actually write."""
+    out = []
+    for c, v in (values or {}).items():
+        sv = str(v or "").strip()
+        if not OWNER_COL.fullmatch(str(c)) or not sv:
+            continue
+        st = style(sv)
+        if needs_person(st):
+            out.append((c, sv, st.styled, st.flags))
+    return out
 
 
 def adoptable(res: StyleResult) -> bool:
@@ -863,9 +923,9 @@ def adoptable(res: StyleResult) -> bool:
     punctuation and fine."""
     if not res.changed:
         return True
-    if "acronym_not_initials" in res.flags and res.basis != "ruling":
-        return False            # the dropped parenthetical ('affiliate', 'IOCL') may say something a
-                                # person should read, whatever the rest of the name matched
+    if set(res.flags) & HOLD_FLAGS and res.basis != "ruling":
+        return False            # the dropped parenthetical ('IOCL', '(affiliate)') may say something
+                                # a person should read, whatever the rest of the name matched
     if res.basis in ("exact", "alias", "ruling"):
         return True
     if res.basis in ("rules", "stem"):

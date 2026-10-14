@@ -92,10 +92,10 @@ def test_push_refused_without_store_and_refresh_refused_without_build(live):
 def test_static_files(live):
     base, _, _ = live
     st, body, h = get(base + "/")
-    assert st == 200 and b'<script src="app.js">' in body and "text/html" in h["Content-Type"]
-    assert get(base + "/app.js")[0] == 200
-    assert get(base + "/style.css")[0] == 200
-    assert get(base + "/nope.js")[0] == 404
+    assert st == 200 and b'<script src="/core/app.js">' in body and "text/html" in h["Content-Type"]
+    assert get(base + "/core/app.js")[0] == 200
+    assert get(base + "/core/style.css")[0] == 200
+    assert get(base + "/core/nope.js")[0] == 404
 
 
 def test_path_traversal_refused(live):

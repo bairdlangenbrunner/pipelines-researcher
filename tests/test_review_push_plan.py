@@ -311,3 +311,14 @@ def test_a_month_is_written_as_a_number_not_text():
     assert push.coerce("11", "StartMonth1") == 11
     assert push.month_number("Ma") is None and push.month_number("13") is None
     assert push.coerce("July", "ResearcherNotes") == "July"
+
+
+def test_a_held_owner_name_is_refused_beside_a_restyle():
+    # P7829 MVP, 2026-10-14: parents with stake notes went past the guard because only
+    # names it could re-spell on its own were listed
+    got = {c: why for c, _, _, why in push.unstyled_names({
+        "Owner1": "Mountain Valley Pipeline LLC", "Owner1%": "1",
+        "Owner2": "EQT Corporation (via Midstream Joint Venture)",
+        "Owner5": "AltaGas Ltd. / RGC Resources, Inc. (affiliates)"})}
+    assert set(got) == {"Owner2", "Owner5"}
+    assert "owner_qualifier" in got["Owner2"] and "multi_owner" in got["Owner5"]
