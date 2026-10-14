@@ -333,13 +333,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   April-2025 release; EIA's State-to-State workbook is independent but point-to-point, not a
   system figure). Staged as a CONTESTED candidate on `Gas_Backend`, not an applied edit —
   adjudicate before pasting, and repoint `Capacity [ref]` to the 10-K when you do.
-- **`New United Kingdom` is a find-and-replace scar, and is NOT a mechanical fix.**
-  P0176 (SheetRow 37) and P0259 (SheetRow 112) carry it in `EndState/Province`; both are
-  New England termini. But the column holds individual STATES everywhere else
-  (`Massachusetts`, `Connecticut`, `Maine`, `New Hampshire`, `New York` all present) and
-  `New England` appears **zero** times in either tracker, so restoring it would introduce
-  an unprecedented value. Research each row's real terminus state. The other 7
-  `United Kingdom` hits in the tab are legitimate North Sea rows — leave them.
+- **State-column repairs pushed 2026-10-14** (`update-state-fixes-20261014`, 36 cells): `New United Kingdom` on P0259 is now Massachusetts (medium; P0176 was already New York), P0176 start Maryland, P2613 start Arizona, P0156 county names moved to the district cells with Pennsylvania in both state cells, and 21 abbreviation/typo cells spelled out. Not yet fixed, no loadable ref on the row to carry the change through `push.py` (P2502, P8216, P8267, P8268, P8290 — mechanical abbreviation/typo fixes) or not high confidence (offshore `Gulf of Mexico` rows, P0168, P0273, P2636, P0252, P0294, P3221, P0288, P2551).
 
 ## Open items
 - Keep deepwater-export terminal pipeline components distinct from the terminal
