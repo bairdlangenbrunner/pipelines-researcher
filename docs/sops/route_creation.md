@@ -94,7 +94,7 @@ provenance/audit, not a citation.
    + `staged_resolutions.json`. Each candidate also stages **paste-ready APPEND values**
    for the sheet's route provenance columns (rendered as `Proposed RouteCreator` /
    `Proposed RouteNotes` / `Proposed Route [ref]` on the RouteCandidates tab — Baird
-   2026-07-30): `RouteCreator` gets `CB`, `RouteNotes` a per-method stamp ("CB: route
+   2026-07-30): `RouteCreator` is set to `CB` (never appended), `RouteNotes` a per-method stamp ("CB: route
    from gulfpub" / "CB: route guessed from endpoints", override with `--routenote`),
    and `Route [ref]` every verified link that informed the route (`--route-ref`,
    repeatable, plus the endpoint refs) — current cell content is always preserved,
@@ -229,8 +229,8 @@ an explicit `--include`, positional targets before flags; branch → commit →
 `merge --no-ff` → push), then the sheet columns via
 `scripts/apply_route_candidates.py` (plan phase → Baird reviews the plan +
 backup CSV → `--apply` with readback verification). Appends never overwrite:
-RouteNotes gets the CB stamp + " — " + researcher notes, RouteCreator gains
-`CB` (gas tab only — the oil tab has no RouteCreator column), Route [ref]
+RouteNotes gets the CB stamp + " — " + researcher notes, RouteCreator is SET to
+`CB`, never appended to the prior initials (Baird 2026-10-15; gas tab only — the oil tab has no RouteCreator column), Route [ref]
 gains only URLs not already present; `RouteAccuracy` must currently be
 `no route` and `RouteType` is set to `Mapped route (at any accuracy)` in the
 same write (see the three-way sync rule above). Authorization never carries to

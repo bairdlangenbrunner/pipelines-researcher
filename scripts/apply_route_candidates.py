@@ -20,9 +20,9 @@ backups `notes/sheet-write-2026-07-30-egypt-gas-*.csv`). Per row it writes:
                    current_route_accuracy — replacement rows already have a route)
   RouteNotes    += CB method stamp + " — " + researcher_notes   (append; --replace
                    stamps 'CB: route replaced (<method>)')
-  RouteCreator  += "CB"                    (append; gas tab only — oil has no column;
-                   --replace SETS the cell to 'CB' — the old geometry is gone, prior
-                   creator preserved in the notes/ backup CSV)
+  RouteCreator  = "CB"                     (SET, never appended — Baird 2026-10-15; gas tab
+                   only, oil has no column; the prior creator is preserved in the
+                   notes/ backup CSV)
   Route [ref]   += staged URLs not already in the cell           (append)
 
 Every planned row is checked against the routes repo first: the PID must have a
@@ -312,15 +312,10 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
                                if cur["RouteNotes"] else addition}
 
         if have_creator:
-            if args.replace:
-                # the old geometry is gone entirely — the live route is now CB's
-                # work, so RouteCreator is SET, not appended (Baird 2026-08-04;
-                # the prior creator survives in the notes/ backup CSV)
-                after["RouteCreator"] = "CB"
-            else:
-                toks = [t.strip() for t in cur["RouteCreator"].split(";")]
-                after["RouteCreator"] = cur["RouteCreator"] if "CB" in toks else \
-                    (f"{cur['RouteCreator']}; CB" if cur["RouteCreator"] else "CB")
+            # RouteCreator is SET to CB, never appended (Baird 2026-08-04 for --replace,
+            # extended to every apply 2026-10-15): never tack CB onto another creator's
+            # initials; the prior creator survives in the notes/ backup CSV
+            after["RouteCreator"] = "CB"
 
         staged_urls = [u for u in c["proposed"]["Route [ref]"].split("; ") if u]
         new_urls = [u for u in dict.fromkeys(staged_urls) if u not in cur["Route [ref]"]]
