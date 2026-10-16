@@ -21,7 +21,7 @@ staging dir's review_log.jsonl. Each record keeps the id and the time the page g
     rebuild the page and publish it again)
   - the page is not given reviewers' addresses (the artifact's "email" user scope is refused by the
     publish service, 2026-10-05), only their names, so name each one:
-    --reviewer amalia.llano@globalenergymonitor.org (matched to the initials AL), or --reviewer AL=ADDRESS
+    --reviewer analyst.lead@globalenergymonitor.org (matched to the initials AL), or --reviewer AL=ADDRESS
 
 This appends to the store `log` tab (the standing authorization in CLAUDE.md) and to the sidecars.
 It never writes the backend sheet: accepted cells reach it only through review_app/push.py (plan,

@@ -17,7 +17,7 @@ import review_fixture
 import store
 from test_review_ledger import FakeStore, logrecs
 
-AL = "amalia.llano@globalenergymonitor.org"
+AL = "analyst.lead@globalenergymonitor.org"
 
 
 @pytest.fixture

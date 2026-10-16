@@ -258,8 +258,8 @@ def test_restore_reviewers_puts_the_address_back_for_the_private_dataset(scope):
                           ], dirs)
     store.overlay(d, dirs)
     assert publish.restore_reviewers(d, dirs, {}) == 0 and l["decided_by"] == "B"
-    n = publish.restore_reviewers(d, dirs, {"s1": ME, "s2": "aiganym@globalenergymonitor.org", "s9": "x@y.org"})
-    assert n == 2 and l["decided_by"] == ME and m["decided_by"] == "aiganym@globalenergymonitor.org"
+    n = publish.restore_reviewers(d, dirs, {"s1": ME, "s2": "analyst@globalenergymonitor.org", "s9": "x@y.org"})
+    assert n == 2 and l["decided_by"] == ME and m["decided_by"] == "analyst@globalenergymonitor.org"
     assert store.read_log(dirs[l["dir"]])[-2]["reviewer"] == "B"      # the log keeps the initials
 
 

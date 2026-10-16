@@ -18,7 +18,7 @@ import store
 sync_api = pytest.importorskip("playwright.sync_api")
 pytestmark = pytest.mark.skipif(H.node() is None, reason="node is not installed")
 
-A, B = "baird@globalenergymonitor.org", "aiganym@globalenergymonitor.org"
+A, B = "baird@globalenergymonitor.org", "analyst@globalenergymonitor.org"
 
 
 def free_port():

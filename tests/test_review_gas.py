@@ -18,7 +18,7 @@ import store
 
 pytestmark = pytest.mark.skipif(H.node() is None, reason="node is not installed")
 
-ME, THEM = "baird@globalenergymonitor.org", "aiganym@globalenergymonitor.org"
+ME, THEM = "baird@globalenergymonitor.org", "analyst@globalenergymonitor.org"
 EXTRA = ("id", "scope", "batch", "snapshot", "origin", "basis", "row")     # what the Google store adds
 
 

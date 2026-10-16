@@ -28,7 +28,15 @@ scratch/
 /scratchpad_*
 /sp_*
 
-# Untracked working CSVs (snapshots ARE tracked; ad-hoc pulls are not).
+# Tracker snapshots stay local, not in git (2026-10-15): they copy the backend's research-notes
+# column, which names researchers, into a public repo. The dated files still land in data/ and
+# every script that reads them works unchanged; they just aren't committed. The operators/owners
+# snapshots are still tracked.
+data/GOIT_oil_ngl_snapshot_*.csv
+data/GGIT_gas_snapshot_*.csv
+data/GGIT_gas_planning_snapshot_*.csv
+
+# Untracked working CSVs (ad-hoc pulls).
 # refresh_csvs.sh --working writes *_working.csv; older undated pulls also disposable.
 data/*_working.csv
 data/GOIT_oil_ngl.csv

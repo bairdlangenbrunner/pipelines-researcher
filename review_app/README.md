@@ -349,8 +349,8 @@ superseded: its shared log cannot be read from the work account, so do not share
 ```bash
 python review_app/build_static.py                          # the review-app gas batch -> work/review_static/pipelines-reviewer.html
 python review_app/build_static.py --country Ukraine --commodity gas
-python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymonitor.org --dry-run
-python review_app/import_log.py FILE.json --reviewer amalia.llano@globalenergymonitor.org
+python review_app/import_log.py FILE.json --reviewer AL=researcher@globalenergymonitor.org --dry-run
+python review_app/import_log.py FILE.json --reviewer AL=researcher@globalenergymonitor.org
 ```
 
 - **Is the live page current? `python review_app/build_all.py --check`.** A page is a snapshot, so

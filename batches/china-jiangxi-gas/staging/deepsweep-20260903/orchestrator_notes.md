@@ -171,7 +171,7 @@ items. Checked their IA metadata, then swept all 44 payloads' `already_sourced`.
 (A seventh, `screenshot-2024-09-26-at-11.47.34-am` = `永修-武宁-修水支线天然气管道`, is in P4784's
 `already_sourced` name_check and in the harvest pool, not as a `Status [ref]`.)
 
-All seven share the same provenance: `uploader = xiaojun.peng@globalenergymonitor.org`,
+All seven share the same provenance: `uploader = researcher@globalenergymonitor.org`,
 `source = None`, `originalurl = None`, `collection = opensource_image`, and a `description`
 that is raw HTML pasted out of a Google Doc (`font-family:'docs-Calibri'`). They are a GEM
 researcher's own screenshots of some other page, uploaded with **no record of what page**.

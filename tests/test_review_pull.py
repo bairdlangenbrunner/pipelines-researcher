@@ -21,7 +21,7 @@ def scope(tmp_path):
 def rec(l, n, **kw):
     return dict({"key": l["key"], "dir": l["dir"], "pid": "P9002", "sheet_row": l.get("sheet_row"), "ref_col": "",
                  "kind": l["kind"], "decision": "accept", "suggested_value": "", "note": "",
-                 "reviewer": "aiganym@globalenergymonitor.org", "ts": "2099-01-01T01:00:0%d-05:00" % n,
+                 "reviewer": "analyst@globalenergymonitor.org", "ts": "2099-01-01T01:00:0%d-05:00" % n,
                  "undecided": False, "basis": "abc", "id": "id%d" % n, "scope": "russia-gas", "batch": "b",
                  "snapshot": "s.csv", "origin": "gas"}, **kw)
 
@@ -56,8 +56,8 @@ def test_mirror_appends_once_in_sheet_order_and_regenerates_the_derived_file(sco
     log = store.read_log(d)
     assert [r["id"] for r in log] == ["id1", "id2"] and all("row" not in r for r in log)
     assert log[1] == rec(l, 2, reviewer="A")    # as the sheet holds it, but for the initials
-    assert "aiganym" not in (d / "review_log.jsonl").read_text() + (d / "review_decisions.json").read_text()
-    assert res["emails"] == {"id1": "aiganym@globalenergymonitor.org", "id2": "aiganym@globalenergymonitor.org"}
+    assert "analyst@" not in (d / "review_log.jsonl").read_text() + (d / "review_decisions.json").read_text()
+    assert res["emails"] == {"id1": "analyst@globalenergymonitor.org", "id2": "analyst@globalenergymonitor.org"}
     assert res["shared"] == {} and "SHARED" not in pull.report(res)
     derived = json.loads((d / "review_decisions.json").read_text())["decisions"]
     assert derived[l["key"]]["decision"] == "accept" and derived[l["key"]]["reviewer"] == "A"
@@ -90,7 +90,7 @@ def test_a_record_is_only_ever_written_under_batches(scope, tmp_path):
 def test_initials_are_first_and_last_and_leave_machines_alone():
     assert store.initials("baird.langenbrunner@globalenergymonitor.org") == "BL"
     assert store.initials("Baird Langenbrunner") == "BL" and store.initials("Mary Ann de la Cruz") == "MC"
-    assert store.initials("Aiganym@GlobalEnergyMonitor.org") == "A"              # a one-part address: its first letter
+    assert store.initials("Analyst@GlobalEnergyMonitor.org") == "A"              # a one-part address: its first letter
     assert store.initials("x_y-z+tag@a.org") == "XT" and store.initials("BL") == "BL"   # applying it twice is a no-op
     for name in ("backend sync", "push", "", None):
         assert store.initials(name) == name
@@ -98,10 +98,10 @@ def test_initials_are_first_and_last_and_leave_machines_alone():
 
 def test_two_reviewers_behind_one_set_of_initials_are_reported_and_machines_are_left_alone(scope, tmp_path):
     l = a_line(scope["dataset"])
-    cells = ["json", json.dumps(rec(l, 1)), json.dumps(rec(l, 2, reviewer="alex@globalenergymonitor.org")),
+    cells = ["json", json.dumps(rec(l, 1)), json.dumps(rec(l, 2, reviewer="assistant@globalenergymonitor.org")),
              json.dumps(rec(l, 3, reviewer="backend sync"))]
     res = pull.pull({"store_sheet_id": "x"}, root=tmp_path, reader=lambda s: cells)
-    assert res["shared"] == {"A": ["aiganym@globalenergymonitor.org", "alex@globalenergymonitor.org"]}
+    assert res["shared"] == {"A": ["analyst@globalenergymonitor.org", "assistant@globalenergymonitor.org"]}
     assert "SHARED INITIALS A stand for 2 reviewers" in pull.report(res)
     assert [r["reviewer"] for r in store.read_log(scope["dirs"][l["dir"]])] == ["A"] * 2 + ["backend sync"]
     assert set(res["emails"]) == {"id1", "id2"}
