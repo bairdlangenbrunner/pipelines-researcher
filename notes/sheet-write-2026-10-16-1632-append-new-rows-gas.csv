@@ -1,0 +1,135 @@
+tab,column,cell,sheet_row,ProjectID,kind,before,after
+Gas pipelines,PipelineName,C4565,4565,P8310,value,,Kern River Gas Pipeline
+Gas pipelines,SegmentName,E4565,4565,P8310,value,,KR Mainline 2001 System Expansion
+Gas pipelines,Status,H4565,4565,P8310,value,,operating
+Gas pipelines,Fuel,L4565,4565,P8310,value,,Gas
+Gas pipelines,CountriesOrAreas,S4565,4565,P8310,value,,United States
+Gas pipelines,StartState/Province,BU4565,4565,P8310,value,,Wyoming
+Gas pipelines,StartCountryOrArea,BV4565,4565,P8310,value,,United States
+Gas pipelines,EndState/Province,CA4565,4565,P8310,value,,California
+Gas pipelines,EndCountryOrArea,CB4565,4565,P8310,value,,United States
+Gas pipelines,LengthKnown,BF4565,4565,P8310,value,,0
+Gas pipelines,LengthKnownUnits,BG4565,4565,P8310,value,,mi
+Gas pipelines,Capacity,AX4565,4565,P8310,value,,135000
+Gas pipelines,CapacityUnits,AY4565,4565,P8310,value,,Mcf/d
+Gas pipelines,SegmentCost,CJ4565,4565,P8310,value,,81000000
+Gas pipelines,SegmentCostUnits,CK4565,4565,P8310,value,,USD
+Gas pipelines,ProposalYear,Z4565,4565,P8310,value,,2001
+Gas pipelines,ProposalMonth,AA4565,4565,P8310,value,,3
+Gas pipelines,StartYear1,AF4565,4565,P8310,value,,2001
+Gas pipelines,Status [ref],I4565,4565,P8310,value,,https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx
+Gas pipelines,Length [ref],BI4565,4565,P8310,value,,https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf
+Gas pipelines,Capacity [ref],AZ4565,4565,P8310,value,,https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf
+Gas pipelines,SegmentCost [ref],CM4565,4565,P8310,value,,https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf
+Gas pipelines,Location [ref],CF4565,4565,P8310,value,,https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf
+Gas pipelines,Proposal [ref],AB4565,4565,P8310,value,,https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf
+Gas pipelines,Start [ref],AL4565,4565,P8310,value,,"https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf, https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+Gas pipelines,ResearcherNotes,T4565,4565,P8310,value,,"New row for the 2001 expansion of the Kern River system, as ruled by Baird on 2026-10-14. It was first filed as another name for the Kern River row P0207. The expansion added compressor stations and no new pipe, so length is 0 and diameter is blank. A Federal Register notice from March 2001 says Kern River Gas Transmission Company applied on March 15, 2001 for emergency facilities. They add 135,000 Mcf per day of capacity from Wyoming to California at a cost of about 81 million dollars. The facilities are three new compressor stations at Elberta and Veyo in Utah and Daggett in California, plus upgrades at three existing stations in Wyoming, Utah and Nevada. The notice gives an expected in-service date of about July 1, 2001. The notice is an application, so the in-service date and cost are as planned. The August 2026 release of the Energy Information Administration pipeline projects list shows the project as completed in July 2001, with 135 million cubic feet per day added and cost of 81.3 million dollars, which supports operating status and the 2001 start. That list also shows 922 miles and 36 inches, which is the existing mainline the added compression works on, so those are not used here. The temporary parts were meant to be replaced by permanent facilities in the 2002 expansion, so the status of those parts is worth a check. Parent company comes from the 2025 annual report of Berkshire Hathaway Energy, which names Kern River Gas Transmission Company as one of its pipeline companies. Not found: the exact in-service date and the final as-built cost. Route is not applicable, since there is no new pipe. Parent company named by the sources: Berkshire Hathaway Energy Co."
+Gas pipelines,ProjectID,F4565,4565,P8310,pid,,P8310
+Gas pipelines,Owner,W4565,4565,P8310,formula,,"=iferror(
+
+INDEX('Pipeline operators/owners'!$O$3:$O, MATCH(F4565,'Pipeline operators/owners'!$F$3:$F,0),0),
+
+    ""Unknown [unknown %]""
+    )"
+Gas pipelines,Parent,X4565,4565,P8310,formula,,"=iferror(
+
+INDEX('Owner/parent formatted'!$C$2:$C, MATCH(F4565,'Owner/parent formatted'!$A$2:$A,0),0),
+
+    ""unknown [unknown %]""
+    )"
+Gas pipelines,ParentEntityIDs,Y4565,4565,P8310,formula,,"=iferror(
+    INDEX('Owner/parent formatted'!$D$2:$D, MATCH(F4565,'Owner/parent formatted'!$A$2:$A,0),0),
+    ""unknown""
+    )"
+Gas pipelines,StartYearEarliest,AP4565,4565,P8310,formula,,"=if(
+min(AF4565,AH4565,AJ4565)=0, ""--"",
+min(AF4565,AH4565,AJ4565))"
+Gas pipelines,CapacityBcm/y,BD4565,4565,P8310,formula,,"=iferror(AX4565 * vlookup(AY4565, 'Capacity conversions - gas'!$B:$D, 3, false),
+""--"")"
+Gas pipelines,CapacityBOEd,BE4565,4565,P8310,formula,,"=iferror(BD4565 * (10^6 * 5.883) * (1/365),
+""--"")"
+Gas pipelines,LengthKnownKm,BJ4565,4565,P8310,formula,,"=if(BG4565=""mi"",
+if(BF4565<>"""",1.609344*BF4565,BJ4565)
+,if(BF4565<>"""",BF4565,""--""))"
+Gas pipelines,LengthEstimateKm,BK4565,4565,P8310,formula,,"=iferror(
+vlookup(F4565,'Length estimates by pipeline'!A:B,2,FALSE),
+""--"")"
+Gas pipelines,LengthMergedKm,BL4565,4565,P8310,formula,,"=if(BJ4565=""--"",BK4565,BJ4565)"
+Gas pipelines,DiameterInMm,BP4565,4565,P8310,formula,,"=iferror(
+    if(regexmatch(BM4565, "",""),""--"",
+        if(BN4565=""in"",
+            if(BM4565<>"""",25.4*BM4565,BM4565),
+            if(BM4565<>"""",1*BM4565,""--"")
+        )
+    )
+,""--"")"
+Gas pipelines,StartRegion,BW4565,4565,P8310,formula,,"=iferror(
+index('Country dictionary'!$E$1:$E, match(BV4565, 'Country dictionary'!$A$1:$A,0),0),
+""--"")"
+Gas pipelines,StartSubRegion,BX4565,4565,P8310,formula,,"=iferror(
+index('Country dictionary'!$F$1:$F, match(BV4565, 'Country dictionary'!$A$1:$A,0),0),
+""--"")"
+Gas pipelines,EndRegion,CC4565,4565,P8310,formula,,"=iferror(
+index('Country dictionary'!$E$1:$E, match(CB4565, 'Country dictionary'!$A$1:$A,0),0),
+""--"")"
+Gas pipelines,EndSubRegion,CD4565,4565,P8310,formula,,"=iferror(
+index('Country dictionary'!$F$1:$F, match(CB4565, 'Country dictionary'!$A$1:$A,0),0),
+""--"")"
+Gas pipelines,NumberOfCountries,CE4565,4565,P8310,formula,,"=len(S4565)-len(REGEXREPLACE(S4565,"","",""""))+1"
+Gas pipelines,CostUSD,CN4565,4565,P8310,formula,,"=iferror(CJ4565 * vlookup(CK4565,'Currency conversions'!$A$2:$D,3,FALSE),
+""--"")"
+Gas pipelines,CostEuro,CO4565,4565,P8310,formula,,"=iferror(CJ4565 * vlookup(CK4565,'Currency conversions'!$A$2:$D,4,FALSE),
+""--"")"
+Gas pipelines,CostUSDPerKm,DU4565,4565,P8310,formula,,"=iferror(CN4565/BJ4565,""--"")"
+Gas pipelines,CostEuroPerKm,DV4565,4565,P8310,formula,,"=iferror(CO4565/BJ4565,""--"")"
+Gas pipelines,Researcher,J4565,4565,P8310,stamp,,CB
+Gas pipelines,LastUpdated,K4565,4565,P8310,stamp,,46311
+Pipeline operators/owners,Owner1,V6657,6657,P8310,value,,Kern River Gas Transmission Co
+Pipeline operators/owners,Owner [ref],U6657,6657,P8310,value,,"https://www.govinfo.gov/content/pkg/FR-2001-03-22/pdf/01-7104.pdf, https://www.sec.gov/Archives/edgar/data/1081316/000108131626000003/bhe-20251231.htm"
+Pipeline operators/owners,ProjectID,F6657,6657,P8310,pid,,P8310
+Pipeline operators/owners,PipelineNetworkContainer,A6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$A$3:$A), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$A$3:$A))"
+Pipeline operators/owners,PipelineName,B6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$C$3:$C), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$C$3:$C))"
+Pipeline operators/owners,SegmentName,C6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$E$3:$E), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$D$3:$D))"
+Pipeline operators/owners,CountriesorAreas,D6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$S$3:$S), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$Q$3:$Q))"
+Pipeline operators/owners,Wiki,E6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$D$3:$D), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$E$3:$E))"
+Pipeline operators/owners,StartRegion,I6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$BW$3:$BW), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$BW$3:$BW))"
+Pipeline operators/owners,EndRegion,J6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$CC$3:$CC), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$CD$3:$CD))"
+Pipeline operators/owners,LengthMergedKm,K6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$BL$3:$BL), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$BK$3:$BK))"
+Pipeline operators/owners,Fuel,L6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$L$3:$L), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$M$3:$M))"
+Pipeline operators/owners,Status,M6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$H$3:$H), xlookup(F6657,'Oil/NGL pipelines'!$F$3:$F,'Oil/NGL pipelines'!$R$3:$R))"
+Pipeline operators/owners,PCI6,N6657,6657,P8310,formula,,"=iferror(xlookup(F6657,'Gas pipelines'!$F$3:$F,'Gas pipelines'!$CY$3:$CY), ""--"")"
+Pipeline operators/owners,AggregateOwners,O6657,6657,P8310,formula,,"=IFERROR(
+  IFS(
+    TEXTJOIN(""; "", TRUE,
+      TEXTJOIN("" "", TRUE, V6657, IF(ISNUMBER(W6657), IF(W6657<>"""",""["" & TEXT(W6657,""0.##%"") & ""]"",""""), IF(W6657<>"""",""["" & W6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, X6657, IF(ISNUMBER(Y6657), IF(Y6657<>"""",""["" & TEXT(Y6657,""0.##%"") & ""]"",""""), IF(Y6657<>"""",""["" & Y6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, Z6657, IF(ISNUMBER(AA6657), IF(AA6657<>"""",""["" & TEXT(AA6657,""0.##%"") & ""]"",""""), IF(AA6657<>"""",""["" & AA6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AB6657, IF(ISNUMBER(AC6657), IF(AC6657<>"""",""["" & TEXT(AC6657,""0.##%"") & ""]"",""""), IF(AC6657<>"""",""["" & AC6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AD6657, IF(ISNUMBER(AE6657), IF(AE6657<>"""",""["" & TEXT(AE6657,""0.##%"") & ""]"",""""), IF(AE6657<>"""",""["" & AE6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AF6657, IF(ISNUMBER(AG6657), IF(AG6657<>"""",""["" & TEXT(AG6657,""0.##%"") & ""]"",""""), IF(AG6657<>"""",""["" & AG6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AH6657, IF(ISNUMBER(AI6657), IF(AI6657<>"""",""["" & TEXT(AI6657,""0.##%"") & ""]"",""""), IF(AI6657<>"""",""["" & AI6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AJ6657, IF(ISNUMBER(AK6657), IF(AK6657<>"""",""["" & TEXT(AK6657,""0.##%"") & ""]"",""""), IF(AK6657<>"""",""["" & AK6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AL6657, IF(ISNUMBER(AM6657), IF(AM6657<>"""",""["" & TEXT(AM6657,""0.##%"") & ""]"",""""), IF(AM6657<>"""",""["" & AM6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AN6657, IF(ISNUMBER(AO6657), IF(AO6657<>"""",""["" & TEXT(AO6657,""0.##%"") & ""]"",""""), IF(AO6657<>"""",""["" & AO6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AP6657, IF(ISNUMBER(AQ6657), IF(AQ6657<>"""",""["" & TEXT(AQ6657,""0.##%"") & ""]"",""""), IF(AQ6657<>"""",""["" & AQ6657 & ""]"","""")), """")
+    ) <> """",
+    TEXTJOIN(""; "", TRUE,
+      TEXTJOIN("" "", TRUE, V6657, IF(ISNUMBER(W6657), IF(W6657<>"""",""["" & TEXT(W6657,""0.##%"") & ""]"",""""), IF(W6657<>"""",""["" & W6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, X6657, IF(ISNUMBER(Y6657), IF(Y6657<>"""",""["" & TEXT(Y6657,""0.##%"") & ""]"",""""), IF(Y6657<>"""",""["" & Y6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, Z6657, IF(ISNUMBER(AA6657), IF(AA6657<>"""",""["" & TEXT(AA6657,""0.##%"") & ""]"",""""), IF(AA6657<>"""",""["" & AA6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AB6657, IF(ISNUMBER(AC6657), IF(AC6657<>"""",""["" & TEXT(AC6657,""0.##%"") & ""]"",""""), IF(AC6657<>"""",""["" & AC6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AD6657, IF(ISNUMBER(AE6657), IF(AE6657<>"""",""["" & TEXT(AE6657,""0.##%"") & ""]"",""""), IF(AE6657<>"""",""["" & AE6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AF6657, IF(ISNUMBER(AG6657), IF(AG6657<>"""",""["" & TEXT(AG6657,""0.##%"") & ""]"",""""), IF(AG6657<>"""",""["" & AG6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AH6657, IF(ISNUMBER(AI6657), IF(AI6657<>"""",""["" & TEXT(AI6657,""0.##%"") & ""]"",""""), IF(AI6657<>"""",""["" & AI6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AJ6657, IF(ISNUMBER(AK6657), IF(AK6657<>"""",""["" & TEXT(AK6657,""0.##%"") & ""]"",""""), IF(AK6657<>"""",""["" & AK6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AL6657, IF(ISNUMBER(AM6657), IF(AM6657<>"""",""["" & TEXT(AM6657,""0.##%"") & ""]"",""""), IF(AM6657<>"""",""["" & AM6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AN6657, IF(ISNUMBER(AO6657), IF(AO6657<>"""",""["" & TEXT(AO6657,""0.##%"") & ""]"",""""), IF(AO6657<>"""",""["" & AO6657 & ""]"","""")), """"),
+      TEXTJOIN("" "", TRUE, AP6657, IF(ISNUMBER(AQ6657), IF(AQ6657<>"""",""["" & TEXT(AQ6657,""0.##%"") & ""]"",""""), IF(AQ6657<>"""",""["" & AQ6657 & ""]"","""")), """")
+    )
+  ),
+  ""--""
+)"
+Pipeline operators/owners,Percentage Verification,AR6657,6657,P8310,formula,,"=sum(W6657,Y6657,AA6657,AC6657,AE6657,AG6657,AI6657,AK6657,AM6657,AO6657,AQ6657)"
+Pipeline operators/owners,Researcher,G6657,6657,P8310,stamp,,CB
+Pipeline operators/owners,LastUpdated,H6657,6657,P8310,stamp,,46311
