@@ -46,6 +46,15 @@ SCOPE_MISMATCH = re.compile(
     r"documents only|only the [^.]{0,60}(lateral|phase|increment|segment|system)|not the (mainline|system|whole)"
     r"|flag for the orchestrator|worth a human check|different (event|entity)|reads as if", re.I)
 
+# A status change carries the date of the event it reports (Baird 2026-10-16, P0241: operating was
+# staged with StartYear1 only, and the June 2026 in-service month the Sempra release states was missed).
+STATUS_DATE_COL = {"operating": "StartYear1", "construction": "ConstructionYear", "proposed": "ProposalYear",
+                   "shelved": "ShelvedYear", "cancelled": "CancelledYear", "mothballed": "StopYear",
+                   "idle": "StopYear", "retired": "StopYear"}
+DATE_NOT_FOUND = re.compile(
+    r"\b(start|in[- ]service|construction|proposal|proposed|shel\w*|cancel\w*|stop\w*|retire\w*)\b[^.]{0,80}"
+    r"\b(not found|not stated|not given|no date|not reported|does not (say|state|give))", re.I)
+
 
 def _carried(pid, col, value, snapshot_value) -> bool:
     """entity_style.carried_on_sheet, or the snapshot-only test when the styler is unavailable."""
@@ -296,6 +305,20 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 why.append("an ok verification lacks `name_found` — the record ships "
                            "'relevance unrecorded' and gate I' flags it; encode true|false "
                            "with the matched name in `note`")
+        # A ref reported as blocked / 403 / unreachable must have been tried through the fetch
+        # ladder (`scripts/fetch.py`: curl -> curl_cffi TLS impersonation -> Chrome clearance).
+        # 2026-10-16, P0278: the agent wrote "403 on every fetch attempt" for an
+        # offshore-technology.com page that fetch.py reads on the impersonation rung, so a 36 in
+        # diameter sat unstaged. A bare 403 is a tooling failure, not a finding.
+        _n = str(f.get("researcher_notes") or "")
+        if (f.get("class_out") or "").upper() in {"REF_BLOCKED", "REF_UNSUPPORTED", "UNRESOLVED", "DEAD_LINK"} \
+                and re.search(r"\b403\b|cloudflare|bot[- ]?wall|\bblocked\b|could not (?:be )?(?:fetch|load|access|read)|every fetch",
+                     _n, re.I) \
+                and not re.search(r"fetch\.py|cf_impersonate|curl_cffi|clearance", _n, re.I):
+            why.append("notes say a page was blocked / 403 / could not be fetched but do not say it "
+                       "went through `python scripts/fetch.py <url> --head 2000` (curl -> TLS "
+                       "impersonation -> Chrome clearance); run it, read the page, and name the "
+                       "route that worked (the `notes:` line) or that all three failed")
         # `values{}` keys land in real cells: a key that is no backend / owners-tab column
         # (R6: `Owner`, `Start`, `Construction` -- ref-column stems) reaches no paste surface.
         # The labels (`value_cols`, `primary_value_col`) must be real headers too, and the refs leg
@@ -346,10 +369,12 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 if _carried(pid, c, sv, cur):
                     continue            # equal to the worklist's snapshot or the newest one
                 st = _owner_style(sv)
-                # an unchanged value can still be unfit: several owners in one cell
-                if st is not None and (st.changed or ("multi_owner" in st.flags and st.basis != "ruling")):
+                # an unchanged value can still be unfit: several owners, or a slash, in one cell
+                if st is not None and (st.changed or ({"multi_owner", "slash"} & set(st.flags) and st.basis != "ruling")):
                     restyle.append(f"{c}: {sv!r} -> {st.styled!r}"
                                    + (" (one owner per cell)" if "multi_owner" in st.flags else "")
+                                   + (" (a slash joins two names: split into two owners or pick the accurate one)"
+                                      if "slash" in st.flags else "")
                                    + (" (the bracketed note is not part of the name; it may mean "
                                       "this is a parent, and Owner1 holds the lowest-level company that owns the pipeline)"
                                       if "owner_qualifier" in st.flags else ""))
@@ -373,7 +398,35 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
     return unreported, silent, malformed
 
 
-def check_findings(shard: dict) -> list[dict]:
+DORMANCY_NOTE = re.compile(r"shelv|cancel|dorman|inferred|2[- ]year|4[- ]year|two[- ]year|four[- ]year", re.I)
+
+
+def _aged_proposed(s: dict, sheet, pid: str) -> str:
+    """A `confirm` on a `proposed` row old enough for the 2-year (shelved) / 4-year (cancelled)
+    dormancy rules must say it applied them (Baird 2026-10-16, P4449). Passes when the row has no
+    proposal year, the proposal is under 2 years old, the verdict's own newest evidence is under
+    2 years old (the project is alive), or the notes discuss shelved / cancelled / dormancy."""
+    import datetime
+    this = datetime.date.today().year
+    try:
+        py = int(float(str(sheet_value(sheet, pid, s.get("sheet_row"), "ProposalYear") or "").strip()))
+    except ValueError:
+        return ""
+    age = this - py
+    if age < 2:
+        return ""
+    m = re.match(r"\d{4}", str(s.get("evidence_date") or ""))
+    if m and this - int(m.group()) < 2:
+        return ""
+    if DORMANCY_NOTE.search(str(s.get("researcher_notes") or "")) or str(s.get("staleness_rule") or "").strip():
+        return ""
+    want = "cancelled" if age >= 4 else "shelved"
+    return (f"confirm on a proposed row with ProposalYear {py} ({age} years old) and no evidence newer than "
+            f"2 years -- apply the dormancy rule: stage a `stale` verdict ({want}, ShelvedCancelledType "
+            f"inferred, year of the newest dated source) or say in researcher_notes why the project is alive")
+
+
+def check_findings(shard: dict, sheet=None, pid: str = "") -> list[dict]:
     """The same ref-encoding defect, in the records `check()` never sees.
 
     `check()` walks `fills[]`. A deep-sweep shard also carries `status_reviews[]`, and the
@@ -411,6 +464,19 @@ def check_findings(shard: dict) -> list[dict]:
                if any(h in str(u.get("url") if isinstance(u, dict) else u).lower() for h in BLOCK)]
         if gem:
             why.append(f"GEM/banned ref(s) {', '.join(gem)} — never cite GEM (standing rule 1)")
+        # a concern's candidate owner is a proposal too: never two names in one cell (Baird
+        # 2026-10-16, P6584 `TC Offshore / Kinetica Deepwater Express`)
+        held = []
+        for c, cv in (v.get("contested") or {}).items():
+            sv = str(cv or "").strip()
+            if not re.fullmatch(r"Owner\d+|Operator", str(c)) or not sv:
+                continue
+            st = _owner_style(sv)
+            if st is not None and {"multi_owner", "slash"} & set(st.flags) and st.basis != "ruling":
+                held.append(f"{c}: {sv!r}")
+        if held:
+            why.append("contested owner candidate(s) " + "; ".join(held) + " hold two names in one "
+                       "cell — split into two owners or pick the accurate one")
         if why:
             out.append({"ref_col": label, "why": "; ".join(why)})
     for i, s in enumerate(shard.get("status_reviews") or []):
@@ -425,6 +491,31 @@ def check_findings(shard: dict) -> list[dict]:
         label = f"status_reviews[{i}] ({verdict or 'no verdict'})"
         refs = [str(u or "").strip() for u in (s.get("proposed_refs") or []) if str(u or "").strip()]
         vers = [v for v in (s.get("verifications") or []) if isinstance(v, dict)]
+        if verdict == "confirm" and str(s.get("current_status") or "").strip().lower() == "proposed":
+            msg = _aged_proposed(s, sheet, pid)
+            if msg:
+                out.append({"ref_col": label, "why": msg})
+        # Status is a controlled value: only the tracker's own words, never a source's label
+        # (Baird 2026-10-16, P7825: EIA's "Applied" was staged as the proposed status).
+        pc0 = s.get("proposed_changes") or s.get("values") or {}
+        bad = sorted({str(x).strip() for x in (s.get("proposed_status"), pc0.get("Status"))
+                      if str(x or "").strip() and str(x).strip() not in STATUS_DATE_COL})
+        if bad:
+            out.append({"ref_col": label,
+                        "why": f"status {', '.join(map(repr, bad))} is not a tracker status "
+                               f"({', '.join(sorted(STATUS_DATE_COL))}) -- a source's label such as EIA's "
+                               "'Applied' or 'Approved' is evidence, not a value; stage the tracker status "
+                               "(the sheet's current one when nothing changes)"})
+        if verdict == "change":
+            pc = s.get("proposed_changes") or s.get("values") or {}
+            new_status = str(s.get("proposed_status") or pc.get("Status") or "").strip().lower()
+            dcol = STATUS_DATE_COL.get(new_status)
+            if dcol and not str(pc.get(dcol) or "").strip() and not DATE_NOT_FOUND.search(
+                    str(s.get("researcher_notes") or "")):
+                out.append({"ref_col": label,
+                            "why": f"a change to {new_status} with no {dcol} in proposed_changes -- stage the "
+                                   "year (and the month when the source gives it) the refs state for the event, or "
+                                   "say in researcher_notes that the date was not found"})
         if not refs:
             # A `confirm` may legitimately rest on the fills' own refs; a verdict that MOVES
             # the sheet may not -- merge QC rewrites it to `unclear` and the change is lost.
@@ -480,7 +571,7 @@ def run_one(staging: Path, pid: str) -> dict:
             return {"pid": pid, "error": f"{sub}/{pid}.json does not parse: {e}",
                     "units": len(units)}
     unreported, silent, malformed = check(units, records, load_scope_sheet(staging), pid)
-    malformed += check_findings(shard)
+    malformed += check_findings(shard, load_scope_sheet(staging), pid)
     return {
         "pid": pid, "units": len(units), "fills": len(records),
         "unreported": [{"ref_col": u.get("ref_col"), "class": u.get("class"),

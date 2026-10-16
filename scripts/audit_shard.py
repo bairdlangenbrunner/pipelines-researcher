@@ -149,11 +149,21 @@ def audit(fp):
         for col, val in pc.items():
             if col in LOWER and isinstance(val, str) and val and val != val.lower():
                 p.append(f'status_reviews[{i}] {col}={val!r} must be lowercase')
+        for sv in (sr.get('proposed_status'), pc.get('Status')):
+            if sv and str(sv) not in ('operating', 'proposed', 'construction', 'shelved', 'cancelled',
+                                      'idle', 'mothballed', 'retired'):
+                p.append(f'status_reviews[{i}] status {sv!r} is not a tracker status')
         st = pc.get('Status')
         if st in LIVE:
             for col in ('CancelledYear', 'ShelvedYear', 'ShelvedCancelledType'):
                 if pc.get(col):
                     p.append(f'status_reviews[{i}] Status={st} but {col}={pc[col]!r}')
+        cur = str(next((sr.get(k) for k in ('current_status', 'status_current', 'sheet_status') if sr.get(k)), '')).lower()
+        eff = str(pc.get('Status') or cur).lower()
+        if eff in ('shelved', 'cancelled') and str(pc.get('ShelvedCancelledType') or '').lower() == 'inferred':
+            ycol = 'CancelledYear' if eff == 'cancelled' else 'ShelvedYear'
+            if not pc.get(ycol) and not str(sr.get('evidence_date') or '')[:4].isdigit():
+                p.append(f'status_reviews[{i}] inferred {eff} without {ycol} or an evidence_date to take it from')
     for l in (s.get('cross_row_leads') or []):
         # older shards write cross_row_leads as bare strings, newer ones as dicts
         u = l.get('url') or '' if isinstance(l, dict) else str(l)
