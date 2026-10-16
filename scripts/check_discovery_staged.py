@@ -47,6 +47,8 @@ def check(cand, min_km):
     unit = str(v.get("LengthKnownUnits", "")).strip().lower()
     if km == 0 and min_km <= 0:
         pass  # compression-only expansion (Baird 2026-10-16): LengthKnown = 0, no unit owed
+    elif km is None and min_km <= 0 and not v.get("LengthKnownUnits"):
+        pass  # no floor: the length only gated the floor, so an unknown length is an owed fill, not a blocker
     elif km is None or unit not in TO_KM:
         why.append(f"no sourced length ({v.get('LengthKnown')!r} {v.get('LengthKnownUnits')!r})")
     elif km * TO_KM[unit] < min_km:

@@ -1,0 +1,705 @@
+{
+ "meta": {
+  "scope": {
+   "tracker": "gas",
+   "country": "United States",
+   "csv": "GGIT_gas_snapshot_20261016.csv"
+  },
+  "class_counts": {
+   "new_row": 1,
+   "monitor": 19,
+   "matched_existing": 4
+  },
+  "n_candidates": 24,
+  "seed_ledger": [
+   {
+    "seed_id": "eia:altamont-green-river-pipeline-project",
+    "name": "Altamont Green River Pipeline Project",
+    "disposition": "dropped",
+    "reason": "Gathering line from Kinder Morgan Altamont system to Chipeta plant; field gathering, no data center tie.",
+    "evidence": []
+   },
+   {
+    "seed_id": "eia:kelso-beaver-reliability-project-acquisition-and-reliability",
+    "name": "Kelso-Beaver Reliability Project",
+    "disposition": "matched",
+    "matched_project_id": "P7790",
+    "reason": "Existing row P7790 covers the project (acquisition of 18 mi KB lateral plus compressor, docket CP25-89). No data center tie found; purpose is North Mist storage access.",
+    "evidence": [
+     {
+      "url": "https://www.williams.com/?p=192396",
+      "note": "Williams project page"
+     }
+    ]
+   },
+   {
+    "seed_id": "eia:naughton-coal-to-gas-conversion",
+    "name": "Naughton Coal-to-Gas Conversion",
+    "disposition": "monitor",
+    "reason": "Power demand only (PacifiCorp Naughton plant), no data center tie found, length 0.",
+    "evidence": []
+   },
+   {
+    "seed_id": "lead:cheyenne-power-hub",
+    "name": "Cheyenne Power Hub supply (Rockies Express)",
+    "disposition": "monitor",
+    "reason": "One search found no source on a dedicated supply lateral for the Cheyenne Power Hub; length unknown.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001080937-bfc-power-and-cheyenne-power-hub",
+    "name": "BFC Power and Cheyenne Power Hub",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: no source found saying how the plant gets gas; nearest lines are CIG P0168, WIC P0282, REX P0246 within 7 km.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001047604-caithness-ii-power-station",
+    "name": "Caithness II power station",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: search for gas supply was rate-limited and unresolved; nearest GGIT line Iroquois P0205 is 28.7 km away.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001081008-creekstone-gigasite-data-center-power-st",
+    "name": "Creekstone Gigasite Data Center power station",
+    "disposition": "matched",
+    "matched_project_id": "P3856",
+    "reason": "EXISTING_ROW: Creekstone contracted 43,000 Dth/d firm capacity on Kern River for the Delta campus; no new pipe named. DataCenter tag lead for Kern River Delta Lateral.",
+    "evidence": [
+     {
+      "url": "https://investor.wedbush.com/wedbush/article/bizwire-2026-7-23-creekstone-energy-secures-43000-dthday-of-firm-kern-river-natural-gas-capacity-for-its-delta-ai-campus",
+      "note": "Creekstone press release July 2026 naming Kern River and the Delta campus"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001064399-desert-sun-power-station",
+    "name": "Desert Sun power station",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: no source found on gas supply or a data center tie; GOGPT notes only mention data centers. Sits 0.6 km from El Paso lines P2617/P0184.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001083286-eagle-mountain-power-station",
+    "name": "Eagle Mountain power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: searched Utah data center gas buildout coverage; no source names the gas supplier or a lateral. Site sits on the Kern River mainline (0.8 km).",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001047646-evanston-power-station",
+    "name": "Evanston power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: onsite islanded microgrid with PureWest as gas supplier; a vendor listing mentions dual pipelines but no route, length or operator found.",
+    "evidence": [
+     {
+      "url": "https://www.datacenterdynamics.com/en/news/prometheus-hyperscale-to-power-wyoming-data-center-with-natural-gas-will-offset-through-carbon-capture/",
+      "note": "Prometheus, PureWest gas, Frontier carbon removals; no pipeline named"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001047633-frontier-carbon-power-station",
+    "name": "Frontier Carbon power station (gas supply)",
+    "disposition": "dropped",
+    "reason": "Frontier Carbon Solutions is the carbon capture developer for the Prometheus Evanston campus (storage hub near Granger), not a data center gas plant with its own supply pipe.",
+    "evidence": [
+     {
+      "url": "https://www.datacenterdynamics.com/en/news/prometheus-hyperscale-to-power-wyoming-data-center-with-natural-gas-will-offset-through-carbon-capture/",
+      "note": "Frontier role is carbon removal"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001083390-griffin-energy-project-power-station",
+    "name": "Griffin Energy Project power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: Copia 500 MW gas plant with solar and battery for a Pinal County campus; no source on the gas supply lateral found.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001063347-joule-capital-power-station",
+    "name": "Joule Capital power station (gas supply)",
+    "disposition": "queued",
+    "slug": "joule-kern-river-lateral",
+    "reason": "NOT_FOUND: Millard County campus reported as on-site gas generation near Kern River; no verified source on a lateral. The Kern River Delta Lateral (P3856) serves the Intermountain Power Project, not Joule. Consolidator: merged with the dc-news candidate, which found a source for redundant 36-inch connections to the Kern River mainline.",
+    "evidence": [
+     {
+      "url": "https://www.ferc.gov/sites/default/files/2022-02/CP21-197%20Delta%20Lateral%20Project%20Final%20Environmental%20Impact%20Statement.pdf",
+      "note": "Delta Lateral purpose is the IPP conversion"
+     },
+     {
+      "url": "https://cleanview.co/reports/behind-the-meter-data-centers/full-report/joule-utah",
+      "date": "2026-01",
+      "note": "Cleanview profile of the Joule campus. Says the campus will connect through redundant 36-inch interconnections with the Kern River mainline in Millard County. Read in full. No length given."
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001080993-monarch-data-center-power-station",
+    "name": "Monarch Data Center power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: 500 MW gas backup plant for Copia Monarch campus in Lyon County; coverage names a gen-tie to Walker River Substation but no gas lateral.",
+    "evidence": [
+     {
+      "url": "https://thenevadaindependent.com/article/a-massive-data-center-in-rural-nevada-is-one-step-closer-to-being-built/",
+      "note": "Monarch campus and gas plant"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001046336-mosida-energy-power-station",
+    "name": "Mosida Energy power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: GOGPT notes only say it could be tied to data center energy; no source on gas supply. Site is on the Kern River line (0.0 km).",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001084862-nexus-fulcrum-power-plant",
+    "name": "Nexus Fulcrum Power Plant (gas supply)",
+    "disposition": "queued",
+    "slug": "nexus-fulcrum-lateral",
+    "reason": "NEW_LATERAL: 510 MW simple-cycle plant at former Sierra BioFuels site near TRIC, gas via a new lateral to the Great Basin (Paiute) system; length unknown. May relate to the Great Basin 2028 expansion spur to TRIC (P7860), not confirmed.",
+    "evidence": [
+     {
+      "url": "https://newprojectmedia.com/?p=20382",
+      "note": "new lateral to Great Basin pipeline"
+     },
+     {
+      "url": "https://hoodline.com/2026/06/lombardo-bets-big-on-gas-pipeline-to-feed-tahoe-reno-data-hubs/",
+      "note": "Great Basin expansion with TRIC spur"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001082659-novva-utah-data-center-power-station",
+    "name": "Novva Utah Data Center power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: 200 MW gas plant approved by Utah in Dec 2024 at the campus; no source names the gas supplier or a lateral (Kern River passes 1.2 km away). Searched Novva, DCD, tracker listings.",
+    "evidence": [
+     {
+      "url": "https://datacenterdynamics.com/en/news/novva-build-1bn-hyperscale-campus-west-jordan-utah",
+      "note": "campus article; gas supply not stated"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001064458-project-baccara-power-station",
+    "name": "Project Baccara power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: search tool rate-limited; no source found on gas supply. Nearest GGIT route El Paso 5.7 km. Unresearched, retry later.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001080938-prometheus-hyperscale-power-station",
+    "name": "Prometheus Hyperscale power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: search tool rate-limited; no source found on gas supply. Tallgrass (P0208) 3.7 km is the nearest line. Unresearched, retry later.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001084833-red-butte-energy-centre",
+    "name": "Red Butte Energy Centre (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: search tool rate-limited; no source found. Kern River (P0207) passes 1.4 km away, so a tap is likely but unsourced. Retry later.",
+    "evidence": []
+   },
+   {
+    "seed_id": "plant:l100001084867-stak-energy-campus",
+    "name": "STAK Energy Campus (gas supply)",
+    "disposition": "queued",
+    "slug": "stak-energy-gas-pipeline",
+    "reason": "NEW_LATERAL: state lease notice says the ~1 GW on-site plant will be supplied by one or more newly built gas pipelines, with connections to producing fields 25 to 90 miles away or nearby prospects; route and length not set. Length unknown. Sponsor Stak Energy, pre-construction, start 2028.",
+    "evidence": [
+     {
+      "url": "https://datacenterdynamics.com/en/news/stak-energy-proposes-3gw-natural-gas-powered-data-center-in-alaskas-north-slope/",
+      "note": "STAK 3 GW gas-powered North Slope campus"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001047645-seminoe-power-project",
+    "name": "Seminoe Power Project (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: company and press say a major gas pipeline corridor adjoins the sites and the plants may serve one or two data center clients; no named supplier, tap or lateral found. Length unknown.",
+    "evidence": [
+     {
+      "url": "https://powercompanyofwyoming.com/gas-generation/index.shtml",
+      "note": "Power Company of Wyoming project page"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001083336-stratos-project-power-station",
+    "name": "Stratos Project power station (gas supply)",
+    "disposition": "queued",
+    "slug": "stratos-ruby-lateral",
+    "reason": "NEW_LATERAL: campus to be powered off the Ruby Pipeline via a Tallgrass deal for unused Ruby capacity; a dedicated connection about 20 km from Ruby is implied but no length or route found. Length unknown.",
+    "evidence": [
+     {
+      "url": "https://www.landgate.com/news/energy-sourcing-lessons-from-utah-s-stratos-project",
+      "note": "Stratos energy sourcing, Ruby Pipeline"
+     },
+     {
+      "url": "https://baxtel.com/data-center/o-leary-hansel-valley-stratos-phase-1",
+      "note": "Stratos phase 1 on-site gas from Ruby capacity"
+     }
+    ]
+   },
+   {
+    "seed_id": "plant:l100001083285-vermaland-la-osa-power-station",
+    "name": "Vermaland La Osa power station (gas supply)",
+    "disposition": "monitor",
+    "reason": "NOT_FOUND: Pinal County rejected the rezoning 4-1 on Aug 26 2026; no gas pipeline source found. Project likely dead.",
+    "evidence": [
+     {
+      "url": "https://ktar.com/arizona-business/pinal-county-rejects-vermaland-data-center-project",
+      "note": "county rejection"
+     }
+    ]
+   }
+  ],
+  "seed_dispositions": {
+   "dropped": 2,
+   "matched": 2,
+   "monitor": 16,
+   "queued": 4
+  }
+ },
+ "candidates": [
+  {
+   "slug": "joule-kern-river-lateral",
+   "class": "new_row",
+   "name": "Joule Capital Partners Utah campus gas interconnection to Kern River",
+   "matched_project_id": "",
+   "values": {
+    "PipelineName": "Joule Campus Gas Pipeline",
+    "SegmentName": "",
+    "OtherEnglishNames": "",
+    "Status": "proposed",
+    "Fuel": "Gas",
+    "PipelineType": "transmission",
+    "CountriesOrAreas": "United States",
+    "StartLocation": "Holden area",
+    "StartState": "Utah",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "McCornick area",
+    "EndState": "Utah",
+    "EndCountryOrArea": "United States",
+    "Diameter": "24",
+    "DiameterUnits": "in",
+    "Owner": "Joule Capital Partners",
+    "DataCenter": "yes",
+    "RouteType": "Unavailable (cannot find route)",
+    "RouteAccuracy": "no route"
+   },
+   "refs": {
+    "Status [ref]": [
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ],
+    "StartLocation [ref]": [
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ],
+    "EndLocation [ref]": [
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ],
+    "Diameter [ref]": [
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ],
+    "Owner [ref]": [
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ],
+    "DataCenter [ref]": [
+     "https://cleanview.co/reports/behind-the-meter-data-centers/full-report/joule-utah",
+     "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf"
+    ]
+   },
+   "verifications": [
+    {
+     "url": "https://millardcounty.gov/wp-content/uploads/2026/04/Joule-DA-PZ-Public-Notice-Z-2026-026-1.pdf",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://cleanview.co/reports/behind-the-meter-data-centers/full-report/joule-utah",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "",
+   "researcher_notes": "Joule Capital Partners applied to Millard County, Utah, for a development agreement to build a 24-inch natural gas transmission pipeline from the Holden area to the McCornick area. The county planning commission notice is for a hearing on May 7, 2026. The notice does not name the data center or Kern River. Holden is where Kern River's mainline runs near the Delta Lateral tap. A Cleanview profile of the Joule data center campus from January 2026 says the campus will connect to the Kern River mainline through redundant 36-inch interconnections, so the tie to the campus comes from that profile and the applicant being the campus developer. The county notice says 24-inch and the profile says 36-inch, so it is not certain these are the same line. Length was not found and no route was found. Status is proposed because no approval or construction was found. Operator not found. Owner name not in the owner list. Separate from the Kern River Delta Lateral (P3856). [QC] independent=yes claimed on 6 surviving ref(s) from 0 publisher(s) -> no."
+  },
+  {
+   "slug": "nexus-fulcrum-lateral",
+   "class": "monitor",
+   "name": "Nexus Fulcrum Lateral",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [
+    {
+     "url": "https://newprojectmedia.com/?p=20382",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://hoodline.com/2026/06/lombardo-bets-big-on-gas-pipeline-to-feed-tahoe-reno-data-hubs/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "No pipeline sponsor, length, or route is identified for the lateral itself, and it cannot be told apart from the Tahoe Reno Industrial Center spur of the Great Basin 2028 Expansion (P7860). The only concrete step is a power plant application, not a pipeline filing. No data center tie is stated for the pipe.",
+   "researcher_notes": "A June 2026 New Project Media article says Nexus Fulcrum LLC applied on June 17 to the Public Utilities Commission of Nevada for a 510 MW gas plant at the former Fulcrum BioEnergy site in the Tahoe Reno Industrial Center, Storey County. It says gas would come through a new lateral connecting to the Great Basin Pipeline system. It also says the plant would serve one customer in the park and support expanded development there, including data centers. The article does not give the lateral's length, route, owner, or diameter, and says the developer and its link to Switch are unclear. A June 2026 Hoodline article describes the Great Basin 2028 Expansion, filed at the Federal Energy Regulatory Commission, which includes a spur into the same industrial center. Hoodline is low weight and cites the wrong docket. It is not known whether the plant lateral is that spur, a separate line, or a short in-fence connection. The existing row P7860 already covers the spur. Data center field left blank because no source ties this specific pipe to a data center. Re-check when the Nevada commission docket or Great Basin filings state the lateral's length and owner."
+  },
+  {
+   "slug": "stak-energy-gas-pipeline",
+   "class": "monitor",
+   "name": "STAK Energy Campus Gas Pipeline",
+   "matched_project_id": "",
+   "values": {
+    "PipelineName": "STAK Energy Campus Gas Pipeline",
+    "Status": "proposed",
+    "Fuel": "Gas",
+    "CountriesOrAreas": "United States",
+    "StartCountryOrArea": "United States",
+    "EndCountryOrArea": "United States",
+    "EndState/Province": "Alaska",
+    "DataCenter": "yes"
+   },
+   "refs": {
+    "DataCenter [ref]": [
+     "https://www.datacenterdynamics.com/en/news/stak-energy-proposes-3gw-natural-gas-powered-data-center-in-alaskas-north-slope/"
+    ]
+   },
+   "verifications": [
+    {
+     "url": "https://www.datacenterdynamics.com/en/news/stak-energy-proposes-3gw-natural-gas-powered-data-center-in-alaskas-north-slope/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.petroleumnews.com/story/2026/06/28/utilities/data-center-in-play/50228.html",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "no concrete step and no endpoints: the state land lease application covers only the campus site, the pipeline is not part of it, and neither route, length nor gas source is set",
+   "researcher_notes": "STAK Energy has applied to the Alaska Division of Oil and Gas for a 50-year lease on about 715 acres near Dalton Highway milepost 390, roughly 26 road miles south of Deadhorse, for a campus of up to 3 gigawatts. A DatacenterDynamics article from May 2026 and a Petroleum News story from June 2026 both say the campus would be fed by new gas pipelines that are still being planned, from fields about 25 to 90 miles away. The pipeline is not part of the lease application and would need its own approval. No route, length, diameter, owner of the pipe or gas supplier has been named. This is not an existing GEM row: the nearby North Slope rows are long-haul or Point Thomson lines with different endpoints. The data center tie is clear, so DataCenter would be yes once a pipeline is formally proposed. Watch for a pipeline right-of-way application, a gas supply deal, or an engineering award. Not found: any permit filing or contract for the pipeline itself. [QC] independent=yes claimed on 1 surviving ref(s) from 0 publisher(s) -> no."
+  },
+  {
+   "slug": "stratos-ruby-lateral",
+   "class": "monitor",
+   "name": "Stratos Project Ruby Pipeline Lateral",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [
+    {
+     "url": "https://www.landgate.com/news/energy-sourcing-lessons-from-utah-s-stratos-project",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.abc4.com/news/digital-exclusives/documents-stratos-project-area-box-elder/",
+     "ok": true,
+     "contains_value": false
+    }
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "no concrete step for the lateral itself: the Utah development agreement only allows a gas service deal with Tallgrass, no signed gas contract, filing, or tender found; length and endpoints unknown",
+   "researcher_notes": "This is not an existing row. The Ruby Gas Pipeline row (P0248) is the mainline only. The Stratos campus is a data center project in Hansel Valley, Box Elder County, Utah, with a stated plan for gas from the Ruby Pipeline, which crosses the valley. A June 2026 LandGate article says the original plan was on-site gas generation drawing on Ruby, and that the governor then said the campus would never run solely on gas. The first phase is now described as 1 to 1.5 gigawatts of gas with other sources later. Press reports say the April 2026 development agreement lets the developer arrange gas service from Tallgrass Energy through a connection to Ruby. That is permission, not a signed gas contract, a filing or a construction award. No length, route, diameter or capacity for a lateral was found, and the connection may be a short tap. A data center tie exists, so there is no length floor, but the add threshold is not met. Do not tag Ruby (P0248) as a data center line. A Baxtel listing and an Energy Mix article repeat the Ruby gas plan but were not used as refs (Baxtel gave no readable pipeline text, Energy Mix blocked access). Watch for a Tallgrass or Ruby connection filing, a Utah air permit naming a gas line, or a signed gas service agreement."
+  },
+  {
+   "slug": "",
+   "class": "matched_existing",
+   "name": "Great Basin 2028 Expansion Project (Tahoe Reno Industrial Center spur); Southwest Gas northern Nevada pipeline expansion",
+   "matched_project_id": "P7860",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "",
+   "researcher_notes": "Same project as the existing Great Basin 2028 Expansion row: Winnemucca to west of Fernley, FERC docket PF26-5, with a spur to the industrial center. Found by both dc-intrastate and dc-regulators. Lead for the DataCenter tag; a firmer source naming data centers is still needed."
+  },
+  {
+   "slug": "",
+   "class": "matched_existing",
+   "name": "Transwestern Desert Southwest Expansion",
+   "matched_project_id": "P7840",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "",
+   "researcher_notes": "Already in GEM under this segment name. Found by dc-intrastate and dc-regulators. Lead for the DataCenter tag. The row's length of 516 looks like miles and sources now say 708 miles, which is an update question. Starts in Texas, outside this slice."
+  },
+  {
+   "slug": "",
+   "class": "matched_existing",
+   "name": "Creekstone Gigasite Data Center gas supply",
+   "matched_project_id": "P3856",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "",
+   "researcher_notes": "Creekstone bought 43,000 Dth/d of firm Kern River capacity for its Delta campus. No new pipe named. Lead for the DataCenter tag on the Kern River Delta Lateral. Not a pipeline name, so no alias."
+  },
+  {
+   "slug": "",
+   "class": "matched_existing",
+   "name": "Kelso-Beaver Reliability Project",
+   "matched_project_id": "P7790",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "monitor_reason": "",
+   "researcher_notes": "Existing row P7790 has this segment name: the 18-mile Kelso-Beaver lateral acquisition plus compression, docket CP25-89. No data center tie found."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Naughton Coal-to-Gas Conversion",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "Power demand only (PacifiCorp Naughton plant), no data center tie found, length 0.",
+   "researcher_notes": "seed eia:naughton-coal-to-gas-conversion: Power demand only (PacifiCorp Naughton plant), no data center tie found, length 0."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Cheyenne Power Hub supply (Rockies Express)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "One search found no source on a dedicated supply lateral for the Cheyenne Power Hub; length unknown.",
+   "researcher_notes": "seed lead:cheyenne-power-hub: One search found no source on a dedicated supply lateral for the Cheyenne Power Hub; length unknown."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "BFC Power and Cheyenne Power Hub",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: no source found saying how the plant gets gas; nearest lines are CIG P0168, WIC P0282, REX P0246 within 7 km.",
+   "researcher_notes": "seed plant:l100001080937-bfc-power-and-cheyenne-power-hub: NOT_FOUND: no source found saying how the plant gets gas; nearest lines are CIG P0168, WIC P0282, REX P0246 within 7 km."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Caithness II power station",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: search for gas supply was rate-limited and unresolved; nearest GGIT line Iroquois P0205 is 28.7 km away.",
+   "researcher_notes": "seed plant:l100001047604-caithness-ii-power-station: NOT_FOUND: search for gas supply was rate-limited and unresolved; nearest GGIT line Iroquois P0205 is 28.7 km away."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Desert Sun power station",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: no source found on gas supply or a data center tie; GOGPT notes only mention data centers. Sits 0.6 km from El Paso lines P2617/P0184.",
+   "researcher_notes": "seed plant:l100001064399-desert-sun-power-station: NOT_FOUND: no source found on gas supply or a data center tie; GOGPT notes only mention data centers. Sits 0.6 km from El Paso lines P2617/P0184."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Eagle Mountain power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: searched Utah data center gas buildout coverage; no source names the gas supplier or a lateral. Site sits on the Kern River mainline (0.8 km).",
+   "researcher_notes": "seed plant:l100001083286-eagle-mountain-power-station: NOT_FOUND: searched Utah data center gas buildout coverage; no source names the gas supplier or a lateral. Site sits on the Kern River mainline (0.8 km)."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Evanston power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: onsite islanded microgrid with PureWest as gas supplier; a vendor listing mentions dual pipelines but no route, length or operator found.",
+   "researcher_notes": "seed plant:l100001047646-evanston-power-station: NOT_FOUND: onsite islanded microgrid with PureWest as gas supplier; a vendor listing mentions dual pipelines but no route, length or operator found."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Griffin Energy Project power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: Copia 500 MW gas plant with solar and battery for a Pinal County campus; no source on the gas supply lateral found.",
+   "researcher_notes": "seed plant:l100001083390-griffin-energy-project-power-station: NOT_FOUND: Copia 500 MW gas plant with solar and battery for a Pinal County campus; no source on the gas supply lateral found."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Monarch Data Center power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: 500 MW gas backup plant for Copia Monarch campus in Lyon County; coverage names a gen-tie to Walker River Substation but no gas lateral.",
+   "researcher_notes": "seed plant:l100001080993-monarch-data-center-power-station: NOT_FOUND: 500 MW gas backup plant for Copia Monarch campus in Lyon County; coverage names a gen-tie to Walker River Substation but no gas lateral."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Mosida Energy power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: GOGPT notes only say it could be tied to data center energy; no source on gas supply. Site is on the Kern River line (0.0 km).",
+   "researcher_notes": "seed plant:l100001046336-mosida-energy-power-station: NOT_FOUND: GOGPT notes only say it could be tied to data center energy; no source on gas supply. Site is on the Kern River line (0.0 km)."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Novva Utah Data Center power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: 200 MW gas plant approved by Utah in Dec 2024 at the campus; no source names the gas supplier or a lateral (Kern River passes 1.2 km away). Searched Novva, DCD, tracker listings.",
+   "researcher_notes": "seed plant:l100001082659-novva-utah-data-center-power-station: NOT_FOUND: 200 MW gas plant approved by Utah in Dec 2024 at the campus; no source names the gas supplier or a lateral (Kern River passes 1.2 km away). Searched Novva, DCD, tracker listings."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Project Baccara power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: search tool rate-limited; no source found on gas supply. Nearest GGIT route El Paso 5.7 km. Unresearched, retry later.",
+   "researcher_notes": "seed plant:l100001064458-project-baccara-power-station: NOT_FOUND: search tool rate-limited; no source found on gas supply. Nearest GGIT route El Paso 5.7 km. Unresearched, retry later."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Prometheus Hyperscale power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: search tool rate-limited; no source found on gas supply. Tallgrass (P0208) 3.7 km is the nearest line. Unresearched, retry later.",
+   "researcher_notes": "seed plant:l100001080938-prometheus-hyperscale-power-station: NOT_FOUND: search tool rate-limited; no source found on gas supply. Tallgrass (P0208) 3.7 km is the nearest line. Unresearched, retry later."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Red Butte Energy Centre (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: search tool rate-limited; no source found. Kern River (P0207) passes 1.4 km away, so a tap is likely but unsourced. Retry later.",
+   "researcher_notes": "seed plant:l100001084833-red-butte-energy-centre: NOT_FOUND: search tool rate-limited; no source found. Kern River (P0207) passes 1.4 km away, so a tap is likely but unsourced. Retry later."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Seminoe Power Project (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: company and press say a major gas pipeline corridor adjoins the sites and the plants may serve one or two data center clients; no named supplier, tap or lateral found. Length unknown.",
+   "researcher_notes": "seed plant:l100001047645-seminoe-power-project: NOT_FOUND: company and press say a major gas pipeline corridor adjoins the sites and the plants may serve one or two data center clients; no named supplier, tap or lateral found. Length unknown."
+  },
+  {
+   "slug": "",
+   "class": "monitor",
+   "name": "Vermaland La Osa power station (gas supply)",
+   "matched_project_id": "",
+   "values": {},
+   "refs": {},
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "",
+   "monitor_reason": "NOT_FOUND: Pinal County rejected the rezoning 4-1 on Aug 26 2026; no gas pipeline source found. Project likely dead.",
+   "researcher_notes": "seed plant:l100001083285-vermaland-la-osa-power-station: NOT_FOUND: Pinal County rejected the rezoning 4-1 on Aug 26 2026; no gas pipeline source found. Project likely dead."
+  }
+ ]
+}
