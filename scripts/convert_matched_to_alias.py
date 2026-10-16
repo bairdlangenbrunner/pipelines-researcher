@@ -3,11 +3,14 @@
 
 A candidate that is probably part of, or another name for, a pipeline GEM already tracks is a
 data-enrichment finding, never a "new row". This moves each such record out of a staging dir's
-`staged_new.json` `candidates` (kept under `converted_to_alias` for audit) and stages it as a ref-less
+`staged_new.json` `candidates` (kept under `converted_to_alias` for audit) and stages it as a
 FILL on the matched row's `OtherEnglishNames` (`OtherLanguageAlternativePipelineNames` for a
 non-English name) in that dir's `staged_resolutions.json`. The existing cell text is kept and the new
 name appended, semicolon-separated. The note says plainly that the match is a judgment and there is
-a chance it is a different pipeline. Idempotent: converted records are no longer candidates.
+a chance it is a different pipeline. The name columns have no `[ref]` of their own, so the candidate's
+pages that use the name word for word (url_verifier, exact phrase) are staged as refs appended to the
+row's `Status [ref]` (Baird 2026-10-16); with no such page the fill stays ref-less and is held low.
+Idempotent: converted records are no longer candidates.
 
     python scripts/convert_matched_to_alias.py            # dry run
     python scripts/convert_matched_to_alias.py --apply
@@ -17,6 +20,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
 SNAP = ROOT / "data" / "GGIT_gas_snapshot_20261014.csv"
 OEN, OLA = "OtherEnglishNames", "OtherLanguageAlternativePipelineNames"
 
@@ -106,11 +110,11 @@ ALIAS = {
 def load_rows():
     raw = list(csv.reader(open(SNAP, encoding="utf-8")))
     h = raw[2]
-    ix = {c: h.index(c) for c in ("ProjectID", "PipelineName", "SegmentName", OEN, OLA)}
+    ix = {c: h.index(c) for c in ("ProjectID", "PipelineName", "SegmentName", OEN, OLA, "Status [ref]")}
     out = {}
     for i, r in enumerate(raw):
         if i > 2 and len(r) > ix[OLA] and r[ix["ProjectID"]]:
-            out[r[ix["ProjectID"]]] = {"sheet_row": i + 1, **{c: r[j] for c, j in ix.items()}}
+            out[r[ix["ProjectID"]]] = {"sheet_row": i + 1, **{c: (r[j] if j < len(r) else "") for c, j in ix.items()}}
     return out
 
 
@@ -164,19 +168,35 @@ def main():
                 continue
             names = "; ".join(new)
             orig = " | ".join((c.get("researcher_notes") or "").strip() for c in fl["cands"] if c.get("researcher_notes"))
+            urls = []
+            for c in fl["cands"]:
+                for u in (c.get("refs") or []) + [v.get("url") for v in (c.get("verifications") or []) if v.get("ok")]:
+                    if isinstance(u, str) and u.startswith("http") and u not in urls:
+                        urls.append(u)
+            from url_verifier import verify_url
+            checks = {u: verify_url(u, any_of=new, fuzzy=False) for u in urls}
+            good = [u for u in urls if checks[u].get("ok")]
+            vers = [{"url": u, "ok": True, "contains_value": True, "name_found": True} for u in good]
+            vers += [v for c in fl["cands"] for v in (c.get("verifications") or []) if v.get("url") not in good]
+            skipped = [u for u in urls if u not in good]
+            where = (" The other names columns have no reference column of their own, so the pages that use the name "
+                     "are added to the status reference cell, after the references already there: " + "; ".join(good) + "."
+                     if good else " No page that uses the name was found, so treat it as unconfirmed.")
+            if skipped:
+                where += " These pages were checked and do not use the name word for word, so they are not added: " + "; ".join(skipped) + "."
             tail = (" The cell already lists: " + row[col] + "." if row[col] else "")
             note = (f"Possible other name for {pid}, {row['PipelineName']}. A discovery search found a pipeline called "
                     f"\"{names}\" and judged it to be part of this row or another name for it. That is a judgment, and there is "
-                    f"a chance it is a different pipeline, so check before accepting. Accepting adds the name to the "
+                    f"a chance it is a different pipeline, so check before accepting.{where} Accepting adds the name to the "
                     f"{'other-language names' if col == OLA else 'other English names'} cell and changes nothing else.{tail} "
                     f"What the search found: {orig}")
             recs.append({
                 "project_id": pid, "sheet_row": row["sheet_row"], "pipeline_name": row["PipelineName"],
-                "segment_name": row["SegmentName"] or "nan", "ref_col": "", "value_cols": [col],
+                "segment_name": row["SegmentName"] or "nan", "ref_col": "Status [ref]" if good else "", "value_cols": [col],
                 "primary_value_col": col, "primary_value": value, "values": {col: value},
-                "current_ref": "nan", "class_in": "FILL", "class_out": "REFS_ADDED", "tier": "medium",
-                "independent": False, "source_language": "en", "proposed_refs": [],
-                "verifications": [v for c in fl["cands"] for v in (c.get("verifications") or [])],
+                "current_ref": row.get("Status [ref]", "") if good else "nan", "class_in": "FILL", "class_out": "REFS_ADDED", "tier": "medium",
+                "independent": False, "source_language": "en", "proposed_refs": good,
+                "verifications": vers,
                 "researcher_notes": note, "alias_of_match": True,
                 "converted_from": [{"name": c.get("name"), "class": "matched_existing"} for c in fl["cands"]],
             })

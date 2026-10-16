@@ -862,8 +862,7 @@ the US gas batches 1-4 recovery (2026-09-09, 70 shards, gate L 258 → 0):
   the refs-leg record must carry the proposed value in `values`, keyed by the unit's
   `value_cols`. `build_refsweep_briefs.py` states this in the contract.
 - **`OtherEnglishNames` and the `OtherLanguage*` name columns have no paired `[ref]` column**
-  in either tracker schema, so a fill on one is legitimately ref-less. Both the coverage checker
-  and gate E exempt them; do not "fix" such a record by inventing a ref cell for it.
+  in either tracker schema. The pages that use the name word for word go in the row's `Status [ref]`, appended after the refs already there (Baird 2026-10-16): stage `ref_col: "Status [ref]"` with those pages in `proposed_refs`. An alias with no page found stays ref-less (`ref_col: ""`) and is flagged unconfirmed; the coverage checker and gate E exempt only that case.
 - **Sentinels are exempt from both class checks** (fixed 2026-09-10). A `__VALIDITY__` /
   `__REDUNDANCY__` / `__STATUS__` record asserts a *finding about a row* — a redundancy verdict,
   a route-length divergence, a status re-read — not a value for a worklist unit, so it carries

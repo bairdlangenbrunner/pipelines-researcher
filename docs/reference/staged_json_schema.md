@@ -136,10 +136,7 @@ other (no orphan values/refs). `class_out` `REFS_ADDED` = corroborated;
 `UNRESOLVED` = not corroborated, do not apply.
 
 A few researchable columns have **no paired `[ref]` column in the schema** —
-`OtherEnglishNames` is the one this batch hit (US gas P0257, 2026-09-04). Such a fill
-carries `ref_col: ""` and empty `proposed_refs`, and states its corroboration in
-`researcher_notes` instead; the "never one without the other" rule is about orphan `[ref]`
-*cells*, and there is no cell to orphan. It still classes `REFS_ADDED` when corroborated,
+`OtherEnglishNames` and the `OtherLanguage*` name columns. Since Baird 2026-10-16 such a fill carries `ref_col: "Status [ref]"` and the pages that use the name word for word in `proposed_refs`: they are appended to the row's Status [ref] after the refs already there, and never replace them (`review_app/push.py` `ALIAS_COLS`). With no such page the fill carries `ref_col: ""` and empty `proposed_refs`, states what was searched in `researcher_notes`, and the review app holds it low. It still classes `REFS_ADDED` when corroborated,
 because that value means *corroborated* and the vocabulary has no other word for it —
 inventing a `FILL` class instead makes the record invisible to `staged_summary.py` (which
 counts `class_in=FILL` + `class_out=REFS_ADDED`) and drops it from the handoff's

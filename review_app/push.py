@@ -155,6 +155,12 @@ class Tab:
         return rows[0] if len(rows) == 1 else None
 
 
+# name columns with no [ref] of their own: an alias fill's pages are appended to Status [ref]
+# (Baird 2026-10-16), so a changed alias never counts as a changed value there
+ALIAS_COLS = {"OtherEnglishNames", "OtherLanguagePrimaryPipelineName",
+              "OtherLanguageAlternativePipelineNames", "OtherLanguageSegmentName"}
+
+
 def add_refs(current, urls):
     have = [u.strip() for u in current.split(",") if u.strip()]
     new = [u for u in dict.fromkeys(urls) if u not in current]
@@ -451,6 +457,8 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 continue
             cleared, changed = [], []
             for c, v in writes.items():
+                if c in ALIAS_COLS:     # a name's pages ride in Status [ref] beside the status refs: append only
+                    continue
                 if c != rc and str(tab.cell(row, c)).strip() != "":
                     (cleared if v == "" else changed).append(c)
             remaining = [c for c in (l.get("value_cols") or []) if c in tab.col and c not in cleared

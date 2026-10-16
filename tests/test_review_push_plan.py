@@ -322,3 +322,28 @@ def test_a_held_owner_name_is_refused_beside_a_restyle():
         "Owner5": "AltaGas Ltd. / RGC Resources, Inc. (affiliates)"})}
     assert set(got) == {"Owner2", "Owner5"}
     assert "owner_qualifier" in got["Owner2"] and "multi_owner" in got["Owner5"]
+
+
+def test_an_alias_fill_appends_its_pages_to_status_ref(world):
+    """OtherEnglishNames has no [ref] of its own; its pages go in Status [ref] after the refs already
+    there (Baird 2026-10-16). Replacing an existing alias is not a status change: never swap the refs."""
+    import json
+    p = world["deep"] / "staged_resolutions.json"
+    d = json.loads(p.read_text())
+    alias_url = "http://alias.example/name"
+    d["resolutions"].append({
+        "project_id": "P9001", "sheet_row": 4, "pipeline_name": "Alpha Pipeline", "segment_name": "",
+        "ref_col": "Status [ref]", "value_cols": ["OtherEnglishNames"], "primary_value_col": "OtherEnglishNames",
+        "values": {"OtherEnglishNames": "Alpha Line; Old Alpha"}, "primary_value": "Alpha Line; Old Alpha",
+        "current_ref": "", "class_in": "FILL", "class_out": "REFS_ADDED", "proposed_refs": [alias_url],
+        "verifications": [{"url": alias_url, "ok": True, "contains_value": True, "name_found": True}],
+        "tier": "high", "independent": False, "source_language": "en", "researcher_notes": "", "alias_of_match": True})
+    p.write_text(json.dumps(d))
+    set_snapshot(world, "P9001", "OtherEnglishNames", "Old Alpha")
+    al = line(world["dataset"], "P9001", "fill", "OtherEnglishNames")
+    assert al["ref_col"] == "Status [ref]"
+    accept(world, al)
+    mine, why, _ = plan_for(world, al["key"])
+    by = {c["column"]: c for c in mine}
+    assert why is None and by["OtherEnglishNames"]["after"] == "Alpha Line; Old Alpha"
+    assert by["Status [ref]"]["after"].split(", ") == [review_fixture._OLD, alias_url]
