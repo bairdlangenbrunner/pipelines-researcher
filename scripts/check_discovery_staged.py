@@ -4,7 +4,7 @@
     python scripts/check_discovery_staged.py --staging <run dir> [--staging <run dir> ...] [--min-km 25]
 
 Per new_row: length floor on a sourced length, cost scale (full currency units), bare cost-units
-code, length/capacity units not numeric, owner names in the ownership team's style, no GEM or
+code, length/capacity units not numeric, DataCenter yes or blank, owner names in the ownership team's style, no GEM or
 banned host in any [ref], and no value without its [ref]. Across all the runs given: two new_rows
 that name the same project (cross-slice duplicates). Prints one line per finding; exit 1 if any.
 """
@@ -18,7 +18,7 @@ from merge_qc import bad_cost_units  # noqa: E402
 
 TO_KM = {"km": 1.0, "mi": 1.609344, "miles": 1.609344, "mile": 1.609344, "m": 0.001}
 VALUE_REF = {"Capacity": ("Capacity [ref]",), "LengthKnown": ("Length [ref]", "LengthKnown [ref]"),
-             "Diameter": ("Diameter [ref]",)}  # the sheet column is Length [ref]; the builder maps LengthKnown [ref] onto it
+             "Diameter": ("Diameter [ref]",), "DataCenter": ("DataCenter [ref]",)}  # the sheet column is Length [ref]; the builder maps LengthKnown [ref] onto it
 
 
 def owner_style(name):
@@ -45,7 +45,9 @@ def check(cand, min_km):
     v, refs, why = cand.get("values") or {}, cand.get("refs") or {}, []
     km = num(v.get("LengthKnown"))
     unit = str(v.get("LengthKnownUnits", "")).strip().lower()
-    if km is None or unit not in TO_KM:
+    if km == 0 and min_km <= 0:
+        pass  # compression-only expansion (Baird 2026-10-16): LengthKnown = 0, no unit owed
+    elif km is None or unit not in TO_KM:
         why.append(f"no sourced length ({v.get('LengthKnown')!r} {v.get('LengthKnownUnits')!r})")
     elif km * TO_KM[unit] < min_km:
         why.append(f"length {km:g} {unit} is under {min_km} km")
@@ -70,6 +72,8 @@ def check(cand, min_km):
             host = urlparse(u).netloc.lower()
             if any(h in host for h in GEM_HOSTS) or any(h in host for h in BLOCKLIST_HOSTS):
                 why.append(f"{col} cites a GEM/banned host: {u}")
+    if str(v.get("DataCenter", "")).strip() not in ("yes", ""):
+        why.append(f"DataCenter {v.get('DataCenter')!r} takes only yes or blank")
     for c, rc in VALUE_REF.items():
         if v.get(c) not in (None, "") and not any(refs.get(k) for k in rc):
             why.append(f"{c} has no {rc[0]}")

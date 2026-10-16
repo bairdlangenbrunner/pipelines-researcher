@@ -135,7 +135,7 @@ a gitignored `<snapshot>.colmap.json` (re-derive with `python3 ../gem-db-ops/gem
 --tracker goit|ggit`).
 If it fails on auth, ask Baird to run `gws-gem auth login` (needs a browser) — don't try it
 headlessly. Writes still require per-edit authorization and `gws-gem-write` (see Hard
-requirements). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (131 cols, GID 1020144097),
+requirements). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (134 cols, GID 1020144097),
 Pipeline operators/owners (44 cols, GID 1489950650) — the script pulls all three.
 
 **Header is at CSV row index 2 for the two tracker tabs**: `pd.read_csv(path, header=2, low_memory=False)`.

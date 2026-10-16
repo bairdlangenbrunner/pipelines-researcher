@@ -32,6 +32,12 @@ const MODEL_VET = A.modelVet || MODEL
 // args.extra is a block of run-specific context (territory rules, seeds, window) for every search agent.
 const SCOPE_RULE = A.scopeRule || 'Transmission lines only — skip gathering/process/feeder lines and distribution networks.'
 const EXTRA = A.extra ? `\n${A.extra}\n` : ''
+// args.minKm = the new-row length floor for seed adjudication (default 25). 0 = no floor: any sourced
+// length counts, including LengthKnown = 0 for a compression-only expansion (the US data center pass,
+// Baird 2026-10-16, docs/plans/2026-10-16_us-gas-datacenter-subfloor.md).
+const MIN_KM = Number.isFinite(Number(A.minKm)) && A.minKm !== null && A.minKm !== '' ? Number(A.minKm) : 25
+const FLOOR_OK = MIN_KM > 0 ? `sourced length >= ${MIN_KM} km` : 'a sourced length (any length, 0 for compression-only)'
+const FLOOR_SHORT = MIN_KM > 0 ? `under ${MIN_KM} km, or length you cannot source` : 'length you cannot source'
 const ROSTER = A.roster.join("\n")
 // args.seeds = structured leads (e.g. OSM recon features) that MUST each end with a disposition in
 // queue.json's seed_ledger: [{seed_id, name, km?, kind?, operator?, name_hint?}]. They get dedicated
@@ -94,9 +100,9 @@ ${ROSTER}
    operator LPUMG pages, regional gasification programmes, Glavgosekspertiza, tender sites`}) for
    length, sponsor/operator, status and year.
    - ${SCOPE_RULE}
-   - sourced length >= 25 km and real evidence → candidate (write it to your found file, below)
+   - ${FLOOR_OK} and real evidence → candidate (write it to your found file, below)
      and ledger disposition "queued" (the consolidator assigns the final slug).
-   - under 25 km, or length you cannot source → "monitor" with what you found.
+   - ${FLOOR_SHORT} → "monitor" with what you found.
    - not a gas pipeline / an urban distribution network / out of scope → "dropped" with why.
 Rules: NEVER cite gem.wiki / globalenergymonitor.org / theodora / wikidot / abarrelfull / yingdodo;
 NEVER fabricate a URL; verify every URL with \`python scripts/url_verifier.py "<url>" "<expected substring>"\`
@@ -200,7 +206,7 @@ ${missing.map(seedLine).join('\n')}
 ${priorNote}
 Adjudicate each one now (roster below; search in-country language; url_verifier every URL; never cite
 gem.wiki/GEM/theodora/wikidot/abarrelfull/yingdodo; never fabricate a URL). ${SCOPE_RULE}
-A sourced >= 25 km line not in the roster → append a queue item to queue.json and ledger it "queued".
+A line with ${FLOOR_OK} not in the roster → append a queue item to queue.json and ledger it "queued".
 Then APPEND one ledger entry per seed to queue.json's seed_ledger (keep the file valid JSON):
 ${LEDGER_SHAPE}
 
@@ -239,6 +245,8 @@ PipelineName, SegmentName, OtherEnglishNames, Status (controlled vocab, lowercas
 PipelineType, CountriesOrAreas, StartLocation/StartState/Province/StartCountryOrArea,
 EndLocation/EndState/Province/EndCountryOrArea, Capacity+CapacityUnits, LengthKnown+LengthKnownUnits,
 Diameter+DiameterUnits, Owner, Parent, ProposalYear, FIDStatus, ProjectLevelCost+Units,
+DataCenter (\`yes\` or blank) + DataCenter [ref] (yes only when a validated ref names this pipeline
+and ties it to a data center; a utility load forecast or an opponents-only claim stays blank, noted),
 RouteType/RouteAccuracy/RouteNotes (route research per docs/reference/route_conventions.md —
 official GIS first; expansion with no new pipe -> LengthKnown=0, Diameter blank, 'no route').
 LengthKnown and Capacity go in the unit the source states, with the matching units cell (1,750 miles -> 1750 + mi). Never convert; the km and bcm/y columns are computed.

@@ -297,8 +297,10 @@ python scripts/build_discovery_context.py --tracker gas --country "<Country>" --
 #   → Workflow({ name: 'country-discovery', args: <the printed JSON> })
 #   (optional per-phase models: add modelSearch / modelConsolidate / modelVet to args; fall back to args.model)
 #     (strategy fan-out → consolidate/match-to-existing → one vetting agent per candidate)
-#   (optional run-specific args: scopeRule = replaces the default transmission-only scope rule, e.g. a
-#     ≥25 km length floor; vetRule = extra rule text for every vetting agent; extra = context block for
+#   (optional run-specific args: minKm = length floor in km, default 25; 0 = no floor, any sourced length
+#     including LengthKnown = 0 for compression-only (the 2026-10-16 data center pass); then run
+#     check_discovery_staged.py with the same --min-km. scopeRule = replaces the default transmission-only
+#     scope rule; vetRule = extra rule text for every vetting agent; extra = context block for
 #     every search agent — territory naming, window, thematic leads. Sliced runs: see
 #     batches/russia-gas/staging/discovery-seeds-20260930/build_slice_args.py)
 #   (structured leads — OSM/GulfPub recon features — go in args.seeds [{seed_id,name,km,kind,operator,

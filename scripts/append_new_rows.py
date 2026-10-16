@@ -64,7 +64,7 @@ NAME_COL = re.compile(r"Owner\d+|Operator")
 TEXT_COLS = {"Diameter"}   # stored as text on the sheet: DiameterInMm runs regexmatch() over it (multi-value "24, 36"), a number errors to "--"
 TRACKER = {"gas": ("Gas pipelines", 1020144097, 3), "oil": ("Oil/NGL pipelines", 456134080, 3)}   # title, sheetId, header row (1-based)
 OO_TITLE, OO_SHEET_ID, OO_HEADER_ROW = "Pipeline operators/owners", 1489950650, 2
-LAST_COL = {"Gas pipelines": 132, "Oil/NGL pipelines": 107, OO_TITLE: 44}
+LAST_COL = {"Gas pipelines": 132, "Oil/NGL pipelines": 107, OO_TITLE: 44}   # floor; tail_state reads the live grid width
 # tabs whose ProjectID column must not already hold a planned ID (title -> header row to search)
 PID_TABS = ["Gas pipelines", "Oil/NGL pipelines", "Hydrogen pipelines", OO_TITLE,
             "Removed oil/NGL/gas pipelines", "Removed Chinese pipelines", "Removed hydrogen pipelines",
@@ -163,6 +163,7 @@ def tab_pids(title):
 def tail_state(title, header_row, props):
     """(header, rows) for the tab's tail: header + the last 40 grid rows, FORMULA render."""
     n = props["rowCount"]
+    LAST_COL[title] = max(LAST_COL[title], props["gridProperties"].get("columnCount", 0))   # columns added since (DataCenter, 2026-10-16)
     header = get_range(f"'{title}'!A{header_row}:{a1(LAST_COL[title] - 1)}{header_row}", "FORMULA")[0]
     header += [""] * (LAST_COL[title] - len(header))
     first = max(header_row + 1, n - 39)
@@ -549,7 +550,7 @@ def verify(plan):
     for tab in {x["tab"] for x in plan["writes"]}:
         header = plan["pre"]["header"] if tab == plan["tab"] else plan["pre"]["oo_header"]
         rows = sorted({x["row"] for x in plan["writes"] if x["tab"] == tab})
-        last = a1(LAST_COL[tab] - 1)
+        last = a1(max(LAST_COL[tab], len(header)) - 1)
         ranges = [f"'{tab}'!A{r}:{last}{r}" for r in rows]
         got_f = {r: (v[0] if v else []) for r, v in zip(rows, batch_get(ranges, "FORMULA"))}
         got_v = {r: (v[0] if v else []) for r, v in zip(rows, batch_get(ranges, "UNFORMATTED_VALUE"))}

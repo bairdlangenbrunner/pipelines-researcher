@@ -150,7 +150,11 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    by the bare column name) that the workbook builder silently drops from the mirror; they were
    remapped to the sheet columns in staged JSON, so a re-merge of the shards would need the same
    remap. 23 owner names were restyled to the ownership team's spelling.
-5. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
+5. **Data center pipelines, no length floor (planned 2026-10-16):** the 25 km floor above left out the
+   short laterals that feed data centers. A second discovery pass (`minKm: 0`, EIA + named leads + GOGPT
+   data center plants) and a tag pass over existing rows for the new `DataCenter` / `DataCenter [ref]`
+   columns. Rulings and steps: `docs/plans/2026-10-16_us-gas-datacenter-subfloor.md`.
+6. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
    `Unavailable`) and reconciliation.
 
 **OIL IS OUT OF SCOPE for this whole cycle** (Baird 2026-09-10). The 448 GOIT US rows /

@@ -84,6 +84,7 @@ def load_scope_sheet(staging: Path):
 GAS_FUEL_VALUES = {"Gas", "Hydrogen", "Gas and hydrogen", "Coke oven gas"}
 PIPELINE_TYPE_VALUES = {"transmission", "gathering", "distribution", "both transmission and gathering",
                         "both transmission and distribution", "both gathering and distribution"}
+DATA_CENTER_VALUES = {"yes", ""}  # Baird 2026-10-16: `yes` or blank, never `no` or `Yes`
 VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK", "REF_BLOCKED",
                    "REF_UNSUPPORTED"}
 
@@ -210,6 +211,12 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 why.append(f"`PipelineType` = {vals_['PipelineType']!r} — only "
                            + ", ".join(sorted(PIPELINE_TYPE_VALUES)) + " (a lateral or an expansion of a "
                            "transmission line is `transmission`; EIA's interstate/intrastate is not a type)")
+        # `DataCenter` takes `yes` or blank (Baird 2026-10-16), and `yes` needs its own
+        # `DataCenter [ref]`. A value equal to the sheet's own is carried, not checked.
+        if "DataCenter" in vals_ and str(vals_["DataCenter"]).strip() not in DATA_CENTER_VALUES:
+            cur_dc = sheet_value(sheet, pid, f.get("sheet_row"), "DataCenter") if sheet is not None else None
+            if str(vals_["DataCenter"]).strip() != str(cur_dc or "").strip():
+                why.append(f"`DataCenter` = {vals_['DataCenter']!r} — only `yes` or blank (never `no`)")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).
