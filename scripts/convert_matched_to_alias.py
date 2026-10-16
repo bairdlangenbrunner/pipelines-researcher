@@ -76,15 +76,17 @@ ALIAS = {
     ("P7454", "Ninilchik Pipeline"): (OEN, "Ninilchik Pipeline"),
     # US gas data center discovery, 2026-10-16: data center tag leads on rows the tag store already
     # checked, not pipeline names. The finding lives in update-datacenter-tags-20261016, so the card goes.
+    # P2567, P7802 and P7792 are real other names: their alias fills were staged by hand with the pages
+    # that use the name (2026-10-16), since this script stages ref-less fills.
     ("P8234", "Monarch Cloud Campus gas pipeline"): None,
-    ("P2567", "MVP Southgate Project"): None,
+    ("P2567", "MVP Southgate Project"): (OEN, "MVP Southgate Project"),
     ("P2628", "TriState Corridor Pipeline Project"): None,
     ("P8123", "Virginia Reliability Project"): None,
-    ("P7802", "Mississippi Crossing Project (MSX)"): None,
+    ("P7802", "Mississippi Crossing Project (MSX)"): (OEN, "Mississippi Crossing Project"),
     ("P7855", "South System Expansion 4 (SSE4)"): None,
     ("P7810", "Kosciusko Junction Pipeline Project"): None,
     ("P7780", "Parks Line Upgrade and Sorrento Station Project (PLUSS Project)"): None,
-    ("P7792", "Southeast Energy Corridor Project"): None,
+    ("P7792", "Southeast Energy Corridor Project"): (OEN, "Southeast Energy Corridor Project"),
     ("P8096", "WBI Energy Bakken East Pipeline (incl. planned Ellendale data center branch)"): None,
     ("P8093", "ANR Northwoods Project"): None,
     ("P8171", "Guardian Pipeline G3 Expansion"): None,
