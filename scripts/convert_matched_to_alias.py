@@ -74,6 +74,29 @@ ALIAS = {
     ("P2553", "Line 1600 Replacement Project"): (OEN, "Line 1600 Replacement Project"),
     ("P0212", "Maritimes & Northeast Phase II (ME)"): (OEN, "Maritimes & Northeast Phase II"),
     ("P7454", "Ninilchik Pipeline"): (OEN, "Ninilchik Pipeline"),
+    # US gas data center discovery, 2026-10-16: data center tag leads on rows the tag store already
+    # checked, not pipeline names. The finding lives in update-datacenter-tags-20261016, so the card goes.
+    ("P8234", "Monarch Cloud Campus gas pipeline"): None,
+    ("P2567", "MVP Southgate Project"): None,
+    ("P2628", "TriState Corridor Pipeline Project"): None,
+    ("P8123", "Virginia Reliability Project"): None,
+    ("P7802", "Mississippi Crossing Project (MSX)"): None,
+    ("P7855", "South System Expansion 4 (SSE4)"): None,
+    ("P7810", "Kosciusko Junction Pipeline Project"): None,
+    ("P7780", "Parks Line Upgrade and Sorrento Station Project (PLUSS Project)"): None,
+    ("P7792", "Southeast Energy Corridor Project"): None,
+    ("P8096", "WBI Energy Bakken East Pipeline (incl. planned Ellendale data center branch)"): None,
+    ("P8093", "ANR Northwoods Project"): None,
+    ("P8171", "Guardian Pipeline G3 Expansion"): None,
+    ("P7814", "Rockies Express Decatur Lateral (Broadwing Energy Center supply)"): None,
+    ("P0161", "Chickasha industrial park power station (gas supply)"): None,
+    ("P8290", "Green Chile Project (Project Jupiter lateral)"): None,
+    ("P0234", "Oasis Pipeline supply to the CloudBurst data center campus"): None,
+    ("P3885", "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II"): None,
+    ("P7860", "Great Basin 2028 Expansion Project (Tahoe Reno Industrial Center spur); Southwest Gas northern Nevada pipeline expansion"): None,
+    ("P7840", "Transwestern Desert Southwest Expansion"): None,
+    ("P3856", "Creekstone Gigasite Data Center gas supply"): None,
+    ("P7790", "Kelso-Beaver Reliability Project"): None,
 }
 # P6119 (Karachaganak-Orenburg) is on the OIL tab, not in the gas snapshot: left as it is.
 
@@ -160,16 +183,19 @@ def main():
         if not a.apply:
             continue
         rp = p.parent / "staged_resolutions.json"
-        if rp.exists():
+        if not recs:
+            pass                                # every card dropped: no resolutions file to start
+        elif rp.exists():
             rd = json.loads(rp.read_text(encoding="utf-8"))
         else:
             sc = dict((d.get("meta") or {}).get("scope") or {})
             sc["csv"] = SNAP.name
             rd = {"meta": {"commodity": "gas", "mode": "update", "scope": sc, "generated": ts,
                            "qualifier": "alias-fills-from-matched-existing"}, "resolutions": []}
-        rd["resolutions"] += recs
-        rd["meta"]["n_fills"] = sum(1 for r in rd["resolutions"] if r.get("class_in") == "FILL")
-        rp.write_text(json.dumps(rd, indent=1, ensure_ascii=False), encoding="utf-8")
+        if recs:
+            rd["resolutions"] += recs
+            rd["meta"]["n_fills"] = sum(1 for r in rd["resolutions"] if r.get("class_in") == "FILL")
+            rp.write_text(json.dumps(rd, indent=1, ensure_ascii=False), encoding="utf-8")
         d["candidates"] = keep
         d.setdefault("converted_to_alias", []).extend(moved)
         cc = d.setdefault("meta", {}).get("class_counts", {})

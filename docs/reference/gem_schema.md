@@ -167,8 +167,8 @@ Country / territory / subdivision names (incl. occupied or disputed territory â€
 Donbas are Ukraine): GEM's naming-conventions sheet, `docs/reference/gem_naming_conventions/`.
 Lifecycle/finance: `ProposalYear`, `ConstructionYear`, `StartYear1`, `Cost`,
 `FIDStatus`, `FIDYear`, `Opposition`, `Delayed`, `ShelvedCancelledType`.
-Tags (gas tab): `AssociatedWithUSLNGExports` (no `[ref]`), `DataCenter` + `DataCenter [ref]`
-(`yes` or blank; plan `docs/plans/2026-10-16_us-gas-datacenter-subfloor.md`).
+Tags (gas tab): `AssociatedWithUSLNGExports` (no `[ref]`), `DataCenter` + `DataCenter [ref]` + `DataCenterNotes`
+(`yes` or blank, with plain notes on the related data center beside a `yes`; plan `docs/plans/2026-10-16_us-gas-datacenter-subfloor.md`).
 Route: `RouteType`, `RouteAccuracy`, `RouteNotes`, `RouteCreator`, `Route [ref]`
 (geometry itself lives in the routes repo, not the sheet â€” see
 `docs/reference/route_conventions.md`).

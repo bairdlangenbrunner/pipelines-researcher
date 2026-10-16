@@ -76,6 +76,8 @@ def check(cand, min_km):
                 why.append(f"{col} cites a GEM/banned host: {u}")
     if str(v.get("DataCenter", "")).strip() not in ("yes", ""):
         why.append(f"DataCenter {v.get('DataCenter')!r} takes only yes or blank")
+    if str(v.get("DataCenterNotes") or "").strip() and str(v.get("DataCenter", "")).strip() != "yes":
+        why.append("DataCenterNotes needs DataCenter = yes")
     for c, rc in VALUE_REF.items():
         if v.get(c) not in (None, "") and not any(refs.get(k) for k in rc):
             why.append(f"{c} has no {rc[0]}")

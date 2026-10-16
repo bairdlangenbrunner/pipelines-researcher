@@ -217,6 +217,13 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
             cur_dc = sheet_value(sheet, pid, f.get("sheet_row"), "DataCenter") if sheet is not None else None
             if str(vals_["DataCenter"]).strip() != str(cur_dc or "").strip():
                 why.append(f"`DataCenter` = {vals_['DataCenter']!r} — only `yes` or blank (never `no`)")
+        # `DataCenterNotes` (added 2026-10-16) describes the related data center, so it only
+        # goes beside `DataCenter = yes`, staged here or already on the sheet.
+        if str(vals_.get("DataCenterNotes") or "").strip():
+            dc_ = vals_["DataCenter"] if "DataCenter" in vals_ else (
+                sheet_value(sheet, pid, f.get("sheet_row"), "DataCenter") if sheet is not None else "yes")
+            if str(dc_ or "").strip() != "yes":
+                why.append("`DataCenterNotes` without `DataCenter` = `yes`")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).

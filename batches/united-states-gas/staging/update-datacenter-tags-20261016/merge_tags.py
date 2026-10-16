@@ -3,6 +3,7 @@
 Only DataCenter = yes rows become records. Every worklist row also keeps a ledger line in meta (yes, blank_noted with the
 reason a tie was not accepted, or blank), so a reviewer can see what was checked. A later shard for the same ProjectID
 replaces an earlier one (the follow-up chunk re-checks rows with a lead from the 2026-10-16 discovery runs).
+Each yes record also carries DataCenterNotes, the plain notes on the related data center from dc_notes/notes-*.json.
 """
 import glob, json
 
@@ -18,6 +19,17 @@ for f in sorted(glob.glob(f'{D}/shards/tags-*.json')) + sorted(glob.glob(f'{D}/s
         r.setdefault('action', 'change')
         r.setdefault('current_ref', '')
         recs[r['project_id']] = r
+notes = {}
+for f in sorted(glob.glob(f'{D}/dc_notes/notes-*.json')):
+    notes.update(json.load(open(f)))
+for pid, r in recs.items():
+    n = notes.get(pid, {}).get('note', '').strip()
+    if n:
+        r['value_cols'] = ['DataCenter', 'DataCenterNotes']
+        r['values']['DataCenterNotes'] = n
+missing = sorted(p for p in recs if 'DataCenterNotes' not in recs[p]['values'])
+if missing:
+    print('no DataCenterNotes for', missing)
 pids = sorted(led)
 meta = {'commodity': 'gas', 'mode': 'update',
         'scope': {'csv': 'GGIT_gas_snapshot_20261016.csv', 'country': 'United States', 'include_pids': pids,
