@@ -351,7 +351,7 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                     restyle.append(f"{c}: {sv!r} -> {st.styled!r}"
                                    + (" (one owner per cell)" if "multi_owner" in st.flags else "")
                                    + (" (the bracketed note is not part of the name; it may mean "
-                                      "this is a parent, and Owner1 holds the SPV)"
+                                      "this is a parent, and Owner1 holds the lowest-level company that owns the pipeline)"
                                       if "owner_qualifier" in st.flags else ""))
             if restyle:
                 why.append("owner name(s) not in the ownership team's style — "

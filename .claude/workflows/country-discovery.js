@@ -244,7 +244,7 @@ Use EXACT GEM column names (header row 3 of data/<csv named in discovery_context
 PipelineName, SegmentName, OtherEnglishNames, Status (controlled vocab, lowercase), Fuel (gas tab: exactly one of Gas, Hydrogen, Gas and hydrogen, Coke oven gas; never "natural gas"),
 PipelineType, CountriesOrAreas, StartLocation/StartState/Province/StartCountryOrArea,
 EndLocation/EndState/Province/EndCountryOrArea, Capacity+CapacityUnits, LengthKnown+LengthKnownUnits,
-Diameter+DiameterUnits, Owner, Parent, ProposalYear, FIDStatus, ProjectLevelCost+Units,
+Diameter+DiameterUnits, Owner (the lowest-level company that holds the pipeline: JV, project company or subsidiary, never a parent; do not research Parent, the ownership team does that), ProposalYear, FIDStatus, ProjectLevelCost+Units,
 DataCenter (\`yes\` or blank) + DataCenter [ref] (yes only when a validated ref names this pipeline
 and ties it to a data center; a utility load forecast or an opponents-only claim stays blank, noted),
 RouteType/RouteAccuracy/RouteNotes (route research per docs/reference/route_conventions.md —

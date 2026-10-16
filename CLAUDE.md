@@ -366,6 +366,7 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   `Gazprom PJSC`, not `PAO Gazprom`; no trailing acronym (it goes to `researcher_notes` +
   `data/owner_aliases.json`); adopt the team's spelling on an exact/alias gazetteer match, a ruling
   in `data/owner_rulings.json`, or a rules result whose flags are all mechanical
+- **`Owner<N>` is the LOWEST-LEVEL owner of the asset (Baird 2026-10-16)** — the JV, project company or operating subsidiary that holds the pipeline (NYSEG on P0310, not Iberdrola), never a parent or intermediate holding company. There is no "ultimate parent" convention. Parents are the ownership team's job: never research them or stage them in `Owner<N>` or `Parent`. A sheet parent with a validated ref naming the lower-level owner is staged as a change. Detail: `docs/reference/gem_schema.md`.
   (`entity_style.adoptable()`), never on a fuzzy one. `Operator` is styled the same way (2026-10-05).
   `check_shard_coverage.py` and gate O block an un-styled `Owner<N>`/`Operator` proposal (a value
   equal to the newest snapshot is carried, not checked); `review_app/push.py` refuses a plan that

@@ -237,6 +237,12 @@ only 12-15.
      has, the verified ref(s) that state them, and class_out="REFS_ADDED". Writing "length and
      diameter confirmed as recorded" in your summary and nowhere else is INDISTINGUISHABLE FROM
      NOT DOING THE WORK — it is the single most common defect in this leg's history (381 units
+   OWNER = the LOWEST-LEVEL company that holds this pipeline (a JV, project company, or operating
+   subsidiary such as a utility), never a parent or intermediate holding company. There is NO GEM
+   convention of recording the ultimate parent. Do not research parents. If the sheet's Owner1 is a
+   parent (e.g. Iberdrola for a NYSEG line) and a ref that names this pipeline names the lower-level
+   owner, stage a change to that owner. A parent-level filing (merger 8-K, annual report) is never
+   an owner ref.
      across four US gas batches, every one of them on a row whose documents the agent had already
      opened). When your sources DISAGREE, emit the corrected value AND file the spec concern in
      validity[]. When you genuinely find nothing, class_out="UNRESOLVED" with researcher_notes

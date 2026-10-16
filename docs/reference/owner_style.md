@@ -5,7 +5,7 @@ what this project stages reads like what GEM's ownership team writes. **The `Ope
 follows the same style** (Baird 2026-10-01): it is the same kind of entity name, and on most
 rows the operator is also `Owner1`, so the two must not drift apart. Parent research is the
 ownership team's job, not ours (Baird 2026-10-01): we style the immediate owner and leave the
-parent tree alone.
+parent tree alone. The immediate owner is the lowest-level company that holds the pipeline, never a parent or intermediate holding company (`gem_schema.md`, ruling 2026-10-16).
 
 Code: `scripts/entity_style.py` (`style(name) -> StyleResult`; CLI `python scripts/entity_style.py
 "<name>" [--json]`). Data: `data/legal_forms.csv`, `data/owner_gazetteer.csv`,

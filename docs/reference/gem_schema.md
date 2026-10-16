@@ -60,14 +60,7 @@ tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owne
 - So a Ref-Sweep owner/operator candidate for ProjectID *P* is pasted into `Owner [ref]` /
   `Operator [ref]` on **this** tab's *P* row — not a tracker-tab cell, not `ResearcherNotes`.
   Because it's ProjectID-keyed, the ref is per-pipeline (no entity-level de-dup).
-- **`Owner1` holds the SPV, not the parent** (Baird ruling 2026-09-15, tracker-wide). When a
-  project is sponsored through a joint venture or project company — `Trail West Pipeline, LLC`,
-  `Mountain Valley Pipeline, LLC`, a 50/50 JV vehicle — that **named entity** is what goes in
-  `Owner1`, even when the sheet currently carries a parent (`Williams Companies`, `TC Energy`)
-  and even when the parent is the name in the headlines. The parent relationship is not lost:
-  the ownership team builds the parent tree **from** that SPV, which is exactly why the SPV has
-  to be the thing recorded. Research stages the SPV and names the parents it found in
-  `researcher_notes`; it never flattens the SPV up to its parent, and never invents a tree.
+- **`Owner<N>` holds the LOWEST-LEVEL owner of the asset, never a parent or an intermediate holding company** (Baird rulings 2026-09-15 and 2026-10-16, tracker-wide). The owner is the company that holds the pipeline itself: a JV or project company (`Trail West Pipeline, LLC`, `Mountain Valley Pipeline, LLC`, a 50/50 JV vehicle), or an operating subsidiary such as a utility (`New York State Electric and Gas Corp` on P0310 DeRuyter, not its parent Avangrid or Avangrid's parent Iberdrola). That entity goes in `Owner<N>` even when the sheet currently carries a parent (`Williams Companies`, `TC Energy`, `Iberdrola`) and even when the parent is the name in the headlines. There is no "GEM convention of recording the ultimate parent"; any note or script that says so is wrong. Parents and intermediaries are the ownership team's job: research does not look them up, does not stage them in `Owner<N>`, and does not research or fill `Parent`. When the sheet carries a parent and a validated ref names the lower-level owner, stage a change to that owner (a value change, the sheet's parent named in `researcher_notes`); a parent-level filing (a merger 8-K, an annual report) is never a ref for the asset's owner.
 - **Owner names are written the ownership team's way** — full legal name, trailing short legal
   form, no punctuation, no trailing acronym (`Mountain Valley Pipeline LLC`, `Gazprom PJSC`,
   `Ministry of Oil (Iraq)`). Rules, adoption policy and the alias file:

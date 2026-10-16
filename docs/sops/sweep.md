@@ -94,7 +94,7 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
   row, *not* `ResearcherNotes`. Because the tab is ProjectID-keyed (not entity-keyed) the ref is
   per-pipeline; no entity-level de-dup. (`discover_ref_pairs` still emits a synthetic
   `kind:'owner'` placeholder for the QC BroadSweep, but the sweep drops it in favour of the join.)
-  Full column layout: `docs/reference/gem_schema.md`. **A proposed `Owner<N>` value is written
+  Full column layout: `docs/reference/gem_schema.md`. **`Owner<N>` is the lowest-level owner of the asset (Baird 2026-10-16)**: the JV, project company or operating subsidiary that holds the pipeline itself, never a parent or intermediate holding company. Don't research parents; when the sheet carries a parent and a validated ref names the lower-level owner, stage the change (`gem_schema.md`). **A proposed `Owner<N>` value is written
   in the ownership team's style** (`docs/reference/owner_style.md`; `scripts/entity_style.py`):
   trailing short legal form, no punctuation, no trailing acronym (acronym → `researcher_notes` +
   `data/owner_aliases.json`), the team's own spelling on an exact/alias gazetteer hit.

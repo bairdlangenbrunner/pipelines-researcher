@@ -72,7 +72,9 @@ VERIFY_NOTE = ("HTTP 200; values confirmed locally with pdftotext -layout "
 # only way a row can be right:
 #   DIRECT         the abbreviation is the GEM owner; a plain corroboration
 #   SPV_OF_PARENT  register names the authorisation-holding subsidiary, GEM names
-#                  the parent. Both defensible — corroborate, don't "fix"
+#                  the parent. The subsidiary is the owner: Owner<N> holds the
+#                  lowest-level owner of the asset, never a parent (Baird 2026-10-16),
+#                  so this stages a change to the subsidiary
 #   JV             register names a joint venture that GEM records by its
 #                  SHAREHOLDERS. Correct in principle, but GEM does it
 #                  inconsistently across the five GSPL-JV rows (see the finding)
@@ -566,17 +568,17 @@ def main():
                     if u:
                         resolutions.append(u)
                 elif rel == "SPV_OF_PARENT" and expect and owner1 == expect:
-                    extra = (f"The register's authorisation holder is '{ent}' ({full}); the "
-                             f"sheet records the PARENT, '{owner1}'. Both are correct at "
-                             "different levels of the corporate stack — the regulator "
-                             "authorises the pipeline-owning subsidiary, GEM's convention "
-                             "records the ultimate parent — so this CORROBORATES the row "
-                             "rather than contradicting it. Value UNCHANGED; ref-only "
-                             f"addition. Consider '{full}' for OtherEnglishNames/notes so "
-                             "the register row is findable from the GEM row.")
+                    owner_name = full.split(" (")[0]
+                    extra = (f"Change Owner1 from {owner1} to {owner_name}. The register "
+                             f"names {owner_name} ({ent}) as the company authorized to hold "
+                             f"this pipeline, and {owner1} is its parent. Owner1 holds the "
+                             "company that owns the pipeline itself; parents are left to the "
+                             "ownership team.")
                     u = owner_ref_unit(pid, note_prefix(rr, extra), tier="medium",
                                        independent=True, rr=rr)
                     if u:
+                        u["values"]["Owner1"] = u["primary_value"] = owner_name
+                        u["class_in"] = "FILL"
                         resolutions.append(u)
                 elif rel == "JV":
                     jv_rows.append((pid, ent, full, owner1,
