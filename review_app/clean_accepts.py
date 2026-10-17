@@ -63,6 +63,10 @@ SCOPE_PATS = {
     "naming": r"Name",
     "route-geometry": r"Location|State|Province|District|Country|Route|Length|Prefecture",
     "classification": r"PipelineType|Fuel",
+    "route": r"Location|State|Province|District|Country|Route|Length|Prefecture",
+    "spec": r"Length|Capacity|Diameter|Cost|Width",
+    "spec_discrepancy": r"Length|Capacity|Diameter|Cost|Width",
+    "aggregate-vs-segment": r"Length|Capacity|Diameter|Cost|Width",
     "Date_logic": r"Year|Month|Status|Shelved|Cancelled",
     "Geo_consistency": r"Country|State|Province|Location|District|Prefecture",
 }
@@ -124,6 +128,8 @@ def blockers(pipes):
                 why = f"concern:{t}:{i.get('call') or 'open'}"
                 if t in WHOLE_PIPELINE and not type_only(i):
                     b["whole"].append(why)
+                elif not cols and t == "n/a":
+                    continue   # "no concern found": nothing to hold (Baird 2026-10-16)
                 elif not cols and t == "attribution":
                     b["oo"].append(why)
                 elif not cols and t == "spec" and FLAG_ONLY.search(i.get("recommendation") or ""):
