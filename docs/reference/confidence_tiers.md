@@ -22,7 +22,9 @@ Machine checks (`scripts/url_verifier.py`, run on every URL, every batch):
    and not navigation — a site search, tag/category listing or paginated index;
 3. it loads: HTTP 200 (bot walls escalate through `fetch.py`; a self-signed TLS chain or
    SEC's UA policy retries once, labeled). 404/410 = dead; other failures are access
-   failures, never deletions;
+   failures, never deletions. "Loads" means loads when a script re-opens it
+   (`ref_recheck.py`), never the shard's own `status` field; a page read only as a Wayback
+   copy is cited as that copy (2026-10-17, P0753);
 4. text is readable — a PDF or workbook with no text layer is "unreadable", not a miss;
 5. the **value is on the page** (`any_of=surface_forms(value)`, whole-number matching
    against prose, not markup);

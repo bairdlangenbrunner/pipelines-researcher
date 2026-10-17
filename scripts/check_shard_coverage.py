@@ -656,6 +656,7 @@ def run_one(staging: Path, pid: str) -> dict:
     unreported, silent, malformed = check(units, records, load_scope_sheet(staging), pid)
     malformed += check_findings(shard, load_scope_sheet(staging), pid)
     wiki_gaps, wiki_enforced = check_wiki_reads(staging, pid, shard)
+    dead = dead_refs(shard)
     return {
         "pid": pid, "units": len(units), "fills": len(records),
         "unreported": [{"ref_col": u.get("ref_col"), "class": u.get("class"),
@@ -665,7 +666,25 @@ def run_one(staging: Path, pid: str) -> dict:
         "unmergeable": malformed,
         "wiki_unread": wiki_gaps if wiki_enforced else [],
         "wiki_unread_legacy": [] if wiki_enforced else wiki_gaps,
+        "dead_refs": dead,
     }
+
+
+def dead_refs(shard) -> list[dict]:
+    """Every proposed ref re-opened by this script, whatever the shard's own `verifications`
+    say: 404/410 through the full fetch ladder blocks (P0753, 2026-10-17: a shard wrote
+    status 200 for a nord-stream.com page its own note said it could not load)."""
+    import ref_recheck
+    recs = [rec for _, rec in ref_recheck.records(shard)]
+    live = ref_recheck.liveness([u for r in recs for u in r["proposed_refs"] if isinstance(u, str)])
+    out = []
+    for r in recs:
+        for u in r["proposed_refs"]:
+            e = live.get(str(u).strip()) or {}
+            if e.get("dead"):
+                out.append({"ref_col": r.get("ref_col") or r.get("concern_type") or "", "url": u,
+                            "status": e["status"]})
+    return out
 
 
 def main() -> None:
@@ -689,7 +708,7 @@ def main() -> None:
     if a.json:
         print(json.dumps(out, indent=1))
     bad = [r for r in out if r.get("error") or r["unreported"] or r["silent_unresolved"]
-           or r["unmergeable"] or r["wiki_unread"]]
+           or r["unmergeable"] or r["wiki_unread"] or r["dead_refs"]]
     if not a.json:
         for r in out:
             if r.get("error"):
@@ -699,7 +718,7 @@ def main() -> None:
                 print(f"WARN {r['pid']}: shard predates wiki_citations_read; "
                       f"{len(r['wiki_unread_legacy'])} harvested wiki citation(s) not accounted for.")
             if not r["unreported"] and not r["silent_unresolved"] and not r["unmergeable"] \
-                    and not r["wiki_unread"]:
+                    and not r["wiki_unread"] and not r["dead_refs"]:
                 if not a.all:
                     print(f"OK — {r['pid']}: all {r['units']} worklist unit(s) reported "
                           f"({r['fills']} fills[] object(s)).")
@@ -714,6 +733,8 @@ def main() -> None:
                 parts.append(f"{len(r['silent_unresolved'])} UNRESOLVED with no notes")
             if r["wiki_unread"]:
                 parts.append(f"{len(r['wiki_unread'])} harvested wiki citation(s) not accounted for")
+            if r["dead_refs"]:
+                parts.append(f"{len(r['dead_refs'])} proposed ref(s) return 404/410")
             print(f"FAIL {r['pid']}: " + "; ".join(parts) + ".")
             for u in r["unreported"]:
                 val = u["primary_value"]
@@ -734,6 +755,9 @@ def main() -> None:
             for w in r["wiki_unread"]:
                 print(f"     [WIKI] {w['cite'][:90]} — {w['why']}; open it and save "
                       f"shard_upsert.py --wiki-read")
+            for d in r["dead_refs"]:
+                print(f"     {str(d['ref_col'])[:24]:24s} [DEAD {d['status']}] {d['url'][:90]} — cite the "
+                      f"Internet Archive copy you read (web.archive.org/web/<ts>/<url>) or another source")
         if a.all:
             n = sum(len(r.get("unreported") or []) for r in out)
             s = sum(len(r.get("silent_unresolved") or []) for r in out)

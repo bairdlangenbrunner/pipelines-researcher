@@ -330,6 +330,12 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   keeps unattended runs from opening Chrome. A 200 that is only a JavaScript app shell is
   `js_shell` → `REF_BLOCKED`, never `REF_UNSUPPORTED` (2026-10-01; oilandgaswatch.org pages are
   read through the site's data API instead — Sweep SOP, "JavaScript application shells").
+  **A shard's own `verifications` are never trusted (Baird 2026-10-17, P0753):** the R2 shard wrote
+  `status: 200` for six nord-stream.com pages that return 404, and ten of them reached the sheet.
+  `scripts/ref_recheck.py` re-opens every proposed ref itself (week-long cache); `check_shard_coverage.py`
+  blocks a 404/410 proposed ref and `review_app/push.py` skips a line that would write one. Cite the URL you
+  actually read: a page read only as a Wayback copy is cited as that copy. One dead link on a host means
+  checking every link on that host, staged and on the sheet. Habits: Sweep SOP → "Verifier false-positives".
 - **`[ref]` cells are ADDITIVE (Baird 2026-10-01).** A proposed ref is appended to the cell's
   existing URLs; it never replaces one — not even when the existing ref doesn't name the pipeline
   (sudact.ru on P0734 stays) or a validity note calls it "superseded". Only a page confirmed

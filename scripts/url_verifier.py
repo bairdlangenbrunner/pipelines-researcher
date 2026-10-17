@@ -937,6 +937,14 @@ def surface_forms(value) -> list[str]:
             forms.add(f"{i:,}")
         else:
             forms.add(repr(n).rstrip("0").rstrip("."))
+        # a cost staged in full units is written scaled in prose: 7400000000 is "€7.4bn",
+        # "7.4 billion euros", "€7.4-billion" (P0753, 2026-10-17: the screen missed all three)
+        for scale, words in ((1e9, (" billion", "-billion", "bn", " bn")),
+                             (1e6, (" million", "-million", "mn", " mln"))):
+            if abs(n) >= scale:
+                x = f"{n / scale:.3f}".rstrip("0").rstrip(".")
+                forms.update(x + w for w in words)
+                break
     return [f for f in forms if f]
 
 

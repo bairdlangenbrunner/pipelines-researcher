@@ -85,6 +85,7 @@ import staged_store  # noqa: E402
 import store  # noqa: E402
 from apply_route_candidates import SHEET_ID, a1, gws  # noqa: E402
 import entity_style  # noqa: E402
+import ref_recheck  # noqa: E402
 
 NAME_COL = re.compile(r"Owner\d+|Operator")
 
@@ -404,7 +405,12 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
     concerns = []
     unstyled = []                       # (line key, col, value, styled) -- the owner-style guard
     row_lines = {}                      # (tab, row, pid) -> [style_only flags of the lines on it]
-    for pid, l, dec in pushable_lines(ds):
+    lines = list(pushable_lines(ds))
+    # every proposed ref is re-opened here, whatever the shard's own `verifications` said: a dead
+    # link (404/410 through the full fetch ladder) never reaches the sheet (P0753, 2026-10-17)
+    live = ref_recheck.liveness([u for _, l, _ in lines if not pushed(l)          # a re-planned pushed line
+                                 for u in (l.get("proposed_refs") or [])], quiet=False)   # is checked below
+    for pid, l, dec in lines:
         pid = pid or l["key"].split("::")[1].split("|")[0]
         tab = tabs["oo" if l["kind"] == "oo" else "tracker"]
         tname = "oo" if l["kind"] == "oo" else "tracker"
@@ -468,6 +474,11 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 urls = own_urls
             if dec == "suggest" and not values:       # a URL suggestion: those URLs, additively
                 urls = [u.strip() for u in str(l["suggested_value"]).split(",") if u.strip()]
+            dead = [u for u in urls if (live.get(u) or ref_recheck.liveness([u]).get(u) or {}).get("dead")]
+            if dead:
+                skipped.append((l["key"], f"dead ref ({live.get(dead[0], {}).get('status', '404')}): {dead[0]}"
+                                          " -- python scripts/ref_recheck.py --fix-wayback, or find another source"))
+                continue
             w = ref_write(tab.cell(row, rc), urls, cleared, changed, remaining)
             if isinstance(w, tuple):
                 skipped.append((l["key"], w[1]))
