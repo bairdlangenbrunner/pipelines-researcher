@@ -310,6 +310,11 @@ python scripts/build_discovery_context.py --tracker gas --country "<Country>" --
 #     seedsOnly=true = a coverage re-run; priorStaging=[earlier run dirs] = don't re-research what they decided
 #     a non-OSM seed source sets seedIntro / seedSearch and a per-seed `length` label, e.g. the US EIA seeds:
 #     batches/united-states-gas/staging/discovery-seeds-20261002/build_slice_args.py)
+#   (retries: seedRetry=true re-researches seeds a priorStaging run left monitor/dropped instead of skipping
+#     them; seedBudget = the per-seed search requirement, e.g. "at least 8 searches, end the reason with
+#     'Searches run: N.'". Every agent shares one session WebSearch cap (600, refills ~100/hour): keep a run
+#     to ~10 seeds an hour, count "Searches run" afterwards and re-queue starved seeds. Never route around
+#     the cap. Example: batches/united-states-gas/staging/discovery-datacenter-seeds-20261016/build_retry5_args.py)
 python scripts/merge_discovery_shards.py --staging $STG/
 python scripts/build_discovery_workbook.py --staging $STG/ \
   --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_discovery.xlsx

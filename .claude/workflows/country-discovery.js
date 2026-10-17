@@ -49,6 +49,10 @@ const ROSTER = A.roster.join("\n")
 // The seed prompt defaults to OSM/Russia wording; a non-OSM seed source overrides it with
 // args.seedIntro (what a seed is), args.seedSearch (where to look in step 3) and per-seed
 // s.length (a free-text length label, e.g. "EIA: 41.7 mi", used instead of km).
+// args.seedBudget replaces the default "about one focused search per seed" budget line (a comprehensive
+// retry sets e.g. "at least 8 searches per seed"; the default line silently overrode a seedSearch checklist,
+// US data center retries 2026-10-16). args.seedRetry = true: a seed an earlier run left monitor or dropped
+// is re-researched in full, and only a seed it queued, vetted or matched is already_handled.
 const SEEDS = Array.isArray(A.seeds) ? A.seeds : []
 const SEED_CHUNK = A.seedChunk || 8
 const PRIOR = Array.isArray(A.priorStaging) ? A.priorStaging : []
@@ -91,8 +95,10 @@ ${chunk.map(seedLine).join('\n')}
 ${ROSTER}
 
 ## For each seed, in order
-1. already_handled: an earlier run (above) already queued/vetted/matched/dropped it → record that
-   (slug or PID) and move on — do NOT re-research.
+${A.seedRetry ? `1. already_handled: ONLY if an earlier run (above) queued, vetted or matched it → record that (slug or
+   PID) and move on. A seed an earlier run left monitor or dropped is NOT already_handled: re-research it in full.` :
+`1. already_handled: an earlier run (above) already queued/vetted/matched/dropped it → record that
+   (slug or PID) and move on — do NOT re-research.`}
 2. matched: it is an existing roster row under another name, or a string/section/loop of one (the
    I/II/III string convention) → matched_project_id + reason (a separate string with its own sourced
    specs goes to Update as a split, still recorded matched with that note).
@@ -106,8 +112,8 @@ ${ROSTER}
    - not a gas pipeline / an urban distribution network / out of scope → "dropped" with why.
 Rules: NEVER cite gem.wiki / globalenergymonitor.org / theodora / wikidot / abarrelfull / yingdodo;
 NEVER fabricate a URL; verify every URL with \`python scripts/url_verifier.py "<url>" "<expected substring>"\`
-and emit only OK + token-present links. Save downloads under \`${STAGING}/work/\`. Budget: about one
-focused search per seed when the first result settles it — don't over-research monitor/dropped ones.
+and emit only OK + token-present links. Save downloads under \`${STAGING}/work/\`. ${A.seedBudget || `Budget: about one
+focused search per seed when the first result settles it — don't over-research monitor/dropped ones.`}
 
 ## Output — write a file, then return a summary
 Write ${STAGING}/discovery/found_seeds-${n}.json EXACTLY shaped:
