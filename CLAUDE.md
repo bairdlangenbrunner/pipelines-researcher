@@ -208,7 +208,10 @@ Routing notes:
   Anything whole-country / "re-verify everything" is a Country Sweep with the
   right legs. The sweep's `refs` leg researches & stages refs across all
   rows×ref-cells (one validated ref per unit, a second preferred); both share one ref-pair model
-  (`scripts/ref_pairs.py`).
+  (`scripts/ref_pairs.py`). **Every research leg opens EVERY citation harvested from the row's
+  gem.wiki page first, in addition to open-web search** (Baird 2026-10-17, P1451), escalating a
+  blocked one through `fetch.py` and the Wayback CDX index; each lands in the shard's
+  `wiki_citations_read`, and `check_shard_coverage.py` blocks until all are accounted for.
 - **Lean pass = the token-budgeted deep/in-dev sweep** (`docs/sops/lean_pass.md`; "lean pass",
   "save tokens", "cheaper sweep"): agents work only uncited values + refs the script could not
   clear + one status/validity record per row, in family groups with a ≤20 k brief; blank-value

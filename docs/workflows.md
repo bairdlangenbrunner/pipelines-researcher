@@ -167,7 +167,10 @@ The worklist joins the **operators/owners tab** (GID 1489950650, ProjectID-keyed
 and emits `Operator [ref]`/`Owner [ref]` units; `--verify-existing` HTTP-checks
 existing refs deterministically (no agent tokens). Route/geometry `[ref]` cells are
 **out of scope** (dropped by `discover_ref_pairs`). Start research from the
-harvested gem.wiki outbound citations — visit gem.wiki, **never cite it**.
+harvested gem.wiki outbound citations — visit gem.wiki, **never cite it**. Every harvested
+citation is opened (fetch.py, then Wayback CDX when blocked) and logged in the shard's
+`wiki_citations_read`, in addition to open-web research; `check_shard_coverage.py` blocks until
+each is accounted for (Sweep SOP §Sequence-3).
 
 **Transit countries share rows** — the second scope swept passes
 `--exclude-pids @batches/<scope>/carried_from_<other>.txt` (derived from the other

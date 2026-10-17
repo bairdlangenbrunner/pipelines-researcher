@@ -98,8 +98,8 @@ The worklist was cut to the OWED set (scripts/lean_worklist.py): uncited values 
 cited values whose link is dead / missing the value / not about this pipeline, and — if listed —
 a few blank-value columns. Blank values and cited values whose links already check out were
 DEFERRED into deferred_units.json on purpose; they are not your job this pass. So:
-- Work ONLY the units \`shard_upsert.py --remaining\` lists, plus the status review and ONE
-  validity record per row. Do not go hunting for blank values. If a document you are already
+- Work ONLY the units \`shard_upsert.py --remaining\` lists (its WIKI lines included: Step 0b is
+  never cut), plus the status review and ONE validity record per row. Do not go hunting for blank values. If a document you are already
   reading states a blank value, you MAY stage it as a FILL (it is free) — never search for one.
 - Second source: PREFERRED, NOT OWED. One validated ref closes the unit at medium. Add a second
   only if the document at hand or one quick search offers it; never spend searches chasing one --
@@ -138,8 +138,8 @@ cd ${REPO} first.
   filter \`units\` to \`project_id == "${pid}"\`. Each unit has ref_col, value_cols, values,
   primary_value, current_ref, sheet_row, segment_name, pipeline_name, wiki.
 - Source leads harvested from this row's gem.wiki page: \`${STAGING}/wiki_citations.json\`
-  (your STARTING POINT — engage what the sheet itself cites BEFORE open-web search; verify each
-  live, since many rot; READ gem.wiki for leads but NEVER cite it). A row whose only support is a
+  (your STARTING POINT — you OPEN EVERY ONE in Step 0b below, before and in addition to open-web
+  search; READ gem.wiki for leads but NEVER cite it). A row whose only support is a
   generic/aggregate citation that does not actually name this pipeline is itself an existence flag.
 - Roster of ALL ${PIDS.length} in-scope pipelines (for duplicate/relabel detection — does ${pid} look
   like the same physical pipe as another row under a different name?):
@@ -182,6 +182,24 @@ only 12-15.
    prints OK/200 AND contains the expected token(s) AND names the pipeline. Use distinctive tokens
    (numbers, place names). Every verification object you write carries "name_found": true|false.
    RELEVANCE: a page about terminus A, or about terminus B, or about the parent trunk, is NOT a ref
+## Step 0b — open EVERY harvested wiki citation (Baird 2026-10-17; blocking)
+\`--remaining\` lists them as WIKI lines. Before any open-web search, open each one and read it
+against EVERY owed unit (capacity, length, diameter, dates, status, owner), not only the one you
+are working. P1451 is why: the wiki cited two tables stating the sheet's 2 bcm/y, nobody opened
+them, and a 1999 "up to 4 bcm" planned volume was staged as a change. This is IN ADDITION to your
+other research, never instead of it.
+- A dead or blocked link is not the end: run \`python scripts/fetch.py "<url>" --text\` (curl, TLS
+  impersonation, Chrome clearance), then the Wayback CDX index
+  (\`curl -s "https://web.archive.org/cdx/search/cdx?url=<url without scheme>&output=txt&filter=statuscode:200"\`,
+  then \`https://web.archive.org/web/<timestamp>id_/<url>\`). The availability API
+  (\`archive.org/wayback/available\`) misses captures the CDX index has; never stop at it.
+- A page whose table or figure states a value for this pipeline IS a ref for it: cite the live URL,
+  or the archived snapshot URL when the live one is gone.
+- Save one record per citation, as you finish it:
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --wiki-read '{"url": "<harvested url>", "outcome": "used|no_value|not_this_row|dead|blocked", "read_via": "<snapshot url if you read an archive>", "tried": ["scripts/fetch.py: <result>", "wayback CDX: <result>"], "note": "<what the page says, plainly>"}'
+  \`used\` = it is in some record's proposed_refs. \`dead\`/\`blocked\` need BOTH fetch.py and a Wayback
+  lookup in \`tried\`. check_shard_coverage blocks until every harvested citation has a record.
+
    for the "A-B" segment row unless it names that segment (its FULL name, or its local-language
    name from the worklist's OtherLanguage* columns). If the name is in another script and the
    verifier misses it, read the page and encode the hand-confirmed match as name_found=true with

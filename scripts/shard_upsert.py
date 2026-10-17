@@ -8,6 +8,7 @@
     python scripts/shard_upsert.py --staging <dir> --pid P#### --status-review @s.json
     python scripts/shard_upsert.py --staging <dir> --pid P#### --lead @l.json
     python scripts/shard_upsert.py --staging <dir> --pid P#### --summary "<one line>"
+    python scripts/shard_upsert.py --staging <dir> --pid P#### --wiki-read @w.json
     python scripts/shard_upsert.py --staging <dir> --pid P#### --remaining
 
 Why this exists (2026-09-14, Russia R1 pilot): the deep-sweep contract asked agents to
@@ -26,7 +27,11 @@ Rules the helper enforces so incremental saving cannot degrade the shard:
   REPLACES the earlier record, so an agent that first wrote UNRESOLVED and later found a
   source overwrites cleanly rather than leaving two records for one unit.
 - validity[] keys on (segment_name, concern_type); status_reviews[] on sheet_row (then
-  segment_name); cross_row_leads[] on (project_id, url). Same replace-on-key semantics.
+  segment_name); cross_row_leads[] on (project_id, url); wiki_citations_read[] on url.
+  Same replace-on-key semantics.
+- `--init` adds an empty `wiki_citations_read` list, which turns on the coverage check that
+  every citation harvested from the row's gem.wiki page was opened (2026-10-17). `--remaining`
+  lists the ones not yet read.
 - Every write is atomic (temp file in the same dir + os.replace), so a crash mid-write
   leaves the previous complete shard, never a truncated one.
 - Each call prints one line: how many owed units the shard now reports on, so the agent
@@ -48,9 +53,11 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from check_shard_coverage import check, load_units  # noqa: E402
+from check_shard_coverage import _norm_url, check, check_wiki_reads, load_units  # noqa: E402
 
 LIST_KEYS = ("validity", "fills", "status_reviews", "cross_row_leads")
+# Not in LIST_KEYS: an old shard without it stays a legacy shard (coverage only warns).
+WIKI_KEY = "wiki_citations_read"
 
 
 def _load_payload(arg: str) -> list[dict]:
@@ -91,6 +98,7 @@ def _skeleton(staging: Path, pid: str) -> dict:
         "fills": [],
         "status_reviews": [],
         "cross_row_leads": [],
+        WIKI_KEY: [],
         "summary": "",
     }
 
@@ -145,13 +153,17 @@ def _key_lead(r: dict) -> tuple:
     return (str(r.get("project_id") or ""), str(r.get("url") or ""))
 
 
+def _key_wiki(r: dict) -> tuple:
+    return (_norm_url(r.get("url") or ""),)
+
+
 KEYS = {"fills": _key_fill, "validity": _key_validity,
-        "status_reviews": _key_status, "cross_row_leads": _key_lead}
+        "status_reviews": _key_status, "cross_row_leads": _key_lead, WIKI_KEY: _key_wiki}
 
 
 def upsert(shard: dict, kind: str, records: list[dict]) -> tuple[int, int]:
     keyf = KEYS[kind]
-    existing = shard[kind]
+    existing = shard.setdefault(kind, [])
     index = {keyf(r): i for i, r in enumerate(existing)}
     replaced = added = 0
     for r in records:
@@ -175,6 +187,9 @@ def progress_line(staging: Path, pid: str, shard: dict) -> str:
         extra.append(f"{len(silent)} UNRESOLVED with empty notes")
     if malformed:
         extra.append(f"{len(malformed)} unmergeable")
+    wiki_gaps, enforced = check_wiki_reads(staging, pid, shard)
+    if wiki_gaps and enforced:
+        extra.append(f"{len(wiki_gaps)} wiki citation(s) not accounted for")
     tail = f" ({'; '.join(extra)})" if extra else ""
     return f"{pid}: {done}/{len(units)} owed units reported{tail}"
 
@@ -190,6 +205,9 @@ def main() -> None:
     ap.add_argument("--status-review", dest="status_review", help="status_reviews[] record(s)")
     ap.add_argument("--lead", help="cross_row_leads[] record(s)")
     ap.add_argument("--summary", help="set the shard's one-line summary")
+    ap.add_argument("--wiki-read", dest="wiki_read",
+                    help="wiki_citations_read[] record(s): {url, outcome: used|no_value|"
+                         "not_this_row|dead|blocked, note, tried: [...] for dead/blocked}")
     ap.add_argument("--remaining", action="store_true",
                     help="list the worklist units this shard does not yet report on, then exit")
     a = ap.parse_args()
@@ -209,6 +227,9 @@ def main() -> None:
             print(f"  FIX   {str(f.get('ref_col') or ''):24s} UNRESOLVED with empty researcher_notes")
         for m in malformed:
             print(f"  FIX   {str(m.get('ref_col') or ''):24s} {m.get('why')}")
+        wiki_gaps, _ = check_wiki_reads(staging, a.pid, shard)
+        for w in wiki_gaps:
+            print(f"  WIKI  {w['cite'][:90]}  — {w['why']}")
         if not shard.get("validity"):
             print("  OWED  validity[]                (at least one object per pipeline)")
         if not path.exists():
@@ -219,7 +240,8 @@ def main() -> None:
     if a.init and not path.exists():
         changed.append("init")
     for kind, arg in (("fills", a.fill), ("validity", a.validity),
-                      ("status_reviews", a.status_review), ("cross_row_leads", a.lead)):
+                      ("status_reviews", a.status_review), ("cross_row_leads", a.lead),
+                      (WIKI_KEY, a.wiki_read)):
         if arg:
             added, replaced = upsert(shard, kind, _load_payload(arg))
             changed.append(f"{kind} +{added}" + (f" ~{replaced}" if replaced else ""))

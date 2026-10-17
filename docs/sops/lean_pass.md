@@ -58,6 +58,7 @@ python scripts/build_ref_worklist.py --tracker gas --country "<C>" --owe-fills -
 python scripts/lean_worklist.py --staging $STG/ [--owe-fill-cols "Start [ref]"] [--work-blocked]
 # 3. harvest from the OWED set (fewer fetches)
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json --out $STG/wiki_citations.json
+#    agents open EVERY harvested citation (Sweep SOP §Sequence-3) — never cut by the lean pass
 # 4. trimmed brief (see "Brief budget"), then compile args with family groups
 python scripts/build_deepsweep_args.py --staging $STG/ --status-review --lean --groups auto \
   --brief $STG/BRIEF.md --model sonnet --out $STG/deepsweep_args.json

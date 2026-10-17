@@ -168,6 +168,18 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    (once per ProjectID). We *visit* gem.wiki but **never cite it** — only the underlying
    URLs (gem.wiki/globalenergymonitor/theodora/abarrelfull/wikidot are filtered out here and at the verifier).
    Expect many harvested links to be dead — verify each before use.
+   **Every harvested citation is OPENED and accounted for, first, and in addition to open-web
+   research (Baird 2026-10-17, P1451):** the wiki cited two tables stating the sheet's 2 bcm/y,
+   nobody opened them, and a 1999 planned volume of "up to 4 bcm" was staged as a change. Read each
+   page against every owed unit of the row, not just the one in hand. A dead or blocked link gets
+   the full ladder: `scripts/fetch.py <url> --text`, then the Wayback **CDX** index
+   (`web.archive.org/cdx/search/cdx?url=…&filter=statuscode:200`; the `archive.org/wayback/available`
+   API misses captures CDX has), and an archived snapshot that states the value is a valid ref.
+   Each citation gets one `wiki_citations_read` record in the shard
+   (`shard_upsert.py --wiki-read '{url, outcome: used|no_value|not_this_row|dead|blocked, note, tried, read_via}'`);
+   `check_shard_coverage.py` blocks a shard with an unopened citation, a `used` one no record cites,
+   or a `dead`/`blocked` one without both fetch.py and Wayback in `tried`. Shards that predate the
+   key only warn.
 4. **Research loop (per ProjectID):**
    - **HAS_REF:** if `--verify-existing` shows all URLs live AND containing the value AND
      the page names the pipeline → **Re-verified (blue)**, done — one validated source is

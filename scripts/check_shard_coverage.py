@@ -20,6 +20,11 @@ carries no `ref_col` to key on or a `class_out` outside the four the pipeline ac
 was done and will vanish — a different message from "you skipped this unit", and one the
 agent can fix in place by re-keying rather than re-researching.
 
+It also blocks a shard that has not opened every citation harvested from the row's gem.wiki
+page (`wiki_citations.json`): each needs a `wiki_citations_read` entry (`shard_upsert.py
+--wiki-read`) saying used / no_value / not_this_row / dead / blocked, and a dead or blocked
+one must show the fetch.py ladder and a Wayback lookup were tried (Baird 2026-10-17, P1451).
+
     python scripts/check_shard_coverage.py --staging <dir> --pid P0187
     python scripts/check_shard_coverage.py --staging <dir> --all [--json]
 
@@ -73,6 +78,84 @@ def _owner_style(name: str):
         return style(name)
     except Exception:       # pragma: no cover — data files absent on a bare checkout
         return None
+
+
+# Every citation harvested from the row's gem.wiki page is OPENED and accounted for (Baird
+# 2026-10-17, P1451): the harvest put the ukrrudprom and EEGAS tables stating the sheet's
+# 2 bcm/y in wiki_citations.json, the agent never opened either, and staged a 1999 "up to 4 bcm"
+# planned volume as a change. A shard carrying `wiki_citations_read` (shard_upsert --init adds
+# it) must hold one entry per harvested citation; older shards without the key only warn.
+WIKI_OUTCOMES = {"used", "no_value", "not_this_row", "dead", "blocked"}
+_WAYBACK = re.compile(r"^https?://web\.archive\.org/web/[0-9a-z_*]+/", re.I)
+
+
+def _norm_url(u: str) -> str:
+    u = _WAYBACK.sub("", (u or "").strip())
+    u = re.sub(r"^https?://", "", u, flags=re.I)
+    u = re.sub(r"^www\.", "", u, flags=re.I)
+    u = re.sub(r":80(?=/)", "", u)
+    return u.rstrip("/").lower()
+
+
+@lru_cache(maxsize=None)
+def load_wiki_citations(staging: Path) -> dict:
+    p = staging / "wiki_citations.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text()).get("pages") or {}
+
+
+def wiki_citation_groups(staging: Path, pid: str) -> list[dict]:
+    """One group per harvested citation (cite_id): the original URL and its archived copy
+    are one source, so reading either accounts for both."""
+    page = load_wiki_citations(staging).get(pid) or {}
+    groups: dict[str, dict] = {}
+    for c in page.get("citations") or []:
+        key = c.get("cite_id") or c.get("url")
+        g = groups.setdefault(key, {"cite_id": key, "urls": [], "link_text": c.get("link_text") or ""})
+        g["urls"].append(c.get("url"))
+    return list(groups.values())
+
+
+def check_wiki_reads(staging: Path, pid: str, shard: dict) -> tuple[list[dict], bool]:
+    """(gaps, enforced). Each gap is {"cite": ..., "why": ...}."""
+    groups = wiki_citation_groups(staging, pid)
+    enforced = "wiki_citations_read" in shard
+    reads = [r for r in (shard.get("wiki_citations_read") or []) if isinstance(r, dict)]
+    by_url = {}
+    for r in reads:   # full URL, and the URL without its query string (tracking parameters)
+        for u in (r.get("url"), r.get("read_via")):
+            if u:
+                by_url.setdefault(_norm_url(u), r)
+                by_url.setdefault(_norm_url(u).split("?")[0], r)
+    cited = set()
+    for kind in ("fills", "validity", "status_reviews", "_units"):
+        recs = load_units(staging).get(pid, []) if kind == "_units" else shard.get(kind) or []
+        for rec in recs:
+            for u in list(rec.get("proposed_refs") or []) + re.split(r"[\s;,]+", str(rec.get("current_ref") or "")):
+                if u:
+                    cited.add(_norm_url(u))
+    gaps = []
+    for g in groups:
+        keys = [k for u in g["urls"] for k in (_norm_url(u), _norm_url(u).split("?")[0])]
+        hit = next((by_url[k] for k in keys if k in by_url), None)
+        label = g["urls"][0]
+        if hit is None:
+            gaps.append({"cite": label, "why": f"harvested wiki citation never opened ({g['link_text'][:60]!r})"})
+            continue
+        outcome = hit.get("outcome")
+        if outcome not in WIKI_OUTCOMES:
+            gaps.append({"cite": label, "why": f"outcome {outcome!r} is not one of {sorted(WIKI_OUTCOMES)}"})
+        elif outcome in ("dead", "blocked"):
+            tried = " ".join(map(str, hit.get("tried") or [])).lower()
+            if "fetch" not in tried or not ("wayback" in tried or "archive" in tried):
+                gaps.append({"cite": label, "why": f"{outcome} without the full ladder: `tried` must "
+                             "show scripts/fetch.py AND a Wayback/archive lookup"})
+        elif outcome == "used" and not ({_norm_url(u) for u in g["urls"]} | {_norm_url(hit.get("url"))}) & cited:
+            gaps.append({"cite": label, "why": "marked used but no record carries it in proposed_refs"})
+        if outcome in ("no_value", "not_this_row") and not str(hit.get("note") or "").strip():
+            gaps.append({"cite": label, "why": f"{outcome} needs a note saying what the page does say"})
+    return gaps, enforced
 
 
 def load_units(staging: Path) -> dict[str, list[dict]]:
@@ -572,6 +655,7 @@ def run_one(staging: Path, pid: str) -> dict:
                     "units": len(units)}
     unreported, silent, malformed = check(units, records, load_scope_sheet(staging), pid)
     malformed += check_findings(shard, load_scope_sheet(staging), pid)
+    wiki_gaps, wiki_enforced = check_wiki_reads(staging, pid, shard)
     return {
         "pid": pid, "units": len(units), "fills": len(records),
         "unreported": [{"ref_col": u.get("ref_col"), "class": u.get("class"),
@@ -579,6 +663,8 @@ def run_one(staging: Path, pid: str) -> dict:
                         "primary_value": u.get("primary_value")} for u in unreported],
         "silent_unresolved": [f.get("ref_col") for f in silent],
         "unmergeable": malformed,
+        "wiki_unread": wiki_gaps if wiki_enforced else [],
+        "wiki_unread_legacy": [] if wiki_enforced else wiki_gaps,
     }
 
 
@@ -603,13 +689,17 @@ def main() -> None:
     if a.json:
         print(json.dumps(out, indent=1))
     bad = [r for r in out if r.get("error") or r["unreported"] or r["silent_unresolved"]
-           or r["unmergeable"]]
+           or r["unmergeable"] or r["wiki_unread"]]
     if not a.json:
         for r in out:
             if r.get("error"):
                 print(f"FAIL {r['pid']}: {r['error']}")
                 continue
-            if not r["unreported"] and not r["silent_unresolved"] and not r["unmergeable"]:
+            if r["wiki_unread_legacy"] and not a.all:
+                print(f"WARN {r['pid']}: shard predates wiki_citations_read; "
+                      f"{len(r['wiki_unread_legacy'])} harvested wiki citation(s) not accounted for.")
+            if not r["unreported"] and not r["silent_unresolved"] and not r["unmergeable"] \
+                    and not r["wiki_unread"]:
                 if not a.all:
                     print(f"OK — {r['pid']}: all {r['units']} worklist unit(s) reported "
                           f"({r['fills']} fills[] object(s)).")
@@ -622,6 +712,8 @@ def main() -> None:
                 parts.append(f"{len(r['unmergeable'])} record(s) cannot be merged")
             if r["silent_unresolved"]:
                 parts.append(f"{len(r['silent_unresolved'])} UNRESOLVED with no notes")
+            if r["wiki_unread"]:
+                parts.append(f"{len(r['wiki_unread'])} harvested wiki citation(s) not accounted for")
             print(f"FAIL {r['pid']}: " + "; ".join(parts) + ".")
             for u in r["unreported"]:
                 val = u["primary_value"]
@@ -639,12 +731,19 @@ def main() -> None:
                       f"— the research is done, re-key the record, do not redo it")
             for c in r["silent_unresolved"]:
                 print(f"     {c:24s} [UNRESOLVED with empty researcher_notes — say what you searched]")
+            for w in r["wiki_unread"]:
+                print(f"     [WIKI] {w['cite'][:90]} — {w['why']}; open it and save "
+                      f"shard_upsert.py --wiki-read")
         if a.all:
             n = sum(len(r.get("unreported") or []) for r in out)
             s = sum(len(r.get("silent_unresolved") or []) for r in out)
             m = sum(len(r.get("unmergeable") or []) for r in out)
+            w = sum(len(r.get("wiki_unread") or []) for r in out)
+            lw = sum(len(r.get("wiki_unread_legacy") or []) for r in out)
             print(f"\n{len(out)} shard(s): {len(bad)} with gaps — "
-                  f"{n} unreported unit(s), {m} unmergeable record(s), {s} silent UNRESOLVED.")
+                  f"{n} unreported unit(s), {m} unmergeable record(s), {s} silent UNRESOLVED, "
+                  f"{w} wiki citation(s) not accounted for."
+                  + (f" ({lw} more on shards that predate wiki_citations_read, not blocking.)" if lw else ""))
             if not bad:
                 print("OK — every worklist unit is reported on in every shard.")
     sys.exit(1 if bad else 0)
