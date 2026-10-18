@@ -24,6 +24,7 @@ backups `notes/sheet-write-2026-07-30-egypt-gas-*.csv`). Per row it writes:
                    only, oil has no column; the prior creator is preserved in the
                    notes/ backup CSV)
   Route [ref]   += staged URLs not already in the cell           (append)
+  Researcher     = "CB", LastUpdated = today's date serial   (row stamp, every mode — Baird 2026-10-02)
 
 Every planned row is checked against the routes repo first: the PID must have a
 geojson with actual coordinates under ../GOIT-GGIT-pipeline-routes. A row whose
@@ -79,6 +80,16 @@ VOCAB = {"high", "medium", "low", "very low (straight line/schematic)",
          "very high (within meters)"}
 MAPPED = "Mapped route (at any accuracy)"
 COLS = ["RouteType", "RouteAccuracy", "RouteNotes", "RouteCreator", "Route [ref]"]
+# every row-specific sheet write also stamps the row (Baird 2026-10-02): Researcher SET to CB,
+# LastUpdated = today's date serial (a RAW integer keeps the cell's date format)
+STAMP = ["Researcher", "LastUpdated"]
+
+
+def stamp_values() -> dict:
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("America/New_York")).date()
+    return {"Researcher": "CB", "LastUpdated": (today - date(1899, 12, 30)).days}
 
 
 def repo_geometry(commodity: str) -> dict[str, int]:
@@ -250,7 +261,8 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
     # the four target columns are contiguous on neither tab necessarily — read
     # each column cell-scoped, plus the ProjectID cell, all in one batchGet
     ranges = []
-    per_row = [pid_letter] + [col_letter[c] for c in COLS if c in col_letter]
+    read_cols = [k for k in COLS + STAMP if k in col_letter]
+    per_row = [pid_letter] + [col_letter[k] for k in read_cols]
     for c in items:
         ranges += [f"{L}{c['sheet_row']}" for L in per_row]
     got = batch_get(tab, ranges, "FORMULA")
@@ -266,15 +278,16 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
         for v in cells:
             assert not v.startswith("="), \
                 f"{c['pid']} row {c['sheet_row']}: formula cell {v!r} — aborting"
-        cur = dict(zip([k for k in COLS if k in col_letter], rest))
+        cur = dict(zip(read_cols, rest))
+        stamps = {k: v for k, v in stamp_values().items() if k in col_letter and cur.get(k) != str(v)}
 
         if args.backfill_route_type:
             # repair-only: the row's other route columns are already applied
             if cur["RouteType"] == MAPPED:
                 continue                       # already in sync — nothing to write
             plan.append({"pid": c["pid"], "sheet_row": c["sheet_row"],
-                         "before": {"RouteType": cur["RouteType"]},
-                         "after": {"RouteType": MAPPED}})
+                         "before": {"RouteType": cur["RouteType"], **{k: cur[k] for k in stamps}},
+                         "after": {"RouteType": MAPPED, **stamps}})
             continue
 
         if args.replace:
@@ -321,6 +334,7 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
         new_urls = [u for u in dict.fromkeys(staged_urls) if u not in cur["Route [ref]"]]
         after["Route [ref]"] = "; ".join(
             ([cur["Route [ref]"]] if cur["Route [ref]"] else []) + new_urls)
+        after.update(stamps)
 
         plan.append({"pid": c["pid"], "sheet_row": c["sheet_row"],
                      "before": cur, "after": after})
@@ -380,7 +394,7 @@ def main() -> None:
     import pandas as pd
     tab = TABS[args.commodity]
     header = pd.read_csv(args.csv, header=2, low_memory=False, nrows=0).columns.tolist()
-    col_letter = {c: a1(header.index(c)) for c in COLS if c in header}
+    col_letter = {c: a1(header.index(c)) for c in COLS + STAMP if c in header}
     pid_letter = a1(header.index("ProjectID"))
     for required in ("RouteType", "RouteAccuracy", "RouteNotes", "Route [ref]"):
         assert required in col_letter, f"{required} not in {args.csv} header"

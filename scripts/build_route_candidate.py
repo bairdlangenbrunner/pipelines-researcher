@@ -58,26 +58,22 @@ METHOD_ROUTENOTE = {
 
 def _proposed_sheet(wl: dict | None, method: str, ref_urls: list[str],
                     note_override: str = "") -> dict:
-    """Paste-ready APPEND values for the sheet's route provenance columns:
-    current cell content + our addition — never an overwrite (Baird 2026-07-30).
-    RouteNotes gets the METHOD_ROUTENOTE stamp; RouteCreator gets 'CB';
-    Route [ref] gets every link that informed the route ('; '-joined)."""
+    """Paste-ready values for the sheet's route provenance columns. RouteNotes and
+    Route [ref] APPEND to the current cell (Baird 2026-07-30): RouteNotes gets the
+    METHOD_ROUTENOTE stamp, Route [ref] every link that informed the route ('; '-joined).
+    RouteCreator is SET to 'CB', never appended (Baird 2026-10-15), as apply_route_candidates writes it."""
     wl = wl or {}
     cur_notes = (wl.get("current_route_notes") or "").strip()
-    cur_creator = (wl.get("current_route_creator") or "").strip()
     cur_ref = (wl.get("current_route_ref") or "").strip()
 
     note = note_override or METHOD_ROUTENOTE[method]
     sep = " " if cur_notes.endswith(".") else "; "
     notes = f"{cur_notes}{sep}{note}" if cur_notes else note
 
-    creator = cur_creator if "CB" in cur_creator.split(";") or cur_creator == "CB" \
-        else (f"{cur_creator}; CB" if cur_creator else "CB")
-
     new_urls = [u for u in dict.fromkeys(ref_urls) if u and u not in cur_ref]
     ref = "; ".join(([cur_ref] if cur_ref else []) + new_urls)
 
-    return {"RouteCreator": creator, "RouteNotes": notes, "Route [ref]": ref}
+    return {"RouteCreator": "CB", "RouteNotes": notes, "Route [ref]": ref}
 
 
 def _utc() -> str:
@@ -361,6 +357,8 @@ def main() -> None:
     ap.add_argument("--pid", required=True)
     ap.add_argument("--commodity", default="gas", choices=["gas", "oil", "ngl"])
     ap.add_argument("--staging", required=True)
+    ap.add_argument("--country", default="",
+                    help="the scope country for the store meta; defaults to the worklist's, then the store's own")
     ap.add_argument("--method", required=True, choices=list(METHOD_ACCURACY))
     # method inputs
     ap.add_argument("--ref-id", help="(sidecar) gulfpub:<cmdty>:<oid>")
@@ -406,6 +404,11 @@ def main() -> None:
     sugg_accuracy = args.accuracy or METHOD_ACCURACY[args.method]
 
     staging = Path(args.staging)
+    country = _scope_country(staging, args.country)
+    if not country:
+        # a store without a country is invisible to the review app's scope match (staged_store._dir_scope)
+        raise SystemExit("no scope country: pass --country (no worklist.json or store meta in "
+                         f"{staging} names one)")
     (staging / "candidate_routes").mkdir(parents=True, exist_ok=True)
     notes_bits = [args.notes] if args.notes else []
     source: dict = {"name": args.source_name, "url": args.source_url,
@@ -546,8 +549,7 @@ def main() -> None:
         "verifications": [], "tier": "", "researcher_notes": " ".join(notes_bits),
     }
     scope_meta = {"mode": "route-creation", "commodity": args.commodity,
-                  "scope": {"country": (wl or {}).get("_country", ""),
-                            "commodity": args.commodity}}
+                  "scope": {"country": country, "commodity": args.commodity}}
     _upsert(staging / "candidates.json", args.pid, cand, "candidates", scope_meta)
 
     rec = _route_record(args.pid, args.commodity, args.method, geom, cand["geometry_file"],
@@ -566,6 +568,23 @@ def main() -> None:
               f"(registration above the RMSE threshold — finish in QGIS).", file=sys.stderr)
     if not qc["passed"]:
         print("  gate errors: " + "; ".join(qc["errors"]), file=sys.stderr)
+
+
+def _scope_country(staging: Path, given: str = "") -> str:
+    """The country the store meta names: --country, else the worklist's, else the existing store's."""
+    if given:
+        return given
+    for fn in ("worklist.json", "staged_resolutions.json", "candidates.json"):
+        f = staging / fn
+        if not f.exists():
+            continue
+        try:
+            c = json.loads(f.read_text()).get("meta", {}).get("scope", {}).get("country", "")
+        except Exception:  # noqa: BLE001
+            continue
+        if c:
+            return c
+    return ""
 
 
 def _load_worklist_unit(staging: Path, pid: str) -> dict | None:
