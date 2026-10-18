@@ -24,7 +24,7 @@ The FERC order of March 19, 2026, for docket CP25-531 (`sources/ferc_order_CP25-
 - `staged_new.json`: the new row, length 0 and route type "Capacity expansion only" so no pipe is counted twice.
 - `traces/`: the company map (`map.jpg`, 600 by 805 pixels; the company serves no larger copy, and the open season PDF of June 2025 carries the same map at 647 by 867), the pixel traces (`trace_palo_duro_v2.json`, `trace_residue_header_v2.json`, written by `retrace.py`), the control points (`gcps_v3.json`, 78 points written by `register_counties.py`: 67 county corners found by fitting the map's drawn county lines to the Census county lines, and 11 points on the Red River state line; town dots kept as check points in `gcps_v3_checkpoints.json`), the georeferenced lines (`palo_duro_v3.geojson`, `residue_header_v3.geojson`, order 2 fit, error 0.17 km, leave one out 0.18 km), the overlays (`overlay_v2_*.png`), the comparison (`compare_routes.py`, `compare_routes.png`, `compare_routes_header.png`), and the cross check against the company's August 2025 asset map (`map_2025_assets_wayback20250822.jpg`, `check_2025_map.py`, `check_2025_map.png`). The older `gcps.json`, `gcps_v2.json` and `*_v2.geojson` files are kept for the record; the v2 fit put the Header about 4 km too far north. The first pass traces (dashed header, affine fit) were deleted on 2026-10-17.
 - `../route-creation-palo-duro-20261017/`: the route candidates (`candidate_routes/P7861.geojson`, `P7862.geojson`, each stamped with where it came from by `stamp_provenance.py`), the staged route records, and the sheet plan `apply_route_replacements_plan.json`.
-- Workbooks in `batches/united-states-gas/deliverables/`: `pipelines_batch_20261017_1917_ET_united-states_palo-duro_update.xlsx` and `..._newrow.xlsx`.
+- Workbooks in `batches/united-states-gas/deliverables/`: `pipelines_batch_20261018_0917_ET_united-states_palo-duro_update.xlsx` and `..._newrow.xlsx`, rebuilt after Baird's decisions. The 10-17 pair is in `archive/`.
 
 ## Route finding
 
@@ -34,16 +34,15 @@ The first georeference put the Header about 4 km north of the P7861 file. The ca
 
 Both new files replace the old ones. The old P7861 file was eight separate pieces; the new one is one connected line with its branches. The candidate builder caps a map trace at medium accuracy, so P7861 is staged to go from high to medium, and P7862 stays medium. The P7861 trace is 218 km against the sheet's 442.6 km, which the routes QC flags; that is the doubled 275 miles that this batch corrects to 150 miles. The traced Palo Duro line is 377 km against FERC's 275 miles (443 km), so the map may not show its full southern end.
 
-## Open decisions for Baird
+## Decisions (Baird, 2026-10-18)
 
-1. P7862 pipeline type: staged as "both transmission and gathering". The other choice is to split the row into a northern 61 mile part and a southern 214 mile part.
-2. P7861 owner: staged as Producers Midstream (existing entity) to match P7862, with Tailwater Capital as parent. The legal owner per FERC is Palo Duro Pipelines (Texas Gathering).
-3. New row status: proposed. Owner Palo Duro Transmission L.P. is a new entity (entity_lookup found no match).
-4. Proposal and start years cleared on both old rows, since they belonged to the interstate project. No build year was found for either line.
-5. Data center totals: removing the 275 miles from P7861 drops about 443 km from the 10,554 km tagged total.
+1. P7862 stays one row, typed "both transmission and gathering".
+2. P7861 owner is Palo Duro Pipelines (Texas Gathering) LP, the company FERC names as owner. Tailwater Capital is dropped and no parent is staged.
+3. The new row is proposed, owned by Palo Duro Transmission LP, with no parent.
+4. Proposal and start years are cleared on both old rows.
+5. The data center tag comes off P7861, which drops about 443 km from the tagged total.
 
 ## Next steps here
 
-1. Baird reviews the two workbooks and the decisions above.
-2. On his go ahead for this batch only: apply the P7861 and P7862 changes, then `scripts/append_new_rows.py` for the new row (plan first, read only, then `--apply`).
-3. Update the data center stats and the Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) once the sheet changes land.
+1. On Baird's go ahead for this batch only: apply the P7861 and P7862 changes, then `scripts/append_new_rows.py` for the new row (plan first, read only, then `--apply`).
+2. Update the data center stats and the Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) once the sheet changes land.

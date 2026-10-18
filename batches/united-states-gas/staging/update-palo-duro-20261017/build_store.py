@@ -21,7 +21,7 @@ NOTE = {
 }
 def ver(urls):
     return [{"url": u, "ok": True, "contains_value": True, "name_found": True, "note": NOTE[u]} for u in urls]
-def res(pid, row, seg, ref_col, values, refs, notes, class_in="FILL", class_out="CHANGE_PROPOSED", tier=None, current=""):
+def res(pid, row, seg, ref_col, values, refs, notes, class_in="FILL", class_out="REFS_ADDED", tier=None, current=""):
     pub = {u.split("/")[2] for u in refs}
     return {"project_id": pid, "pipeline_name": "Producers Midstream Gas Pipeline", "wiki": "", "sheet_row": row,
             "segment_name": seg, "ref_col": ref_col, "value_cols": list(values), "primary_value_col": list(values)[0],
@@ -31,31 +31,31 @@ def res(pid, row, seg, ref_col, values, refs, notes, class_in="FILL", class_out=
             "source_language": "en", "researcher_notes": notes}
 H, P = "Residue Header", "Palo Duro Gas Pipeline"
 R = [
- res("P7861", 4249, H, "Status [ref]", {"Status": "operating"}, [FERC],
+ res("P7861", 4248, H, "Status [ref]", {"Status": "operating"}, [FERC],
      "Status stays operating. The FERC order of March 19, 2026, says Palo Duro Pipelines (Texas Gathering) owns and operates the Header Pipeline today.", class_out="REFS_ADDED", tier="high"),
- res("P7861", 4249, H, "PipelineType [ref]", {"PipelineType": "gathering"}, [FERC],
+ res("P7861", 4248, H, "PipelineType [ref]", {"PipelineType": "gathering"}, [FERC],
      "Changed from transmission to gathering. The FERC order calls the Header Pipeline part of the non-jurisdictional Anadarko Gathering System, which has more than 3,000 miles of pipe and about 2,750 connected wells. Only a leased slice of its capacity becomes interstate service, and that slice is the new row for the interstate project."),
- res("P7861", 4249, H, "Length [ref]", {"LengthKnown": "150", "LengthKnownUnits": "mi"}, [FERC],
+ res("P7861", 4248, H, "Length [ref]", {"LengthKnown": "150", "LengthKnownUnits": "mi"}, [FERC],
      "Changed from 275 miles to 150 miles. The 275 miles belonged to the Palo Duro line in P7862 and was copied here by mistake, so the same pipe was counted twice. The FERC order gives the Header Pipeline as about 150 miles. The current route file for this row measures about 142 miles, which agrees."),
- res("P7861", 4249, H, "Diameter [ref]", {"Diameter": "16, 20", "DiameterUnits": "in"}, [FERC],
+ res("P7861", 4248, H, "Diameter [ref]", {"Diameter": "16, 20", "DiameterUnits": "in"}, [FERC],
      "Changed from 16 to 16 and 20 inches, as the FERC order gives both sizes. Units changed from inches to in, the form the rest of the sheet uses, so the millimeter column fills."),
- res("P7861", 4249, H, "Location [ref]", {"StartLocation": "Washita County", "StartState/Province": "Oklahoma", "EndLocation": "Roberts County", "EndState/Province": "Texas"}, [FERC],
+ res("P7861", 4248, H, "Location [ref]", {"StartLocation": "Washita County", "StartState/Province": "Oklahoma", "EndLocation": "Roberts County", "EndState/Province": "Texas"}, [FERC],
      "The old start and end, Waha in the Permian Basin to Wheeler County, described the Palo Duro line, not this one. The FERC order says the Header Pipeline runs from Washita County, Oklahoma, to Roberts County, Texas. The current route file already runs between those two counties. The pipe crosses into Oklahoma, so the state columns change."),
- res("P7861", 4249, H, "Proposal [ref]", {"ProposalYear": "", "ProposalMonth": "", "StartYear1": ""}, [FERC],
+ res("P7861", 4248, H, "Proposal [ref]", {"ProposalYear": "", "ProposalMonth": "", "StartYear1": ""}, [FERC],
      "Cleared the proposal date of June 2025 and the start year of 2026. Those are the dates of the interstate service project, which now has its own row. The Header Pipeline was already operating when the project was proposed. No source found gives the year it was built, so the start year is left blank."),
- res("P7861", 4249, H, "DataCenter [ref]", {"DataCenter": "", "DataCenter [ref]": "", "DataCenterNotes": ""}, [PGJ],
+ res("P7861", 4248, H, "DataCenter [ref]", {"DataCenter": "", "DataCenter [ref]": "", "DataCenterNotes": ""}, [PGJ],
      "Data center tag removed. The data center news is about the interstate service project, which now has its own row and carries the tag. Keeping the tag here as well would count the same demand twice."),
- res("P7861", 4249, H, "Owner [ref]", {"Owner1": "Producers Midstream", "Owner1%": "100.00%"}, [FERC],
-     "Owner changed from Tailwater Capital to Producers Midstream, the existing GEM entity, to match P7862. The FERC order says Palo Duro Pipelines (Texas Gathering) owns the Header Pipeline. It is a wholly owned indirect subsidiary of Palo Duro Midstream, which belongs to Producers Midstream II. Tailwater Capital backs Producers Midstream and fits as the parent."),
- res("P7862", 4250, P, "Status [ref]", {"Status": "operating", "ProposalYear": "", "StartYear1": ""}, [FERC, ED],
+ res("P7861", 4248, H, "Owner [ref]", {"Owner1": "Palo Duro Pipelines (Texas Gathering) LP"}, [FERC],
+     "Owner changed from Tailwater Capital to Palo Duro Pipelines (Texas Gathering) LP. The FERC order says this company owns and operates the Header Pipeline. Tailwater Capital is an investor further up the chain, not the company that holds the pipe. The share stays at 100 percent."),
+ res("P7862", 4249, P, "Status [ref]", {"Status": "operating", "ProposalYear": "", "StartYear1": ""}, [FERC, ED],
      "Changed from proposed to operating. The FERC order says PD Transmission operates the 275 mile line today and that it currently gathers gas. An East Daley Analytics note from July 2025 says the pipeline is already operational. Two publishers agree. The proposal year of 2025 and start year of 2026 belonged to the interstate service project, which now has its own row, so they are cleared. No source found gives the year the line was built.", tier="high"),
- res("P7862", 4250, P, "Location [ref]", {"StartLocation": "Nolan County", "EndLocation": "Wheeler County"}, [FERC],
+ res("P7862", 4249, P, "Location [ref]", {"StartLocation": "Nolan County", "EndLocation": "Wheeler County"}, [FERC],
      "Start and end were blank. The FERC order says the line runs from Nolan County to Wheeler County, Texas. The open season names a receipt meter near the southern end in Nolan County, and the route file ends within a fraction of a mile of it."),
- res("P7862", 4250, P, "PipelineType [ref]", {"PipelineType": "both transmission and gathering"}, [FERC],
-     "Suggested change from transmission to both transmission and gathering, for Baird to decide. The FERC order says the line currently gathers gas. Under the amended plan the northern 61 miles, in Childress, Collingsworth and Wheeler counties, become interstate transmission, and the southern part is to be sold to an affiliate and kept as gathering. The other choice is to split this row in two, about 61 miles and about 214 miles."),
+ res("P7862", 4249, P, "PipelineType [ref]", {"PipelineType": "both transmission and gathering"}, [FERC],
+     "Changed from transmission to both transmission and gathering. The FERC order says the line currently gathers gas. Under the amended plan the northern 61 miles, in Childress, Collingsworth and Wheeler counties, become interstate transmission, and the southern part is to be sold to an affiliate and kept as gathering. The row stays whole rather than being split in two."),
 ]
 meta = {"commodity": "gas", "mode": "update",
-        "scope": {"csv": "GGIT_gas_snapshot_20261017.csv", "country": "United States", "province": None,
+        "scope": {"csv": "GGIT_gas_snapshot_20261018.csv", "country": "United States", "province": None,
                   "include_pids": ["P7861", "P7862"], "rows": 2, "project_ids": 2},
         "n_units": len(R), "created": "2026-10-17", "requested_by": "BL",
         "purpose": "Palo Duro fixes: P7861 Residue Header to gathering, 150 miles, Washita County OK to Roberts County TX, data center tag removed; P7862 Palo Duro to operating; interstate service project staged as a new row in staged_new.json"}
@@ -64,11 +64,11 @@ json.dump({"meta": meta, "resolutions": R}, open(HERE / "staged_resolutions.json
 new = {"slug": "palo-duro-lease-agreement-project", "class": "new_row", "name": "Palo Duro Lease Agreement Project (Palo Duro Transmission)", "matched_project_id": "",
  "values": {"PipelineName": "Producers Midstream Gas Pipeline", "SegmentName": "Palo Duro Lease Agreement Project", "Status": "proposed", "Fuel": "Gas",
   "PipelineType": "transmission", "CountriesOrAreas": "United States", "StartCountryOrArea": "United States", "EndCountryOrArea": "United States",
-  "StartLocation": "Childress County", "StartState": "Texas", "EndLocation": "Washita County", "EndState": "Oklahoma",
+  "StartLocation": "Childress County", "StartState/Province": "Texas", "EndLocation": "Washita County", "EndState/Province": "Oklahoma",
   "ProposalYear": "2025", "ProposalMonth": "6", "Capacity": "80000", "CapacityUnits": "Dth/d",
   "LengthKnown": "0", "LengthKnownUnits": "mi", "Diameter": "16", "DiameterUnits": "in",
   "RouteType": "Capacity expansion only", "RouteAccuracy": "no route",
-  "Owner": "Palo Duro Transmission L.P.", "Parent": "Producers Midstream; Tailwater Capital",
+  "Owner": "Palo Duro Transmission LP",
   "DataCenter": "yes", "DataCenterNotes": "A Pipeline and Gas Journal article from July 2025, citing East Daley Analytics, says the project targets demand from data centers, petrochemical plants and power generators. It says that if the line were fully dedicated to data center use it could support 125 to 150 megawatts of load. The company notice mentions behind the meter uses tied to artificial intelligence. No specific data center is named."},
  "refs": {"Status [ref]": [FERC, SUMM], "Proposal [ref]": [CO, OGJ, FR_APP], "Capacity [ref]": [FERC, ED], "Location [ref]": [FERC, FR_AMD],
           "Length [ref]": [FERC], "Diameter [ref]": [FERC], "PipelineType [ref]": [FERC], "DataCenter [ref]": [PGJ, ED]},
