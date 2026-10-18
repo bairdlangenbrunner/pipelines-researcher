@@ -1,6 +1,6 @@
 # Palo Duro update, handoff (2026-10-17)
 
-Started in a gem-desk session and moved here to finish. The new route files for P7861 and P7862 were merged into the routes repo on 2026-10-18 (ae67b0cb), and the matching route cells were written to the sheet the same day with Baird's go ahead (backup `notes/sheet-write-2026-10-18-united-states-palo-duro-route-replacements.csv`). The other changes in this batch have not been written to the sheet.
+Started in a gem-desk session and moved here to finish. The new route files for P7861 and P7862 were merged into the routes repo on 2026-10-18 (ae67b0cb), and the matching route cells were written to the sheet the same day with Baird's go ahead (backup `notes/sheet-write-2026-10-18-united-states-palo-duro-route-replacements.csv`). The rest of the batch went to the sheet on 2026-10-18 with Baird's go ahead: the 11 changes to P7861 and P7862 (33 cells, backup `notes/sheet-write-2026-10-18-1013-review-app-push.csv`), the new row as P8330 (73 cells, backup `notes/sheet-write-2026-10-18-1014-append-new-rows-gas.csv`), and a repair of 8 ref links that an old push had broken with a stray space after a comma inside a text fragment (backup `notes/sheet-write-2026-10-18-1015-review-app-push.csv`).
 
 ## What Baird asked for
 
@@ -44,5 +44,4 @@ Both new files replace the old ones. The old P7861 file was eight separate piece
 
 ## Next steps here
 
-1. On Baird's go ahead for this batch only: apply the P7861 and P7862 changes, then `scripts/append_new_rows.py` for the new row (plan first, read only, then `--apply`).
-2. Update the data center stats and the Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) once the sheet changes land.
+1. Update the data center stats and the Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) once the sheet changes land.
