@@ -27,6 +27,9 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     orphan ref) unless a value of the same cluster stays. A value CHANGED to a different one likewise
     replaces its `[ref]` with the proposed refs (the old ones supported the old value; none proposed =
     skipped). `[ref]` is additive ONLY while the value it supports stays the same
+  * every value a line writes is backed in ITS OWN cluster's `[ref]`, by the same rules: a status change
+    that moves StartYear1 / ConstructionYear / CancelledYear writes Start / Construction / Cancelled
+    [ref] too, not only Status [ref] (P0241, 2026-10-16)
   * a fill writes its value(s) and its `[ref]` together, or neither (no orphan refs); a non-blank
     differing value cell is OVERWRITTEN: accept is the authorization (Baird 2026-10-01) -- the
     stale check guards it, the backup CSV keeps the old text; several lines on one cell merge, two lines wanting different values abort
@@ -41,7 +44,17 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     values, `[ref]` text, Status) differ on the LIVE tab from what the reviewer saw when deciding --
     the record's `basis` no longer matches, or the sheet moved since the snapshot -- is skipped with
     "stale: <what changed>" and listed in the plan's `stale`; the decision still stands in the ledger
-    and the workbook. --include-stale pushes them anyway (the conflict rules above still apply).
+    and the workbook. --include-stale pushes them anyway (the conflict rules above still apply), with
+    two exceptions it never overrides (2026-10-16, after an --include-stale run put 20 superseded
+    cells back on 18 rows):
+      - an accepted REF line never changes a value (a person's suggest or rival pick still can). Its
+        proposed values are the value the ref backs; if the
+        live cell holds a different non-blank value, the line is skipped ("ref backs X, sheet now
+        says Y"). A blank value cell is still filled with it (value and ref go together).
+      - an older decision never beats a newer push. If a cell the line would write holds the value a
+        LATER push.py run wrote (its notes/sheet-write-*-review-app-push*.csv backup is newer than the
+        person's call on this line), the line is skipped as superseded. This also catches a line whose
+        push record was left on an old row key when the row moved (P3170, 1670 -> 2212).
   * OWNER STYLE GUARD (Baird 2026-10-05): an Owner<N> / Operator value about to be written is run through
     scripts/entity_style.py; if the styler would re-spell it AND the policy allows adopting that spelling
     with no person looking (entity_style.adoptable: exact gazetteer hit, confirmed alias, ruling, or a
@@ -83,9 +96,11 @@ import review_data  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
+from trackers.pipelines.config import parse_key  # noqa: E402  (store puts ../gem-review-app on sys.path)
 from apply_route_candidates import SHEET_ID, a1, gws  # noqa: E402
 import entity_style  # noqa: E402
 import ref_recheck  # noqa: E402
+from months import MONTHS, month_number  # noqa: E402,F401  (scripts import month_number from here)
 
 NAME_COL = re.compile(r"Owner\d+|Operator")
 
@@ -144,6 +159,21 @@ class Tab:
             if i > header_idx and len(r) > pid and r[pid].strip():
                 self.by_pid.setdefault(r[pid].strip(), []).append(i + 1)      # 1-based sheet row
 
+    def clusters(self):
+        """{[ref] column: its value columns} for this tab's header (scripts/ref_pairs.py)."""
+        if not hasattr(self, "_clusters"):
+            import ref_pairs
+            self._clusters = {p["ref_col"]: list(p["value_cols"]) for p in ref_pairs.discover_ref_pairs(self.header)
+                              if p.get("ref_col") and p.get("value_cols")}
+        return self._clusters
+
+    def ref_of(self, col):
+        """The [ref] column whose cluster holds `col`, or None."""
+        for rc, vcs in self.clusters().items():
+            if col in vcs:
+                return rc
+        return None
+
     def cell(self, row, col):
         r = self.rows[row - 1]
         i = self.col[col]
@@ -162,10 +192,20 @@ ALIAS_COLS = {"OtherEnglishNames", "OtherLanguagePrimaryPipelineName",
               "OtherLanguageAlternativePipelineNames", "OtherLanguageSegmentName"}
 
 
+def split_urls(text):
+    """The URLs in a `[ref]` cell. Splits only at a comma or semicolon that starts the next URL: a
+    text fragment (`#:~:text=...existing,Waha...`) holds commas of its own, and splitting on every
+    comma wrote `existing, Waha` back into P7862's cells (2026-10-18)."""
+    return [u.strip() for u in re.split(r"[,;]\s*(?=https?://)", str(text or "")) if u.strip()]
+
+
 def add_refs(current, urls):
-    have = [u.strip() for u in current.split(",") if u.strip()]
+    """The live cell text kept verbatim, with the missing URLs appended."""
     new = [u for u in dict.fromkeys(urls) if u not in current]
-    return (", ".join(have + new) if new else current), new
+    if not new:
+        return current, new
+    head = current.strip().rstrip(",;").strip()
+    return (", ".join([head] + new) if head else ", ".join(new)), new
 
 
 def ref_write(cur_ref, proposed, cleared, changed, remaining):
@@ -216,24 +256,6 @@ def same_value(cur, v):
         return False
 
 
-MONTHS = {m: i for i, m in enumerate(("january", "february", "march", "april", "may", "june", "july", "august",
-                                      "september", "october", "november", "december"), 1)}
-
-
-def month_number(v):
-    """1-12 for 'July', 'Mar', 'Sept.', '11' or 11; None when it is not a month. Month columns hold
-    the NUMBER, never the name or a number stored as text (Baird 2026-10-08)."""
-    s = str(v).strip().lower().rstrip(".")
-    if re.fullmatch(r"\d{1,2}(\.0+)?", s):
-        n = int(float(s))
-        return n if 1 <= n <= 12 else None
-    if len(s) >= 3:
-        hits = [n for m, n in MONTHS.items() if m.startswith(s)]
-        if len(hits) == 1:
-            return hits[0]
-    return None
-
-
 def coerce(v, col=""):
     s = str(v).strip()
     if "Month" in str(col) and month_number(s) is not None:
@@ -242,18 +264,26 @@ def coerce(v, col=""):
         return round(float(s[:-1]) / 100, 10)
     if NUM.match(s):
         f = float(s)
+        if str(col).endswith("%") and f > 1:    # a percent column holds a fraction: a staged '100.00' is 1, not 10,000%
+            f = round(f / 100, 10)
         return int(f) if f == int(f) and "." not in s else f
     return s
 
 
+def person_call(l):
+    """True when a person's live call speaks for the line: store.reviewed() of the record
+    store.overlay laid on it (its `reviewed`, `decided_by`, `decision`). A push or backend-sync
+    record never counts; a push record after the accept marks it `applied`, it does not undecide it."""
+    return bool(l.get("reviewed")) and store.reviewed({"reviewer": l.get("decided_by"),
+                                                      "undecided": l.get("decision") is None})
+
+
 def accepted_lines(ds):
-    """(pid, line) for every line a PERSON accepted (store.overlay: `reviewed`, the latest person
-    call; a push record after the accept marks it `applied`, it does not undecide it)."""
+    """(pid, line) for every line a PERSON accepted (person_call)."""
     out = []
     for p in ds["pipelines"]:
         for l in p["lines"]:
-            if l.get("reviewed") and l.get("decision") == "accept" and l["kind"] in PUSH_KINDS \
-                    and l.get("decided_by") not in store.MACHINE_REVIEWERS:
+            if person_call(l) and l.get("decision") == "accept" and l["kind"] in PUSH_KINDS:
                 out.append((l.get("pid") or (p["pid"] if "pid" in p else p.get("project_id")), l))
     return out
 
@@ -288,12 +318,12 @@ def suggest_writes(l, text, tab):
         cols = [c for c, v in (l.get("proposed_values") or {}).items() if v not in (None, "")]
         if len(cols) == 1:
             return {cols[0]: text}, ""
-    if l["kind"] == "ref" and not all(re.match(r"https?://", u.strip()) for u in text.split(",")):
+    if l["kind"] == "ref" and not all(re.match(r"https?://", u) for u in split_urls(text)):
         # a ref line whose one value column is a real cell (P0147 FuelSource): a bare value goes there
         cols = [c for c in (l.get("value_cols") or []) if c in tab.col and not c.endswith("[ref]")]
         if len(cols) == 1:
             return {cols[0]: text}, ""
-    if l["kind"] == "ref" and all(re.match(r"https?://", u.strip()) for u in text.split(",")):
+    if l["kind"] == "ref" and all(re.match(r"https?://", u) for u in split_urls(text)):
         return {}, ""
     cols = ", ".join((l.get("value_cols") or [])[:4]) or "a column"
     return None, f"suggested value {text[:30]!r} names no cell; resave as 'Column=value' (e.g. {cols.split(', ')[0]}=...)"
@@ -324,7 +354,7 @@ def pushable_lines(ds):
     out = []
     for p in ds["pipelines"]:
         for l in p["lines"]:
-            if l.get("reviewed") and l["kind"] in PUSH_KINDS and l.get("decided_by") not in store.MACHINE_REVIEWERS:
+            if person_call(l) and l["kind"] in PUSH_KINDS:
                 if l.get("decision") == "accept" or l.get("decision") == "suggest":
                     # a name card's lines each carry their own ProjectID (review_data._line)
                     out.append((l.get("pid") or (p["pid"] if "pid" in p else p.get("project_id")), l, l["decision"]))
@@ -344,6 +374,46 @@ def newer(a, b):
         return datetime.fromisoformat(ta) > datetime.fromisoformat(tb)
     except (TypeError, ValueError):
         return ta > tb
+
+
+BACKUP_NAME = re.compile(r"sheet-write-(\d{4}-\d{2}-\d{2})(?:-(\d{4}))?-review-app-push(?:-\d+)?\.csv$")
+_LATEST = None
+
+
+def latest_pushes():
+    """{(tab title, ProjectID, column): (when, after)} -- the newest value push.py itself wrote to each
+    cell, read from its backup CSVs in notes/ (minute precision; a date-only name counts as midnight)."""
+    global _LATEST
+    if _LATEST is None:
+        _LATEST = {}
+        for f in sorted((ROOT / "notes").glob("sheet-write-*-review-app-push*.csv")):
+            m = BACKUP_NAME.search(f.name)
+            if not m:
+                continue
+            when = datetime.strptime(m.group(1) + (m.group(2) or "0000"), "%Y-%m-%d%H%M").replace(tzinfo=ET)
+            with f.open(newline="", encoding="utf-8") as fh:
+                for r in csv.DictReader(fh):
+                    k = (r.get("tab") or "", r.get("ProjectID") or "", r.get("column") or "")
+                    if all(k) and (k not in _LATEST or _LATEST[k][0] <= when):
+                        _LATEST[k] = (when, r.get("after") or "")
+    return _LATEST
+
+
+def superseded(l, rec, tab, row, pid, writes):
+    """Why this line is superseded by a later push, or "": a cell it would write holds the value a
+    push.py run newer than the person's call on the line wrote."""
+    try:
+        decided = datetime.fromisoformat(str((rec or {}).get("ts") or ""))
+    except ValueError:
+        return ""
+    if decided.tzinfo is None:
+        decided = decided.replace(tzinfo=ET)
+    out = []
+    for c in writes:
+        hit = latest_pushes().get((tab.title, pid, c))
+        if hit and hit[0] > decided and same_value(tab.cell(row, c), hit[1]):
+            out.append(f"{c} {str(hit[1])[:40]!r} was pushed {hit[0]:%Y-%m-%d %H:%M}")
+    return ("superseded: decided " + f"{decided:%Y-%m-%d %H:%M}, but " + "; ".join(out)) if out else ""
 
 
 def staleness(l, rec, tab, row):
@@ -386,7 +456,7 @@ def unstyled_names(writes):
     return out
 
 
-def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, country=None):
+def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, country=None, hold_keys=()):
     root = staged_store.BATCHES_ROOT
     countries = scopes.included(commodity, None)
     if country:                         # one country's accepts only (it must be in the review-app batch)
@@ -411,9 +481,12 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
     live = ref_recheck.liveness([u for _, l, _ in lines if not pushed(l)          # a re-planned pushed line
                                  for u in (l.get("proposed_refs") or [])], quiet=False)   # is checked below
     for pid, l, dec in lines:
-        pid = pid or l["key"].split("::")[1].split("|")[0]
+        pid = pid or parse_key(l["key"])[1]
         tab = tabs["oo" if l["kind"] == "oo" else "tracker"]
         tname = "oo" if l["kind"] == "oo" else "tracker"
+        if l["key"] in hold_keys:   # --hold: a line left out of this plan (its decision stands; re-plan to push it)
+            skipped.append((l["key"], "held back by --hold"))
+            continue
         row = tab.locate(pid, l["sheet_row"])
         if row is None:
             skipped.append((l["key"], "row not found / ambiguous on the live tab"))
@@ -434,7 +507,7 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 skipped.append((l["key"], why_not))
                 continue
             if l.get("ref_col") in values:      # `Capacity=5.8; Capacity [ref]=URL`: their ref backs their value
-                own_urls = [u.strip() for u in str(values.pop(l["ref_col"])).split(",") if u.strip()]
+                own_urls = split_urls(values.pop(l["ref_col"]))
         for c, v in values.items():
             if v in (None, ""):
                 # a blank proposal over a filled cell is a CLEAR (the page draws it "(clear)" and the
@@ -451,6 +524,9 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 writes[c] = coerce(v, c)
             elif same_value(cur, v) or same_value(cur, coerce(v, c)):     # 'February' is the live 2
                 continue
+            elif l["kind"] == "ref" and dec == "accept":    # an accepted ref backs a value, never changes one (2026-10-16)
+                bad = f"ref backs {c} {str(v)[:40]!r}, sheet now says {str(cur)[:40]!r}"
+                break
             else:                       # an accepted change overwrites: the click is the authorization
                 writes[c] = coerce(v, c) if not (l["kind"] in ("status", "fill") and c == "Status") else str(v)
         if bad:
@@ -463,6 +539,8 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 continue
             cleared, changed = [], []
             for c, v in writes.items():
+                if tname == "tracker" and tab.ref_of(c) not in (None, rc):   # another cluster's value: its own [ref] below
+                    continue
                 if c in ALIAS_COLS:     # a name's pages ride in Status [ref] beside the status refs: append only
                     continue
                 if c != rc and str(tab.cell(row, c)).strip() != "":
@@ -473,7 +551,7 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             if own_urls:
                 urls = own_urls
             if dec == "suggest" and not values:       # a URL suggestion: those URLs, additively
-                urls = [u.strip() for u in str(l["suggested_value"]).split(",") if u.strip()]
+                urls = split_urls(l["suggested_value"])
             dead = [u for u in urls if (live.get(u) or ref_recheck.liveness([u]).get(u) or {}).get("dead")]
             if dead:
                 skipped.append((l["key"], f"dead ref ({live.get(dead[0], {}).get('status', '404')}): {dead[0]}"
@@ -485,11 +563,36 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 continue
             if w is not None:
                 writes[rc] = w
+            # a value the line writes outside its own [ref] cluster gets that cluster's [ref] the same
+            # way: a status change's StartYear1 is backed in Start [ref], not only Status [ref]
+            # (P0241, 2026-10-16: the new start year went to the sheet uncited)
+            why_not = None
+            for orc in (sorted({tab.ref_of(c) for c in writes} - {None, rc}) if tname == "tracker" else []):
+                if orc not in tab.col or orc in writes:
+                    continue
+                ovc = [c for c in tab.clusters()[orc] if c in tab.col]
+                o_live = {c: str(tab.cell(row, c)).strip() for c in ovc}
+                o_cleared = [c for c in ovc if c in writes and writes[c] == "" and o_live[c]]
+                o_changed = [c for c in ovc if c in writes and writes[c] != "" and o_live[c]]
+                o_remaining = [c for c in ovc if c not in o_cleared and str(writes.get(c, o_live[c])).strip() != ""]
+                ow = ref_write(tab.cell(row, orc), urls, o_cleared, o_changed, o_remaining)
+                if isinstance(ow, tuple):
+                    why_not = f"{orc}: {ow[1]}"
+                    break
+                if ow is not None:
+                    writes[orc] = ow
+            if why_not:
+                skipped.append((l["key"], why_not))
+                continue
         if not writes:
             skipped.append((l["key"], "already in the backend"))
             continue
         unstyled += [(l["key"],) + u for u in unstyled_names(writes)]
         why = staleness(l, prec, tab, row)
+        sup = superseded(l, prec, tab, row, pid, writes) if why else ""
+        if sup:                         # never overridden by --include-stale
+            skipped.append((l["key"], sup))
+            continue
         if why:
             stale.append((l["key"], why))
             if not include_stale:
@@ -502,7 +605,7 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             k = (tname, row, c)
             if k in cells and cells[k]["after"] != v:
                 if c.endswith("[ref]"):        # two lines on one ref cell: union
-                    text, _ = add_refs(str(cells[k]["after"]), [u.strip() for u in str(v).split(",")])
+                    text, _ = add_refs(str(cells[k]["after"]), split_urls(v))
                     cells[k]["after"] = text
                 else:
                     sys.exit(f"ABORT: two accepted lines want different values for {k}: {cells[k]['after']!r} vs {v!r}")
@@ -642,9 +745,9 @@ def record_push(pl, plan):
     for k, m in sorted(meta.items()):
         if k.startswith("__"):
             continue
-        d = k.split("::")[0]
+        d, pid = parse_key(k)[:2]
         dirs[d] = ROOT / d
-        recs.append({"key": k, "dir": d, "pid": k.split("::")[1].split("|")[0], "sheet_row": m["sheet_row"],
+        recs.append({"key": k, "dir": d, "pid": pid, "sheet_row": m["sheet_row"],
                      "ref_col": m["ref_col"], "kind": m["kind"], "decision": "accept", "suggested_value": "",
                      "note": f"written to the sheet by review_app/push.py {ts}", "reviewer": "push", "ts": ts,
                      "undecided": False})
@@ -665,6 +768,8 @@ def record_push(pl, plan):
                     f.write(json.dumps({"keys": p["lines"], "range": f"{p['tab']}!{p['cell']}", "before": p["before"],
                                         "after": p["after"], "ts": ts}, ensure_ascii=False) + "\n")
     print(f"push records written for {len(recs)} lines in {len(dirs)} staging dirs")
+    print("NEXT, before reporting the push: rebuild + republish the review page so it matches the sheet "
+          "(build_all.py, Artifact publish, build_all.py --mark-published <page>)")
     if pl.get("concerns"):
         cf = ROOT / "notes" / "push_concerns.csv"
         new = not cf.exists()
@@ -684,6 +789,8 @@ def main(argv=None):
     ap.add_argument("--include-stale", action="store_true",
                     help="plan lines whose backend cells changed since they were decided (default: skip, listed)")
     ap.add_argument("--apply", metavar="PLAN", help="write this plan file (ASK BAIRD FIRST)")
+    ap.add_argument("--hold", action="append", default=[], metavar="LINE_KEY",
+                    help="leave this line out of the plan (repeatable); e.g. the one line an owner-style hold refuses, so the rest can go")
     ap.add_argument("--allow-unstyled", action="store_true",
                     help="plan even when an Owner<N>/Operator value is not in the ownership team's style (default: refuse)")
     ap.add_argument("--stamp-from", metavar="BACKUP_CSV",
@@ -718,7 +825,7 @@ def main(argv=None):
         return record_push(pl, pl["plan"])
     if a.apply:
         return apply(a.apply)
-    plan, skipped, meta = build_plan(a.commodity, a.include_stale, a.allow_unstyled, a.country)
+    plan, skipped, meta = build_plan(a.commodity, a.include_stale, a.allow_unstyled, a.country, hold_keys=set(a.hold))
     show(plan, skipped, meta.get("__concerns__", []))
     print("plan written:", save_plan(plan, meta, a.commodity))
 

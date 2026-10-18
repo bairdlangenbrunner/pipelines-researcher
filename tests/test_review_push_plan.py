@@ -130,6 +130,33 @@ def test_value_the_reviewer_saw_is_replaced_but_a_moved_cell_is_stale(world):
     assert (cell["before"], cell["replaces"]) == ("8", True) and fill["key"] in dict(meta["__stale__"])
 
 
+def test_a_ref_line_never_changes_the_value_it_backs_even_with_include_stale(world):
+    ln = line(world["dataset"], "P9001", "ref", "Status")          # backs Status = operating
+    accept(world, ln)
+    world["edits"][("P9001", "Status")] = "proposed"                # the sheet moved on since
+    plan, skipped, _ = push.build_plan("gas", include_stale=True)
+    assert not [p for p in plan if ln["key"] in p["lines"]]
+    assert dict(skipped)[ln["key"]] == "ref backs Status 'operating', sheet now says 'proposed'"
+
+
+def test_an_older_decision_never_beats_a_newer_push_even_with_include_stale(world, monkeypatch):
+    col = line(world["dataset"], "P9002", "fill")["column"]
+    set_snapshot(world, "P9002", col, "7")
+    fill = line(world["dataset"], "P9002", "fill")
+    accept(world, fill)
+    world["edits"][("P9002", col)] = "8"
+    title = review_fixture.SNAP_NAME                                 # FakeTab's title
+    later = datetime.now(push.ET) + timedelta(hours=1)
+    monkeypatch.setattr(push, "_LATEST", {(title, "P9002", col): (later, "8")})
+    plan, skipped, _ = push.build_plan("gas", include_stale=True)
+    assert not [p for p in plan if fill["key"] in p["lines"]]
+    assert dict(skipped)[fill["key"]].startswith("superseded: decided ")
+    # a push OLDER than the decision is just drift: --include-stale still writes over it
+    monkeypatch.setattr(push, "_LATEST", {(title, "P9002", col): (later - timedelta(days=2), "8")})
+    plan, skipped, _ = push.build_plan("gas", include_stale=True)
+    assert [p for p in plan if fill["key"] in p["lines"] and p["column"] == col]
+
+
 def test_a_pushed_line_is_never_planned_twice_and_its_accept_still_speaks(world):
     fill = line(world["dataset"], "P9002", "fill")
     accept(world, fill)
@@ -324,6 +351,62 @@ def test_a_held_owner_name_is_refused_beside_a_restyle():
     assert "owner_qualifier" in got["Owner2"] and "multi_owner" in got["Owner5"]
 
 
+def test_coerce_percent_column_takes_a_fraction():
+    from review_app import push
+    assert push.coerce("100.00", "Owner1%") == 1
+    assert push.coerce("100.00%", "Owner1%") == 1
+    assert push.coerce("49", "Owner2%") == 0.49
+    assert push.coerce("0.49", "Owner2%") == 0.49
+    assert push.coerce("100.00", "LengthKnown") == 100
+
+
+def test_a_status_change_backs_its_start_year_in_start_ref_too(world):
+    """P0241, 2026-10-16: a status line that moved StartYear1 wrote Status [ref] only, leaving the
+    new start year uncited. Every value a line writes is backed in its own cluster's [ref]."""
+    import json
+    p = world["deep"] / "staged_resolutions.json"
+    d = json.loads(p.read_text())
+    for r in d["resolutions"]:
+        if r["project_id"] == "P9002" and r["ref_col"] == "__STATUS__":
+            r["values"] = {"Status": "construction", "StartYear1": "2027"}
+            r["value_cols"] = ["Status", "StartYear1"]
+    p.write_text(json.dumps(d))
+    data, _ = review_data.build([world["qc"], world["deep"]], "Russia", "gas", data_dir=world["data"], root=world["root"])
+    data["scope"]["batch"] = True
+    world["dataset"] = data
+    st = line(data, "P9002", "status")
+    assert st["proposed_values"].get("StartYear1") == "2027"
+    accept(world, st)
+    mine, why, _ = plan_for(world, st["key"])
+    assert why is None
+    by = {c["column"]: c for c in mine}
+    assert str(by["StartYear1"]["after"]) == "2027" and by["Status"]["after"] == "construction"
+    assert "Start [ref]" in by and set(by["Start [ref]"]["after"].split(", ")) >= set(st["proposed_refs"])
+    assert set(by["Status [ref]"]["after"].split(", ")) >= set(st["proposed_refs"])
+
+
+def test_an_inferred_cancelled_year_gets_the_last_evidence_ref(world):
+    """A dormancy inference (ShelvedCancelledType=inferred) carries the newest dated source as its
+    ref (Baird 2026-10-16): it proves the last sign of life, so Cancelled [ref] gets it beside the year."""
+    import json
+    p = world["deep"] / "staged_resolutions.json"
+    d = json.loads(p.read_text())
+    for r in d["resolutions"]:
+        if r["project_id"] == "P9002" and r["ref_col"] == "__STATUS__":
+            r["values"] = {"Status": "cancelled", "CancelledYear": "2024", "ShelvedCancelledType": "inferred"}
+            r["value_cols"] = ["Status", "CancelledYear", "ShelvedCancelledType"]
+            r["proposed_status"], r["verdict"] = "cancelled", "stale"
+    p.write_text(json.dumps(d))
+    data, _ = review_data.build([world["qc"], world["deep"]], "Russia", "gas", data_dir=world["data"], root=world["root"])
+    data["scope"]["batch"] = True
+    world["dataset"] = data
+    st = line(data, "P9002", "status")
+    accept(world, st)
+    mine, why, _ = plan_for(world, st["key"])
+    by = {c["column"]: c for c in mine}
+    assert why is None and str(by["CancelledYear"]["after"]) == "2024" and "Cancelled [ref]" in by
+
+
 def test_an_alias_fill_appends_its_pages_to_status_ref(world):
     """OtherEnglishNames has no [ref] of its own; its pages go in Status [ref] after the refs already
     there (Baird 2026-10-16). Replacing an existing alias is not a status change: never swap the refs."""
@@ -347,3 +430,12 @@ def test_an_alias_fill_appends_its_pages_to_status_ref(world):
     by = {c["column"]: c for c in mine}
     assert why is None and by["OtherEnglishNames"]["after"] == "Alpha Line; Old Alpha"
     assert by["Status [ref]"]["after"].split(", ") == [review_fixture._OLD, alias_url]
+
+
+def test_a_text_fragment_comma_survives_an_additive_ref_write():
+    # P7862, 2026-10-18: splitting on every comma wrote `existing, Waha` back into the cell
+    frag = "https://producersmidstream.com/p/#:~:text=utilize%20existing,Waha%20residue"
+    assert push.split_urls(f"{frag}, https://ogj.com/a; https://ferc.gov/b") == [frag, "https://ogj.com/a", "https://ferc.gov/b"]
+    text, new = push.add_refs(frag, ["https://ferc.gov/b"])
+    assert text == f"{frag}, https://ferc.gov/b" and new == ["https://ferc.gov/b"]
+    assert push.add_refs(frag, [frag]) == (frag, [])
