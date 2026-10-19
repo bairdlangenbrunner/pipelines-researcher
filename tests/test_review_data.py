@@ -513,3 +513,40 @@ def test_ref_line_echoing_its_research_snapshot_is_dropped_once_the_sheet_moved(
     assert stats["value_moved"] == 1
     assert not _find(data, "P9001", "ref")
     assert [l["proposed_values"] for l in _find(data, "P9002", "ref")] == [{"Capacity": "3"}]
+
+
+def _decided_newer_copy(tmp_path, extra_refs, applied):
+    """deepsweep-x holds a person's accept on P9001 Status [ref]; a newer store (deepsweep-y)
+    stages the same unit again, with `extra_refs` on top."""
+    import json
+    import store
+    from review_fixture import _deepsweep_records
+    s = make_scope(tmp_path)
+    newer = s["root"] / "russia-gas" / "staging" / "deepsweep-y"
+    newer.mkdir(parents=True)
+    rec = _deepsweep_records()[0]
+    rec = dict(rec, proposed_refs=rec["proposed_refs"] + extra_refs)
+    (newer / "staged_resolutions.json").write_text(json.dumps({"meta": {"mode": "deepsweep", "commodity": "gas",
+        "scope": {"country": "Russia", "commodity": "gas"}, "generated": "2099-06-01"}, "resolutions": [rec]}))
+    key = "batches/russia-gas/staging/deepsweep-x::P9001|4|Status [ref]"
+    log = [{"key": key, "decision": "accept", "reviewer": "BL", "ts": "2099-02-01T10:00:00-04:00"}]
+    if applied:
+        log.append({"key": key, "decision": "accept", "reviewer": store.SYNC_REVIEWER, "ts": "2099-02-02T10:00:00-04:00"})
+    (s["deep"] / "review_log.jsonl").write_text("".join(json.dumps(r) + "\n" for r in log))
+    data, stats = rd.build([newer, s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    return [o for o in _find(data, "P9001", "ref") if o["key"].endswith("|Status [ref]")]
+
+
+def test_decided_copy_stays_primary_over_a_newer_same_proposal(tmp_path):
+    (ref,) = _decided_newer_copy(tmp_path, [], applied=True)
+    assert ref["dir"].endswith("deepsweep-x") and any(d.endswith("deepsweep-y") for d in ref["also_in"])
+
+
+def test_unpushed_decision_stays_primary_over_a_newer_wider_proposal(tmp_path):
+    (ref,) = _decided_newer_copy(tmp_path, ["https://example.org/more"], applied=False)
+    assert ref["dir"].endswith("deepsweep-x")
+
+
+def test_newer_wider_proposal_takes_over_once_the_decision_is_applied(tmp_path):
+    (ref,) = _decided_newer_copy(tmp_path, ["https://example.org/more"], applied=True)
+    assert ref["dir"].endswith("deepsweep-y")

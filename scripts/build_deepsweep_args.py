@@ -22,6 +22,10 @@ one-off copy of the workflow, compiled here so the args file IS the dispatch:
 leading hub name); REVIEW the printed grouping and hand-edit `groups` in the JSON where the
 heuristic is wrong (e.g. two unrelated lines that both start at a big hub). `--groups FILE`
 takes a JSON list of PID lists instead.
+
+Wiki-citation recovery pass (2026-10-17, Russia P0765): after `wiki_prepass.py --verify
+--write-worklist --init-shards`, add `--lean --wiki-only` — agents open only the harvested
+gem.wiki citations (pre-screened in wiki_prepass.json), no open-web search.
 """
 import argparse, json, math, os, re, sys
 from collections import Counter, OrderedDict
@@ -80,12 +84,18 @@ def main():
                          "(confirm/change/stale/unclear) as status_reviews in each shard")
     ap.add_argument("--lean", action="store_true",
                     help="worklist was cut by lean_worklist.py; agents work the owed set only")
+    ap.add_argument("--wiki-only", dest="wiki_only", action="store_true",
+                    help="wiki-citation recovery pass: the worklist was written by wiki_prepass.py; agents open "
+                         "ONLY the harvested gem.wiki citations (no open-web search) and read wiki_prepass.json")
     ap.add_argument("--groups", help="'auto' or a JSON file holding a list of PID lists")
     ap.add_argument("--max-group", type=int, default=4)
     ap.add_argument("--max-group-units", type=int, default=60,
                     help="cap on owed worklist units per family agent (context budget)")
     ap.add_argument("--brief", help="BRIEF.md to inline as extra_brief (never pass a path to agents)")
     ap.add_argument("--model", help="dispatch-time model choice (recorded in the args)")
+    ap.add_argument("--no-roster", dest="no_roster", action="store_true",
+                    help="omit the in-scope roster from the args (a wiki-only pass judges from the "
+                         "citations only; a 285-row roster costs every agent ~7k tokens)")
     args = ap.parse_args()
 
     staging = args.staging.rstrip("/")
@@ -145,14 +155,20 @@ def main():
         "commodity": commodity,
         "country": country,
         "pids": pids,
-        "roster": roster,
+        "roster": [] if args.no_roster else roster,
     }
     if args.status_review:
         payload["status_review"] = True
     if args.lean:
         if not wl.get("scope", {}).get("lean"):
-            sys.exit("--lean but worklist.json was not cut by scripts/lean_worklist.py")
+            sys.exit("--lean but worklist.json was not cut by scripts/lean_worklist.py (or wiki_prepass.py --write-worklist)")
         payload["lean"] = True
+    if args.wiki_only:
+        if not wl.get("scope", {}).get("wiki_only"):
+            sys.exit("--wiki-only but worklist.json was not written by scripts/wiki_prepass.py --write-worklist")
+        if not os.path.exists(os.path.join(staging, "wiki_prepass.json")):
+            sys.exit(f"--wiki-only but {staging}/wiki_prepass.json is missing")
+        payload["wiki_only"] = True
     if args.model:
         payload["model"] = args.model
     if args.brief:

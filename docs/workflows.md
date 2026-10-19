@@ -160,7 +160,10 @@ python scripts/build_ref_worklist.py --tracker gas --country "<Country>" \
 python scripts/check_shard_coverage.py --staging $STG/ --all   # every worklist unit reported on? (blocking)
 python scripts/sweep_gates.py --staging $STG/   # gates A–M; quote the counts in the delivery note
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json \
-  --out $STG/wiki_citations.json
+  --out $STG/wiki_citations.json --save-html $STG/wiki_pages
+python scripts/attribute_wiki.py --worklist $STG/worklist.json --html-dir $STG/wiki_pages \
+  --out $STG/wiki_attributed.json                              # which ref cell each citation supports
+python scripts/wiki_prepass.py --staging $STG/ --verify --init-shards   # pre-screen + ledger
 ```
 
 The worklist joins the **operators/owners tab** (GID 1489950650, ProjectID-keyed)
@@ -170,7 +173,13 @@ existing refs deterministically (no agent tokens). Route/geometry `[ref]` cells 
 harvested gem.wiki outbound citations — visit gem.wiki, **never cite it**. Every harvested
 citation is opened (fetch.py, then Wayback CDX when blocked) and logged in the shard's
 `wiki_citations_read`, in addition to open-web research; `check_shard_coverage.py` blocks until
-each is accounted for (Sweep SOP §Sequence-3).
+each is accounted for (Sweep SOP §Sequence-3). `attribute_wiki.py` + `wiki_prepass.py` tell the
+agent which ref cell each citation supports and whether the page loads and states the figure, so a
+citation that states the value is never closed from a weaker open-web source (P0765). **Wiki-citation
+recovery pass** for a scope already swept: `build_ref_worklist.py … --owe-fills` (no `--verify-existing`;
+the pre-pass verifies the citations), harvest with `--save-html`, `attribute_wiki.py --html-dir`,
+`wiki_prepass.py … --verify --write-worklist --init-shards`, then `build_deepsweep_args.py --lean
+--wiki-only --no-roster` — agents open only the harvested citations.
 
 **Transit countries share rows** — the second scope swept passes
 `--exclude-pids @batches/<scope>/carried_from_<other>.txt` (derived from the other

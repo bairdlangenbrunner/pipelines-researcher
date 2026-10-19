@@ -101,7 +101,6 @@ def liveness(urls, refresh: bool = False, workers: int = 8, quiet: bool = True) 
     cache = _load_cache()
     todo = [u for u in uniq if refresh or not _fresh(cache.get(u) or {})]
     if todo:
-        os.environ.setdefault("LNGCT_NO_BROWSER", "1")
         next_ok: dict[str, float] = {}
 
         def one(u):
@@ -127,29 +126,57 @@ def liveness(urls, refresh: bool = False, workers: int = 8, quiet: bool = True) 
     return {u: cache[u] for u in uniq if u in cache}
 
 
-def wayback_capture(url: str) -> str | None:
-    """Newest Internet Archive capture of `url` that answered 200 and still loads, or None."""
+def wayback_lookup(url: str, attempts: int = 4, max_pause: int = 60) -> tuple[str | None, str]:
+    """Newest Internet Archive capture of `url` that answered 200 and still loads.
+
+    Returns (snapshot_url, state). state is `found`, `none` (the index answered and holds no
+    usable capture: a real answer) or `error` (the index or a capture could not be reached, or
+    kept answering 429/5xx: NOT an answer, retry later). A 429 or a refused connection is a rate
+    limit, not a ban, so each attempt backs off (5 s, 10 s, 20 s ... capped at `max_pause`)."""
     from fetch import fetch_page
     api = ("https://web.archive.org/cdx/search/cdx?url=" + quote(url, safe="")
            + "&filter=statuscode:200&output=json&fl=timestamp,original&limit=-5")
     rows = None
-    for attempt in range(4):        # a 429 is a rate limit, not a ban: back off and retry
-        p = fetch_page(api, timeout=40)
-        if str(p.status) == "200":
+    answered = False
+    for attempt in range(attempts):
+        try:
+            p = fetch_page(api, timeout=40)
+        except Exception:   # noqa: BLE001
+            p = None
+        if p is not None and str(p.status) == "200":
             try:
                 rows = json.loads(p.text)
+                answered = True
             except json.JSONDecodeError:
                 rows = None
             break
-        time.sleep(5 * (attempt + 1))
+        if attempt < attempts - 1:
+            time.sleep(min(max_pause, 5 * 2 ** attempt))
+    if not answered:
+        return None, "error"
     if not rows or len(rows) < 2:
-        return None
+        return None, "none"
+    reached = False
     for ts, orig in reversed(rows[1:]):
         snap = f"https://web.archive.org/web/{ts}/{orig}"
-        raw = fetch_page(f"https://web.archive.org/web/{ts}id_/{orig}", timeout=40)
-        if str(raw.status) == "200" and len(raw.text) > 500:
-            return snap
-    return None
+        raw = None
+        for attempt in range(max(2, attempts // 2)):
+            try:
+                raw = fetch_page(f"https://web.archive.org/web/{ts}id_/{orig}", timeout=40)
+            except Exception:   # noqa: BLE001
+                raw = None
+            if raw is not None and str(raw.status) not in ("000", "429") and not str(raw.status).startswith("5"):
+                reached = True
+                break
+            time.sleep(min(max_pause, 5 * 2 ** attempt))
+        if raw is not None and str(raw.status) == "200" and len(raw.text) > 500:
+            return snap, "found"
+    return None, ("none" if reached else "error")
+
+
+def wayback_capture(url: str) -> str | None:
+    """Newest Internet Archive capture of `url` that answered 200 and still loads, or None."""
+    return wayback_lookup(url)[0]
 
 
 # -- staged JSON ---------------------------------------------------------------------------

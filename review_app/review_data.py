@@ -340,6 +340,24 @@ class _neg(str):
     def __ge__(self, o): return str.__le__(self, o)
 
 
+def _ts(ts):
+    """A record ts as seconds since the epoch (0 when it is missing or does not parse)."""
+    try:
+        return datetime.fromisoformat(str(ts)).timestamp()
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def _proposes_more(new, old):
+    """True when the line `new` proposes something the decided line `old` did not: another value,
+    or a ref `old` does not carry. Such a copy stays primary so its proposal is not hidden."""
+    nv = {c: str(v).strip() for c, v in (_month_nums(new.rec.get("values")) or {}).items()}
+    ov = {c: str(v).strip() for c, v in (_month_nums(old.rec.get("values")) or {}).items()}
+    if any(v and ov.get(c, "") != v for c, v in nv.items()):
+        return True
+    return bool(set(new.rec.get("proposed_refs") or []) - set(old.rec.get("proposed_refs") or []))
+
+
 def _load_dir(d, root, order0, country=""):
     """-> (entries, recorded_csvs, recorded_owner_csvs, skipped Counter by kind; a whole
     skipped recon dir counts once under "recon")."""
@@ -550,6 +568,28 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         kept.append(e)
 
     # ---- dedupe across dirs (primary copy first in `kept`)
+    # A copy a person already decided stays primary over an undecided newer copy of the same
+    # unit (2026-10-19: the Russia wiki-recovery store, ranked first as the newest, folded 494
+    # decided R1-R7 lines into also_in and their decisions no longer matched any key).
+    # A decided copy that is not on the sheet yet (no push or backend-sync record after the call)
+    # stays primary even when the newer copy proposes more, so the push still finds it; once it is
+    # applied, a newer copy that proposes more takes over and asks for a fresh call.
+    decided, pending = set(), set()
+    for d in ordered:
+        cb = store.calls(store.read_log(d))
+        for key in cb:
+            rec, mach = store.speaker(cb, key)
+            if store.reviewed(rec):
+                decided.add(key)
+                if not mach or _ts(mach.get("ts")) < _ts(rec.get("ts")):
+                    pending.add(key)
+
+    def _decided(e):
+        return make_key(e.dir, e.pid, e.sheet_row, e.colid) in decided
+
+    def _pending(e):
+        return make_key(e.dir, e.pid, e.sheet_row, e.colid) in pending
+
     primary, by_key = [], {}
     for e in kept:
         k = (e.pid, e.sheet_row, e.colid)
@@ -557,7 +597,17 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             p = by_key[k]
             if e.kind != p.kind:
                 stats["cross_kind"] += 1
-            if e.group == "line" and p.group == "item":
+            if (_decided(e) and not _decided(p) and e.group == p.group
+                    and (_pending(e) or not (p.group == "line" and _proposes_more(p, e)))):
+                e.also_in = [p.dir] + [d for d in p.also_in if d != p.dir and d != e.dir]
+                by_key[k] = e
+                primary[primary.index(p)] = e
+                stats["decided_kept"] = stats.get("decided_kept", 0) + 1
+            elif _decided(e) and not _decided(p) and e.group == p.group:
+                stats["decided_shadowed"] = stats.get("decided_shadowed", 0) + 1
+                if e.dir != p.dir and e.dir not in p.also_in:
+                    p.also_in.append(e.dir)
+            elif e.group == "line" and p.group == "item":
                 # a proposal must never be hidden behind a newer copy that only says
                 # "unresolved"/"confirmed": the line wins, the item's dir goes to also_in
                 e.also_in = [p.dir] + [d for d in p.also_in if d != p.dir]
@@ -1142,7 +1192,7 @@ def summary(data, stats):
            f"dropped N/A records: {stats['dropped_na']}   in_backend lines: {inb}   "
            f"Status [ref] records folded into their status line: {stats['status_covers']}   "
            f"concern candidates folded onto lines as rivals: {stats['rivals']} (corroborating: {stats['corroborations']})",
-           f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']})   "
+           f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']}, decided copy kept {stats.get('decided_kept', 0)}, applied decision behind a newer proposal {stats.get('decided_shadowed', 0)})   "
            f"sheet_row moved: {stats['moved']}   not in snapshot: {stats['not_in_snapshot']}"]
     if stats.get("wikidiff_skipped"):
         out.append(f"sheet-vs-wiki diff records left out (not review-app items): {stats['wikidiff_skipped']}")

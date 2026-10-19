@@ -56,9 +56,13 @@ python scripts/build_ref_worklist.py --tracker gas --country "<C>" --owe-fills -
   [--exclude-pids @<exclude_pids.txt>] --out $STG/worklist_full.json > $STG/worklist_build.log 2>&1
 # 2. lean cut → worklist.json (owed) + deferred_units.json + lean_summary.json
 python scripts/lean_worklist.py --staging $STG/ [--owe-fill-cols "Start [ref]"] [--work-blocked]
-# 3. harvest from the OWED set (fewer fetches)
-python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json --out $STG/wiki_citations.json
-#    agents open EVERY harvested citation (Sweep SOP §Sequence-3) — never cut by the lean pass
+# 3. harvest from the OWED set (fewer fetches), keep the pages, attribute each citation to its
+#    ref cell, then pre-screen every URL (fetch + Wayback ladder, name/value screen, ledger for
+#    map-only/dead/blocked) so agents start from labelled candidates (Sweep SOP §Sequence-3, P0765)
+python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json --out $STG/wiki_citations.json --save-html $STG/wiki_pages
+python scripts/attribute_wiki.py --worklist $STG/worklist_full.json --html-dir $STG/wiki_pages --out $STG/wiki_attributed.json
+python scripts/wiki_prepass.py --staging $STG/ --verify --init-shards     # minutes to an hour; run in the background
+#    agents open EVERY harvested citation — never cut by the lean pass
 # 4. trimmed brief (see "Brief budget"), then compile args with family groups
 python scripts/build_deepsweep_args.py --staging $STG/ --status-review --lean --groups auto \
   --brief $STG/BRIEF.md --model sonnet --out $STG/deepsweep_args.json

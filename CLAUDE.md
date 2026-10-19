@@ -211,7 +211,12 @@ Routing notes:
   (`scripts/ref_pairs.py`). **Every research leg opens EVERY citation harvested from the row's
   gem.wiki page first, in addition to open-web search** (Baird 2026-10-17, P1451), escalating a
   blocked one through `fetch.py` and the Wayback CDX index; each lands in the shard's
-  `wiki_citations_read`, and `check_shard_coverage.py` blocks until all are accounted for.
+  `wiki_citations_read`, and `check_shard_coverage.py` blocks until all are accounted for. The
+  harvest keeps the wiki bullet each footnote supports, `attribute_wiki.py` maps it to the ref cell,
+  and `wiki_prepass.py` pre-screens every URL (Baird 2026-10-17, P0765: the wiki's cost citation
+  stated the value and the sweep still closed the unit from a weaker source). A scope already swept
+  gets a **wiki-citation recovery pass** (`wiki_prepass.py --write-worklist` +
+  `build_deepsweep_args.py --lean --wiki-only`): harvested citations only, no open-web search.
 - **Lean pass = the token-budgeted deep/in-dev sweep** (`docs/sops/lean_pass.md`; "lean pass",
   "save tokens", "cheaper sweep"): agents work only uncited values + refs the script could not
   clear + one status/validity record per row, in family groups with a ≤20 k brief; blank-value
@@ -326,8 +331,9 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   A bot wall (Cloudflare, AWS WAF, Imperva) is not a verdict: the verifier falls back to
   `scripts/fetch.py` (curl → `curl_cffi` TLS impersonation → real-Chrome clearance cookie via
   `scripts/cf_clearance.py`; byte-identical with the two LNG repos, state in gitignored `work/`),
-  and `python scripts/fetch.py <url> --head 2000` is the ad-hoc route. `LNGCT_NO_BROWSER=1`
-  keeps unattended runs from opening Chrome. A 200 that is only a JavaScript app shell is
+  and `python scripts/fetch.py <url> --head 2000` is the ad-hoc route. **Never set
+  `LNGCT_NO_BROWSER=1`** (Baird 2026-10-19): it skips the Chrome rung, so bot-walled hosts read as blocked when they are
+  readable. It is not a way to quiet an unattended run, and no agent prompt, script or doc command sets it. A 200 that is only a JavaScript app shell is
   `js_shell` → `REF_BLOCKED`, never `REF_UNSUPPORTED` (2026-10-01; oilandgaswatch.org pages are
   read through the site's data API instead — Sweep SOP, "JavaScript application shells").
   **A shard's own `verifications` are never trusted (Baird 2026-10-17, P0753):** the R2 shard wrote

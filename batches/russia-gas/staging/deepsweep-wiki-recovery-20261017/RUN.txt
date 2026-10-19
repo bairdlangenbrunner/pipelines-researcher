@@ -1,0 +1,34 @@
+Russia gas wiki-citation recovery (wiki-only lean pass, docs/sops/lean_pass.md)
+==============================================================================
+why                 R1-R7 closed units from weaker sources while the row's own gem.wiki citation stated the value (P0765 TurkStream: the rferl.org article states US$7.8 billion). Every harvested wiki citation is opened, no open-web search.
+scope               all 285 Russia gas rows, the 33 rows carried from the Ukraine, Kazakhstan, Uzbekistan, Iran and China passes included
+lean_summary.json   full units 4,295 -> owed 1,032 on 244 rows; deferred 3,263 -> deferred_units.json
+
+workflow runs (critical-deep-sweep, baked from deepsweep_args*.json)
+  wf_5d49168a-6de   main run (workflow_baked.js)                     3.9 M subagent tokens
+  wf_9d439ee7-aec   follow-up for empty or short shards (workflow_followup.js)   263 k
+  wf_303cd106-f03   recovered citations after the full-ladder re-check (workflow_recovered.js)   1.66 M
+  wf_f43d5cbb-8fc   follow-up for 7 rows whose last agent ended mid-fetch, 16 citations (workflow_recovered2.js)   321 k
+  total             about 6.1 M subagent tokens
+regrouping          the recovered-citation wave was regrouped by row family; the last agent of wf_303cd106-f03 ended its turn while a fetch was still running, so its 7 rows went to wf_f43d5cbb-8fc. Its brief now says to run fetches in the foreground and never end a turn while one runs.
+browser rung        part of the main run ran with LNGCT_NO_BROWSER=1 set, which skips the Chrome clearance route. Every citation left dead or blocked was re-checked through the full fetch.py ladder afterward (recheck_full_ladder.json), and the ones it opened were sent back to agents (recovered_citations.json). The variable is now barred in every agent prompt and doc (Baird 2026-10-19).
+
+citations (wiki_citations_read, every shard; check_shard_coverage OK on 285 of 285 rows)
+  total 3,182: used 689, no_value 1,632, not_this_row 244, dead 195, blocked 422
+  unreadable_citations.csv: 617 citations on 303 URLs (energybase.ru 199, e-disclosure.ru 58, gazprom.com 40, neftegaz.ru 17, uk.reuters.com 15). energybase.ru and gazprom.com are IP-blocked for Baird and stay listed but off the retry list. e-disclosure.ru serves a servicepipe challenge live and in its Wayback copies; archive.today returns 404.
+
+outputs (staged_resolutions.json, 1,719 records)
+  refs added        687 ref records (751 REFS_ADDED incl. fills)
+  fills             193
+  validity          294 (confirmed 30, caveat 184, concern 78, keep 2)
+  status reviews    285 (confirm 197, unclear 74, confirmed 9, stale 3, change 2)
+  UNRESOLVED        169 ref units; REF_BLOCKED 85; REF_UNSUPPORTED 20
+  P0765             SegmentCost 7800000000 USD, high, from the rferl.org article the wiki cites
+  P5409             SegmentCost left UNRESOLVED: the Neftegaz article gives only a range of 4.5 to 13.6 billion US dollars; the sheet's 9.05 billion is its midpoint, which no page states
+  dedupe vs R1-R7   0 exact duplicates; ref_recheck 0 dead proposed refs
+
+gates               blocking B, D, E, F, J, L, M, N, O, P pass
+                    review flags: A=80 (rows under 2 hosts), C=20 (multi-pipeline documents: decree 816-r, the Neftegaz list of 13 Gazprom lines, the aup.ru table), I=11 (P1472 x3; Norilsktransgaz pages for P1647, P5666-P5668; all capped low), O'=4 (operators with no legal form: P2285, P2309, P2315, P2459), O''=1 (P4077), K=506 informational
+
+deliverable         batches/russia-gas/deliverables/pipelines_batch_20261019_1825_ET_russia-gas_deepsweep-wiki-recovery.xlsx
+review app          gas-batch page republished 2026-10-19 (version 1792449262-a88e). review_data now keeps a decided R1-R7 copy in front of this store's copy of the same unit until that decision is pushed; 327 decisions already on the sheet give way to recovery lines that add new refs and need a fresh call.

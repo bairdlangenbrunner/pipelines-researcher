@@ -180,6 +180,33 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    `check_shard_coverage.py` blocks a shard with an unopened citation, a `used` one no record cites,
    or a `dead`/`blocked` one without both fetch.py and Wayback in `tried`. Shards that predate the
    key only warn.
+   **Harvest WITH the inline context and attribute it (Baird 2026-10-17, P0765):** the TurkStream
+   wiki page says `Cost: US$7.8 billion` cited to an rferl.org article that states the value and
+   passes every check, yet the R7 agent closed SegmentCost from an open-web search at low, because the
+   harvest said only what each source *was*, not what GEM cited it *for*. So the harvester now
+   keeps the bullet each footnote sits on (`inline`), `--save-html` keeps the pages, and two more
+   steps run before dispatch: `scripts/attribute_wiki.py --worklist … --html-dir …/wiki_pages --out
+   …/wiki_attributed.json` (maps each cited wiki bullet to the ref column and sheet row it supports,
+   with the wiki's value) and `scripts/wiki_prepass.py --staging … --verify --init-shards` (opens every
+   distinct URL once, runs the fetch.py + Wayback CDX ladder on failures, screens the text for the
+   pipeline name and the sheet's and wiki's figures, pre-writes the ledger records for map-only,
+   dead and blocked citations into each shard, and buckets the rest as `verifying` / `wiki_differs` /
+   `loads_unchecked` / `prose` in `wiki_prepass.json`). Agents read the candidates for their row from
+   that file, so a citation that states the value arrives labelled, not buried in a list. **A failed
+   lookup is not an answer (Baird 2026-10-17):** after the pass, run `wiki_prepass.py … --retry-failed
+   --write-worklist --init-shards` — it re-opens every dead/blocked citation for up to four rounds with
+   growing pauses (live check plus eight Wayback attempts each, exponential backoff), and only a
+   404/410 whose archive index answered "no capture" is final (`wayback_state` is recorded per
+   citation; `ref_recheck.wayback_lookup` returns found / none / error). **Recovery
+   pass for a scope already swept:** `wiki_prepass.py … --write-worklist` cuts a `wiki_only` lean
+   worklist (owed = units with a readable wiki candidate; the rest deferred `no_wiki_candidate`), and
+   `build_deepsweep_args.py --lean --wiki-only` dispatches agents that open only the harvested
+   citations, no open-web search (`critical-deep-sweep.js` WIKI-CITATION RECOVERY PASS). Build the
+   recovery pass's `worklist_full.json` WITHOUT `--verify-existing`: the original sweep already
+   checked the existing refs, the pass stages only additive refs from the wiki citations, and the
+   pre-pass does its own verification of every citation. With the flag the Russia build (285 rows,
+   2,307 cited units) ran 3.5 hours on slow Russian hosts without finishing and was killed. Russia gas
+   was the first: `batches/russia-gas/staging/deepsweep-wiki-recovery-20261017/`.
 4. **Research loop (per ProjectID):**
    - **HAS_REF:** if `--verify-existing` shows all URLs live AND containing the value AND
      the page names the pipeline → **Re-verified (blue)**, done — one validated source is
@@ -1000,4 +1027,4 @@ class of values looks systematically unsupported (likely a schema misread, not a
 
 ## Iterate
 Expect Baird to challenge specific refs. Acknowledge, re-search with verified sources,
-regenerate — **do not defend** wrong findings (standing rule 3).
+regenerate — **do not defend** wrong findings (standing rule 3). Never set `LNGCT_NO_BROWSER` anywhere (agent prompts, retry loops, scripts, doc commands): it skips the Chrome rung and turns readable pages into false "blocked" results (Baird 2026-10-19; the wiki recovery pass agents had written their own fetch loops with it set). Any pass that ran with it owes a re-check of its blocked and dead citations through the full ladder.

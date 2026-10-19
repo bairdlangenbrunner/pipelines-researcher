@@ -110,8 +110,8 @@ def _wall_fallback(url: str, r, timeout):
     """A bot wall (Cloudflare firewall/JS challenge, AWS WAF, Imperva) is a
     tooling failure, not a fact about the page. Re-fetch through the shared
     ladder in scripts/fetch.py (curl → curl_cffi Chrome-TLS impersonation →
-    real-Chrome clearance cookie via cf_clearance.py; LNGCT_NO_BROWSER=1 stops
-    before the browser) and hand back a Response built from what it got, with
+    real-Chrome clearance cookie via cf_clearance.py; never set LNGCT_NO_BROWSER,
+    it skips the browser rung) and hand back a Response built from what it got, with
     `fetch_notes` naming the route. The original response is returned when the
     ladder cannot clear the wall either. Text is re-encoded as utf-8 (fetch.py
     already decoded it charset-aware) and a PDF comes back as its extracted

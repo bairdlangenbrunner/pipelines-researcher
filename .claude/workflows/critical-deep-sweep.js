@@ -8,12 +8,15 @@ export const meta = {
 
 // args (from `python scripts/build_deepsweep_args.py --staging <dir>`):
 //   { repo, staging, commodity, country, pids:[...], roster:[...], status_review?: true,
-//     groups?: [[pid,...],...], lean?: true, model?, extra_brief? }
+//     groups?: [[pid,...],...], lean?: true, wiki_only?: true, model?, extra_brief? }
 // groups: one agent per GROUP instead of per PID — sibling segments / strings / hub branches
 // that share their documents (docs/sops/lean_pass.md). Every PID must appear in exactly one
 // group; a singleton group is the classic one-agent-per-row contract, word for word.
 // lean: the worklist was cut by scripts/lean_worklist.py — the agent works the owed set only,
 // and the deferred units are recorded, not skipped.
+// wiki_only: a wiki-citation recovery pass (scripts/wiki_prepass.py --write-worklist; 2026-10-17,
+// Russia P0765) — the agent opens ONLY the citations harvested from the row's gem.wiki page,
+// pre-screened in <staging>/wiki_prepass.json, and never runs an open-web search.
 // status_review: true = annual-update mode — each subagent ALSO stages a per-segment-row
 // status verdict (confirm / change / stale / unclear) as `status_reviews` in its shard.
 // tolerate a JSON-encoded string (some invocation paths stringify `args`)
@@ -40,6 +43,7 @@ const GROUPS = Array.isArray(A.groups) && A.groups.length ? A.groups : PIDS.map(
   }
 }
 const LEAN = !!A.lean
+const WIKI_ONLY = !!A.wiki_only
 const ROSTER = (A.roster || []).join("\n")
 const STATUS_REVIEW = !!A.status_review
 // optional scope-specific guidance (e.g. China: research in Chinese, geo-blocked-site
@@ -114,6 +118,46 @@ DEFERRED into deferred_units.json on purpose; they are not your job this pass. S
   pipeline, or the scope guidance names this row as a duplicate/existence candidate.
 - Stop when coverage prints OK and the status + validity records are saved. Do not widen scope.` : ''
 
+const wikiOnlyInstr = WIKI_ONLY ? `
+
+## WIKI-CITATION RECOVERY PASS (read this before starting — it narrows everything above)
+This pass exists because earlier sweeps closed units from open-web searches while the row's own
+gem.wiki page cited a source that states the value (P0765 TurkStream: the wiki's "US$7.8 billion"
+cost is cited to an rferl.org article that passes every check; the sweep staged a weaker article
+at low). Your ONLY sources this pass are the citations harvested from this row's gem.wiki page.
+NO open-web search, NO new sources: if a value has no wiki citation that states it, the unit ends
+UNRESOLVED with the note "no wiki citation states this value; not searched this pass".
+- Your candidate list is \`${STAGING}/wiki_prepass.json\` → \`candidates\` filtered to
+  \`project_id == "<PID>"\`. Each candidate is one harvested URL with: \`inline\` (the wiki
+  bullet or sentence the footnote sits on — what GEM cited it FOR), \`units\` (the owed ref cells
+  the wiki attributes it to, each with \`wiki_value\`, \`sheet_values\` and a \`compare\`
+  verdict), \`bucket\` and, when the pre-pass could load it, \`screen\` (whether the page names
+  the pipeline and where the sheet's / wiki's figures appear in its text) and \`verify\`.
+  \`read_via\` is a Wayback snapshot URL that loaded when the live page did not: READ THAT, and
+  cite the snapshot URL as the ref (the live URL goes in the note).
+- Candidates whose ledger record is already in your shard (geometry links, confirmed dead or
+  blocked after fetch.py + Wayback) are done: \`--remaining\` does not list them. Do not re-try them.
+- Open EVERY remaining candidate and read the WHOLE page (strip tags, search for the figures)
+  against EVERY owed unit on the row, not only the unit the wiki attached it to — one approval
+  notice sources Length / Diameter / Cost / Construction / Start at once. A \`prose\` candidate (no
+  attributed unit) still gets read: it is often the status / start-year source.
+- A candidate that states the sheet's value → stage the ref ADDITIVELY (REFS_ADDED, same value,
+  existing refs kept). A candidate that states the WIKI's value where the wiki differs from the
+  sheet (\`compare.match == false\`) → a value question under standing rule 4: two independent
+  validated refs on one precise figure = propose it as a FILL / change with the old value in
+  researcher_notes; one ref = REFS_ADDED at medium with the discrepancy noted, sheet value stays.
+  Never stage a value the page does not state.
+- Length and capacity stay in the unit the page states; costs in full currency units; months as
+  numbers. A ref must NAME this pipeline (an article about the system is not a ref for one segment
+  unless it states the segment's figure).
+- One \`--wiki-read\` record per candidate as you finish it (used / no_value / not_this_row /
+  dead / blocked); it is what check_shard_coverage blocks on.
+- Status review and validity: ONE record each per row, judged from the citations you opened only.
+  A status-review verdict of "unclear" and a validity "confirmed (caveat)" are the honest defaults
+  when the wiki's sources do not settle it; never widen to a search to settle them.
+- Stop when coverage prints OK. Do not widen scope; a lead worth an open-web search goes in
+  \`--lead\` for a later pass.` : ''
+
 const contract = (group) => group.length === 1 ? contractFor(group[0], '') : contractFor('<PID>', `
 ## FAMILY GROUP — you own ${group.length} rows: ${group.join(', ')}
 These rows share their documents (sibling segments, strings of one corridor, or branches of one
@@ -139,11 +183,13 @@ cd ${REPO} first.
   primary_value, current_ref, sheet_row, segment_name, pipeline_name, wiki.
 - Source leads harvested from this row's gem.wiki page: \`${STAGING}/wiki_citations.json\`
   (your STARTING POINT — you OPEN EVERY ONE in Step 0b below, before and in addition to open-web
-  search; READ gem.wiki for leads but NEVER cite it). A row whose only support is a
+  search; READ gem.wiki for leads but NEVER cite it).${WIKI_ONLY ? ` In THIS pass the pre-screened
+  form of that list, \`${STAGING}/wiki_prepass.json\`, is your whole source set — see the
+  WIKI-CITATION RECOVERY PASS section.` : ''} A row whose only support is a
   generic/aggregate citation that does not actually name this pipeline is itself an existence flag.
 - Roster of ALL ${PIDS.length} in-scope pipelines (for duplicate/relabel detection — does ${pid} look
   like the same physical pipe as another row under a different name?):
-${ROSTER}
+${ROSTER || '  (roster omitted for this pass; judge duplicates only from the documents you open)'}
 
 ## Step 0 — open your shard BEFORE any research (save-as-you-go is mandatory)
 Run, in this order:
@@ -278,7 +324,7 @@ other research, never instead of it.
    39, $10.7M against $11M — that is REFS_ADDED at medium/high tier with the small discrepancy
    stated in researcher_notes (and a validity spec concern if it is material). UNRESOLVED means you
    found NOTHING; it never means you found something slightly different. The limit stays the
-   aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell.${statusInstr}${leanInstr}${EXTRA}
+   aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell.${statusInstr}${leanInstr}${wikiOnlyInstr}${EXTRA}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
@@ -335,7 +381,7 @@ one-line \`--summary\` last. Return ONLY a 2-line summary: the verdict/concern_t
 file is the deliverable, not your message.`
 
 phase('Audit')
-log(`Critically auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} pipelines in ${GROUPS.length} agent(s)${LEAN ? ' (lean pass)' : ''} (existence+classification first).`)
+log(`Critically auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} pipelines in ${GROUPS.length} agent(s)${LEAN ? ' (lean pass)' : ''}${WIKI_ONLY ? ' (wiki-citation recovery)' : ''} (existence+classification first).`)
 const results = await parallel(GROUPS.map(group => () =>
   agent(contract(group), { label: `audit:${group.join('+')}`, phase: 'Audit', agentType: 'general-purpose', model: MODEL })
 ))
