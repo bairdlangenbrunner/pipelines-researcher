@@ -587,7 +587,6 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
         if not writes:
             skipped.append((l["key"], "already in the backend"))
             continue
-        unstyled += [(l["key"],) + u for u in unstyled_names(writes)]
         why = staleness(l, prec, tab, row)
         sup = superseded(l, prec, tab, row, pid, writes) if why else ""
         if sup:                         # never overridden by --include-stale
@@ -598,6 +597,9 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
             if not include_stale:
                 skipped.append((l["key"], "stale: " + why))
                 continue
+        # judged only on lines that stay in the plan: a superseded or stale line writes nothing (P7861's
+        # 10-02 owner line, 2026-10-18, refused a plan it was never going to be part of)
+        unstyled += [(l["key"],) + u for u in unstyled_names(writes)]
         meta[l["key"]] = {"kind": l["kind"], "sheet_row": row, "ref_col": rc or l.get("column") or "", "decision": dec}
         if dec == "suggest":
             concerns += [dict(c, key=l["key"]) for c in geo_concerns(pid, row, writes, tab)]

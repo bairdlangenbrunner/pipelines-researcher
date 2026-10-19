@@ -56,6 +56,8 @@ def world(tmp_path, monkeypatch):
     monkeypatch.setattr(push.review_data, "build", lambda dirs_, c, cm, root=None, dir_country=None, data_dir=None:
                         real_build(dirs_, c, cm, data_dir=data_dir or s["data"], root=root))
     monkeypatch.setattr(push.ledger, "scope_of", lambda ds: ("russia-gas", review_fixture.SNAP_NAME))
+    # no network: every proposed ref counts as live (the fixtures' example.org URLs 404 for real)
+    monkeypatch.setattr(push.ref_recheck, "liveness", lambda urls, **k: {u: {"status": 200, "dead": False} for u in urls})
     s.update(dataset=data, dirs=dirs, edits=edits)
     return s
 

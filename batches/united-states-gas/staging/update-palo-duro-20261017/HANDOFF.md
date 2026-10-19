@@ -44,4 +44,5 @@ Both new files replace the old ones. The old P7861 file was eight separate piece
 
 ## Next steps here
 
-1. Update the data center stats and the Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) once the sheet changes land.
+1. The Beyond Carbon notes in gem-desk (`grants/beyond-carbon/`) were updated 2026-10-18 with the live data center stats: 41 tagged rows, 10,112 km.
+2. Three owner and operator changes from the FERC order went to the sheet on 2026-10-19 with Baird's go ahead (the last three records in `build_store.py`; 8 cells, backup `notes/sheet-write-2026-10-19-0829-review-app-push.csv`). P7861 Operator goes from `Producers Midstream II, LLC` to `Palo Duro Pipelines (Texas Gathering) LP`. P7862 Owner1 goes from `Producers Midstream` to `Palo Duro Transmission LP`, and P7862's blank Operator becomes `Palo Duro Transmission LP`. Footnote 4 of the order says Producers Midstream II is the parent group, two steps above the companies that own and run the pipe. Each change replaces the old ref with the FERC order, and each stamps Researcher CB, since they are research changes, not spelling fixes. A spelling-only accept on the P7861 operator line was put on hold on 2026-10-18 when the line changed.

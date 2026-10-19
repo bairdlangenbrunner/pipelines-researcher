@@ -53,6 +53,14 @@ R = [
      "Start and end were blank. The FERC order says the line runs from Nolan County to Wheeler County, Texas. The open season names a receipt meter near the southern end in Nolan County, and the route file ends within a fraction of a mile of it."),
  res("P7862", 4249, P, "PipelineType [ref]", {"PipelineType": "both transmission and gathering"}, [FERC],
      "Changed from transmission to both transmission and gathering. The FERC order says the line currently gathers gas. Under the amended plan the northern 61 miles, in Childress, Collingsworth and Wheeler counties, become interstate transmission, and the southern part is to be sold to an affiliate and kept as gathering. The row stays whole rather than being split in two."),
+ res("P7861", 4248, H, "Operator [ref]", {"Operator": "Palo Duro Pipelines (Texas Gathering) LP"}, [FERC],
+     "Operator changed from Producers Midstream II, LLC to Palo Duro Pipelines (Texas Gathering) LP. The FERC order says this company owns and operates the Header Pipeline. A footnote in the order says Producers Midstream II is the parent group, two steps up the chain, not the company that runs the pipe. The old ref was the Producers Midstream open season notice. It backed the old name, so the FERC order replaces it.",
+     tier="high", current=CO),
+ res("P7862", 4249, P, "Owner [ref]", {"Owner1": "Palo Duro Transmission LP"}, [FERC],
+     "Owner changed from Producers Midstream to Palo Duro Transmission LP. The FERC order says Palo Duro Transmission operates the Palo Duro line, and a footnote lists it among the owners of the pipelines that connect to the Header Pipeline. Another footnote says Producers Midstream II is the parent group, two steps up the chain. The share stays at 100 percent. The old refs, the open season notice and an Oil and Gas Journal article, backed the old name, so the FERC order replaces them.",
+     tier="high", current=f"{CO}, {OGJ}"),
+ res("P7862", 4249, P, "Operator [ref]", {"Operator": "Palo Duro Transmission LP"}, [FERC],
+     "Operator was blank. The FERC order says Palo Duro Transmission operates the Palo Duro line today.", tier="high"),
 ]
 meta = {"commodity": "gas", "mode": "update",
         "scope": {"csv": "GGIT_gas_snapshot_20261018.csv", "country": "United States", "province": None,
@@ -76,6 +84,8 @@ new = {"slug": "palo-duro-lease-agreement-project", "class": "new_row", "name": 
  "tier": "high", "independent": True, "source_language": "en", "monitor_reason": "",
  "researcher_notes": "This row is the project that turns existing Palo Duro pipe into interstate service. It builds no new pipe. Producers Midstream opened a binding open season on June 30, 2025, and Palo Duro Transmission and Palo Duro Pipelines (Texas Gathering) applied to FERC on August 1, 2025, under docket CP25-531. They amended the plan on December 22, 2025. FERC issued the certificates on March 19, 2026, and the companies accepted them on April 7, 2026. Under the approved plan, Palo Duro Transmission offers interstate service on the northern 61 miles of the Palo Duro line in P7862, in Childress, Collingsworth and Wheeler counties, plus 80,000 dekatherms a day of capacity leased for ten years on the Header Pipeline in P7861. The Header Pipeline connects to eight interstate pipelines, including Northern Natural, Transwestern, Natural Gas Pipeline Company of America, ANR and Panhandle Eastern. The only shipper is Scurry Downstream, an affiliate of Producers Midstream, holding all of the capacity. Length is 0 because the pipe is already counted in P7861 and P7862. Status is proposed because no sign was found that interstate service has started. A search of the FERC eLibrary on October 17, 2026, found no tariff filing or start of service notice after the April acceptance, and FERC requires a filing within ten days of taking over the leased capacity. The company had aimed for the first quarter of 2026, so start year is left blank. End location is the Oklahoma end of the Header Pipeline. Gas can be delivered at interconnects along its length, so Washita County is the far end, not a single delivery point.",
  "project_id": ""}
+if json.load(open(HERE / "staged_new.json"))["candidates"][0].get("applied"):
+    raise SystemExit("staged_new.json: the new row is applied (P8330); left as it is")
 json.dump({"meta": {**meta, "mode": "discovery", "purpose": "the Palo Duro interstate service project as a new row (CP25-531)", "n_units": 1}, "candidates": [new], "converted_to_alias": []},
           open(HERE / "staged_new.json", "w"), indent=1)
 print(len(R), "resolutions; 1 new row")
