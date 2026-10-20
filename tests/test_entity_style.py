@@ -270,3 +270,10 @@ def test_needs_person_and_held_names():
     held = ES.held_names({"Owner1": "Mountain Valley Pipeline LLC", "Owner1%": "1",
                           "Owner3": "NextEra Energy, Inc. (affiliate)", "Operator": ""})
     assert [(c, st) for c, _, st, _ in held] == [("Owner3", "NextEra Energy Inc")]
+
+
+def test_cyrillic_ruling_does_not_shadow_transliterated_spelling():
+    # ПАО "Газпром" is ruled; PAO Gazprom transliterates to the same key but keeps its gazetteer match
+    assert ES.style('ПАО "Газпром"').basis == "ruling"
+    r = ES.style("PAO Gazprom")
+    assert r.styled == "Gazprom PJSC" and r.basis == "exact"

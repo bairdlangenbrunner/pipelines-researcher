@@ -246,7 +246,12 @@ def rulings() -> dict:
     if not RULINGS_JSON.exists():
         return out
     d = json.loads(RULINGS_JSON.read_text(encoding="utf-8"))
-    out["names"] = {normalize_name(k): dict(v, raw=k) for k, v in (d.get("names") or {}).items()}
+    # a Cyrillic or Chinese spelling transliterates onto the same key as its Latin twin
+    # (`Узтрансгаз` / `Uztransgaz`): the Latin ruling wins the key, so it covers both, and a
+    # non-Latin ruling only takes a key no Latin ruling holds (style() keeps it off Latin cells)
+    names = sorted((d.get("names") or {}).items(), key=lambda kv: bool(_NON_LATIN.search(kv[0])))
+    for k, v in names:
+        out["names"].setdefault(normalize_name(k), dict(v, raw=k))
     # the ruled form itself is ruled too, so a cell already written that way re-checks clean
     # (a kept multi-operator list would otherwise be held again as multi_owner)
     for v in list(out["names"].values()):
@@ -583,6 +588,9 @@ def style(raw: str, country: str | None = None) -> StyleResult:
         return res
 
     ru = rulings()["names"].get(normalize_name(s))
+    if ru and _NON_LATIN.search(ru.get("raw", "")) and not _NON_LATIN.search(s):
+        ru = None       # a ruling on a Cyrillic spelling (ПАО "Газпром") is for that spelling; the
+                        # transliterated `PAO Gazprom` keeps its own gazetteer match
     if ru and ru.get("styled"):
         res.styled = ru["styled"]
         res.basis, res.confidence = "ruling", "high"
