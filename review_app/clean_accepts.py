@@ -38,6 +38,17 @@ in the backend, major or minor, AND none of these applies:
                   store and is listed in clean_accepts_flagged.csv); `noted`/`dismissed`
                   closes one
   escalation      a scope escalation whose text names the pipeline's ProjectID
+  other run       (every mode) a value change that another directory's non-rejected line on the same
+                  row proposes a different value for (Baird 2026-10-20, P2380)
+`--loose-refs` (Baird 2026-10-19: "accept every card with no explicit conflict"): a minor ref-only line
+ignores pipeline-wide, owner/operator and column-pattern concerns and flags; only a rival, a failed ref
+check, a blocked class or a concern naming its own column still skips it.
+`--column-only` (Baird 2026-10-20, the auto-accept rule; extends --loose-refs to major lines): a fill, ref
+or owners-tab line with a proposed ref is accepted whether it fills, changes or clears a value, and is
+skipped only for a rival, an owner-style hold, a failed ref check, a blocked class, an open concern on a
+column it proposes, or a proposed ref that `scripts/ref_recheck.py` re-opens without HTTP 200 (a shard's
+own verifications are never trusted). Status lines, new rows and routes stay held for a person. Record
+the plan with `ledger.py decide --records … --reviewer CB`: the accept is the agent's, not Baird's.
 An unresolved note or a `confirmed` (positive) item never blocks. Anything unclear blocks:
 the point is to leave every line a person might want to judge for a person.
 """
@@ -72,7 +83,11 @@ SCOPE_PATS = {
 }
 BLOCK_CLASSES = {"STALE", "REF_UNSUPPORTED", "REF_BLOCKED"}
 CHUNK = 100
+COLUMN_ONLY = False   # --column-only: Baird 2026-10-20, any fill/ref/oo line is blocked only by a concern on its own columns
+COLUMN_ONLY_KINDS = {"fill", "ref", "oo"}   # status changes, new rows and routes stay with a person
+LOOSE_REFS = False   # --loose-refs: Baird 2026-10-19, a minor ref/oo line is blocked only by a concern on its own column
 NOTE = "clean accept: high confidence, no open concern or flag"
+NOTE_COLUMN_ONLY = "auto-accepted by CB: high tier, every proposed ref re-opened (HTTP 200), no open concern on the column (Baird 2026-10-20)"
 
 
 def stem(col):
@@ -164,6 +179,33 @@ def blockers(pipes):
     return out
 
 
+def same_value(a, b):
+    a, b = str(a).strip(), str(b).strip()
+    try:
+        return float(a) == float(b)
+    except ValueError:
+        return a.lower() == b.lower()
+
+
+def contested_by_other_run(p, l):
+    """A value change another staged run contradicts (Baird 2026-10-20, P2380: the R7 length 469.1 sat
+    default-accept beside the wiki-recovery run's accepted 365). Another directory's line on the same
+    row and value column, not rejected, that proposes a different value holds this line for a person."""
+    cur = l.get("current") or {}
+    chg = {k: v for k, v in (l.get("proposed_values") or {}).items() if not same_value(cur.get(k, ""), v)}
+    if not chg:
+        return ""
+    for o in p["lines"]:
+        if o is l or o.get("dir") == l.get("dir") or o.get("decision") == "reject":
+            continue
+        if o.get("sheet_row") != l.get("sheet_row"):
+            continue
+        for k, v in (o.get("proposed_values") or {}).items():
+            if k in chg and not same_value(chg[k], v):
+                return f"{k}: another run proposes {v} ({Path(o['dir']).name})"
+    return ""
+
+
 def skip_reason(p, l, blk):
     if l.get("rival"):
         return "rival concern candidate"
@@ -172,7 +214,29 @@ def skip_reason(p, l, blk):
     for v in l.get("verifications") or []:
         if not (v.get("ok") and v.get("name_found") is not False and v.get("contains_value") is not False):
             return "a proposed ref failed its check"
+    why = contested_by_other_run(p, l)
+    if why:
+        return "contested by another run: " + why
     b = blk.get(p["pid"], {})
+    if COLUMN_ONLY:
+        if l.get("kind") not in COLUMN_ONLY_KINDS:
+            return f"kind {l.get('kind')}: held for a person"
+        if l.get("rivals") or l.get("owner_style_held"):
+            return "rival candidate or owner-style hold"
+        if not l.get("proposed_refs"):
+            return "no proposed ref"
+        hit = (line_cols(l) | {stem(c) for c in l.get("proposed_values") or {}}) & set(b.get("cols", {}))
+        if hit:
+            c = sorted(hit)[0]
+            return f"column {c}: {b['cols'][c]}"
+        return ""
+    if LOOSE_REFS and l.get("severity") == "minor" and l.get("kind") in ("ref", "oo"):
+        # ref added beside a value that stands: only a concern on the line's own column conflicts with it
+        hit = line_cols(l) & set(b.get("cols", {}))
+        if hit:
+            c = sorted(hit)[0]
+            return f"column {c}: {b['cols'][c]}"
+        return ""
     if b.get("whole"):
         return "pipeline-wide: " + b["whole"][0]
     if l.get("kind") == "oo" and b.get("oo"):
@@ -206,7 +270,13 @@ def main(argv=None):
     ap.add_argument("--country", action="append", default=[])
     ap.add_argument("--commodity", default="gas", choices=("gas", "oil"))
     ap.add_argument("--out", default=str(ROOT / "work" / "clean_accepts"))
+    ap.add_argument("--loose-refs", action="store_true",
+                    help="a minor ref-only line is skipped only for a rival, a bad ref, a blocked class, or a concern on its own column (Baird 2026-10-19)")
+    ap.add_argument("--column-only", action="store_true",
+                    help="any fill/ref/oo line is skipped only for a rival, a bad or unloadable ref, a blocked class, or a concern on its own columns (Baird 2026-10-20)")
     a = ap.parse_args(argv)
+    global LOOSE_REFS, COLUMN_ONLY
+    LOOSE_REFS, COLUMN_ONLY = a.loose_refs, a.column_only
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     tmp = out / "dataset.json"
@@ -216,7 +286,16 @@ def main(argv=None):
     review_data.main(argv2)
     ds = json.loads(tmp.read_text(encoding="utf-8"))
     take, skip = plan(ds)
-    recs = [{"key": l["key"], "decision": "accept", "note": NOTE} for _, l, _ in take]
+    if COLUMN_ONLY:
+        import ref_recheck
+        live = ref_recheck.liveness([u for _, l, _ in take for u in l["proposed_refs"]], quiet=False)
+        kept = []
+        for p, l, why in take:
+            bad = sorted({str((live.get(u) or {}).get("status")) for u in l["proposed_refs"]} - {"200"})
+            (skip.append((p, l, f"a proposed ref did not load (HTTP {','.join(bad)})")) if bad else kept.append((p, l, why)))
+        take = kept
+    note = NOTE_COLUMN_ONLY if COLUMN_ONLY else NOTE
+    recs = [{"key": l["key"], "decision": "accept", "note": note} for _, l, _ in take]
     (out / "clean_accepts.json").write_text(json.dumps(recs, indent=1), encoding="utf-8")
     # one gws call per ledger append: ~1,100 records in one call overflows the argument limit
     for i in range(0, len(recs), CHUNK):
