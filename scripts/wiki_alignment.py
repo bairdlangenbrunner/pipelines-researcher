@@ -67,7 +67,7 @@ _PROSE_STATUS = [
     (r"\bconstruction\b", "construction"),
     (r"\bshelved\b", "shelved"),
     (r"\bcancell?ed\b", "cancelled"),
-    (r"\bidle\b", "idle"),
+    (r"\bidled?\b", "idled"),
     (r"\bmothballed\b", "mothballed"),
     (r"\bretired\b", "retired"),
 ]

@@ -8,7 +8,7 @@ import unicodedata
 # GEM Status controlled vocab (lowercase) — see docs/reference/controlled_vocab.md
 GEM_STATUSES = {
     "operating", "proposed", "construction", "shelved",
-    "cancelled", "idle", "mothballed", "retired",
+    "cancelled", "idled", "mothballed", "retired",
 }
 
 MILES_TO_KM = 1.609344
@@ -173,14 +173,17 @@ def map_status(raw: str | None, status_map: dict | None) -> str | None:
     raw_s = str(raw).strip()
     if not raw_s:
         return None
+    # the sheet spells it `idled` (Baird 2026-10-20); source maps and prose still say `idle`
+    fix = lambda v: "idled" if v == "idle" else v
     if status_map:
         # exact, then case-insensitive
         if raw_s in status_map:
-            return status_map[raw_s]
+            return fix(status_map[raw_s])
         low = {k.lower(): v for k, v in status_map.items()}
         if raw_s.lower() in low:
-            return low[raw_s.lower()]
-    return raw_s.lower() if raw_s.lower() in GEM_STATUSES else None
+            return fix(low[raw_s.lower()])
+    low_s = fix(raw_s.lower())
+    return low_s if low_s in GEM_STATUSES else None
 
 
 # A comma is BOTH the multi-value delimiter GEM uses ('700, 720, 820') and the

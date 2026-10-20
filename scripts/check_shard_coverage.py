@@ -55,7 +55,7 @@ SCOPE_MISMATCH = re.compile(
 # staged with StartYear1 only, and the June 2026 in-service month the Sempra release states was missed).
 STATUS_DATE_COL = {"operating": "StartYear1", "construction": "ConstructionYear", "proposed": "ProposalYear",
                    "shelved": "ShelvedYear", "cancelled": "CancelledYear", "mothballed": "StopYear",
-                   "idle": "StopYear", "retired": "StopYear"}
+                   "idled": "StopYear", "retired": "StopYear"}
 DATE_NOT_FOUND = re.compile(
     r"\b(start|in[- ]service|construction|proposal|proposed|shel\w*|cancel\w*|stop\w*|retire\w*)\b[^.]{0,80}"
     r"\b(not found|not stated|not given|no date|not reported|does not (say|state|give))", re.I)
@@ -173,7 +173,7 @@ def load_scope_sheet(staging: Path):
     return load_sheet(wl.get("scope"))
 
 
-GAS_FUEL_VALUES = {"Gas", "Hydrogen", "Gas and hydrogen", "Coke oven gas"}
+GAS_FUEL_VALUES = {"gas", "hydrogen", "gas and hydrogen", "coke oven gas"}  # lowercase since 2026-10-20
 PIPELINE_TYPE_VALUES = {"transmission", "gathering", "distribution", "both transmission and gathering",
                         "both transmission and distribution", "both gathering and distribution"}
 DATA_CENTER_VALUES = {"yes", ""}  # Baird 2026-10-16: `yes` or blank, never `no` or `Yes`
@@ -293,7 +293,7 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
             cur_fuel = sheet_value(sheet, pid, f.get("sheet_row"), "Fuel") if sheet is not None else None
             if str(vals_["Fuel"]).strip() != str(cur_fuel or "").strip():
                 why.append(f"`Fuel` = {vals_['Fuel']!r} — the gas tab takes only "
-                           + ", ".join(sorted(GAS_FUEL_VALUES)) + " (a plain gas pipeline is `Gas`)")
+                           + ", ".join(sorted(GAS_FUEL_VALUES)) + " (a plain gas pipeline is `gas`)")
         # `PipelineType` takes transmission / gathering / distribution or a combination of two (Baird
         # 2026-10-14): never lateral, expansion, interstate, intrastate (EIA's labels) or free text.
         if "PipelineType" in vals_ and str(vals_["PipelineType"]).strip() \

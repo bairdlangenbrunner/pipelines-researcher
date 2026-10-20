@@ -151,7 +151,7 @@ def audit(fp):
                 p.append(f'status_reviews[{i}] {col}={val!r} must be lowercase')
         for sv in (sr.get('proposed_status'), pc.get('Status')):
             if sv and str(sv) not in ('operating', 'proposed', 'construction', 'shelved', 'cancelled',
-                                      'idle', 'mothballed', 'retired'):
+                                      'idled', 'mothballed', 'retired'):
                 p.append(f'status_reviews[{i}] status {sv!r} is not a tracker status')
         st = pc.get('Status')
         if st in LIVE:

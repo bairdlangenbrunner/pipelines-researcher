@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Plan the repair of non-canonical `Fuel` spellings on the gas tracker tab (Baird 2026-10-14).
 
-The gas tab takes `Gas`, `Hydrogen`, `Gas and hydrogen`, `Coke oven gas` (controlled_vocab.md). The
+The gas tab takes `gas`, `hydrogen`, `gas and hydrogen`, `coke oven gas`, all lowercase since 2026-10-20 (controlled_vocab.md). The
 2026-10-05 discovery append wrote lowercase `gas` (and some `natural gas` / `Natural Gas`) before that
-rule was enforced. Only a case-insensitive `gas` or `natural gas` is rewritten, to `Gas`; anything else
+rule was enforced. Only a case-insensitive `gas` or `natural gas` is rewritten, to `gas`; anything else
 is left alone. Also (Baird 2026-10-14): an off-list `PipelineType` on the gas tab (lateral, expansion,
 intrastate, interstate, pipeline, natural gas) becomes `transmission`, and `gathering and transmission`
 becomes the sheet's own `both transmission and gathering`. A spelling fix has no research behind it, so each row gets LastUpdated only.
@@ -34,10 +34,10 @@ def main():
         if n <= tab.header_idx + 1 or i >= len(r):
             continue
         v = r[i]
-        if isinstance(v, str) and v.strip().lower() in BAD and v != "Gas":
+        if isinstance(v, str) and v.strip().lower() in BAD and v != "gas":
             if v.startswith("="):
                 sys.exit(f"ABORT: formula cell {tab.title}!{push.a1(i)}{n}")
-            cells[("tracker", n, "Fuel")] = {"before": v, "after": "Gas", "pid": r[pid_i], "lines": []}
+            cells[("tracker", n, "Fuel")] = {"before": v, "after": "gas", "pid": r[pid_i], "lines": []}
     ti = tab.col["PipelineType"]
     for n, r in enumerate(tab.rows, 1):
         if n <= tab.header_idx + 1 or ti >= len(r):

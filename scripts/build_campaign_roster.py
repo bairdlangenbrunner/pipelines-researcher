@@ -16,7 +16,7 @@ import pandas as pd
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEV = ["proposed", "construction", "shelved"]
-COUNTED = INDEV + ["mothballed", "idle", "operating"]
+COUNTED = INDEV + ["mothballed", "idled", "operating"]
 MANUAL_COLS = ["priority", "indev_status", "discovery_status", "packet_file", "applied", "notes"]
 
 
@@ -66,7 +66,7 @@ def main():
             counts[c] = ""
     counts[MANUAL_COLS] = counts[MANUAL_COLS].fillna("")
 
-    cols = (["country", "indev_total"] + INDEV + ["mothballed", "idle", "operating", "total_rows"]
+    cols = (["country", "indev_total"] + INDEV + ["mothballed", "idled", "operating", "total_rows"]
             + MANUAL_COLS)
     counts = counts[cols].sort_values(["indev_total", "total_rows"], ascending=False)
     counts.to_csv(out_path, index=False)
