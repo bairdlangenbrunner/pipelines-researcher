@@ -164,6 +164,10 @@ def audit(fp):
             ycol = 'CancelledYear' if eff == 'cancelled' else 'ShelvedYear'
             if not pc.get(ycol) and not str(sr.get('evidence_date') or '')[:4].isdigit():
                 p.append(f'status_reviews[{i}] inferred {eff} without {ycol} or an evidence_date to take it from')
+            ev = str(sr.get('evidence_date') or '')[:4]
+            if pc.get(ycol) and ev.isdigit() and str(pc[ycol]).strip() == ev:
+                p.append(f'status_reviews[{i}] {ycol}={pc[ycol]} is the source year; the rule takes effect after the quiet '
+                         f'period ({int(ev) + (4 if eff == "cancelled" else 2)})')
     for l in (s.get('cross_row_leads') or []):
         # older shards write cross_row_leads as bare strings, newer ones as dicts
         u = l.get('url') or '' if isinstance(l, dict) else str(l)

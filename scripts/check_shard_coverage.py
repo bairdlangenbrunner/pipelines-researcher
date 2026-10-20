@@ -506,7 +506,7 @@ def _aged_proposed(s: dict, sheet, pid: str) -> str:
     want = "cancelled" if age >= 4 else "shelved"
     return (f"confirm on a proposed row with ProposalYear {py} ({age} years old) and no evidence newer than "
             f"2 years -- apply the dormancy rule: stage a `stale` verdict ({want}, ShelvedCancelledType "
-            f"inferred, year of the newest dated source) or say in researcher_notes why the project is alive")
+            f"inferred, year = newest dated source + 2 shelved / + 4 cancelled) or say in researcher_notes why the project is alive")
 
 
 def check_findings(shard: dict, sheet=None, pid: str = "") -> list[dict]:

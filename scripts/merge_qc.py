@@ -6,6 +6,7 @@ one rule set, one implementation: no orphan or unverified ref survives a merge, 
 GEM / blocklisted hosts are stripped (defense in depth; url_verifier rejects them too).
 """
 import glob
+import datetime
 import json
 import os
 import re
@@ -385,10 +386,26 @@ def is_ref_only(proposed_values, current_values):
     return all(_norm_value(prop[c]) == _norm_value(cur.get(c)) for c in prop)
 
 
-def status_qc(verdict, changes, refs, notes):
+DORMANCY_YEARS = {"shelved": 2, "cancelled": 4}
+
+
+def dormancy_year(evidence_date, status):
+    """Year an inferred shelved/cancelled takes effect (Baird 2026-10-20, P3972): the year of the
+    newest dated source PLUS the quiet period (2 for shelved, 4 for cancelled), not the year of the
+    source. A 2023 news item shelves the project in 2025. None when there is no usable date."""
+    yr = str(evidence_date or "").strip()[:4]
+    n = DORMANCY_YEARS.get(str(status or "").lower())
+    return int(yr) + n if yr.isdigit() and n else None
+
+
+def status_qc(verdict, changes, refs, notes, evidence_date="", current_status=""):
     """Merge-time QC for one status_reviews[] record: a 'change' with zero verified
     refs -> 'unclear'; a 'stale' shelved/cancelled inference always gets
-    ShelvedCancelledType=inferred (standing rule 2 — inferred, no fabricated URL).
+    ShelvedCancelledType=inferred (standing rule 2); its ref is the newest dated source (2026-10-16).
+    An inferred shelved/cancelled ALWAYS carries its year too (Baird 2026-10-16): `ShelvedYear` /
+    `CancelledYear` = the year of that newest dated source (`evidence_date`) PLUS the quiet period (+2
+    shelved, +4 cancelled; Baird 2026-10-20), unless the record gave a different year; a year equal to the
+    evidence year (the old default) is corrected.
     Returns (verdict, changes, class_out, notes).
 
     NB the value is lowercase `inferred`, not `Presumed`: verified 2026-08-07 against
@@ -420,4 +437,18 @@ def status_qc(verdict, changes, refs, notes):
                 and (changes.get("ShelvedCancelledType") or "").lower() != "inferred":
             changes["ShelvedCancelledType"] = "inferred"
             notes = qc_note(notes, "set ShelvedCancelledType=inferred (dormancy-rule change).")
+    st_now = (changes.get("Status") or current_status or "").strip().lower()
+    if st_now in ("shelved", "cancelled") and (changes.get("ShelvedCancelledType") or "").lower() == "inferred":
+        ycol = "CancelledYear" if st_now == "cancelled" else "ShelvedYear"
+        yr = dormancy_year(evidence_date, st_now)
+        given = str(changes.get(ycol) or "").strip()
+        ev = str(evidence_date or "").strip()[:4]
+        if yr and (not given or given == ev):
+            changes[ycol] = str(yr)
+            notes = qc_note(notes, f"set {ycol}={yr} (newest dated source {ev} plus the "
+                                   f"{DORMANCY_YEARS[st_now]}-year quiet period; an inferred "
+                                   "shelved/cancelled always carries its year).")
+        if yr and yr > datetime.date.today().year:
+            notes = qc_note(notes, f"the {DORMANCY_YEARS[st_now]}-year quiet period after {ev} ends in {yr}; "
+                                   "the dormancy rule is not met yet.")
     return verdict, changes, STATUS_VERDICT_CLASS.get(verdict, "UNRESOLVED"), notes

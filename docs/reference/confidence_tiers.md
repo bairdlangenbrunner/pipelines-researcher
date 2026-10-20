@@ -56,7 +56,7 @@ ref at `low`, and `sweep_gates.py` gates E (orphans), F (banned/GEM), I (relevan
 | **High** | green | one source that passes every validation check below (2+ independent preferred) — **sufficient; the unit is done**. Exception: a **status change** is green only on 2+ independent publishers |
 | **Medium** | yellow | a usable source with a caveat the agent flags, or a status change resting on one publisher |
 | **Low** | red | a single weak/secondary source, or sources partially conflict |
-| **Inferred / Presumed** | (blank + note) | no verifiable source — flag in `ResearcherNotes`; for status changes set `ShelvedCancelledType = inferred`, no fabricated URL |
+| **Inferred / Presumed** | (blank + note) | no verifiable source — flag in `ResearcherNotes`; for status changes set `ShelvedCancelledType = inferred` plus the `ShelvedYear` / `CancelledYear` (newest dated source year + 2 for shelved, + 4 for cancelled, since the rule takes effect after the quiet period); a dormancy (`stale`) status carries the newest dated independent source as its ref (it proves the last sign of life), never a fabricated URL |
 | **Re-verified** | blue | value unchanged from the existing GEM value but checked again this batch |
 
 **Independent** = genuinely separate origins (company PR **and** a regulator filing

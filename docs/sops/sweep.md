@@ -728,9 +728,10 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
 - **`ref_col="__STATUS__"` (the `status-review` leg / `in-dev` preset)** — a per-segment-row
   status verdict, staged when the sweep runs with `build_deepsweep_args.py --status-review`
   (workflows.md §3). `verdict` ∈ `confirm` / `change` / `stale` / `unclear`; `values` carries the exact
-  column→value edits (`change`: Status + matching date cols, refs required; `stale`: the
-  dormancy-rule inference, `ShelvedCancelledType=inferred` force-added at merge, no ref by
-  design). Routed to a dedicated **`<Cmdty>_StatusReview`** tab that leads the workbook.
+  column→value edits (`change`: Status + matching date cols, refs required — the year AND month of the event the refs state, and the row's other proposal/construction/start dates checked against the same documents, or a note that the date was not found; Baird 2026-10-16, P0241, enforced by `check_shard_coverage.py`; `stale`: the
+  dormancy-rule inference, `ShelvedCancelledType=inferred` AND `ShelvedYear`/`CancelledYear` (newest dated source year + 2 for shelved, + 4 for cancelled; Baird 2026-10-20) force-added at merge; its ref is the
+  newest dated independent source on the project, Baird 2026-10-16). Routed to a dedicated **`<Cmdty>_StatusReview`** tab that leads the workbook.
+  **A `confirm` on a `proposed` row, or a rival that keeps `proposed`, is age-checked against the 2-year (shelved) and 4-year (cancelled) dormancy rules first** (`controlled_vocab.md` → Status-logic conventions; Baird 2026-10-16, P4449). `check_shard_coverage.py` blocks a `confirm` on a proposed row 2+ years past `ProposalYear` unless the notes address the rule or the evidence is under 2 years old; `python scripts/audit_proposed_age.py` lists every aged proposed row on the newest snapshots beside its staged verdicts.
   Verdict vocabulary + QC rules: `docs/sops/annual_update.md`; full record schema:
   `docs/reference/staged_json_schema.md`.
 - **`routes[]` (deep-sweep route-suggestion leg)** — a per-row list of suggested routes for

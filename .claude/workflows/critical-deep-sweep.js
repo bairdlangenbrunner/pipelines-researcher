@@ -79,8 +79,15 @@ one validated dated source makes it a change (tier medium); tier high needs >=2 
 - "stale"   — NO independent news found. Apply the dormancy rules: proposed with no progress
   >=2y -> shelved; shelved >=4y -> cancelled. proposed_changes MUST include
   ShelvedCancelledType="inferred" (lowercase — that is the live column's vocabulary, NOT
-  "Presumed") and the inference gets NO fabricated ref (standing rule 2);
-  set staleness_rule to "2y->shelved" or "4y->cancelled". If dormant but under the threshold,
+  "Presumed"), AND the year column that matches the new Status: ShelvedYear for shelved,
+  CancelledYear for cancelled, set to the year the rule takes effect: the year of that newest dated source PLUS the quiet period,
+  +2 for shelved and +4 for cancelled (news last seen in 2023 means ShelvedYear 2025, not 2023; Baird 2026-10-20).
+  If that year is still in the future the rule is not met, so do not infer. Never skipped, never
+  left blank as "unsupported precision" (Baird 2026-10-16). The ref for the inference is the NEWEST dated independent source you found on the
+  project (the one whose date is evidence_date): the last sign of life is the proof of dormancy
+  (Baird 2026-10-16). Put it in proposed_refs, verified with the pipeline name, and give its date in
+  the notes. Never invent a URL; if no dated source exists at all, say so. Tier medium at most.
+  Set staleness_rule to "2y->shelved" or "4y->cancelled". If dormant but under the threshold,
   use "confirm" and note the last-evidence date.
 - "unclear" — genuinely cannot tell; explain what you tried in researcher_notes.
 evidence_date = date of the MOST RECENT independent evidence found (YYYY-MM where possible).

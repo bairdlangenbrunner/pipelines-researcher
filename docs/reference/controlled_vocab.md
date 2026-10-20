@@ -110,7 +110,7 @@ it above `medium`.
 - No development updates **2 years** post-proposal → `shelved`.
 - No development updates **4+ years** post-proposal → `cancelled`.
 - Confirmed cancelled by owner/news → `cancelled` + `ShelvedCancelledType = confirmed`.
-- Inferred by the GEM dormancy rule → `ShelvedCancelledType = inferred` (no fabricated URL).
+- Inferred by the GEM dormancy rule → `ShelvedCancelledType = inferred`, ref = the newest dated independent source on the project (the last evidence it was alive), AND the matching `ShelvedYear` / `CancelledYear` = the year of that source PLUS the quiet period, +2 shelved and +4 cancelled (Baird 2026-10-20, P3972: last news 2023 means ShelvedYear 2025; never an inferred status without its year, and not inferred at all while that year is still in the future).
 - Date consistency: `Status = operating` ⇒ a `StartYear1` should exist;
   `Status = cancelled` ⇒ a `CancelledYear` (or `StopYear = presumed` for the 4-year rule).
 

@@ -53,7 +53,19 @@ Where things live — **read on demand as the workflow dictates, not all at once
    is to surface what *other*, independent sources exist.
 2. **Never fabricate source URLs.** If a URL can't be verified, describe the source
    precisely in `ResearcherNotes` and flag inferred/presumed. Inferred status change
-   → `ShelvedCancelledType = inferred`, no fabricated URL.
+   → `ShelvedCancelledType = inferred`, and the ref is the NEWEST dated independent source on the
+   project (Baird 2026-10-16): the last evidence the project was alive IS the proof for a dormancy
+   inference, so a `stale` status line carries that URL (verified, name-matched) in `Status [ref]`
+   and the `Shelved`/`Cancelled [ref]` beside the year. Never a made-up URL; if no dated source
+   exists at all, say so and the line stays low. **EVERY suggested shelved-inferred or cancelled-inferred
+   also carries its year (Baird 2026-10-16):** `ShelvedYear` / `CancelledYear` is staged in the same record
+   as `ShelvedCancelledType = inferred`, set to the year the dormancy rule takes effect: the year of that newest dated source PLUS the quiet period
+   (+2 for shelved, +4 for cancelled; Baird 2026-10-20, P3972: news last seen in 2023 means shelved in 2025,
+   not 2023), or the on-hold date the source itself gives, with the source date and the arithmetic named in the note.
+   If that year is still in the future the rule is not met yet and no inference is staged. A year is never left for later and
+   never skipped as "fabricated precision"; if the sheet cell already holds a year, the record keeps it.
+   Merge fills a missing one, and corrects one equal to the source year, from `evidence_date` + the quiet period (`merge_qc.status_qc`; `scripts/fix_dormancy_years.py` re-dates already staged work); `audit_shard.py` flags a record
+   with neither.
 3. **Don't defend wrong findings.** Baird challenges data points actively.
    Acknowledge errors, revise on evidence, regenerate outputs.
 4. **One fully validated ref is SUFFICIENT; 2+ independent sources are PREFERRED**

@@ -47,8 +47,8 @@ row**. Verdict vocabulary:
 | verdict | meaning | merge-time QC |
 |---|---|---|
 | `confirm` | recorded Status verified, with evidence date | — |
-| `change` | evidence-based new status; `proposed_changes` = exact column→value edits (Status + matching date cols) | zero verified refs → downgraded to `unclear` (a status change is a claim; it needs sources) |
-| `stale` | no independent news; dormancy rules (proposed ≥2y → shelved, shelved ≥4y → cancelled) | `ShelvedCancelledType=inferred` force-added; **no ref by design** (an inference has no URL — standing rule 2) |
+| `change` | evidence-based new status; `proposed_changes` = exact column→value edits (Status + matching date cols: the year and month of the event the refs state, with the row's other proposal/construction/start dates checked against the same documents; a source with no date gets a note saying so; Baird 2026-10-16) | zero verified refs → downgraded to `unclear` (a status change is a claim; it needs sources) |
+| `stale` | no independent news; dormancy rules (proposed ≥2y → shelved, shelved ≥4y → cancelled) | `ShelvedCancelledType=inferred` + year (newest dated source + 2 shelved / + 4 cancelled) force-added; **ref = the newest dated independent source** (Baird 2026-10-16: the last evidence the project was alive proves the dormancy; verified + name-matched, `evidence_date` = its date; tier capped at medium, since it shows the last sign of life, not the cancellation) |
 | `unclear` | genuinely undeterminable; notes say what was tried | — |
 
 Class-out mapping: `CONFIRMED` / `CHANGE_PROPOSED` / `STALE` / `UNRESOLVED`. The
