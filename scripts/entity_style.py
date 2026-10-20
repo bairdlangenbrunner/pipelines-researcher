@@ -97,8 +97,9 @@ LONG_FORMS: list[tuple[str, str]] = [
     ("corp limited", "Corp Ltd"),
     ("company incorporated", "Co Inc"),
     ("company inc", "Co Inc"),
-    # "Company" STAYS in the name when the form is LLC / LP (guide): the form is LLC, not Co LLC
-    ("company llc", "Company LLC"),
+    # LLC takes the short form `Co LLC` (Baird 2026-10-20: one spelling per company, the
+    # legal-forms list's short form); "Company" still STAYS before LP (guide)
+    ("company llc", "Co LLC"),
     ("company lp", "Company LP"),
     ("incorporated", "Inc"),
     ("corporation", "Corp"),
@@ -781,9 +782,9 @@ def style(raw: str, country: str | None = None) -> StyleResult:
             # (a token with a parenthesis is part of a parenthetical, never a bare form)
             rest = [_form_key(x) for x in toks[i + 1:]]
             if all(x in forms for x in rest):
-                # "Company" STAYS when the form is LLC / LP (guide): `X Company, L.L.C.` ->
-                # `X Company LLC`, not `X Co LLC`
-                new = "Company" if k in ("company", "co") and set(rest) & {"llc", "lp"} and \
+                # "Company" STAYS when the form is LP (guide): `X Company, L.P.` -> `X Company LP`;
+                # before LLC it shortens: `X Company, L.L.C.` -> `X Co LLC` (Baird 2026-10-20)
+                new = "Company" if k in ("company", "co") and set(rest) & {"lp"} and \
                     toks[i].strip(",.").lower() == "company" else forms[k]
                 if new != toks[i]:
                     toks[i] = new
