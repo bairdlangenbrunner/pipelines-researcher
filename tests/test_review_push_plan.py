@@ -441,3 +441,18 @@ def test_a_text_fragment_comma_survives_an_additive_ref_write():
     text, new = push.add_refs(frag, ["https://ferc.gov/b"])
     assert text == f"{frag}, https://ferc.gov/b" and new == ["https://ferc.gov/b"]
     assert push.add_refs(frag, [frag]) == (frag, [])
+
+
+def test_a_ref_label_before_a_url_never_reaches_the_cell():
+    # P2322 / P4149, 2026-10-20: a suggestion of `URL1, Owner [ref]=URL2` wrote the label into the cell
+    assert push.split_urls("Start [ref]=https://a.org/x, Owner [ref]=http://b.org/y") == ["https://a.org/x", "http://b.org/y"]
+    text, new = push.add_refs("https://a.org/x, Owner [ref]=http://b.org/y", ["https://c.org/z"])
+    assert text == "https://a.org/x, http://b.org/y, https://c.org/z" and new == ["https://c.org/z"]
+
+
+def test_a_respelled_owner_keeps_its_refs_and_a_sentence_is_not_an_owner():
+    # P2227 BOTAS -> BOTAS AS kept its botas.gov.tr ref; P1783's concern note never goes into Owner1
+    assert push.respelling("Owner1", "BOTAŞ", "BOTAŞ AŞ")
+    assert not push.respelling("Owner1", "Gazprom PJSC", "Novatek PJSC")
+    note = "Sakhalin Energy LLC (100.00%) — value confirmed correct, but the stake is not resolved"
+    assert push.unstyled_names({"Owner1": note})[0][3].startswith("held: note text")

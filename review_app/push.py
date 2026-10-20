@@ -192,15 +192,26 @@ ALIAS_COLS = {"OtherEnglishNames", "OtherLanguagePrimaryPipelineName",
               "OtherLanguageAlternativePipelineNames", "OtherLanguageSegmentName"}
 
 
+# a reviewer's suggestion sometimes repeats the cell name before a URL (`URL1, Owner [ref]=URL2`),
+# and until 2026-10-20 that label went to the sheet as part of the cell text (P1783, P2322, P3365,
+# P4149, P0756)
+_REF_LABEL = r"(?:[A-Za-z0-9/ ]+?\[ref\]\s*=\s*)?"
+
+
 def split_urls(text):
     """The URLs in a `[ref]` cell. Splits only at a comma or semicolon that starts the next URL: a
     text fragment (`#:~:text=...existing,Waha...`) holds commas of its own, and splitting on every
-    comma wrote `existing, Waha` back into P7862's cells (2026-10-18)."""
-    return [u.strip() for u in re.split(r"[,;]\s*(?=https?://)", str(text or "")) if u.strip()]
+    comma wrote `existing, Waha` back into P7862's cells (2026-10-18). A `Col [ref]=` label in front
+    of a URL is dropped."""
+    parts = re.split(r"[,;]\s*(?=" + _REF_LABEL + r"https?://)", str(text or ""))
+    return [re.sub("^" + _REF_LABEL, "", u.strip()) for u in parts if u.strip()]
 
 
 def add_refs(current, urls):
-    """The live cell text kept verbatim, with the missing URLs appended."""
+    """The live cell text kept verbatim, with the missing URLs appended. A `Col [ref]=` label an
+    earlier push left in the cell is cleaned out on the way."""
+    if re.search(r"\[ref\]\s*=", current):
+        current = ", ".join(split_urls(current))
     new = [u for u in dict.fromkeys(urls) if u not in current]
     if not new:
         return current, new
@@ -223,6 +234,18 @@ def ref_write(cur_ref, proposed, cleared, changed, remaining):
         return "" if (not remaining and cur_ref.strip()) else None
     text, new = add_refs(cur_ref, proposed)
     return text if new else None
+
+
+def respelling(col, cur, v):
+    """True when an Owner<N>/Operator change only re-spells the same company (`BOTAS` -> `BOTAS AS`,
+    `Transco` -> its ruled full name): the old refs still name it, so they stay and new ones append.
+    P2227's 2026-10-20 plan would have dropped its botas.gov.tr ref over a legal-form suffix."""
+    if not NAME_COL.fullmatch(str(col)):
+        return False
+    a, b = entity_style.style(str(cur)), entity_style.style(str(v))
+    if entity_style.needs_person(a) or entity_style.needs_person(b):
+        return False
+    return a.styled.strip().casefold() == b.styled.strip().casefold()
 
 
 def same_value(cur, v):
@@ -448,6 +471,10 @@ def unstyled_names(writes):
         sv = str(v or "").strip()
         if not NAME_COL.fullmatch(str(c)) or not sv:
             continue
+        if len(sv.split()) > 12 or re.search(r"\s[\u2013\u2014-]\s+[a-z]", sv):
+            # a sentence, not a name: P1783's concern candidate carried its note into Owner1 (2026-10-20)
+            out.append((c, sv, "", "held: note text, not a company name"))
+            continue
         st = entity_style.style(sv)
         if entity_style.needs_person(st):
             out.append((c, sv, st.styled, "held: " + ", ".join(st.flags)))
@@ -544,6 +571,8 @@ def build_plan(commodity="gas", include_stale=False, allow_unstyled=False, count
                 if c in ALIAS_COLS:     # a name's pages ride in Status [ref] beside the status refs: append only
                     continue
                 if c != rc and str(tab.cell(row, c)).strip() != "":
+                    if v != "" and respelling(c, tab.cell(row, c), v):     # same company: refs still back it
+                        continue
                     (cleared if v == "" else changed).append(c)
             remaining = [c for c in (l.get("value_cols") or []) if c in tab.col and c not in cleared
                          and str(writes.get(c, tab.cell(row, c))).strip() != ""]
