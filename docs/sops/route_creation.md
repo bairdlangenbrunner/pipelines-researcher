@@ -195,6 +195,8 @@ suggest as for any line. On an authorized §8 apply, `apply_route_candidates.py 
 before the plan. The plan / review / `--apply` protocol and the three-way sync below are
 unchanged, and accepting in the app authorizes nothing by itself.
 
+The review app also shows each candidate on a map, and a line whose geometry is already in the routes repo shows as already added (`review_app/route_state.py`), so it is not applied twice. `apply_route_candidates.py --apply` writes an `applied` marker (`{date, by, sheet_row, commit, backup}`) on each candidate it wrote in `staged_resolutions.json` and records an `apply` decision in the store `log` tab; `--decisions` skips a PID that is already added. `build_route_candidate.py` stamps a plain `provenance` summary (how the route was traced, from which map, with how many control points) on each new record, and the page shows it with the snapshot and overlay pictures from the run folder, so keep those files in the staging dir. Every §8 apply is followed in the same turn by a rebuild, publish and `--mark-published` of the review page.
+
 ### The three-way sync rule (cardinal — Baird 2026-07-31)
 
 **`RouteType`, `RouteAccuracy`, and the routes repo must ALWAYS agree.** They are
