@@ -645,3 +645,23 @@ def test_route_not_in_the_repo_is_an_open_line(tmp_path, monkeypatch):
     line = _find(data, "P9004", "route", sheet_row=7)[0]
     assert not line.get("applied") and not line.get("route_disagree")
     assert stats["route_applied"] == stats["route_disagree"] == 0
+
+
+def test_route_that_differs_from_the_repo_carries_the_current_route(tmp_path, monkeypatch):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    _route_state_as(monkeypatch, s, [[29.0, 49.0, 5.0], [32.0, 52.0]], mapped=True)
+    data, _ = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    geo = _find(data, "P9004", "route", sheet_row=7)[0]["geo"]
+    assert geo["current"]["features"][0]["geometry"] == {"type": "LineString", "coordinates": [[29.0, 49.0], [32.0, 52.0]]}
+    assert geo["current_length_km"] == 395.7                         # geodesic, one decimal
+    assert geo["bbox"] == [29.0, 49.0, 32.0, 52.0]                   # covers both routes
+
+
+def test_route_already_in_the_repo_sends_no_second_copy(tmp_path, monkeypatch):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    _route_state_as(monkeypatch, s, [[30.12345678, 50.1], [31.5, 51.7654321]], mapped=True)
+    data, _ = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    geo = _find(data, "P9004", "route", sheet_row=7)[0]["geo"]
+    assert geo["current"] is None and geo["current_length_km"] is None

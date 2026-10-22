@@ -63,6 +63,7 @@ import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
 from ref_pairs import OO_PRIMARY  # noqa: E402
+from adapter_base import geodesic_km  # noqa: E402
 from build_ref_workbook import J, _annotate_kept_refs, _ref_cell_text  # noqa: E402
 
 OO_TAB = "operators_owners"
@@ -908,15 +909,17 @@ def _line(e, snap, own, stats, root=None):
             "geometry_file", "length_km", "sheet_length_km", "length_ratio",
             "suggested_route_accuracy", "qc_passed")})
         base["current_route_accuracy"] = r.get("current_route_accuracy") or srow.get("RouteAccuracy", "")
-        # map data (gem-review-app plan, "Geo"): `current` is filled later from the routes repo
+        # map data (gem-review-app plan, "Geo"); `current` is the routes-repo file when it differs from the candidate
         gf = r.get("geometry_file")
         gpath = Path(root or staged_store.BATCHES_ROOT).parent / e.dir / gf if gf else None
-        base["geo"] = _route_geo(gpath, r) if gpath else None
+        # already added? the routes-repo mirror + the snapshot row (route_state.py); the past applies left no marker
+        js = route_state.judge(r, gpath, srow, "oil" if "-oil/" in e.dir + "/" else "gas") if gpath else None
+        cur = paths.gem_route_path(r.get("project_id") or "", "oil" if "-oil/" in e.dir + "/" else "gas") \
+            if js and js["state"] == "differs" else None
+        base["geo"] = _route_geo(gpath, r, cur) if gpath else None
         if base["geo"] is None:
             stats["geo_missing"] += 1
-        # already added? the routes-repo mirror + the snapshot row (route_state.py); the past applies left no marker
-        if gpath:
-            js = route_state.judge(r, gpath, srow, "oil" if "-oil/" in e.dir + "/" else "gas")
+        if js:
             if js["applied"]:
                 base["applied"] = base["detected_applied"] = js["applied"]
                 stats["route_applied"] += 1
@@ -927,13 +930,13 @@ def _line(e, snap, own, stats, root=None):
     return base
 
 
-def _route_geo(path, rec):
-    """Candidate route geometry for the page's map, or None when the file is missing, unreadable or
-    holds no line coordinates. Lines only, 6-decimal x/y, no z, no properties; never simplified."""
+def _geo_lines(path):
+    """(features, points) of the line geometry in a geojson file: lines only, 6-decimal x/y, no z, no
+    properties; never simplified. ([], []) when the file is missing, unreadable or holds no line."""
     try:
         gj = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        return None
+        return [], []
     t = gj.get("type") if isinstance(gj, dict) else None
     geoms = [f.get("geometry") for f in gj.get("features") or []] if t == "FeatureCollection" else \
         [gj.get("geometry")] if t == "Feature" else [gj]
@@ -952,12 +955,28 @@ def _route_geo(path, rec):
         pts += [c for ln in lines for c in ln]
         coords = lines[0] if g["type"] == "LineString" else lines
         feats.append({"type": "Feature", "properties": {}, "geometry": {"type": g["type"], "coordinates": coords}})
+    return feats, pts
+
+
+def _route_geo(path, rec, current_path=None):
+    """Candidate route geometry for the page's map, or None when the candidate file holds no line.
+    `current_path` is the routes-repo file the candidate would replace; its lines fill `current` and
+    `current_length_km`, and the bbox covers both."""
+    feats, pts = _geo_lines(path)
     if not feats:
         return None
-    xs, ys = [c[0] for c in pts], [c[1] for c in pts]
-    return {"candidate": {"type": "FeatureCollection", "features": feats}, "current": None,
+    cur, cpts = _geo_lines(current_path) if current_path else ([], [])
+    cur_km = None
+    if cur:
+        km = geodesic_km({"type": "MultiLineString", "coordinates": [
+            ln for f in cur for ln in ([f["geometry"]["coordinates"]] if f["geometry"]["type"] == "LineString"
+                                       else f["geometry"]["coordinates"])]})
+        cur_km = round(km, 1) if km else None
+    xs, ys = [c[0] for c in pts + cpts], [c[1] for c in pts + cpts]
+    return {"candidate": {"type": "FeatureCollection", "features": feats},
+            "current": {"type": "FeatureCollection", "features": cur} if cur else None,
             "bbox": [min(xs), min(ys), max(xs), max(ys)], "length_km": rec.get("length_km"),
-            "current_length_km": None, "file": rec.get("geometry_file"),
+            "current_length_km": cur_km, "file": rec.get("geometry_file"),
             "start_name": rec.get("start_name") or "", "end_name": rec.get("end_name") or ""}
 
 
