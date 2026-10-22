@@ -490,7 +490,8 @@ def unstyled_names(writes):
         sv = str(v or "").strip()
         if not NAME_COL.fullmatch(str(c)) or not sv:
             continue
-        if len(sv.split()) > 12 or re.search(r"\s[\u2013\u2014-]\s+[a-z]", sv):
+        ruled = sv in {v.get("styled") for v in entity_style.rulings()["names"].values()}   # a named ruling is not a note (2026-10-22, P5624)
+        if not ruled and (len(sv.split()) > 12 or re.search(r"\s[\u2013\u2014-]\s+[a-z]", sv)):
             # a sentence, not a name: P1783's concern candidate carried its note into Owner1 (2026-10-20)
             out.append((c, sv, "", "held: note text, not a company name"))
             continue
