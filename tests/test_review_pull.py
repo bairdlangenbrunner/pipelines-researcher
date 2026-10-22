@@ -92,7 +92,7 @@ def test_initials_are_first_and_last_and_leave_machines_alone():
     assert store.initials("Baird Langenbrunner") == "BL" and store.initials("Mary Ann de la Cruz") == "MC"
     assert store.initials("Analyst@GlobalEnergyMonitor.org") == "A"              # a one-part address: its first letter
     assert store.initials("x_y-z+tag@a.org") == "XT" and store.initials("BL") == "BL"   # applying it twice is a no-op
-    for name in ("backend sync", "push", "", None):
+    for name in ("backend sync", "push", "apply_route_candidates", "", None):
         assert store.initials(name) == name
 
 

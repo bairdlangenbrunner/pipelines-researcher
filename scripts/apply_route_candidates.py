@@ -58,7 +58,15 @@ Usage:
 
 --decisions sources the PID list from the staging dir's review-app decisions (review_decisions.json):
 every ROUTE_CANDIDATE line a person ACCEPTED. It is an alternative to --pids (both together, or no
-accepted route lines, is refused); the plan / review / apply phases are unchanged.
+accepted route lines, is refused); the plan / review / apply phases are unchanged. An accepted line
+that is already added (an `applied` marker, or review_app/route_state.py finds the geometry in the
+routes repo with the snapshot row mapped) is left out and listed.
+
+After a verified --apply (not --backfill-route-type), each written candidate gets an `applied`
+marker in staged_resolutions.json ({date, by, sheet_row, commit, backup}), and the decision store
+gets one `apply_route_candidates` machine record per line (ledger origin 'apply', then the staging
+dir's log), so the review page shows the line as already added. Rebuild and republish the review
+page afterwards.
 """
 import argparse
 import csv
@@ -68,8 +76,9 @@ import os
 import re
 import subprocess
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 REPO = Path(__file__).resolve().parents[1]
 ROUTES_REPO = REPO.parent / "GOIT-GGIT-pipeline-routes"
@@ -83,12 +92,12 @@ COLS = ["RouteType", "RouteAccuracy", "RouteNotes", "RouteCreator", "Route [ref]
 # every row-specific sheet write also stamps the row (Baird 2026-10-02): Researcher SET to CB,
 # LastUpdated = today's date serial (a RAW integer keeps the cell's date format)
 STAMP = ["Researcher", "LastUpdated"]
+AGENT = "apply_route_candidates"      # the machine reviewer on the review app's records
+ET = ZoneInfo("America/New_York")
 
 
 def stamp_values() -> dict:
-    from datetime import datetime
-    from zoneinfo import ZoneInfo
-    today = datetime.now(ZoneInfo("America/New_York")).date()
+    today = datetime.now(ET).date()
     return {"Researcher": "CB", "LastUpdated": (today - date(1899, 12, 30)).days}
 
 
@@ -187,19 +196,30 @@ def stamp_of(proposed_notes: str) -> str:
     return proposed_notes[i:].strip()
 
 
-def pids_from_decisions(staging, replace: bool = False) -> list[str]:
+def pids_from_decisions(staging, replace: bool = False, csv_path=None,
+                        commodity: str = "gas") -> list[str]:
     """ProjectIDs of the staging dir's ROUTE_CANDIDATE lines (ref_col __ROUTE__) that a person
     accepted in the review app (`Decisions.person_decision`; machine records do not count).
-    `replace` selects replacement candidates like build_plan. Exits non-zero when none."""
+    `replace` selects replacement candidates like build_plan. A line already added (an `applied`
+    marker, or route_state.judge on the `csv_path` snapshot row) is left out and listed.
+    Exits non-zero when none."""
     sys.path.insert(0, str(REPO / "review_app"))
     from decisions import Decisions
+    import route_state
     staging = Path(staging)
     dec = Decisions(staging)
     staged = json.loads((staging / "staged_resolutions.json").read_text())
-    pids = sorted({r["project_id"] for r in staged["resolutions"]
-                   if r.get("class_out") == "ROUTE_CANDIDATE" and r.get("ref_col") == "__ROUTE__"
-                   and bool(r.get("replacement")) == replace
-                   and dec.person_decision(r, "route") == "accept"})
+    rows = route_state.snapshot_rows(csv_path) if csv_path else {}
+    accepted = [r for r in staged["resolutions"]
+                if r.get("class_out") == "ROUTE_CANDIDATE" and r.get("ref_col") == "__ROUTE__"
+                and bool(r.get("replacement")) == replace
+                and dec.person_decision(r, "route") == "accept"]
+    added = sorted({r["project_id"] for r in accepted
+                    if r.get("applied") or (r.get("geometry_file") and route_state.judge(
+                        r, staging / r["geometry_file"], rows.get(r["project_id"]), commodity)["applied"])})
+    if added:
+        print(f"--decisions: {len(added)} accepted route line(s) already added, left out: {','.join(added)}")
+    pids = sorted({r["project_id"] for r in accepted} - set(added))
     if not pids:
         sys.exit(f"--decisions: no accepted route lines in {staging} "
                  "(no review_decisions.json, or no ROUTE_CANDIDATE line has an accept)")
@@ -211,7 +231,8 @@ def resolve_pid_source(args) -> None:
     if args.decisions:
         if args.pids:
             sys.exit("give --pids or --decisions, not both")
-        args.pids = ",".join(pids_from_decisions(args.staging, args.replace))
+        args.pids = ",".join(pids_from_decisions(args.staging, args.replace, getattr(args, "csv", None),
+                                                 getattr(args, "commodity", "gas")))
         print(f"--decisions: {len(args.pids.split(','))} accepted route line(s): {args.pids}")
 
 
@@ -365,6 +386,71 @@ def apply_plan(plan: list[dict], tab: str, col_letter: dict) -> None:
     print(f"verified: all {len(data)} cells read back exactly as planned")
 
 
+def routes_commit(pid: str, commodity: str) -> str:
+    """Short hash of the newest routes-repo commit touching the PID's geojson ('' when git cannot say)."""
+    files = [f for f in glob.glob(str(ROUTES_REPO / "data" / "individual-routes" / ROUTE_DIRS[commodity]
+                                      / "**" / f"*{pid}*.geojson"), recursive=True)
+             if re.search(rf"{pid}(?!\d)", os.path.basename(f))]
+    if not files:
+        return ""
+    out = subprocess.run(["git", "-C", str(ROUTES_REPO), "log", "-1", "--format=%h", "--", *files],
+                         capture_output=True, text=True)
+    return out.stdout.strip()
+
+
+def mark_applied(staging, plan: list[dict], commodity: str, replace: bool) -> None:
+    """The `applied` marker on each written candidate in staged_resolutions.json (route_state.py
+    and the review page read it); the file keeps its indent and trailing newline."""
+    today = datetime.now(ET).date().isoformat()
+    by_pid = {p["pid"]: p for p in plan}
+    f = Path(staging) / "staged_resolutions.json"
+    text = f.read_text()
+    m = re.search(r"\n( +)\"", text)
+    indent = len(m.group(1)) if m else 1
+    data = json.loads(text)
+    n = 0
+    for r in data["resolutions"]:
+        p = by_pid.get(r.get("project_id"))
+        if p and r.get("class_out") == "ROUTE_CANDIDATE" and bool(r.get("replacement")) == replace:
+            commit = routes_commit(p["pid"], commodity)
+            r["applied"] = {"date": today, "by": AGENT, "sheet_row": p["sheet_row"],
+                            **({"commit": commit} if commit else {}), "backup": p.get("backup", "")}
+            n += 1
+    f.write_text(json.dumps(data, ensure_ascii=False, indent=indent) + ("\n" if text.endswith("\n") else ""))
+    print(f"marked {n} candidates applied in {f}")
+
+
+def record_ledger(staging, plan: list[dict], commodity: str, snapshot: str, root: Path = REPO) -> None:
+    """One `apply_route_candidates` machine record per written route line (a machine record is not
+    a click; the line shows as applied): to the decision store first (ledger origin 'apply'), then
+    the staging dir's log. The key is the review page's: <dir>::<pid>|<row>|__ROUTE__, the dir relative
+    to `root` (the repo)."""
+    sys.path.insert(0, str(REPO / "review_app"))
+    import ledger
+    import pull
+    import store
+    from trackers.pipelines.config import make_key   # store puts ../gem-review-app on sys.path
+    d = Path(staging).resolve().relative_to(Path(root).resolve()).as_posix()
+    ts = datetime.now(ET).isoformat(timespec="seconds")
+    recs = [{"key": make_key(d, p["pid"], p["sheet_row"], "__ROUTE__"), "dir": d, "pid": p["pid"],
+             "sheet_row": p["sheet_row"], "ref_col": "__ROUTE__", "kind": "route", "decision": "accept",
+             "suggested_value": "", "note": f"route columns written to the sheet by scripts/apply_route_candidates.py {ts}",
+             "reviewer": AGENT, "ts": ts, "undecided": False} for p in plan]
+    dirs = {d: Path(root) / d}
+    cfg = pull.config()
+    if cfg.get("store_sheet_id"):
+        led = ledger.Ledger(cfg["store_sheet_id"], f"review-app-{commodity}", snapshot, "apply")
+        store.append_records(recs, dirs, sink=led.sink)
+        print(f"apply records in the decision store: rows {recs[0].get('row')}-{recs[-1].get('row')}")
+    else:
+        print("WARNING: no decision store configured; apply records written to the staging dir only",
+              file=sys.stderr)
+        store.append_records(recs, dirs)
+    print(f"apply records written for {len(recs)} route lines")
+    print("NEXT, before reporting the apply: rebuild + republish the review page so it matches the sheet "
+          "(build_all.py, Artifact publish, build_all.py --mark-published <page>)")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--staging", required=True,
@@ -406,15 +492,21 @@ def main() -> None:
         else "apply_route_replacements_plan.json" if args.replace
         else "apply_route_candidates_plan.json")
     if args.apply:
-        apply_plan(json.loads(plan_path.read_text()), tab, col_letter)
+        plan = json.loads(plan_path.read_text())
+        apply_plan(plan, tab, col_letter)
+        if not args.backfill_route_type:
+            mark_applied(args.staging, plan, args.commodity, args.replace)
+            record_ledger(args.staging, plan, args.commodity, Path(args.csv).name)
         return
 
     plan = build_plan(args, tab, col_letter, pid_letter)
-    plan_path.write_text(json.dumps(plan, indent=1, ensure_ascii=False))
     suffix = ("route-type-backfill" if args.backfill_route_type
               else "route-replacements" if args.replace else "route-columns")
     backup = REPO / "notes" / \
         f"sheet-write-{date.today().isoformat()}-{args.scope_slug}-{suffix}.csv"
+    for p in plan:
+        p["backup"] = backup.name      # carried onto the staged `applied` marker by --apply
+    plan_path.write_text(json.dumps(plan, indent=1, ensure_ascii=False))
     # APPEND, never truncate: a second plan for the same scope on the same day
     # (a follow-up row, a re-plan) must not erase the first write's before-state
     fresh = not backup.exists()

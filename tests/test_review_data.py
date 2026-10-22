@@ -601,3 +601,47 @@ def test_route_geo_normalizes_shapes(tmp_path):
     assert rd._route_geo(p, rec) is None
     p.write_text("not json")
     assert rd._route_geo(p, rec) is None
+
+
+def _route_state_as(monkeypatch, s, live_lines, mapped):
+    """The routes-repo mirror holds `live_lines` for every PID (None: no file) and the snapshot row says mapped or not."""
+    import route_state
+    live = s["root"] / "routes_mirror.geojson"
+    if live_lines is not None:
+        live.write_text(json.dumps({"type": "LineString", "coordinates": live_lines}))
+    monkeypatch.setattr(route_state.paths, "gem_route_path",
+                        lambda pid, commodity=None: live if live_lines is not None else None)
+    monkeypatch.setattr(route_state, "last_commit", lambda path: ("abc1234", "2026-10-21"))
+    monkeypatch.setattr(route_state, "sheet_mapped", lambda row: mapped)
+
+
+def test_route_already_added_is_applied_by_the_routes_repo(tmp_path, monkeypatch):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    _route_state_as(monkeypatch, s, [[30.12345678, 50.1], [31.5, 51.7654321]], mapped=True)
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    line = _find(data, "P9004", "route", sheet_row=7)[0]
+    assert line["applied"] == line["detected_applied"] == {
+        "by": "routes_repo", "at": "2026-10-21", "commit": "abc1234", "sheet": True}
+    assert not line.get("route_disagree")
+    assert stats["route_applied"] == 1 and stats["route_disagree"] == 0
+
+
+def test_route_in_the_repo_but_not_on_the_sheet_is_held_with_the_disagreement(tmp_path, monkeypatch):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    _route_state_as(monkeypatch, s, [[30.12345678, 50.1], [31.5, 51.7654321]], mapped=False)
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    line = _find(data, "P9004", "route", sheet_row=7)[0]
+    assert not line.get("applied") and line["default"] == "hold" and "abc1234" in line["route_disagree"]
+    assert stats["route_applied"] == 0 and stats["route_disagree"] == 1
+
+
+def test_route_not_in_the_repo_is_an_open_line(tmp_path, monkeypatch):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    _route_state_as(monkeypatch, s, None, mapped=False)
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    line = _find(data, "P9004", "route", sheet_row=7)[0]
+    assert not line.get("applied") and not line.get("route_disagree")
+    assert stats["route_applied"] == stats["route_disagree"] == 0

@@ -58,6 +58,7 @@ for _p in (ROOT / "scripts", ROOT / "review_app"):
 
 import entity_style  # noqa: E402
 import paths  # noqa: E402
+import route_state  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
@@ -484,7 +485,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
              "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": [],
              "rivals": 0, "corroborations": 0, "wikidiff_skipped": 0,
-             "routeqc_skipped": 0, "recon_skipped": 0, "updates_skipped": 0, "geo_missing": 0}
+             "routeqc_skipped": 0, "recon_skipped": 0, "updates_skipped": 0, "geo_missing": 0,
+             "route_applied": 0, "route_disagree": 0}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
     entries, rec_csv, rec_own = [], [], []
@@ -908,9 +910,20 @@ def _line(e, snap, own, stats, root=None):
         base["current_route_accuracy"] = r.get("current_route_accuracy") or srow.get("RouteAccuracy", "")
         # map data (gem-review-app plan, "Geo"): `current` is filled later from the routes repo
         gf = r.get("geometry_file")
-        base["geo"] = _route_geo(Path(root or staged_store.BATCHES_ROOT).parent / e.dir / gf, r) if gf else None
+        gpath = Path(root or staged_store.BATCHES_ROOT).parent / e.dir / gf if gf else None
+        base["geo"] = _route_geo(gpath, r) if gpath else None
         if base["geo"] is None:
             stats["geo_missing"] += 1
+        # already added? the routes-repo mirror + the snapshot row (route_state.py); the past applies left no marker
+        if gpath:
+            js = route_state.judge(r, gpath, srow, "oil" if "-oil/" in e.dir + "/" else "gas")
+            if js["applied"]:
+                base["applied"] = base["detected_applied"] = js["applied"]
+                stats["route_applied"] += 1
+            if js["disagree"]:
+                base["route_disagree"] = js["disagree"]
+                base["default"] = "hold"
+                stats["route_disagree"] += 1
     return base
 
 
@@ -1241,6 +1254,9 @@ def summary(data, stats):
         out.append(f"recon staging dirs left out for now: {stats['recon_skipped']}")
     if stats.get("updates_skipped"):
         out.append(f"country-scoped update stores left out (handoff workbook only): {stats['updates_skipped']}")
+    if stats.get("route_applied") or stats.get("route_disagree"):
+        out.append(f"route lines already added: {stats.get('route_applied', 0)}   "
+                   f"route lines where the routes repo and the sheet disagree (held): {stats.get('route_disagree', 0)}")
     if stats.get("value_moved"):
         out.append(f"ref-only lines dropped, the value they checked has since changed on the sheet: {stats['value_moved']}")
     if stats.get("done_dropped"):

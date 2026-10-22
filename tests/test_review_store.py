@@ -96,7 +96,7 @@ def test_latest_wins_and_undo_unreviews(scope):
 
 
 def test_machine_reviewer_is_not_reviewed(scope):
-    assert store.MACHINE_REVIEWERS == {"backend sync", "push"}
+    assert store.MACHINE_REVIEWERS == {"backend sync", "push", "apply_route_candidates"}
     l = line(scope["dataset"], "P9002", "fill")
     dec(scope, [{"key": l["key"], "decision": "accept"}], who="backend sync")
     assert not store.reviewed(store.latest(store.read_log(scope["dirs"][l["dir"]]))[l["key"]])

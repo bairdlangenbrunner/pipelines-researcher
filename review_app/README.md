@@ -125,7 +125,8 @@ to the `log` tab of the store spreadsheet (`google.json: store_sheet_id`) FIRST 
 dir's sidecars second — `review_app/ledger.py`, the same 19-column row Code.gs writes. Doors:
 the served Google page (Code.gs, origin `gas`), the loopback server (`store.decide(…, sink=Ledger.sink)`,
 origin `local`), a Claude chat (`python review_app/ledger.py decide --key K --decision accept`, origin
-`chat`), `push.py`'s `push` records, a refresh's `backend sync` records and a publish's carry-forwards.
+`chat`), `push.py`'s `push` records, `apply_route_candidates.py`'s `apply_route_candidates` records
+(origin `apply`, written after a verified §8 sheet apply), a refresh's `backend sync` records and a publish's carry-forwards.
 The store is the single source of truth; the sidecars are its committed mirror (`pull.py` fills in
 what the Google page wrote); the workbook, the push plan and the published dataset all read one
 history. A store that cannot be written **refuses the decision** (502 on the server, exit 2 on the
