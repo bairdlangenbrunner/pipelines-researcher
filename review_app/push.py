@@ -65,7 +65,9 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     It also REFUSES a value the styler holds for a person (entity_style.needs_person: a stake note such
     as `(affiliate)` or `(via ...)`, several owners in one cell, a judgment-flagged re-spelling); before
     2026-10-14 those passed silently (P7829 MVP). Fix the line with a suggest, or rule on the name in
-    data/owner_rulings.json, and re-plan.
+    data/owner_rulings.json, and re-plan. An Operator cell may hold several operators separated by `; `
+    when each one is already in style (Baird 2026-10-22, P5585): there is no Operator2 column. A list with
+    a slash, or with any name the styler would re-spell, is still refused. Owner cells keep one company each.
   * STYLE-ONLY lines (Baird 2026-10-05): a line flagged `style_only` (an owner-style batch: the entity is
     unchanged, only its spelling moves) stamps LastUpdated but leaves Researcher as it is -- the person
     who researched the ownership keeps the credit. A row with any non-style-only line is stamped in full
@@ -316,12 +318,14 @@ COARSE = ("Prefecture/District", "State/Province", "CountryOrArea")
 
 
 def parse_suggest(text, tab):
-    """`Col=value; Col2=value2` -> {col: value} when every Col is a column of the tab, else None."""
+    """`Col=value; Col2=value2` -> {col: value} when every Col is a column of the tab, else None. A `;`
+    splits only where a `Col=` follows, so a value may hold one (`Operator=A LLC; B LLC`)."""
     out = {}
-    for part in str(text or "").split(";"):
+    cols = "|".join(re.escape(c) for c in sorted(tab.col, key=len, reverse=True))
+    for part in re.split(r";\s*(?=(?:" + cols + r")\s*=)", str(text or "")):
         c, eq, v = part.partition("=")
-        if not eq or c.strip() not in tab.col:
-            return None
+        if not eq or c.strip() not in tab.col or re.search(r";\s*[A-Za-z][\w%/ \[\]]*=", v):
+            return None         # a `; Typo=` in the value names a column the tab does not have
         out[c.strip()] = v.strip()
     return out or None
 
@@ -462,6 +466,21 @@ def staleness(l, rec, tab, row):
     return "; ".join(why)
 
 
+def operator_list_in_style(value):
+    """Is `value` two or more operators joined by `; `, each one already in the ownership team's style?
+    (Baird 2026-10-22: two operators in one cell is fine when each is styled.)"""
+    if "; " not in value or "/" in value:
+        return False
+    parts = value.split("; ")
+    if any(not p.strip() or p != p.strip() for p in parts):
+        return False
+    for p in parts:
+        st = entity_style.style(p)
+        if st.changed or entity_style.needs_person(st):
+            return False
+    return True
+
+
 def unstyled_names(writes):
     """[(col, value, styled, why)] for the Owner<N> / Operator cells a line would write in a spelling the
     ownership team would not use: `why` is "restyle" where adopting the team's spelling needs no person,
@@ -476,6 +495,8 @@ def unstyled_names(writes):
             out.append((c, sv, "", "held: note text, not a company name"))
             continue
         st = entity_style.style(sv)
+        if c == "Operator" and operator_list_in_style(sv):
+            continue
         if entity_style.needs_person(st):
             out.append((c, sv, st.styled, "held: " + ", ".join(st.flags)))
         elif st.changed and entity_style.adoptable(st):

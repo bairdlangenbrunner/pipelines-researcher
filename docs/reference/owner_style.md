@@ -37,7 +37,7 @@ is staged only into `Owner<N>` (with its `Owner<N>%`) or `Operator`, via a recor
 `tab: "operators_owners"` and `ref_col: "Owner [ref]"` / `"Operator [ref]"` — never into the
 tracker's `Owner` / `Operator` columns. `Operator` is ONE cell with no `Operator1..N`, and the
 sheet does hold `A; B` lists there; the styler flags those `multi_owner` (the style batch files
-them as `multi_operator`) and leaves the shape to a human.
+them as `multi_operator`) and leaves the shape to a human. Two or more operators joined by `; ` may go into `Operator` when each one is already in style and none has a slash (Baird 2026-10-22, P5585: `Gazprom Transgaz Saint Petersburg LLC; Gazprom Transgaz Ukhta LLC`); `push.py` lets that through and still holds an `Owner<N>` list.
 
 ## The rules (team examples where the guide gives one)
 

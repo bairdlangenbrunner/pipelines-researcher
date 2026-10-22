@@ -353,6 +353,23 @@ def test_a_held_owner_name_is_refused_beside_a_restyle():
     assert "owner_qualifier" in got["Owner2"] and "multi_owner" in got["Owner5"]
 
 
+def test_two_styled_operators_pass_but_an_owner_list_or_a_slash_is_held():
+    # P5585, Baird 2026-10-22: two operators in one cell is fine when each is styled
+    ok = "Gazprom Transgaz Saint Petersburg LLC; Gazprom Transgaz Ukhta LLC"
+    assert push.unstyled_names({"Operator": ok}) == []
+    got = {c: why for c, _, _, why in push.unstyled_names({
+        "Owner1": ok, "Operator": "Gazprom Transgaz Saint Petersburg / Gazprom Transgaz Ukhta"})}
+    assert set(got) == {"Owner1", "Operator"}
+
+
+def test_a_suggest_value_may_hold_a_semicolon():
+    class Tab:
+        col = {"Operator": 17, "OperatorLocalLanguage": 18}
+    got = push.parse_suggest("Operator=A LLC; B LLC; OperatorLocalLanguage=ООО «А»; ООО «Б»", Tab)
+    assert got == {"Operator": "A LLC; B LLC", "OperatorLocalLanguage": "ООО «А»; ООО «Б»"}
+    assert push.parse_suggest("Operator=A; Nowhere=B", Tab) is None
+
+
 def test_coerce_percent_column_takes_a_fraction():
     from review_app import push
     assert push.coerce("100.00", "Owner1%") == 1
