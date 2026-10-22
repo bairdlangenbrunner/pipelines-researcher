@@ -44,6 +44,7 @@ import publish  # noqa: E402
 import pull as pull_mod  # noqa: E402
 import scopes  # noqa: E402
 import store  # noqa: E402
+from review_core import assets as core_assets  # noqa: E402
 from review_core import build_static as core  # noqa: E402
 
 WEB = core.CORE_WEB                   # the shared page; the pipelines extension is store.CONFIG.web_dir
@@ -51,6 +52,7 @@ SCRIPTS = core.CORE_SCRIPTS           # ("static_store.js", "app.js"), inlined i
 MAX_BYTES = core.MAX_BYTES            # the Artifact tool's page limit
 BLOB_ID = core.BLOB_ID
 blob = core.blob
+ASSETS = HERE / "assets.json"         # uploaded map pictures, per artifact page (review_core/assets.py)
 
 
 def read_scope(out, entry):
@@ -103,6 +105,7 @@ def main(argv=None):
                          "on a published artifact each viewer is recorded under their own")
     ap.add_argument("--out", default=None, help="default work/review_static/pipelines-reviewer.html")
     ap.add_argument("--config", default=None, help="default review_app/google.json")
+    ap.add_argument("--artifact", default="", help="the artifact url the page goes to: fills map picture urls from review_app/assets.json")
     ap.add_argument("--batches-root", default=None, help=argparse.SUPPRESS)
     ap.add_argument("--data-dir", default=None, help=argparse.SUPPRESS)
     a = ap.parse_args(argv)
@@ -129,11 +132,15 @@ def main(argv=None):
                                      include_done=a.include_done, write=False)
         data, index = read_scope(tmp, entry)
     reviewer = a.reviewer if a.reviewer is not None else git_initials()
+    shown = list(dict.fromkeys(i["asset"] for i in core_assets.images_in(data)))
+    missing = core_assets.fill_urls(data, core_assets.load_manifest(ASSETS), a.artifact) if shown else []
     page = render(data, index, reviewer=reviewer)
     size = len(page.encode("utf-8"))
     out = Path(a.out) if a.out else paths.work_dir() / "review_static" / "pipelines-reviewer.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
+    asset_list(out).write_text(json.dumps({"artifact": a.artifact, "shown": shown, "missing": missing}, indent=1) + "\n",
+                               encoding="utf-8")
     c = entry["counts"]
     print(f"{entry['label']}: {c['pipelines']} pipelines, {c['lines']} lines, {c['items']} items; "
           f"{rep['decided']} lines already decided by a person; snapshot {entry['snapshot']}")
@@ -141,10 +148,19 @@ def main(argv=None):
         print(f"  {len(rep['carried'])} decisions would carry forward to a new sheet row: not written here, run publish.py")
     if rep["orphans"]:
         print(f"  {len(rep['orphans'])} earlier decisions match no line of this build (publish.py lists them)")
+    if shown:
+        print(f"  {len(shown)} map pictures, {len(missing)} not uploaded for "
+              f"{a.artifact or 'any page (no --artifact)'}; list: {asset_list(out).name}")
     print(f"wrote {out} ({size:,} bytes)")
     if size > MAX_BYTES:
         raise SystemExit(f"the page is over the artifact limit of {MAX_BYTES:,} bytes: narrow it with --country")
     return out
+
+
+def asset_list(page):
+    """The <page>.assets.json written beside a built page: {artifact, shown, missing} asset names."""
+    page = Path(page)
+    return page.with_name(page.stem + ".assets.json")
 
 
 if __name__ == "__main__":

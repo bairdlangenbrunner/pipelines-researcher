@@ -18,6 +18,7 @@ Logic: ../gem-review-app/review_core/pages.py; plan: ../gem-review-app/docs/refr
 """
 import argparse
 import hashlib
+import json
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -33,11 +34,13 @@ import review_data  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
+from review_core import assets as core_assets  # noqa: E402
 from review_core import hooks, pages  # noqa: E402
 
 REGISTRY = HERE / "artifacts.json"
 LAST_BUILD = ROOT / pages.LAST_BUILD
 DATA = ROOT / "data"
+ASSETS = HERE / "assets.json"         # uploaded map pictures, per artifact page (build_static.ASSETS)
 
 
 def _countries(entry):
@@ -57,15 +60,26 @@ def _extra(entry):
     commodity = (entry.get("scope") or {}).get("commodity", "gas")
     tracker = review_data._pick_snapshot(commodity, [], DATA)
     owners = review_data._pick_owners([], tracker, DATA)
-    return {"manifest": hashlib.sha256("|".join(sorted(_countries(entry))).encode()).hexdigest(),
-            "snapshot": tracker.name if tracker else "", "owners": owners.name if owners else ""}
+    out = {"manifest": hashlib.sha256("|".join(sorted(_countries(entry))).encode()).hexdigest(),
+           "snapshot": tracker.name if tracker else "", "owners": owners.name if owners else ""}
+    up = sorted((sha, v["url"]) for sha, per in core_assets.load_manifest(ASSETS).items()
+                for art, v in per.items() if art == entry.get("url"))
+    if up:      # a recorded upload changes the page (its picture urls); pages with none keep their old parts
+        out["assets"] = hashlib.sha256(json.dumps(up).encode()).hexdigest()
+    return out
+
+
+def _assets(entry):
+    """The map pictures the last build of this page showed (build_static writes <page>.assets.json)."""
+    f = paths.work_dir() / "review_static" / f"{entry['name']}.assets.json"
+    return json.loads(f.read_text(encoding="utf-8")).get("shown", []) if f.is_file() else []
 
 
 def adapter():
     return pages.PageAdapter(
         root=ROOT, resolve_dirs=_dirs,
         staged_files=lambda d: sorted(p.name for p in Path(d).glob("staged_*.json")),
-        decision_files=("review_log.jsonl",), extra_inputs=_extra,
+        decision_files=("review_log.jsonl",), extra_inputs=_extra, assets=_assets, asset_manifest=ASSETS,
         builder_files=tuple(f"review_app/{n}" for n in ("review_data.py", "publish.py", "build_static.py", "store.py", "bundle.py")))
 
 
@@ -139,7 +153,7 @@ def main(argv=None):
             continue
         sc = e.get("scope") or {}
         out = paths.work_dir() / "review_static" / f"{e['name']}.html"
-        argv2 = ["--commodity", sc.get("commodity", "gas"), "--out", str(out)]
+        argv2 = ["--commodity", sc.get("commodity", "gas"), "--out", str(out), "--artifact", e.get("url", "")]
         for c in (sc["countries"] if sc.get("countries") else []):
             argv2 += ["--country", c]
         if e.get("dirs"):

@@ -39,6 +39,7 @@ from adapter_base import geodesic_km, geom_endpoints  # noqa: E402
 from route_compare import (load_gem_route, merge_geoms, geometry_signals,  # noqa: E402
                            _featurecollection_to_geom)
 import validate_route_candidate as gate  # noqa: E402
+import route_provenance  # noqa: E402
 
 METHOD_ACCURACY = {
     "sidecar": "high", "gis": "high", "osm": "high",
@@ -557,6 +558,7 @@ def main() -> None:
                         " ".join(notes_bits), args.start_ref, args.end_ref, wl, packet_rel,
                         suggested_accuracy=sugg_accuracy)
     rec["proposed_sheet"] = cand["proposed_sheet"]
+    rec["provenance"] = route_provenance.summary(rec)
     _upsert(staging / "staged_resolutions.json", args.pid, rec, "resolutions", scope_meta)
 
     flag = "PASS" if qc["passed"] else "FAIL"

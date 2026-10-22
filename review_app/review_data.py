@@ -58,6 +58,7 @@ for _p in (ROOT / "scripts", ROOT / "review_app"):
 
 import entity_style  # noqa: E402
 import paths  # noqa: E402
+import route_provenance  # noqa: E402
 import route_state  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
@@ -919,6 +920,9 @@ def _line(e, snap, own, stats, root=None):
         base["geo"] = _route_geo(gpath, r, cur) if gpath else None
         if base["geo"] is None:
             stats["geo_missing"] += 1
+        prov = route_provenance.describe(r, Path(root or staged_store.BATCHES_ROOT).parent / e.dir, ROOT) if e.dir else None
+        if prov:
+            base["provenance"] = prov
         if js:
             if js["applied"]:
                 base["applied"] = base["detected_applied"] = js["applied"]
