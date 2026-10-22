@@ -9,7 +9,7 @@ def test_the_bundle_is_self_contained():
     assert html.startswith("<!doctype html>\n" + bundle.BANNER)
     assert '<base target="_top">' in html                      # links leave the sandboxed iframe
     assert not re.search(r'<script[^>]+src=', html) and '<link rel="stylesheet"' not in html
-    for name in ("style.css",) + bundle.SCRIPTS:
+    for name in ("style.css", "leaflet.css", "geo.js") + bundle.SCRIPTS:
         body = (bundle.WEB / name).read_text(encoding="utf-8").rstrip()
         assert body in html, name                               # inlined whole, unaltered
     assert html.index("GasStore") < html.index("window.ReviewApp")   # gas.js runs before app.js
@@ -30,7 +30,7 @@ def test_check_and_out(tmp_path, capsys):
 def test_refuses_what_an_inline_script_cannot_hold(tmp_path):
     web = tmp_path / "web"
     web.mkdir()
-    for name in ("index.html", "style.css") + bundle.SCRIPTS:
+    for name in ("index.html", "style.css", "leaflet.css", "geo.js") + bundle.SCRIPTS:
         (web / name).write_text((bundle.WEB / name).read_text(encoding="utf-8"), encoding="utf-8")
     assert bundle.bundle(web) == bundle.bundle()
     (web / "app.js").write_text("var s = '</script>';\n", encoding="utf-8")

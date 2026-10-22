@@ -1,4 +1,5 @@
 """review_data.build against the review_fixture scope."""
+import json
 from collections import Counter
 
 import pytest
@@ -550,3 +551,53 @@ def test_unpushed_decision_stays_primary_over_a_newer_wider_proposal(tmp_path):
 def test_newer_wider_proposal_takes_over_once_the_decision_is_applied(tmp_path):
     (ref,) = _decided_newer_copy(tmp_path, ["https://example.org/more"], applied=True)
     assert ref["dir"].endswith("deepsweep-y")
+
+
+def _add_geo(s):
+    d = s["deep"] / "candidate_routes"
+    d.mkdir()
+    (d / "P9004.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": [
+        {"type": "Feature", "properties": {"big": "x" * 50}, "geometry": {
+            "type": "LineString", "coordinates": [[30.12345678, 50.1, 7.0], [31.5, 51.7654321, 7.0]]}},
+        {"type": "Feature", "properties": {}, "geometry": {"type": "Point", "coordinates": [0, 0]}},
+        {"type": "Feature", "properties": {}, "geometry": {"type": "Polygon", "coordinates": [
+            [[0, 0], [90, 0], [90, 80], [0, 0]]]}}]}))
+
+
+def test_route_line_carries_geo(tmp_path):
+    s = make_scope(tmp_path)
+    _add_geo(s)
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    geo = _find(data, "P9004", "route", sheet_row=7)[0]["geo"]
+    fc = geo["candidate"]
+    assert fc["type"] == "FeatureCollection" and len(fc["features"]) == 1      # Point and Polygon dropped
+    f = fc["features"][0]
+    assert f["properties"] == {} and f["geometry"]["coordinates"] == [[30.123457, 50.1], [31.5, 51.765432]]
+    assert geo["bbox"] == [30.123457, 50.1, 31.5, 51.765432]
+    assert geo["file"] == "candidate_routes/P9004.geojson" and geo["length_km"] == 54.1
+    assert geo["current"] is None and geo["current_length_km"] is None
+    assert stats["geo_missing"] == 0
+
+
+def test_route_geo_missing_file_counts(built):
+    data, stats, s = built          # the fixture records a geometry_file but writes none
+    assert _find(data, "P9004", "route", sheet_row=7)[0]["geo"] is None
+    assert stats["geo_missing"] == 1
+
+
+def test_route_geo_normalizes_shapes(tmp_path):
+    line = {"type": "LineString", "coordinates": [[1.0000004, 2, 9], [3, 4]]}
+    rec = {"geometry_file": "x.geojson", "length_km": 1.0}
+    for name, gj in (("feature", {"type": "Feature", "properties": {"a": 1}, "geometry": line}),
+                     ("bare", line)):
+        p = tmp_path / f"{name}.geojson"
+        p.write_text(json.dumps(gj))
+        geo = rd._route_geo(p, rec)
+        assert geo["candidate"]["type"] == "FeatureCollection"
+        assert geo["candidate"]["features"][0]["geometry"]["coordinates"] == [[1.0, 2], [3, 4]]
+        assert geo["bbox"] == [1.0, 2, 3, 4]
+    p = tmp_path / "pt.geojson"
+    p.write_text('{"type": "Point", "coordinates": [1, 2]}')
+    assert rd._route_geo(p, rec) is None
+    p.write_text("not json")
+    assert rd._route_geo(p, rec) is None

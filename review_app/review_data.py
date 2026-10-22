@@ -484,7 +484,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
              "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": [],
              "rivals": 0, "corroborations": 0, "wikidiff_skipped": 0,
-             "routeqc_skipped": 0, "recon_skipped": 0, "updates_skipped": 0}
+             "routeqc_skipped": 0, "recon_skipped": 0, "updates_skipped": 0, "geo_missing": 0}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
     entries, rec_csv, rec_own = [], [], []
@@ -671,7 +671,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             segs = [{"sheet_row": sr0, "segment": rec0.get("segment_name", "")}] if sr0 else []
         lines, items, recs, ents = [], [], {}, {}
         for e in card["entries"]:
-            obj = _line(e, snap, own, stats) if e.group == "line" else _item(e)
+            obj = _line(e, snap, own, stats, root=root) if e.group == "line" else _item(e)
             (lines if e.group == "line" else items).append(obj)
             recs[obj["key"]], ents[obj["key"]] = e.rec, e
         lines = _fold_status_covers(lines, recs, stats)
@@ -780,7 +780,7 @@ def _held_note(held):
     return "\n".join(out)
 
 
-def _line(e, snap, own, stats):
+def _line(e, snap, own, stats, root=None):
     r = e.rec
     kind = e.kind
     tier = r.get("tier") or ""
@@ -906,7 +906,46 @@ def _line(e, snap, own, stats):
             "geometry_file", "length_km", "sheet_length_km", "length_ratio",
             "suggested_route_accuracy", "qc_passed")})
         base["current_route_accuracy"] = r.get("current_route_accuracy") or srow.get("RouteAccuracy", "")
+        # map data (gem-review-app plan, "Geo"): `current` is filled later from the routes repo
+        gf = r.get("geometry_file")
+        base["geo"] = _route_geo(Path(root or staged_store.BATCHES_ROOT).parent / e.dir / gf, r) if gf else None
+        if base["geo"] is None:
+            stats["geo_missing"] += 1
     return base
+
+
+def _route_geo(path, rec):
+    """Candidate route geometry for the page's map, or None when the file is missing, unreadable or
+    holds no line coordinates. Lines only, 6-decimal x/y, no z, no properties; never simplified."""
+    try:
+        gj = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    t = gj.get("type") if isinstance(gj, dict) else None
+    geoms = [f.get("geometry") for f in gj.get("features") or []] if t == "FeatureCollection" else \
+        [gj.get("geometry")] if t == "Feature" else [gj]
+    feats, pts = [], []
+    for g in geoms:
+        if not isinstance(g, dict) or g.get("type") not in ("LineString", "MultiLineString"):
+            continue
+        try:
+            lines = [g["coordinates"]] if g["type"] == "LineString" else g["coordinates"]
+            lines = [[[round(c[0], 6), round(c[1], 6)] for c in ln] for ln in lines]
+        except (KeyError, TypeError, IndexError):
+            continue
+        lines = [ln for ln in lines if ln]
+        if not lines:
+            continue
+        pts += [c for ln in lines for c in ln]
+        coords = lines[0] if g["type"] == "LineString" else lines
+        feats.append({"type": "Feature", "properties": {}, "geometry": {"type": g["type"], "coordinates": coords}})
+    if not feats:
+        return None
+    xs, ys = [c[0] for c in pts], [c[1] for c in pts]
+    return {"candidate": {"type": "FeatureCollection", "features": feats}, "current": None,
+            "bbox": [min(xs), min(ys), max(xs), max(ys)], "length_km": rec.get("length_km"),
+            "current_length_km": None, "file": rec.get("geometry_file"),
+            "start_name": rec.get("start_name") or "", "end_name": rec.get("end_name") or ""}
 
 
 # ---------------------------------------------------------------- severity (Baird 2026-10-02)
