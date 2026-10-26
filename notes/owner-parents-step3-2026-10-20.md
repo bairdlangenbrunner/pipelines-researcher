@@ -1,6 +1,6 @@
 # Owner consistency step 3: parent and rename sweep (2026-10-20)
 
-Staged store: `batches/united-states-gas/staging/update-owner-parents-20261020/` (24 ProjectIDs, 37 research lines, none pushed). A line was staged only where an opened page names the pipeline or project and the company that holds it. Every ref was re-opened with `ref_recheck` (23 URLs, 0 dead).
+Staged store: `batches/united-states-gas/staging/update-owner-parents-20261020/` (24 ProjectIDs, 37 research lines, pushed to the sheet 2026-10-20 at 18:44). A line was staged only where an opened page names the pipeline or project and the company that holds it. Every ref was re-opened with `ref_recheck` (23 URLs, 0 dead).
 
 ## Staged
 
