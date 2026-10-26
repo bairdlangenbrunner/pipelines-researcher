@@ -303,12 +303,13 @@
       ],
       "primary_value_col": "Diameter",
       "values": {
-        "Diameter": "24",
+        "Diameter": "24, 36",
         "DiameterUnits": "in"
       },
-      "primary_value": "24",
+      "primary_value": "24, 36",
       "proposed_refs": [
-        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/"
+        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+        "https://www.offshore-technology.com/marketdata/viking-gas-transmission-gas-pipeline-canada/"
       ],
       "verifications": [
         {
@@ -316,14 +317,21 @@
           "ok": true,
           "contains_value": true,
           "name_found": true,
-          "note": "'a rupture and explosion hit a portion of Oneok Partners LP's 24-inch diameter Viking Gas Transmission Pipeline in northern Minnesota' -- explicit, name-matched diameter figure for the mainline in Marshall County, MN."
+          "note": "'a rupture and explosion hit a portion of Oneok Partners LP's 24-inch diameter Viking Gas Transmission Pipeline in northern Minnesota' -- name-matched 24 in figure for the mainline in Marshall County, MN."
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/viking-gas-transmission-gas-pipeline-canada/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Fetched via scripts/fetch.py (cf_impersonate, HTTP 200); url_verifier OK. Page: 'Viking Gas Transmission is a 1,082km-long onshore pipeline project operated by Oneok. This gas pipeline, with a maximum diameter of 36 inches, starts at Manitoba (Canada) and ends in Wisconsin (the US).' 1,082 km is about 672 mi, matching the whole system, so 36 in is the system maximum."
         }
       ],
       "class_out": "REFS_ADDED",
-      "tier": "low",
-      "independent": false,
+      "tier": "high",
+      "independent": true,
       "source_language": "en",
-      "researcher_notes": "Only one verifiable diameter figure found (24 in, for the mainline segment in Marshall County, MN, near the Canadian border, per the 2014 NGI rupture story). Staging it because it's a real, name-matched, sourced number for a field that is otherwise entirely blank -- but flagging the caveat explicitly: this describes ONE segment, not necessarily the full 671-mile system, which (like most 1990s-vintage interstate mainlines) may carry a larger diameter nearer the Emerson receipt point or compressor stations. An open-web claim of a 36-inch maximum diameter exists but traces to offshore-technology.com, which returned HTTP 403 on every fetch attempt this session (blocked, not confirmed) -- could not verify it, so did not stage it. A second, ideally system-wide, diameter source is still owed."
+      "researcher_notes": "Two diameters recorded: 24 in and 36 in. A 2014 Natural Gas Intelligence rupture story gives 24 inches for the mainline in Marshall County, Minnesota. An offshore-technology.com pipeline profile gives a maximum diameter of 36 inches for the whole system, about 1,082 km (about 672 mi), which matches the system length. The two figures describe different stretches and do not conflict. The profile site still lists Oneok as operator, which is out of date, so it is cited for diameter only. This page first returned a 403 and was read with scripts/fetch.py (cf_impersonate route), which is how a page that returns 403 to plain clients should be read."
     },
     {
       "segment_name": "",

@@ -42,7 +42,7 @@
       "recommendation": "Correct StartYear1 from 1991 to 1992 (StartMonth1 = 2) -- in service Feb. 15, 1992. Current 1991 value is unsupported by any source found.",
       "contested": {
         "StartYear1": "1992",
-        "StartMonth1": "2"
+        "StartMonth1": 2
       },
       "researcher_notes": "GEM's current StartYear1 = '1991', MISSING_REF (no source found supports this). Three independent sources agree the pipeline entered service in February 1992: WyoHistory.org -- 'It went into service on Feb. 15, 1992'; the 2019 EPA partner profile -- 'has been in business since 1992'; the Jan 25, 1992 Deseret News article, published while construction was still finishing, reporting gas expected to start flowing 'the first or second week of February' 1992 (and a system dedication ceremony March 6, 1992, per a separate OGJ piece). No source found states 1991 as the in-service year -- USGS's 'was built in 1991' describes construction/build timing, not the in-service/start date, and is consistent with a construction period concluding in 1991 ahead of the Feb 1992 commissioning.",
       "proposed_refs": [
@@ -199,7 +199,7 @@
       "primary_value_col": "ProposalYear",
       "values": {
         "ProposalYear": "1985",
-        "ProposalMonth": "5"
+        "ProposalMonth": 5
       },
       "primary_value": "1985",
       "proposed_refs": [
@@ -371,15 +371,28 @@
         "PressureUnits"
       ],
       "primary_value_col": "Pressure",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
+      "values": {
+        "Pressure": "1333",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "1333",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2022-06/Kern_11-06-2008_Final%20508_compliant%2029078_1.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2022-06/Kern_11-06-2008_Final%20508_compliant%2029078_1.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'This special permit allows Kern River to raise the maximum allowable operating pressure (MAOP) of the Kern River pipeline system from 1200 pounds per square inch gauge (psig) to 1333 psig in the mainline and loop lines and to 1350 psig in the compressor station pipe.' Federal pipeline safety agency special permit order of November 6, 2008, docket PHMSA-2007-29078, for the 1,380 mile Kern River system."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
       "independent": false,
       "source_language": "en",
-      "researcher_notes": "Blank (MISSING_VALUE). The one lead found -- PHMSA's Kern River special-permit/MAOP document (paths tried: phmsa.dot.gov/sites/phmsa.dot.gov/files/2022-06/Kern_11-06-2008_Final%20508_compliant%2029078_1.pdf and .../files/docs/Kern_11-06-2008_Final%20508_compliant%2029078.pdf) -- 403'd on every attempt this session (Akamai edge block, 'errors.edgesuite.net'; confirmed again on retry with a browser UA). Wayback fallback (archive.org/wayback/available) was rate-limited (HTTP 429) on every attempt and never recovered within the session. No other source found states an operating pressure/MAOP figure. Flagging as a genuine open lead for a future pass, not a dead end -- the PHMSA document itself was never confirmed 404/410, only blocked."
+      "researcher_notes": "Ran python scripts/fetch.py on the pipeline safety agency order. Plain curl got a 403, and the TLS impersonation route read the whole 51 page order. The order covers the 1,380 mile Kern River system and allows the maximum allowable operating pressure to rise from 1200 to 1333 psig on the mainline and loop lines, and 1350 psig in the compressor station pipe. Staged 1333 psig as the mainline figure. Held at medium because the order grants permission to operate at that level and was written in 2008, so a newer document stating the current pressure would settle it."
     },
     {
       "segment_name": "",

@@ -1,0 +1,34 @@
+{
+ "P8309": {
+  "root_source": {
+   "name": "FERC Yuma Pipeline overview map (Updated Yuma Map 8-27-2026)",
+   "page_url": "https://www.ferc.gov/media/yuma-pipeline-overview-map",
+   "image_url": "https://www.ferc.gov/sites/default/files/2026-08/Updated%20Yuma%20Map%208-27-2026.jpg",
+   "page_date": "2026-08-28",
+   "fetched": "2026-10-17",
+   "local_copy": "maps/Updated Yuma Map 8-27-2026.jpg"
+  },
+  "parent_artifact": "traces/trace.json (pixel centerline of the red line: color mask thinned to a one-pixel skeleton, traces/trace_red.py); traces/P8309_georef_out_unclipped.geojson is the georeferenced line before the border cut",
+  "method": "traced (route-creation rung 3)",
+  "georef": {
+   "tool": "scripts/georef.py",
+   "order": 2,
+   "n_gcps": 9,
+   "rmse_km": 0.098,
+   "loo_rmse_km": 2.154,
+   "gcps": "traces/gcps.json (US Census cb_2023 county corners and border points; OSM I-10 / AZ 85 interchange)"
+  },
+  "checks": {
+   "census_border_offset_m": "under about 160",
+   "milepost_spacing_mi": "9.68 to 10.18 per 10-mile interval",
+   "traced_length_mi": 137.2,
+   "stated_length_mi": 138,
+   "trace_points": 185,
+   "border_cut": "raw trace ran about 650 m past the border (map border symbol); cut at the Natural Earth 10m United States boundary, last vertex 20 m inside it, about 250 m north of the Census border"
+  },
+  "accuracy_cap": "medium",
+  "qc_gate": "validate_route_candidate.py PASS (warning: end endpoint flagged as Mexico by its boundary set); routes repo qc_routes.py WARN only (geocoder mishit on Yuma County)",
+  "created": "2026-10-17",
+  "creator": "CB"
+ }
+}

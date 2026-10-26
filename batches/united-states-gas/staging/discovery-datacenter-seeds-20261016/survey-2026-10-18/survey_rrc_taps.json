@@ -1,0 +1,393 @@
+{
+ "searches_used": 15,
+ "rrc": {
+  "dataset_url": "https://www.rrc.texas.gov/pipeline-safety/reports/new-pipeline-construction-reports/",
+  "dataset_verified": true,
+  "format": "One PDF per calendar year of new construction reports (Form PS-48), 2008 to 2026. Not a T-4 permit dataset. Parsed here with pdftotext. Separate: RRC publishes 'Pipeline Layers by County' shapefiles (255 county zips, about 182 MB for the first 250, updated twice a week, via a GoAnywhere file-transfer page that needs a browser click-through) which carry the T-4 permit number per line but no permit issue date. No bulk T-4 permit table exists; RRC says permits filed since 2015 live only in its POPS system and older permits are searchable one at a time as PDFs.",
+  "fields": "PS-48 PDFs: received date, report number (e.g. 25-NC-078), notification ID, operator, system ID, system name, T-4 permit number (placeholder 12345, 01234 or 55555 means not yet permitted or not yet added to an existing permit; 99999 distribution; 66666 breakout tank), start date, county, RRC region, product type (natural gas gathering / transmission / distribution, hazardous liquid, crude), miles, diameter, and (2025 on) new system vs extension. Shapefiles (per Harris County mirror of RRC data): operator, system name, T4PERMIT, diameter, commodity, interstate flag, status, county, length. Neither says new vs amended permit directly; the PS-48 'new system' vs 'extension' flag is the nearest.",
+  "new_permits_by_year": {
+   "note": "These are new construction reports, not issued T-4 permits. PS-48 covers transmission, gathering in Class 2/3/4 locations, and some distribution, so rural gathering is undercounted. 2026 runs to Sept 18 only. Counts come from my own regex parse of the PDFs; 2023 has 2 and 2024 has 1 unparseable rows.",
+   "2023": {
+    "all_reports": 210,
+    "gas_transmission": 52,
+    "gas_transmission_new_system": 41,
+    "gas_transmission_ge_25km": 16,
+    "gas_transmission_miles": 1099.0,
+    "gas_gathering": 84,
+    "gas_distribution": 35,
+    "gas_transmission_with_placeholder_T4": 6,
+    "gas_gathering_with_placeholder_T4": 13
+   },
+   "2024": {
+    "all_reports": 277,
+    "gas_transmission": 29,
+    "gas_transmission_new_system": 21,
+    "gas_transmission_ge_25km": 6,
+    "gas_transmission_miles": 465.2,
+    "gas_gathering": 117,
+    "gas_distribution": 75,
+    "gas_transmission_with_placeholder_T4": 1,
+    "gas_gathering_with_placeholder_T4": 30
+   },
+   "2025": {
+    "all_reports": 314,
+    "gas_transmission": 46,
+    "gas_transmission_new_system": 36,
+    "gas_transmission_ge_25km": 12,
+    "gas_transmission_miles": 1360.4,
+    "gas_gathering": 145,
+    "gas_distribution": 89,
+    "gas_transmission_with_placeholder_T4": 20,
+    "gas_gathering_with_placeholder_T4": 16
+   },
+   "2026_through_Sep_18": {
+    "all_reports": 250,
+    "gas_transmission": 47,
+    "gas_transmission_new_system": 32,
+    "gas_transmission_ge_25km": 11,
+    "gas_transmission_miles": 880.4,
+    "gas_gathering": 125,
+    "gas_distribution": 39,
+    "gas_transmission_with_placeholder_T4": 14,
+    "gas_gathering_with_placeholder_T4": 40
+   }
+  },
+  "count_method": "I downloaded the RRC's four yearly new-construction-report PDFs for 2023 to 2026, converted them to text, and counted rows by product type, system type, and miles (25 km is 15.5 miles). I did not find any RRC dataset that counts T-4 permits themselves by year, so the per-year numbers are construction reports, a proxy. Note the RRC labels many large Permian lines 'natural gas transmission' even when they are gathering-like, so the 25 km count (6 to 16 a year) is an upper bound for what GGIT would add from Texas intrastate. No dates or counts of actual T-4 issuance were found; I did not download the 182 MB county shapefiles because they carry no permit date.",
+  "data_center_permits": [
+   {
+    "name": "Abilene DC 1, LLC (Goodnight gas pipeline)",
+    "operator": "Abilene DC 1, LLC",
+    "county": "Armstrong",
+    "length_km": 2.4,
+    "status": "new system, report filed 2025-12-18, start 2026-03-01, T-4 pending",
+    "evidence": "Operator name is a data-center entity; 1.5 mi 20-inch natural gas transmission line. Armstrong County is in the Panhandle, so it may be a different site than Abilene; the site link is not confirmed.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/cyobcgq5/pdf_2025-cy-pipeline-construction_dec31-2025.pdf",
+      "verified": true,
+      "what": "report 25-NC-314"
+     }
+    ]
+   },
+   {
+    "name": "Abilene DC 1, LLC",
+    "operator": "Abilene DC 1, LLC",
+    "county": "Taylor",
+    "length_km": 4.9,
+    "status": "new system, filed 2025-03-19, start 2025-03-24, T-4 pending",
+    "evidence": "Operator name is a data-center entity; 3.07 mi 16-inch line in Taylor County (Abilene). Report 25-NC-074.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/cyobcgq5/pdf_2025-cy-pipeline-construction_dec31-2025.pdf",
+      "verified": true,
+      "what": "report 25-NC-074"
+     }
+    ]
+   },
+   {
+    "name": "Stargate Pipeline, 24in",
+    "operator": "Energy Transfer Company",
+    "county": "Taylor",
+    "length_km": 41.8,
+    "status": "new system, filed 2025-03-26, start 2025-04-21, existing permit 5781",
+    "evidence": "26 mi 24-inch gas transmission line named Stargate in Taylor County. A 2026 trade article says Energy Transfer began supplying gas to the Oracle and OpenAI Stargate campus near Abilene via a lateral off its North Texas and Hugh Brinson systems; no source I fetched ties this specific report to the campus, so the link is a strong name match only.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/cyobcgq5/pdf_2025-cy-pipeline-construction_dec31-2025.pdf",
+      "verified": true,
+      "what": "report 25-NC-078"
+     },
+     {
+      "url": "https://energynewsbeat.co/ai/oracles-165-billion-data-center-plan-gets-a-gas-pipeline-delay/",
+      "verified": true,
+      "what": "Energy Transfer supplying gas to Abilene Stargate campus, 900 MMcf/d to three Oracle data centers"
+     }
+    ]
+   },
+   {
+    "name": "Abilene 2.0 and Abilene 3.0",
+    "operator": "Energy Transfer Company",
+    "county": "Jones, Shackelford, Taylor",
+    "length_km": 55.5,
+    "status": "new systems, filed 2025-08-12, permit T05781",
+    "evidence": "14 mi and 20.5 mi 24-inch lines; names suggest the Abilene data-center laterals but I found no source that says so.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/cyobcgq5/pdf_2025-cy-pipeline-construction_dec31-2025.pdf",
+      "verified": true,
+      "what": "reports 25-NC-190 and 25-NC-191"
+     }
+    ]
+   },
+   {
+    "name": "Bolt Shackelford Datacenter Interconnect",
+    "operator": "Energy Transfer Company",
+    "county": "Shackelford",
+    "length_km": 12.1,
+    "status": "new system, filed 2026-08-07, start 2027-03-01",
+    "evidence": "Name says data center interconnect; 7.5 mi 24-inch line.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "report 26-NC-195"
+     }
+    ]
+   },
+   {
+    "name": "Duroc Power Plant lateral",
+    "operator": "Energy Transfer Company",
+    "county": "Taylor",
+    "length_km": 3.2,
+    "status": "new system, filed 2026-06-19",
+    "evidence": "2 mi 24-inch line to a power plant in Taylor County; data-center link not confirmed.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "report 26-NC-149"
+     }
+    ]
+   },
+   {
+    "name": "Chevron Power Lateral",
+    "operator": "WWM Operating, LLC",
+    "county": "Pecos, Reeves",
+    "length_km": 35.8,
+    "status": "new system, filed 2026-04-17, start 2026-07-01, permit 9729",
+    "evidence": "22.23 mi 36-inch line. Name matches Chevron's Project Kilby gas plant near Pecos for Microsoft (announced June 2026, final investment decision due end 2026). The tie is by name and location only; no source I fetched names this lateral.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "report 26-NC-096"
+     },
+     {
+      "url": "https://thenextweb.com/news/chevron-microsoft-gas-deal-texas-data-centre",
+      "verified": true,
+      "what": "Project Kilby, Chevron and Microsoft, Pecos, Reeves County"
+     }
+    ]
+   },
+   {
+    "name": "Monahans Utility Lateral",
+    "operator": "WWM Operating, LLC",
+    "county": "Ward",
+    "length_km": 27.3,
+    "status": "new system, filed 2026-08-21",
+    "evidence": "16.95 mi 20-inch line; purpose not stated.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "report 26-NC-207"
+     }
+    ]
+   },
+   {
+    "name": "Salsbury Pecos",
+    "operator": "Pecos Power Plant LLC",
+    "county": "Reeves",
+    "length_km": 6.1,
+    "status": "new system, filed 2026-06-09",
+    "evidence": "3.82 mi 10-inch line to a power plant; data-center link not confirmed.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "report 26-NC-147"
+     }
+    ]
+   },
+   {
+    "name": "Outer Loop Utility",
+    "operator": "Outer Loop Utility, LLC",
+    "county": "Bexar, Comal, Guadalupe",
+    "length_km": 101.4,
+    "status": "new system, filed 2025-07-17, start 2026-03-30, T-4 pending",
+    "evidence": "63 mi 24-inch gas transmission line near San Antonio. Purpose not stated; not shown to be data-center related.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/cyobcgq5/pdf_2025-cy-pipeline-construction_dec31-2025.pdf",
+      "verified": true,
+      "what": "report 25-NC-173"
+     }
+    ]
+   },
+   {
+    "name": "Hubbard Lateral",
+    "operator": "WTG Hubbard Transmission, LLC",
+    "county": "Ellis, Hill, Navarro",
+    "length_km": 80.7,
+    "status": "three reports in 2026",
+    "evidence": "Reports of 2.13, 8.89 and 39.14 mi, 24 to 30 inch. Purpose not stated.",
+    "urls": [
+     {
+      "url": "https://www.rrc.texas.gov/media/slyfbohn/pdf_2026-cy-pipeline-construction_sept18-2026.pdf",
+      "verified": true,
+      "what": "reports 26-NC-107, 26-NC-193, 26-NC-206"
+     }
+    ]
+   }
+  ],
+  "other_sources": [
+   {
+    "url": "https://www.rrc.texas.gov/resource-center/research/data-sets-available-for-download/",
+    "verified": true,
+    "what": "RRC data sets page: pipeline data offered only as county shapefiles; no T-4 permit table"
+   },
+   {
+    "url": "https://www.rrc.texas.gov/pipeline-safety/permitting-and-mapping/permitting/how-to-search-for-t-4-permits/",
+    "verified": true,
+    "what": "RRC: permits since 2015 live in POPS only; older permits searchable as PDFs"
+   },
+   {
+    "url": "https://mft.rrc.texas.gov/link/c7cbab0c-afe2-4f6f-91ae-e6ed7d3a7ab6",
+    "verified": true,
+    "what": "RRC file-transfer listing of pipeline001.zip to pipeline499.zip, 255 files"
+   },
+   {
+    "url": "https://www.gis.hctx.net/arcgishcpid/rest/services/TXRRC/Pipelines/MapServer/layers?f=pjson",
+    "verified": true,
+    "what": "Harris County mirror of RRC pipeline layer, field list"
+   }
+  ]
+ },
+ "taps": [
+  {
+   "name": "Green Chile Delivery Lateral (Transwestern, Project Jupiter)",
+   "pipeline": "Transwestern Pipeline Company",
+   "state": "NM",
+   "serves": "Green Chile Ventures LLC, gas generation for an AI/data center, up to 400,000 Dth/d, about $60.2 million",
+   "docket": "CP26-80-000",
+   "filing_type": "prior notice under blanket certificate (notice published 2026-02-17); FERC environmental assessment schedule notice 2026-07-29 indicates it is being processed as a protested project",
+   "evidence": "Federal Register notice text says delivery is for 'the generation of electricity for an AI/data center'. It is a meter lateral, in Dona Ana County, not a bare tap. News says the NM State Land Office denied rights-of-way for it. Whether it will be built is unclear.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/02/17/2026-03005/transwestern-pipeline-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
+     "verified": true,
+     "what": "FR notice, CP26-80"
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/07/29/2026-15286.txt",
+     "verified": true,
+     "what": "FR environmental assessment schedule notice, CP26-80"
+    }
+   ]
+  },
+  {
+   "name": "Clarksville Lateral",
+   "pipeline": "Enable Gas Transmission",
+   "state": "AR",
+   "serves": "Hatchbo LLC power generation facility, 150 MMcf/d; data-center use not stated",
+   "docket": "CP26-573-000",
+   "filing_type": "prior notice",
+   "evidence": "Power plant only; no data-center statement in the notice. Listed as candidate.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/09/17/2026-19067.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "Dalton Lateral new interconnection",
+   "pipeline": "Transcontinental Gas Pipe Line",
+   "state": "GA",
+   "serves": "new power generation demand; data-center use not stated",
+   "docket": "CP26-571-000",
+   "filing_type": "prior notice",
+   "evidence": "Notice says 'to support new power generation demand'. Candidate only.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/09/08/2026-18228.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "new delivery point, South Mainline",
+   "pipeline": "El Paso Natural Gas",
+   "state": "AZ or NM (not read)",
+   "serves": "planned new power generation facility, 167,000 Dth/d; data-center use not stated",
+   "docket": "CP26-558-000",
+   "filing_type": "prior notice",
+   "evidence": "Candidate only.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/08/10/2026-16237.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "Welsh Lateral",
+   "pipeline": "Gulf South Pipeline",
+   "state": "TX",
+   "serves": "SWEPCO Welsh Power Plant, 16.11 mi of 16-inch pipe, 277,500 Dth/d",
+   "docket": "CP26-557-000",
+   "filing_type": "prior notice",
+   "evidence": "Utility power plant; no data-center statement. Candidate only.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/08/06/2026-16065.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "Harrison County Power Project",
+   "pipeline": "Natural Gas Pipeline Company of America",
+   "state": "TX",
+   "serves": "SWEPCO Hallsville Power Plant, 126,600 Dth/d",
+   "docket": "CP26-565-000",
+   "filing_type": "prior notice",
+   "evidence": "Utility power plant; no data-center statement.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/09/01/2026-17847.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "Coleto Creek conversion",
+   "pipeline": "Transcontinental Gas Pipe Line",
+   "state": "TX",
+   "serves": "Luminant Coleto Creek Power Plant coal-to-gas, 170,000 Dth/d",
+   "docket": "CP26-133-000",
+   "filing_type": "prior notice",
+   "evidence": "Not data-center related as stated.",
+   "urls": [
+    {
+     "url": "https://www.federalregister.gov/documents/full_text/text/2026/03/17/2026-05189.txt",
+     "verified": true,
+     "what": "FR notice"
+    }
+   ]
+  },
+  {
+   "name": "River Ranch Delivery Meter Station (checked and excluded)",
+   "pipeline": "Colorado Interstate Gas",
+   "state": "WY",
+   "serves": "Mountain Cement Company plant expansion, not a data center",
+   "docket": "CP25-493-000",
+   "filing_type": "prior notice, deemed authorized 2025-07-29",
+   "evidence": "Filing says it serves a cement plant.",
+   "urls": [
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/CIG/CP25-493_CIG_Start_of_Construction_and_Weekly_Construction_Reporting_Update-20250814091210.pdf",
+     "verified": true,
+     "what": "CIG letter on CP25-493"
+    }
+   ]
+  }
+ ],
+ "taps_estimate": "Confirmed: one data-center prior-notice filing, Transwestern's Green Chile lateral (CP26-80), and it is a lateral and meter station that is stalled by land and environmental review, not a simple tap. I pulled all 186 Federal Register 'Notice of Request Under Blanket Authorization' notices published since 2024-01-01 and searched their text: only that one says data center. Six more serve new gas power plants or power generation (Enable, Transco twice, El Paso, Gulf South, NGPL) with no stated data-center link. Self-implementing (automatic authorization) filings are not published in the Federal Register and I could not search FERC eLibrary, so those are uncounted. My estimate is that explicit data-center taps under blanket authority are very few, probably fewer than 10 since 2024 and likely 1 to 5 by what filings say, but I am not sure, because pipelines often name only the customer (for example a utility or a developer LLC) and not the end use. Several named pipelines (Texas Eastern, Tennessee Gas, Columbia, Rockies Express, Northern Natural, Southern Natural, Texas Gas, Equitrans) showed no data-center prior notice in the Federal Register scan, but customer names were not checked against data-center developers.",
+ "not_found": "No bulk dataset of T-4 permits with issue dates or new vs amended flags; no RRC count of T-4 permits per year; no RRC page or news item naming a T-4 permit for a data center (the data-center links above come from operator names in construction reports plus news context, and none is source-confirmed except Abilene DC 1, LLC's operator name). I did not download the 182 MB county shapefiles (they lack permit dates and need a browser click-through). No FERC automatic-authorization filings were searched, since FERC eLibrary is not scriptable with curl. I did not read each Federal Register power-plant notice fully for customer names that might be data-center developers. Four web searches for Texas Eastern, Transco, Tennessee, Columbia and Northern Natural data-center taps returned only operational notices. No Energy Transfer or Abilene source I fetched ties the Stargate Pipeline 24in report to the campus directly. Some per-year counts come from a regex over PDF text and could be off by a few rows."
+}

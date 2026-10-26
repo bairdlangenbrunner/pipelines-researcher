@@ -1,0 +1,13 @@
+# P8321 Shippingport Lateral Project, Pennsylvania
+
+This route was traced from sheet 1 of 3 of the Appendix A USGS Project Location map in the National Fuel prior notice request, docket CP25-541, accession 20250829-5203, page 4 of the mapping file. The map is a raster image at 1:28,000 scale, and the file is maps/P8321/appxA-usgs-p4-04.png.
+
+The Line N Lateral is drawn as a solid blue line, so it was extracted by color mask, thinned to a one pixel skeleton, chained from the Shippingport meter and regulator station to the Service Creek tie, and simplified to about one pixel (trace_blue.py). The access roads, staging areas and tie symbols were not traced. I viewed the overlay of the trace on the image and it follows the blue line for its whole length.
+
+There are eight ground control points in gcps.json. Three are places where a public road centerline crosses a USGS quadrangle boundary, which gives one exact coordinate from the quadrangle grid (40.625 north or 80.375 west) and the other from the road geometry. One is the corner where the two quadrangle boundaries cross. One is the Holt Road and Patterson Road junction at Holt. Two are road junctions on Green Garden Road in the southeast. One is Calhoon Road at the 80.375 west line. Road geometry is from the Census Bureau TIGER/Line files served by TIGERweb (fetch_tiger.py, junctions.py, quadx.py). No coordinate was read off the map image.
+
+The affine fit (order 1) has a root mean square error of 0.006 km, a leave-one-out error of 0.010 km, and a maximum residual of 0.010 km. The bound was 5 km. The points span the whole extent, from Shippingport in the northwest to the Raccoon area in the southeast. As an independent check, the fitted transform was used to draw TIGER roads over the map (check.py), and the roads land on the printed roads, including the Interstate 376 ramps, which were not used as control points.
+
+The georeferenced line is 11.29 km or 7.01 miles, against a stated 7.26 miles, a ratio of 0.97. It starts at about 40.6318 north, 80.4151 west, at Shippingport in Beaver County, and ends at about 40.5879 north, 80.3196 west, near the Service Creek tie. Both ends are in Pennsylvania.
+
+Doubts. The line is about 3 percent shorter than the stated length, which may reflect smoothing of the drawn line at this scale or a length measured along the ground slope. The Calhoon Road control point and the Shippingport Road control point were located by eye to within about 10 pixels, or 50 meters, and the fit does not depend on them alone. The end of the trace runs into the green Service Creek tie symbol, so the last few tens of meters are the tie outline rather than the pipeline.

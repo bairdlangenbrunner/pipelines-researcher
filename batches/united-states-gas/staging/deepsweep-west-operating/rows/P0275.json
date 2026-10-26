@@ -84,9 +84,9 @@
       ],
       "primary_value_col": "Operator",
       "values": {
-        "Operator": "Tuscarora Gas Transmission Company"
+        "Operator": "Tuscarora Gas Transmission Co"
       },
-      "primary_value": "Tuscarora Gas Transmission Company",
+      "primary_value": "Tuscarora Gas Transmission Co",
       "tab": "operators_owners",
       "proposed_refs": [
         "http://tcplus.com/Tuscarora",
@@ -120,7 +120,7 @@
       "tier": "high",
       "independent": true,
       "source_language": "en",
-      "researcher_notes": "Operator was blank on the sheet (MISSING_VALUE). 'Tuscarora Gas Transmission Company' is the operating entity per tcplus.com and the TC Energy XPress fact sheet (both TC Energy family, one origin under strict independence) AND independently per Wikipedia, which is not a TC Energy property. This is distinct from the Owner1 value ('TC PipeLines LP') -- Tuscarora Gas Transmission Company is the operating subsidiary, wholly owned (100%) by TC PipeLines LP, itself now an indirect wholly-owned subsidiary of TC Energy since the March 2021 merger. Staged to the operators_owners tab per convention, oo_sheet_row=257."
+      "researcher_notes": "Operator was blank on the sheet (MISSING_VALUE). 'Tuscarora Gas Transmission Company' is the operating entity per tcplus.com and the TC Energy XPress fact sheet (both TC Energy family, one origin under strict independence) AND independently per Wikipedia, which is not a TC Energy property. This is distinct from the Owner1 value ('TC PipeLines LP') -- Tuscarora Gas Transmission Company is the operating subsidiary, wholly owned (100%) by TC PipeLines LP, itself now an indirect wholly-owned subsidiary of TC Energy since the March 2021 merger. Staged to the operators_owners tab per convention, oo_sheet_row=257. Operator is written 'Tuscarora Gas Transmission Company' by the source; spelled the ownership team's way as 'Tuscarora Gas Transmission Co'."
     },
     {
       "segment_name": "",
@@ -139,7 +139,7 @@
       "tier": "low",
       "independent": false,
       "source_language": "en",
-      "researcher_notes": "Could not find an explicit 'construction began/completed in <year>' statement for the original mainline. What IS established: the California Draft EIR/EIS for the project was received 12/22/1994 (CEQA SCH#1993112055; ceqanet.opr.ca.gov/1993112055/2) and the pipeline came into service in 1995 per three sources (tcplus.com 'Commenced Operations: 1995'; tcpipelineslp.com 'Began operations 1995'; Wikipedia 'opened in 1995'; tcenergy.com 'since it came on stream in 1995'). This places construction SOMEWHERE in the late-1994-to-1995 window by inference, but inferring StartYear=ConstructionYear risks fabricating a value the sources don't actually state (environmental review completion and physical construction start are not the same event, and could span the 1994/1995 boundary). Per the standing rule against fabricating a number from inference alone, this is left UNRESOLVED rather than filled at 1995. A dated PHMSA construction/as-built record, an original Federal Register 'notice to construct' order for CP93-685, or a contemporaneous 1994-1995 trade-press article giving a construction start date would resolve this; none was located in searches of Power Engineering, Oil & Gas Journal, and general web search (NaturalGasIntel blocked live and not found archived at the needed URL) within this pass's budget."
+      "researcher_notes": "Ran python scripts/fetch.py on the NaturalGasIntel page named earlier and on the offshore-technology.com market data page. The offshore page needed the TLS impersonation route and loaded, but it only says the pipeline started operations in 1995. A Federal Register notice of October 24, 1995 was read in full through the same tool. It says construction had been going relatively smoothly by then, so work was underway in 1995. None of these pages states when construction began, and the 1995 start of operations is already recorded. No construction year is staged. A 1994 or 1995 start cannot be told apart from these pages."
     },
     {
       "segment_name": "",
@@ -170,15 +170,37 @@
         "SegmentCostYear"
       ],
       "primary_value_col": "SegmentCost",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
+      "values": {
+        "SegmentCost": "130300000",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "1995"
+      },
+      "primary_value": "130300000",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-1995-10-24/pdf/95-26237.pdf",
+        "https://en.wikipedia.org/wiki/Tuscarora_Gas_Pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-1995-10-24/pdf/95-26237.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Tuscarora says that although construction has proceeded relatively smoothly, the estimated cost of the project has risen approximately 4% from $125.2 million to $130.3 million.' Federal Register notice of October 24, 1995, docket CP93-685."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Tuscarora_Gas_Pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline was built for $130 million and opened in 1995.' Agrees within rounding."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
       "independent": false,
       "source_language": "en",
-      "researcher_notes": "Only a single, unfootnoted figure was found -- Wikipedia's 'The pipeline was built for $130 million and opened in 1995' -- with no primary source (a FERC certificate cost estimate, a 10-K capital-expenditure disclosure, or a dated financing announcement) located to corroborate it despite checking Power Engineering, Oil & Gas Journal-type trade coverage and general web search (NaturalGasIntel 403'd live and was not found archived at the specific URL needed). Per the rule that cost figures require a qualifying primary source rather than a single tertiary mention, this is left UNRESOLVED rather than filled at single-source/low tier from Wikipedia alone."
+      "researcher_notes": "Earlier notes said NaturalGasIntel was blocked, so python scripts/fetch.py was run on it and on the sources below. A Federal Register notice of October 24, 1995 loaded on the plain curl route and was read in full. It gives the estimated project cost as 130.3 million dollars, up from 125.2 million. Staged 130300000 USD with the year 1995. Held at medium because this is a late stage estimate rather than a final cost. Wikipedia says 130 million, which agrees within rounding."
     }
   ],
   "cross_row_leads": [
