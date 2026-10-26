@@ -43,11 +43,10 @@ def rec(o, ts, rid, who="AL", **kw):
 # ---- the page ----------------------------------------------------------------------------
 
 def test_the_page_is_one_file_the_artifact_tool_can_wrap(scope, tmp_path):
-    entry, _ = publish.publish(["Russia"], "gas", tmp_path / "out", batches_root=scope["root"],
-                               data_dir=scope["data"], write=False)
-    data, index = build_static.read_scope(tmp_path / "out", entry)
-    assert len(data["pipelines"]) == entry["counts"]["pipelines"]
-    page = build_static.render(data, index, reviewer="BL")
+    from review_core.build_static import pack_index
+    data, rep = publish.build_dataset(["Russia"], "gas", batches_root=scope["root"], data_dir=scope["data"], write=False)
+    assert data["pipelines"] and rep["orphan_reasons"] == [] and rep["label"] == "Russia gas"
+    page = build_static.render(data, reviewer="BL")
     assert page.startswith("<title>pipelines reviewer</title>\n<style>")
     assert not re.search(r"<!doctype|<html[ >]|<head[ >]|<body[ >]", page, re.I)
     assert not re.search(r'<script[^>]+src=', page) and '<link rel="stylesheet"' not in page
@@ -57,7 +56,7 @@ def test_the_page_is_one_file_the_artifact_tool_can_wrap(scope, tmp_path):
     assert page.index("window.REVIEW_STATIC") < page.index("window.StaticStore = ") < page.index("window.ReviewApp = ")
     m = re.search(r'<script type="application/octet-stream" id="review-blob">([A-Za-z0-9+/=]+)</script>', page)
     body = json.loads(gzip.decompress(base64.b64decode(m.group(1))))
-    assert body["data"] == data and body["index"] == index
+    assert body["data"] == json.loads(json.dumps(data)) and body["index"] == pack_index(data, store.CONFIG)
     assert not (scope["deep"] / store.LOG_NAME).exists()         # building the page wrote no sidecar
 
 
@@ -70,12 +69,13 @@ def test_the_shared_packer_builds_the_index_publish_builds(scope, tmp_path):
     concern["contested"] = {"Status": "operating", "Owner1": "OldCo"}
     review_fixture.relink(d)
     publish.stamp_basis(d, scope["dirs"])
-    want = publish.pack_index(publish.make_index(d))
+    want = pack_index(d, store.CONFIG)
     assert sum(1 for g in want["keys"] for e in g.values() if e.get("x")) >= 2 and want["w"] and want["cmd"] == "gas"
-    assert pack_index(d, store.CONFIG) == want
     entry, _ = publish.publish(["Russia"], "gas", tmp_path / "out", batches_root=scope["root"],
                                data_dir=scope["data"], write=False)
-    data, index = build_static.read_scope(tmp_path / "out", entry)
+    index = json.loads((tmp_path / "out" / entry["index"]).read_text(encoding="ascii"))
+    parts = [json.loads(gzip.decompress((tmp_path / "out" / n).read_bytes())) for n in entry["parts"]]
+    data = dict(parts[0], pipelines=[p for part in parts for p in part["pipelines"]])
     assert pack_index(data, store.CONFIG) == index
 
 
@@ -120,14 +120,14 @@ def test_import_goes_store_first_under_the_reviewers_address(scope):
     assert not again["new"] and again["dup"] == 3
 
 
-def test_import_skips_what_a_later_decision_superseded_and_refuses_what_it_cannot_place(scope):
+def test_import_skips_what_a_later_decision_superseded_and_refuses_what_it_cannot_read(scope):
     ds, dirs = scope["dataset"], scope["dirs"]
     l1 = some(ds, "lines", 1)[0]
     store.decide([{"key": l1["key"], "decision": "reject", "note": "n"}], ds, "BL", dirs)
     old = {"reviewer": "AL", "email": AL, "records": [rec(l1, "2020-01-01T00:00:00-04:00", "id-old", decision="accept")]}
     pl = import_log.plan([old], ds, dirs)
     assert not pl["new"] and [r["id"] for r in pl["stale"]] == ["id-old"]
-    for bad, why in (({"key": "batches/nope::x"}, "not in the current"), ({"call": "noted"}, "is a line"),
+    for bad, why in (({"call": "noted"}, "is a line"),
                      ({"reviewer": "backend sync"}, "initials"), ({"ts": "yesterday"}, "usable time")):
         r = rec(l1, "2030-01-01T00:00:00-04:00", "id-x", decision="accept")
         r.update(bad)
@@ -139,6 +139,32 @@ def test_import_skips_what_a_later_decision_superseded_and_refuses_what_it_canno
     assert "--reviewer AL=EMAIL" in str(e.value)
     ok = import_log.plan([{"records": [rec(l1, "2030-01-01T00:00:00-04:00", "id-y", decision="accept")]}], ds, dirs, emails={"AL": AL})
     assert ok["people"] == {"AL": AL}
+
+
+def test_import_moves_a_renumbered_row_and_parks_what_it_cannot_place(scope, tmp_path):
+    """A rebuild since the page was made: a record whose line moved to another sheet row follows it;
+    a record that matches nothing, or names a dir outside the dataset, is parked and the rest go ahead."""
+    ds, dirs = scope["dataset"], scope["dirs"]
+    l1 = next(l for p in ds["pipelines"] for l in p["lines"] if l.get("sheet_row") is not None and not l.get("covers"))
+    d, pid, row, colid = l1["key"].split("::")[0], *l1["key"].split("::")[1].split("|", 2)
+    moved = rec(l1, "2030-01-01T00:00:00-04:00", "id-moved", decision="accept", sheet_row=int(row) + 40)
+    moved["key"] = f"{d}::{pid}|{int(row) + 40}|{colid}"
+    gone = rec(l1, "2030-01-01T00:00:01-04:00", "id-gone", decision="accept")
+    gone["key"] = f"{d}::P0000|9|{colid}"
+    away = rec(l1, "2030-01-01T00:00:02-04:00", "id-away", decision="accept")
+    away.update(key="batches/nope::P1|2|x", dir="batches/nope")
+    pl = import_log.plan([{"email": AL, "records": [moved, gone, away]}], ds, dirs)
+    assert [r["key"] for _, r in pl["new"]] == [l1["key"]]
+    r = pl["new"][0][1]
+    assert r["rekeyed_from"] == moved["key"] and r["sheet_row"] == l1["sheet_row"]
+    assert [x["record"]["id"] for x in pl["parked"]] == ["id-gone", "id-away"]
+    assert "no line or item" in pl["parked"][0]["reason"] and "not part of the current" in pl["parked"][1]["reason"]
+    assert "2 parked" in import_log.report(pl) and "1 moved" in import_log.report(pl)
+    f = import_log.write_parked(pl, work=tmp_path / "work")
+    assert f.name.startswith("review_import_parked_") and f.suffix == ".jsonl"
+    rows = [json.loads(x) for x in f.read_text(encoding="utf-8").splitlines()]
+    assert [x["record"]["id"] for x in rows] == ["id-gone", "id-away"] and all(x["reason"] and x["email"] == AL for x in rows)
+    assert import_log.write_parked({"parked": []}, work=tmp_path / "work") is None
 
 
 def test_a_store_failure_writes_nothing_locally(scope):

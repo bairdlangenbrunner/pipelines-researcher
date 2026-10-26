@@ -25,8 +25,8 @@ home; the original 4-phase methodology doc is archived in `docs/archive/`). Comm
 4. **Route / map research** (see "Route / map research" below; ladder values in
    `docs/reference/route_conventions.md`): official GIS first; else digitized visual
    maps; assign `RouteAccuracy` on the ladder; fill `RouteType`/`RouteNotes`/`Route
-   [ref]`. (Capacity expansion, no new pipe → `no route`.)
-5. Collect all GEM columns with verified `[ref]` URLs for each discovery.
+   [ref]`. (Capacity expansion, no new pipe → `Capacity expansion only` + `no route`.) **`RouteType` and `RouteAccuracy` are ALWAYS staged on every new row (Baird 2026-10-20, 93 US rows reached the sheet with both blank).** Nonzero length and no route found yet = `Not mapped (but could be — route or endpoints are known)` + `no route`; `Unavailable (cannot find route)` only after an exhaustive search (`route_creation.md` three-way sync). `check_discovery_staged.py` blocks a new row with either blank, off-vocabulary, or the pair out of agreement, and `append_new_rows.py` aborts on one.
+5. Collect all GEM columns with verified `[ref]` URLs for each discovery. **`Status` is ALWAYS staged, with a `Status [ref]`, on every new row (Baird 2026-10-20, P8094 reached the sheet with none).** It is the most important field. If the evidence does not settle which status applies, do not guess and do not leave it blank: stop and ask Baird to look, naming the candidate, what the sources say and the statuses in play. A candidate with no settled status is never staged as a `new_row`, never appended. `check_discovery_staged.py` blocks a new row with a blank or off-vocabulary `Status`, and `append_new_rows.py` aborts on one.
 6. `scripts/url_verifier.py` on all URLs; `scripts/entity_lookup.py` on every new
    owner/operator/parent — and write each owner in the ownership team's style it prints
    (`docs/reference/owner_style.md`).
@@ -56,6 +56,7 @@ and the workbook's `<Cmdty>_SeedLedger` tab shows it. A seed with no disposition
    development.
 2. **Regulatory filings** — FERC, PHMSA, MARAD (US) or the national equivalent, for new
    pipeline applications.
+   **Permit records of the plants a pipeline would feed** (Amalia, relayed by Baird 2026-10-20): a new gas power plant, especially one built for a data center, leaves an environmental assessment or impact statement (NEPA or the state equivalent), a construction or siting permit, an EPA record, state environmental agency and utility commission filings, and air permits (Title V, PSD, minor source). Each describes the fuel supply pipeline, its sponsor, size, length, interconnect and often a route map. The environmental assessment is the richest and is read first. Search these for every plant lead before concluding its pipeline cannot be found. Amalia's example (DM 2026-10-20): the USDA Rural Utilities Service environmental assessment for CIPCO's Hickory Grove Generating Station in Scott County, Iowa (March 2026, `rd.usda.gov/media/file/download/usda-rd-hickory-grove-generating-station-ea.pdf`) states the whole gas supply in its project description: about 2,100 feet of new 12 to 16 inch lateral and an interconnection station tying into the Northern Border pipeline, gas delivered by TC Energy, about 750 feet on a new easement, a horizontal directional drill under Hickory Creek, owner CIPCO or a contracted pipeline operator still to be decided, construction from Q1 2027 and operation by Q1 2030. None of that is on the plant's own web page or in GOGPT.
 3. **EIA / government data** — the EIA petroleum pipeline projects database or the national
    equivalent.
 4. **Industry news** — `"<country>" new oil pipeline <year>` and `"<country>" NGL pipeline
@@ -69,7 +70,7 @@ Pacific Pipeline = Lines 901/903 = CA-324/CA-325 = Las Flores Pipeline System = 
 Pipeline System) lists them all in `OtherEnglishNames`, semicolon-separated
 (`gem_schema.md`).
 
-**A candidate that is probably part of, or another name for, an existing row is never a new row** (Baird 2026-10-14). Stage it as an `OtherEnglishNames` fill on the matched row (existing text kept, new name appended) and say in the note that there is a chance it is a different pipeline. After a merge, `python scripts/convert_matched_to_alias.py --apply` does this for every `matched_existing` record (alias map inside the script; originals are kept under `converted_to_alias` in `staged_new.json`). Non-English names go to `OtherLanguageAlternativePipelineNames`.
+**A candidate that is probably part of, or another name for, an existing row is never a new row** (Baird 2026-10-14). Stage it as an `OtherEnglishNames` fill on the matched row (existing text kept, new name appended) and say in the note that there is a chance it is a different pipeline. **Every `OtherEnglishNames` suggestion names the page(s) where the name was found** (Baird 2026-10-14): the URL, read in full, in the note and in the chat message that proposes it. No page that uses the name means no firm suggestion; say so. After a merge, `python scripts/convert_matched_to_alias.py --apply` does this for every `matched_existing` record (alias map inside the script; originals are kept under `converted_to_alias` in `staged_new.json`). Non-English names go to `OtherLanguageAlternativePipelineNames`.
 
 ## Route / map research
 

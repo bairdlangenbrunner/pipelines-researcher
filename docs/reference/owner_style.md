@@ -61,6 +61,7 @@ them as `multi_operator`) and leaves the shape to a human. Two or more operators
 | Former owner | `X Corp [former]` | |
 | Share belongs in `Owner<N>%`, not the name | `Acme Corp` + `55.00%` | `Acme Corp [55%]` |
 | One owner per `Owner<N>` cell; a spaced slash is a list too (`A/S`, `I/S` are not) | | `Energy Transfer; Enbridge`, `AltaGas Ltd / RGC Resources Inc` |
+| No slash between names, spaced or not (Baird 2026-10-16, P6584): a slash joins two companies or an old and a new name for one, so split it into `Owner1` and `Owner2` with their shares, or keep only the company that holds the pipeline now. Legal forms (`A/S`, `I/S`, `K/S`, `NV/SA`) are not names, and a slashed name the team already writes that way (an exact gazetteer match) passes | `Kinetica Deepwater Express LLC` | `TC Offshore / Kinetica Deepwater Express`, `Saudi Aramco/Bahrain Petroleum Co` |
 | No stake note in the name: `(affiliate)`, `(via …)`, `(parent)`, `(member)` and the like go to `researcher_notes`, and the JV company itself is `Owner1` (`gem_schema.md`, SPV ruling 2026-09-15) | `Mountain Valley Pipeline LLC` | `NextEra Energy, Inc. (affiliate)`, `EQT Corporation (via Midstream Joint Venture)` |
 
 ¹ `GAIL (India) Ltd` is a confirmed alias of the team's canonical `GAIL Ltd`, so the styler
@@ -77,7 +78,7 @@ Country names inside a state body follow the GEM naming conventions sheet
 `ruling`, and on `rules` / `stem` when the styled form has no comma and every flag is in
 `MECHANICAL_FLAGS` (`form_punctuation`, `form_long`, `form_moved`, `form_russian`,
 `dots_stripped`, `acronym_dropped`, `acronym_lead`, `quotes_stripped`, `form_from_gazetteer`,
-`percent_stripped`, `whitespace`, `ruled`). The `HOLD_FLAGS` (`acronym_not_initials`, `owner_qualifier` for a stripped stake note, `multi_owner` for a `;` or spaced-slash list) always hold unless a ruling settles the name. `needs_person(res)` is true for a ruled-free value with a hold flag, changed or not, and for any changed value that is not adoptable; `held_names(values)` lists those cells (2026-10-14, after P7829 Mountain Valley).
+`percent_stripped`, `whitespace`, `ruled`). The `HOLD_FLAGS` (`acronym_not_initials`, `owner_qualifier` for a stripped stake note, `multi_owner` for a `;` or spaced-slash list, `slash` for an unspaced slash outside a legal form, 2026-10-16) always hold unless a ruling settles the name. The 2026-10-05 ruling that kept `Saudi Aramco/Bahrain Petroleum Co` was superseded on 2026-10-16, so that cell is held for a person too. `needs_person(res)` is true for a ruled-free value with a hold flag, changed or not, and for any changed value that is not adoptable; `held_names(values)` lists those cells (2026-10-14, after P7829 Mountain Valley).
 
 | basis | when | confidence | action |
 |---|---|---|---|
@@ -136,7 +137,7 @@ JSON sorted by `canonical`. Nothing regenerates it.
   and is the lint's business; "the sheet" means the worklist's snapshot OR the newest
   operators/owners snapshot in `data/` (`entity_style.carried_on_sheet`), since a push after the
   worklist's pull moves the sheet.
-- **`review_app/push.py`** lists every Owner<N>/Operator cell a plan would write in a spelling `adoptable()` would change, and every cell `needs_person()` holds, and refuses `--apply` until the staged record is fixed (`--allow-unstyled` overrides, by hand). A plan line marked `style_only` stamps `LastUpdated` only (Baird 2026-10-05). The review app shows a line with a held name as low tier, default hold, with the reason first in its notes (`owner_style_held`, 2026-10-14).
+- **`review_app/push.py`** lists every Owner<N>/Operator cell a plan would write in a spelling `adoptable()` would change, and every cell `needs_person()` holds, and refuses `--apply` until the staged record is fixed (`--allow-unstyled` overrides, by hand). A plan line marked `style_only` stamps `LastUpdated` only (Baird 2026-10-05). The review app shows a line with a held name as low tier, default hold, with the reason first in its notes (`owner_style_held`, 2026-10-14). A validity concern's `contested` owner or operator candidate is styled too (2026-10-16): a held one (two owners, a slash, a near-match spelling, a prose candidate) is never offered as an accept-candidate rival, it shows on the concern as `held_candidates` with the reason, and the reviewer enters the right value with suggest. `check_shard_coverage.py` blocks a shard whose concern carries such a candidate.
 - **`scripts/restyle_staged_owners.py`** re-spells pending staged proposals in place (every live
   `staged_resolutions.json` and shard `rows/*.json`), as string edits through
   `scripts/json_patch.py` so each file keeps its formatting; the source's spelling goes to

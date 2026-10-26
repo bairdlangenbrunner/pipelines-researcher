@@ -108,20 +108,33 @@ def test_machine_reviewer_is_not_reviewed(scope):
     assert l["reviewed"] is True
 
 
-def push_record(l, ts="2026-10-01T18:31:00-04:00"):
+def hourly_clock(monkeypatch, start="2026-10-01T18:00:00-04:00"):
+    """Make each live call stamp one hour later than the last, from `start`. The log is replayed in time order (store.in_time_order), so a test that appends its own records between live calls has to give them timestamps that fall between, as a real push or sync would."""
+    from datetime import datetime, timedelta
+    import review_core.store as core
+    t = [datetime.fromisoformat(start)]
+
+    def tick():
+        t[0] += timedelta(hours=1)
+        return t[0].isoformat(timespec="seconds")
+    monkeypatch.setattr(core, "now", tick)
+
+
+def push_record(l, ts="2026-10-01T19:31:00-04:00"):
     return {"key": l["key"], "dir": l["dir"], "pid": "P9002", "sheet_row": l["sheet_row"], "ref_col": l["ref_col"],
             "kind": l["kind"], "decision": "accept", "suggested_value": "", "note": "written to the sheet",
             "reviewer": "push", "ts": ts, "undecided": False}
 
 
-def test_a_push_record_after_an_accept_marks_it_applied_and_keeps_the_person_speaking(scope):
+def test_a_push_record_after_an_accept_marks_it_applied_and_keeps_the_person_speaking(scope, monkeypatch):
+    hourly_clock(monkeypatch)                                    # accept 19:00, push 19:31, reject 20:00, undo 21:00
     d, dirs = scope["dataset"], scope["dirs"]
     l = line(d, "P9002", "fill")
     dec(scope, [{"key": l["key"], "decision": "accept"}])
     store.append_records([push_record(l)], dirs)
     store.overlay(d, dirs)
     assert (l["decision"], l["reviewed"], l["decided_by"]) == ("accept", True, "BL")
-    assert l["applied"] == {"by": "push", "at": "2026-10-01T18:31:00-04:00"}
+    assert l["applied"] == {"by": "push", "at": "2026-10-01T19:31:00-04:00"}
     c = store.calls(store.read_log(dirs[l["dir"]]))[l["key"]]
     assert (c["person"]["reviewer"], c["machine"]["reviewer"], c["last"]["reviewer"]) == ("BL", "push", "push")
     # the person changes their mind after the push: the newer call speaks, the push stays as applied
@@ -153,8 +166,8 @@ def test_legacy_single_column_fill_key_speaks_for_the_multi_column_line(scope):
                           dict(push_record(l), reviewer="backend sync", ts="2026-10-01T19:00:00-04:00")], dirs)  # a sync under the new key
     store.overlay(d, dirs)
     assert (l["decision"], l["reviewed"], l["decided_by"], l["applied"]["by"]) == ("accept", True, "BL", "backend sync")
-    # a person record under the new key — even an undo — ends the fallback
-    store.append_records([dict(push_record(l), reviewer="BL", undecided=True, decision=None)], dirs)
+    # a later person record under the new key, even an undo, ends the fallback
+    store.append_records([dict(push_record(l, ts="2026-10-01T20:30:00-04:00"), reviewer="BL", undecided=True, decision=None)], dirs)
     store.overlay(d, dirs)
     assert (l["decision"], l["reviewed"]) == (None, False)
 

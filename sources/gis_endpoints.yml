@@ -17,7 +17,7 @@
 
 rrc_pipelines:
   kind: arcgis
-  url: ""                       # discover the numbered layer under the RRC GIS REST services
+  url: "https://gis.rrc.texas.gov/server/rest/services/rrc_public/RRC_Public_Viewer_Srvs/MapServer/14"
   portal: "https://www.rrc.texas.gov/resource-center/research/gis-viewer/"
   coverage: "Texas, USA — intrastate pipelines"
   commodities: [oil, gas, ngl]
@@ -27,6 +27,11 @@ rrc_pipelines:
     FeatureServer/MapServer layer from the GIS viewer's network tab, confirm it
     returns f=geojson & outSR=4326, then set `url`. High-density state; use --bbox
     or a county --where to stay under --max-features.
+    Verified 2026-10-20: layer 14 "Pipelines" (polyline, 1000 records per page) answers
+    /query with f=geojson and outSR=4326. Fields include OPERATOR, SYSTEM_NAME,
+    SUBSYSTEM_NAME, DIAMETER, T4PERMIT, T4PERMIT_MILES, COMMODITY, INTERSTATE, STATUS,
+    COUNTY_NAME. Select by T4PERMIT (the T-4 permit number) or OPERATOR plus SUBSYSTEM_NAME.
+    The bare layer URL returns 403 to url_verifier.py; the query URL returns data.
 
 boem_pipelines:
   kind: arcgis
@@ -72,3 +77,18 @@ osm_overpass:
     Not a per-layer URL — driven by fetch_overpass.py --area/--bbox --substance.
     Every feature ships with source=OSM/license=ODbL provenance; whether ODbL
     geometry can enter a GEM tracker is decided at review, never assumed.
+
+ferc_elibrary:
+  kind: download
+  url: "https://elibrary.ferc.gov/eLibrarywebapi/api/File/DownloadP8File"
+  portal: "https://elibrary.ferc.gov/eLibrary/search"
+  coverage: "US interstate gas pipelines, storage and LNG: FERC docket filings (applications, resource reports, environmental assessments and their route figures)"
+  commodities: [gas]
+  license: "US federal public record; public (availCode P) documents only, never CEII alignment sheets"
+  notes: >
+    The eLibrary web pages are a JavaScript app, but its JSON API answers plain POSTs (verified 2026-10-20 on dockets CP25-531 and CP26-19).
+    Search: POST https://elibrary.ferc.gov/eLibrarywebapi/api/Search/AdvancedSearch with a JSON body carrying docketSearches [{docketNumber, subDocketNumbers: []}], searchText and resultsPerPage; each hit gives acesssionNumber (sic), availCode and transmittals[].fileId.
+    Download: POST the url above with {"FileType":"","accession":"","fileid":0,"FileIDAll":"","fileidLst":["<fileId>"],"Islegacy":false}; it returns the raw file.
+    Route figures are usually in Resource Report 1 or the environmental assessment; render pages with pdftoppm.
+    Resource Report figures are often GeoPDFs: a page whose object has /VP with a /Measure dictionary (GPTS corner lat/lon, LPTS, a WKT projection) carries the drawn route as a real vector path, so read it with PyMuPDF get_drawings() and the page's own georeferencing instead of tracing (worked example, P8327 2026-10-20: batches/united-states-gas/staging/route-creation-p8327-20261020/traces/extract_geopdf.py). Cut such a page out with doc.select([n]), which keeps /VP; insert_pdf drops it.
+    The citable form is https://elibrary.ferc.gov/eLibrary/filedownload?fileid=<fileId>. That page is a JavaScript shell, but url_verifier.py (since 2026-10-20) reads the file itself through the download API above, so these links verify like any PDF. Name the accession number in notes too.

@@ -110,20 +110,20 @@ def test_cols_are_code_gs_cols_verbatim():
     assert re.findall(r"'([a-z_]+)'", m.group(1)) == ledger.COLS
 
 
-def test_row_for_mirrors_append_and_cell():
+def test_row_of_mirrors_append_and_cell():
     rec = {"key": "batches/x::P1|5|c", "dir": "batches/x", "pid": "P1", "sheet_row": 5, "ref_col": "Status [ref]",
            "kind": "ref", "decision": "accept", "suggested_value": "", "note": "=SUM(1)", "reviewer": ME,
            "ts": "t", "undecided": True, "via": "-v", "batch": "b", "snapshot": "s.csv", "id": "i", "scope": "sc"}
-    row = ledger.row_for(rec)
+    row = ledger.row_of(rec)
     assert len(row) == len(ledger.COLS)
     got = dict(zip(ledger.COLS, row))
     assert got["rec"] == "line" and got["undecided"] == "undone" and got["note"] == "'=SUM(1)" and got["via"] == "'-v"
     assert got["sheet_row"] == "5" and got["call"] == "" and json.loads(got["json"]) == rec
-    item = ledger.row_for({"key": "k", "call": "noted", "kind": "flag", "sheet_row": None, "note": "x" * 2500})
+    item = ledger.row_of({"key": "k", "call": "noted", "kind": "flag", "sheet_row": None, "note": "x" * 2500})
     g = dict(zip(ledger.COLS, item))
     assert g["rec"] == "item" and g["sheet_row"] == "" and g["decision"] == "" and len(g["note"]) == 2001
     with pytest.raises(ledger.StoreError):
-        ledger.row_for({"key": "k", "note": "x" * 50000})
+        ledger.row_of({"key": "k", "note": "x" * 50000})
 
 
 def test_stamp_fields_fills_what_is_missing_and_keeps_an_id():

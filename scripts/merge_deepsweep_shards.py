@@ -371,7 +371,9 @@ def main():
             changes, notes, bad = screen_value_keys(changes, sheet, notes, "proposed_changes")
             n_badkeys += len(bad)
             verdict, changes, cls, notes = status_qc(
-                s.get("verdict"), changes, refs, notes)
+                s.get("verdict"), changes, refs, notes,
+                evidence_date=s.get("evidence_date", ""),
+                current_status=first_key(s, CURRENT_STATUS_KEYS))
             s_chg = verdict == "change"
             s_tier, s_indep, notes = independence_qc(
                 refs, s.get("tier", ""), s.get("independent", False), notes,
@@ -379,6 +381,11 @@ def main():
             if refs and not s_chg:
                 s_tier, notes = validated_tier(refs, s.get("verifications", []), s_tier, notes,
                                               cls=cls)
+            if verdict == "stale" and s_tier == "high":
+                # a dormancy inference's ref shows the last sign of life, not the cancellation
+                s_tier = "medium"
+                notes = qc_note(notes, "tier high -> medium (dormancy inference: the ref is the "
+                                       "last dated evidence, not a statement of the status).")
             new_status.append({**ident,
                 "sheet_row": s.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": s.get("segment_name", ""),

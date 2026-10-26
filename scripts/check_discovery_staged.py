@@ -41,8 +41,34 @@ def num(v):
         return None
 
 
+STATUSES = {"operating", "proposed", "construction", "shelved", "cancelled", "idled", "mothballed", "retired"}
+
+ROUTE_TYPES = {
+    "Mapped route (at any accuracy)",
+    "Not mapped (but could be — route or endpoints are known)",
+    "Unavailable (cannot find route)",
+    "Capacity expansion only",
+    "Bidirectionality upgrade only",
+    "Included in other ProjectID",
+}
+
+
 def check(cand, min_km):
     v, refs, why = cand.get("values") or {}, cand.get("refs") or {}, []
+    st = str(v.get("Status") or "").strip()
+    if not st:
+        why.append("Status is blank: every new row needs a status, ask Baird if it cannot be settled")
+    elif st not in STATUSES:
+        why.append(f"Status {st!r} is not in the controlled vocabulary")
+    elif not refs.get("Status [ref]"):
+        why.append("Status has no Status [ref]")
+    rt, ra = str(v.get("RouteType") or "").strip(), str(v.get("RouteAccuracy") or "").strip()
+    if not rt or not ra:
+        why.append("RouteType and RouteAccuracy must both be set on a new row (nonzero length, no route: Not mapped + no route)")
+    elif rt not in ROUTE_TYPES:
+        why.append(f"RouteType {rt!r} is not in the controlled vocabulary")
+    elif rt.startswith("Mapped") == (ra == "no route"):
+        why.append("RouteType and RouteAccuracy disagree (Mapped needs an accuracy tier; anything else needs no route)")
     km = num(v.get("LengthKnown"))
     unit = str(v.get("LengthKnownUnits", "")).strip().lower()
     if km == 0 and min_km <= 0:

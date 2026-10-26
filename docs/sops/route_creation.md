@@ -205,8 +205,10 @@ one fact stated three ways, never three independent judgments:
 | Routes repo | `RouteType` | `RouteAccuracy` |
 |---|---|---|
 | geojson with real coordinates | `Mapped route (at any accuracy)` | the earned tier — `very high (within meters)` … `very low (straight line/schematic)` |
-| no geojson / empty placeholder | `Not mapped (but could be — route or endpoints are known)` or `Unavailable (cannot find route)` | `no route` |
+| no geojson / empty placeholder, nonzero length | `Not mapped (but could be — route or endpoints are known)` (the default) | `no route` |
+| no geojson, route exhaustively searched for and not found | `Unavailable (cannot find route)` | `no route` |
 
+- **`Not mapped` is the default for any pipeline with nonzero length and no route (Baird 2026-10-20).** Use `Unavailable (cannot find route)` only after an exhaustive search for the route, and say what was searched in `RouteNotes`. Never set it by default on a new row.
 - **A merged route ALWAYS flips `RouteType` to `Mapped route (at any accuracy)`.**
   "At any accuracy" is literal: `very low (straight line/schematic)` is still
   mapped. A low tier is never a reason to leave `RouteType` unmapped, and it never

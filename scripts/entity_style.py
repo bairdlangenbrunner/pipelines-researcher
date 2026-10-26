@@ -172,7 +172,8 @@ _QUALIFIER_TAIL = re.compile(
     r"members?|sponsors?|operator|owner|shareholders?|stakeholders?|majority\b[^()]*|minority\b[^()]*|"
     r"held\b[^()]*|owned\b[^()]*|on behalf of\b[^()]*)\s*\)\s*$", re.I)
 # several owners in one cell joined by a spaced slash (`AltaGas Ltd. / RGC Resources, Inc.`);
-# an unspaced slash is part of a name or a form (`A/S`, `I/S`, `Deutsch/Dänische …`)
+# an unspaced slash is a form (`A/S`, `I/S`, `NV/SA`) or, rarely, part of a registered name
+# (`Deutsch/Dänische …`, which only an exact gazetteer hit or a ruling clears: `_slash_name`)
 _SLASH_LIST = re.compile(r"\s+/\s*|\s*/\s+")
 # parenthetical words that are legal-name elements, never trade names
 PAREN_KEEP_WORDS = {"persero", "private", "public", "holding", "holdings", "group", "proprietary",
@@ -213,6 +214,24 @@ def _form_key(s: str) -> str:
     t = fold_diacritics(str(s)).lower().replace(".", "")
     t = re.sub(r"[^a-z0-9&]+", " ", t)
     return " ".join(t.split())
+
+
+def _slash_name(s: str) -> bool:
+    """Does `s` hold a slash that is not inside a legal form (`A/S`, `I/S`, `P/S`, `NV/SA`,
+    `CVBA/SCRL`)? Checked after the exact gazetteer and alias lookups, so a registered name the
+    ownership team already writes with a slash passes."""
+    forms = legal_forms()
+    for tok in s.split():
+        if "/" not in tok:
+            continue
+        core = tok.strip(",.;:()[]")
+        halves = [h for h in core.split("/")]
+        if _form_key(core) in forms and all(halves):
+            continue
+        if all(len(h) == 1 and h.isalpha() for h in halves):
+            continue                    # `K/S`, `S/A`: single-letter form abbreviations
+        return True
+    return False
 
 
 @lru_cache(maxsize=None)
@@ -611,8 +630,9 @@ def style(raw: str, country: str | None = None) -> StyleResult:
             res.flags += [f for f in x.flags if f not in res.flags]
             res.aliases += [a for a in x.aliases if a not in res.aliases]
         res.confidence = "low"
-        res.note = ("one cell holds several owners — the sheet wants one per Owner<N> with its "
-                    "own Owner<N>%; styled each part")
+        res.note = ("one cell holds several owners, or an old and a new name for one: split them into "
+                    "one Owner<N> each with its own Owner<N>%, or keep only the company that holds the "
+                    "pipeline now (Baird 2026-10-16); styled each part")
         return res
 
     former = bool(_FORMER_TAIL.search(s))
@@ -663,6 +683,17 @@ def style(raw: str, country: str | None = None) -> StyleResult:
     if a:
         res.styled = s
         return _finish(_adopt(res, a, "alias", "confirmed alias in data/owner_aliases.json"), former)
+
+    # an unspaced slash that is not a legal form usually joins two companies, or an old and a new
+    # name for one (Baird 2026-10-16, P6584 `TC Offshore/Kinetica`): never written as one cell
+    if _slash_name(s):
+        res.styled = s
+        res.basis, res.confidence = "rules", "low"
+        res.flags.append("slash")
+        res.note = ("a slash in a name usually joins two companies, or an old and a new name for one: "
+                    "split it into Owner1 and Owner2 with their shares, or keep only the company that "
+                    "holds the pipeline now")
+        return _finish(res, former)
 
     # 2. rules
     t = s
@@ -889,13 +920,13 @@ MECHANICAL_FLAGS = frozenset({"whitespace", "form_punctuation", "form_long", "fo
                               "form_from_gazetteer", "percent_stripped", "ruled"})
 # Flags that make a re-spelling a judgment (who the entity is, which form it is registered under)
 JUDGMENT_FLAGS = frozenset({"fuzzy_candidates", "no_legal_form", "form_conflict", "form_ambiguous",
-                            "alias_candidate", "acronym_not_initials", "multi_owner", "non_latin",
+                            "alias_candidate", "acronym_not_initials", "multi_owner", "slash", "non_latin",
                             "form_check_registration", "state_body", "jv", "group", "former", "sentinel",
                             "owner_qualifier"})
 # Flags that hold a cell for a person whatever else matched, and that make an UNCHANGED value
 # unfit to write too: the cell says something about the stake (`(affiliate)`) or holds several
-# owners, which no re-spelling fixes.
-HOLD_FLAGS = frozenset({"acronym_not_initials", "owner_qualifier", "multi_owner"})
+# owners (a `;` list, or a slash between two names, Baird 2026-10-16), which no re-spelling fixes.
+HOLD_FLAGS = frozenset({"acronym_not_initials", "owner_qualifier", "multi_owner", "slash"})
 OWNER_COL = re.compile(r"Owner\d+|Operator")
 
 

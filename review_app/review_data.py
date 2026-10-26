@@ -18,9 +18,11 @@ pipeline card tagged with the batch countries it came from (`scope_countries`) s
 filter by country. Scope-level items get one card per country.
 
 Sources, per staging dir: staged_resolutions.json, staged_new.json, qc_flags.json,
-escalations.json. NEVER staged_actions.json (a render-only re-join of the same records:
-reading it would double every carried record) and never *.prior.json (backups). Only
-those four exact filenames are opened, so both stay ignored by construction.
+escalations.json and staged_updates.json. Of staged_updates.json only an owner-style store
+(meta.style_only) is read; a country update store is counted in `stats["updates_skipped"]`.
+NEVER staged_actions.json (a render-only re-join of the same records: reading it would double
+every carried record) and never *.prior.json (backups). Only those five exact filenames are
+opened, so both stay ignored by construction.
 
 Kinds (docs/plans/2026-09-30_review-app.md, "Facts" item 2):
   lines  ref / fill / status / oo / route / new_row   (one decision each; push candidates)
@@ -63,6 +65,7 @@ import route_state  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
+from trackers.pipelines.config import make_key  # noqa: E402  (store puts ../gem-review-app on sys.path)
 from ref_pairs import OO_PRIMARY  # noqa: E402
 from adapter_base import geodesic_km  # noqa: E402
 from build_ref_workbook import J, _annotate_kept_refs, _ref_cell_text  # noqa: E402
@@ -97,6 +100,19 @@ COMMODITY_GLOB = {"gas": "GGIT_gas_snapshot_*.csv", "oil": "GOIT_oil_ngl_snapsho
 
 
 # ---------------------------------------------------------------- snapshots
+
+def _month_nums(vals):
+    """Month columns hold the number 1-12, never a name (Baird 2026-10-14): scrub on the way in."""
+    from months import month_number
+    out = dict(vals or {})
+    for c, v in out.items():
+        if "Month" in str(c) and "[ref]" not in str(c) and str(v).strip():
+            n = month_number(v)
+            if n is not None:
+                out[c] = n
+    return out
+
+
 def _read_csv(path, header_idx):
     with open(path, encoding="utf-8", newline="") as f:
         rows = list(csv.reader(f))
@@ -175,6 +191,21 @@ def _same(a, b):
         return float(a.replace(",", "")) == float(b.replace(",", ""))
     except ValueError:
         return False
+
+
+def _same_displayed(shown, proposed):
+    """The snapshot holds the sheet's FORMATTED values, so a cell stored as 5.516 but formatted
+    to two decimals reads 5.52. A proposed value that rounds to what is shown, at the shown
+    precision (two or more decimals shown), is treated as on the sheet (a 5.516 push of 2026-10-02 sat in the queue as
+    "5.52 now" for that reason). Needs more decimals proposed than shown."""
+    a, b = str(shown if shown is not None else "").strip(), str(proposed if proposed is not None else "").strip()
+    try:
+        fa, fb = float(a.replace(",", "")), float(b.replace(",", ""))
+    except ValueError:
+        return False
+    da = len(a.split(".")[1]) if "." in a else 0
+    db = len(b.split(".")[1]) if "." in b else 0
+    return da >= 2 and db > da and round(fb, da) == fa
 
 
 def _urls(text):
@@ -272,7 +303,7 @@ def _fill_colid(r):
     changed column was ProposalMonth was logged under `…|ProposalYear` (P6011) and the ledger
     could not say what had been accepted; `publish.carry_forward` maps those legacy keys onto the
     new ones."""
-    vals = r.get("values") or {}
+    vals = _month_nums(r.get("values"))
     order = list(r.get("value_cols") or []) + [c for c in vals if c not in (r.get("value_cols") or [])]
     cols = [c for c in order if str(vals.get(c) if vals.get(c) is not None else "").strip()]
     if not cols:
@@ -418,10 +449,15 @@ def _load_dir(d, root, order0, country=""):
                 skipped["new_row_applied"] += 1     # already on the sheet (scripts/append_new_rows.py)
                 continue
             cls = c.get("class") or ""
+            if cls == "matched_existing":
+                # probably another name for a row GEM already tracks: an alias fill (convert_matched_to_alias.py),
+                # never a new-row card -- a record the converter has not reached yet stays off the page
+                skipped["matched_existing"] += 1
+                continue
             slug = c.get("slug") or (c.get("name") or f"cand{i}").lower().replace(" ", "-")
             if cls == "monitor":
                 group, kind = "item", "monitor"
-            elif cls in ("new_row", "matched_existing"):
+            elif cls == "new_row":
                 group, kind = "line", "new_row"
             else:
                 group, kind = "item", "other"
@@ -518,6 +554,18 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
                if not (e.kind == "unresolved" and not (e.rec.get("researcher_notes") or "").strip()
                        and _cell(e) in line_cells)]
     stats["superseded_baselines"] = n0 - len(entries)
+
+    # A MISSING_REF "ref added" line and a FILL line for the same cell, with the same values and
+    # the same proposed refs, are one proposal staged twice (P0282 Start 1978): keep the fill.
+    def _twin_key(e):
+        r = e.rec
+        return (_cell(e), json.dumps(_month_nums(r.get("values")), sort_keys=True),
+                tuple(sorted(r.get("proposed_refs") or [])))
+    fill_twins = {_twin_key(e) for e in entries if e.group == "line" and e.kind == "fill"}
+    n0 = len(entries)
+    entries = [e for e in entries
+               if not (e.group == "line" and e.kind == "ref" and _twin_key(e) in fill_twins)]
+    stats["twin_refs"] = n0 - len(entries)
 
     recorded_snapshot = max((c for c in rec_csv if c), default="")   # what the staging dirs named
     snap_path = _pick_snapshot(commodity.lower(), rec_csv, data_dir, snapshot)
@@ -699,6 +747,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
                                       - {""}),
             "lines": lines, "items": items,
         }
+        if pid.startswith("new:"):
+            card_out["existing"] = _existing_by_name(snap, name, rec0)
         if name_card:       # a name card spans both trackers (the owners tab is shared)
             card_out.update({"name_card": name_card, "commodity": "both"})
         pipelines.append(card_out)
@@ -714,22 +764,32 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         "pipelines": pipelines,
     }
     overlay_decisions(data, root)
+    settle_countries(data, label_country, countries, stats, drop=drop_done)
+    stats["owners_snapshot"] = own_path.name if own_path else ""
+    return data, stats
+
+
+def settle_countries(data, label_country, countries, stats, drop=False):
+    """Set scope.country_status, and with `drop` remove the pipelines of the done countries (they
+    stay listed there, marked hidden). publish.build_dataset calls it again after its own writes
+    (a carried decision), so the status counts what the page will show. `label_country` maps a
+    dir label to its country."""
     data["scope"]["country_status"] = cs = country_status(data, label_country, countries)
-    if drop_done:
+    if drop:
         done = {c["country"] for c in cs if c["done"]}
         keep = [p for p in data["pipelines"] if not set(p["scope_countries"] or countries[:1]) <= done]
         stats["done_dropped"] = len(data["pipelines"]) - len(keep)
         data["pipelines"] = keep
         for c in cs:
             c["hidden"] = c["done"]
-    stats["owners_snapshot"] = own_path.name if own_path else ""
-    return data, stats
+    return cs
 
 
 def country_status(data, label_country, countries):
     """Per batch country: lines / items and how many are still open. A line is open until a
-    person decides it (machine records do not count) unless the backend already holds it; an
-    item is open until a person makes its call, except the info kinds nobody is asked about
+    person decides it (machine records do not count), unless it has landed: the backend already
+    holds it, or push.py wrote it (a `push` record). That is the page's `landed` rule (ext.js).
+    An item is open until a person makes its call, except the info kinds nobody is asked about
     (confirmed). done = nothing open (a country with nothing to decide at all is done too)."""
     st = {c: {"country": c, "dirs": 0, "pipelines": 0, "lines": 0, "open_lines": 0,
               "items": 0, "open_items": 0, "done": False, "hidden": False} for c in countries}
@@ -741,7 +801,7 @@ def country_status(data, label_country, countries):
         for l in p["lines"]:
             s = st[label_country.get(l["dir"], countries[0])]
             s["lines"] += 1
-            s["open_lines"] += not (l["reviewed"] or l.get("in_backend"))
+            s["open_lines"] += not (l["reviewed"] or landed(l))
         for i in p["items"]:
             if i["kind"] in INFO_KINDS:
                 continue
@@ -751,6 +811,14 @@ def country_status(data, label_country, countries):
     for s in st.values():
         s["done"] = not (s["open_lines"] or s["open_items"])
     return list(st.values())
+
+
+LANDED_BY = ("push", "routes_repo", "apply_route_candidates")
+
+
+def landed(line):
+    """True when the line is already on the sheet: the backend holds it, push.py wrote it, or its route is in the routes repo with the sheet columns mapped (route_state.py)."""
+    return bool(line.get("in_backend")) or (line.get("applied") or {}).get("by") in LANDED_BY
 
 
 def overlay_decisions(data, root=None):
@@ -766,8 +834,12 @@ _HELD_WHY = (   # first matching flag explains a held name, in words a reviewer 
     ("owner_qualifier", "A note such as affiliate or via is not part of a name. It usually means the "
                         "cell names a parent company, and Owner1 should hold the company that owns the "
                         "pipeline itself."),
-    ("multi_owner", "The cell names more than one company. Each owner goes in its own cell. Several "
-                    "operators in one cell is a call for a person."),
+    ("multi_owner", "The cell names more than one company, or an old and a new name for one. Each "
+                    "owner goes in its own cell with its share, or keep only the company that holds the "
+                    "pipeline now. Several operators in one cell is a call for a person."),
+    ("slash", "A slash in a name usually joins two companies, or an old and a new name for one. Split "
+              "it into Owner1 and Owner2 with their shares, or keep only the company that holds the "
+              "pipeline now."),
     ("acronym_not_initials", "The short name in brackets does not match the initials of the full name. "
                              "Check which company is meant."),
 )
@@ -779,7 +851,7 @@ def _held_note(held):
     for c, v, st, fl in held:
         why = next((w for f, w in _HELD_WHY if f in fl),
                    "The styler's spelling is a near match to a known name, not a sure one.")
-        fix = f" A styled spelling would be {st!r}." if st != v and "multi_owner" not in fl else ""
+        fix = f" A styled spelling would be {st!r}." if st != v and not {"multi_owner", "slash"} & set(fl) else ""
         out.append(f"{c} {v!r}: {why}{fix}")
     return "\n".join(out)
 
@@ -789,7 +861,7 @@ def _line(e, snap, own, stats, root=None):
     kind = e.kind
     tier = r.get("tier") or ""
     base = {
-        "key": f"{e.dir}::{e.pid}|{e.sheet_row}|{e.colid}",
+        "key": make_key(e.dir, e.pid, e.sheet_row, e.colid),
         "kind": kind, "dir": e.dir, "also_in": e.also_in, "sheet_row": e.sheet_row,
         "sheet_row_moved": e.moved,
         "tier": tier, "independent": r.get("independent"),
@@ -807,7 +879,7 @@ def _line(e, snap, own, stats, root=None):
                      "entity_id": r.get("entity_id") or "", "aliases": r.get("aliases") or [],
                      "action": r.get("action") or ""})
     if kind == "new_row":
-        vals = r.get("values") or {}
+        vals = _month_nums(r.get("values"))
         refs = r.get("refs") or {}
         base.update({
             "column": "", "ref_col": "", "value_cols": list(vals), "current": {}, "current_ref": "",
@@ -830,7 +902,7 @@ def _line(e, snap, own, stats, root=None):
         if sr == e.sheet_row:
             srow = row
     srow = srow or {}
-    vals = r.get("values") or {}
+    vals = _month_nums(r.get("values"))
     value_cols = list(r.get("value_cols") or []) if isinstance(r.get("value_cols"), list) else []
     for c in vals:
         if c not in value_cols:
@@ -854,7 +926,7 @@ def _line(e, snap, own, stats, root=None):
     if kind in ("ref", "oo") and not vals and not refs:
         in_backend = False
     else:
-        vals_ok = all(_same(_cell(srow, c), v) if v not in (None, "") else str(_cell(srow, c) or "").strip() == ""
+        vals_ok = all((_same(_cell(srow, c), v) or _same_displayed(_cell(srow, c), v)) if v not in (None, "") else str(_cell(srow, c) or "").strip() == ""
                       for c, v in vals.items())
         refs_ok = all(u in current_ref for u in refs)
         in_backend = bool(srow) and vals_ok and refs_ok and (bool(vals) or bool(refs))
@@ -1095,6 +1167,21 @@ def _norm(v):
     return str(v or "").strip().lower()
 
 
+def _existing_by_name(snap, name, rec):
+    """Sheet rows already carrying a new-pipeline candidate's name (PipelineName or an other
+    English name), as [{pid, name, wiki, sheet_row}] so the card can link the existing pipeline
+    and its wiki page. The candidate's own Wiki value (if it staged one) is returned as `wiki_staged`."""
+    want = {_norm(name), _norm((rec.get("values") or {}).get("PipelineName"))} - {""}
+    found, seen = [], set()
+    for sr, row in snap.rows:
+        pid = row.get("ProjectID", "").strip()
+        names = {_norm(row.get("PipelineName"))} | {_norm(x) for x in str(row.get("OtherEnglishNames") or "").split(",")}
+        if pid and pid not in seen and want & (names - {""}):
+            seen.add(pid)
+            found.append({"pid": pid, "name": row.get("PipelineName", ""), "wiki": row.get("Wiki", ""), "sheet_row": sr})
+    return {"matches": found, "wiki_staged": str((rec.get("values") or {}).get("Wiki") or "")}
+
+
 def _fold_status_covers(lines, recs, stats):
     """One card per status call (Baird 2026-09-30): a status-review line and the refs-leg record
     that stages the SAME Status value onto `Status [ref]` are two staged records for one
@@ -1176,7 +1263,7 @@ def _item(e):
         obj["concern_type"] = "ref_unverified"
         obj.setdefault("recommendation", _REF_CHECK_TEXT.get(r.get("class_out"), ""))
     obj.update({
-        "key": f"{e.dir}::{e.pid}|{e.sheet_row}|{e.colid}",
+        "key": make_key(e.dir, e.pid, e.sheet_row, e.colid),
         "kind": e.kind, "dir": e.dir, "also_in": e.also_in, "sheet_row": e.sheet_row,
         "sheet_row_moved": e.moved,
         "contested": _contested_map(r.get("contested")),
@@ -1214,11 +1301,23 @@ def _attach_rivals(lines, items, stats):
     concern gains `rival_lines` [line keys]. A differing candidate is a second proposal the
     reviewer decides between on the line (accept proposed / accept candidate); an agreeing one is
     corroboration (a chip). A concern with blank candidates only, or on columns no line proposes,
-    attaches to nothing here: it is the inline contested note and an Items-tab call, as before."""
+    attaches to nothing here: it is the inline contested note and an Items-tab call, as before.
+    An Owner<N>/Operator candidate the styler holds for a person (several owners in one cell, a
+    slash between two names: Baird 2026-10-16, P6584 `TC Offshore / Kinetica Deepwater Express`;
+    also a near-match spelling or a prose candidate) is never offered as a one-click rival:
+    push.py would refuse it anyway. It stays on the concern as `held_candidates` {column: reason}
+    and the Items-tab call, and the reviewer enters the right value with suggest: two owners, the
+    accurate one, or the team's spelling."""
     concerns = [it for it in items if it.get("kind") == "concern"
                 and any(str(v).strip() for v in (it.get("contested") or {}).values())]
     for it in concerns:
         cont = {c: str(v).strip() for c, v in it["contested"].items() if str(v).strip()}
+        held = entity_style.held_names({c: v for c, v in cont.items()})
+        if held:
+            it["held_candidates"] = {c: _held_note([(c, v, st, fl)]).split("\n", 1)[1] for c, v, st, fl in held}
+            for c, *_ in held:
+                cont.pop(c, None)
+            stats["held_candidates"] = stats.get("held_candidates", 0) + len(held)
         for l in lines:
             differs, agrees = {}, []
             for c in sorted(store.line_cols(l) & set(cont)):
@@ -1280,6 +1379,8 @@ def summary(data, stats):
     if stats.get("route_applied") or stats.get("route_disagree"):
         out.append(f"route lines already added: {stats.get('route_applied', 0)}   "
                    f"route lines where the routes repo and the sheet disagree (held): {stats.get('route_disagree', 0)}")
+    if stats.get("held_candidates"):
+        out.append(f"owner/operator concern candidates the styler holds for a person, not offered as rivals: {stats['held_candidates']}")
     if stats.get("value_moved"):
         out.append(f"ref-only lines dropped, the value they checked has since changed on the sheet: {stats['value_moved']}")
     if stats.get("done_dropped"):

@@ -21,8 +21,11 @@ What it does, in order:
      last sheet row read (the cursor). The published dataset already carries every decision up to
      the cursor; the web app lays only LATER rows over it. --no-pull skips this (cursor 1) and is
      refused with --upload once a store is configured.
-  3. review_data.build + the decision overlay (the same dataset the local server serves); with
-     --refresh also store.sync_backend (machine records for lines the sheet already holds).
+  3. review_data.build + the decision overlay (the same dataset the local server serves). Every
+     line the sheet already holds and no one has decided gets a `backend sync` accept
+     (store.sync_backend): with --refresh the records are written (store first, then the
+     sidecars); otherwise they are laid over the dataset in memory only (sync_in_memory), so the
+     page shows those lines as landed without a write. Either way the line is not a person's call.
   4. Stamp every line with `basis`: a short hash of the backend cells the proposal was judged
      against (current value, current refs, current status, current route accuracy). The web app
      copies it into each decision record. A line whose latest person decision carries a DIFFERENT
@@ -34,15 +37,17 @@ What it does, in order:
      ProjectID and column (only the row differs) and nothing is recorded under that key yet, a
      copy of the record is appended to the log under the new key (`rekeyed_from` = the old key;
      reviewer, time, basis and snapshot kept). The old record is never rewritten. Anything else
-     whose key matches no line of this build (ambiguous: a multi-row ProjectID, a column that
-     left the batch) is reported as an orphan and left alone.
+     whose key matches no line of this build is reported as an orphan, with its reason
+     (explain_orphans), and left alone. Orphans are counted over every country of the build,
+     before the all-decided countries are dropped: a decision in a hidden country is not lost.
   6. Write the flat file set into --out (gitignored work/review_publish by default; the dev server
      review_app/gas_dev/dev_server.js reads it as if it were the Drive folder):
 
        scopes.json                     {updated, scopes: [{id, label, ver, parts, index, geo, store_cursor, ...}]}
        <id>.<ver>.part<k>.json.gz      the dataset, split so no part is big; part 0 has everything but
                                        the later pipelines, the others are {"pipelines": [...]}
-       <id>.<ver>.index.json           what Code.gs validates a decision against (ASCII JSON)
+       <id>.<ver>.index.json           what Code.gs validates a decision against (ASCII JSON; the
+                                       same index the artifact page carries, review_core.build_static.pack_index)
        <id>.<ver>.geo.json.gz          candidate route geometry, only when the scope has route lines
 
   7. --upload: create the new files in the Drive data folder (review_app/google.json
@@ -76,6 +81,8 @@ import review_data  # noqa: E402
 import scopes  # noqa: E402
 import staged_store  # noqa: E402
 import store  # noqa: E402
+from review_core import build_static as core  # noqa: E402
+from trackers.pipelines.config import key_index, parse_key, resolve_key  # noqa: E402
 
 ET = ZoneInfo("America/New_York")
 PART_BYTES = 2_500_000          # raw JSON per part; gzips to well under 1 MB
@@ -124,13 +131,6 @@ def known_keys(data):
     return keys
 
 
-def _split(key):
-    """'<dir>::<pid>|<row>|<colid>' -> (dir, pid, row, colid), colid WITH its '#...' suffix."""
-    d, sep, rest = str(key).partition("::")
-    parts = rest.split("|", 2)
-    return (d, parts[0], parts[1], parts[2]) if sep and len(parts) == 3 else None
-
-
 def _rows(data):
     """{key: sheet_row} for every line, item and covered record of the build."""
     out = {}
@@ -162,43 +162,167 @@ def orphans(data, dirs):
     return [r for _, r in _orphans(known_keys(data), _logs(data, dirs), dirs)]
 
 
+ORPHAN_REASONS = {
+    "row_renumbered": "row renumbered: one line of this build has the same dir, ProjectID and column at another "
+                      "sheet row, but the decision was not carried to it (a person already decided that line, "
+                      "or other moved decisions on it disagree)",
+    "column_left": "column left the batch: the ProjectID is still in this dir, but none of its lines or items has the column",
+    "dir_skipped": "dir dropped or skipped: the dir is not in this build, or the build leaves its records out on "
+                   "purpose (a recon dir, a route-QC record, a sheet-vs-wiki diff, a country update store, a new-row "
+                   "candidate already on the sheet or now matched to an existing row)",
+    "multi_row": "multi-row ProjectID: several lines of this build have the same dir, ProjectID and column, "
+                 "so the decision cannot be carried without a guess",
+    "unknown": "unknown: none of the above (the key does not parse, or the ProjectID has nothing left in this dir)",
+}
+
+
+def stray_logs(data, countries, commodity, root):
+    """{dir label: path} of the staging dirs under the countries' scope dirs that hold a
+    review_log.jsonl but are not part of this build (discovery no longer finds them)."""
+    root, have, out = Path(root), set(data.get("dirs", [])), {}
+    for c in countries:
+        if c == review_data.TRACKER_WIDE:
+            continue
+        for f in sorted((root / staged_store.scope_dirname(c, commodity) / "staging").glob("*/review_log.jsonl")):
+            label = review_data._rel(f.parent, root)
+            if label not in have:
+                out[label] = f.parent
+    return out
+
+
+def explain_orphans(data, dirs, stray=None, carried=()):
+    """Every orphan (orphans(), plus the live person records in the `stray` dirs) with the reason
+    its key matches nothing in this build, as [{"reason", "dir", "key", "decision", "reviewer",
+    "ts", "detail"}]; ORPHAN_REASONS says what each reason means. `carried` are the records
+    carry_forward returned on a dry run: they are reported as carried, not as orphans."""
+    rows = _rows(data)
+    ix = key_index(rows)
+    pids = {(s[0], s[1]) for s in map(parse_key, rows) if s}
+    cols = {}                                   # (dir, pid, colid without its #suffix) -> keys
+    for k in rows:
+        s = parse_key(k)
+        if s:
+            cols.setdefault((s[0], s[1], s[3].split("#", 1)[0]), []).append(k)
+    new_left = {}                               # dir -> {"new:<slug>": why the build leaves it out}
+
+    def left_out(d):
+        if d not in new_left:
+            new_left[d] = {}
+            f = Path(dirs[d]) / "staged_new.json" if d in dirs else None
+            for i, c in enumerate(review_data._read_json(f).get("candidates", []) if f and f.exists() else []):
+                slug = c.get("slug") or (c.get("name") or f"cand{i}").lower().replace(" ", "-")
+                if c.get("applied"):
+                    new_left[d][f"new:{slug}"] = "a new-row candidate already appended to the sheet"
+                elif c.get("class") == "matched_existing":
+                    new_left[d][f"new:{slug}"] = "a new-row candidate now matched to an existing row"
+        return new_left[d]
+    done = {r.get("rekeyed_from") for r in carried}
+    upd = {d for d, path in dirs.items() if (Path(path) / "staged_updates.json").exists()}
+
+    def why(d, key, r):
+        if d in (stray or {}):
+            return "dir_skipped", "the dir is not part of this build"
+        if review_data.SKIP_RECON_DIRS and Path(d).name.startswith("recon-"):
+            return "dir_skipped", "a recon dir (SKIP_RECON_DIRS)"
+        s = parse_key(key)
+        if not s:
+            return "unknown", "the key does not parse"
+        if r.get("kind") == "routeqc" or s[3].startswith("__ROUTEQC__"):
+            return "dir_skipped", "a route-QC record (SKIP_ROUTEQC)"
+        if r.get("kind") == "wikidiff" or s[3].startswith("__WIKIDIFF__"):
+            return "dir_skipped", "a sheet-vs-wiki diff record"
+        ident = (s[0], s[1], s[3])
+        cands = ix["ident"].get(ident) or ix["legacy"].get(ident) or []
+        if len(cands) > 1:
+            return "multi_row", f"{len(cands)} lines match: " + ", ".join(sorted(cands)[:4])
+        if cands:
+            return "row_renumbered", f"the line is now {cands[0]}"
+        if (s[0], s[1]) in pids:
+            same = cols.get((s[0], s[1], s[3].split("#", 1)[0]))
+            return "column_left", (f"the column is still there under another record number: {same[0]}" if same else "")
+        if s[3] in left_out(d):
+            return "dir_skipped", left_out(d)[s[3]]
+        if d in upd:
+            return "dir_skipped", "a country update store (not read by the review app)"
+        return "unknown", "the ProjectID has no line or item in this dir"
+
+    logs = _logs(data, dirs)
+    found = [(d, r) for d, r in _orphans(set(rows), logs, dirs) if r["key"] not in done]
+    for d, path in (stray or {}).items():
+        by_key = store.calls(store.read_log(path))
+        found += [(d, r) for k in by_key for r in [store.speaker(by_key, k)[0]] if store.reviewed(r)]
+    out = []
+    for d, r in found:
+        reason, detail = why(d, r["key"], r)
+        out.append({"reason": reason, "dir": d, "key": r["key"], "kind": r.get("kind") or "",
+                    "decision": r.get("decision") or r.get("call") or "", "reviewer": r.get("reviewer") or "",
+                    "ts": r.get("ts") or "", "detail": detail})
+    return out
+
+
+def sync_in_memory(data, dirs, snapshot="", ts=None):
+    """The backend sync without a write: the records store.sync_backend would append (a `backend
+    sync` accept for every line the sheet already holds that no one has decided, and for its
+    covers) are laid over `data` exactly as the overlay lays a logged one, and nothing is written.
+    A line so marked shows decision accept by "backend sync", `applied` by it, and stays not
+    `reviewed`: it is not a person's call, and the page never sends a machine record back
+    (import_log refuses one). A later --refresh, or the local server's refresh, writes the same
+    records for real. -> the records."""
+    recs = store.sync_backend(data, dirs, snapshot, sink=lambda recs, dirs: recs)
+    if not recs:
+        return []
+    ts = ts or data.get("built") or datetime.now(ET).isoformat(timespec="seconds")
+    who = store.SYNC_REVIEWER
+    keys = {r["key"] for r in recs}
+    for p in data.get("pipelines", []):
+        for l in p.get("lines", []):
+            if l["key"] in keys:
+                l.update(decision="accept", suggested_value="", decision_note="", reviewed=False,
+                         decided_by=who, decided_at=ts, rival=None, applied={"by": who, "at": ts})
+            if l.get("covers"):
+                for c in l["covers"]:
+                    if c["key"] in keys:
+                        c.update(decision="accept", decided_by=who, decided_at=ts)
+                l["uncovered"] = [c["key"] for c in l["covers"] if c["decision"] != l["decision"]]
+    return recs
+
+
 def carry_forward(data, dirs, sink=None, write=True):
     """Re-key the person decisions that a renumbered sheet row orphaned (module docstring, step 5).
     Appends the copies to the logs (store.append_records: time and reviewer kept; `sink` = the
     ledger's, so the copies land in the decision store too) and returns them; the caller overlays
-    the dataset again. Carried only when the match is beyond doubt:
+    the dataset again. Carried only when the match is beyond doubt (config.resolve_key):
       - exactly one key of this build has the orphan's dir, ProjectID and full colid — or, for a
         fill decided before 2026-10-01 under its first value column alone (`…|ProposalYear`),
         exactly one multi-column fill key of this build names that column
         (`…|ProposalYear+ProposalMonth`; review_data._fill_colid),
       - no PERSON record sits under that key (a later decision wins; a machine record there — a
         backend sync, a push — is not a decision and does not block the carry),
-      - no other orphan wants the same key.
+      - no other orphan wants the same key, unless every orphan that wants it made the same call on
+        the same cells (decision or call, basis and suggested value all equal): the same line
+        decided again on a later build, before a second re-sort. The latest one is carried.
     `write=False` (a --no-pull dry run against a configured store) only reports the carries: a
     sidecar-only record would put the sidecars ahead of the store, the single source of truth."""
     rows = _rows(data)
-    by_ident, legacy = {}, {}
-    for k in rows:
-        s = _split(k)
-        if not s:
-            continue
-        by_ident.setdefault((s[0], s[1], s[3]), []).append(k)
-        base, _, suffix = s[3].partition("#")
-        if "+" in base:                         # a multi-column fill: reachable from any one of its columns
-            for col in base.split("+"):
-                legacy.setdefault((s[0], s[1], col + ("#" + suffix if suffix else "")), []).append(k)
+    ix = key_index(rows)                        # config.resolve_key: the one rule for "the same line"
     logs = _logs(data, dirs)
     want = {}                                   # target key -> [(dir, orphan record)]
     for d, r in _orphans(set(rows), logs, dirs):
-        s = _split(r["key"])
-        ident = (s[0], s[1], s[3]) if s else None
-        cands = (by_ident.get(ident) or legacy.get(ident) or []) if ident else []
-        if len(cands) == 1 and not (logs.get(d, {}).get(cands[0]) or {}).get("person"):
-            want.setdefault(cands[0], []).append((d, r))
-    moved = {rs[0][1]["key"]: k for k, rs in want.items() if len(rs) == 1}      # old key -> new key
+        k = resolve_key(r["key"], rows, ix)
+        if k and not (logs.get(d, {}).get(k) or {}).get("person"):
+            want.setdefault(k, []).append((d, r))
+    def same_call(r):
+        return (r.get("decision"), r.get("call"), r.get("basis"), r.get("suggested_value") or "")
+    chosen = {}                                 # target key -> the orphan record carried to it
+    for k, rs in want.items():
+        if len({same_call(r) for _, r in rs}) == 1 and all(r.get("basis") for _, r in rs):
+            chosen[k] = max((r for _, r in rs), key=lambda r: r.get("ts") or "")
+        elif len(rs) == 1:
+            chosen[k] = rs[0][1]
+    moved = {r["key"]: k for k, r in chosen.items()}                           # old key -> new key
     new = []
     for old, k in moved.items():
-        r = dict(want[k][0][1], key=k, sheet_row=rows[k], rekeyed_from=old)
+        r = dict(chosen[k], key=k, sheet_row=rows[k], rekeyed_from=old)
         if r.get("id"):
             r["id"] = f"{r['id']}~rekey"        # pull.py dedupes by id: the copy is its own record
         if r.get("via") in moved:
@@ -229,104 +353,6 @@ def restore_reviewers(data, dirs, emails):
 
 
 # ---- the files -----------------------------------------------------------------------
-
-def make_watch(data):
-    """The backend cells each line was judged against, for the live drift check (Code.gs liveCheck):
-    {"tracker"|"oo": [[pid, sheet_row, {column: value}]]}, one entry per (tab, pid, row). The columns
-    are the ones `basis` hashes (value cols, the ref col, Status, RouteAccuracy) with the values the
-    line shows. Code.gs compares them with the sheet as it is NOW; the page matches changes to lines."""
-    seen = {}
-    for p in data.get("pipelines", []):
-        for l in p.get("lines", []):
-            if l.get("kind") == "new_row" or l.get("sheet_row") is None:
-                continue
-            tab = "oo" if l.get("tab") == review_data.OO_TAB else "tracker"
-            cells = {c: str(v if v is not None else "") for c, v in (l.get("current") or {}).items()}
-            if l.get("ref_col"):
-                cells[l["ref_col"]] = str(l.get("current_ref") or "")
-            if "current_status" in l:
-                cells["Status"] = str(l.get("current_status") or "")
-            if "current_route_accuracy" in l:
-                cells["RouteAccuracy"] = str(l.get("current_route_accuracy") or "")
-            seen.setdefault((tab, l.get("pid") or p["pid"], l["sheet_row"]), {}).update(cells)
-    out = {"tracker": [], "oo": []}
-    for (tab, pid, row), cells in seen.items():
-        out[tab].append([pid, row, cells])
-    return out
-
-
-def make_index(data):
-    """What Code.gs needs to validate a request without the dataset: see the module docstring of
-    review_app/gas/Code.gs. Column logic (line_cols / resolves / rivals) stays in store.py and
-    review_data.py; this only precomputes its answers per line: `concerns` = [{c: concern key,
-    res: [columns the line's accept resolves], cand: the concern's candidate value a `rival`
-    suggest takes ("" when it has none that differs), cols: the columns that candidate covers}]."""
-    keys = {}
-    for p in data.get("pipelines", []):
-        concerns = [it for it in p.get("items", [])
-                    if it.get("kind") == "concern" and isinstance(it.get("contested"), dict)]
-        for l in p.get("lines", []):
-            e = {"g": "l", "kind": l["kind"], "dir": l["dir"], "pid": l.get("pid") or p["pid"], "sheet_row": l.get("sheet_row"),
-                 "ref_col": l.get("ref_col") or l.get("column") or "", "def": l.get("default") or "hold",
-                 "basis": l.get("basis") or basis(l)}
-            covers = [{"key": c["key"], "dir": c["dir"], "sheet_row": c.get("sheet_row"),
-                       "ref_col": c.get("ref_col") or "", "kind": c["kind"]} for c in l.get("covers") or []]
-            if covers:
-                e["covers"] = covers
-            xs = []
-            for c in concerns:
-                res = store.resolves(l, c)
-                rv = store.rival_of(l, c["key"])
-                cand = rv["value"] if rv else ""
-                if res or cand:
-                    xs.append({"c": c["key"], "res": res, "cand": cand, "cols": sorted(rv["cols"]) if rv else []})
-            if xs:
-                e["concerns"] = xs
-            keys[l["key"]] = e
-        for it in p.get("items", []):
-            keys[it["key"]] = {"g": "i", "kind": it["kind"], "dir": it["dir"], "pid": p["pid"],
-                               "call0": it.get("call") or ""}
-    return {"keys": keys, "watch": make_watch(data), "commodity": (data.get("scope") or {}).get("commodity", "")}
-
-
-def pack_index(index):
-    """make_index's answer in the shape Code.gs reads (its get_ unpacks one entry at a time).
-    Every key is "<dir>::<rest>" and the dir label is most of its length, so the keys are grouped
-    by dir and the label is stored once: {"v": 2, "dirs": [label], "keys": [{rest: entry}]}, the
-    two lists aligned. A line entry is {k kind, p pid, r sheet_row, c ref_col, d default (left out
-    when "accept"), b basis, v [[cover key, sheet_row, ref_col, kind]], x [[concern key, res, cand, cols]]};
-    an item entry is {i kind, p pid, c0 the call the published dataset already holds}. Empty
-    fields are left out. For the two-country gas batch this is 1.5 MB instead of 3.9."""
-    dirs, groups = [], []
-    for key, e in index["keys"].items():
-        d, sep, rest = key.partition("::")
-        if not sep or d != e["dir"]:
-            raise SystemExit(f"key {key!r} does not start with its dir {e['dir']!r}: the index cannot be packed")
-        if d not in dirs:
-            dirs.append(d)
-            groups.append({})
-        if e["g"] == "i":
-            c = {"i": e["kind"], "p": e["pid"]}
-            if e.get("call0"):
-                c["c0"] = e["call0"]
-        else:
-            c = {"k": e["kind"], "p": e["pid"], "b": e["basis"]}
-            if e.get("sheet_row") is not None:
-                c["r"] = e["sheet_row"]
-            if e.get("ref_col"):
-                c["c"] = e["ref_col"]
-            if e["def"] != "accept":
-                c["d"] = e["def"]
-            if e.get("covers"):
-                for x in e["covers"]:
-                    if x["key"].partition("::")[0] != x["dir"]:
-                        raise SystemExit(f"cover key {x['key']!r} does not start with its dir")
-                c["v"] = [[x["key"], x.get("sheet_row"), x.get("ref_col") or "", x["kind"]] for x in e["covers"]]
-            if e.get("concerns"):
-                c["x"] = [[x["c"], x["res"], x["cand"], x["cols"]] for x in e["concerns"]]
-        groups[dirs.index(d)][rest] = c
-    return {"v": 2, "dirs": dirs, "keys": groups, "w": index.get("watch") or {}, "cmd": index.get("commodity") or ""}
-
 
 def _dump(obj):
     return json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
@@ -390,7 +416,7 @@ def write_scope(data, out, sid, cursor, base, ver=None, build=None, target=PART_
         (out / name).write_bytes(_gz(_dump(part)))
         names.append(name)
     index_name = f"{sid}.{ver}.index.json"
-    (out / index_name).write_text(json.dumps(pack_index(make_index(data)), ensure_ascii=True, separators=(",", ":")),
+    (out / index_name).write_text(json.dumps(core.pack_index(data, store.CONFIG), ensure_ascii=True, separators=(",", ":")),
                                   encoding="ascii")
     geo, geo_name = geo_bundle(data, base), None
     if geo:
@@ -507,16 +533,49 @@ def upload(out, entry, cfg, yes=False, gws=pull_mod.gws, say=print):
 
 # ---- the run -------------------------------------------------------------------------
 
-def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None, sid=None, cursor=1,
-            batches_root=None, data_dir=None, sync=False, ver=None, target=PART_BYTES, batch=False,
-            include_done=False, emails=None, led=None, write=True):
-    """Build, overlay, stamp, write the mirror. -> (entry, report dict). No network unless `led`
-    (a ledger.Ledger): then the records this run writes -- backend syncs, carried-forward
-    decisions -- go to the decision store first, and the store cursor advances past them.
-    `batch` = the countries are the review-app batch: all-decided ones are dropped (unless
-    `include_done`), exactly as review_data.main does for the local server. `write=False` = a dry
-    run: carries are reported, not appended, and no backend sync runs (nothing lands in a sidecar
-    that the decision store does not hold)."""
+def scope_label(countries, commodity, batch):
+    if batch:
+        return f"review batch: {commodity} ({len(countries)} countr{'y' if len(countries) == 1 else 'ies'})"
+    return f"{', '.join(countries)} {commodity}".strip()
+
+
+def skipped_dirs(data, stats, countries, commodity, root):
+    """What the build left out under the countries' scope dirs, for the build report:
+    {"no_store": [dir labels with none of the store files], "other_scope": [dirs whose store names
+    another scope], "loose": [files sitting in staging/ itself], "recon": [recon-* dirs, read but
+    skipped while SKIP_RECON_DIRS], "routeqc", "wikidiff", "updates": record and store counts}."""
+    root, have = Path(root), set(data.get("dirs", []))
+    out = {"no_store": [], "other_scope": [], "loose": [], "recon": [],
+           "routeqc": stats.get("routeqc_skipped", 0), "wikidiff": stats.get("wikidiff_skipped", 0),
+           "updates": stats.get("updates_skipped", 0)}
+    for c in countries:
+        if c == review_data.TRACKER_WIDE:
+            continue
+        sd = root / staged_store.scope_dirname(c, commodity) / "staging"
+        for d in sorted(sd.glob("*")) if sd.is_dir() else []:
+            label = review_data._rel(d, root)
+            if not d.is_dir():
+                out["loose"].append(label)
+            elif label in have:
+                if review_data.SKIP_RECON_DIRS and d.name.startswith("recon-"):
+                    out["recon"].append(label)
+            elif not any((d / fn).exists() for fn in staged_store._STORE_FILES):
+                out["no_store"].append(label)
+            else:
+                out["other_scope"].append(label)
+    return out
+
+
+def build_dataset(countries, commodity, dirs=None, exclude_pids=(), snapshot=None, batches_root=None,
+                  data_dir=None, sync=False, batch=False, include_done=False, emails=None, led=None, write=True):
+    """Build, overlay, sync, carry, stamp: the dataset both pages show. -> (data, report dict).
+    No network unless `led` (a ledger.Ledger): then the records this run writes -- backend syncs
+    with `sync`, carried-forward decisions -- go to the decision store first. `batch` = the
+    countries are the review-app batch: all-decided ones are dropped (unless `include_done`),
+    exactly as review_data.main does for the local server; that drop comes last, so carries and
+    orphans see every country. `write=False` = a dry run: carries are reported, not appended, and
+    the backend sync stays in memory (nothing lands in a sidecar that the decision store does not
+    hold). Without `sync` the backend sync is always in memory (sync_in_memory)."""
     root = Path(batches_root) if batches_root else staged_store.BATCHES_ROOT
     ds, dir_country = review_data._country_dirs(countries, commodity, root, dirs)
     if batch:   # an included country with no staging dir left (archived) has nothing to show
@@ -525,11 +584,11 @@ def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None
     if not ds:
         raise SystemExit(f"no staging dirs found for {', '.join(countries)} {commodity}")
     data, stats = review_data.build(ds, countries, commodity, snapshot=snapshot, data_dir=data_dir,
-                                    exclude_pids=list(exclude_pids), root=root, dir_country=dir_country,
-                                    drop_done=batch and not include_done)
+                                    exclude_pids=list(exclude_pids), root=root, dir_country=dir_country)
     data["scope"]["batch"] = batch
     base = root.parent
     paths_by_label = store.dir_paths(data, base)
+    snap = data.get("scope", {}).get("snapshot", "")
     sink = None
     if led is not None:
         led.scope, led.snapshot = ledger.scope_of(data)
@@ -538,28 +597,49 @@ def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None
     if sync and write:
         if led is not None:
             led.origin = "sync"
-        synced = store.sync_backend(data, paths_by_label, data.get("scope", {}).get("snapshot", ""), sink=sink)
+        synced = store.sync_backend(data, paths_by_label, snap, sink=sink)
         store.overlay(data, paths_by_label)
     if led is not None:
         led.origin = "publish"
     carried = carry_forward(data, paths_by_label, sink=sink, write=write)
     if carried and write:
         store.overlay(data, paths_by_label)
-    if led is not None and led.last_row:
-        cursor = max(int(cursor), led.last_row)      # the page lays only rows AFTER this dataset over it
+    synced_mem = [] if (sync and write) else sync_in_memory(data, paths_by_label, snap)
     drifted = stamp_basis(data, paths_by_label)
     lost = orphans(data, paths_by_label)
+    why = explain_orphans(data, paths_by_label, stray=stray_logs(data, countries, commodity, root),
+                          carried=[] if write else carried)
     restore_reviewers(data, paths_by_label, emails)
+    label_country = {review_data._rel(d, root): dir_country.get(Path(d).resolve(), countries[0]) for d in ds}
+    review_data.settle_countries(data, label_country, countries, stats, drop=batch and not include_done)
+    rep = {"summary": review_data.summary(data, stats), "drift": drifted, "orphans": lost, "orphan_reasons": why,
+           "carried": carried, "synced": len(synced), "synced_in_memory": len(synced_mem), "dry": not write,
+           "decided": sum(1 for p in data["pipelines"] for l in p["lines"] if l.get("reviewed")),
+           "countries": countries, "stats": stats, "label": scope_label(countries, commodity, batch),
+           "skipped": skipped_dirs(data, stats, countries, commodity, root)}
+    return data, rep
+
+
+def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None, sid=None, cursor=1,
+            batches_root=None, data_dir=None, sync=False, ver=None, target=PART_BYTES, batch=False,
+            include_done=False, emails=None, led=None, write=True):
+    """build_dataset, then write the mirror. -> (entry, report dict). The store cursor advances
+    past the records the build wrote to the decision store (`led`)."""
+    data, rep = build_dataset(countries, commodity, dirs=dirs, exclude_pids=exclude_pids, snapshot=snapshot,
+                              batches_root=batches_root, data_dir=data_dir, sync=sync, batch=batch,
+                              include_done=include_done, emails=emails, led=led, write=write)
+    countries = rep["countries"]
+    root = Path(batches_root) if batches_root else staged_store.BATCHES_ROOT
+    if led is not None and led.last_row:
+        cursor = max(int(cursor), led.last_row)      # the page lays only rows AFTER this dataset over it
     sid = sid or (f"review-app-{commodity.lower()}" if batch else scope_id(countries, commodity))
     build = {"country": list(countries), "commodity": commodity, "batch": batch, "include_done": include_done,
              "dirs": [str(d) for d in dirs] if dirs else None, "exclude_pids": sorted(exclude_pids)}
-    label = f"review batch: {commodity} ({len(countries)} countr{'y' if len(countries) == 1 else 'ies'})" if batch else None
-    entry = write_scope(data, out, sid, cursor, base, ver=ver, build=build, target=target, label=label)
+    entry = write_scope(data, out, sid, cursor, root.parent, ver=ver, build=build, target=target,
+                        label=rep["label"] if batch else None)
     write_scopes(out, merge_scopes(read_scopes(Path(out) / "scopes.json"), entry))
-    rep = {"summary": review_data.summary(data, stats), "drift": drifted, "orphans": lost, "carried": carried, "synced": len(synced),
-           "dry": not write,
-           "decided": sum(1 for p in data["pipelines"] for l in p["lines"] if l.get("reviewed")),
-           "files": {n: (Path(out) / n).stat().st_size for n in entry["parts"] + [entry["index"]] + ([entry["geo"]] if entry["geo"] else [])}}
+    rep["files"] = {n: (Path(out) / n).stat().st_size
+                    for n in entry["parts"] + [entry["index"]] + ([entry["geo"]] if entry["geo"] else [])}
     return entry, rep
 
 
@@ -571,6 +651,8 @@ def report(entry, rep):
     out += [f"  {n:<52} {s:>10,} bytes" for n, s in rep["files"].items()]
     if rep["synced"]:
         out.append(f"  backend sync: {rep['synced']} machine records written for lines the sheet already holds")
+    if rep.get("synced_in_memory"):
+        out.append(f"  backend sync in memory only: {rep['synced_in_memory']} records shown, not written (--refresh writes them)")
     out.append(f"  drift (decided against backend cells that have since changed): {len(rep['drift'])}")
     out += [f"    {l['key']}  decided by {l.get('decided_by')} on {l['drift'].get('decided_snapshot') or '?'}" for l in rep["drift"][:25]]
     out.append(f"  carried forward (a person's decision moved to its line's new sheet row): {len(rep['carried'])}"

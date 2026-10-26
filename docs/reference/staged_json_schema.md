@@ -279,5 +279,5 @@ Per candidate:
 Apply semantics: `new_row` = a candidate new tracker row (green in the workbook) that
 cleared the add-threshold (sponsor + geography + concrete step); `monitor` = watch, do
 not add; `matched_existing` = add `name` to the matched row's `OtherEnglishNames`, no
-new row. Merge-time QC (`scripts/merge_discovery_shards.py`): blocklist strip, no orphan
+new row (the page URL(s) that use the name go in the note). Merge-time QC (`scripts/merge_discovery_shards.py`): blocklist strip, no orphan
 values/refs, a `new_row` left with zero verified refs is downgraded to `monitor`.

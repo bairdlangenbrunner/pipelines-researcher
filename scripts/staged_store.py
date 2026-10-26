@@ -16,7 +16,7 @@ Two entry points:
   discover_staging_dirs(country, commodity)
       Scan of batches/*/staging/*: a dir is in scope when a store file's meta
       matches the requested country+commodity (fallback: the parent scope-dir
-      name, with a WARN). Assembled packets (meta.mode qc/handoff) are skipped
+      name, with a WARN on stderr). Assembled packets (meta.mode qc/handoff) are skipped
       unless include_assembled=True — a packet's own records must not be
       re-imported as "prior staged work" into the next packet.
 
@@ -54,7 +54,9 @@ assemble staged_actions.json), and staged_summary.py.
 from __future__ import annotations
 
 import json
+import sys
 from collections import Counter
+from contextlib import contextmanager
 from pathlib import Path
 
 import normalize as N
@@ -118,6 +120,33 @@ _STATUS_FIELDS = (
 )
 
 
+_META_KEYS = ("scope", "country", "commodity", "tracker", "mode", "style_only")
+
+
+def read_meta(f: Path) -> dict | None:
+    """The meta fields that dir discovery reads from one store file, or None when the file cannot be read or parsed."""
+    try:
+        meta = json.loads(Path(f).read_text()).get("meta", {})
+    except (json.JSONDecodeError, OSError):
+        return None
+    return {k: meta[k] for k in _META_KEYS if k in meta}
+
+
+_meta = read_meta      # meta_cache() swaps this while a review page check runs
+
+
+@contextmanager
+def meta_cache(cache):
+    """Inside the block, store meta is read through `cache` (a review_core.pages.FileCache), so a store file whose size and modification time did not change is not parsed again. The review page check uses it: discovery parses every store file under batches/ just to read its meta."""
+    global _meta
+    old = _meta
+    _meta = lambda f: cache.file("staged-meta", f, read_meta)
+    try:
+        yield
+    finally:
+        _meta = old
+
+
 def _dir_scope(d: Path) -> tuple[str, str] | None:
     """(normalized_country, commodity) for a staging dir, or None if no
     store file exists / carries scope metadata."""
@@ -125,9 +154,8 @@ def _dir_scope(d: Path) -> tuple[str, str] | None:
         f = d / fn
         if not f.exists():
             continue
-        try:
-            meta = json.loads(f.read_text()).get("meta", {})
-        except (json.JSONDecodeError, OSError):
+        meta = _meta(f)
+        if meta is None:
             continue
         scope = meta.get("scope") or {}
         country = scope.get("country", "") or meta.get("country", "")
@@ -146,9 +174,8 @@ def trackerwide_dirs(root: str | Path = BATCHES_ROOT) -> list[Path]:
         f = d / "staged_updates.json"
         if not d.is_dir() or not f.exists():
             continue
-        try:
-            meta = json.loads(f.read_text()).get("meta", {})
-        except (json.JSONDecodeError, OSError):
+        meta = _meta(f)
+        if meta is None:
             continue
         if meta.get("style_only") and not (meta.get("country") or (meta.get("scope") or {}).get("country")):
             out.append(d)
@@ -161,10 +188,8 @@ def _dir_mode(d: Path) -> str:
         f = d / fn
         if not f.exists():
             continue
-        try:
-            mode = json.loads(f.read_text()).get("meta", {}).get("mode", "")
-        except (json.JSONDecodeError, OSError):
-            continue
+        meta = _meta(f)
+        mode = meta.get("mode", "") if meta else ""
         if mode:
             return mode
     return ""
@@ -187,6 +212,26 @@ def dir_label(d: Path) -> str:
     return d.name
 
 
+_WARNED: set[str] = set()     # dirs already warned about in this process
+
+
+def scope_dir_fallback(d: Path, country: str, commodity: str) -> bool:
+    """The fallback match for a staging dir whose store files carry no scope: it has a store
+    file and sits under the scope dir named for this country+commodity. One WARN per dir per
+    process, on stderr. Shared by discover_staging_dirs and review_app/scopes.researched."""
+    d = Path(d)
+    if not any((d / fn).exists() for fn in _STORE_FILES):
+        return False
+    if d.parent.parent.name != scope_dirname(country, commodity):
+        return False
+    label = dir_label(d)
+    if label not in _WARNED:
+        _WARNED.add(label)
+        print(f"WARN dir {label}: store meta lacks scope; matched on parent scope-dir name",
+              file=sys.stderr)
+    return True
+
+
 def discover_staging_dirs(country: str, commodity: str,
                           root: str | Path = BATCHES_ROOT,
                           exclude: tuple | list = (),
@@ -197,13 +242,12 @@ def discover_staging_dirs(country: str, commodity: str,
     Matching is on store metadata (meta.scope.country + meta.commodity /
     meta.scope.tracker, or update-store meta.country + meta.tracker); dirs
     whose stores lack scope fields fall back to the parent scope-dir name
-    with a WARN. Assembled packets (meta.mode qc/handoff) are excluded unless
+    with a WARN on stderr (scope_dir_fallback). Assembled packets (meta.mode qc/handoff) are excluded unless
     include_assembled. `exclude` paths (e.g. the packet's own dir) are always
     skipped.
     """
     root = Path(root)
     want = (N.normalize_country(country), commodity.lower())
-    want_scope_dir = scope_dirname(country, commodity)
     skip = {Path(e).resolve() for e in exclude}
     out = []
     if not root.is_dir():
@@ -213,11 +257,8 @@ def discover_staging_dirs(country: str, commodity: str,
             continue
         scope = _dir_scope(d)
         if scope is None:
-            if any((d / fn).exists() for fn in _STORE_FILES):
-                if d.parent.parent.name == want_scope_dir:
-                    print(f"WARN dir {dir_label(d)}: store meta lacks scope; "
-                          "matched on parent scope-dir name")
-                    out.append(d)
+            if scope_dir_fallback(d, country, commodity):
+                out.append(d)
             continue
         if scope != want:
             continue

@@ -261,6 +261,17 @@ def test_spaced_slash_is_several_owners():
         assert "multi_owner" not in s(name).flags                      # an unspaced slash is part of the name
 
 
+def test_slash_between_names_is_held():
+    # Baird 2026-10-16, P6584: a slash in an owner name never stays; two owners, or the accurate one
+    for name in ("TC Offshore/Kinetica Deepwater Express", "Saudi Aramco/Bahrain Petroleum Co (Bapco)",
+                 "Deutsch/Dänische Erdgastransport-Gesellschaft mbH"):
+        r = s(name)
+        assert "slash" in r.flags and ES.needs_person(r), name
+    assert "multi_owner" in s("TC Offshore / Kinetica Deepwater Express").flags
+    for name in ("Foo A/S", "Bar K/S", "Ørsted A/S", "Fluxys Belgium NV/SA", "HMN Naturgas I/S"):
+        assert "slash" not in s(name).flags, name                      # legal forms, not two names
+
+
 def test_needs_person_and_held_names():
     assert not ES.needs_person(s("Mountain Valley Pipeline LLC"))
     assert not ES.needs_person(s("Chubu Steel Plate Co., Ltd."))       # the styler re-spells it on its own

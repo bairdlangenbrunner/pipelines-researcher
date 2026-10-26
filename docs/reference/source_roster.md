@@ -31,6 +31,7 @@ link to original sources — use those.
 | US — Texas | Texas RRC GIS viewer |
 | US — Alaska | Alaska DNR State Pipeline Coordinator |
 | US — data | EIA petroleum/natural-gas; **gas project workbooks archived locally** — see note below |
+| US — gas power plant permit records (the pipeline that feeds a plant) | The plant's environmental assessment or impact statement (NEPA, `energy.gov/nepa`, agency EA/EIS libraries, or the state equivalent), construction and siting permit dockets at the state utility commission or siting board, the EPA record (ECHO `echo.epa.gov`, Region permit pages), the state environmental agency, and air permits (Title V, PSD, minor source) from the state air office or EPA Region. All describe the fuel supply pipeline, sponsor, size, length and interconnect; the environmental assessment is the richest (the USDA RUS assessment for CIPCO's Hickory Grove plant, Iowa, March 2026, gives the lateral's length, diameter, tie-in pipeline, shipper, easement, crossing method and schedule in its project description). Added for the data center work (Amalia, relayed by Baird 2026-10-20); see Discovery SOP strategy 2 |
 | Iran | Shana (MOP outlet) `shana.ir` |
 | India — gas | PNGRB `pngrb.gov.in` — monthly **NGPL MIS report** (see note below) |
 | Pakistan — gas | OGRA `ogra.org.pk`; and SNGPL's own audited asset register (see the Pakistan country note) |
@@ -395,7 +396,8 @@ Machine-fetchable GIS layers for candidate route geometry, registered in
 commodities, license, notes). Fetched by `fetch_arcgis.py` / `fetch_overpass.py`; new
 endpoints found during a run get appended there + a line here.
 
-- **Texas RRC**, **BOEM** (US onshore/offshore) — ArcGIS REST; seeded as entries with
+- **Texas RRC** (`rrc_pipelines`) — the Railroad Commission's public pipeline layer, `gis.rrc.texas.gov/.../RRC_Public_Viewer_Srvs/MapServer/14`, answers `/query` with `f=geojson` (verified 2026-10-20 on T-4 permit 10370, the Hugh Brinson Abilene laterals). It names operator, system, subsystem, diameter and permit miles, so a feature can be tied to a row by permit number. The bare layer URL returns 403 to `url_verifier.py`; cite the query URL.
+- **BOEM** (US offshore) — ArcGIS REST; seeded as an entry with
   an empty `url` + portal/discovery notes (no guessed FeatureServer paths — standing
   rule 2). **NPMS** blocks bulk export → human cross-check only, not an entry.
 - **Israel Land Registry plan store** (`israel_itur_tabot`) — statutory-plan (תמ"א/תב"ע)
@@ -404,6 +406,7 @@ endpoints found during a run get appended there + a line here.
   2026-07-23 (plan 1053432, TAMA 37/A/2/7 Ashdod–Ashkelon). Israeli **Notices to Mariners**
   (רספ"ן; official gov.il pages Cloudflare-403, mirrors work) publish pipe-lay corridors as
   coordinate polygons — a citable vector source for offshore lines (NtM 113/2024 precedent).
+- **FERC eLibrary** (`ferc_elibrary`) — route figures from US interstate gas filings (Resource Report 1, environmental assessments). The site is a JavaScript app, but its JSON API answers plain POSTs: `AdvancedSearch` by docket finds the filings and `DownloadP8File` by file id returns the document (verified 2026-10-20; recipe in the yml entry). Public documents only, never CEII alignment sheets. The `filedownload?fileid=` link is the citable form; `url_verifier.py` reads the file behind it through the download API (2026-10-20), so it verifies like any PDF. Name the accession number in notes too. Its Resource Report figures are often GeoPDFs that carry the route as a vector path; read that path rather than tracing the picture (yml entry, P8327).
 - **OSM (Overpass)** — `man_made=pipeline`; every feature carries ODbL provenance.
   **Caution:** ODbL is a share-alike license; whether it's acceptable for a GEM tracker
   is **Baird's review call**, surfaced end-to-end (workbook License column), never

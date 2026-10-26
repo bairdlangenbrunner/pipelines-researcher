@@ -22,14 +22,12 @@ Accepted cells reach the sheet only through push.py's plan/apply, here or on the
 
 Every decision goes to the Google decision store FIRST (review_app/ledger.py: the `log` tab of the store spreadsheet in review_app/google.json, origin 'local') and to the staging dir's sidecars second; the store is the single source of truth the served Google page, pull.py, publish.py and push.py all share. A store that cannot be written refuses the decision (502, nothing recorded anywhere). --no-store (tests, dev) writes the sidecars alone and says so. Otherwise the only things written are the two decision sidecars inside the staging dirs named by the dataset (and, on refresh, data/ snapshots by the pull script and the rebuilt dataset file).
 """
-import argparse
 import contextlib
 import io
 import json
 import subprocess
 import sys
 import threading
-import webbrowser
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -156,82 +154,49 @@ def make_server(app, host="127.0.0.1", port=8766):
 
 
 def git_user():
-    try:
-        return subprocess.run(["git", "config", "user.name"], capture_output=True, text=True,
-                              cwd=ROOT).stdout.strip() or "reviewer"
-    except OSError:
-        return "reviewer"
+    return core.git_user(ROOT)
 
 
-def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+def _add_args(ap):
     ap.add_argument("--country", action="append", default=None,
                     help="repeat (or comma-separate) for several countries; omit for the review-app batch")
     ap.add_argument("--commodity", choices=["gas", "oil"], help="required with --country; review-app batch default gas")
     ap.add_argument("--include-done", action="store_true", help="review-app batch: keep all-decided countries")
     ap.add_argument("--dirs", nargs="*", default=None, help="explicit staging dirs (skips discovery)")
     ap.add_argument("--exclude-pids", default="", help="comma-separated ProjectIDs to drop")
-    ap.add_argument("--data", default=None, help="dataset path (default work/review_data.json)")
-    ap.add_argument("--reviewer", default=None,
-                    help="default: git config user.name; recorded as initials (store.initials)")
-    ap.add_argument("--reviewer-email", default=None,
-                    help="the address written on this person's rows in the Google decision store "
-                         "(default: the gws-gem-write account's address)")
-    ap.add_argument("--no-store", action="store_true",
-                    help="DEV/TESTS ONLY: write the staging-dir sidecars alone, skipping the Google decision store")
-    ap.add_argument("--host", default="127.0.0.1")
-    ap.add_argument("--port", type=int, default=8766)
-    ap.add_argument("--no-open", action="store_true", help="do not open the browser")
-    ap.add_argument("--no-build", action="store_true", help="serve --data as it is; do not rebuild")
-    args = ap.parse_args(argv)
-    try:
-        ensure_loopback(args.host)
-    except ValueError as e:
-        raise SystemExit(str(e))
-    data_path = Path(args.data) if args.data else paths.work_dir() / "review_data.json"
-    if not args.no_build:
-        if args.country and not args.commodity:
-            raise SystemExit("--commodity is required with --country")
-        build = [x for c in args.country or () for x in ("--country", c)]
-        build += ["--commodity", args.commodity or "gas", "--out", str(data_path)]
-        if args.include_done:
-            build += ["--include-done"]
-        if args.dirs:
-            build += ["--dirs", *args.dirs]
-        if args.exclude_pids:
-            build += ["--exclude-pids", args.exclude_pids]
-        review_data.main(build)
-    elif not data_path.exists():
-        raise SystemExit(f"{data_path} not found: run without --no-build, or pass --data")
-    led = None
-    if args.no_store:
-        print("review app: --no-store: decisions go to the staging-dir sidecars ONLY and will not be in the "
-              "Google decision store (the served page, publish.py and push.py will not see them)", file=sys.stderr)
-    else:
-        cfg = pull.config()
-        if not cfg.get("store_sheet_id"):
-            raise SystemExit("no decision store configured (review_app/google.json: store_sheet_id); "
-                             "pass --no-store only for dev/tests")
-        email = args.reviewer_email or ledger.whoami()
-        if not email:
-            raise SystemExit("cannot read the store account's address (gws-gem-write auth?): pass --reviewer-email, "
-                             "or run `gws-gem-write auth login` yourself (needs a browser)")
-        data0 = json.loads(data_path.read_text(encoding="utf-8"))
-        led = ledger.Ledger(cfg["store_sheet_id"], *ledger.scope_of(data0), "local", reviewer_email=email)
-    app = App(data_path, args.reviewer or git_user(), build_argv=None if args.no_build else build, ledger=led)
-    httpd = make_server(app, args.host, args.port)
-    url = f"http://{args.host}:{httpd.server_address[1]}/"
-    where = (f"decisions write to the Google decision store ({led.scope}, as {led.reviewer_email}) then to each "
-             "staging dir's review_log.jsonl" if led else "decisions write to each staging dir's review_log.jsonl ONLY")
-    print(f"review app: {url}  (reviewer: {app.reviewer}; {where}; Ctrl-C to stop)", file=sys.stderr)
-    if not args.no_open:
-        webbrowser.open(url)
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        httpd.server_close()
+
+
+def _build_argv(args, data_path):
+    if args.country and not args.commodity:
+        raise SystemExit("--commodity is required with --country")
+    build = [x for c in args.country or () for x in ("--country", c)]
+    build += ["--commodity", args.commodity or "gas", "--out", str(data_path)]
+    if args.include_done:
+        build += ["--include-done"]
+    if args.dirs:
+        build += ["--dirs", *args.dirs]
+    if args.exclude_pids:
+        build += ["--exclude-pids", args.exclude_pids]
+    return build
+
+
+def _where(led):
+    if led:
+        return (f"decisions write to the Google decision store ({led.scope}, as {led.reviewer_email}) then to each "
+                "staging dir's review_log.jsonl")
+    return "decisions write to each staging dir's review_log.jsonl ONLY"
+
+
+def main(argv=None):
+    """The shared command line (review_core.server.main) with the pipelines dataset arguments."""
+    return core.main(
+        argv, description=__doc__.split("\n\n")[0], port=8766, add_args=_add_args, build_argv=_build_argv,
+        build_data=review_data.main, make_server=make_server, pull=pull, ledger=ledger,
+        make_app=lambda data_path, reviewer, build, led: App(data_path, reviewer, build_argv=build, ledger=led),
+        data_default=paths.work_dir() / "review_data.json", git_root=ROOT, where=_where,
+        no_store_note="decisions go to the staging-dir sidecars ONLY and will not be in the Google decision store "
+                      "(the served page, publish.py and push.py will not see them)",
+        auth_hint="or run `gws-gem-write auth login` yourself (needs a browser)")
 
 
 if __name__ == "__main__":

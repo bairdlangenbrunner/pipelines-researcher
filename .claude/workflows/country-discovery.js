@@ -237,7 +237,7 @@ ${priorNote}
    If your only source fails a check (doesn't name the pipeline or doesn't state the value), spend one or two quick searches for one that passes; keep both if they mostly agree.
 4. RE-CHECK match-to-existing yourself before anything else — if this is really an existing GEM row
    under another name, class it matched_existing and STOP researching a new row.
-   A matched_existing record is an alias finding, never a new row: put the name it would add in researcher_notes ("OtherEnglishNames suggestion: <name>") and say there is a chance it is a different pipeline. After the merge, scripts/convert_matched_to_alias.py stages it as an OtherEnglishNames fill on the matched row.
+   A matched_existing record is an alias finding, never a new row: put the name it would add in researcher_notes ("OtherEnglishNames suggestion: <name>"), list the URL(s) of the page(s) that actually use that name in the record's refs (read in full; if none found, say so and do not suggest it firmly), and say there is a chance it is a different pipeline. After the merge, scripts/convert_matched_to_alias.py stages it as an OtherEnglishNames fill on the matched row.
 5. New owner/operator entities: \`python scripts/entity_lookup.py "<owner>" "${COUNTRY}"\` first.
 
 ## The add-threshold (Discovery SOP §3) — ALL THREE or it is monitor, not new_row:
@@ -247,10 +247,10 @@ ${A.vetRule || ''}
 
 ## For a qualifying new_row, research the GEM columns
 Use EXACT GEM column names (header row 3 of data/<csv named in discovery_context.json>):
-PipelineName, SegmentName, OtherEnglishNames, Status (controlled vocab, lowercase), Fuel (gas tab: exactly one of Gas, Hydrogen, Gas and hydrogen, Coke oven gas; never "natural gas"),
+PipelineName + SegmentName (title case: every word capitalized, e.g. "Hope Utilities AEP Fuel Cell Data Center Pipeline"; acronyms kept as written; SHORT, in the sheet's pattern: two end points or the project's own short name + "Gas Pipeline", e.g. "Obskaya–Yarsaltinskaya Gas Pipeline", never a description with a parent system, "incl.", station codes or a parenthetical; the long descriptive name goes in OtherEnglishNames), OtherEnglishNames, Status (REQUIRED on every new_row: controlled vocab, lowercase, with a Status [ref]; if the evidence does not settle it, do not guess and do not leave it blank: return the candidate as an open question for Baird with what the sources say and the statuses in play, and do not stage it as a new_row), Fuel (gas tab: exactly one of Gas, Hydrogen, Gas and hydrogen, Coke oven gas; never "natural gas"),
 PipelineType, CountriesOrAreas, StartLocation/StartState/Province/StartCountryOrArea,
 EndLocation/EndState/Province/EndCountryOrArea, Capacity+CapacityUnits, LengthKnown+LengthKnownUnits,
-Diameter+DiameterUnits, Owner (the lowest-level company that holds the pipeline: JV, project company or subsidiary, never a parent; do not research Parent, the ownership team does that), ProposalYear, FIDStatus, ProjectLevelCost+Units,
+Diameter+DiameterUnits, Owner (the lowest-level company that holds the pipeline: JV, project company or subsidiary, never a parent; do not research Parent, the ownership team does that; one company per Owner cell, never two names joined by a slash), ProposalYear, FIDStatus, ProjectLevelCost+Units,
 DataCenter (\`yes\` or blank) + DataCenter [ref] (yes only when a validated ref names this pipeline
 and ties it to a data center; a utility load forecast or an opponents-only claim stays blank, noted),
 RouteType/RouteAccuracy/RouteNotes (route research per docs/reference/route_conventions.md —
@@ -263,7 +263,7 @@ orphan refs.
 Write ${STAGING}/discovery/vetted/${q.slug}.json EXACTLY shaped:
 { "slug": "${q.slug}", "class": "new_row|monitor|matched_existing",
   "matched_project_id": "<P#### when matched_existing, else empty>",
-  "name": "${q.name}",
+  "name": "<new_row: the same title-case spelling as values.PipelineName (add ' / ' + SegmentName for a segment); otherwise ${q.name}>",
   "values": { "<GEM column>": "<value>", ... },
   "refs": { "<GEM [ref] column>": ["https://...verified..."], ... },
   "verifications": [ {"url":"https://...","ok":true,"contains_value":true} ],

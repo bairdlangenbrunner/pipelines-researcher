@@ -68,6 +68,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -725,8 +726,8 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
             # proposed status change (verdict change/stale): its values overlay their
             # backend cells; when it carries corroborating ref(s) they take over the
             # Status [ref] cluster (they support the NEW value — a refs-leg unit on the
-            # same cluster corroborates the old one). A dormancy-inferred change with no
-            # ref stays under the synthetic key: values overlay, no [ref] cell is touched.
+            # same cluster corroborates the old one). A dormancy-inferred change carries its
+            # last-evidence ref (2026-10-16); with none it stays under the synthetic key: values overlay, no [ref] cell is touched.
             segs[sk]["by_ref"]["Status [ref]" if r.get("proposed_refs") else rc] = r
         elif rc:
             # a FILL takes its cluster over a ref-leg twin recorded for the same cell —
@@ -2007,7 +2008,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "own; verdict != confirm — confirms are counts-only in the README). Verdict "
                        "yellow=change (evidence-based new status, refs verified) / red=stale "
                        "(dormancy rule -> inferred shelved/cancelled, ShelvedCancelledType=inferred, "
-                       "no ref by design) or unclear. NOT auto-applied."))
+                       "ref = the newest dated source) or unclear. NOT auto-applied."))
     if afb_res:
         t = f"{prefix}_AllFillsBackend"
         # open concerns tint the rows this tab already carries (they never add one — a
@@ -2388,7 +2389,9 @@ def main() -> None:
     if out.exists():
         sys.exit(f"refusing to overwrite existing {out} (use a fresh <stamp>)")
 
-    data = json.loads((Path(args.staging) / "staged_resolutions.json").read_text())
+    data = json.loads(re.sub(r'("[A-Za-z0-9_]*Month[A-Za-z0-9_]*"\s*:\s*)"(January|February|March|April|May|June|July|August|September|October|November|December)"',
+                             lambda m: m[1] + str(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].index(m[2]) + 1),
+                             (Path(args.staging) / "staged_resolutions.json").read_text()))   # month names -> 1-12 (Baird 2026-10-14)
     meta = data.get("meta", {})
     # Optional: class-level escalations that no individual row action can carry (a whole
     # class of GEM values is wrong, an ingest defect, a scope ruling). Without this they
@@ -2516,7 +2519,7 @@ def main() -> None:
                            "(NOT auto-applied). Verdict green=confirm (status verified, see evidence date) / "
                            "yellow=change (evidence-based new status; Proposed changes lists the exact "
                            "column=value edits, refs verified) / red=stale (dormancy rule -> inferred "
-                           "shelved/cancelled, ShelvedCancelledType=inferred, no ref by design) or unclear."))
+                           "shelved/cancelled, ShelvedCancelledType=inferred, ref = the newest dated source) or unclear."))
 
     # HANDOFF: status changes carried from prior packets (verdict != confirm) — the
     # confirms are counts-only in the README.
@@ -2609,7 +2612,7 @@ def main() -> None:
                                "yellow=caveat or 1-source status change / red=low or none / blue=re-verified). Tier-COLORED value cells are "
                                "recommended EDITS: corroborated fills plus the StatusReview change/stale verdicts "
                                "(new Status + ShelvedCancelledType/start-year cells; a stale verdict with no ref "
-                               "is dormancy-inferred — red, ShelvedCancelledType=inferred by design). Untinted "
+                               "found is dormancy-inferred — red, ShelvedCancelledType=inferred). Untinted "
                                "values are current sheet values. A red [ref] cell keeping its existing text = "
                                "unresolved, needs manual sourcing. ORANGE is NOT a tier — it is the opposite of "
                                "the tier colors: an orange cell keeps the CURRENT value and means an open "

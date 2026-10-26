@@ -21,6 +21,7 @@ import json
 from pathlib import Path
 
 from store import DERIVED_NAME, LOG_NAME, MACHINE_REVIEWERS, latest, read_jsonl
+from trackers.pipelines.config import legacy_colids, parse_key as _parse_key  # (store puts ../gem-review-app on sys.path)
 
 try:                                     # the key's colid comes from the same function the builder uses
     from review_data import _colid, classify
@@ -29,12 +30,10 @@ except ImportError:                      # pragma: no cover
 
 
 def parse_key(key):
-    """'<dir>::<pid>|<row>|<colid>' -> (dir, pid, row_str, colid_base). The '#…' dedupe suffix
-    is stripped from colid_base."""
-    d, _, rest = key.partition("::")
-    pid, _, rest = rest.partition("|")
-    row, _, colid = rest.partition("|")
-    return d, pid, row, colid.split("#", 1)[0]
+    """'<dir>::<pid>|<row>|<colid>' -> (dir, pid, row_str, colid_base), or None for a key of any
+    other shape. The '#…' dedupe suffix is stripped from colid_base (config.parse_key keeps it)."""
+    s = _parse_key(key)
+    return (s[0], s[1], s[2], s[3].split("#", 1)[0]) if s else None
 
 
 def _new_key(rec):
@@ -58,7 +57,10 @@ class Decisions:
             self.records = latest(read_jsonl(self.dir / LOG_NAME))
         self.by_pid_col = {}
         for key, rec in self.records.items():
-            _, pid, row, colid = parse_key(key)
+            s = parse_key(key)
+            if not s:
+                continue
+            _, pid, row, colid = s
             self.by_pid_col.setdefault((pid, colid), []).append((row, rec))
 
     def __bool__(self):
@@ -78,7 +80,7 @@ class Decisions:
             # (`…|Capacity` for today's `…|Capacity+CapacityUnits`); a sidecar nobody has
             # republished still holds that key, and the decision still applies to this record
             # when exactly one of the fill's columns carries one.
-            legacy = [self.by_pid_col[(pid, c)] for c in colid.split("+") if (pid, c) in self.by_pid_col]
+            legacy = [self.by_pid_col[(pid, c)] for c in legacy_colids(colid) if (pid, c) in self.by_pid_col]
             hit = legacy[0] if len(legacy) == 1 else []
         return hit
 

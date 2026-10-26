@@ -86,31 +86,41 @@ def test_geo_bundle_only_takes_files_inside_batches(scope, tmp_path):
 
 # ---- the index ---------------------------------------------------------------------------
 
+def packed(d):
+    """The page index as the shared builder packs it with the pipelines config."""
+    from review_core.build_static import pack_index
+    return pack_index(d, store.CONFIG)
+
+
+def packed_entry(index, key):
+    dlabel, _, rest = key.partition("::")
+    return index["keys"][index["dirs"].index(dlabel)][rest]
+
+
 def test_index_knows_every_key_and_packs_without_loss(scope):
     d = scope["dataset"]
     publish.stamp_basis(d, scope["dirs"])
-    idx = publish.make_index(d)["keys"]
-    assert set(idx) == {o["key"] for p in d["pipelines"] for g in ("lines", "items") for o in p[g]}
+    idx = packed(d)
+    objs = {o["key"]: (o, g) for p in d["pipelines"] for g in ("lines", "items") for o in p[g]}
+    assert idx["v"] == 2 and len(idx["dirs"]) == len(idx["keys"])
+    assert {dl + "::" + rest for dl, g in zip(idx["dirs"], idx["keys"]) for rest in g} == set(objs)
     status = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"]
                   if l["kind"] == "ref" and l["column"] == "Status")
     concern = next(i for p in d["pipelines"] if p["pid"] == "P9001" for i in p["items"] if i["kind"] == "concern")
-    assert "concerns" not in idx[status["key"]]                 # a blank candidate: nothing to resolve or take
-    assert idx[status["key"]]["basis"] == status["basis"] and idx[concern["key"]] == \
-        {"g": "i", "kind": "concern", "dir": concern["dir"], "pid": "P9001", "call0": ""}
-    packed = publish.pack_index({"keys": idx})
-    assert packed["v"] == 2 and len(packed["dirs"]) == len(packed["keys"]) == len({e["dir"] for e in idx.values()})
-    assert sum(len(g) for g in packed["keys"]) == len(idx)
-    for key, e in idx.items():
-        dlabel, _, rest = key.partition("::")
-        c = packed["keys"][packed["dirs"].index(dlabel)][rest]
-        if e["g"] == "i":
-            assert (c["i"], c["p"], c.get("c0", "")) == (e["kind"], e["pid"], e["call0"])
+    assert "x" not in packed_entry(idx, status["key"])                 # a blank candidate: nothing to resolve or take
+    assert packed_entry(idx, status["key"])["b"] == status["basis"] and packed_entry(idx, concern["key"]) == {"i": "concern", "p": "P9001"}
+    for key, (o, g) in objs.items():
+        c = packed_entry(idx, key)
+        if g == "items":
+            assert (c["i"], c["p"], c.get("c0", "")) == (o["kind"], o.get("pid") or key.split("::")[1].split("|")[0], o.get("call") or "")
         else:
-            assert (c["k"], c["p"], c.get("r"), c.get("c", ""), c.get("d", "accept"), c["b"]) == \
-                (e["kind"], e["pid"], e["sheet_row"], e["ref_col"], e["def"], e["basis"])
-            assert [x[0] for x in c.get("x", [])] == [x["c"] for x in e.get("concerns", [])]
+            assert (c["k"], c.get("r"), c.get("c", ""), c["b"]) == \
+                (o["kind"], o.get("sheet_row"), o.get("ref_col") or o.get("column") or "", o["basis"])
+            assert c.get("d", "accept") == (o.get("default") or "hold")
+    bad = json.loads(json.dumps(d))
+    bad["pipelines"][0]["lines"][0]["key"] = "elsewhere::P1|4|x"
     with pytest.raises(SystemExit, match="does not start with its dir"):
-        publish.pack_index({"keys": {"elsewhere::P1|4|x": dict(idx[status["key"]])}})
+        packed(bad)
 
 
 def test_index_carries_what_a_line_resolves_or_may_take(scope):
@@ -119,14 +129,12 @@ def test_index_carries_what_a_line_resolves_or_may_take(scope):
     concern["contested"] = {"Status": "operating", "Owner1": "OldCo"}
     review_fixture.relink(d)
     publish.stamp_basis(d, scope["dirs"])
-    idx = publish.make_index(d)["keys"]
+    idx = packed(d)
     status = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"] if l["kind"] == "ref" and l["column"] == "Status")
     owner = next(l for p in d["pipelines"] if p["pid"] == "P9001" for l in p["lines"] if l["kind"] == "oo")
-    assert idx[status["key"]]["concerns"] == [{"c": concern["key"], "res": ["Status"], "cand": "", "cols": []}]
-    assert idx[owner["key"]]["concerns"] == [{"c": concern["key"], "res": [], "cand": "OldCo", "cols": ["Owner1"]}]
-    packed = publish.pack_index({"keys": idx})
-    d0, _, rest = owner["key"].partition("::")
-    assert packed["keys"][packed["dirs"].index(d0)][rest]["x"] == [[concern["key"], [], "OldCo", ["Owner1"]]]
+    assert packed_entry(idx, status["key"])["x"] == [[concern["key"], ["Status"], "", []]]
+    assert packed_entry(idx, owner["key"])["x"] == [[concern["key"], [], "OldCo", ["Owner1"]]]
+    assert idx["w"] and idx["cmd"] == "gas"
 
 
 def test_an_item_already_called_is_published_as_called(scope):
@@ -134,7 +142,7 @@ def test_an_item_already_called_is_published_as_called(scope):
     concern = next(i for p in d["pipelines"] for i in p["items"] if i["kind"] == "concern")
     store.record_items([{"key": concern["key"], "call": "dismissed"}], d, "Baird", dirs=scope["dirs"])
     store.overlay(d, scope["dirs"])
-    assert publish.make_index(d)["keys"][concern["key"]]["call0"] == "dismissed"
+    assert packed_entry(packed(d), concern["key"])["c0"] == "dismissed"
 
 
 # ---- basis, drift, orphans ---------------------------------------------------------------
@@ -207,7 +215,7 @@ def test_carry_forward_leaves_the_doubtful_ones_as_orphans(scope):
     d, dirs = scope["dataset"], scope["dirs"]
     l = first(d, "P9002", "fill")
     a, b = l["key"].replace("|5|", "|4|"), l["key"].replace("|5|", "|3|")
-    store.append_records([gas_record(l, "b", key=a, id="1"), gas_record(l, "b", key=b, id="2"),      # two want one key
+    store.append_records([gas_record(l, "b", key=a, id="1"), gas_record(l, "b", key=b, id="2", decision="reject"),  # two disagree on one key
                           gas_record(l, "b", key=a + "x", id="3"),                                     # another column
                           gas_record(l, "b", key=a + "y", id="4", reviewer=store.SYNC_REVIEWER)], dirs)
     assert publish.carry_forward(d, dirs) == []
@@ -225,6 +233,20 @@ def test_carry_forward_leaves_the_doubtful_ones_as_orphans(scope):
     store.append_records([gas_record(n, "b", key=gone2, id="7"),
                           gas_record(n, "b", id="8", decision="reject")], dirs)                # a PERSON decided the new key: it wins
     assert publish.carry_forward(d, dirs) == [] and gone2 in [r["key"] for r in publish.orphans(d, dirs)]
+
+
+def test_two_orphans_with_the_same_call_carry_the_latest(scope):
+    # P2502, 2026-10-14: accepted on one build, re-sorted, accepted again on the next build, re-sorted again
+    d, dirs = scope["dataset"], scope["dirs"]
+    l = first(d, "P9002", "fill")
+    a, b = l["key"].replace("|5|", "|4|"), l["key"].replace("|5|", "|3|")
+    store.append_records([gas_record(l, "b", key=a, id="1", ts="2099-01-01T01:00:00-05:00"),
+                          gas_record(l, "b", key=b, id="2", ts="2099-01-01T01:01:00-05:00")], dirs)
+    (got,) = publish.carry_forward(d, dirs)
+    assert (got["key"], got["rekeyed_from"], got["id"]) == (l["key"], b, "2~rekey")
+    store.overlay(d, dirs)
+    assert (l["decision"], l["reviewed"]) == ("accept", True)
+    assert publish.carry_forward(d, dirs) == []                     # the new key now holds a person's call
 
 
 def test_carry_forward_dry_run_reports_without_writing(scope):

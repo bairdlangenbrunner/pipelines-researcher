@@ -222,12 +222,48 @@ def _json_prose(obj, prefix="") -> str:
     return f"{prefix}: {'' if obj is None else obj}"
 
 
+_FERC_FILE_RE = re.compile(r"^https?://elibrary\.ferc\.gov/eLibrary/filedownload\?(?:.*&)?fileid=([0-9A-Fa-f-]{20,})", re.I)
+_FERC_API = "https://elibrary.ferc.gov/eLibrarywebapi/api/File/DownloadP8File"
+
+
+def _ferc_file(url: str, timeout):
+    """(text, note) for a FERC eLibrary `filedownload?fileid=<id>` link, or None. The link opens a
+    JavaScript app; the file itself comes from the app's own download API as a plain POST (verified
+    2026-10-20 on dockets CP25-531 and CP26-19). Public (availCode P) files only; a CEII file is
+    refused by the API and falls through to `js_shell`."""
+    m = _FERC_FILE_RE.match(url or "")
+    if not m:
+        return None
+    try:
+        import requests
+    except ImportError:
+        return None
+    body = {"FileType": "", "accession": "", "fileid": 0, "FileIDAll": "",
+            "fileidLst": [m.group(1)], "Islegacy": False}
+    try:
+        r = requests.post(_FERC_API, json=body, timeout=max(timeout or 0, 60),
+                          headers={"User-Agent": _OGW_UA, "Accept": "application/octet-stream, */*"})
+        if r.status_code != 200 or not r.content:
+            return None
+        raw = r.content
+        if raw[:5] == b"%PDF-":
+            text, _err = _pdf_text(raw, max_pages=1000)
+        else:
+            text = _visible_text(r.text or "")
+    except Exception:
+        return None
+    return (text, f"ferc elibrary download api, fileid {m.group(1)}") if text.strip() else None
+
+
 def _app_data(url: str, timeout):
     """(text, note) for a JS-shell page whose content the site's own data API hands out, or None.
     oilandgaswatch.org (Environmental Integrity Project; Vue + Xata): `/pipeline/<id>` is served by
     `/api/01-01_PIPELINES/data/<id>` (JSON). The API answers 403 "Access denied" unless the request
     looks like the app's own same-origin XHR (browser UA, JSON Accept, Referer/Origin on the site,
     Sec-Fetch-* cors/same-origin) — those headers are the app's, not a disguise."""
+    ferc = _ferc_file(url, timeout)
+    if ferc is not None:
+        return ferc
     m = _OGW_PIPELINE_RE.match(url or "")
     if not m:
         return None

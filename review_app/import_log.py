@@ -4,30 +4,20 @@ Bring decisions made on the artifact page (build_static.py) into the decision le
     python review_app/import_log.py pipelines_review_log_20261005_1712_ET_AL.json --dry-run
     python review_app/import_log.py FILE [FILE ...] [--commodity gas] --reviewer EMAIL [--reviewer XX=EMAIL ...]
 
-FILE is what the page's "download decisions" button saves, or the artifact's shared `logs`
-collection saved as JSON (an ArtifactData list or get result). Either way it holds one or more
-log documents, each {reviewer, email, records: [...]}.
+FILE is what the page's "download decisions" button saves, or the artifact's shared `logs` collection saved as JSON (an ArtifactData `list` or `get` result on the published page's url; the page's "push to log" button writes each reviewer's document there). Either way it holds one or more log documents, each {reviewer, email, records: [...]}; read_docs finds them inside any wrapper.
 
-Every new record goes through the ledger like any other decision: appended to the store
-spreadsheet's `log` tab first (origin 'artifact', under the reviewer's own address), then to the
-staging dir's review_log.jsonl. Each record keeps the id and the time the page gave it. Rules:
+Every new record goes through the ledger like any other decision: appended to the store spreadsheet's `log` tab first (origin 'artifact', under the reviewer's own address), then to the staging dir's review_log.jsonl. Each record keeps the id and the time the page gave it. Rules:
 
-  - a record whose id is already in a staging dir's log is skipped, so importing the same file
-    twice, or a later download that repeats an earlier one, is safe
-  - a record is skipped as superseded when the log already holds a later decision by a person on
-    the same line or item (someone decided it on the Google page or the local server afterwards)
-  - a record whose key is not in the current review-app dataset, or whose staging dir is not,
-    stops the import before anything is written (the batch was rebuilt since the page was made:
-    rebuild the page and publish it again)
-  - the page is not given reviewers' addresses (the artifact's "email" user scope is refused by the
-    publish service, 2026-10-05), only their names, so name each one:
-    --reviewer analyst.lead@globalenergymonitor.org (matched to the initials AL), or --reviewer AL=ADDRESS
+  - a record whose id is already in a staging dir's log is skipped, so importing the same file twice, or a later download that repeats an earlier one, is safe
+  - a record is skipped as superseded when the log already holds a later decision by a person on the same line or item (someone decided it on the Google page or the local server afterwards)
+  - a record whose key is not in the current review-app dataset is matched the way the build carries a decision forward (config.resolve_key): when exactly one line of the same staging dir, ProjectID and column sits at another sheet row, or exactly one two-column fill names that column, the record is imported under that line's key and keeps the page's key in `rekeyed_from`
+  - a record that still matches nothing, or whose staging dir is not in the dataset, is parked: written with its reason to work/review_import_parked_<time>.jsonl and left out, and the rest of the import goes ahead (the batch was rebuilt since the page was made; a person looks at the parked file, and rebuilding and republishing the page stops it happening again)
+  - the page is not given reviewers' addresses (the artifact's "email" user scope is refused by the publish service, 2026-10-05), only their names, so name each one: --reviewer analyst.lead@globalenergymonitor.org (matched to the initials AL), or --reviewer AL=ADDRESS
 
-This appends to the store `log` tab (the standing authorization in CLAUDE.md) and to the sidecars.
-It never writes the backend sheet: accepted cells reach it only through review_app/push.py (plan,
-ask Baird, --apply).
+This appends to the store `log` tab (the standing authorization in CLAUDE.md) and to the sidecars. It never writes the backend sheet: accepted cells reach it only through review_app/push.py (plan, ask Baird, --apply).
+
+The plan, write and report code is shared with gogpt-researcher in ../gem-review-app/review_core/import_log.py. This file holds the pipelines rules: where a record lands (Rules, with resolve_key and parking), write_parked, and the --commodity dataset.
 """
-import argparse
 import json
 import sys
 from datetime import datetime
@@ -40,166 +30,95 @@ for p in (ROOT / "scripts", HERE):
         sys.path.insert(0, str(p))
 
 import ledger  # noqa: E402
-import pull  # noqa: E402
+import paths  # noqa: E402
 import store  # noqa: E402
-
-ORIGIN = "artifact"
-
-
-def read_docs(path):
-    """Every log document in a file, wherever it sits: the download ({logs: [...]}), one document,
-    or an ArtifactData result that wraps documents in its own envelope."""
-    body = json.loads(Path(path).read_text(encoding="utf-8"))
-    docs = []
-
-    def walk(x):
-        if isinstance(x, dict):
-            if isinstance(x.get("records"), list):
-                docs.append(x)
-            else:
-                for v in x.values():
-                    walk(v)
-        elif isinstance(x, list):
-            for v in x:
-                walk(v)
-    walk(body)
-    return docs
+from review_core import import_log as core  # noqa: E402
+from trackers.pipelines.config import key_index, parse_key, resolve_key  # noqa: E402
 
 
-def _when(ts):
-    try:
-        return datetime.fromisoformat(str(ts))
-    except ValueError:
-        return None
-
-
-def plan(docs, ds, dirs, emails=None):
-    """-> {"new": [(email, record), ...] in time order, "dup": n, "stale": [records], "people": {initials: email}}.
-    SystemExit on a record this dataset cannot take; nothing is written here."""
-    idx = store.index(ds)
-    have, last = set(), {}
-    for d in dirs.values():
-        for r in store.read_log(d):
-            if r.get("id"):
-                have.add(str(r["id"]))
-            t = _when(r.get("ts"))
-            if r.get("key") and t and not store.is_machine(r) and (r["key"] not in last or t > last[r["key"]]):
-                last[r["key"]] = t
-    new, stale, people, dup, seen = [], [], {}, 0, set()
-    for doc in docs:
-        doc_email = str(doc.get("email") or "").strip()
-        for i, r in enumerate(doc["records"]):
-            where = f"{doc.get('reviewer') or '?'} record {i + 1}"
-            if not isinstance(r, dict) or not r.get("key") or not r.get("id") or not r.get("reviewer") or not r.get("dir"):
-                raise SystemExit(f"{where}: not a review record (needs key, id, reviewer, dir)")
-            t = _when(r.get("ts"))
-            if t is None or t.tzinfo is None:
-                raise SystemExit(f"{where}: no usable time ({r.get('ts')!r})")
-            if r["reviewer"] in store.MACHINE_REVIEWERS or not store._INITIALS_RE.match(str(r["reviewer"])):
-                raise SystemExit(f"{where}: reviewer {r['reviewer']!r} is not a person's initials")
-            if str(r["id"]) in have or str(r["id"]) in seen:
-                dup += 1
-                continue
-            seen.add(str(r["id"]))
-            if r["key"] not in idx:
-                raise SystemExit(f"{where}: {r['key']} is not in the current review-app dataset "
-                                 "(rebuilt since the page was made? rebuild the page and publish it again)")
-            if r["dir"] not in dirs:
-                raise SystemExit(f"{where}: staging dir {r['dir']} is not part of the current review-app dataset")
-            grp = idx[r["key"]][2]
-            if ("call" in r) != (grp == "items"):
-                raise SystemExit(f"{where}: {r['key']} is {'an item' if grp == 'items' else 'a line'} "
-                                 f"but the record is {'an item call' if 'call' in r else 'a line decision'}")
-            if "decision" in r and r["decision"] not in store.DECISIONS:
-                raise SystemExit(f"{where}: decision {r['decision']!r} is not one of {sorted(store.DECISIONS)}")
-            email = doc_email or (emails or {}).get(r["reviewer"]) or ""
-            if not email:
-                raise SystemExit(f"{where}: the log of {r['reviewer']} carries no address: pass --reviewer {r['reviewer']}=EMAIL")
-            full = store.initials(email)         # a one-word profile name logs "B": record "BL" (Baird 2026-10-05)
-            if len(r["reviewer"]) < 2 and full.startswith(r["reviewer"]):
-                r["reviewer"] = full
-            if people.setdefault(r["reviewer"], email) != email:
-                raise SystemExit(f"{where}: {r['reviewer']} appears under two addresses ({people[r['reviewer']]}, {email})")
-            if r["key"] in last and last[r["key"]] > t:
-                stale.append(r)
-                continue
-            new.append((t, email, r))
-    new.sort(key=lambda x: x[0])
-    return {"new": [(e, r) for _, e, r in new], "dup": dup, "stale": stale, "people": people}
-
-
-def runs(new):
-    """Consecutive records of one address, so the log keeps time order across reviewers."""
-    out = []
-    for email, r in new:
-        if out and out[-1][0] == email:
-            out[-1][1].append(r)
-        else:
-            out.append((email, [r]))
+def _known(ds):
+    """{key: (group, object)} for every line, item and covered record of the dataset."""
+    out = {}
+    for k, (_, o, grp) in store.index(ds).items():
+        out[k] = (grp, o)
+        for c in o.get("covers") or []:
+            out[c["key"]] = ("lines", dict(c, sheet_row=c.get("sheet_row", o.get("sheet_row"))))
     return out
 
 
-def write(pl, ds, dirs, cfg=None, gws=pull.gws):
-    """Append the planned records, store first. -> the saved records (each with its store `row`)."""
-    saved = []
-    for email, recs in runs(pl["new"]):
-        led = ledger.Ledger.for_data(ds, ORIGIN, cfg=cfg, reviewer_email=email, gws=gws)
-        if led is None:
-            raise SystemExit("no store configured (review_app/google.json: store_sheet_id): nothing was recorded")
-        saved += store.append_records([dict(r) for r in recs], dirs, sink=led.sink)
-    return saved
+def _unplaced(key, d, dirs, ix):
+    """Why a key that resolve_key could not place is parked, in words."""
+    if d not in dirs:
+        return f"the staging dir {d} is not part of the current review-app dataset"
+    s = parse_key(key)
+    if not s:
+        return "the key does not have the <dir>::<ProjectID>|<row>|<column> shape"
+    n = len(ix["ident"].get((s[0], s[1], s[3])) or ix["legacy"].get((s[0], s[1], s[3])) or [])
+    if n > 1:
+        return f"{n} lines of the current dataset have this ProjectID and column at other rows, so the record cannot be placed without a guess"
+    return "no line or item of the current dataset has this key, or this ProjectID and column at another row"
 
 
-def report(pl):
-    out = []
-    by = {}
-    for email, r in pl["new"]:
-        by.setdefault((r["reviewer"], email), []).append(r)
-    for (who, email), recs in sorted(by.items()):
-        n_item = sum(1 for r in recs if "call" in r)
-        undo = sum(1 for r in recs if r.get("undecided"))
-        out.append(f"{who} ({email}): {len(recs) - n_item} line decisions, {n_item} item calls"
-                   + (f", {undo} of them undos" if undo else "")
-                   + (f"  [note: the address reads as {store.initials(email)}]" if store.initials(email) != who else ""))
-    out.append(f"{len(pl['new'])} new, {pl['dup']} already in the log, {len(pl['stale'])} superseded by a later decision")
-    for r in pl["stale"][:20]:
-        out.append(f"  superseded: {r['key']} ({r['reviewer']}, {r.get('ts')})")
-    return "\n".join(out)
+class Rules:
+    """Where a pipelines record lands: its own key, the key its line moved to (rekeyed), or nowhere (parked). The plan adds "rekeyed" (records moved to their line's new key) and "parked" ([{reason, reviewer, email, record}]). A line or item mismatch, or a decision outside the vocabulary, stops the import."""
+
+    def __init__(self, ds, dirs):
+        self.dirs = dirs
+        self.known = _known(ds)
+        self.ix = key_index(self.known)
+        self.rekeyed, self.parked = [], []
+
+    def place(self, r, where, email):
+        known, ix = self.known, self.ix
+        k = resolve_key(r["key"], known, ix) if r["dir"] in self.dirs else None
+        if k is None:
+            self.parked.append({"reason": _unplaced(r["key"], r["dir"], self.dirs, ix), "reviewer": r["reviewer"],
+                                "email": email, "record": r})
+            return None
+        if k != r["key"]:
+            via = resolve_key(r["via"], known, ix) if r.get("via") else None
+            r = dict(r, key=k, rekeyed_from=r["key"])
+            if "sheet_row" in r:
+                r["sheet_row"] = known[k][1].get("sheet_row", r["sheet_row"])
+            if via:
+                r["via"] = via
+            self.rekeyed.append(r)
+        grp = known[r["key"]][0]
+        if ("call" in r) != (grp == "items"):
+            raise SystemExit(f"{where}: {r['key']} is {'an item' if grp == 'items' else 'a line'} "
+                             f"but the record is {'an item call' if 'call' in r else 'a line decision'}")
+        if "decision" in r and r["decision"] not in store.DECISIONS:
+            raise SystemExit(f"{where}: decision {r['decision']!r} is not one of {sorted(store.DECISIONS)}")
+        return r
+
+    def extra(self):
+        return {"rekeyed": self.rekeyed, "parked": self.parked}
 
 
-def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("file", nargs="+", help="the page's download, or the artifact's `logs` collection saved as JSON")
+def write_parked(pl, work=None, now=None):
+    """Write the parked records to work/review_import_parked_<time>.jsonl, one {reason, reviewer,
+    email, record} per line. -> the path, or None when nothing was parked."""
+    if not pl.get("parked"):
+        return None
+    work = Path(work) if work else paths.work_dir()
+    work.mkdir(parents=True, exist_ok=True)
+    f = work / f"review_import_parked_{(now or datetime.now()).strftime('%Y%m%d_%H%M%S')}.jsonl"
+    f.write_text("".join(json.dumps(x, ensure_ascii=False) + "\n" for x in pl["parked"]), encoding="utf-8")
+    return f
+
+
+def _add_args(ap):
     ap.add_argument("--commodity", choices=["gas", "oil"], default="gas")
-    ap.add_argument("--reviewer", action="append", default=[], metavar="EMAIL or XX=EMAIL",
-                    help="a reviewer's address, for a log that carries none (the page is not given addresses); "
-                         "repeat per reviewer. A bare EMAIL is matched to its own initials")
-    ap.add_argument("--dry-run", action="store_true", help="report only; write nothing")
-    a = ap.parse_args(argv)
-    docs = [d for f in a.file for d in read_docs(f)]
-    if not any(d["records"] for d in docs):
-        raise SystemExit("no records in " + ", ".join(a.file))
-    ds, dirs = ledger._dataset(a.commodity)
-    emails = {}
-    for v in a.reviewer:
-        who, _, addr = v.rpartition("=")
-        emails[who.strip() or store.initials(addr.strip())] = addr.strip()
-    pl = plan(docs, ds, dirs, emails=emails)
-    print(report(pl))
-    if a.dry_run:
-        print("dry run: nothing written")
-        return 0
-    if not pl["new"]:
-        return 0
-    try:
-        saved = write(pl, ds, dirs)
-    except ledger.StoreError as e:
-        sys.exit(f"{e}\nthe records of this run were not recorded; run the import again (earlier runs are skipped by id)")
-    print(f"{len(saved)} records in the store (rows {min(r['row'] for r in saved)}-{max(r['row'] for r in saved)}) "
-          f"and in {len({r['dir'] for r in saved})} staging dir(s). "
-          "Accepted cells reach the sheet only via review_app/push.py (plan, ask Baird, --apply).")
-    return 0
 
+
+def _parked_lines(pl):
+    f = write_parked(pl)
+    return [f"parked records written to {f}"] if f else []
+
+
+core.bind(sys.modules[__name__], required=("key", "id", "reviewer", "dir"), rules=Rules, add_args=_add_args,
+          dataset_for=lambda a, docs: ledger._dataset(a.commodity), after_plan=_parked_lines,
+          next_step="Accepted cells reach the sheet only via review_app/push.py (plan, ask Baird, --apply).")
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main())  # noqa: F821  (bound above)

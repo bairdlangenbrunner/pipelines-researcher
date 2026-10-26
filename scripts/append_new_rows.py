@@ -329,15 +329,31 @@ def build_plan(dirs, commodity):
     cands = load_candidates(dirs)
     if not cands:
         sys.exit("nothing to append: no un-applied new_row candidates")
+    nostatus = [c["slug"] for _, _, c in cands if not str((c.get("values") or {}).get("Status") or "").strip()]
+    if nostatus:
+        sys.exit(f"ABORT: new rows with no Status (ask Baird to settle each, never append blank): {nostatus}")
+    noroute = [c["slug"] for _, _, c in cands
+               if not str((c.get("values") or {}).get("RouteType") or "").strip()
+               or not str((c.get("values") or {}).get("RouteAccuracy") or "").strip()]
+    if noroute:
+        sys.exit(f"ABORT: new rows with no RouteType/RouteAccuracy (nonzero length, no route: Not mapped + no route): {noroute}")
     props = meta()
     t_props, oo_props = props[title], props[OO_TITLE]
     header, tail = tail_state(title, hdr_row, t_props)
     oo_header, oo_tail = tail_state(OO_TITLE, OO_HEADER_ROW, oo_props)
     buf = buffer_rows(header, tail, ("PipelineName", "Status"))
-    if not buf or buf[-1] != t_props["rowCount"]:
-        sys.exit(f"ABORT {title}: buffer rows {buf} do not run to the grid's last row {t_props['rowCount']}")
-    selftest_rerow(header, tail, buf)
-    tmpl_row = buf[-1]
+    last = t_props["rowCount"]
+    if buf and buf[-1] != last:
+        sys.exit(f"ABORT {title}: buffer rows {buf} do not run to the grid's last row {last}")
+    if buf:
+        selftest_rerow(header, tail, buf)
+        tmpl_row = buf[-1]
+    else:   # no buffer left (the 2026-10-05 append used it up): the tab ends in a real row, which is the template
+        name_i = header.index("PipelineName")
+        if not nonempty(tail[last][name_i]):
+            sys.exit(f"ABORT {title}: no buffer rows and the last grid row {last} is not a real row")
+        selftest_rerow(header, tail, [last - 1, last])
+        tmpl_row = last
     tmpl = formula_template(header, tail, tmpl_row)
     header_formula_marker.clear()
     header_formula_marker.update(tmpl)

@@ -76,6 +76,11 @@ one validated dated source makes it a change (tier medium); tier high needs >=2 
   {column: value} pairs — Status (controlled vocab, lowercase) plus the matching date columns
   (e.g. now operating -> StartYear1; construction began -> ConstructionYear; newly shelved ->
   ShelvedYear). A change without a verified ref will be downgraded at merge — source it.
+  DATES GO WITH THE STATUS (Baird 2026-10-16): stage the year AND the month (an integer 1-12)
+  of the event your refs state, and check the row's other date columns against the same
+  documents (ProposalYear/Month, ConstructionYear/Month, StartYear1/StartMonth1) — fix any the
+  refs contradict, with the refs. If a source gives no date, say so in researcher_notes ("the
+  start month was not found"). check_shard_coverage.py blocks a change with no date column.
 - "stale"   — NO independent news found. Apply the dormancy rules: proposed with no progress
   >=2y -> shelved; shelved >=4y -> cancelled. proposed_changes MUST include
   ShelvedCancelledType="inferred" (lowercase — that is the live column's vocabulary, NOT
@@ -225,16 +230,6 @@ writer. Each call prints "N/M owed units reported": that is your progress meter.
 you hit your context limit on unit 12 of 15, units 1-11 are on disk and your replacement does
 only 12-15.
 
-## Standing rules (NON-NEGOTIABLE)
-1. NEVER cite gem.wiki / globalenergymonitor.org, theodora.com, or A Barrel Full /
-   abarrelfull.wikidot.com / any wikidot.com page. Read for leads only. url_verifier rejects them.
-2. NEVER fabricate a URL. If you cannot verify, say so in researcher_notes — no invented links.
-3. Run EVERY url through the verifier before you cite it, WITH THE PIPELINE NAME:
-   \`python scripts/url_verifier.py "<url>" "<expected substring>" ["<more>"] --name "<pipeline name>"\`
-   (or \`verify_url(url, any_of=surface_forms(value), name=<pipeline_name>)\`) → cite only if it
-   prints OK/200 AND contains the expected token(s) AND names the pipeline. Use distinctive tokens
-   (numbers, place names). Every verification object you write carries "name_found": true|false.
-   RELEVANCE: a page about terminus A, or about terminus B, or about the parent trunk, is NOT a ref
 ## Step 0b — open EVERY harvested wiki citation (Baird 2026-10-17; blocking)
 \`--remaining\` lists them as WIKI lines. Before any open-web search, open each one and read it
 against EVERY owed unit (capacity, length, diameter, dates, status, owner), not only the one you
@@ -253,6 +248,16 @@ other research, never instead of it.
   \`used\` = it is in some record's proposed_refs. \`dead\`/\`blocked\` need BOTH fetch.py and a Wayback
   lookup in \`tried\`. check_shard_coverage blocks until every harvested citation has a record.
 
+## Standing rules (NON-NEGOTIABLE)
+1. NEVER cite gem.wiki / globalenergymonitor.org, theodora.com, or A Barrel Full /
+   abarrelfull.wikidot.com / any wikidot.com page. Read for leads only. url_verifier rejects them.
+2. NEVER fabricate a URL. If you cannot verify, say so in researcher_notes — no invented links.
+3. Run EVERY url through the verifier before you cite it, WITH THE PIPELINE NAME:
+   \`python scripts/url_verifier.py "<url>" "<expected substring>" ["<more>"] --name "<pipeline name>"\`
+   (or \`verify_url(url, any_of=surface_forms(value), name=<pipeline_name>)\`) → cite only if it
+   prints OK/200 AND contains the expected token(s) AND names the pipeline. Use distinctive tokens
+   (numbers, place names). Every verification object you write carries "name_found": true|false.
+   RELEVANCE: a page about terminus A, or about terminus B, or about the parent trunk, is NOT a ref
    for the "A-B" segment row unless it names that segment (its FULL name, or its local-language
    name from the worklist's OtherLanguage* columns). If the name is in another script and the
    verifier misses it, read the page and encode the hand-confirmed match as name_found=true with
@@ -260,6 +265,20 @@ other research, never instead of it.
    merge and listed by the pre-delivery gates -- do not stage it as if it were support.
    DOWNLOADS: save any fetched file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\`
    (gitignored) -- never the repo root or a tracked path.
+3b. A 403, Cloudflare page, timeout or garbled PDF is a TOOLING failure, never a finding. Before you
+   write "blocked" / "403" / "could not fetch" anywhere, run \`python scripts/fetch.py <url> --head 2000\`
+   (curl -> curl_cffi TLS impersonation -> Chrome clearance; its \`notes:\` line names the route that
+   worked) and READ the whole page it returns. url_verifier uses the same ladder, but a miss there is
+   not final either. Name the route in researcher_notes ("read via fetch.py, cf_impersonate"); say a
+   page is unreachable only after all three rungs failed, and then say so. P0278 2026-10-16: a "403 on
+   every fetch" offshore-technology.com page read fine on the impersonation rung and held the system-wide
+   diameter. check_shard_coverage.py blocks a blocked/403 note that never mentions fetch.py.
+   NEVER set \`LNGCT_NO_BROWSER\` (not =1, not in a loop, not in a retry script) and never pass a flag or
+   write a wrapper that skips the Chrome rung. It turns off the third rung, so bot-walled hosts read as
+   "blocked" when they are readable (Baird 2026-10-19, after agents in the wiki recovery pass ran their
+   own fetch loops with it set). If your shell already has it set, run \`unset LNGCT_NO_BROWSER\` first.
+   Retries use the same full ladder; a miss on a host that returns a clearance page is retried once, then
+   logged with every rung tried.
 4. ONE VALIDATED SOURCE IS SUFFICIENT; >=2 INDEPENDENT IS PREFERRED. A ref that passes url_verifier,
    names THIS pipeline (name_found) and states the value (within rounding) closes the unit -- no
    second-search note is owed. Independent = separate origins (not one wire story reprinted, not two
@@ -292,6 +311,14 @@ other research, never instead of it.
 3. DUPLICATE — Compare against the roster. If ${pid} is very likely the same physical pipe as another
    ProjectID (relabel / segment double-count), flag concern_type="duplicate" and NAME the other PID.
 4. ATTRIBUTION — owner/operator, FuelSource, province, endpoints. Wrong → concern_type="attribution".
+   OWNER = the LOWEST-LEVEL company that holds this pipeline (a JV, project company, or operating
+   subsidiary such as a utility), never a parent or intermediate holding company. There is NO GEM
+   convention of recording the ultimate parent. Do not research parents. If the sheet's Owner1 is a
+   parent (e.g. Iberdrola for a NYSEG line) and a ref that names this pipeline names the lower-level
+   owner, stage a change to that owner. A parent-level filing (merger 8-K, annual report) is never
+   an owner ref. One company per Owner<N>/Operator value, a concern's contested candidate included:
+   never two names joined by "/" or ";". Split into Owner1 and Owner2 with shares, or, for one
+   company's old and new names, keep the current one.
 5. SPEC — length, diameter, capacity, dates. CRITICALLY confirm each against a validated source (>=2 independent preferred).
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
@@ -308,12 +335,6 @@ other research, never instead of it.
      has, the verified ref(s) that state them, and class_out="REFS_ADDED". Writing "length and
      diameter confirmed as recorded" in your summary and nowhere else is INDISTINGUISHABLE FROM
      NOT DOING THE WORK — it is the single most common defect in this leg's history (381 units
-   OWNER = the LOWEST-LEVEL company that holds this pipeline (a JV, project company, or operating
-   subsidiary such as a utility), never a parent or intermediate holding company. There is NO GEM
-   convention of recording the ultimate parent. Do not research parents. If the sheet's Owner1 is a
-   parent (e.g. Iberdrola for a NYSEG line) and a ref that names this pipeline names the lower-level
-   owner, stage a change to that owner. A parent-level filing (merger 8-K, annual report) is never
-   an owner ref.
      across four US gas batches, every one of them on a row whose documents the agent had already
      opened). When your sources DISAGREE, emit the corrected value AND file the spec concern in
      validity[]. When you genuinely find nothing, class_out="UNRESOLVED" with researcher_notes

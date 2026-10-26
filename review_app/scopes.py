@@ -73,17 +73,29 @@ def save(m, path=None):
 def researched(root=None, commodity=None):
     """{(normalized country, commodity): {"country": display name, "dirs": [Path]}} for every
     staging dir whose store metadata names a scope. Assembled packets count (they are staged
-    work too); dirs without scope metadata are left to discovery's scope-dir-name fallback."""
+    work too). A dir whose store files carry no scope joins a scope found here when it sits
+    under that scope's dir: the same fallback discovery uses (staged_store.scope_dir_fallback).
+    A scope dir whose every store lacks scope is not listed: nothing names its country."""
     root = Path(root or staged_store.BATCHES_ROOT)
-    out = {}
+    out, bare = {}, []
     for d in sorted(root.glob("*/staging/*")):
         if not d.is_dir():
             continue
         sc = staged_store._dir_scope(d)
-        if sc is None or (commodity and sc[1] != commodity.lower()):
+        if sc is None:
+            bare.append(d)
+            continue
+        if commodity and sc[1] != commodity.lower():
             continue
         ent = out.setdefault(sc, {"country": _display(d) or sc[0].title(), "dirs": []})
         ent["dirs"].append(d)
+    for d in bare:
+        for sc, ent in out.items():
+            if staged_store.scope_dir_fallback(d, ent["country"], sc[1]):
+                ent["dirs"].append(d)
+                break
+    for ent in out.values():
+        ent["dirs"].sort()
     tw = staged_store.trackerwide_dirs(root)
     if tw:          # the tracker-wide scope joins every commodity's batch, so it is listed whatever the filter
         out[(staged_store.TRACKER_WIDE, "both")] = {"country": staged_store.TRACKER_WIDE, "dirs": tw}

@@ -1,0 +1,69 @@
+# Routes for the new US gas rows, data center lines first (plan, 2026-10-20)
+
+Goal: every row added to the Gas tab during the 2026 US gas cycle gets a route in `GOIT-GGIT-pipeline-routes` where a route can be sourced, with the lines tied to the data center buildout done first. The pass follows the route creation recipe (`docs/workflows.md` §8) and SOP (`docs/sops/route_creation.md`): candidate geometry is staged in this repo as `<PID>.geojson`, reviewed, and applied only on Baird's per-batch authorization, with `RouteType`, `RouteAccuracy` and the routes repo moving together and `RouteCreator` set to `CB`.
+
+Review folder: `batches/united-states-gas/staging/route-creation-newrows-20261020/` (its README lists the files). Nothing in it is a candidate yet.
+
+## Scope (snapshot `data/GGIT_gas_snapshot_20261019.csv`)
+
+240 rows carry a ProjectID of P8091 or higher. One (P8309 Yuma) already has a route. The other 239 are the scope, in five tiers (`inventory.csv` `tier`):
+
+| Tier | Rows | What they are |
+|---|---|---|
+| A, data center | 17 | `DataCenter = yes` and physical pipe: P8093, P8096, P8234, P8290, P8311 to P8321, P8324, P8327 |
+| B, in development | 24 | proposed, construction or shelved, not tagged for data centers |
+| C, operating | 180 | older interstate and intrastate lines and expansion segments the tracker never carried, median 41 mi |
+| D, cancelled, blank or other status | 13 | cancelled, mothballed, idle or blank status; not this pass |
+| X, no physical pipe | 5 | `LengthKnown = 0` or `RouteType = Capacity expansion only` (P8310 Kern River 2001 expansion, P8322 NGPL Amarillo, P8325 Vector 2028, P8328 MVP Boost, P8330 Palo Duro); no route is owed, only `RouteType = Capacity expansion only` where it is blank (P8310) |
+
+Order of work: A, then B, then C. Tier D is out of this pass. Tier C is large and mostly operating interstate pipe, so it is a GIS exercise (EIA operator layer, Texas RRC, BOEM) rather than a map hunt, and it runs as its own batch after A and B are applied.
+
+## What is already digitized elsewhere
+
+**oilandgaswatch.org** (Environmental Integrity Project) is the big find. Its pipeline table has 455 records and 249 of them carry route geometry, most georeferenced from the FERC application map or loaded from a sponsor shapefile, each with a resolution grade (High 70, Medium 71, Low 30, Unknown 55, Mixed 8, none 15) and the source document named. The site's pages are JavaScript shells, but the data API behind them returns the whole table in one call (recorded in the folder README; `url_verifier._app_data` already reads the per-record endpoint). Matched by hand against the 239 rows:
+
+- **19 rows have a direct match with geometry** (name, states and length all agree): P8093 Northwoods (High), P8096 Bakken East mainline (Medium, four parts), P8290 Green Chile (Medium), P8312 Aristotle Central (Low), P8313 Aristotle South (Low), P8123, P8124, P8125, P8136, P8146, P8171, P8174, P8210, P8230 (Low), P8257, P8259 (no grade), P8272, P8302, P8326 (Unknown). Five of these are tier A.
+- **3 rows are one part of a multi-part record**: P8161 Florida Southeast Connection (part 0 of the Southeast Market record, 126.5 mi against GEM's 126), P8193 Magnum header (part 2, 59.6 mi against 61.6), P8099 Black Bayou (27 of 54 mi, partial).
+- **3 rows have a related record whose geometry is a different segment**: P8327 Jamestown to Ellendale lateral (the Bakken East record is the mainline only), P8318 Hugh Brinson Abilene laterals (the record is the 325 mi mainline from an RRC T-4 shapefile), P8186 KMLP mainline (the record is a 3 mi 2026 expansion).
+- **12 rows have a record without geometry**, seven of them tier A (P8315, P8316, P8317 with two attached documents, P8320 with one, P8321, plus P8325 in tier X); the attached documents are the first place to look for a map.
+- **202 rows have no record there.**
+
+Precedent: P7814 Decatur Lateral was applied 2026-10-15 from an oilandgaswatch record (`method gis_vector`, `Route [ref]` the record page, accuracy medium from the site's grade), and P8312's `Status [ref]` already cites the site. Its geometry is a georeferenced trace of a public filing, so it is a tier 2 source: never green on its own as a data ref, but a usable route at the site's own accuracy grade, capped at medium.
+
+**Other scrapable geometry (rung 2 of the ladder):**
+
+- EIA Natural Gas Interstate and Intrastate Pipelines (ArcGIS feature service, 2025-10-22 edit; the DOT and HIFLD mirrors are older vintages). Fields are only type, operator and status, no names, so a feature is selected by operator plus corridor and checked by a person. This is the tool for tier C's operating interstate rows. It needs a `sources/gis_endpoints.yml` entry.
+- Texas RRC pipeline layer (entry exists, URL to fill): the 33 Texas-only rows, intrastate lines and ET, Atmos, Enterprise and Kinder Morgan Texas segments.
+- BOEM pipeline layer (entry exists, URL to fill): the four offshore gathering rows (Okeanos, Manta Ray, Cleopatra, Canyon).
+- MassGIS MORIS HubLine arc layer: P8091's own status ref is its metadata page.
+- OSM Overpass is NOT used in this pass (Baird 2026-10-20: OSM is not trusted; no fallback to it).
+
+GulfPub (rung 1) has 10 US gas features and is not worth running.
+
+## Steps
+
+1. **Inventory and crosswalk (done 2026-10-20).** `inventory.csv`, `ogw_crosswalk.csv`, `ogw_catalog.csv` and the matched geometries are in the review folder.
+2. **Map hunt, tiers A and B (41 rows).** For each row, seeded from its `Status [ref]` URLs and the discovery record's refs: the FERC eLibrary application or prior-notice map (Resource Report 1 figures, the general location map), the Federal Register notice's docket number to reach it, the sponsor's project page map, the state filing (Ohio PUCO for the Aristotle and Apollo lines, Pennsylvania DEP for Homer City, Millard County for Joule, the Texas RRC T-4 for the Hugh Brinson laterals), and the oilandgaswatch attached documents. Every map file goes in `maps/<PID>/` with a `source.json` (URL, document, page, date read, fetch route), and `inventory.csv` gets `map_status`: `vector` (geometry available), `map-good` (a legible map with named roads, towns or county lines to georeference), `map-weak` (schematic or no landmarks), `endpoints-only`, or `nothing-found` with what was searched. Blocked URLs go through `fetch.py` and the Wayback index before they are called unreadable. This is subagent work, one agent per family of rows, cheapest sufficient model, read-only.
+3. **Review page for Baird.** A gallery artifact (one card per row: the map image, the oilandgaswatch geometry if any drawn over a basemap, the candidate accuracy, the source) so the decision on each row is a click: use the vector geometry as is, digitize this map, find a better map, or endpoints only. Decisions are written back to `inventory.csv` `decision`. This is a reading surface, not a review-app batch; the review app enters at step 6.
+4. **Build candidates.** `build_route_candidate.py --method gis` from the oilandgaswatch geometry (new code: a small `scripts/ogw_catalog.py` that pulls the table and writes a per-record geojson, and `url_verifier._OGW_PIPELINE_RE` widened to the `rec_` and UUID ids), `--method traced` through `georef.py` for the maps Baird picks (at least 4 geocoded control points with a `source_ref`, RMSE within the SOP bound, else the row stops in `packets/`), `--method gis` from the state and federal layers for tier C, `--method endpoints` last. Accuracy: oilandgaswatch High or Medium becomes `medium`, Low or Unknown becomes `low`, traced maps `medium` at best, endpoints `very low (straight line/schematic)`. `Route [ref]` is the page or document the geometry came from, through `url_verifier`; the oilandgaswatch record page for its geometry, the FERC document for a trace.
+5. **Validate and deliver.** `validate_route_candidate.py`, the route-creation workbook, `recalc.py`, and the escalation gate (more than 30 percent of a batch on rungs 3 and 4 is a conversation, not a default).
+6. **Review app and apply.** The batch goes into the review app as `route` lines; on Baird's per-batch authorization the §8 step 6 recipe runs: routes repo `qc_routes.py`, branch, merge `--no-ff`, push, then `apply_route_candidates.py --apply` for the sheet columns, `RouteCreator = CB`, and `audit_route_sync.py`.
+
+## Rulings (Baird 2026-10-20)
+
+1. Tier order A, B, C. The old tier C was split: operating rows stay in scope (C, 180 rows); cancelled, blank and other-status rows are tier D (13 rows) and are not in this pass.
+2. oilandgaswatch geometry is accepted as a route source at its own grade: High or Medium becomes `RouteAccuracy = medium`, Low or Unknown becomes `low`, `Route [ref]` is the record page. Low grades are not re-digitized from the underlying filing unless a better map turns up during the hunt anyway. The 22 direct and part matches carry this decision in `inventory.csv` already.
+3. The five tier X rows get `RouteType = Capacity expansion only` where blank (only P8310 is blank) and nothing else.
+4. No OSM in this pass. ODbL is the Open Database License, OSM's share-alike license; the question is moot because OSM is not a trusted source for this work.
+5. The review surface for step 3 is an artifact gallery, one card per row, decisions written back to `inventory.csv`.
+
+Execution is handed to a cheaper model: `notes/handoff-2026-10-20-us-gas-new-rows-route-creation.md` is the self-contained brief for that session.
+
+## Status
+
+- 2026-10-20: scope inventory, oilandgaswatch catalog pull and hand-judged crosswalk done; plan written; Baird ruled on the five questions the same day (above); handoff brief written for the executing session.
+- 2026-10-20: map hunt over tiers A and B done (eight agents by family of rows, each map and source.json checked by hand). `map_status` filled for all 41 rows: 16 map-good, 13 vector, 3 map-weak, 6 endpoints-only, 3 nothing-found. No family lacks a map and 6 of 41 rows end on endpoints, under the 30% gate. Gallery published for Baird's picks: https://claude.ai/artifact/DeavCcikQGM7vZJTgk5fvp (picks saved in its `decisions` collection). Next: Baird's clicks, then they go into `inventory.csv` `decision` with the date, then the candidate build.
+- 2026-10-20: P8327, the Jamestown to Ellendale lateral, was dropped from the Bakken East design after the 2026 open season. It is in WBI Energy's March 13, 2026 FERC draft (81.6 miles of 20-inch pipe, mapped on page 9) and gone from the April 16, 2026 filing, and MDU said on its May 7, 2026 call that it is not in the current design. A change to cancelled (confirmed, 2026, medium), plus the March length and diameter, is staged in `batches/united-states-gas/staging/update-p8327-cancelled-20261020/`, not pushed. Its gallery card now suggests tracing the lateral from the March map, if a cancelled line still gets a route; the oilandgaswatch line there is the mainline only. `url_verifier.py` now reads FERC eLibrary `filedownload?fileid=` links through FERC's download API, so FERC filings can be cited.
+- 2026-10-20: Baird still wants a route for P8327 although it is cancelled. Page 685 of the March 13, 2026 draft (Figure 10.6.1-5) is a GeoPDF, and its dashed line is the whole Ellendale Lateral as WBI Energy drew it, so the route was read straight from that vector path with the page's own georeferencing, not traced. It is 81.62 miles against the filing's 81.6, mileposts 45 to 54 fall within 1 meter of their distances, and the county line crossings match the filing's table. Candidate staged in `batches/united-states-gas/staging/route-creation-p8327-20261020/` at high (gate PASS, page and scripts in `traces/`), not applied. The same store change in `update-p8327-cancelled-20261020/` now also moves `StartLocation` from Jamestown to the mainline valve site in Barnes County, where the filing puts milepost 0.0.
+- 2026-10-20: Baird's digitize picks run. Ten of 13 rows traced and staged as candidates: P8212, P8241, P8316, P8317, P8320, P8321 and P8324 at medium, P8110, P8299 and P8329 at low. All pass `validate_route_candidate.py`. Three stopped for data reasons: P8092 (24 scanned sheets with no independent control points), P8261 and P8315 (no public route map). P8311 (endpoints pick) has a sourced end at the Apollo plant but no sourced start at the Rover tie-in, so it waits for the Ohio Power Siting Board letter of notification in case 26-0624-GA-BLN. Workbook `batches/united-states-gas/deliverables/pipelines_batch_20261020_1936_ET_united-states-gas_route-creation-newrows.xlsx`. On 2026-10-21 P8092 got a Glenn Highway corridor proxy (US Census roads, very low accuracy, gate passed); it is not the surveyed alignment and waits for the Alaska DNR lease alignment. Nothing applied.
+- 2026-10-21: Baird asked for P8311 as an endpoints line even though the start is only a proxy. Candidate staged at `very low (straight line/schematic)`, 25.5 km straight, from the Cygnet Road and Wingston Road intersection (stand-in for the Rover tie-in, could be several km off) to the Apollo plant at Ohio 582 and Mercer Road. The stated length is 23.5 miles, so the real route is longer. The Ohio Power Siting Board letter of notification in case 26-0624-GA-BLN should replace it. The gallery has a Traced lines tab showing all twelve traced or read candidates. Workbook rebuilt as `20261021_0824_ET`. Nothing applied.

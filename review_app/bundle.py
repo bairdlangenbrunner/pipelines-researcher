@@ -3,7 +3,7 @@ Bundle the review app's front end into the one HTML file Apps Script serves (pha
 
     python review_app/bundle.py [--check] [--out FILE] [--project FILE]
 
-Apps Script's HtmlService serves a single file, so the shared page in ../gem-review-app (review_core/web: index.html, style.css, gas.js, app.js) and the pipelines extension (trackers/pipelines/web: ext.css, ext.js) are inlined into review_app/gas/index.html. gas.js is the Apps Script adapter (window.GasStore, which app.js picks before any other store). That file is GENERATED and gitignored (the shared web files are the one source, and they change often): never edit it by hand, and run this right before every deploy (clasp pushes review_app/gas/ as it is; a paste deploy copies the file). The local stand-in (review_app/gas_dev/dev_server.js) runs it at start. --check writes nothing and exits 1 when the bundle on disk is not what the web files would produce now: run it before `clasp push`.
+Apps Script's HtmlService serves a single file, so the shared page in ../gem-review-app (review_core/web: index.html, style.css, app.js) and the pipelines extension (trackers/pipelines/web: ext.css, ext.js, gas.js) are inlined into review_app/gas/index.html. gas.js is the Apps Script adapter (window.GasStore, which app.js picks before any other store). That file is GENERATED and gitignored (the shared web files are the one source, and they change often): never edit it by hand, and run this right before every deploy (clasp pushes review_app/gas/ as it is; a paste deploy copies the file). The local stand-in (review_app/gas_dev/dev_server.js) runs it at start. --check writes nothing and exits 1 when the bundle on disk is not what the web files would produce now: run it before `clasp push`.
 
 It also writes review_app/gas/Config.gs (generated, gitignored) from review_app/google.json: the two
 Drive IDs Code.gs needs (`data_folder_id`, `store_sheet_id`), so nobody types them into Script
@@ -41,7 +41,7 @@ OPTIONAL_TAGS = {'<link rel="stylesheet" href="/core/leaflet.css">': "leaflet.cs
                  '<script src="/core/geo.js"></script>': "geo.js"}                   # folded into the style block and inlined
 APP_TAG = '<script src="/core/app.js"></script>'
 EXT_TAG = '<script src="/tracker/ext.js"></script>'
-SCRIPTS = ("gas.js", "app.js")         # from WEB, inlined in this order where app.js is linked; ext.js follows
+SCRIPTS = ("gas.js", "app.js")         # inlined in this order where app.js is linked (gas.js from EXT_WEB, app.js from WEB); ext.js follows
 
 
 def _inline_js(name, web):
@@ -73,7 +73,7 @@ def bundle(web=WEB, ext=EXT_WEB):
     html = html.replace(CSS_TAGS[1], "")
     for tag, name in OPTIONAL_TAGS.items():
         html = html.replace(tag + "\n", "").replace(tag, "") if name.endswith(".css") else html.replace(tag, _inline_js(name, web))
-    html = html.replace(APP_TAG, "\n".join(_inline_js(name, web) for name in SCRIPTS))
+    html = html.replace(APP_TAG, "\n".join(_inline_js(name, ext if name == "gas.js" else web) for name in SCRIPTS))
     html = html.replace(EXT_TAG, _inline_js("ext.js", ext))
     left = re.findall(r'<(?:script|link)[^>]+(?:src|href)="(?!https?:)[^"]*"', html)
     if left:

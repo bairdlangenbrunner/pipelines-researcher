@@ -32,6 +32,16 @@ def main():
 
     ctx_path = os.path.join(S, "discovery_context.json")
     scope = json.load(open(ctx_path))["scope"] if os.path.exists(ctx_path) else {}
+    if not scope.get("country"):
+        # a coverage re-run made without build_discovery_context.py: its workflow args name the scope
+        args_path = os.path.join(S, "args.json")
+        wf = json.load(open(args_path)) if os.path.exists(args_path) else {}
+        if wf.get("country") and wf.get("commodity"):
+            scope = {**scope, "tracker": scope.get("tracker") or wf["commodity"], "country": wf["country"]}
+    if not (scope.get("country") and (scope.get("tracker") or scope.get("commodity"))):
+        # a store without its scope is invisible to the review app and the staged-store readers
+        sys.exit(f"no scope for {S}: run scripts/build_discovery_context.py first, or put country and "
+                 "commodity in its args.json")
 
     candidates = []
     for p, d in iter_shards(os.path.join(S, "discovery", "vetted", "*.json")):

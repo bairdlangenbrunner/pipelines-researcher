@@ -13,9 +13,13 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 
 | Field | Allowed values |
 |---|---|
-| `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` — **plus `N/A`, which is an EXCLUSION MARKER, not a status** (see below) |
+| `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idled`, `mothballed`, `retired` — **plus `N/A`, which is an EXCLUSION MARKER, not a status** (see below) |
 | `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)`. **Unbuilt rows cap at `medium`** — see below |
 | `PipelineType` | `transmission`, `gathering`, `distribution`, or a combination of two (`both transmission and gathering`, `both transmission and distribution`) | Baird 2026-10-14: never add a new type. `lateral`, `expansion`, `interstate`, `intrastate`, `pipeline` and `natural gas` are not types (a lateral is `transmission`); `check_shard_coverage.py` blocks them unless equal to the sheet's own value |
+
+### `Status` is mandatory on every suggested new row (Baird 2026-10-20)
+
+A new row is never suggested, staged or appended without a controlled-vocabulary `Status` and its `Status [ref]`. If the status cannot be settled from the evidence, ask Baird to look; never leave it blank and never guess. (P8094 reached the sheet with a blank status.)
 
 ### `Status = N/A` means "do not research this row"
 
@@ -45,11 +49,11 @@ the word **`inferred`**, not `Presumed`, which appears nowhere in either tracker
 | Field | Allowed values | Notes |
 |---|---|---|
 | `DelayType` | `inferred`, `confirmed` | live counts: 114/138 gas, 37/41 oil (one stray `Assumed` in gas is a data error) |
-| `ShelvedCancelledType` | `inferred`, `confirmed` | `inferred` for a GEM-rule dormancy change (no fabricated URL); `confirmed` when a source states it. Live: 84/83 gas, 63/52 oil |
-| `Fuel` (gas tab) | `Gas`, `Hydrogen`, `Gas and hydrogen`, `Coke oven gas` | Baird 2026-10-09: never `natural gas` / `Natural Gas` / lowercase `gas`. `check_shard_coverage.py` blocks anything else unless it equals the sheet's own value (the sheet still carries 8 `Gas and Hydrogen` and 2 `Oil` rows) |
+| `ShelvedCancelledType` | `inferred`, `confirmed` | `inferred` for a GEM-rule dormancy change (its ref is the newest dated source on the project, never a fabricated URL); `confirmed` when a source states it. Live: 84/83 gas, 63/52 oil |
+| `Fuel` (gas tab) | `gas`, `hydrogen`, `gas and hydrogen`, `coke oven gas` | Baird 2026-10-20: all lowercase, cells and dropdown (reverses the 2026-10-09 capitalized rule); never `natural gas` / `Natural Gas`. `check_shard_coverage.py` blocks anything else unless it equals the sheet's own value. **Oil/NGL tab `Fuel`** is lowercase too, except the acronyms `NGL`, `LPG` and `CO2` stay uppercase (`oil`, `NGL`, `oil, NGL`, `oil products (only)`, `condensate/NGL`, `LPG`, `CO2`). **`Status` spells it `idled`** (2026-10-20, both tabs, cells and dropdown); source maps may still say `idle`, and `normalize.normalize_status` turns it into `idled` |
 | `FIDStatus` | `Pre-FID`, `FID` | only populated when `Status = proposed`; genuinely capitalized like this |
 | `Delayed` | `yes` | leave **blank** if not delayed — do **not** enter `no`. Live: 254 gas / 78 oil, all lowercase |
-| `DataCenter` (gas tab) | `yes` | Baird 2026-10-16: leave **blank** otherwise, never `no`. `yes` with a validated `DataCenter [ref]` that names this pipeline and mentions data centers at all as a demand driver or reason for the project (ruling loosened later on 2026-10-16: one of several drivers counts, and so does a shipper whose demand for this project the source ties to data centers). Data center talk that is company-wide and not about this project, comes only from opponents, or concerns another row stays blank with a note. A blank is never an owed fill. Checked by `check_shard_coverage.py` and `check_discovery_staged.py` |
+| `DataCenter` (gas tab) | `yes` | Baird 2026-10-16: leave **blank** otherwise, never `no`. `yes` with a validated `DataCenter [ref]` that names this pipeline and mentions data centers at all as a demand driver or reason for the project (ruling loosened later on 2026-10-16: one of several drivers counts, and so does a shipper whose demand for this project the source ties to data centers; 2026-10-18: so does a tie through a power plant the pipeline supplies, when the plant's filings, developer, or utility tie that plant to data center load, tagged on the expansion or lateral serving the plant; 2026-10-19: a new data center row needs only a sourced pipeline project tied to a data center or its power supply, with no endpoints or state required, the state filled when it can be inferred and the inference noted). Data center talk that is company-wide and not about this project, comes only from opponents, or concerns another row stays blank with a note. A blank is never an owed fill. Checked by `check_shard_coverage.py` and `check_discovery_staged.py` |
 | `DataCenterNotes` (gas tab) | free text | Baird 2026-10-16: plain notes on the related data center (campus name and code name, developer and tenant, location, size, the power plant between the pipeline and the campus, the gas deal, status and timing), naming the source of each fact. Only beside `DataCenter = yes`, blank otherwise. Not a `[ref]` column; the refs stay in `DataCenter [ref]`. Checked by `check_shard_coverage.py` and `check_discovery_staged.py` |
 | `Opposition` | `yes`, `no` | **the sheet is genuinely inconsistent here** — gas holds `no` 66 / `Yes` 46 / `yes` 29 / `No` 26, oil is uniformly lowercase. Write lowercase; do not mass-restyle existing cells without Baird's say-so |
 
@@ -73,6 +77,7 @@ itself: a "336 million EGP" source is staged as `ProjectLevelCost = 336000000`,
 - `RouteType` — match the exact dropdown strings from the sheet, e.g.
   `Not mapped (but could be — route or endpoints are known)`,
   `Mapped route (at any accuracy)`, `Unavailable (cannot find route)`.
+  `Not mapped` is the default for nonzero length with no route; `Unavailable` only after an exhaustive route search (Baird 2026-10-20).
   Pull a live row to confirm the current exact strings before populating.
 - `RouteLocation` — REMOVED from both tabs (2026-07-30): a repo geojson is the
   source of truth; don't stage values for it.
@@ -88,7 +93,7 @@ it above `medium`.
 
 - **In scope of the cap:** `proposed`, `shelved`, `cancelled`, `construction` — all
   four are a mechanical sweep, no per-row judgment.
-- **Not in scope:** `operating`, `mothballed`, `idle` (built pipe), and `retired`
+- **Not in scope:** `operating`, `mothballed`, `idled` (built pipe), and `retired`
   (was built — a traced route stays legitimate).
 - **Not in scope:** network-level rows with a blank or `mixed status` `Status`
   (they aggregate operating segments).
@@ -109,6 +114,7 @@ it above `medium`.
 
 - No development updates **2 years** post-proposal → `shelved`.
 - No development updates **4+ years** post-proposal → `cancelled`.
+- **Age-check every `proposed` row and every `proposed` value you keep or offer (Baird 2026-10-16, P4449).** A `proposed` status whose newest dated evidence (or proposal/start year) is more than 2 years old is checked for `shelved` + `ShelvedCancelledType = inferred`; more than 4 years, for `cancelled` + `inferred`. This applies to a `confirm` verdict and to a rival candidate that keeps `proposed`, not only to rows the sweep already flags: a stale start year (2022) beside a `proposed` status is the trigger. If a newer source shows the project alive or built, that source wins and the age rule does not fire.
 - Confirmed cancelled by owner/news → `cancelled` + `ShelvedCancelledType = confirmed`.
 - Inferred by the GEM dormancy rule → `ShelvedCancelledType = inferred`, ref = the newest dated independent source on the project (the last evidence it was alive), AND the matching `ShelvedYear` / `CancelledYear` = the year of that source PLUS the quiet period, +2 shelved and +4 cancelled (Baird 2026-10-20, P3972: last news 2023 means ShelvedYear 2025; never an inferred status without its year, and not inferred at all while that year is still in the future).
 - Date consistency: `Status = operating` ⇒ a `StartYear1` should exist;

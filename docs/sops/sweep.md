@@ -94,7 +94,7 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
   row, *not* `ResearcherNotes`. Because the tab is ProjectID-keyed (not entity-keyed) the ref is
   per-pipeline; no entity-level de-dup. (`discover_ref_pairs` still emits a synthetic
   `kind:'owner'` placeholder for the QC BroadSweep, but the sweep drops it in favour of the join.)
-  Full column layout: `docs/reference/gem_schema.md`. **`Owner<N>` is the lowest-level owner of the asset (Baird 2026-10-16)**: the JV, project company or operating subsidiary that holds the pipeline itself, never a parent or intermediate holding company. Don't research parents; when the sheet carries a parent and a validated ref names the lower-level owner, stage the change (`gem_schema.md`). **A proposed `Owner<N>` value is written
+  Full column layout: `docs/reference/gem_schema.md`. **`Owner<N>` is the lowest-level owner of the asset (Baird 2026-10-16)**: the JV, project company or operating subsidiary that holds the pipeline itself, never a parent or intermediate holding company. Don't research parents; when the sheet carries a parent and a validated ref names the lower-level owner, stage the change (`gem_schema.md`). **No owner or operator value, a concern's candidate included, holds two names joined by a slash (Baird 2026-10-16):** split it into `Owner1` and `Owner2` with their shares, or, when the names are one company's old and new names, keep the current one. **A proposed `Owner<N>` value is written
   in the ownership team's style** (`docs/reference/owner_style.md`; `scripts/entity_style.py`):
   trailing short legal form, no punctuation, no trailing acronym (acronym → `researcher_notes` +
   `data/owner_aliases.json`), the team's own spelling on an exact/alias gazetteer hit.
@@ -308,6 +308,7 @@ builder enforces this mechanically (`_annotate_kept_refs` in `build_ref_workbook
 not-proven-dead current URL in the cell ahead of the proposed refs; `review_app/push.py` keeps
 the live cell text verbatim and appends), so a blocked origin gets its Wayback snapshot *added*,
 never swapped in as a replacement:
+- **A 403 is not a finding; run the ladder first (2026-10-16).** Before any note says a page was blocked, 403, or could not be fetched, run `python scripts/fetch.py <url> --head 2000` (curl, then `curl_cffi` TLS impersonation, then Chrome clearance) and read the whole page. offshore-technology.com 403s plain clients and reads on the impersonation rung; the P0278 agent called it blocked and a 36 in system diameter went unstaged. Name the route that worked in the note. `check_shard_coverage.py` blocks a blocked/403 note that does not mention `fetch.py`.
 - **JavaScript application shells (2026-10-01).** A single-page app serves the same ~2 KB HTML
   for every URL and loads the content afterwards, so the verifier sees a 200 with nothing in it.
   `verify_url` now returns `js_shell: True` (not a content miss, not a deletion) and
