@@ -626,6 +626,9 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     # A decided copy that is not on the sheet yet (no push or backend-sync record after the call)
     # stays primary even when the newer copy proposes more, so the push still finds it; once it is
     # applied, a newer copy that proposes more takes over and asks for a fresh call.
+    # A call carried to a new key when the row moved (`rekeyed_from`) is applied when the call it
+    # was carried from has a push or backend-sync record after it (2026-11-03, P7833 4213 -> 4221:
+    # the carried accepts read as never pushed and hid a newer proposal for the same cells).
     decided, pending = set(), set()
     for d in ordered:
         cb = store.calls(store.read_log(d))
@@ -633,6 +636,8 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
             rec, mach = store.speaker(cb, key)
             if store.reviewed(rec):
                 decided.add(key)
+                if not mach and rec.get("rekeyed_from"):
+                    mach = (cb.get(rec["rekeyed_from"]) or {}).get("machine")
                 if not mach or _ts(mach.get("ts")) < _ts(rec.get("ts")):
                     pending.add(key)
 
