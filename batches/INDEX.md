@@ -40,7 +40,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## egypt-gas
 
-- `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4) decided —
+- `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4) decided 0a/0h/0r/0s of 84
 - `staging/deepsweep-20260827` — rows=40 fills=9 updates=0 status-pending=0 refs(REFS_ADDED=46, REVERIFIED=202, UNRESOLVED=18) routes=0 new(none) decided —
 - `staging/map-traces-gasco` — no store — invisible to discovery
 - `staging/qc` [assembled packet: qc] — rows=63 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
@@ -49,7 +49,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260827` — recon inputs
 - `staging/recon-osm-20260729` — recon inputs
 - `staging/recon-osm-20260827` — recon inputs
-- `staging/ref-sweep-operating` — rows=50 fills=124 updates=0 status-pending=0 refs(REFS_ADDED=235, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none) decided —
+- `staging/ref-sweep-operating` — rows=50 fills=124 updates=0 status-pending=0 refs(REFS_ADDED=235, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none) decided 0a/0h/0r/0s of 541
 - `staging/route-creation-20260810` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none) decided —
 - `staging/route-creation-20260811` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided —
 - `staging/route-creation-20260811-p7589` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided —
@@ -69,7 +69,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/recon-gulfpub-20260827` — recon inputs
 - `staging/recon-osm-20260827` — recon inputs
-- `staging/ref-sweep-all` — rows=46 fills=14 updates=0 status-pending=0 refs(REFS_ADDED=172, REVERIFIED=201, UNRESOLVED=71) routes=0 new(none) decided —
+- `staging/ref-sweep-all` — rows=46 fills=14 updates=0 status-pending=0 refs(REFS_ADDED=172, REVERIFIED=201, UNRESOLVED=71) routes=0 new(none) decided 0a/0h/0r/0s of 387
 - `staging/route-creation-20260827` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided —
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-osm.xlsx`
@@ -79,14 +79,14 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## india-gas
 
-- `staging/annual` — rows=27 fills=19 updates=0 status-pending=5 refs(REFS_ADDED=64, REF_UNSUPPORTED=27, REVERIFIED=62, UNRESOLVED=68) routes=0 new(none) decided —
-- `staging/cancelled-review` — rows=13 fills=10 updates=0 status-pending=2 refs(DEAD_LINK=3, REFS_ADDED=50, REF_UNSUPPORTED=6, REVERIFIED=8, UNRESOLVED=41) routes=0 new(none) decided —
+- `staging/annual` — rows=27 fills=19 updates=0 status-pending=5 refs(REFS_ADDED=64, REF_UNSUPPORTED=27, REVERIFIED=62, UNRESOLVED=68) routes=0 new(none) decided 0a/0h/0r/0s of 150
+- `staging/cancelled-review` — rows=13 fills=10 updates=0 status-pending=2 refs(DEAD_LINK=3, REFS_ADDED=50, REF_UNSUPPORTED=6, REVERIFIED=8, UNRESOLVED=41) routes=0 new(none) decided 0a/0h/0r/0s of 70
 - `staging/qc` [assembled packet: handoff] — rows=75 fills=40 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260810` — recon inputs
 - `staging/redundancy` [redundancy] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=35 fills=17 updates=0 status-pending=0 refs(REFS_ADDED=235, REVERIFIED=5, UNRESOLVED=56) routes=0 new(none) decided —
-- `staging/register-crosswalk` [register-crosswalk] — rows=40 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=116) routes=0 new(none) decided —
+- `staging/ref-sweep-operating` — rows=35 fills=17 updates=0 status-pending=0 refs(REFS_ADDED=235, REVERIFIED=5, UNRESOLVED=56) routes=0 new(none) decided 0a/0h/0r/0s of 257
+- `staging/register-crosswalk` [register-crosswalk] — rows=40 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=116) routes=0 new(none) decided 0a/0h/0r/0s of 118
 - `deliverables/pipelines_batch_20260810_1851_ET_india-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260812_1359_ET_india-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260930_1455_ET_india-gas_handoff-actions.xlsx`
@@ -95,15 +95,15 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## iran-gas
 
-- `staging/annual` — rows=9 fills=18 updates=0 status-pending=5 refs(REFS_ADDED=39, REF_UNSUPPORTED=3, REVERIFIED=33, UNRESOLVED=3) routes=0 new(new_row=9) decided —
+- `staging/annual` — rows=9 fills=18 updates=0 status-pending=5 refs(REFS_ADDED=39, REF_UNSUPPORTED=3, REVERIFIED=33, UNRESOLVED=3) routes=0 new(new_row=9) decided 0a/0h/0r/0s of 104
 - `staging/recon-gulfpub-20260812` — recon inputs
-- `staging/ref-sweep-operating` — rows=31 fills=93 updates=0 status-pending=0 refs(DEAD_LINK=6, REFS_ADDED=33, REF_BLOCKED=3, REF_UNSUPPORTED=11, REVERIFIED=21, UNRESOLVED=198) routes=31 new(none) decided —
+- `staging/ref-sweep-operating` — rows=31 fills=93 updates=0 status-pending=0 refs(DEAD_LINK=6, REFS_ADDED=33, REF_BLOCKED=3, REF_UNSUPPORTED=11, REVERIFIED=21, UNRESOLVED=198) routes=31 new(none) decided 0a/0h/0r/0s of 147
 - `deliverables/pipelines_batch_20260812_1359_ET_iran-gas_reconciliation-gulfpub.xlsx`
 - `archive/` — 1 superseded/applied file(s)
 
 ## iraq-gas
 
-- `staging/annual` — rows=16 fills=45 updates=0 status-pending=6 refs(REFS_ADDED=46, REF_UNSUPPORTED=4, REVERIFIED=71, UNRESOLVED=10) routes=0 new(monitor=5, new_row=5) decided —
+- `staging/annual` — rows=16 fills=45 updates=0 status-pending=6 refs(REFS_ADDED=46, REF_UNSUPPORTED=4, REVERIFIED=71, UNRESOLVED=10) routes=0 new(monitor=5, new_row=5) decided 0a/0h/0r/0s of 173
 - `staging/asb-length-units` [sweep] — rows=19 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/cancelled-review` [sweep] — rows=4 fills=0 updates=0 status-pending=2 refs(REFS_ADDED=16, REVERIFIED=6, UNRESOLVED=8) routes=0 new(none) decided —
 - `staging/qc` [assembled packet: handoff] — rows=52 fills=3 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
@@ -148,13 +148,13 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## kazakhstan-gas
 
-- `staging/annual` — rows=11 fills=5 updates=0 status-pending=3 refs(DEAD_LINK=1, REFS_ADDED=19, REF_BLOCKED=1, REF_UNSUPPORTED=34, REVERIFIED=65, UNRESOLVED=11) routes=0 new(none) decided —
+- `staging/annual` — rows=11 fills=5 updates=0 status-pending=3 refs(DEAD_LINK=1, REFS_ADDED=19, REF_BLOCKED=1, REF_UNSUPPORTED=34, REVERIFIED=65, UNRESOLVED=11) routes=0 new(none) decided 0a/0h/0r/0s of 92
 - `staging/cancelled-review` — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=12, UNRESOLVED=6) routes=0 new(none) decided —
 - `staging/qc` [assembled packet: handoff] — rows=50 fills=38 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260811` — recon inputs
 - `staging/redundancy` [redundancy] — rows=28 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=39 fills=4 updates=0 status-pending=0 refs(DEAD_LINK=6, REFS_ADDED=177, REF_UNSUPPORTED=33, REVERIFIED=62, UNRESOLVED=148) routes=0 new(none) decided —
+- `staging/ref-sweep-operating` — rows=39 fills=4 updates=0 status-pending=0 refs(DEAD_LINK=6, REFS_ADDED=177, REF_UNSUPPORTED=33, REVERIFIED=62, UNRESOLVED=148) routes=0 new(none) decided 0a/0h/0r/0s of 243
 - `deliverables/pipelines_batch_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260814_0120_ET_kazakhstan-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260930_1455_ET_kazakhstan-gas_handoff-actions.xlsx`
@@ -169,7 +169,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260728` — recon inputs
 - `staging/redundancy` [redundancy] — rows=16 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=30 fills=39 updates=0 status-pending=0 refs(REFS_ADDED=190, REVERIFIED=30, UNRESOLVED=19) routes=0 new(none) decided —
+- `staging/ref-sweep-operating` — rows=30 fills=39 updates=0 status-pending=0 refs(REFS_ADDED=190, REVERIFIED=30, UNRESOLVED=19) routes=0 new(none) decided 0a/0h/0r/0s of 259
 - `staging/route-creation` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided —
 - `staging/route-creation-p1855-p6457` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260728_1149_ET_libya-gas_reconciliation-osm.xlsx`
@@ -180,7 +180,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## malaysia-gas
 
-- `staging/deep-sweep-20260812` — rows=5 fills=2 updates=0 status-pending=0 refs(DEAD_LINK=1, REFS_ADDED=9, REF_UNSUPPORTED=2, REVERIFIED=7, UNRESOLVED=19) routes=0 new(none) decided —
+- `staging/deep-sweep-20260812` — rows=5 fills=2 updates=0 status-pending=0 refs(DEAD_LINK=1, REFS_ADDED=9, REF_UNSUPPORTED=2, REVERIFIED=7, UNRESOLVED=19) routes=0 new(none) decided 0a/0h/0r/0s of 18
 - `staging/qc` [assembled packet: handoff] — rows=5 fills=3 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-malaysian-gas-map-20260812` — recon inputs
@@ -206,12 +206,12 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## pakistan-gas
 
-- `staging/annual` — rows=6 fills=4 updates=0 status-pending=4 refs(REFS_ADDED=28, REF_BLOCKED=4, REF_UNSUPPORTED=5, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none) decided —
+- `staging/annual` — rows=6 fills=4 updates=0 status-pending=4 refs(REFS_ADDED=28, REF_BLOCKED=4, REF_UNSUPPORTED=5, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none) decided 0a/0h/0r/0s of 49
 - `staging/cancelled-review` — rows=1 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=8, UNRESOLVED=2) routes=0 new(none) decided —
 - `staging/qc` [assembled packet: handoff] — rows=70 fills=19 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260807` — recon inputs
-- `staging/ref-sweep-operating` — rows=63 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=108, UNRESOLVED=351) routes=0 new(none) decided —
+- `staging/ref-sweep-operating` — rows=63 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=108, UNRESOLVED=351) routes=0 new(none) decided 0a/0h/0r/0s of 110
 - `staging/register-crosswalk` [register-crosswalk] — rows=51 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=98) routes=0 new(none) decided —
 - `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-actions.xlsx`
@@ -222,15 +222,15 @@ applied). See docs/workflows.md "Batch artifacts".
 ## russia-gas
 
 - `staging/append-new-rows-20261020` — no store — invisible to discovery
-- `staging/deepsweep-r1-fareast` — rows=32 fills=84 updates=0 status-pending=8 refs(REFS_ADDED=258, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=37) routes=0 new(none) decided 100a/0h/1r/1s of 380
-- `staging/deepsweep-r2-nw-operating` — rows=28 fills=75 updates=0 status-pending=1 refs(REFS_ADDED=224, REF_BLOCKED=11, REF_UNSUPPORTED=16, REVERIFIED=4, UNRESOLVED=28) routes=0 new(none) decided 133a/1h/3r/2s of 307
-- `staging/deepsweep-r3-nw-indev` — rows=27 fills=63 updates=0 status-pending=7 refs(REFS_ADDED=174, REF_BLOCKED=4, REF_UNSUPPORTED=1, REVERIFIED=2, UNRESOLVED=60) routes=0 new(none) decided 78a/0h/0r/0s of 247
-- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 64a/0h/2r/0s of 168
-- `staging/deepsweep-r4b-urals-south` — rows=23 fills=7 updates=0 status-pending=1 refs(REFS_ADDED=112, REF_UNSUPPORTED=6, UNRESOLVED=38) routes=0 new(none) decided 55a/0h/0r/0s of 122
+- `staging/deepsweep-r1-fareast` — rows=32 fills=84 updates=0 status-pending=8 refs(REFS_ADDED=258, REF_BLOCKED=8, REF_UNSUPPORTED=10, REVERIFIED=22, UNRESOLVED=37) routes=0 new(none) decided 91a/0h/0r/1s of 380
+- `staging/deepsweep-r2-nw-operating` — rows=28 fills=75 updates=0 status-pending=1 refs(REFS_ADDED=224, REF_BLOCKED=11, REF_UNSUPPORTED=16, REVERIFIED=4, UNRESOLVED=28) routes=0 new(none) decided 132a/1h/1r/1s of 307
+- `staging/deepsweep-r3-nw-indev` — rows=27 fills=63 updates=0 status-pending=7 refs(REFS_ADDED=174, REF_BLOCKED=4, REF_UNSUPPORTED=1, REVERIFIED=2, UNRESOLVED=60) routes=0 new(none) decided 72a/0h/0r/0s of 247
+- `staging/deepsweep-r4a-urals-yanao` — rows=30 fills=13 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=152, REF_UNSUPPORTED=5, REVERIFIED=2, UNRESOLVED=22) routes=0 new(none) decided 64a/0h/0r/0s of 168
+- `staging/deepsweep-r4b-urals-south` — rows=23 fills=7 updates=0 status-pending=1 refs(REFS_ADDED=112, REF_UNSUPPORTED=6, UNRESOLVED=38) routes=0 new(none) decided 54a/0h/0r/0s of 122
 - `staging/deepsweep-r5-volga` — rows=31 fills=21 updates=0 status-pending=0 refs(REFS_ADDED=215, REF_UNSUPPORTED=1, UNRESOLVED=59) routes=0 new(none) decided 137a/0h/0r/0s of 236
-- `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 37a/0h/0r/0s of 94
-- `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 170a/0h/2r/0s of 329
-- `staging/deepsweep-wiki-recovery-20261017` — rows=285 fills=67 updates=0 status-pending=5 refs(REFS_ADDED=687, REF_BLOCKED=85, UNRESOLVED=175) routes=0 new(none) decided 56a/0h/2r/0s of 760
+- `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 36a/0h/0r/0s of 94
+- `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 168a/0h/0r/0s of 329
+- `staging/deepsweep-wiki-recovery-20261017` — rows=285 fills=67 updates=0 status-pending=5 refs(REFS_ADDED=687, REF_BLOCKED=85, UNRESOLVED=175) routes=0 new(none) decided 53a/0h/2r/0s of 760
 - `staging/discovery-d1-d4-merged-20260930` [update] — rows=5 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(monitor=8) decided 0a/0h/0r/0s of 21
 - `staging/discovery-d1-fareast-20260930` — no store — invisible to discovery
 - `staging/discovery-d2-siberian-20260930` — no store — invisible to discovery
@@ -265,8 +265,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/annual` — rows=22 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=78, REF_UNSUPPORTED=2, REVERIFIED=99, UNRESOLVED=1) routes=0 new(new_row=3) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/ref-sweep` — rows=65 fills=7 updates=0 status-pending=0 refs(REFS_ADDED=129, REF_BLOCKED=29, REF_UNSUPPORTED=11, REVERIFIED=179, UNRESOLVED=155) routes=0 new(none) decided —
-- `staging/ref-sweep-critical` — rows=65 fills=104 updates=0 status-pending=0 refs(REFS_ADDED=129, REF_BLOCKED=29, REF_UNSUPPORTED=11, REVERIFIED=179, UNRESOLVED=153) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=40 fills=66 updates=0 status-pending=0 refs(REFS_ADDED=198, REVERIFIED=53, UNRESOLVED=45) routes=40 new(none) decided —
+- `staging/ref-sweep-critical` — rows=65 fills=104 updates=0 status-pending=0 refs(REFS_ADDED=129, REF_BLOCKED=29, REF_UNSUPPORTED=11, REVERIFIED=179, UNRESOLVED=153) routes=0 new(none) decided 0a/0h/0r/0s of 452
+- `staging/ref-sweep-operating` — rows=40 fills=66 updates=0 status-pending=0 refs(REFS_ADDED=198, REVERIFIED=53, UNRESOLVED=45) routes=40 new(none) decided 0a/0h/0r/0s of 317
 - `deliverables/pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`
 - `deliverables/pipelines_batch_20260812_1359_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260904_1355_ET_saudi-arabia-gas_annual-indev.xlsx`
@@ -278,7 +278,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/discovery` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=4) decided —
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/ref-sweep` — rows=3 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=20, REF_UNSUPPORTED=9, REVERIFIED=6) routes=0 new(none) decided —
-- `staging/ref-sweep-10row` — rows=10 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=67, REF_BLOCKED=10, REF_UNSUPPORTED=15, REVERIFIED=10, UNRESOLVED=6) routes=0 new(none) decided —
+- `staging/ref-sweep-10row` — rows=10 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=67, REF_BLOCKED=10, REF_UNSUPPORTED=15, REVERIFIED=10, UNRESOLVED=6) routes=0 new(none) decided 0a/0h/0r/0s of 102
 - `deliverables/pipelines_batch_20260717_1804_ET_saudi-arabia_discovery.xlsx`
 
 ## ukraine-gas
@@ -301,16 +301,17 @@ applied). See docs/workflows.md "Batch artifacts".
 ## united-states-gas
 
 - `staging/append-new-rows-20261018` — no store — invisible to discovery
+- `staging/append-new-rows-20261104` — no store — invisible to discovery
 - `staging/deepsweep-aged-proposed-20261016` — no store — invisible to discovery
 - `staging/deepsweep-appalachian-operating` — rows=46 fills=146 updates=0 status-pending=0 refs(REFS_ADDED=336, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided 2a/0h/4r/0s of 485
-- `staging/deepsweep-gulf-operating` — rows=50 fills=166 updates=0 status-pending=0 refs(REFS_ADDED=350, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=84) routes=0 new(none) decided 6a/0h/3r/0s of 523
+- `staging/deepsweep-gulf-operating` — rows=50 fills=166 updates=0 status-pending=0 refs(REFS_ADDED=350, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=84) routes=0 new(none) decided 2a/0h/3r/0s of 523
 - `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided 6a/0h/0r/0s of 489
-- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=145 updates=0 status-pending=25 refs(REFS_ADDED=338, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 10a/0h/0r/1s of 540
-- `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 14a/0h/0r/0s of 587
-- `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=120 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=318, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=48) routes=0 new(none) decided 5a/0h/0r/0s of 465
+- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=145 updates=0 status-pending=25 refs(REFS_ADDED=338, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 5a/0h/0r/0s of 540
+- `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 13a/0h/0r/0s of 587
+- `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=120 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=318, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=48) routes=0 new(none) decided 2a/0h/0r/0s of 465
 - `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided 1a/0h/0r/0s of 503
-- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=20 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 2a/0h/0r/0s of 424
-- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=94 updates=0 status-pending=4 refs(REFS_ADDED=278, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=70) routes=0 new(none) decided 1a/0h/2r/0s of 415
+- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=20 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 1a/0h/0r/0s of 424
+- `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=94 updates=0 status-pending=4 refs(REFS_ADDED=278, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=70) routes=0 new(none) decided 0a/0h/2r/0s of 415
 - `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided 6a/0h/0r/0s of 514
 - `staging/deepsweep-tx-operating` — rows=45 fills=24 updates=0 status-pending=0 refs(REFS_ADDED=337, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 1a/1h/1r/0s of 362
 - `staging/deepsweep-west-operating` — rows=46 fills=168 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=95) routes=0 new(none) decided 0a/0h/0r/0s of 469
@@ -351,17 +352,19 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/discovery-gulf-20261002` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(monitor=18) decided 0a/0h/0r/0s of 43
 - `staging/discovery-midcon-north-20261002` [update] — rows=4 fills=4 updates=0 status-pending=0 refs(none) routes=0 new(monitor=15) decided 0a/0h/0r/0s of 41
 - `staging/discovery-seeds-20261002` — no store — invisible to discovery
+- `staging/discovery-southeast-connector-20261104` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/discovery-tx-permian-20261002` [update] — rows=3 fills=3 updates=0 status-pending=0 refs(none) routes=0 new(monitor=17) decided 0a/0h/0r/0s of 44
 - `staging/discovery-west-ne-ak-20261002` [update] — rows=10 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(monitor=18) decided 1a/0h/0r/0s of 71
 - `staging/eia-crosswalk-20260910` — no store — invisible to discovery
 - `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 0
 - `staging/recovery-20260909` — no store — invisible to discovery
-- `staging/route-creation-newrows-20261020` [route-creation] — rows=31 fills=0 updates=0 status-pending=0 refs(none) routes=31 new(none) decided 12a/0h/0r/0s of 31
-- `staging/route-creation-ogw-20261015` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
-- `staging/route-creation-p8318-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
+- `staging/route-creation-newrows-20261020` [route-creation] — rows=31 fills=0 updates=0 status-pending=0 refs(none) routes=31 new(none) decided 0a/0h/0r/0s of 31
+- `staging/route-creation-ogw-20261015` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-creation-p7833-20261103` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-creation-p8318-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-creation-p8327-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
 - `staging/route-creation-palo-duro-20261017` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 2a/0h/0r/0s of 2
-- `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
+- `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/state-audit-20260904` — no store — invisible to discovery
 - `staging/state-audit-20260910` — no store — invisible to discovery
 - `staging/update-datacenter-tags-20261016` [update] — rows=10 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 10
@@ -372,6 +375,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
 - `staging/update-p7814-parent-20261008` [update] — rows=1 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
+- `staging/update-p7833-south-mississippi-20261102` [update] — rows=1 fills=8 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 9
+- `staging/update-p7833-south-mississippi-notice-20261103` [update] — rows=1 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=5) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-p8327-cancelled-20261020` [update] — rows=1 fills=3 updates=0 status-pending=1 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-palo-duro-20261017` [update] — rows=2 fills=14 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 15
 - `staging/update-rex-owners-20261008` [update] — rows=5 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
@@ -439,7 +444,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260826` — recon inputs
 - `staging/recon-osm-20260826` — recon inputs
 - `staging/redundancy` [redundancy] — rows=17 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
-- `staging/ref-sweep-operating` — rows=18 fills=4 updates=0 status-pending=1 refs(REFS_ADDED=84, REF_UNSUPPORTED=2, REVERIFIED=38, UNRESOLVED=34) routes=0 new(none) decided —
+- `staging/ref-sweep-operating` — rows=18 fills=4 updates=0 status-pending=1 refs(REFS_ADDED=84, REF_UNSUPPORTED=2, REVERIFIED=38, UNRESOLVED=34) routes=0 new(none) decided 0a/0h/0r/0s of 129
 - `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260930_1455_ET_uzbekistan-gas_handoff-actions.xlsx`
