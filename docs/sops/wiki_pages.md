@@ -1,0 +1,98 @@
+# SOP: gem.wiki pages for new pipelines
+
+How to create wiki pages for newly added pipelines, and how to add a new segment to a pipeline that already has a page. Written from the US gas pilot (Aquila Pipeline new page, Oasis Gas Pipeline edit, 2026-11-04). The wiki template is the Google Doc "wiki pipeline template" (https://docs.google.com/document/d/1BIrEsqOkQEtsi9oFG0xELJn3EBk3ENVymSOMsvYNKmo/edit?tab=t.0). If the template and this SOP disagree, the template wins and this file gets fixed.
+
+## Standing rules
+
+1. **Pilot first.** Post one new page and edit one existing page, and get Baird's approval before any bulk publish.
+2. **Never cite GEM.** No gem.wiki or globalenergymonitor.org URL in a reference. Banned hosts (abarrelfull, theodora.com, yingdodo) are also excluded. The generator drops them.
+3. **Edits to existing pages need a live-text check.** Before posting, re-read the live page and confirm it is unchanged since the draft was made. Never overwrite someone else's edit.
+4. **The sheet's Wiki column is not written by this workflow.** Writing new URLs back needs Baird's explicit OK and `gws-gem-write`, like any sheet write.
+5. **No deleting.** The wiki account has no delete or suppress-redirect rights, so a bad page cannot be undone by deletion. Check drafts before posting.
+6. Prose follows the notes style rule: short sentences, plain words, no AI-sounding phrasing, no em-dashes. American spelling.
+
+## Tools
+
+- `scripts/build_wiki_pages.py --scope <scope.json> --out <dir>` writes local `.wiki` drafts for new pages and edits. It posts nothing.
+- `../goit-ggit-data-ops/gem-wiki/gemwiki.py` is the one wiki client: `session(login=True)`, `page_text`, `edit_page(s, title, text=, summary=, bot=False)`. It throttles to 5 requests a second. Retry on 429. Use `bot=False` (the account lacks the bot right).
+- `scripts/wiki_pdf_titles.py` downloads each PDF ref and prints its title and first-page lines. Titles go in `data/wiki_pdf_titles.json`.
+- `data/wiki_backgrounds.json` holds hand-written Background prose per ProjectID, plus a `_refs` table of reusable citations.
+
+## Steps
+
+1. **Scope.** Pull a fresh snapshot (`./scripts/refresh_csvs.sh`). List the newly added ProjectIDs. Group them by PipelineName into `scope.json`: per name, `pids`, `wiki` (existing URL, `MISSING`, or `EXISTS:<title>`), `routes`, `oldrows`. Optional keys: `link_only` (PIDs the page already describes, so only the map is redrawn, no segment is added), `rebuild` plus `keep_background` (see Existing pages).
+2. **New page or segment.** A name with no wiki page gets a new page. A pipeline that is a segment of one with an existing page is added to that page (see Existing pages). Check by searching the wiki for the name and any alias before deciding.
+3. **PDF titles.** Run `scripts/wiki_pdf_titles.py` for PDF refs not yet in `data/wiki_pdf_titles.json` and add titles. Scanned PDFs with no readable text show the full URL. A ref that does not load and has no archived copy goes in `data/wiki_unreadable_refs.json` with the reason; the generator leaves it off the page and the sheet keeps it.
+4. **Background prose.** Write it by hand from `ResearcherNotes`, `DataCenterNotes` and the `[ref]` columns, with `{key}` placeholders that resolve to `_refs` citations. If none is written, the Background heading still appears; it holds only the dormancy sentence where one applies.
+5. **Generate drafts** and read them. Check the map, refs, status wording, units.
+6. **Pilot, then approval, then bulk publish**, throttled, with the live-text check on every edit.
+7. **Report** what was posted (links) and what needs a person.
+
+## New page layout
+
+```
+{{Navbar-Global Gas Infrastructure Tracker}}
+'''Name''' is a {status} natural gas pipeline in the United States.<ref>
+==Location==
+The pipeline is proposed to run from X to Y.<ref>
+{{#display_map: ... }}        (omit if there is no route)
+==Project Details==
+==Background==                 (always present, even if empty)
+==Articles and Resources==
+===References===
+<references />
+===Additional Data===          (the Global Gas Infrastructure Tracker paragraph)
+[[Category:Global Gas Infrastructure Tracker]]
+[[Category:Gas and Hydrogen Pipelines]]
+```
+
+- **Lead.** "'''Name''' is a {status} natural gas pipeline in the United States" with a reference.
+- **Background tense (Baird 2026-11-04).** Write Background in the past tense, or at least acknowledge the timeline. Something proposed, filed or approved is stated as having happened, with its date ("Dominion Energy North Carolina proposed the T-15 Reliability Project"). What the project would have done stays conditional ("would run", "would be regulated"). Never "plans to", "proposes" or "is now" without a date, because the source may be months old.
+- **Construction wording (Baird 2026-11-04).** A construction-status pipeline is "a natural gas pipeline under construction", never "a construction natural gas pipeline". The generator's `new_page` does this.
+- **Null route stubs.** A routes-repo geojson with `geometry: null` (142 bytes) means no route. Leave the map off.
+- **Browser check limit.** Cloudflare challenges headless Chrome, so `wiki_map_check.py` can fail. Fall back to `action=parse` (`prop=text|headitems`): the map id should be `map_google3_1` and the head items should include `maps.googleapis.com`.
+- **Location verb by status.** Proposed: "is proposed to run from X to Y". Construction: "is being built from X to Y" (Baird 2026-11-05: a pipeline under construction is not just proposed). Cancelled or shelved: "was proposed to run". Operating: "runs".
+- **Project Details order.** Operator, Owner, Capacity, Length, Diameter, Status, Start year, Cost. Leave Parent out. Keep original units. Costs are full units shown as "US$...".
+- **Single segment vs several.** A page with one segment has no subheadings in Project Details or Background, and no "Main Line" label. "Main Line" and `===<SegmentName>===` headings appear only on pages with several segments.
+- **Map.** `{{#display_map:|lines=lat, lon:lat, lon|center=|width=400|height=300|type=map|zoom=}}`. Leave the map off if a pipeline has no route. Thin long routes to about 60 points. `type=map` and `type=normal` both render the same (ROADMAP), so the type is not what matters. **Purge the page after every save** (see below).
+- **A blank SegmentName on a page with several segments is "Main Line".**
+- **Dormancy sentence.** The template sentence is used only for shelved-inferred or cancelled-inferred rows that have a year.
+
+## References
+
+- Cite web format: `{{Cite web|url=|title=|website=|access-date=2026-11-04}}` (use the real access date).
+- **One citation per URL.** If a URL is used twice on a page, define it once as `<ref name="rXXXXXX">...</ref>` and reuse it as `<ref name="rXXXXXX" />`. The generator's `dedupe_refs` does this.
+- **Titles are never the bare hostname (Baird 2026-11-05).** A ref with a known document title shows it. Every other ref, web pages included, shows its full URL as the title, so the reference list says which page it is.
+- **PDF titles.** When a ref is a PDF, put the document's title in the reference, for example "Western Interstates 2026 Spring SAB Meeting, 23 April 2026". Federal Register PDFs are titled by volume, issue and date. Do not title a PDF from memory; read its first page.
+- Every reference loads, names the pipeline and states the value (the main sweep rules apply).
+
+## Existing pages (adding a segment)
+
+1. Re-read the live page and save the original beside the draft (`.orig`).
+2. Add each new segment under Project Details with a `===<SegmentName>===` heading. Add its Background text under Background in the same way. Add a References section if the page has none.
+3. **"Expansion projects" section.** If the page has one, move the projects under it into Project Details (after the new segments) and remove the empty heading.
+4. Share one `seen` set across the page so refs already on the page are reused, not repeated.
+5. **Redraw the route map (Baird 2026-11-04).** The routes repo is usually newer than the map on the page. Redraw the page's first `{{#display_map:...}}` from the routes repo for every PID on the page: the new PIDs plus every sheet row whose Wiki URL is this page. Lines are thinned to 100 points each. If the page has no map, add one after the Location text. If none of those PIDs has a route, leave the page alone. Maps under a sub-project heading stay as they are. `update_map` in `build_wiki_pages.py` does this.
+6. Do not otherwise rewrite existing content.
+   **Rebuild instead of appending (2026-11-05).** A page made by this workflow with one segment, edited only by the bot account since (check `page_revisions`), is regenerated as a multi-segment page when new segments arrive: `"rebuild": true` in scope.json, with the original PID under `keep_background` so its live Background text is kept word for word. The `.orig` is saved first as usual.
+7. Post with a short edit summary. Confirm from the revision history that the base text was unchanged.
+
+## Purge and check the map after every save
+
+A page saved through the API can end up with its map cached WITHOUT the Google Maps script tag (the saved render showed `map_google3_2`, not `_1`). The browser then shows "Your browser is not compatible with Google Maps v3" even though the markup is correct and identical to working pages. Fix: purge the page right after saving: `gemwiki.post(s, action="purge", titles=title, forcelinkupdate="1")`. Then confirm in a real browser with `python scripts/wiki_map_check.py <url> ...` (headless Chrome via Playwright): the map text should read "Map / Satellite / ... Terms", not the "not compatible" message. Do this on every page that has a map, in the bulk publish too. Any script that edits existing pages (wording, status, lead fixes) breaks maps the same way if it skips the purge; on 2026-11-05 about 100 pages lost their maps this way. To find and fix pages saved without a purge, run `python scripts/wiki_map_repair.py --since <YYYY-MM-DD> --purge`. It scans every page the account saved since that date, purges each broken one and re-checks it.
+
+## Checks before publishing
+
+- **No repetition anywhere (Baird 2026-11-04).** Re-read the live page after posting and check for duplicate headings within a section, duplicate paragraphs and repeated sentences (Oasis got its whole Clint Export section twice). `insert_segments` skips a segment whose heading is already on the page, so a re-run is safe, but still read the result.
+- Every page with a map was purged after saving and passes `scripts/wiki_map_check.py`.
+- Background heading present.
+- No duplicate citations; PDF refs titled.
+- No GEM or banned URLs.
+- Single-segment pages have no "Main Line".
+- Existing pages: live text unchanged since the draft; Expansion projects folded in.
+- Prose reads plainly (see deslop).
+
+## Known limits
+
+- US gas Backgrounds were drafted 2026-11-05 by cheaper-model agents (14 batches) and posted with `scripts/patch_wiki_backgrounds.py` (fills only empty Background bodies, re-reads live text first). Drafts: `batches/united-states-gas/wiki-drafts-20261104b/background_drafts_20261105.json`. Check before posting: every number and date in a sentence appears in the page it cites, and every ref loads and names the pipeline.
+- Five scanned PDFs have no readable title and show their full URL.
