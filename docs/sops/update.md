@@ -60,6 +60,9 @@ operational sequence.
    layout per `docs/reference/workbook_conventions.md` "Update workbook") →
    `batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_update.xlsx`; `scripts/recalc.py`; present.
 
+## Merging a duplicate row (Baird 2026-11-05)
+When Baird rules that a row duplicates another, merge it, never set it to `N/A`. Copy the dropped row's refs and any values the kept row lacks onto the kept row (refs additive, with `Researcher` and `LastUpdated` stamped), then copy the dropped row as values to the end of "Removed oil/NGL/gas pipelines", with the reason in column A ("CB: duplicate of P…, …"). Do the same with its operators/owners row on "Removed operators/owners (from removed pipelines)". Then delete both rows, re-checking the ProjectID in each row just before deleting it. Back up every cell to `notes/` and commit. Gotcha: the Sheets `values.append` call puts the row near the top of these tabs (row 2 and row 1), because column A is mostly blank, so write to the explicit next row instead. Worked example: `notes/sheet-write-2026-11-05-merge-P7853-into-P7851.csv`. If the dropped row has a wiki segment or its own route file, fix the wiki page and flag the route for Baird.
+
 ## Pre-delivery checks
 URL spot-check (fetch 3–5), expansion-length, ownership consistency, status logic
 (2y→shelved / 4y→cancelled), date consistency, every changed row has a
