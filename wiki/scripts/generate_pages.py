@@ -353,7 +353,7 @@ def map_block(pg, rows):
             text += f" {unm} of the {len(rows)} segments have no mapped route."
     body = ";".join(lines)
     mid = f"{(max(lats) + min(lats)) / 2:.5f}, {(max(lons) + min(lons)) / 2:.5f}"
-    return (f"{text}\n\n{{{{#display_map:\n|lines={body}|center={mid}|width=600|height=400|type=map|zoom={zoom}}}}}",
+    return (f"{text}\n\n{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}",
             len(allp))
 
 
@@ -431,13 +431,16 @@ def route_shape_svg(pid):
 
 # ---------- per-segment cells (shared by the separate tables and the tabbed segment table) ----------
 
+END_RULE = '<div style="border-top:1px solid #c8ccd1;margin-top:0.25em;padding-top:0.25em">'   # a thin rule between start and end
+
+
 def route_cells(pg, r):
     """start/end (with the Location ref), countries, length as the route table shows it (known, or the
     route-based estimate starred; no ref, the Pipeline details column carries it)."""
     a = place(r["StartLocation"], r["StartState/Province"]) or "–"
     z = place(r["EndLocation"], r["EndState/Province"]) or "–"
     known = f"{fmt(r['LengthKnown'])} {r['LengthKnownUnits']}" if r["LengthKnown"].strip() else ""
-    return [f"'''Start:''' {a}<br />'''End:''' {z}" + pg.cite(r["Location [ref]"]),
+    return [f"'''Start:''' {a}{END_RULE}'''End:''' {z}</div>" + pg.cite(r["Location [ref]"]),
             ", ".join(countries(r["CountriesOrAreas"])),
             known or length_est(r)]
 
@@ -508,11 +511,12 @@ def cost_cell(pg, r):
 
 
 def owner_cells(pg, r, owners):
-    """owner (names with shares) and operator from the operators/owners tab, each with its ref."""
+    """owner (names with shares) and operator from the operators/owners tab, each with its ref, and the
+    parent as the tracker tab's Parent column states it (shares kept where known; no ref column)."""
     o = owners.get(r["ProjectID"])
     if o is None:
         pg.log.append(f"{r['ProjectID']}: no operators/owners row; Owner taken from the tracker tab")
-        return [r["Owner"], ""]
+        return [r["Owner"], parent_cell(r), ""]
     names = []
     for i in range(1, 12):
         n = (o.get(f"Owner{i}") or "").strip()
@@ -522,7 +526,18 @@ def owner_cells(pg, r, owners):
     own = "; ".join(names) + (pg.cite(o.get("Owner [ref]")) if names else "")
     opr = (o.get("Operator") or "").strip()
     opr += pg.cite(o.get("Operator [ref]")) if opr else ""
-    return [own, opr]
+    return [own, parent_cell(r), opr]
+
+
+def parent_cell(r):
+    """'Williams Companies Inc [unknown %]; X [59.10%]' -> 'Williams Companies Inc; X (59.1%)'."""
+    out = []
+    for part in (r.get("Parent") or "").split(";"):
+        m = re.match(r"\s*(.*?)\s*(?:\[([^\]]*)\])?\s*$", part)
+        n, p = m.group(1), pct((m.group(2) or "").replace("unknown", "").replace(" ", ""))
+        if n and n.lower() != "unknown":
+            out.append(f"{n} ({p})" if p else n)
+    return "; ".join(out)
 
 
 def shape_cells(pg, rows):
@@ -607,7 +622,7 @@ def segment_table(pg, rows, owners):
             ("Length", ["route", "details"], False), ("Diameter", ["details"], False), ("Pressure", ["details"], False),
             ("Proposal year", ["timeline"], False), ("FID", ["timeline"], False), ("Construction year", ["timeline"], False),
             ("Start year", ["timeline"], False), ("Inactive year", ["timeline"], False),
-            ("Cost", ["cost"], False), ("Owner", ["ownership"], False), ("Operator", ["ownership"], False)]
+            ("Cost", ["cost"], False), ("Owner", ["ownership"], False), ("Parent", ["ownership"], False), ("Operator", ["ownership"], False)]
     body = []
     for r in rows:
         rt = route_cells(pg, r)
@@ -702,7 +717,7 @@ def details(pg, rows, tab):
 
 def ownership(pg, rows, owners, tab):
     body = [[label(r, rows)] + owner_cells(pg, r, owners) for r in rows]
-    return "==Ownership==\n" + table(tab(), "Ownership", ["Segment", "Owner", "Operator"], body)
+    return "==Ownership==\n" + table(tab(), "Ownership", ["Segment", "Owner", "Parent", "Operator"], body)
 
 
 # ---------- preserved sections ----------
@@ -1062,6 +1077,11 @@ def main():
         ap.error("no pages given")
     df = C.load(a.tracker)
     df["page"] = df["Wiki"].map(C.page_name)
+    # a Parent the ownership team has not linked yet reads "unknown [unknown %]"; borrow the parent the
+    # backend gives for the identical Owner cell elsewhere, when there is exactly one
+    unk = df["Parent"].str.strip().str.match(r"^(unknown\b|$)")
+    known = df[~unk].groupby("Owner")["Parent"].agg(lambda x: x.iloc[0] if x.nunique() == 1 else "")
+    df.loc[unk, "Parent"] = df.loc[unk, "Owner"].map(known).fillna("")
     own = C.load("owners").drop_duplicates("ProjectID").set_index("ProjectID")
     owners = {pid: row.to_dict() for pid, row in own.iterrows()}
     out = a.out or os.path.join(C.OUT, "samples", time.strftime("%Y%m%d_%H%M"))

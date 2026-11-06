@@ -45,13 +45,14 @@ The first two scripts read the newest `data/*_snapshot_*.csv` files and write to
 ## Decided
 
 - **Ten or more segments: one tabbed table (Baird 2026-11-06).** `scripts/generate_pages.py` replaces Tables 1 to 5 with one sortable table under Project Details and a Route / Details / Timeline / Cost / Ownership / All columns tab strip, CSS only, styled by `Template:Segment table/styles.css` (pushed with `--push-styles`). Smaller pages keep the five tables. The row label is "Segment" on every table. Live on Transcontinental Gas Pipeline; mockup at https://claude.ai/artifact/Cs1KMu8zBctA2uRdap3crR.
+- **Parent column next to Owner (Baird 2026-11-06).** Filled from the gas tab's Parent cell as the backend has it; parents stay the ownership team's research. Maps are `width=100%` so pages fit a phone screen.
 
 ## Open decisions
 
 Tabled on 2026-11-06; Baird wants to work through them later. Items 1 to 4 are listed in the template too, where each one applies. Items 5 to 11 come from [`design_tagging_and_maps.md`](design_tagging_and_maps.md), which argues each one; the backend side is planned in [`docs/plans/2026-11-06_wiki-tagging-backend.md`](../docs/plans/2026-11-06_wiki-tagging-backend.md) (decisions D1 to D6 there gate phase 1).
 
 1. Page names: keep each page at its current `Wiki` URL, or move pages so they match `PipelineName`? The readiness report counts both sides. The design note recommends `PipelineName` is the page name and `Wiki` is derived from it.
-2. Parent companies: the other trackers show a Parent column. Our rule is to leave parents to the ownership team, and the ownership tree insert covers them. The draft leaves Parent out.
+2. Parent companies: decided 2026-11-06, see Decided.
 3. Oil's `Background` column: use it to seed Background on new pages only, or ignore it?
 4. Status categories: live pages mix "Existing pipelines in X", "Proposed pipelines in X" and others. Pick one scheme.
 5. Page type rule: row details only on the primary page, with network pages generated as a roster plus one map (recommended), or keep per-segment details on network pages as the China pages have now.

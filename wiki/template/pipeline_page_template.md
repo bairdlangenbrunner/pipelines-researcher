@@ -75,6 +75,7 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 **Logic:**
 - **Geometry:** It comes from the routes repo (`GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes`, one `<ProjectID>.geojson` per segment). It is not in the tracker sheet, so the data team needs a way in. GEMwiki already has `make_map_w_wkt_geometry()`, so we would send WKT per ProjectID as an extra column or file (open decision 5). Thin each line to about 60 to 100 points so the page stays light.
 - **Caption:** taken from `«RouteAccuracy»`. `very high (within meters)` and `high` give "the exact route". `medium` and `low` give "the approximate route". `very low (straight line/schematic)` gives "a sketch of the route".
+- **Size (Baird 2026-11-06):** `width=100%|height=400`, never a fixed pixel width. A 600 px map made the whole page wider than a phone screen, so the page panned sideways on mobile.
 - **No route:** If `«RouteType»` is not `Mapped route (at any accuracy)`, show no map and write "The route of this pipeline has not been mapped."
 
 ### ==Project Details== (generated)
@@ -120,20 +121,20 @@ Caption under the table: "FID = final investment decision, used by some develope
 
 ### Pages with ten or more segments (Baird 2026-11-06)
 
-A page with ten or more segments gets ONE sortable table under Project Details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year, Inactive year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 10` in the script.
+A page with ten or more segments gets ONE sortable table under Project Details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end with a thin rule between start and end, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year, Inactive year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 10` in the script.
 
 ### ==Ownership== (generated)
 
 **Table 5: Ownership**
 
-| Segment | Owner | Operator |
-|---|---|---|
-| segment label | «Owner1» («Owner1%»); «Owner2» («Owner2%»); ... [ref: «Owner [ref]»] | «Operator» [ref: «Operator [ref]»] |
+| Segment | Owner | Parent | Operator |
+|---|---|---|---|
+| segment label | «Owner1» («Owner1%»); «Owner2» («Owner2%»); ... [ref: «Owner [ref]»] | «Parent», shares kept where known | «Operator» [ref: «Operator [ref]»] |
 
 **Logic:**
 - **Source tab:** Owner and operator come from the operators/owners tab, joined on `ProjectID`. Percentages are stored as fractions (0.75) and shown as "75%". A blank percentage shows the name only.
 - **Fallback:** If the operators/owners tab has no row for the ProjectID, use the tracker tab's `«Owner»` cell as written.
-- **Parent:** There is no Parent column. Parent companies belong to the ownership team, and the data team's ownership tree insert covers them (open decision 2). Put the "ownership tree" insert point right after this table, the way the other GEOT-covered trackers do.
+- **Parent (Baird 2026-11-06):** A Parent column sits next to Owner. It shows the gas tab's `«Parent»` cell as the backend has it, with no ref of its own: `Williams Companies Inc [unknown %]` shows as "Williams Companies Inc", and a known share shows as "(59.1%)". A cell reading `unknown [unknown %]` takes the parent the backend gives for the same `«Owner»` cell on other rows, when there is exactly one; otherwise it shows a dash. The parents are still the ownership team's; the page only displays them. Put the "ownership tree" insert point right after this table, the way the other GEOT-covered trackers do.
 
 ### Preserved sections (human-written, never overwritten)
 
@@ -179,7 +180,7 @@ To access additional data, including an interactive map of {oil and NGL / gas} p
 ## Open decisions for Baird (before this goes to the data team)
 
 1. **Page names.** Keep each page at its current `«Wiki»` URL (the draft does this), or move pages to match `«PipelineName»`? The readiness report lists the mismatches. Most are dash or spacing differences (`-` vs `–`), and some are real renames. Real renames go to the data team as the step 3 list.
-2. **Parent companies.** Leave the column out and rely on the ownership tree insert (the draft does this), or add a Parent column like LNG?
+2. **Parent companies.** Decided 2026-11-06: a Parent column next to Owner, filled from the backend's Parent cell (see Table 5).
 3. **Oil `Background` column.** Seed Background on new pages from it, or leave it out?
 4. **Status categories.** Which scheme should the pages use?
 5. **Route geometry.** Send WKT per ProjectID as an extra column in the tracker file, or as a separate file the generator joins?
