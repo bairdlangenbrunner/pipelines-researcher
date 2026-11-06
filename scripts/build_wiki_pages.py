@@ -138,7 +138,7 @@ def seg_title(r, single=False):
     return 'Main Line' if single else (r['SegmentName'] or 'Main Line')
 
 def cite(url, title, site, date=None):
-    if title == site or not title or title == url or title.startswith('http'): title = _known_titles().get(url) or site or url.replace('|', '%7C')
+    if title == site or not title: title = _known_titles().get(url) or url.replace('|', '%7C')
     return '<ref>{{Cite web|url=%s|title=%s|website=%s|access-date=%s}}</ref>' % (url, title, site, ACCESS)
 
 BG_OVERRIDE = {}   # ProjectID -> live Background text kept when a page is rebuilt
