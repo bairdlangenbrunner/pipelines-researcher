@@ -440,7 +440,9 @@ def route_cells(pg, r):
     a = place(r["StartLocation"], r["StartState/Province"]) or "–"
     z = place(r["EndLocation"], r["EndState/Province"]) or "–"
     known = f"{fmt(r['LengthKnown'])} {r['LengthKnownUnits']}" if r["LengthKnown"].strip() else ""
-    return [f"'''Start:''' {a}{END_RULE}'''End:''' {z}</div>" + pg.cite(r["Location [ref]"]),
+    rf = pg.cite(r["Location [ref]"])
+    rf = f'<span style="float:right;margin-left:0.4em">{rf}</span>' if rf else ""   # the refs sit at the right end of the End line
+    return [f"'''Start:''' {a}{END_RULE}{rf}'''End:''' {z}</div>",
             ", ".join(countries(r["CountriesOrAreas"])),
             known or length_est(r)]
 
@@ -530,14 +532,7 @@ def owner_cells(pg, r, owners):
 
 
 def parent_cell(r):
-    """'Williams Companies Inc [unknown %]; X [59.10%]' -> 'Williams Companies Inc; X (59.1%)'."""
-    out = []
-    for part in (r.get("Parent") or "").split(";"):
-        m = re.match(r"\s*(.*?)\s*(?:\[([^\]]*)\])?\s*$", part)
-        n, p = m.group(1), pct((m.group(2) or "").replace("unknown", "").replace(" ", ""))
-        if n and n.lower() != "unknown":
-            out.append(f"{n} ({p})" if p else n)
-    return "; ".join(out)
+    return B.parent_text(r.get("Parent"))
 
 
 def shape_cells(pg, rows):
@@ -1077,11 +1072,7 @@ def main():
         ap.error("no pages given")
     df = C.load(a.tracker)
     df["page"] = df["Wiki"].map(C.page_name)
-    # a Parent the ownership team has not linked yet reads "unknown [unknown %]"; borrow the parent the
-    # backend gives for the identical Owner cell elsewhere, when there is exactly one
-    unk = df["Parent"].str.strip().str.match(r"^(unknown\b|$)")
-    known = df[~unk].groupby("Owner")["Parent"].agg(lambda x: x.iloc[0] if x.nunique() == 1 else "")
-    df.loc[unk, "Parent"] = df.loc[unk, "Owner"].map(known).fillna("")
+    B.fill_unknown_parents(df)
     own = C.load("owners").drop_duplicates("ProjectID").set_index("ProjectID")
     owners = {pid: row.to_dict() for pid, row in own.iterrows()}
     out = a.out or os.path.join(C.OUT, "samples", time.strftime("%Y%m%d_%H%M"))

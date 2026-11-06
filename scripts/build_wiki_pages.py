@@ -85,7 +85,8 @@ def coords_of(pid):
         walk(gj.get('geometry'))
     elif 'coordinates' in gj:
         walk(gj)
-    if not lines and gj.get('geometry', gj.get('features', 0)) not in (None, []):
+    geoms = [ft.get('geometry') for ft in gj.get('features', [])] if gj.get('type') == 'FeatureCollection' else [gj.get('geometry', gj if 'coordinates' in gj else None)]
+    if not lines and any(g for g in geoms):  # a stub whose features all carry null geometry is just "no route"
         raise ValueError(f'{pid}: route file has geometry the reader did not parse: {f}')
     return lines
 
@@ -102,7 +103,7 @@ def map_block(pids, maxpts=60):
     span = max(max(p[1] for p in allp) - min(p[1] for p in allp), max(p[0] for p in allp) - min(p[0] for p in allp))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9 if span > .3 else 10
     body = ';'.join(':'.join(f'{p[1]:.5f}, {p[0]:.5f}' for p in l) for l in lines)
-    return f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=400|height=300|type=normal|zoom={zoom}}}}}\n'
+    return f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
 
 def details(r, own):
     st = r['Status']
@@ -113,6 +114,9 @@ def details(r, own):
     if o.get('Owner1'):
         owners = '; '.join(x for x in (o.get(f'Owner{i}') for i in range(1, 12)) if x)
         b.append(f"*'''Owner: '''{owners}{refs(o.get('Owner [ref]'))}")
+    par = parent_text(r.get('Parent'))
+    if par:
+        b.append(f"*'''Parent: '''{par}")
     cap = num(r['Capacity'])
     if cap is not None:
         b.append(f"*'''Capacity: '''{fmt(cap)} {r['CapacityUnits']}{refs(r['Capacity [ref]'])}")
@@ -129,6 +133,26 @@ def details(r, own):
         cr = r['ProjectLevelCost [ref]'] or r['SegmentCost [ref]']
         b.append(f"*'''Cost: '''{'US$' if cu == 'USD' else cu + ' '}{fmt(cost)}{refs(cr)}")
     return '\n'.join(b)
+
+def parent_text(cell):
+    # the gas tab's Parent cell as the backend has it, shares kept where known (Baird 2026-11-06): parents are the
+    # ownership team's research, the page only shows them. 'Williams Companies Inc [unknown %]; X [59.10%]' gives
+    # 'Williams Companies Inc; X (59.1%)'.
+    out = []
+    for part in (cell or '').split(';'):
+        m = re.match(r'\s*(.*?)\s*(?:\[([^\]]*)\])?\s*$', part)
+        n, p = m.group(1), num((m.group(2) or '').replace('unknown', '').replace('%', '').strip())
+        if n and n.lower() != 'unknown':
+            out.append(f"{n} ({fmt(p)}%)" if p is not None else n)
+    return '; '.join(out)
+
+def fill_unknown_parents(df):
+    # a Parent the ownership team has not linked yet reads 'unknown [unknown %]'; take the parent the backend gives
+    # for the identical Owner cell on other rows, when there is exactly one
+    unk = df['Parent'].str.strip().str.match(r'^(unknown\b|$)')
+    known = df[~unk].groupby('Owner')['Parent'].agg(lambda x: x.iloc[0] if x.nunique() == 1 else '')
+    df.loc[unk, 'Parent'] = df.loc[unk, 'Owner'].map(known).fillna('')
+    return df
 
 def verb(st):
     if st == 'construction': return 'is being built'
@@ -335,7 +359,7 @@ if __name__ == '__main__':
     ap.add_argument('--snap', default=SNAP); ap.add_argument('--own', default=OWN); ap.add_argument('--access', default=ACCESS)
     a = ap.parse_args(); SNAP, OWN, ACCESS = a.snap, a.own, a.access
     sys.path.insert(0, '../goit-ggit-data-ops/gem-wiki'); import gemwiki
-    d = pd.read_csv(SNAP, header=2, low_memory=False, keep_default_na=False)
+    d = fill_unknown_parents(pd.read_csv(SNAP, header=2, low_memory=False, keep_default_na=False))
     o = pd.read_csv(OWN, header=1, low_memory=False, keep_default_na=False)
     own = {r['ProjectID']: r.to_dict() for _, r in o.iterrows()}
     scope = json.load(open(a.scope)); s = gemwiki.session()
