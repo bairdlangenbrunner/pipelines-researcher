@@ -57,6 +57,10 @@ License column. Whether ODbL is acceptable for a GEM tracker is **Baird's call a
 review** — the workflow surfaces it, never decides it. Disconnected OSM ways stay
 separate `MultiLineString` parts — **gaps are never bridged**.
 
+**When OSM may be used (Baird 2026-11-05).** OSM is not trusted by default (2026-10-02, 2026-10-20 for US gas). Use an OSM line only when it is explicitly high resolution and much better than every other available source, and write the comparison against the best non-OSM source into PROVENANCE.md. First case: P4457 Lowman (OSM way 1282145901, 555 points, 0.2 km mean gap to the company-map trace).
+
+**The EIA ArcGIS natural gas pipeline layer is a last resort (Baird 2026-11-06).** It is generalized (MEP: 21 points over 487 miles). Look first for OSM (under the rule above), then a map found online: company system or segment maps, FERC eLibrary GeoPDFs or resource report figures, state GIS shapefiles, or another scrapable web map, extracted or traced. Use the EIA layer only when none of those exists, and say in PROVENANCE.md what was searched first. It can still serve as a coarse cross-check (P0213 and P5926, 2026-11-06).
+
 **Facility gazetteer (GOGET/GOGPT) — internal, never citable.** Resolves named
 start/end facilities to coordinates (sourced endpoints for the great-circle rung),
 supplies snap targets for traced/fetched endpoints, and notes the extraction area /

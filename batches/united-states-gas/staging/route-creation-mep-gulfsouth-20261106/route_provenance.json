@@ -1,0 +1,74 @@
+{
+ "P0213": {
+  "root_source": {
+   "name": "OpenStreetMap ways 1105967095, 1105967099, 13426782, 1105967084, 256619214, Midcontinent Express Pipeline (MEP 0180010000)",
+   "url": "https://www.openstreetmap.org/way/13426782",
+   "license": "ODbL, credit to OpenStreetMap contributors",
+   "fetched": "2026-11-06",
+   "local_copy": "fetched_layers/osm_P0213.geojson"
+  },
+  "parent_artifact": "fetched_layers/osm_mep_gulfsouth.json (Overpass pull of Midcontinent, Gulf South, Boardwalk and Kinder Morgan pipelines, 29-36 N, 98-85 W)",
+  "method": "osm (route-creation rung 2)",
+  "cross_checks": [
+   {
+    "name": "Kinder Morgan MEP segment pin map, June 2025",
+    "url": "https://pipeline2.kindermorgan.com/Documents/MEP/MEP_SEGMENT_PIN_MAP-20250410092236.pdf",
+    "local_copy": "maps/MEP_SEGMENT_PIN_MAP-20250410092236.pdf",
+    "result": "same shape and same counties from Bryan County, Oklahoma to Choctaw County, Alabama; compared by eye with overlays/mep_gulfsouth_overlay.png"
+   },
+   {
+    "name": "EIA natural gas pipelines layer, MEP features (generalized, last resort)",
+    "local_copy": "fetched_layers/eia_mep.geojson",
+    "result": "average gap 2.5 km, largest 11.9 km"
+   },
+   {
+    "name": "current routes-repo route (4 points)",
+    "result": "average gap 9.3 km, largest 23.3 km"
+   }
+  ],
+  "checks": {
+   "length_km": 823.8,
+   "sheet_length_km": 816.4,
+   "n_points": 1907,
+   "start": "Bryan County, Oklahoma, near Bennington (33.9332, -96.0711)",
+   "end": "Transco Station 85 near Butler, Choctaw County, Alabama (32.0571, -88.3615)"
+  },
+  "accuracy_cap": "high",
+  "qc_gate": "validate_route_candidate.py PASS (length check skipped, no worklist; checked by hand)",
+  "created": "2026-11-06",
+  "creator": "CB"
+ },
+ "P5926": {
+  "root_source": {
+   "name": "OpenStreetMap ways 834013474, 1107120399, Harrisville, MS to Transco Compressor Station (Gulf South line 818)",
+   "url": "https://www.openstreetmap.org/way/834013474",
+   "license": "ODbL, credit to OpenStreetMap contributors",
+   "fetched": "2026-11-06",
+   "local_copy": "fetched_layers/osm_P5926.geojson"
+  },
+  "parent_artifact": "fetched_layers/osm_mep_gulfsouth.json",
+  "method": "osm (route-creation rung 2)",
+  "cross_checks": [
+   {
+    "name": "Boardwalk Pipeline Partners 2007 annual report",
+    "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/b/NYSE_BWP_2007.pdf",
+    "result": "about 112 miles of 42 inch pipe from near Harrisville, Mississippi to Transco Station 85 in Choctaw County, Alabama"
+   },
+   {
+    "name": "current routes-repo route (2-point straight line)",
+    "result": "average gap 11.9 km, largest 23.3 km"
+   }
+  ],
+  "checks": {
+   "length_km": 178.1,
+   "sheet_length_km": 178.6,
+   "n_points": 547,
+   "start": "near Harrisville, Simpson County, Mississippi (32.0282, -90.1461)",
+   "end": "Transco Station 85, Choctaw County, Alabama (32.0569, -88.3606)"
+  },
+  "accuracy_cap": "high",
+  "qc_gate": "validate_route_candidate.py PASS (length check skipped, no worklist; checked by hand)",
+  "created": "2026-11-06",
+  "creator": "CB"
+ }
+}

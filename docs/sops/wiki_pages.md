@@ -62,6 +62,8 @@ The pipeline is proposed to run from X to Y.<ref>
 
 - Cite web format: `{{Cite web|url=|title=|website=|access-date=2026-11-04}}` (use the real access date).
 - **One citation per URL.** If a URL is used twice on a page, define it once as `<ref name="rXXXXXX">...</ref>` and reuse it as `<ref name="rXXXXXX" />`. The generator's `dedupe_refs` does this.
+- **Define each acronym once.** Spell it out at its first use on the page with the acronym in parentheses, such as Federal Energy Regulatory Commission (FERC), then use the bare acronym everywhere after, in the Background and in every later section. Do not spell it out again.
+- **Define every named ref where it is first used.** A `<ref name="x" />` with no `<ref name="x">...</ref>` anywhere on the page renders as a red cite error. After any wiki edit, check that every reused name has a definition (MEP lost six on 2026-11-06).
 - **Titles are never the bare hostname (Baird 2026-11-05).** A ref with a known document title shows it. Every other ref, web pages included, shows its full URL as the title, so the reference list says which page it is.
 - **PDF titles.** When a ref is a PDF, put the document's title in the reference, for example "Western Interstates 2026 Spring SAB Meeting, 23 April 2026". Federal Register PDFs are titled by volume, issue and date. Do not title a PDF from memory; read its first page.
 - Every reference loads, names the pipeline and states the value (the main sweep rules apply).

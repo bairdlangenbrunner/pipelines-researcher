@@ -230,7 +230,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/deepsweep-r5-volga` — rows=31 fills=21 updates=0 status-pending=0 refs(REFS_ADDED=215, REF_UNSUPPORTED=1, UNRESOLVED=59) routes=0 new(none) decided 137a/0h/0r/0s of 236
 - `staging/deepsweep-r6-siberia` — rows=32 fills=11 updates=0 status-pending=4 refs(DEAD_LINK=1, REFS_ADDED=78, REF_UNSUPPORTED=5, REVERIFIED=1, UNRESOLVED=95) routes=0 new(none) decided 36a/0h/0r/0s of 94
 - `staging/deepsweep-r7-central-south` — rows=49 fills=20 updates=0 status-pending=9 refs(REFS_ADDED=300, UNRESOLVED=107) routes=0 new(none) decided 168a/0h/0r/0s of 329
-- `staging/deepsweep-wiki-recovery-20261017` — rows=285 fills=67 updates=0 status-pending=5 refs(REFS_ADDED=687, REF_BLOCKED=85, UNRESOLVED=175) routes=0 new(none) decided 53a/0h/2r/0s of 760
+- `staging/deepsweep-wiki-recovery-20261017` — rows=285 fills=67 updates=0 status-pending=5 refs(REFS_ADDED=687, REF_BLOCKED=85, UNRESOLVED=175) routes=0 new(none) decided 53a/0h/3r/0s of 760
 - `staging/discovery-d1-d4-merged-20260930` [update] — rows=5 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(monitor=8) decided 0a/0h/0r/0s of 21
 - `staging/discovery-d1-fareast-20260930` — no store — invisible to discovery
 - `staging/discovery-d2-siberian-20260930` — no store — invisible to discovery
@@ -310,7 +310,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 13a/0h/0r/0s of 587
 - `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=120 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=318, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=48) routes=0 new(none) decided 2a/0h/0r/0s of 465
 - `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided 1a/0h/0r/0s of 503
-- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=20 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 1a/0h/0r/0s of 424
+- `staging/deepsweep-s2-tx-indev` — rows=40 fills=45 updates=0 status-pending=20 refs(DEAD_LINK=1, REFS_ADDED=342, REF_BLOCKED=2, REF_UNSUPPORTED=6, REVERIFIED=12, UNRESOLVED=69) routes=0 new(none) decided 3a/0h/0r/0s of 424
 - `staging/deepsweep-s2-tx-midcon-operating` — rows=41 fills=94 updates=0 status-pending=4 refs(REFS_ADDED=278, REF_BLOCKED=3, REF_UNSUPPORTED=4, REVERIFIED=19, UNRESOLVED=70) routes=0 new(none) decided 0a/0h/2r/0s of 415
 - `staging/deepsweep-s2-west` — rows=42 fills=140 updates=0 status-pending=8 refs(REFS_ADDED=337, REF_BLOCKED=3, REF_UNSUPPORTED=6, REVERIFIED=25, UNRESOLVED=23) routes=0 new(none) decided 6a/0h/0r/0s of 514
 - `staging/deepsweep-tx-operating` — rows=45 fills=24 updates=0 status-pending=0 refs(REFS_ADDED=337, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none) decided 1a/1h/1r/0s of 362
@@ -349,6 +349,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/discovery-datacenter-west-ne-ak-retry2-20261016` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(matched_existing=2, monitor=9) decided —
 - `staging/discovery-datacenter-west-ne-ak-retry3b-20261016` — no store — invisible to discovery
 - `staging/discovery-datacenter-west-ne-ak-retry4-20261016` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(monitor=9) decided 0a/0h/0r/0s of 1
+- `staging/discovery-fsc-laterals-20261105` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/discovery-gulf-20261002` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(monitor=18) decided 0a/0h/0r/0s of 43
 - `staging/discovery-midcon-north-20261002` [update] — rows=4 fills=4 updates=0 status-pending=0 refs(none) routes=0 new(monitor=15) decided 0a/0h/0r/0s of 41
 - `staging/discovery-seeds-20261002` — no store — invisible to discovery
@@ -358,6 +359,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/eia-crosswalk-20260910` — no store — invisible to discovery
 - `staging/qc` [assembled packet: handoff] — rows=526 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 0
 - `staging/recovery-20260909` — no store — invisible to discovery
+- `staging/route-creation-crossroads-20261105` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-creation-fsc-20261105` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-creation-lowman-20261105` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-creation-mep-gulfsouth-20261106` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 0a/0h/0r/0s of 2
 - `staging/route-creation-newrows-20261020` [route-creation] — rows=31 fills=0 updates=0 status-pending=0 refs(none) routes=31 new(none) decided 0a/0h/0r/0s of 31
 - `staging/route-creation-ogw-20261015` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-creation-p7833-20261103` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
@@ -365,6 +370,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/route-creation-p8327-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
 - `staging/route-creation-palo-duro-20261017` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 2a/0h/0r/0s of 2
 - `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
+- `staging/route-merge-p7853-20261106` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
 - `staging/state-audit-20260910` — no store — invisible to discovery
 - `staging/update-datacenter-tags-20261016` [update] — rows=10 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 10
@@ -372,6 +378,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-datacenter-tags-powerplant-20261019` [update] — rows=11 fills=11 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 11
 - `staging/update-followups-20261014` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-km-to-mi-20261009` [update] — rows=7 fills=7 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 7
+- `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
 - `staging/update-p7814-parent-20261008` [update] — rows=1 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
@@ -431,6 +438,11 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20261019_0941_ET_united-states-gas_discovery-datacenter-utility-b.xlsx`
 - `deliverables/pipelines_batch_20261020_1936_ET_united-states-gas_route-creation-newrows.xlsx`
 - `deliverables/pipelines_batch_20261021_0824_ET_united-states-gas_route-creation-newrows.xlsx`
+- `deliverables/pipelines_batch_20261105_1443_ET_united-states-gas_route-creation-fsc.xlsx`
+- `deliverables/pipelines_batch_20261105_1443_ET_united-states-gas_update-nextera.xlsx`
+- `deliverables/pipelines_batch_20261105_1457_ET_united-states-gas_route-creation-lowman.xlsx`
+- `deliverables/pipelines_batch_20261105_1459_ET_united-states-gas_discovery-fsc-laterals.xlsx`
+- `deliverables/pipelines_batch_20261106_1151_ET_united-states-gas_route-creation-mep-gulfsouth.xlsx`
 - `archive/` — 55 superseded/applied file(s)
 
 ## united-states-oil
