@@ -44,8 +44,9 @@ The first two scripts read the newest `data/*_snapshot_*.csv` files and write to
 
 ## Decided
 
-- **Ten or more segments: one tabbed table (Baird 2026-11-06).** `scripts/generate_pages.py` replaces Tables 1 to 5 with one sortable table under Project Details and a Route / Details / Timeline / Cost / Ownership / All columns tab strip, CSS only, styled by `Template:Segment table/styles.css` (pushed with `--push-styles`). Smaller pages keep the five tables. The row label is "Segment" on every table. Live on Transcontinental Gas Pipeline; mockup at https://claude.ai/artifact/Cs1KMu8zBctA2uRdap3crR.
+- **Ten or more segments: one tabbed table (Baird 2026-11-06).** `scripts/generate_pages.py` replaces Tables 1 to 5 with one sortable table under Project Details and a Route / Details / Timeline / Cost / Ownership / All columns tab strip, CSS only, styled by `Template:Segment table/styles.css` (pushed with `--push-styles`). Smaller pages keep the five tables. The route map's click popup is tightened by `Template:Pipeline map/styles.css` (also pushed with `--push-styles`) and shows a status-colored dot. The row label is "Segment" on every table. Live on Transcontinental Gas Pipeline; mockup at https://claude.ai/artifact/Cs1KMu8zBctA2uRdap3crR.
 - **Parent column next to Owner (Baird 2026-11-06).** Filled from the gas tab's Parent cell as the backend has it; parents stay the ownership team's research. Maps are `width=100%` so pages fit a phone screen.
+- **Map colors match GEM's website tracker maps; headings are sentence case (Baird 2026-11-06).** Lines and route-shape pictures are colored by status from the website map config, with a legend line under the map on pages with several segments. Headings read "Project details", "Articles and resources".
 
 ## Open decisions
 
@@ -59,7 +60,7 @@ Tabled on 2026-11-06; Baird wants to work through them later. Items 1 to 4 are l
 6. Tracker columns: the implementation plan (`docs/plans/2026-11-06_wiki-tagging-backend.md`) drops the new `NetworkTags` column after a blast-radius check (`match.py`, `build_qc_workbook.py`, `gem-db-ops` colmap and the public release sheets all read `PipelineNetworkGrouping` as one value). Instead `PipelineNetworkGrouping` is secondary tag 1 and the Alt column is secondary tag 2, both single page names; whether to unify the two Alt headers is open.
 7. Whether the owners tab's `PipelineNetworkContainer` systems also become network tags.
 8. China gas: translating the 72 Chinese `PipelineNetworkGrouping` values to English network page names, and who checks the translation.
-9. Map coloring: by status with a legend (recommended), by segment on small pages, or a page-level switch between the two. Names show on click, not hover (Maps 13 limit).
+9. Map coloring: decided 2026-11-06, by status in the website map's colors with a legend (see Decided). Names show on click, not hover (Maps 13 limit).
 10. Whether to test Maps' `geojson=` input on the test wiki before building the `lines=` generator.
 11. Row anchors on multi-row pages: `SegmentName` or `ProjectID`.
 12. The Google Doc is titled for gas pipelines while the template covers both trackers: one doc for both, or split it.

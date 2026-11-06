@@ -38,12 +38,12 @@ This SOP covers hand-built pages. The prep for having the data team generate eve
 ==Location==
 The pipeline is proposed to run from X to Y.<ref>
 {{#display_map: ... }}        (omit if there is no route)
-==Project Details==
+==Project details==
 ==Background==                 (always present, even if empty)
-==Articles and Resources==
+==Articles and resources==
 ===References===
 <references />
-===Additional Data===          (the Global Gas Infrastructure Tracker paragraph)
+===Additional data===          (the Global Gas Infrastructure Tracker paragraph)
 [[Category:Global Gas Infrastructure Tracker]]
 [[Category:Gas and Hydrogen Pipelines]]
 ```
@@ -56,7 +56,9 @@ The pipeline is proposed to run from X to Y.<ref>
 - **Location verb by status.** Proposed: "is proposed to run from X to Y". Construction: "is being built from X to Y" (Baird 2026-11-05: a pipeline under construction is not just proposed). Cancelled or shelved: "was proposed to run". Operating: "runs".
 - **Project Details order.** Operator, Owner, Parent, Capacity, Length, Diameter, Status, Start year, Cost. Parent is the gas tab's Parent cell as the backend has it, with no ref; a cell reading `unknown [unknown %]` takes the parent of the same Owner cell on other rows, when there is exactly one (`parent_text`, `fill_unknown_parents`; Baird 2026-11-06). Parents stay the ownership team's research; the page only shows them. Keep original units. Costs are full units shown as "US$...".
 - **Single segment vs several.** A page with one segment has no subheadings in Project Details or Background, and no "Main Line" label. "Main Line" and `===<SegmentName>===` headings appear only on pages with several segments.
-- **Map.** `{{#display_map:|lines=lat, lon:lat, lon|center=|width=100%|height=400|type=map|zoom=}}`. Never a fixed pixel width: a map wider than a phone screen makes the whole page pan sideways on mobile (Baird 2026-11-06).. Leave the map off if a pipeline has no route. Thin long routes to about 60 points. `type=map` and `type=normal` both render the same (ROADMAP), so the type is not what matters. **Purge the page after every save** (see below).
+- **Map.** `{{#display_map:|lines=lat, lon:lat, lon|center=|width=100%|height=400|type=map|zoom=}}`. Never a fixed pixel width: a map wider than a phone screen makes the whole page pan sideways on mobile (Baird 2026-11-06). Leave the map off if a pipeline has no route. Thin long routes to about 60 points. `type=map` and `type=normal` both render the same (ROADMAP), so the type is not what matters. **Purge the page after every save** (see below).
+- **Map colors (Baird 2026-11-06).** Each line takes its status color from GEM's tracker maps on the website (the `color` block of `trackers/ggit/config.js` in `GlobalEnergyMonitor/maps`, branch `gitpages-production`, read only): gas operating red `#c74a48`, construction blue `#5c62cf`, proposed green `#4c9d4f`, everything else grey `#8f8f8e`. Oil follows `trackers/GOIT/config.js`, which differs (proposed blue, cancelled and mothballed green). The colors live in `build_wiki_pages.STATUS_COLORS`, shared by both builders; the route-shape pictures in the segment table use the same colors. A page with several segments gets a legend line right under the map: a colored square and the status for each status shown, with no lead-in words.
+- **Section headings are sentence case (Baird 2026-11-06).** "Project details", "Articles and resources", "Additional data". `sentence_case_headings` lowercases the later words of a level-2 or level-3 heading only when every one is a generic word, so a name in a heading a person wrote ("Opposition From Sierra Club", a segment name) keeps its capitals.
 - **A blank SegmentName on a page with several segments is "Main Line".**
 - **Dormancy sentence.** The template sentence is used only for shelved-inferred or cancelled-inferred rows that have a year.
 
@@ -73,8 +75,8 @@ The pipeline is proposed to run from X to Y.<ref>
 ## Existing pages (adding a segment)
 
 1. Re-read the live page and save the original beside the draft (`.orig`).
-2. Add each new segment under Project Details with a `===<SegmentName>===` heading. Add its Background text under Background in the same way. Add a References section if the page has none.
-3. **"Expansion projects" section.** If the page has one, move the projects under it into Project Details (after the new segments) and remove the empty heading.
+2. Add each new segment under Project details with a `===<SegmentName>===` heading. Add its Background text under Background in the same way. Add a References section if the page has none.
+3. **"Expansion projects" section.** If the page has one, move the projects under it into Project details (after the new segments) and remove the empty heading.
 4. Share one `seen` set across the page so refs already on the page are reused, not repeated.
 5. **Redraw the route map (Baird 2026-11-04).** The routes repo is usually newer than the map on the page. Redraw the page's first `{{#display_map:...}}` from the routes repo for every PID on the page: the new PIDs plus every sheet row whose Wiki URL is this page. Lines are thinned to 100 points each. If the page has no map, add one after the Location text. If none of those PIDs has a route, leave the page alone. Maps under a sub-project heading stay as they are. `update_map` in `build_wiki_pages.py` does this. The routes repo holds `FeatureCollection` files, bare `Feature` files (P7711, P7712, P7714, P7715, P7766, P7767) and 142-byte null stubs; `coords_of` reads all three and raises on a shape it cannot parse. A page whose PID has a non-null route must come out with a map (a bare `Feature` read as an empty collection left Shedgum-Riyadh 2 and five drafts without one, 2026-11-06).
 6. Do not otherwise rewrite existing content.
@@ -89,7 +91,7 @@ History: on 2026-11-05 about 100 US pages lost their maps to a wording script th
 
 ## Pages with ten or more segments
 
-A page with ten or more tracker rows is regenerated by `wiki/scripts/generate_pages.py` (not hand-built): its Project Details is one sortable segment table with a tab strip (Route, Details, Timeline, Cost, Ownership, All columns), and the row label is "Segment" (Baird 2026-11-06). The tabs are CSS from `Template:Segment table/styles.css`; run `python wiki/scripts/generate_pages.py --push-styles` after changing `SEG_CSS` in the script, and never edit the template page by hand. Generating writes nothing; upload the `shapes/` files, then save the `.txt` (minus its first two lines) through `wiki_save.save`. Check the tabs in a real browser the first time a page gets them (the 2026-11-06 Transco check clicked every tab with Playwright and read the visible headers and `scrollY`). The anchor divs are `position: fixed` so a tab click does not scroll the page; keep that rule. Its map is `width=100%`: the old fixed 600 px map made the page 615 px wide on a 390 px phone, so the page panned and jumped on tab taps (fixed 2026-11-06; check `document.documentElement.scrollWidth` equals `innerWidth` on an iPhone 13 profile in both Chrome and WebKit). The table has a Parent column next to Owner, read from the gas tab's Parent cell. Layout detail: `wiki/template/pipeline_page_template.md`, "Pages with ten or more segments".
+A page with ten or more tracker rows is regenerated by `wiki/scripts/generate_pages.py` (not hand-built): its Project details is one sortable segment table with a tab strip (Route, Details, Timeline, Cost, Ownership, All columns), and the row label is "Segment" (Baird 2026-11-06). The tabs are CSS from `Template:Segment table/styles.css`; run `python wiki/scripts/generate_pages.py --push-styles` after changing `SEG_CSS` in the script, and never edit the template page by hand. The map click popup is styled the same way by `Template:Pipeline map/styles.css` (`MAP_CSS`, also pushed by `--push-styles`, included by the map block; Baird 2026-11-06). Generating writes nothing; upload the `shapes/` files, then save the `.txt` (minus its first two lines) through `wiki_save.save`. Check the tabs in a real browser the first time a page gets them (the 2026-11-06 Transco check clicked every tab with Playwright and read the visible headers and `scrollY`). The anchor divs are `position: fixed` so a tab click does not scroll the page; keep that rule. Its map is `width=100%`: the old fixed 600 px map made the page 615 px wide on a 390 px phone, so the page panned and jumped on tab taps (fixed 2026-11-06; check `document.documentElement.scrollWidth` equals `innerWidth` on an iPhone 13 profile in both Chrome and WebKit). The table has a Parent column next to Owner, read from the gas tab's Parent cell. Layout detail: `wiki/template/pipeline_page_template.md`, "Pages with ten or more segments".
 
 ## Checks before publishing
 

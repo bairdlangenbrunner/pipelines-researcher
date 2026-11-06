@@ -95,15 +95,43 @@ def thin(line, maxpts=60):
     step = (len(line) - 1) / (maxpts - 1)
     return [line[round(i * step)] for i in range(maxpts)]
 
-def map_block(pids, maxpts=60):
-    lines = [thin(l, maxpts) for p in pids for l in coords_of(p)]
+# Status colors of GEM's tracker maps on the website (GlobalEnergyMonitor/maps, gitpages-production:
+# trackers/ggit/config.js and trackers/GOIT/config.js `color`, hex from site-config.js `colors`), Baird 2026-11-06
+MAP_RED, MAP_BLUE, MAP_GREEN, MAP_GREY = "#c74a48", "#5c62cf", "#4c9d4f", "#8f8f8e"
+STATUS_COLORS = {
+    "gas": {"operating": MAP_RED, "construction": MAP_BLUE, "proposed": MAP_GREEN, "shelved": MAP_GREY,
+            "cancelled": MAP_GREY, "retired": MAP_GREY, "idled": MAP_GREY, "mothballed": MAP_GREY,
+            "mixed status": MAP_GREY},
+    "oil": {"operating": MAP_RED, "construction": MAP_BLUE, "proposed": MAP_BLUE, "mothballed": MAP_GREEN,
+            "cancelled": MAP_GREEN, "shelved": MAP_GREY, "retired": MAP_GREY, "idled": MAP_GREY,
+            "mixed status": MAP_GREY},
+}
+STATUS_ORDER = ["operating", "construction", "proposed", "shelved", "mothballed", "idled", "cancelled",
+                "retired", "mixed status"]
+
+
+def map_block(pids, maxpts=60, status=None):
+    """The page map. With status (ProjectID -> Status), each line takes its status color from GEM's website
+    tracker map and a row of colored squares under the map names the statuses shown."""
+    status = status or {}
+    segs = [(p, thin(l, maxpts)) for p in pids for l in coords_of(p)]
+    lines = [l for _, l in segs]
     if not lines: return ''
     allp = [pt for l in lines for pt in l]
     clat = sum(p[1] for p in allp) / len(allp); clon = sum(p[0] for p in allp) / len(allp)
     span = max(max(p[1] for p in allp) - min(p[1] for p in allp), max(p[0] for p in allp) - min(p[0] for p in allp))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9 if span > .3 else 10
-    body = ';'.join(':'.join(f'{p[1]:.5f}, {p[0]:.5f}' for p in l) for l in lines)
-    return f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
+    col = lambda p: STATUS_COLORS['gas'].get(status.get(p, ''), MAP_GREY)
+    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~~~{col(p)}~1~3' if status else '') for p, l in segs)
+    out = f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
+    shown = sorted({status[p] for p, _ in segs if p in status}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
+    if len(set(pids)) > 1 and shown:
+        out += '\n' + legend_html(shown) + '\n'
+    return out
+
+def legend_html(statuses, tracker='gas'):
+    phrase = {'construction': 'under construction'}
+    return ' &nbsp; '.join(f'<span style="color:{STATUS_COLORS[tracker].get(s, MAP_GREY)}">■</span> {phrase.get(s, s).capitalize()}' for s in statuses)
 
 def details(r, own):
     st = r['Status']
@@ -197,7 +225,7 @@ def dormancy(r):
             return f"As of {r['ShelvedYear']}, no development on the {t} has been reported for over 2 years, and it is considered shelved.{refs(r['Shelved [ref]'] or r['Status [ref]'])}"
     return ''
 
-TAIL = ['==Articles and Resources==', '', '===References===', '<references />', '', '===Additional Data===',
+TAIL = ['==Articles and resources==', '', '===References===', '<references />', '', '===Additional data===',
         'To access additional data, including an interactive map of gas pipelines, a downloadable dataset, and summary data, please visit the [https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/ Global Gas Infrastructure Tracker] on the Global Energy Monitor website.', '',
         '[[Category:Global Gas Infrastructure Tracker]]', '[[Category:Gas and Hydrogen Pipelines]]']
 
@@ -260,9 +288,9 @@ def new_page(name, rows, own):
     for r in rows:
         s = route_sentence(r)
         if s: out.append((f"{seg_title(r)}: " if not single and r['SegmentName'] else '') + s)
-    mb = map_block([r['ProjectID'] for r in rows])
+    mb = map_block([r['ProjectID'] for r in rows], status={r['ProjectID']: r['Status'] for r in rows})
     if mb: out += ['', mb.rstrip()]
-    out += ['', '==Project Details==']
+    out += ['', '==Project details==']
     for r in rows:
         out += ([] if single else [f"==={seg_title(r)}==="]) + [details(r, own), '']
     bgs = [(r, background_text(r)) for r in rows]
@@ -285,6 +313,25 @@ def background_block(rows):
         if b.strip(): out += [f"\n==={seg_title(r)}===", b]
     return '\n'.join(out) + '\n' if out else ''
 
+# section headings are sentence case, "Project details", "Articles and resources" (Baird 2026-11-06). A heading
+# changes only when every word, the first included, is a generic one, so a project's name ("Heartland Project",
+# "Sunrise Pipeline Project") and a name inside a heading a person wrote keep their capitals. Only the case changes.
+HEADING_WORDS = set("""details data resources articles sources projects project history background information references
+ownership cost costs timeline expansion expansions related external other and of the further reading news status
+opposition financing finance notes links see also map maps location overview additional pipeline pipelines route routes
+segment segments proposed existing research reports report documents media coverage controversy controversies impact
+impacts environmental regulatory approval approvals construction capacity contractors technical specifications
+description summary in on for to""".split())
+
+def sentence_case_headings(text):
+    def fix(m):
+        h = m.group(2)
+        w = h.split(' ')
+        if len(w) < 2 or not all(x.lower() in HEADING_WORDS for x in w):
+            return m.group(0)
+        return m.group(0).replace(h, ' '.join([w[0]] + [x.lower() for x in w[1:]]), 1)
+    return re.sub(r'(?m)^(={2,3})(?!=)[ \t]*([^=\n]*?[^=\s])[ \t]*\1[ \t]*$', fix, text)
+
 def _insert(text, head, block, before):
     m = re.search(r'\n==\s*' + head + r'\s*==[^\n]*\n', text, re.I)
     if m:
@@ -300,18 +347,21 @@ def wiki_key(u):
     from urllib.parse import unquote
     return unquote(str(u)).split('gem.wiki/')[-1].replace('_', ' ').strip().lower()
 
-def update_map(text, pids):
-    # an existing page's main map (the first display_map) is redrawn from the routes repo for every pipeline on the page;
-    # sub-project maps under their own headings stay. No map yet: add one after the Location text. No routes: leave alone.
-    blk = map_block(pids, 100)
+LEGEND_RE = r'(?:\n*<span style="color:#[0-9a-f]{6}">■</span>[^\n]*\n?)?'
+
+def update_map(text, pids, status=None):
+    # an existing page's main map (the first display_map) is redrawn from the routes repo for every pipeline on the page,
+    # with the status legend that follows it; sub-project maps under their own headings stay. No map yet: add one after
+    # the Location text. No routes: leave alone.
+    blk = map_block(pids, 100, status)
     if not blk: return text
-    m = re.search(r'\{\{#display_map:.*?\}\}\n?', text, re.S)
-    if m: return text[:m.start()] + blk + text[m.end():]
+    m = re.search(r'\{\{#display_map:.*?\}\}\n?' + LEGEND_RE, text, re.S)
+    if m: return sentence_case_headings(text[:m.start()] + blk + text[m.end():])
     loc = re.search(r'\n==\s*Location\s*==[^\n]*\n', text, re.I)
     if not loc: return text
     nxt = re.search(r'\n==[^=\n]', text[loc.end():])
     pos = loc.end() + nxt.start() + 1 if nxt else len(text)
-    return text[:pos].rstrip('\n') + '\n\n' + blk + '\n' + text[pos:]
+    return sentence_case_headings(text[:pos].rstrip('\n') + '\n\n' + blk + '\n' + text[pos:])
 
 def pull_expansion(text):
     # an 'Expansion projects' section is folded into Project Details: its subsections move, the heading goes
@@ -330,7 +380,7 @@ def merge_details_headings(text):
     out, last = [], 0
     for i, m in enumerate(ms):
         out.append(text[last:m.start()])
-        if i == 0: out.append('==Project Details==')
+        if i == 0: out.append('==Project details==')
         else: out.append('')
         last = m.end()
     out.append(text[last:])
@@ -339,19 +389,19 @@ def merge_details_headings(text):
 def insert_segments(text, rows, own, map_pids=None):
     text = merge_details_headings(text)
     seen = set()
-    if map_pids: text = update_map(text, map_pids)
+    if map_pids: text = update_map(text, map_pids, {r['ProjectID']: r['Status'] for r in rows})
     # idempotent: a segment whose heading is already on the page was inserted by an earlier run (Oasis got it twice, 2026-11-04)
     rows = [r for r in rows if f"==={seg_title(r)}===" not in text.replace('=== ', '===').replace(' ===', '===')]
     if not rows: return text
     text, exp = pull_expansion(text)
     block = segments_block(rows, own) + (('\n' + exp + '\n') if exp else '')
-    text = _insert(text, 'Project Details', dedupe_refs(block, seen), 'Background|Articles and resources')
+    text = _insert(text, 'Project details', dedupe_refs(block, seen), 'Background|Articles and resources')
     bb = background_block(rows)
     if bb: text = _insert(text, 'Background', dedupe_refs(bb, seen), 'Articles and resources')
     if '{{reflist' not in text.lower() and '<references' not in text.lower():
         cat = text.find('[[Category:')
         text = (text[:cat] + '==References==\n<references />\n\n' + text[cat:]) if cat >= 0 else text + '\n==References==\n<references />\n'
-    return text
+    return sentence_case_headings(text)
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
@@ -393,7 +443,7 @@ if __name__ == '__main__':
             mp = sorted(set(v['pids']) | set(d[d.Wiki.map(wiki_key) == title.lower()].ProjectID))
             # link_only rows are already described on the page: they join the map but get no new section
             rows = [r for r in rows if r['ProjectID'] not in v.get('link_only', [])]
-            try: open(path, 'w').write(insert_segments(cur, rows, own, None) if rows else update_map(cur, mp)); kind = 'edit'
+            try: open(path, 'w').write(insert_segments(cur, rows, own, None) if rows else update_map(cur, mp, dict(zip(d.ProjectID, d.Status)))); kind = 'edit'
             except ValueError as e: kind = 'EDIT-FAILED:' + str(e)
             time.sleep(0.5)
         man.append(dict(name=name, title=title, kind=kind, pids=v['pids'], path=path, url='https://www.gem.wiki/' + title.replace(' ', '_')))

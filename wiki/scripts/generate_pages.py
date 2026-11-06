@@ -4,9 +4,9 @@
 The template is `wiki/template/pipeline_page_template.md` (pushed to the Google Doc
 "Wiki page template - gas pipelines (draft)"). This is a stand-in for the data team's GEMwiki
 generator, so the template can be tried on real pages before it goes to them. It posts nothing
-(except `--push-styles`, which saves the stylesheet page the tabbed table needs).
+(except `--push-styles`, which saves the two stylesheet pages: the tabbed table's and the map popup's).
 
-A page with SEG_TABLE_MIN (10) or more segments gets ONE segment table under Project Details instead
+A page with SEG_TABLE_MIN (10) or more segments gets ONE segment table under Project details instead
 of the five tables (route, details, timeline, cost, ownership): rows are segments, every column is
 tagged with its group (`col-route`, `col-details`, ...), and a tab strip shows one group at a time.
 The tabs are plain anchor links: the stylesheet `Template:Segment table/styles.css` (TemplateStyles,
@@ -66,9 +66,13 @@ VERB = {"operating": "runs", "idled": "runs", "mothballed": "runs", "proposed": 
 CAPTION = {"very high (within meters)": "the exact route", "high": "the exact route",
            "medium": "the approximate route", "low": "the approximate route",
            "very low (straight line/schematic)": "a sketch of the route"}
-STATUS_COLOR = {"operating": "#1b7837", "construction": "#e08214", "proposed": "#2166ac",
-                "shelved": "#8073ac", "cancelled": "#b2182b", "retired": "#636363",
-                "idled": "#636363", "mothballed": "#636363", "mixed status": "#636363"}
+MAP_GREY, STATUS_COLORS, STATUS_ORDER = B.MAP_GREY, B.STATUS_COLORS, B.STATUS_ORDER
+
+
+def status_color(pg, status):
+    return STATUS_COLORS[pg.tracker].get(status, MAP_GREY)
+
+
 STATUS_CATEGORY = {"operating": "Existing", "proposed": "Proposed", "construction": "Under construction",
                    "shelved": "Shelved", "cancelled": "Cancelled", "retired": "Retired",
                    "idled": "Idled", "mothballed": "Mothballed"}
@@ -93,8 +97,9 @@ CATS = {"gas": ["Global Gas Infrastructure Tracker", "Gas and Hydrogen Pipelines
 class Page:
     """Per-page state: named refs and a log of what the generator had to decide."""
 
-    def __init__(self, name):
+    def __init__(self, name, tracker="gas"):
         self.name = name
+        self.tracker = tracker
         self.url_name = {}      # url -> ref name, for URLs already defined on the page
         self.defined = set()
         self.log = []
@@ -329,12 +334,13 @@ def map_block(pg, rows):
         if not ls:
             pg.log.append(f"{r['ProjectID']}: RouteType says mapped but the routes repo has no geometry")
             continue
-        color = STATUS_COLOR.get(r["Status"], "#636363")
+        color = status_color(pg, r["Status"])
         for l in ls:
             allp += l
             pts = ":".join(f"{p[1]:.5f}, {p[0]:.5f}" for p in l)
             title = label(r, rows) if len(rows) > 1 else pg.name
-            lines.append(f"{pts}~{title}~{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}~{color}~1~3")
+            dot = f'<span class="gem-mapdot gem-mapdot-{r["Status"].replace(" ", "-")}"></span>'
+            lines.append(f"{pts}~{title}~{dot}{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}~{color}~1~3")
     if not lines:
         return "The route of this pipeline has not been mapped.", 0
     lats, lons = [p[1] for p in allp], [p[0] for p in allp]
@@ -344,16 +350,19 @@ def map_block(pg, rows):
     cap = CAPTION.get(next(iter(accs)), "the approximate route") if len(accs) == 1 else "the approximate route"
     where = "of the pipeline" if len(rows) == 1 else "of its mapped segments"
     text = f"The map below shows {cap} {where}."
+    legend = ""
     if len(rows) > 1:
-        sts = sorted({r["Status"] for r in mapped}, key=list(STATUS_COLOR).index)
-        legend = " ".join(f'<span style="color:{STATUS_COLOR[s]}">■</span> {STATUS_PHRASE.get(s, s)}' for s in sts)
+        sts = sorted({r["Status"] for r in mapped}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
+        legend = "\n\n" + " &nbsp; ".join(f'<span style="color:{status_color(pg, s)}">■</span> {STATUS_PHRASE.get(s, s).capitalize()}'
+                                            for s in sts)
         unm = len(rows) - len(mapped)
-        text += f" Lines are colored by status: {legend}. Click a line for its segment name."
+        text += " Click a line for its segment name."
         if unm:
             text += f" {unm} of the {len(rows)} segments have no mapped route."
     body = ";".join(lines)
     mid = f"{(max(lats) + min(lats)) / 2:.5f}, {(max(lons) + min(lons)) / 2:.5f}"
-    return (f"{text}\n\n{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}",
+    return (f'{text}\n\n<templatestyles src="{MAP_STYLES_PAGE}" />\n'
+            f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}{legend}",
             len(allp))
 
 
@@ -371,7 +380,7 @@ def join_list(xs):
 def overview_sentence(pg, rows, tabbed=False):
     """One sentence on where a many-segment pipeline is, so the page says it even with the
     route table collapsed: the system row's end points if there is one, then where the segments are.
-    On a tabbed page the table sits under Project Details, open, so the pointer says that instead."""
+    On a tabbed page the table sits under Project details, open, so the pointer says that instead."""
     sysr = [r for r in rows if r["SegmentName"].upper().startswith("SYSTEM/NETWORK")]
     cs = sorted({c for r in rows for c in countries(r["CountriesOrAreas"])})
     out = []
@@ -390,22 +399,21 @@ def overview_sentence(pg, rows, tabbed=False):
     elif len(cs) > 1:
         out.append(f"Its {len(rows)} segments are in {len(cs)} countries: {join_list([country_name(c) for c in cs])}.")
     if tabbed:
-        out.append("The segment table under Project Details lists each segment's start and end points on its Route tab.")
+        out.append("The segment table under Project details lists each segment's start and end points on its Route tab.")
     else:
         out.append("The table below lists each segment's start and end points; click Expand to show it.")
     return " ".join(out)
 
 
 SHAPE_W, SHAPE_H, SHAPE_PAD = 120, 60, 4
-SHAPE_COLOR = "#1f4e79"
 
 
 def shape_file(pid):
     return f"Route shape {pid}.svg"
 
 
-def route_shape_svg(pid):
-    """The unit's route drawn as a bare line (no map), fitted to a small box; None when it has no route."""
+def route_shape_svg(pid, color=MAP_GREY):
+    """The unit's route drawn as a bare line (no map) in its status color, fitted to a small box; None when it has no route."""
     import math
     lines = [l for l in B.coords_of(pid) if len(l) >= 2]
     if not lines:
@@ -425,7 +433,7 @@ def route_shape_svg(pid):
         if len(pts) >= 2:
             paths.append("M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts))
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{SHAPE_W}" height="{SHAPE_H}" viewBox="0 0 {SHAPE_W} {SHAPE_H}">'
-            f'<path d="{" ".join(paths)}" fill="none" stroke="{SHAPE_COLOR}" stroke-width="2" '
+            f'<path d="{" ".join(paths)}" fill="none" stroke="{color}" stroke-width="2" '
             f'stroke-linecap="round" stroke-linejoin="round"/></svg>\n')
 
 
@@ -537,7 +545,7 @@ def parent_cell(r):
 
 def shape_cells(pg, rows):
     """ProjectID -> route-shape image cell (or '' when the row has no route); {} when no row has one."""
-    shapes = {r["ProjectID"]: route_shape_svg(r["ProjectID"]) for r in rows}
+    shapes = {r["ProjectID"]: route_shape_svg(r["ProjectID"], status_color(pg, r["Status"])) for r in rows}
     if not any(shapes.values()):
         return {}
     out = {}
@@ -561,6 +569,27 @@ def gloss(units):
 
 SEG_TABLE_MIN = 10
 STYLES_PAGE = "Segment table/styles.css"       # Template:Segment table/styles.css, content model sanitized-css
+MAP_STYLES_PAGE = "Pipeline map/styles.css"    # Template:Pipeline map/styles.css: the click popup on the route map
+
+# The Maps extension hands Google Maps `<b><p>title</p></b><p>status</p>` for a clicked line, and Google's info
+# window adds a 48 px header row for its close button, 12 px padding and scrollbars, so the popup was mostly
+# empty space (Baird 2026-11-06). This collapses the header, shrinks the close button into the corner, drops the
+# paragraph margins and sets the two lines as name over status. The inline sizes Google sets need !important.
+MAP_CSS = """\
+/* Click popup on the route map of pipeline pages. Generated by the GEM pipeline page builder
+   (pipelines-researcher, wiki/scripts/generate_pages.py); edit it there, not here. */
+.gm-style .gm-style-iw-c { padding: 7px 10px 8px 11px !important; min-width: 0 !important; border-radius: 6px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
+.gm-style .gm-style-iw-chr { position: absolute; top: 0; right: 0; height: auto; min-height: 0; }
+.gm-style .gm-style-iw-ch { display: none; }
+.gm-style .gm-style-iw-chr button { width: 22px !important; height: 22px !important; margin: 2px 2px 0 0 !important; opacity: 0.55; }
+.gm-style .gm-style-iw-chr button:hover { opacity: 1; }
+.gm-style .gm-style-iw-chr button span { width: 14px !important; height: 14px !important; margin: 4px !important; }
+.gm-style .gm-style-iw-d { overflow: auto !important; padding-right: 18px; font-size: 12px; line-height: 1.35; color: #202122; }
+.gm-style .gm-style-iw-d p { margin: 0; padding: 0; line-height: inherit; white-space: nowrap; }
+.gm-style .gm-style-iw-d b p { font-size: 13px; margin: 0 0 1px; }
+.gm-style .gm-style-iw-d p + p { color: #54595d; }
+.gem-mapdot { display: inline-block; width: 8px; height: 8px; margin: 0 5px 1px 0; border-radius: 50%; vertical-align: middle; background: """ + MAP_GREY + """; }
+""" + "".join(f".gem-mapdot-{s.replace(' ', '-')} {{ background: {c}; }}\n" for s, c in STATUS_COLORS["gas"].items())
 SEG_GROUPS = ("route", "details", "timeline", "cost", "ownership")
 SEG_TAB_LABEL = {"route": "Route", "details": "Details", "timeline": "Timeline", "cost": "Cost",
                  "ownership": "Ownership", "all": "All columns"}
@@ -683,7 +712,7 @@ def location(pg, rows, tab, tabbed=False):
 
 
 def details(pg, rows, tab):
-    out = ["==Project Details=="]
+    out = ["==Project details=="]
     units = set()
     has_pressure = any(r.get("Pressure", "").strip() for r in rows)
     body = []
@@ -946,7 +975,7 @@ def shade_first_column(text):
 
 
 def build(name, rows, owners, live, tracker):
-    pg = Page(name)
+    pg = Page(name, tracker)
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
     kept = unshade(kept)
@@ -960,7 +989,7 @@ def build(name, rows, owners, live, tracker):
     head = [name, "", f"<!---\n\t{COMMENT1}\n-->", NAVBAR[tracker], intro(pg, rows, tracker), ""]
     tabbed = len(rows) >= SEG_TABLE_MIN
     if tabbed:   # one tabbed segment table instead of the five separate tables (Baird 2026-11-06)
-        body = location(pg, rows, tab, tabbed=True) + "\n\n==Project Details==\n" + segment_table(pg, rows, owners)
+        body = location(pg, rows, tab, tabbed=True) + "\n\n==Project details==\n" + segment_table(pg, rows, owners)
     else:
         body = location(pg, rows, tab) + "\n\n" + details(pg, rows, tab) + "\n\n" + ownership(pg, rows, owners, tab)
     gen = "\n".join(head) + "\n" + body + "\n"
@@ -989,14 +1018,14 @@ def build(name, rows, owners, live, tracker):
     strip_cat = lambda t: re.sub(r"\n*\[\[\s*Category\s*:[^\]]+\]\]", "", t).strip()
     kept, extra_ar = strip_cat(kept), strip_cat(extra_ar)
     extra_ar = "\n\n".join(b for b in re.split(r"\n\n(?====)", extra_ar) if b.strip() and "\n" in b.strip())
-    tail = ["==Articles and Resources==", "", "===References===", "<references />", ""]
+    tail = ["==Articles and resources==", "", "===References===", "<references />", ""]
     if extra_ar:
         tail += [extra_ar, ""]
     tail += ["===Additional data===",
              f"To access additional data, including an interactive map of {word} pipelines, a downloadable dataset, and summary data, please visit the {link} on the Global Energy Monitor website.",
              ""] + cats
     text = gen + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
-    text = shade_first_column(text)
+    text = B.sentence_case_headings(shade_first_column(text))
     if not kept:
         text += "\n__NOTOC__\n"
     return text, pg
@@ -1036,24 +1065,29 @@ def upload_shapes(s, folder, page):
 
 
 def ensure_styles(s):
-    """Save SEG_CSS to Template:Segment table/styles.css when the live copy differs (TemplateStyles gives a
-    Template-namespace .css page the sanitized-css content model itself). Returns what happened."""
+    """Save SEG_CSS to Template:Segment table/styles.css and MAP_CSS to Template:Pipeline map/styles.css when the
+    live copy differs (TemplateStyles gives a Template-namespace .css page the sanitized-css content model itself).
+    Returns what happened, one line per stylesheet."""
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import wiki_save
-    title = "Template:" + STYLES_PAGE
-    try:
-        live = GW.page_text(s, title) or ""
-    except GW.WikiError:   # not created yet
-        live = ""
-    if live.strip() == SEG_CSS.strip():
-        return "stylesheet unchanged"
-    wiki_save.save(s, title, text=SEG_CSS, summary="segment table tabs: stylesheet from generate_pages.py")
-    info = GW.get(s, action="query", titles=title, prop="info")["query"]["pages"]
-    pg = next(iter(info.values())) if isinstance(info, dict) else info[0]
-    model = pg.get("contentmodel")
-    if model != "sanitized-css":
-        raise RuntimeError(f"{title} saved with content model {model!r}, not sanitized-css; fix with action=changecontentmodel")
-    return f"stylesheet saved ({'created' if not live else 'updated'}, content model sanitized-css)"
+    out = []
+    for page, css in ((STYLES_PAGE, SEG_CSS), (MAP_STYLES_PAGE, MAP_CSS)):
+        title = "Template:" + page
+        try:
+            live = GW.page_text(s, title) or ""
+        except GW.WikiError:   # not created yet
+            live = ""
+        if live.strip() == css.strip():
+            out.append(f"{title}: unchanged")
+            continue
+        wiki_save.save(s, title, text=css, summary="pipeline page stylesheet from generate_pages.py")
+        info = GW.get(s, action="query", titles=title, prop="info")["query"]["pages"]
+        pg = next(iter(info.values())) if isinstance(info, dict) else info[0]
+        model = pg.get("contentmodel")
+        if model != "sanitized-css":
+            raise RuntimeError(f"{title} saved with content model {model!r}, not sanitized-css; fix with action=changecontentmodel")
+        out.append(f"{title}: saved ({'created' if not live else 'updated'}, content model sanitized-css)")
+    return "\n".join(out)
 
 
 def main():
@@ -1062,7 +1096,7 @@ def main():
     ap.add_argument("--tracker", default="gas", choices=["gas"])
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-render", action="store_true")
-    ap.add_argument("--push-styles", action="store_true", help="save the tabbed-table stylesheet page on the wiki if it differs")
+    ap.add_argument("--push-styles", action="store_true", help="save the tabbed-table and map-popup stylesheet pages on the wiki if they differ")
     a = ap.parse_args()
     if a.push_styles:
         print(ensure_styles(GW.session(login=True)))

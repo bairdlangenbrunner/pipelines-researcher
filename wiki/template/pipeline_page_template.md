@@ -58,7 +58,7 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 - **Place names:** blank parts are dropped, and repeated parts collapse ("Novorossiysk, Krasnodar Krai, Russia").
 - **Single segment:** one sentence.
 - **Multiple segments:** Table 1 instead of the sentence.
-- **Ten or more segments (Baird 2026-11-06):** no Table 1 here. The overview sentence points to the segment table under Project Details, which replaces Tables 1 to 5 with one tabbed table (see "Pages with ten or more segments" below).
+- **Ten or more segments (Baird 2026-11-06):** no Table 1 here. The overview sentence points to the segment table under Project details, which replaces Tables 1 to 5 with one tabbed table (see "Pages with ten or more segments" below).
 
 **Table 1: Route details** (multiple segments only)
 
@@ -76,9 +76,10 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 - **Geometry:** It comes from the routes repo (`GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes`, one `<ProjectID>.geojson` per segment). It is not in the tracker sheet, so the data team needs a way in. GEMwiki already has `make_map_w_wkt_geometry()`, so we would send WKT per ProjectID as an extra column or file (open decision 5). Thin each line to about 60 to 100 points so the page stays light.
 - **Caption:** taken from `«RouteAccuracy»`. `very high (within meters)` and `high` give "the exact route". `medium` and `low` give "the approximate route". `very low (straight line/schematic)` gives "a sketch of the route".
 - **Size (Baird 2026-11-06):** `width=100%|height=400`, never a fixed pixel width. A 600 px map made the whole page wider than a phone screen, so the page panned sideways on mobile.
+- **Colors (Baird 2026-11-06):** each line takes its status color from GEM's tracker maps on the website (gas: operating red `#c74a48`, construction blue `#5c62cf`, proposed green `#4c9d4f`, the rest grey `#8f8f8e`; oil follows the GOIT map's own scheme). With several segments, a legend line sits right under the map: a colored square and the status for each status shown, nothing else.
 - **No route:** If `«RouteType»` is not `Mapped route (at any accuracy)`, show no map and write "The route of this pipeline has not been mapped."
 
-### ==Project Details== (generated)
+### ==Project details== (generated)
 
 **Table 2: Pipeline details**
 
@@ -121,7 +122,7 @@ Caption under the table: "FID = final investment decision, used by some develope
 
 ### Pages with ten or more segments (Baird 2026-11-06)
 
-A page with ten or more segments gets ONE sortable table under Project Details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end with a thin rule between start and end and the location refs at the right end of the End line, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year, Inactive year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 10` in the script.
+A page with ten or more segments gets ONE sortable table under Project details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end with a thin rule between start and end and the location refs at the right end of the End line, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year, Inactive year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 10` in the script. Every generated map block also loads `Template:Pipeline map/styles.css` (`MAP_CSS`), which collapses Google's popup header band and padding and adds a status dot before the status line.
 
 ### ==Ownership== (generated)
 
@@ -151,10 +152,12 @@ A page with ten or more segments gets ONE sortable table under Project Details i
 - **New pages:** A new page with nothing to preserve gets an empty `==Background==` only if oil's `«Background»` column has text (open decision 3). Otherwise it gets no Background section.
 - **Named refs:** A preserved section can reuse a named ref (`<ref name=":0" />`) whose definition sat in a generated section that is now replaced. That breaks the citation. The LNG run hit this. The generator should log every named ref used in preserved text but defined nowhere, so a person can fix those pages before upload.
 
-### ==Articles and Resources== (generated)
+### ==Articles and resources== (generated)
+
+Section headings are sentence case on every page (Baird 2026-11-06): only the first word is capitalized, unless a later word is a name.
 
 ```
-==Articles and Resources==
+==Articles and resources==
 ===Additional data===
 To access additional data, including an interactive map of {oil and NGL / gas} pipelines, a downloadable dataset, and summary data, please visit the [https://globalenergymonitor.org/projects/global-oil-infrastructure-tracker/ Global Oil Infrastructure Tracker] on the Global Energy Monitor website.
    (gas tab: [https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/ Global Gas Infrastructure Tracker])
