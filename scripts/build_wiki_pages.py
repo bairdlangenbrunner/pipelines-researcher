@@ -138,7 +138,7 @@ def seg_title(r, single=False):
     return 'Main Line' if single else (r['SegmentName'] or 'Main Line')
 
 def cite(url, title, site, date=None):
-    if title == site or not title: title = _known_titles().get(url) or url.replace('|', '%7C')
+    if title == site or not title or title == url or title.startswith('http'): title = _known_titles().get(url) or site or url.replace('|', '%7C')
     return '<ref>{{Cite web|url=%s|title=%s|website=%s|access-date=%s}}</ref>' % (url, title, site, ACCESS)
 
 BG_OVERRIDE = {}   # ProjectID -> live Background text kept when a page is rebuilt
@@ -232,9 +232,11 @@ def new_page(name, rows, own):
     out += ['', '==Project Details==']
     for r in rows:
         out += ([] if single else [f"==={seg_title(r)}==="]) + [details(r, own), '']
-    out += ['==Background==']
-    for r in rows:
-        out += ([] if single else [f"==={seg_title(r)}==="]) + [background_text(r), '']
+    bgs = [(r, background_text(r)) for r in rows]
+    bgs = [(r, b) for r, b in bgs if b.strip()]   # a row with no prose gets no empty heading
+    if bgs: out += ['==Background==']
+    for r, b in bgs:
+        out += ([] if single else [f"==={seg_title(r)}==="]) + [b, '']
     return merge_named_defs(dedupe_refs('\n'.join(out + TAIL) + '\n', set()))
 
 def segments_block(rows, own):
@@ -246,8 +248,9 @@ def segments_block(rows, own):
 def background_block(rows):
     out = []
     for r in rows:
-        out += [f"\n==={seg_title(r)}===", background_text(r)]
-    return '\n'.join(out) + '\n'
+        b = background_text(r)
+        if b.strip(): out += [f"\n==={seg_title(r)}===", b]
+    return '\n'.join(out) + '\n' if out else ''
 
 def _insert(text, head, block, before):
     m = re.search(r'\n==\s*' + head + r'\s*==[^\n]*\n', text, re.I)
@@ -294,7 +297,8 @@ def insert_segments(text, rows, own, map_pids=None):
     text, exp = pull_expansion(text)
     block = segments_block(rows, own) + (('\n' + exp + '\n') if exp else '')
     text = _insert(text, 'Project Details', dedupe_refs(block, seen), 'Background|Articles and resources')
-    text = _insert(text, 'Background', dedupe_refs(background_block(rows), seen), 'Articles and resources')
+    bb = background_block(rows)
+    if bb: text = _insert(text, 'Background', dedupe_refs(bb, seen), 'Articles and resources')
     if '{{reflist' not in text.lower() and '<references' not in text.lower():
         cat = text.find('[[Category:')
         text = (text[:cat] + '==References==\n<references />\n\n' + text[cat:]) if cat >= 0 else text + '\n==References==\n<references />\n'
@@ -340,7 +344,7 @@ if __name__ == '__main__':
             mp = sorted(set(v['pids']) | set(d[d.Wiki.map(wiki_key) == title.lower()].ProjectID))
             # link_only rows are already described on the page: they join the map but get no new section
             rows = [r for r in rows if r['ProjectID'] not in v.get('link_only', [])]
-            try: open(path, 'w').write(insert_segments(cur, rows, own, mp) if rows else update_map(cur, mp)); kind = 'edit'
+            try: open(path, 'w').write(insert_segments(cur, rows, own, None) if rows else update_map(cur, mp)); kind = 'edit'
             except ValueError as e: kind = 'EDIT-FAILED:' + str(e)
             time.sleep(0.5)
         man.append(dict(name=name, title=title, kind=kind, pids=v['pids'], path=path, url='https://www.gem.wiki/' + title.replace(' ', '_')))
