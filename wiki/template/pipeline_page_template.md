@@ -63,9 +63,11 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 
 **Table 1: Route details** (pages with fewer than ten segments)
 
-| Segment | Start location | End location | Countries | Length |
-|---|---|---|---|---|
-| segment label | «StartLocation», «StartState/Province», «StartCountryOrArea» [ref] | «EndLocation», ... [ref] | «CountriesOrAreas» | «LengthKnown» «LengthKnownUnits» [ref: «Length [ref]»] |
+| Segment | Start location | End location | Countries |
+|---|---|---|---|
+| segment label | «StartLocation», «StartState/Province», «StartCountryOrArea» [ref] | «EndLocation», ... [ref] | «CountriesOrAreas» |
+
+No Length column here (Baird 2026-11-06, Ruby): it showed the figure without its reference, and Table 2 already carries it with `«Length [ref]»`.
 
 **Map** (generated):
 

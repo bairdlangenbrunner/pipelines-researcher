@@ -444,16 +444,15 @@ END_RULE = '<div style="border-top:1px solid #c8ccd1;margin-top:0.25em;padding-t
 
 
 def route_cells(pg, r):
-    """start/end (with the Location ref), countries, length as the route table shows it (known, or the
-    route-based estimate starred; no ref, the Pipeline details column carries it)."""
+    """start/end (with the Location ref) and countries. No length here: the Route details table carried an
+    unreferenced copy of it, and the referenced figure already sits in the Pipeline details table (Baird
+    2026-11-06, Ruby). The tabbed table's Route tab shows the referenced Pipeline details cell instead."""
     a = place(r["StartLocation"], r["StartState/Province"]) or "–"
     z = place(r["EndLocation"], r["EndState/Province"]) or "–"
-    known = f"{fmt(r['LengthKnown'])} {r['LengthKnownUnits']}" if r["LengthKnown"].strip() else ""
     rf = pg.cite(r["Location [ref]"])
     rf = f'<span style="float:right;margin-left:0.4em">{rf}</span>' if rf else ""   # the refs sit at the right end of the End line
     return [f"'''Start:''' {a}{END_RULE}{rf}'''End:''' {z}</div>",
-            ", ".join(countries(r["CountriesOrAreas"])),
-            known or length_est(r)]
+            ", ".join(countries(r["CountriesOrAreas"]))]
 
 
 def detail_cells(pg, r, units):
@@ -716,8 +715,8 @@ def location(pg, rows, tab, tabbed=False):
         # gets it too, open and with no route picture, since the map sits right below (Baird 2026-11-06)
         shapes = shape_cells(pg, rows) if len(rows) > 1 else {}
         body = [([shapes[r["ProjectID"]]] if shapes else []) + [label(r, rows)] + route_cells(pg, r) for r in rows]
-        out += ["", table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas", "Length"], body,
-                          collapsed=len(rows) > 1, sortable=True, footnote=EST_NOTE if any(b[-1].endswith("*") for b in body) else "")]
+        out += ["", table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
+                          collapsed=len(rows) > 1, sortable=True)]
     m, npts = map_block(pg, rows)
     out += ["", m]
     pg.log.append(f"map points: {npts}")
