@@ -129,6 +129,8 @@ A page with ten or more segments gets ONE sortable table under Project details i
 
 Segment names link the two tables (Baird 2026-11-06). On a tabbed page each segment name in the table links down to its row in the Background table (anchor `bg-<ProjectID>`, hover text "Click for project background"), and the name there links back up (anchor `row-<ProjectID>`, hover text "Click for project details"). Both anchors carry `scroll-margin-top`, so the row lands at the same height below the wiki's top bar either way. Background rows are matched to segments by name after normalizing; a Background row that matches no single segment stays unlinked, and the generator logs it. A jump changes the page fragment, so the table shows its default Route tab again.
 
+Both tables scroll inside their own box (Baird 2026-11-06). The segment table and the Background table each sit in a box 80% of the window tall that scrolls on its own, with the tab strip and the column headers fixed at its top, so a long table never runs off the screen. On a phone the box scrolls sideways too, and the tab strip scrolls sideways on its own. Classes `gem-segments` and `gem-bgbox` in `Template:Segment table/styles.css`.
+
 ### ==Ownership== (generated)
 
 **Table 5: Ownership**
