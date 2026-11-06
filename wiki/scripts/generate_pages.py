@@ -6,7 +6,7 @@ The template is `wiki/template/pipeline_page_template.md` (pushed to the Google 
 generator, so the template can be tried on real pages before it goes to them. It posts nothing
 (except `--push-styles`, which saves the two stylesheet pages: the tabbed table's and the map popup's).
 
-A page with SEG_TABLE_MIN (10) or more segments gets ONE segment table under Project details instead
+A page with SEG_TABLE_MIN (5) or more segments gets ONE segment table under Project details instead
 of the five tables (route, details, timeline, cost, ownership): rows are segments, every column is
 tagged with its group (`col-route`, `col-details`, ...), and a tab strip shows one group at a time.
 The tabs are plain anchor links: the stylesheet `Template:Segment table/styles.css` (TemplateStyles,
@@ -71,6 +71,16 @@ MAP_GREY, STATUS_COLORS, STATUS_ORDER = B.MAP_GREY, B.STATUS_COLORS, B.STATUS_OR
 
 def status_color(pg, status):
     return STATUS_COLORS[pg.tracker].get(status, MAP_GREY)
+
+
+DOT_RE = re.compile(r'<span class="gem-statusdot" style="[^"]*"></span>')
+
+
+def status_dot(pg, status):
+    """A dot in the map's color for the status, set before the status word in the tables (Baird 2026-11-06).
+    Inline style, so it shows on every page whatever stylesheets the page loads."""
+    return (f'<span class="gem-statusdot" style="display:inline-block;width:8px;height:8px;margin:0 5px 1px 0;'
+            f'border-radius:50%;vertical-align:middle;background:{status_color(pg, status)}"></span>')
 
 
 STATUS_CATEGORY = {"operating": "Existing", "proposed": "Proposed", "construction": "Under construction",
@@ -467,7 +477,7 @@ def detail_cells(pg, r, units):
     units |= {r["CapacityUnits"] if cap else "", r["LengthKnownUnits"] if ln and num(r["LengthKnown"]) else "",
               r["DiameterUnits"] if dia else ""}
     p = f"{r['Pressure']} {r['PressureUnits']}".strip() if r.get("Pressure", "").strip() else ""
-    return [r["Status"] + pg.cite(r["Status [ref]"]),
+    return [status_dot(pg, r["Status"]) + r["Status"] + pg.cite(r["Status [ref]"]),
             r["Fuel"] + (pg.cite(r["Fuel [ref]"]) if r["Fuel"] else ""),
             cap + (pg.cite(r["Capacity [ref]"]) if cap else ""),
             (ln + pg.cite(r["Length [ref]"])) if ln else est,
@@ -568,7 +578,7 @@ def gloss(units):
 
 # ---------- the tabbed segment table (pages with SEG_TABLE_MIN or more segments) ----------
 
-SEG_TABLE_MIN = 10
+SEG_TABLE_MIN = 5    # five or more segments get the tabbed table (Baird 2026-11-06; was ten)
 STYLES_PAGE = "Segment table/styles.css"       # Template:Segment table/styles.css, content model sanitized-css
 MAP_STYLES_PAGE = "Pipeline map/styles.css"    # Template:Pipeline map/styles.css: the click popup on the route map
 
@@ -601,10 +611,11 @@ _CSS_HEAD = """\
    builder (pipelines-researcher, wiki/scripts/generate_pages.py); edit it there, not here. */
 /* the table scrolls inside a box a bit shorter than the window, with the tab strip and the column headers fixed at its top (Baird 2026-11-06) */
 .gem-segments { overflow: auto; max-height: 80vh; margin-top: 0.6em; }
-.gem-segtabs { position: sticky; top: 0; left: 0; z-index: 3; height: 34px; margin: 0; padding-top: 4px; box-sizing: border-box; white-space: nowrap; overflow-x: auto; overflow-y: hidden; background: #fff; border-bottom: 1px solid #a2a9b1; line-height: 1.2; }
+.gem-segtabs { position: sticky; top: 0; left: 0; z-index: 3; height: 34px; margin: 0; padding-top: 4px; box-sizing: border-box; white-space: nowrap; overflow-x: auto; overflow-y: hidden; background: #fff; line-height: 1.2; }
 /* the strip scrolls sideways on its own on a narrow screen, so it never makes the box wider than the table */
 /* the headers tuck 3px under the tab strip, or a sliver of the rows shows between the two */
-.gem-segments th { position: sticky; top: 31px; z-index: 4; box-shadow: inset 0 -1px #a2a9b1; }
+.gem-segments th { position: sticky; top: 31px; z-index: 4; border-top: 0; box-shadow: inset 0 1px #a2a9b1, inset 0 -1px #a2a9b1; }
+/* a fixed header's own border scrolls away with the table, so its top and bottom lines are drawn as shadows that stay; the tab strip draws no line of its own, so no line runs wider than the table (Baird 2026-11-06) */
 .gem-segtabs a { display: inline-block; padding: 0.35em 0.9em; margin: 0 0.15em -1px 0; border: 1px solid #a2a9b1; border-radius: 4px 4px 0 0; background: #eaecf0; color: #202122; font-size: 95%; text-decoration: none; }
 .gem-segtabs a:hover { background: #f8f9fa; }
 /* the anchors sit fixed at the top of the window, always in view, so a tab click does not scroll the page */
@@ -615,11 +626,11 @@ _CSS_HEAD = """\
 /* the Background table on the same pages: its own box, header fixed at the top */
 .gem-bgbox { overflow: auto; max-height: 80vh; }
 .gem-bgbox table { margin: 0; }
-.gem-bgbox th { position: sticky; top: 0; z-index: 2; box-shadow: inset 0 -1px #a2a9b1; }
+.gem-bgbox th { position: sticky; top: 0; z-index: 2; border-top: 0; box-shadow: inset 0 1px #a2a9b1, inset 0 -1px #a2a9b1; }
 .gem-bgbox .gem-anchor { scroll-margin-top: 3.5em; }   /* below the column header */
 .gem-segments table { margin-top: 0; }
 /* the phone skin makes a table a block that scrolls sideways on its own, which breaks the fixed headers; the box does the scrolling instead */
-.gem-segments table, .gem-bgbox table { display: table; overflow: visible; }
+.gem-segments table, .gem-bgbox table { display: table; overflow: visible; border-top: 0; }
 /* the Ownership tab: Operator, Owner and Parent share the width equally (Baird 2026-11-06) */
 #seg-ownership:target ~ .gem-segments table { display: table; table-layout: fixed; width: 100%; }   /* display: the phone skin makes tables blocks, which ignores fixed layout */
 #seg-ownership:target ~ .gem-segments th.col-ownership { width: 26%; }
@@ -749,7 +760,7 @@ def details(pg, rows, tab):
                      footnote=EST_NOTE if any(b[4].endswith("*") for b in body) else ""))
 
     # timeline
-    body = [[label(r, rows), r["Status"]] + timeline_cells(pg, r) for r in rows]
+    body = [[label(r, rows), status_dot(pg, r["Status"]) + r["Status"]] + timeline_cells(pg, r) for r in rows]
     cap = FID_GLOSS if any(r["FIDStatus"].strip() or r["FIDYear"].strip() for r in rows) else ""
     out += ["", table(tab(), "Project timeline", ["Segment", "Status", "Proposal year", "FID", "Construction year",
                                                   "Start year", "Inactive year"], body, cap, sortable=True)]
@@ -995,6 +1006,21 @@ def dormancy_into_background(pg, kept, rows):
     return dedupe_background(kept)
 
 
+def color_background_status(pg, kept):
+    """Put the map-colored status dot before each status in the Background table; a re-run replaces the old dot."""
+    tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
+    if not tm:
+        return kept
+    word = {v: k for k, v in STATUS_PHRASE.items()}
+
+    def dot(mo):
+        st = DOT_RE.sub("", mo.group(2)).strip()
+        return mo.group(1) + (status_dot(pg, word.get(st, st)) + st if st and st != "–" else st)
+
+    body = re.sub(r"(?m)(^\|-\s*\n\|[^\n]*\n\|)([^\n]*)$", dot, tm.group(1))
+    return kept[:tm.start(1)] + body + kept[tm.end(1):]
+
+
 def dedupe_background(kept):
     """Drop a Background table row that repeats an earlier row word for word (an older run could add one twice)."""
     tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
@@ -1083,6 +1109,7 @@ def build(name, rows, owners, live, tracker):
     # defines itself are reused above
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     kept = dormancy_into_background(pg, kept, rows)
+    kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
     carried = lost_refs(pg, replaced, gen + kept + extra_ar)
     if carried:
