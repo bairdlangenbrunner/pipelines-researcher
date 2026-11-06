@@ -76,8 +76,17 @@ def coords_of(pid):
         t, c = g['type'], g['coordinates']
         if t == 'LineString': lines.append(c)
         elif t == 'MultiLineString': lines.extend(c)
-    for ft in json.load(open(f)).get('features', []):
-        walk(ft.get('geometry'))
+    gj = json.load(open(f))
+    # the routes repo holds FeatureCollections, bare Features (P7715) and null stubs; a Feature read through
+    # .get('features') silently gave no map, so Shedgum-Riyadh 2 was posted without one (2026-11-06)
+    if gj.get('type') == 'FeatureCollection':
+        for ft in gj.get('features', []): walk(ft.get('geometry'))
+    elif gj.get('type') == 'Feature':
+        walk(gj.get('geometry'))
+    elif 'coordinates' in gj:
+        walk(gj)
+    if not lines and gj.get('geometry', gj.get('features', 0)) not in (None, []):
+        raise ValueError(f'{pid}: route file has geometry the reader did not parse: {f}')
     return lines
 
 def thin(line, maxpts=60):
