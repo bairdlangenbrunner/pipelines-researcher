@@ -521,12 +521,13 @@ def cost_cell(pg, r):
 
 
 def owner_cells(pg, r, owners):
-    """owner (names with shares) and operator from the operators/owners tab, each with its ref, and the
-    parent as the tracker tab's Parent column states it (shares kept where known; no ref column)."""
+    """operator, owner (names with shares) and parent, in that column order (Baird 2026-11-06): operator and owner
+    from the operators/owners tab, each with its ref, and the parent as the tracker tab's Parent column states it
+    (shares kept where known; no ref column)."""
     o = owners.get(r["ProjectID"])
     if o is None:
         pg.log.append(f"{r['ProjectID']}: no operators/owners row; Owner taken from the tracker tab")
-        return [r["Owner"], parent_cell(r), ""]
+        return ["", r["Owner"], parent_cell(r)]
     names = []
     for i in range(1, 12):
         n = (o.get(f"Owner{i}") or "").strip()
@@ -536,7 +537,7 @@ def owner_cells(pg, r, owners):
     own = "; ".join(names) + (pg.cite(o.get("Owner [ref]")) if names else "")
     opr = (o.get("Operator") or "").strip()
     opr += pg.cite(o.get("Operator [ref]")) if opr else ""
-    return [own, parent_cell(r), opr]
+    return [opr, own, parent_cell(r)]
 
 
 def parent_cell(r):
@@ -605,6 +606,10 @@ _CSS_HEAD = """\
 #seg-route, #seg-details, #seg-timeline, #seg-cost, #seg-ownership, #seg-all { position: fixed; top: 0; left: 0; width: 0; height: 0; overflow: hidden; }
 .gem-segments { overflow-x: auto; }
 .gem-segments table { margin-top: 0; }
+/* the Ownership tab: Operator, Owner and Parent share the width equally (Baird 2026-11-06) */
+#seg-ownership:target ~ .gem-segments table { display: table; table-layout: fixed; width: 100%; }   /* display: the phone skin makes tables blocks, which ignores fixed layout */
+#seg-ownership:target ~ .gem-segments th.col-ownership { width: 26%; }
+#seg-ownership:target ~ .gem-segments td { overflow-wrap: break-word; }
 .gem-segments .cap-details, .gem-segments .cap-timeline, .gem-segments .cap-cost, .gem-segments .cap-ownership, .gem-segments .cap-all { display: none; }
 """
 
@@ -646,7 +651,7 @@ def segment_table(pg, rows, owners):
             ("Length", ["route", "details"], False), ("Diameter", ["details"], False), ("Pressure", ["details"], False),
             ("Proposal year", ["timeline"], False), ("FID", ["timeline"], False), ("Construction year", ["timeline"], False),
             ("Start year", ["timeline"], False), ("Inactive year", ["timeline"], False),
-            ("Cost", ["cost"], False), ("Owner", ["ownership"], False), ("Parent", ["ownership"], False), ("Operator", ["ownership"], False)]
+            ("Cost", ["cost"], False), ("Operator", ["ownership"], False), ("Owner", ["ownership"], False), ("Parent", ["ownership"], False)]
     body = []
     for r in rows:
         rt = route_cells(pg, r)
@@ -701,10 +706,13 @@ def location(pg, rows, tab, tabbed=False):
         out.append(overview_sentence(pg, rows, tabbed=True))
     else:
         out.append(overview_sentence(pg, rows))
-        shapes = shape_cells(pg, rows)
+    if not tabbed:
+        # the Route details table, the five-table pages' version of the tabbed table's Route tab. A one-segment page
+        # gets it too, open and with no route picture, since the map sits right below (Baird 2026-11-06)
+        shapes = shape_cells(pg, rows) if len(rows) > 1 else {}
         body = [([shapes[r["ProjectID"]]] if shapes else []) + [label(r, rows)] + route_cells(pg, r) for r in rows]
         out += ["", table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas", "Length"], body,
-                          collapsed=True, sortable=True, footnote=EST_NOTE if any(b[-1].endswith("*") for b in body) else "")]
+                          collapsed=len(rows) > 1, sortable=True, footnote=EST_NOTE if any(b[-1].endswith("*") for b in body) else "")]
     m, npts = map_block(pg, rows)
     out += ["", m]
     pg.log.append(f"map points: {npts}")
@@ -741,7 +749,7 @@ def details(pg, rows, tab):
 
 def ownership(pg, rows, owners, tab):
     body = [[label(r, rows)] + owner_cells(pg, r, owners) for r in rows]
-    return "==Ownership==\n" + table(tab(), "Ownership", ["Segment", "Owner", "Parent", "Operator"], body)
+    return "==Ownership==\n" + table(tab(), "Ownership", ["Segment"] + [f'width="26%"|{h}' for h in ("Operator", "Owner", "Parent")], body)
 
 
 # ---------- preserved sections ----------
@@ -1031,8 +1039,15 @@ def build(name, rows, owners, live, tracker):
     return text, pg
 
 
+def page_body(text):
+    """The wiki text to save: the .txt minus the page-name line and blank line GEMwiki puts first. Saving the .txt
+    as it stands prints the name as a stray first line above the intro (Transcontinental and Ruby, 2026-11-06)."""
+    first, _, rest = text.partition("\n")
+    return rest.lstrip("\n")
+
+
 def render(s, title, text):
-    body = text.split("\n", 2)[2]  # drop the page-name line GEMwiki puts first in the .txt
+    body = page_body(text)
     d = GW.post(s, action="parse", title=title, text=body, contentmodel="wikitext", prop="text|headhtml",
                 disablelimitreport=1, pst=1)
     t = d["parse"]["text"]
@@ -1096,6 +1111,7 @@ def main():
     ap.add_argument("--tracker", default="gas", choices=["gas"])
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-render", action="store_true")
+    ap.add_argument("--save", action="store_true", help="upload the route shapes and save each page via wiki_save (page-name line dropped)")
     ap.add_argument("--push-styles", action="store_true", help="save the tabbed-table and map-popup stylesheet pages on the wiki if they differ")
     a = ap.parse_args()
     if a.push_styles:
@@ -1137,6 +1153,12 @@ def main():
         report += [f"## {name}", "", f"- rows: {len(rows)}; generated text {len(text):,} characters (live page {len(live):,})",
                    f"- cite errors in the rendered preview: {len(errs)}"]
         report += [f"  - {e}" for e in errs[:20]]
+        if a.save:
+            import wiki_save
+            ls = ls if "ls" in dir() else GW.session(login=True)
+            up = upload_shapes(ls, out, name)
+            r = wiki_save.save(ls, name, text=page_body(text), summary="generated from the tracker by generate_pages.py")
+            pg.log.append(f"saved: {r.get('result')}, map {'BROKEN' if r.get('map', {}).get('broken') else 'ok'}, {len(up)} shapes uploaded")
         report += [f"- {l}" for l in pg.log] + [""]
     open(os.path.join(out, "report.md"), "w").write("\n".join(report))
     print(out)

@@ -57,10 +57,11 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 - **Verb:** use "runs" for `operating`, `idled` and `mothballed`; "is proposed to run" for `proposed` and `construction`; "was proposed to run" for `shelved` and `cancelled`; "ran" for `retired`.
 - **Place names:** blank parts are dropped, and repeated parts collapse ("Novorossiysk, Krasnodar Krai, Russia").
 - **Single segment:** one sentence.
-- **Multiple segments:** Table 1 instead of the sentence.
+- **Multiple segments:** Table 1 instead of the sentence, folded shut by default.
+- **One segment (Baird 2026-11-06):** the sentence and also Table 1, open, with one row and no route-shape picture (the map sits right below), so a small page shows start and end the way the tabbed table's Route tab does.
 - **Ten or more segments (Baird 2026-11-06):** no Table 1 here. The overview sentence points to the segment table under Project details, which replaces Tables 1 to 5 with one tabbed table (see "Pages with ten or more segments" below).
 
-**Table 1: Route details** (multiple segments only)
+**Table 1: Route details** (pages with fewer than ten segments)
 
 | Segment | Start location | End location | Countries | Length |
 |---|---|---|---|---|
@@ -128,14 +129,14 @@ A page with ten or more segments gets ONE sortable table under Project details i
 
 **Table 5: Ownership**
 
-| Segment | Owner | Parent | Operator |
+| Segment | Operator | Owner | Parent |
 |---|---|---|---|
-| segment label | «Owner1» («Owner1%»); «Owner2» («Owner2%»); ... [ref: «Owner [ref]»] | «Parent», shares kept where known | «Operator» [ref: «Operator [ref]»] |
+| segment label | «Operator» [ref: «Operator [ref]»] | «Owner1» («Owner1%»); «Owner2» («Owner2%»); ... [ref: «Owner [ref]»] | «Parent», shares kept where known |
 
 **Logic:**
 - **Source tab:** Owner and operator come from the operators/owners tab, joined on `ProjectID`. Percentages are stored as fractions (0.75) and shown as "75%". A blank percentage shows the name only.
 - **Fallback:** If the operators/owners tab has no row for the ProjectID, use the tracker tab's `«Owner»` cell as written.
-- **Parent (Baird 2026-11-06):** A Parent column sits next to Owner. It shows the gas tab's `«Parent»` cell as the backend has it, with no ref of its own: `Williams Companies Inc [unknown %]` shows as "Williams Companies Inc", and a known share shows as "(59.1%)". A cell reading `unknown [unknown %]` takes the parent the backend gives for the same `«Owner»` cell on other rows, when there is exactly one; otherwise it shows a dash. The parents are still the ownership team's; the page only displays them. Put the "ownership tree" insert point right after this table, the way the other GEOT-covered trackers do.
+- **Parent (Baird 2026-11-06):** A Parent column sits next to Owner. It shows the gas tab's `«Parent»` cell as the backend has it, with no ref of its own: `Williams Companies Inc [unknown %]` shows as "Williams Companies Inc", and a known share shows as "(59.1%)". A cell reading `unknown [unknown %]` takes the parent the backend gives for the same `«Owner»` cell on other rows, when there is exactly one; otherwise it shows a dash. The parents are still the ownership team's; the page only displays them. The columns run Operator, Owner, Parent, matching the bullet order of hand-built pages (Baird 2026-11-06), and are the same width (26% each; Baird 2026-11-06): a `width` on each header cell in the five-table layout, and a fixed table layout on the Ownership tab of the tabbed table. Put the "ownership tree" insert point right after this table, the way the other GEOT-covered trackers do.
 
 ### Preserved sections (human-written, never overwritten)
 
