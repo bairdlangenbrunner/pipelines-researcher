@@ -378,6 +378,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-datacenter-tags-powerplant-20261019` [update] — rows=11 fills=11 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 11
 - `staging/update-followups-20261014` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-km-to-mi-20261009` [update] — rows=7 fills=7 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 7
+- `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 89a/0h/0r/0s of 101
 - `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
