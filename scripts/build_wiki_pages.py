@@ -288,7 +288,23 @@ def pull_expansion(text):
     end = m.end() + nxt.start() if nxt else len(text)
     return text[:m.start()] + '\n' + text[end:].lstrip('\n'), text[m.end():end].strip('\n')
 
+def merge_details_headings(text):
+    # wiki pages carry one 'Project Details' section, never 'Pipeline details' (Baird 2026-11-06): a page with only
+    # Pipeline details gets it renamed; a page with both keeps the first heading and loses the second
+    pat = re.compile(r'^==\s*(Pipeline|Project) details\s*==[ \t]*$', re.I | re.M)
+    ms = list(pat.finditer(text))
+    if not ms: return text
+    out, last = [], 0
+    for i, m in enumerate(ms):
+        out.append(text[last:m.start()])
+        if i == 0: out.append('==Project Details==')
+        else: out.append('')
+        last = m.end()
+    out.append(text[last:])
+    return re.sub(r'\n{3,}', '\n\n', ''.join(out))
+
 def insert_segments(text, rows, own, map_pids=None):
+    text = merge_details_headings(text)
     seen = set()
     if map_pids: text = update_map(text, map_pids)
     # idempotent: a segment whose heading is already on the page was inserted by an earlier run (Oasis got it twice, 2026-11-04)
