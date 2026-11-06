@@ -105,6 +105,7 @@ class Page:
         self.log = []
         self.dorm = []
         self.shapes = {}        # wiki file name -> svg text for the route-shape column
+        self.bg = set()         # ProjectIDs with a row in the Background table (linked both ways, link_background)
         # self.dorm: (row, sentence, ref cell) for a segment's Background entry
 
     def cite(self, cell):
@@ -605,6 +606,8 @@ _CSS_HEAD = """\
 /* the anchors sit fixed at the top of the window, always in view, so a tab click does not scroll the page */
 #seg-route, #seg-details, #seg-timeline, #seg-cost, #seg-ownership, #seg-all { position: fixed; top: 0; left: 0; width: 0; height: 0; overflow: hidden; }
 .gem-segments { overflow-x: auto; }
+/* a segment link lands its row the same distance below the top of the window in both tables, clear of the sticky header */
+.gem-anchor { display: inline-block; width: 0; height: 0; scroll-margin-top: 4.5em; }
 .gem-segments table { margin-top: 0; }
 /* the Ownership tab: Operator, Owner and Parent share the width equally (Baird 2026-11-06) */
 #seg-ownership:target ~ .gem-segments table { display: table; table-layout: fixed; width: 100%; }   /* display: the phone skin makes tables blocks, which ignores fixed layout */
@@ -675,8 +678,10 @@ def segment_table(pg, rows, owners):
     for i in keep:
         h, gs, uns = cols[i]
         t.append(f'!class="{"unsortable " if uns else ""}{" ".join("col-" + g for g in gs)}"|{h}')
-    for lab, cells in body:
-        t += ["|-", f"|{lab}"]
+    for (lab, cells), r in zip(body, rows):
+        pid = r["ProjectID"]
+        # each segment name is an anchor, and links down to its Background row when it has one (Baird 2026-11-06)
+        t += ["|-", f'|<span id="row-{pid}" class="gem-anchor"></span>' + (f'<span title="Click for project background">[[#bg-{pid}|{lab}]]</span>' if pid in pg.bg else lab)]
         for i in keep:
             v = cells[i].strip()
             cls = f'class="{" ".join("col-" + g for g in cols[i][1])}"'
@@ -909,6 +914,38 @@ def background_table(pg, kept, rows):
     return kept[:m.start(1)] + new + kept[m.end(1):]
 
 
+BG_LINKED = re.compile(r'<span id="bg-P\d+" class="gem-anchor"></span>(?:<span title="[^"]*">)?\[\[#row-P\d+\|(.*?)\]\](?:</span>)?')
+
+
+def link_background(pg, kept, rows):
+    """On a tabbed page, each Background table row whose segment name matches a tracker row (same name key as
+    background_table) gets an anchor and a link up to that segment's row in the segment table; the segment
+    table links back down (pg.bg). Re-running on an already linked page relinks from the plain name."""
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if not m:
+        return kept
+    keys = {}
+    for r in rows:
+        for k in {_key(label(r, rows)), _key(r["SegmentName"])} - {""}:
+            keys.setdefault(k, set()).add(r["ProjectID"])
+    unmatched, used = [], set()
+
+    def cell(mo):
+        pre, name = mo.group(1), BG_LINKED.sub(r"\1", mo.group(2)).strip()
+        pids = keys.get(_key(name), set())
+        if len(pids) != 1 or next(iter(pids)) in used:
+            unmatched.append(name)
+            return pre + name
+        pid = pids.pop(); used.add(pid)
+        return f'{pre}<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{name}]]</span>'
+
+    # the first cell after each row separator: "|name" or "|style=...|name"
+    body = re.sub(r'(?m)(^\|-\s*\n\|(?:[^|\n]*?=\s*"[^"\n]*"\s*\|)?)([^\n]+)$', cell, m.group(1))
+    pg.bg |= used
+    pg.log.append(f"Background links: {len(used)} rows linked to the segment table" + (f"; no single segment matched {', '.join(unmatched)}" if unmatched else ""))
+    return kept[:m.start(1)] + body + kept[m.end(1):]
+
+
 def dormancy_into_background(pg, kept, rows):
     """Put each segment's dormancy sentence at the end of its row in the Background table, or add a
     row for the segment when it has none. Skipped when the sentence is already there (a re-run)."""
@@ -988,6 +1025,8 @@ def build(name, rows, owners, live, tracker):
     kept, extra_ar, replaced = preserved(pg, live)
     kept = unshade(kept)
     kept = background_table(pg, kept, order(rows))
+    if len(rows) >= SEG_TABLE_MIN:
+        kept = link_background(pg, kept, rows)
     # a Background table built on the 2026-11-06 run says "Unit"; the row label is "Segment" (Baird 2026-11-06)
     kept = kept.replace("!Unit\n!Status\n!Background", "!Segment\n!Status\n!Background")
     seed_url_names(pg, kept)
