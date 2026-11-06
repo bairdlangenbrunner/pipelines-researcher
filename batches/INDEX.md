@@ -369,6 +369,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/route-creation-p8318-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-creation-p8327-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
 - `staging/route-creation-palo-duro-20261017` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 2a/0h/0r/0s of 2
+- `staging/route-creation-transco-20261106` [route-creation] — rows=13 fills=0 updates=0 status-pending=0 refs(none) routes=13 new(none) decided 0a/0h/0r/0s of 13
 - `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-merge-p7853-20261106` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
@@ -378,7 +379,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-datacenter-tags-powerplant-20261019` [update] — rows=11 fills=11 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 11
 - `staging/update-followups-20261014` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-km-to-mi-20261009` [update] — rows=7 fills=7 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 7
-- `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 89a/0h/0r/0s of 101
+- `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 101
 - `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
@@ -444,6 +445,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20261105_1457_ET_united-states-gas_route-creation-lowman.xlsx`
 - `deliverables/pipelines_batch_20261105_1459_ET_united-states-gas_discovery-fsc-laterals.xlsx`
 - `deliverables/pipelines_batch_20261106_1151_ET_united-states-gas_route-creation-mep-gulfsouth.xlsx`
+- `deliverables/pipelines_batch_20261106_1721_ET_united-states-gas_route-creation-transco.xlsx`
 - `archive/` — 55 superseded/applied file(s)
 
 ## united-states-oil
