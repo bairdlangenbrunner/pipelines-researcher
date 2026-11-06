@@ -23,6 +23,7 @@ Where things live — **read on demand as the workflow dictates, not all at once
   (pluggable GEM↔dataset diff), `sweep.md` (Country Sweep — the research engine),
   `discovery.md`, `update.md` (targeted fixes), `qc.md` (QC + handoff packet),
   `lean_pass.md` (token-budgeted sweep mode),
+  `wiki_pages.md` (gem.wiki pages for new pipelines; the prep for data-team page generation is `wiki/`),
   `annual_update.md` (campaign recipe).
 - **Workflow recipes** (commands, in order): `docs/workflows.md`.
 - **Reference**: `docs/reference/` — `gem_schema.md`, `controlled_vocab.md`,
@@ -171,6 +172,7 @@ For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
   run wiki-fetching passes in both at the same time.
 - Full writeup, including the account's actual rights: that repo's
   `gem-wiki/README.md` → Auth and the Cloudflare section.
+- **Saving a gem.wiki page goes through `scripts/wiki_save.py`, never `gemwiki.edit_page` directly (Baird 2026-11-06).** A page saved through the API is cached without the Google Maps script and its map shows "Your browser is not compatible with Google Maps v3"; `wiki_save.save()` edits, purges and checks the render, and the PreToolUse hook `.claude/hooks/guard-wiki-save.py` blocks a hand-rolled save. Repair: `python scripts/wiki_save.py --check --since <date> --purge`. Detail: `docs/sops/wiki_pages.md`.
 
 ---
 

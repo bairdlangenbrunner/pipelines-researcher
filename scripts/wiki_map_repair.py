@@ -11,7 +11,7 @@ python scripts/wiki_map_repair.py --titles "Kern River Gas Pipeline" "EPIC NGL P
 python scripts/wiki_map_repair.py --purge                 # also purge every broken page and re-check it
 
 A page is broken when its rendered HTML has a Maps div (maps-googlemaps3) but no
-maps.googleapis.com script. The check reads the page as a reader's browser gets it. Purging changes
+maps.googleapis.com script. The check reads the parser cache through the API (scripts/wiki_save.py map_state), the copy readers get; scripts/wiki_save.py --check does the same and is the preferred entry point. Purging changes
 no content. Confirm a few in a real browser with scripts/wiki_map_check.py.
 """
 import argparse, json, re, subprocess, sys, time
@@ -22,26 +22,19 @@ from urllib.parse import quote
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'goit-ggit-data-ops' / 'gem-wiki'))
 import gemwiki as g
 
-BROWSER_UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 '
-              '(KHTML, like Gecko) Chrome/130.0 Safari/537.36')
 ACCOUNT = 'Baird Langenbrunner'
 
-
-def rendered(title):
-    url = 'https://www.gem.wiki/' + quote(title.replace(' ', '_'), safe="/()!,;:@$*'")  # MediaWiki's own link form; the %28 form can hit a stale cache copy
-    out = subprocess.run(['curl', '-sL', '--compressed', '-A', BROWSER_UA, '-w', '\n%{http_code}', url],
-                         capture_output=True, text=True).stdout
-    html, _, code = out.rpartition('\n')
-    return code, html
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from wiki_save import map_state  # action=parse, not curl: Cloudflare turns curl's answer into "0 with a map" (2026-11-06)
 
 
 def state(title):
-    code, html = rendered(title)
-    maps = len(re.findall(r'class="maps-map maps-googlemaps3"', html))
-    script = 'maps.googleapis.com/maps/api/js' in html
-    empty = len(re.findall(r'data-mw-maps-mapdata="[^"]*&quot;centre&quot;:false', html))
-    return {'title': title, 'code': code, 'maps': maps, 'script': script,
-            'broken': bool(maps and not script), 'empty_maps': empty}
+    r = map_state(_S, title)
+    r['empty_maps'] = 0
+    return r
+
+
+_S = None
 
 
 def main():
@@ -53,7 +46,8 @@ def main():
     ap.add_argument('--out', help='write the per-page results as JSON')
     a = ap.parse_args()
 
-    s = g.session()
+    global _S
+    s = _S = g.session(login=True)
     if a.titles:
         titles = a.titles
     else:

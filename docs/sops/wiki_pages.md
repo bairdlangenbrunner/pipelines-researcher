@@ -4,6 +4,8 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 
 ## Standing rules
 
+This SOP covers hand-built pages. The prep for having the data team generate every pipeline page from the tracker (template, readiness report, example tracker file) lives in `wiki/` (see `wiki/README.md`). Once that generator exists, the layout there replaces the bullet-list layout below.
+
 1. **Pilot first.** Post one new page and edit one existing page, and get Baird's approval before any bulk publish.
 2. **Never cite GEM.** No gem.wiki or globalenergymonitor.org URL in a reference. Banned hosts (abarrelfull, theodora.com, yingdodo) are also excluded. The generator drops them.
 3. **Edits to existing pages need a live-text check.** Before posting, re-read the live page and confirm it is unchanged since the draft was made. Never overwrite someone else's edit.
@@ -50,7 +52,7 @@ The pipeline is proposed to run from X to Y.<ref>
 - **Background tense (Baird 2026-11-04).** Write Background in the past tense, or at least acknowledge the timeline. Something proposed, filed or approved is stated as having happened, with its date ("Dominion Energy North Carolina proposed the T-15 Reliability Project"). What the project would have done stays conditional ("would run", "would be regulated"). Never "plans to", "proposes" or "is now" without a date, because the source may be months old.
 - **Construction wording (Baird 2026-11-04).** A construction-status pipeline is "a natural gas pipeline under construction", never "a construction natural gas pipeline". The generator's `new_page` does this.
 - **Null route stubs.** A routes-repo geojson with `geometry: null` (142 bytes) means no route. Leave the map off.
-- **Browser check limit.** Cloudflare challenges headless Chrome, so `wiki_map_check.py` can fail. Fall back to `action=parse` (`prop=text|headitems`): the map id should be `map_google3_1` and the head items should include `maps.googleapis.com`.
+- **Browser check limit.** Cloudflare challenges headless Chrome, so `wiki_map_check.py` can fail. `scripts/wiki_save.py` checks every save through `action=parse` (`prop=text|headhtml`): a page with a map div must have `maps.googleapis.com` in its head. Never check with curl: a Cloudflare challenge page has no map div and reads as "0 with a map".
 - **Location verb by status.** Proposed: "is proposed to run from X to Y". Construction: "is being built from X to Y" (Baird 2026-11-05: a pipeline under construction is not just proposed). Cancelled or shelved: "was proposed to run". Operating: "runs".
 - **Project Details order.** Operator, Owner, Capacity, Length, Diameter, Status, Start year, Cost. Leave Parent out. Keep original units. Costs are full units shown as "US$...".
 - **Single segment vs several.** A page with one segment has no subheadings in Project Details or Background, and no "Main Line" label. "Main Line" and `===<SegmentName>===` headings appear only on pages with several segments.
@@ -79,14 +81,16 @@ The pipeline is proposed to run from X to Y.<ref>
    **Rebuild instead of appending (2026-11-05).** A page made by this workflow with one segment, edited only by the bot account since (check `page_revisions`), is regenerated as a multi-segment page when new segments arrive: `"rebuild": true` in scope.json, with the original PID under `keep_background` so its live Background text is kept word for word. The `.orig` is saved first as usual.
 7. Post with a short edit summary. Confirm from the revision history that the base text was unchanged.
 
-## Purge and check the map after every save
+## Every save goes through `scripts/wiki_save.py`
 
-A page saved through the API can end up with its map cached WITHOUT the Google Maps script tag (the saved render showed `map_google3_2`, not `_1`). The browser then shows "Your browser is not compatible with Google Maps v3" even though the markup is correct and identical to working pages. Fix: purge the page right after saving: `gemwiki.post(s, action="purge", titles=title, forcelinkupdate="1")`. Then confirm in a real browser with `python scripts/wiki_map_check.py <url> ...` (headless Chrome via Playwright): the map text should read "Map / Satellite / ... Terms", not the "not compatible" message. Do this on every page that has a map, in the bulk publish too. Any script that edits existing pages (wording, status, lead fixes) breaks maps the same way if it skips the purge; on 2026-11-05 about 100 pages lost their maps this way. To find and fix pages saved without a purge, run `python scripts/wiki_map_repair.py --since <YYYY-MM-DD> --purge`. It scans every page the account saved since that date, purges each broken one and re-checks it.
+A page saved through the API is cached WITHOUT the Google Maps script tag (the saved render shows `map_google3_2`, not `_1`). The browser then shows "Your browser is not compatible with Google Maps v3" even though the markup is correct and identical to working pages. A purge right after the save re-renders it with the script. So **every save, new page or edit, one page or a bulk run, goes through `wiki_save.save(s, title, text=..., summary=...)`**, which edits, purges (`forcelinkupdate`), and checks through `action=parse` that a mapped page's head carries `maps.googleapis.com`, purging again up to three times and raising `MapBroken` otherwise. Never call `gemwiki.edit_page` or post `action=edit` by hand; the PreToolUse hook `.claude/hooks/guard-wiki-save.py` blocks a shell command that does. Then confirm a pilot page in a real browser with `python scripts/wiki_map_check.py <url>` (headless Chrome via Playwright): the map text should read "Map / Satellite / ... Terms", not the "not compatible" message.
+
+History: on 2026-11-05 about 100 US pages lost their maps to a wording script that skipped the purge; on 2026-11-06 Idku-Abu Hummus Gas Pipeline I and Kuraimat-Al Tebbin Gas Pipeline were posted with a hand-rolled `edit_page` call and broke the same way (Baird: "make sure this never happens again"). To find and fix pages saved without a purge, run `python scripts/wiki_save.py --check --since <YYYY-MM-DD> --purge` (`scripts/wiki_map_repair.py` is the older entry point and now uses the same API check). It scans every page the account saved since that date, purges each broken one and re-checks it.
 
 ## Checks before publishing
 
 - **No repetition anywhere (Baird 2026-11-04).** Re-read the live page after posting and check for duplicate headings within a section, duplicate paragraphs and repeated sentences (Oasis got its whole Clint Export section twice). `insert_segments` skips a segment whose heading is already on the page, so a re-run is safe, but still read the result.
-- Every page with a map was purged after saving and passes `scripts/wiki_map_check.py`.
+- Every page was saved through `scripts/wiki_save.py` (its map check passed), and a pilot page with a map passes `scripts/wiki_map_check.py` in a real browser.
 - Background heading present.
 - No duplicate citations; PDF refs titled.
 - No GEM or banned URLs.
