@@ -56,7 +56,7 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 **Logic:**
 - **Verb:** use "runs" for `operating`, `idled` and `mothballed`; "is proposed to run" for `proposed` and `construction`; "was proposed to run" for `shelved` and `cancelled`; "ran" for `retired`.
 - **Place names:** blank parts are dropped, and repeated parts collapse ("Novorossiysk, Krasnodar Krai, Russia").
-- **Single segment:** one sentence.
+- **Single segment:** one sentence, plus the open Table 1 described below.
 - **Multiple segments:** Table 1 instead of the sentence, folded shut by default.
 - **One segment (Baird 2026-11-06):** the sentence and also Table 1, open, with one row and no route-shape picture (the map sits right below), so a small page shows start and end the way the tabbed table's Route tab does.
 - **Ten or more segments (Baird 2026-11-06):** no Table 1 here. The overview sentence points to the segment table under Project details, which replaces Tables 1 to 5 with one tabbed table (see "Pages with ten or more segments" below).
