@@ -562,6 +562,8 @@ _CSS_HEAD = """\
 .gem-segtabs { margin: 0.6em 0 0; border-bottom: 1px solid #a2a9b1; line-height: 1.2; }
 .gem-segtabs a { display: inline-block; padding: 0.35em 0.9em; margin: 0 0.15em -1px 0; border: 1px solid #a2a9b1; border-radius: 4px 4px 0 0; background: #eaecf0; color: #202122; font-size: 95%; text-decoration: none; }
 .gem-segtabs a:hover { background: #f8f9fa; }
+/* the anchors sit fixed at the top of the window, always in view, so a tab click does not scroll the page */
+#seg-route, #seg-details, #seg-timeline, #seg-cost, #seg-ownership, #seg-all { position: fixed; top: 0; left: 0; width: 0; height: 0; overflow: hidden; }
 .gem-segments { overflow-x: auto; }
 .gem-segments table { margin-top: 0; }
 .gem-segments .cap-details, .gem-segments .cap-timeline, .gem-segments .cap-cost, .gem-segments .cap-ownership, .gem-segments .cap-all { display: none; }
