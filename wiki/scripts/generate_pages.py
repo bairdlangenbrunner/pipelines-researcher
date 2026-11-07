@@ -760,9 +760,10 @@ def details(pg, rows, tab):
                      footnote=EST_NOTE if any(b[4].endswith("*") for b in body) else ""))
 
     # timeline
-    body = [[label(r, rows), status_dot(pg, r["Status"]) + r["Status"]] + timeline_cells(pg, r) for r in rows]
+    # no Status column: the Pipeline details table right above already shows it (Baird 2026-11-06, Ruby)
+    body = [[label(r, rows)] + timeline_cells(pg, r) for r in rows]
     cap = FID_GLOSS if any(r["FIDStatus"].strip() or r["FIDYear"].strip() for r in rows) else ""
-    out += ["", table(tab(), "Project timeline", ["Segment", "Status", "Proposal year", "FID", "Construction year",
+    out += ["", table(tab(), "Project timeline", ["Segment", "Proposal year", "FID", "Construction year",
                                                   "Start year", "Inactive year"], body, cap, sortable=True)]
 
     # cost

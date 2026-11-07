@@ -101,11 +101,13 @@ Caption under the table: list each unit abbreviation used on the page, for examp
 
 **Table 3: Project timeline**
 
-| Segment | Status | Proposal year | FID | Construction year | Start year | Inactive year |
-|---|---|---|---|---|---|---|
-| segment label | «Status» | «ProposalYear» [ref: «Proposal [ref]»] | «FIDYear» («FIDStatus») [ref: «FID [ref]»] | «ConstructionYear» [ref: «Construction [ref]»] | «StartYear1» [ref: «Start [ref]»] | {year} ({status}) [ref] |
+| Segment | Proposal year | FID | Construction year | Start year | Inactive year |
+|---|---|---|---|---|---|
+| segment label | «ProposalYear» [ref: «Proposal [ref]»] | «FIDYear» («FIDStatus») [ref: «FID [ref]»] | «ConstructionYear» [ref: «Construction [ref]»] | «StartYear1» [ref: «Start [ref]»] | {year} ({status}) [ref] |
 
 Caption under the table: "FID = final investment decision, used by some developers to indicate a project will move forward".
+
+No Status column here: Table 2 right above already shows it (Baird 2026-11-06).
 
 **Logic:**
 - **Start year:** For `proposed` and `construction`, the header note reads "planned". If `«Delayed» = yes`, add " (delayed)" after the start year, with the ref from `«Delay [ref]»`. Later phases (`«StartYear2»`, `«StartYear3»`) are added as "2027, 2029 (phase 2)".
