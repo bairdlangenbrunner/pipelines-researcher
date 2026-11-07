@@ -366,10 +366,8 @@ def map_block(pg, rows):
         sts = sorted({r["Status"] for r in mapped}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
         legend = "\n\n" + " &nbsp; ".join(f'<span style="color:{status_color(pg, s)}">■</span> {STATUS_PHRASE.get(s, s).capitalize()}'
                                             for s in sts)
-        unm = len(rows) - len(mapped)
-        text += " Click a line for its segment name."
-        if unm:
-            text += f" {unm} of the {len(rows)} segments have no mapped route."
+        # one plain count on multi-segment pages (Baird 2026-11-06)
+        text = f"{len(mapped)} of {len(rows)} segments have a mapped route in the database."
     body = ";".join(lines)
     mid = f"{(max(lats) + min(lats)) / 2:.5f}, {(max(lons) + min(lons)) / 2:.5f}"
     return (f'{text}\n\n<templatestyles src="{MAP_STYLES_PAGE}" />\n'
