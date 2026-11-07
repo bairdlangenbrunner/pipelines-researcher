@@ -369,7 +369,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/route-creation-p8318-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-creation-p8327-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
 - `staging/route-creation-palo-duro-20261017` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 2a/0h/0r/0s of 2
-- `staging/route-creation-transco-20261106` [route-creation] — rows=13 fills=0 updates=0 status-pending=0 refs(none) routes=13 new(none) decided 0a/0h/0r/0s of 13
+- `staging/route-creation-transco-20261106` [route-creation] — rows=13 fills=0 updates=0 status-pending=0 refs(none) routes=13 new(none) decided 13a/0h/0r/0s of 13
 - `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-merge-p7853-20261106` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
@@ -382,6 +382,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 101
 - `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
+- `staging/update-p2607-p0145-20261106` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(UNRESOLVED=1) routes=0 new(none) decided —
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
 - `staging/update-p7814-parent-20261008` [update] — rows=1 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-p7833-south-mississippi-20261102` [update] — rows=1 fills=8 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 9
