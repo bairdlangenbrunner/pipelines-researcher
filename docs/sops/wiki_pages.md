@@ -90,7 +90,7 @@ A page saved through the API is cached WITHOUT the Google Maps script tag (the s
 
 History: on 2026-11-05 about 100 US pages lost their maps to a wording script that skipped the purge; on 2026-11-06 Idku-Abu Hummus Gas Pipeline I and Kuraimat-Al Tebbin Gas Pipeline were posted with a hand-rolled `edit_page` call and broke the same way (Baird: "make sure this never happens again"). To find and fix pages saved without a purge, run `python scripts/wiki_save.py --check --since <YYYY-MM-DD> --purge` (`scripts/wiki_map_repair.py` is the older entry point and now uses the same API check). It scans every page the account saved since that date, purges each broken one and re-checks it.
 
-A map line's style fields are never three tildes in a row: `~~~` saves as the editor's signature and breaks the line (68 pages were hit on 2026-11-06 and repaired 2026-11-07), so an empty title and popup are written `~ ~ ~`.
+A map line's style fields are never three tildes in a row: `~~~` saves as the editor's signature and breaks the line (68 pages were hit on 2026-11-06 and repaired 2026-11-07), so each line carries the page name as its label (a blank label written `~ ~ ~` tripped the site firewall on Elba Express Pipeline).
 
 ## Pages with five or more segments
 
