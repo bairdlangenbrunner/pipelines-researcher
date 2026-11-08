@@ -4,7 +4,7 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 
 ## Standing rules
 
-This SOP covers hand-built pages. The prep for having the data team generate every pipeline page from the tracker (template, readiness report, example tracker file) lives in `wiki/` (see `wiki/README.md`). Once that generator exists, the layout there replaces the bullet-list layout below.
+**Every new page is built in the Ruby/Transco format (Baird 2026-11-07).** Point the rows' Wiki cells at the new page name, then build it with `wiki/scripts/generate_pages.py --tracker <gas|oil> --out wiki/out/<run> "<Page name>"` and save with `--save`, the same layout as the Ruby_Gas_Pipeline page (one row) and the Transcontinental_Gas_Pipeline page (tabbed segment table at five or more rows). The bullet-list layout of `scripts/build_wiki_pages.py` described under "New page layout" is no longer used for new pages; it stays only for adding a segment to an old hand-built page. The data team's generator prep (template, readiness report, example tracker file) is in `wiki/` (see `wiki/README.md`).
 
 1. **Pilot first.** Post one new page and edit one existing page, and get Baird's approval before any bulk publish.
 2. **Never cite GEM.** No gem.wiki or globalenergymonitor.org URL in a reference. Banned hosts (abarrelfull, theodora.com, yingdodo) are also excluded. The generator drops them.
@@ -23,7 +23,7 @@ This SOP covers hand-built pages. The prep for having the data team generate eve
 ## Steps
 
 1. **Scope.** Pull a fresh snapshot (`./scripts/refresh_csvs.sh`). List the newly added ProjectIDs. Group them by PipelineName into `scope.json`: per name, `pids`, `wiki` (existing URL, `MISSING`, or `EXISTS:<title>`), `routes`, `oldrows`. Optional keys: `link_only` (PIDs the page already describes, so only the map is redrawn, no segment is added), `rebuild` plus `keep_background` (see Existing pages).
-2. **New page or segment.** A name with no wiki page gets a new page. A pipeline that is a segment of one with an existing page is added to that page (see Existing pages). Check by searching the wiki for the name and any alias before deciding.
+2. **New page or segment.** A name with no wiki page gets a new page. A pipeline that is a segment of one with an existing page is added to that page (see Existing pages). Check by searching the wiki for the name and any alias before deciding, and check the tracker for another row about the same project: P3200 (VNG Interconnect, a Transco segment) already had a page through P5990, so a "new" page would have made a second page for one project (2026-11-07).
 3. **PDF titles.** Run `scripts/wiki_pdf_titles.py` for PDF refs not yet in `data/wiki_pdf_titles.json` and add titles. Scanned PDFs with no readable text show the full URL. A ref that does not load and has no archived copy goes in `data/wiki_unreadable_refs.json` with the reason; the generator leaves it off the page and the sheet keeps it.
 4. **Background prose.** Write it by hand from `ResearcherNotes`, `DataCenterNotes` and the `[ref]` columns, with `{key}` placeholders that resolve to `_refs` citations. If none is written, the Background heading still appears; it holds only the dormancy sentence where one applies.
 5. **Generate drafts** and read them. Check the map, refs, status wording, units.
@@ -91,6 +91,10 @@ A page saved through the API is cached WITHOUT the Google Maps script tag (the s
 History: on 2026-11-05 about 100 US pages lost their maps to a wording script that skipped the purge; on 2026-11-06 Idku-Abu Hummus Gas Pipeline I and Kuraimat-Al Tebbin Gas Pipeline were posted with a hand-rolled `edit_page` call and broke the same way (Baird: "make sure this never happens again"). To find and fix pages saved without a purge, run `python scripts/wiki_save.py --check --since <YYYY-MM-DD> --purge` (`scripts/wiki_map_repair.py` is the older entry point and now uses the same API check). It scans every page the account saved since that date, purges each broken one and re-checks it.
 
 A map line's style fields are never three tildes in a row: `~~~` saves as the editor's signature and breaks the line (68 pages were hit on 2026-11-06 and repaired 2026-11-07), so each line carries the page name as its label (a blank label written `~ ~ ~` tripped the site firewall on Elba Express Pipeline).
+
+## Regenerating a page from the tracker keeps every citation (Baird 2026-11-06)
+
+`wiki/scripts/generate_pages.py` rebuilds the lead, Location, Project details, Ownership and Articles and resources of a live page and keeps everything else (Background, Opposition, any other section a person wrote) word for word. A citation that sat only in a rebuilt section is not thrown away: `lost_refs` collects every `<ref>` and bare external link from the replaced text whose URL the new page no longer cites and writes them as a bullet list under `==Other sources==` inside the human-kept zone, so the data team's generator keeps them too; `fix_named_refs` copies the definition of a named ref that the kept text reuses but a replaced section defined. After the build, `audit_refs` compares the live page with the generated one, URL by URL (and by text for a ref with no URL), and logs each `LOST REF`; `--save` refuses a page with any. Every run writes `refs_ledger.json` (per page: live ref and URL counts, the citations carried into Other sources, the lost ones) beside `report.md`, and the live text of every page as `<page>.orig.txt`. The wiki's own revision history is the durable copy of the old page. Bulk runs take `--pages-file <list>` (one page name per line); the first bulk run, 395 US gas pages, is `wiki/out/us_gas_20261106/`.
 
 ## Pages with five or more segments
 
