@@ -36,3 +36,9 @@ def test_value_change_is_not_held_by_a_rejected_or_agreeing_line():
     old = _line("a/r7", "469.1")
     assert not clean_accepts.contested_by_other_run({"lines": [old, _line("a/recovery", "365", "reject")]}, old)
     assert not clean_accepts.contested_by_other_run({"lines": [old, _line("a/other", "469.10")]}, old)
+
+
+def test_same_value_ignores_thousands_separators():
+    assert clean_accepts.same_value("246,000.00", 246000)
+    assert clean_accepts.same_value("1443.00", "1443")
+    assert not clean_accepts.same_value("246,000.00", 246001)

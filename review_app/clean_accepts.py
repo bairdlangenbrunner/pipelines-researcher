@@ -180,9 +180,10 @@ def blockers(pipes):
 
 
 def same_value(a, b):
+    """Equal as text or as numbers; the snapshot's display text keeps thousands separators ('246,000.00')."""
     a, b = str(a).strip(), str(b).strip()
     try:
-        return float(a) == float(b)
+        return float(a.replace(",", "")) == float(b.replace(",", ""))
     except ValueError:
         return a.lower() == b.lower()
 

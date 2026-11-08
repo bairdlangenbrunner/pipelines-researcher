@@ -261,6 +261,7 @@ def same_value(cur, v):
         return True
 
     def num(x):
+        x = x.replace(",", "")   # the snapshot's display text carries thousands separators ('246,000.00')
         try:
             return float(x[:-1]) / 100 if x.endswith("%") else float(x)
         except ValueError:
@@ -274,7 +275,7 @@ def same_value(cur, v):
     if not m or len(m.group(1)) > 6:
         return False
     try:
-        live = Decimal(a.rstrip("%")) / (100 if a.endswith("%") else 1) * (100 if m.group(2) else 1)
+        live = Decimal(a.rstrip("%").replace(",", "")) / (100 if a.endswith("%") else 1) * (100 if m.group(2) else 1)
         shown = live.quantize(Decimal(1).scaleb(-len(m.group(1))), rounding=ROUND_HALF_UP)
         return shown == Decimal(b.rstrip("%").replace(",", ""))
     except InvalidOperation:

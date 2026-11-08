@@ -333,6 +333,13 @@ def test_a_figure_rounded_from_the_snapshot_display_is_the_live_value():
     assert not push.same_value("12.5", "13")
 
 
+def test_a_thousands_separator_in_the_snapshot_display_is_not_a_change():
+    # the snapshot shows '246,000.00' for a live cell of 246000; that is the same value, not a stale basis (EACOP 2026-11-07)
+    assert push.same_value("246000", "246,000.00") and push.same_value("246,000.00", "246000")
+    assert push.same_value("1443", "1443.00") and push.same_value("5000000000", "5,000,000,000.00")
+    assert not push.same_value("246000", "246,001.00")
+
+
 def test_a_month_is_written_as_a_number_not_text():
     assert push.coerce("July", "ProposalMonth") == 7
     assert push.coerce("Mar", "ConstructionMonth") == 3
