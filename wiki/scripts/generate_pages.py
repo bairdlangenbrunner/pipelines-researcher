@@ -954,6 +954,84 @@ def background_table(pg, kept, rows):
     return kept[:m.start(1)] + new + kept[m.end(1):]
 
 
+EXPANSION_HEAD = re.compile(r"(?ms)^==\s*(expansions?(?: projects?)?|expansion and extension projects?|extensions?)\s*==\s*\n(.*?)(?=^==[^=]|\Z)", re.I)
+DATA_BULLET = re.compile(r"(?m)^\*+\s*(?:'''[^'\n]{1,60}?:?\s*'''|(?:operator|owners?|parent(?: company)?|(?:current |proposed )?capacity|diameter|length|cost|status|start year|proposal year|construction year|financing|associated infrastructure)\s*:).*\n?", re.I)
+
+
+def segment_matcher(rows):
+    """name -> ProjectID: an exact SegmentName or label first, then the loose key, then a unique loose-key prefix."""
+    exact = {n.strip().lower(): r["ProjectID"] for r in rows for n in (label(r, rows), r["SegmentName"]) if n.strip()}
+    loose = {}
+    for r in rows:
+        for k in {_key(label(r, rows)), _key(r["SegmentName"])} - {""}:
+            loose.setdefault(k, set()).add(r["ProjectID"])
+
+    def find(h):
+        if h.strip().lower() in exact:
+            return exact[h.strip().lower()]
+        k = _key(h)
+        if not k:
+            return None
+        if len(loose.get(k, ())) == 1:
+            return next(iter(loose[k]))
+        hit = {next(iter(p)) for kk, p in loose.items() if len(p) == 1 and (kk.startswith(k) or k.startswith(kk))}
+        return hit.pop() if len(hit) == 1 else None
+    return find
+
+
+def fold_expansions(pg, kept, rows):
+    """An "Expansion projects" section mixes background and project details (Baird 2026-11-07, Iroquois). Its
+    data bullets (Operator, Owner, Capacity, Status ...) go, since the tables carry them; its narrative moves to
+    Background, one subsection per expansion, each checked against the tracker segments. Returns (kept, removed
+    text); the removed text is scanned like a replaced section, so no citation is lost."""
+    m = EXPANSION_HEAD.search(kept)
+    if not m:
+        return kept, ""
+    bullets = DATA_BULLET.findall(m.group(2))
+    removed = "\n".join(bullets)
+    body = DATA_BULLET.sub("", m.group(2)).strip()
+    find = segment_matcher(rows)
+    parts = re.split(r"(?m)^===\s*([^=].*?)\s*===\s*$", body)
+    lead, subs = parts[0].strip(), [(parts[i].strip(), parts[i + 1].strip()) for i in range(1, len(parts), 2)]
+    unmatched = [h for h, _ in subs if not find(h)]
+    pg.log.append(f"Expansion section '{m.group(1)}': {len(subs)} subsections moved to Background, {len(bullets)} data bullets removed")
+    if unmatched:
+        pg.log.append(f"EXPANSION NOT IN TRACKER: {', '.join(unmatched)}")
+    pg.unmatched_expansions = unmatched
+    moved = ((lead + "\n\n") if lead else "") + "".join(f"==={h}===\n{t}\n\n" for h, t in subs)
+    kept = (kept[:m.start()] + kept[m.end():]).strip()
+    bg = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if bg:
+        kept = kept[:bg.end(1)].rstrip() + "\n\n" + moved.strip() + "\n\n" + kept[bg.end(1):].lstrip()
+    else:
+        kept = "==Background==\n" + moved.strip() + ("\n\n" + kept if kept else "")
+    return kept.strip(), removed
+
+
+def fold_other_sections(pg, kept):
+    """A page has four sections, Location, Project details, Ownership and Background, plus Other sources (Baird
+    2026-11-07, Kern River). Any other kept section (Environmental impact, Opposition, Financing ...) moves into Background as a
+    subsection, its own subsections one level down, in page order. Other sources stays last."""
+    secs = split_sections(kept)
+    bg, other, moved = [], [], []
+    for h, _, body in secs[1:]:
+        hl = h.lower()
+        if hl == "background":
+            bg.append(body.strip())
+        elif hl == "other sources":
+            other.append(f"=={h}==\n{body.strip()}")
+        else:
+            moved.append((h, re.sub(r"(?m)^(===+)([^=].*?[^=])(===+)\s*$", r"=\1\2\3=", body.strip())))
+    if not moved:
+        return kept
+    pg.log.append(f"sections moved into Background: {', '.join(h for h, _ in moved)}")
+    lead = secs[0][2].strip()
+    if lead:   # text above the first heading in kept: keep it at the top of Background
+        bg.insert(0, lead)
+    body = "\n\n".join([b for b in bg if b] + [f"==={h}===\n{t}" for h, t in moved if t])
+    return "\n\n".join(["==Background==\n" + body] + other)
+
+
 BG_LINKED = re.compile(r'<span id="bg-P\d+" class="gem-anchor"></span>(?:<span title="[^"]*">)?\[\[#row-P\d+\|(.*?)\]\](?:</span>)?')
 
 
@@ -1106,6 +1184,9 @@ def build(name, rows, owners, live, tracker):
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
     kept = unshade(kept)
+    kept, gone = fold_expansions(pg, kept, rows)
+    replaced = replaced + "\n\n" + gone
+    kept = fold_other_sections(pg, kept)
     kept = background_table(pg, kept, order(rows))
     if len(rows) >= SEG_TABLE_MIN:
         kept = link_background(pg, kept, rows)
