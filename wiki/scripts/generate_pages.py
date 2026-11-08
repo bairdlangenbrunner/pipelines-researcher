@@ -926,20 +926,31 @@ def background_table(pg, kept, rows):
             loose.setdefault(k, set()).add(r["ProjectID"])
     by_pid = {r["ProjectID"]: r["Status"] for r in rows}
     status = {k: by_pid[next(iter(p))] for k, p in loose.items() if len(p) == 1}
+    def st_of(h):
+        st = exact.get(h.strip().lower()) or status.get(_key(h), "")
+        if not st and _key(h):                     # "Phase II" for "Phase II Kovykta-Chayanda": a unique prefix
+            hit = {next(iter(p)) for k, p in loose.items() if len(p) == 1 and k.startswith(_key(h))}
+            st = by_pid[hit.pop()] if len(hit) == 1 else ""
+        return st
+    # only subsections that name a segment go in the table; the others ("Technical description", "Route",
+    # "Ownership") stay as prose subsections after it (Baird 2026-11-07)
+    seg = [(h, txt, st_of(h)) for h, txt in subs]
+    rows_in = [x for x in seg if x[2]]
+    other = [(h, txt) for h, txt, st in seg if not st]
+    if len(rows_in) < 2:
+        if other:
+            pg.log.append(f"Background left as prose: fewer than two subsections name a segment ({', '.join(h for h, _ in other)})")
+        return kept
     t = ['{| class="wikitable"', "!Segment", "!Status", "!Background"]
-    unmatched = []
-    for h, txt in subs:
+    for h, txt, st in rows_in:
         txt = re.sub(r"(?m)^====+\s*(.*?)\s*=+\s*$", "'''\\1'''", txt)
         txt = re.sub(r"(?m)^([|!])", r"<nowiki>\1</nowiki>", txt)  # a line starting | or ! would break the table
-        st = exact.get(h.strip().lower()) or status.get(_key(h), "")
-        if not st:
-            unmatched.append(h)
-        t += ["|-", f"|{h}", f"|{STATUS_PHRASE.get(st, st) or '–'}", "|\n" + (txt or "–")]
+        t += ["|-", f"|{h}", f"|{STATUS_PHRASE.get(st, st)}", "|\n" + (txt or "–")]
     t.append("|}")
-    if unmatched:
-        pg.log.append(f"Background table: no tracker status matched for {', '.join(unmatched)}")
-    pg.log.append(f"Background: {len(subs)} segment subsections turned into a table")
-    new = (lead + "\n\n" if lead else "") + "\n".join(t) + "\n\n"
+    if other:
+        pg.log.append(f"Background: kept as prose subsections, no segment matched: {', '.join(h for h, _ in other)}")
+    pg.log.append(f"Background: {len(rows_in)} segment subsections turned into a table")
+    new = (lead + "\n\n" if lead else "") + "\n".join(t) + "\n\n" + "".join(f"==={h}===\n{txt}\n\n" for h, txt in other)
     return kept[:m.start(1)] + new + kept[m.end(1):]
 
 
