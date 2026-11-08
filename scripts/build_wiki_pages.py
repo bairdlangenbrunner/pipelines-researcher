@@ -122,7 +122,7 @@ def map_block(pids, maxpts=60, status=None):
     span = max(max(p[1] for p in allp) - min(p[1] for p in allp), max(p[0] for p in allp) - min(p[0] for p in allp))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9 if span > .3 else 10
     col = lambda p: STATUS_COLORS['gas'].get(status.get(p, ''), MAP_GREY)
-    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~~~{col(p)}~1~3' if status else '') for p, l in segs)
+    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~ ~ ~{col(p)}~1~3' if status else '')  # never ~~~: it saves as a signature for p, l in segs)
     out = f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
     shown = sorted({status[p] for p, _ in segs if p in status}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
     if len(set(pids)) > 1 and shown:
