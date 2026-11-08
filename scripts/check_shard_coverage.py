@@ -287,6 +287,13 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                     r"(?:[1-9]|1[0-2])(?:\.0+)?", str(mval_).strip()):
                 why.append(f"`{mcol_}` = {mval_!r} — month columns take the number 1-12, never "
                            "the month name or text")
+        # Owner<N>% is staged the way the sheet shows it, "100.00%" (Baird 2026-11-07): a bare
+        # 1 or 100 reads as a different value in the review app; push.py turns it into a fraction.
+        for pcol_, pval_ in vals_.items():
+            if re.fullmatch(r"Owner\d+%", str(pcol_)) and str(pval_).strip() and not re.fullmatch(
+                    r"\d{1,3}\.\d{2}%", str(pval_).strip()):
+                why.append(f"`{pcol_}` = {pval_!r} — stage owner shares as the sheet shows them, "
+                           "two decimals and a percent sign (\"100.00%\", \"1.00%\"), never 1 or 100")
         # `Fuel` on the gas tab takes one of four values (Baird 2026-10-09): never "natural gas",
         # "Natural Gas" or lowercase "gas". A value equal to the sheet's own is carried, not checked.
         if "Fuel" in vals_ and str(vals_["Fuel"]).strip() not in GAS_FUEL_VALUES:
