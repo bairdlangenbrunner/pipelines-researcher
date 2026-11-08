@@ -917,14 +917,21 @@ def background_table(pg, kept, rows):
     if len(parts) < 5:
         return kept
     lead, subs = parts[0].strip(), [(parts[i].strip(), parts[i + 1].strip()) for i in range(1, len(parts), 2)]
-    status = {_key(label(r, rows)): r["Status"] for r in rows}
-    status.update({_key(r["SegmentName"]): r["Status"] for r in rows if r["SegmentName"].strip()})
+    # an exact name wins; a loose key counts only when it points at one row ("Phase I" and "Phase I Expansion"
+    # share the loose key "1", and Power of Siberia's operating Phase I showed as cancelled, 2026-11-07)
+    exact = {n.strip().lower(): r["Status"] for r in rows for n in (label(r, rows), r["SegmentName"]) if n.strip()}
+    loose = {}
+    for r in rows:
+        for k in {_key(label(r, rows)), _key(r["SegmentName"])} - {""}:
+            loose.setdefault(k, set()).add(r["ProjectID"])
+    by_pid = {r["ProjectID"]: r["Status"] for r in rows}
+    status = {k: by_pid[next(iter(p))] for k, p in loose.items() if len(p) == 1}
     t = ['{| class="wikitable"', "!Segment", "!Status", "!Background"]
     unmatched = []
     for h, txt in subs:
         txt = re.sub(r"(?m)^====+\s*(.*?)\s*=+\s*$", "'''\\1'''", txt)
         txt = re.sub(r"(?m)^([|!])", r"<nowiki>\1</nowiki>", txt)  # a line starting | or ! would break the table
-        st = status.get(_key(h), "")
+        st = exact.get(h.strip().lower()) or status.get(_key(h), "")
         if not st:
             unmatched.append(h)
         t += ["|-", f"|{h}", f"|{STATUS_PHRASE.get(st, st) or '–'}", "|\n" + (txt or "–")]
