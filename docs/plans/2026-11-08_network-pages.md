@@ -61,7 +61,9 @@ Steps:
 1. Mockup (done 2026-11-08): hand-built wikitext of the pilot page from the live text, for approval. No save.
 2. Generator `--network <English name>` mode in `generate_pages.py`: rows = every row whose registry-mapped primary is the network; direct segments = rows whose PipelineName equals the page name; the sections above. Pipeline pages gain the two lead lines. Preserved sections (COMMENT2 to COMMENT3) are carried as today.
 3. Dry run to `wiki/out/samples/`, compare with the mockup, render through action=parse, check the refs ledger (nothing lost).
-4. Save through `scripts/wiki_save.py` from the work profile, one page, after Baird's OK. Then the member pipelines' pages (none exist standalone for Guangxi today; the two member names have no page of their own and get none until Baird wants them).
+4. Save through `scripts/wiki_save.py` from the work profile, one page, after Baird's OK. Then the member pipelines' pages, only when Baird wants one. Done for Guangxi LNG Terminal Transport Pipeline 2026-11-08: its page was built from its 8 rows (the generator selects by `Wiki`, which still points at the network page, so a wrapper passed the rows), the legacy Guangxi LNG Supporting Line page folded in and redirects to it, and the network page's Pipelines table links to it while its 8 segments left the network page's segment table (their 17 citations moved with them). The map still draws them.
+
+Generator gap found on that page: `intro()` falls back to the first row's `OtherLanguageAlternativePipelineNames` on a multi-segment page with no system row, so a segment's local name (柳州支线) lands in the lead as the pipeline's alias. Network mode must take the pipeline's local name from `OtherLanguagePrimaryPipelineName` (the majority value) and skip segment aliases.
 5. Audit: `python wiki/scripts/network_audit.py` (to write) checks the invariants: one primary per PipelineName, every primary in the registry, every registry page exists or is a PipelineName, no secondary equal to the primary, no grouping value equal to the row's own PipelineName.
 
 ## Gates (Baird decides)
