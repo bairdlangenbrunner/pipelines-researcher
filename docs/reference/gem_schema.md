@@ -81,6 +81,7 @@ Each row is a pipeline **segment**, not a whole pipeline:
 
 - `PipelineNetworkGrouping` (+ `AltPipelineNetworkGrouping`) groups segments that
   form one physical system.
+- **`PipelineNetworkGrouping` is how rows are organized onto gem.wiki pages; `PipelineName` stays as the researcher chose it (Baird 2026-11-07).** Never rename a researcher's `PipelineName` to match a wiki page title, a wiki redirect, or a network. When a row's page or network looks wrong, the fix is its grouping. A 2026-10-28 pass that renamed 26 China rows to their wiki redirect targets was reverted (`notes/backup-2026-11-07-revert-china-pipelinename-renames.csv`).
 - `PipelineName` is the system/pipeline name; `SegmentName` distinguishes segments
   (`Pipeline 1`, `Pipeline 2`, …; blank or `--` for a single-segment pipeline).
 - **Names are title case (GGIT convention, Baird 2026-10-19):** every word in a proposed `PipelineName` / `SegmentName` is capitalized (`Hope Utilities AEP Fuel Cell Data Center Pipeline`, not `… fuel cell data center pipeline`); acronyms and brand spellings stay as the source writes them.
