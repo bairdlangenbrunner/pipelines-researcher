@@ -48,7 +48,7 @@ DEFAULT_FIELDS = ["PipelineName", "SegmentName", "Status", "StartYear1", "Length
                   "Capacity", "CapacityUnits", "Diameter", "Owner", "RouteAccuracy",
                   "StartCountryOrArea", "EndCountryOrArea", "StartLocation", "EndLocation",
                   "StartState/Province", "EndState/Province", "FuelSource",
-                  "PipelineNetworkGrouping"]
+                  "PrimaryNetwork", "PipelineNetworkGrouping"]
 
 
 def _latest_snapshot(commodity: str) -> Path:

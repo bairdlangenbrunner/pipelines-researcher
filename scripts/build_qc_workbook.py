@@ -122,7 +122,8 @@ def check_diameter(df):
 def check_name_uniqueness(df):
     groups = defaultdict(list)
     for _, r in df.iterrows():
-        key = (str(r.get("PipelineNetworkGrouping", "")).strip() or str(r.get("PipelineName", "")).strip(),
+        key = (str(r.get("PrimaryNetwork", "") or r.get("PipelineNetworkGrouping", "")).strip()
+               or str(r.get("PipelineName", "")).strip(),
                str(r.get("SegmentName", "")).strip())
         groups[key].append(r)
     out = []

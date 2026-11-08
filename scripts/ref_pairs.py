@@ -33,6 +33,7 @@ REF_SUFFIX = " [ref]"
 NON_REF_VALUE_COLS = {
     # identity & names
     "PipelineNetworkGrouping", "AltPipelineNetworkGrouping", "PipelineNetworkGroupingAlt",
+    "PrimaryNetwork", "PrimaryNetworkWiki", "SecondaryNetworks",
     "PipelineName", "SegmentName", "Wiki", "ProjectID", "Researcher", "LastUpdated",
     "OtherEnglishNames", "OtherLanguagePrimaryPipelineName",
     "OtherLanguageAlternativePipelineNames", "OtherLanguageSegmentName",

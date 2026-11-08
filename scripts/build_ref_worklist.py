@@ -234,6 +234,20 @@ def _classify(kind: str, ref_col, any_value_filled: bool, current_ref: str,
     return "HAS_REF" if current_ref.strip() else "MISSING_REF"
 
 
+
+def _network_local_names() -> dict:
+    """English network name -> local-language name, from the wiki network registry.
+
+    The Gas tab's PrimaryNetwork holds English names since 2026-11-08; the China
+    idiom regex is written against the Chinese names, so both are tried."""
+    import json
+    reg = Path(__file__).resolve().parent.parent / "wiki" / "data" / "networks.json"
+    try:
+        nets = json.loads(reg.read_text())["networks"]
+    except (OSError, ValueError, KeyError):
+        return {}
+    return {n["PrimaryNetwork"]: n.get("PrimaryNetworkLocalLanguage", "") for n in nets}
+
 def build(csv: str, country: str | None, statuses: set[str] | None,
           verify_existing: bool, owners_csv: str | None = None,
           province: str | None = None,
@@ -287,8 +301,13 @@ def build(csv: str, country: str | None, statuses: set[str] | None,
         df = df[mask]
     if exclude_network_regex:
         rx = re.compile(exclude_network_regex)
-        if "PipelineNetworkGrouping" in cols:
-            df = df[~df["PipelineNetworkGrouping"].map(lambda s: bool(rx.search(str(s))))]
+        net_col = next((c for c in ("PrimaryNetwork", "PipelineNetworkGrouping") if c in cols), None)
+        if net_col:
+            # A pattern written in local script (the China idiom) is tested against the
+            # network's local-language name; any other pattern against the English value.
+            local = _network_local_names() if not exclude_network_regex.isascii() else {}
+            df = df[~df[net_col].map(
+                lambda s: bool(rx.search(local.get(str(s).strip(), str(s)))))]
     if statuses:
         df = df[df["Status"].map(lambda s: str(s).strip().lower() in statuses)]
     if include_pids:
@@ -485,7 +504,9 @@ def main() -> None:
                          "terminus matches; transited provinces don't count). Combine with "
                          "--country for sub-country batches, e.g. China by province")
     ap.add_argument("--exclude-network-regex",
-                    help="drop rows whose PipelineNetworkGrouping matches this regex (re.search). "
+                    help="drop rows whose PrimaryNetwork (or old PipelineNetworkGrouping) matches this regex "
+                         "(re.search). A non-ASCII pattern is tested against the network's local-language "
+                         "name from wiki/data/networks.json, any other against the English value. "
                          "China idiom: '^(?!.*输气管网$)' keeps only provincial-grid rows, "
                          "excluding national trunk systems (their own batch scope)")
     ap.add_argument("--exclude-pids",

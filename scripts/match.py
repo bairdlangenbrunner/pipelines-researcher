@@ -122,9 +122,9 @@ def gem_rows_for_country(df: pd.DataFrame, country: str):
             project_ids=[str(row.get("ProjectID") or "").strip()],
             pipeline_name=str(row.get("PipelineName") or "").strip(),
             segment_name=str(row.get("SegmentName") or "").strip(),
-            network_grouping=str(row.get("PipelineNetworkGrouping") or "").strip(),
+            network_grouping=str(row.get("PrimaryNetwork") or row.get("PipelineNetworkGrouping") or "").strip(),
             name_variants=_variants(row.get("PipelineName"), row.get("SegmentName"),
-                                    row.get("PipelineNetworkGrouping"), *other_names),
+                                    row.get("PrimaryNetwork") or row.get("PipelineNetworkGrouping"), *other_names),
             status=str(row.get("Status") or "").strip().lower(),
             owner=str(row.get("Owner") or "").strip(),
             # honours the row's own DiameterUnits — GEM tags mm vs in per row (see
