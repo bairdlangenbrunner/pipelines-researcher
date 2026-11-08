@@ -21,7 +21,7 @@ Researchers' `PipelineName`s are never renamed to fit a page (gem_schema, 2026-1
 - A pipeline has at most one primary network and any number of secondary networks. Both behave like tags.
 - The primary is where the pipeline is counted: the network page's length total, status mix and segment count include it, and its segments draw at full weight on the network map.
 - A secondary is navigation only: the pipeline is listed under "Connected pipelines" on that network's page and drawn lighter on its map (opacity 0.45, weight 2), and it is never in that network's totals. The pipeline page says "Also connected to Y".
-- Invariant: every row of one PipelineName carries the same primary. The audit flags a split (P7668 today).
+- Invariant: every row of one PipelineName carries the same primary. The audit flags a split (P7668 was one until it moved, 2026-11-08).
 - A one-row pipeline that is not a network of anything still has a primary when it belongs to a grid (the Beijing case: one row, one network, no network page).
 
 ## Sheet columns
@@ -54,7 +54,7 @@ Categories: on hold (Baird 2026-11-08). No network category, no per-network cate
 
 ## Pilot: Guangxi
 
-Network 广西输气管网 / Guangxi Gas Pipeline Network, case 2. 42 rows today, 43 once P7668 moves. Members: Guangxi Gas Pipeline Network (33 direct segments, 2,021 km), Guangxi LNG Terminal Transport Pipeline (8 segments, 1,620 km, Guangxi and Yunnan), Nanning-Pingxiang Gas Pipeline (2 segments, 225 km). Every row's Wiki cell already points at the Guangxi page, so the pilot changes the page's shape and not its row set. Secondary candidates for its Connected pipelines list are in the registry's `secondary_proposals`; Baird picks.
+Network 广西输气管网 / Guangxi Gas Pipeline Network, case 2. 43 rows since P7668 moved over from West-East Gas Pipeline 2 (2026-11-08). Members: Guangxi Gas Pipeline Network (33 direct segments, 2,021 km), Guangxi LNG Terminal Transport Pipeline (8 segments, 1,620 km, Guangxi and Yunnan), Nanning-Pingxiang Gas Pipeline (2 segments, 225 km). Every row's Wiki cell already points at the Guangxi page, so the pilot changes the page's shape and not its row set. Secondary candidates for its Connected pipelines list are in the registry's `secondary_proposals`; Baird picks.
 
 Steps:
 
@@ -70,7 +70,7 @@ Generator gap found on that page: `intro()` falls back to the first row's `Other
 
 1. The mockup's shape (this turn).
 2. Adding the sheet columns: done by Baird 2026-11-08 (see Sheet columns).
-3. P7668's grouping move to 广西输气管网, and the other grouping fixes already on the list (P4553, P3894, P8037). Each is a sheet write under the hard requirements: FORMULA pre-read, backup CSV in `notes/`, RAW cell-scoped write, re-read, `Researcher` = CB and `LastUpdated` stamped.
+3. P7668's move to Guangxi Gas Pipeline Network (done 2026-11-08: `PrimaryNetwork` and `PrimaryNetworkWiki`, backup `notes/sheet-backup-2026-11-08-gas-p7668-primary-network.csv`), and the other grouping fixes already on the list (P4553, P3894, P8037). Each is a sheet write under the hard requirements: FORMULA pre-read, backup CSV in `notes/`, RAW cell-scoped write, re-read, `Researcher` = CB and `LastUpdated` stamped.
 4. The name for 川渝输气管网 and whether the four Central Asia–China line groupings merge into one network.
 5. Which secondary proposals become `SecondaryNetworks` values for the Guangxi pilot.
 6. Extending past Guangxi: Guangdong and Xinjiang next (case 2, no new page), then Sichuan-Chongqing (case 3), then the one-pipeline networks, which only gain the lead line.
