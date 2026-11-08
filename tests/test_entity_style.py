@@ -283,6 +283,16 @@ def test_needs_person_and_held_names():
     assert [(c, st) for c, _, st, _ in held] == [("Owner3", "NextEra Energy Inc")]
 
 
+def test_a_ruled_operator_list_is_still_held_in_an_owner_cell():
+    # the 2026-10-22 ruling allows this list in Operator (no Operator2 column); an Owner<N> cell holds one company
+    lst = "Gazprom Transgaz Saint Petersburg LLC; Gazprom Transgaz Ukhta LLC"
+    assert s(lst).basis == "ruling" and not ES.needs_person(s(lst))
+    assert ES.owner_list("Owner1", lst) and not ES.owner_list("Operator", lst)
+    assert ES.owner_list("Owner2", "TC Offshore / Kinetica") and not ES.owner_list("Owner2", "Gazprom PJSC")
+    held = ES.held_names({"Operator": lst, "Owner1": lst})
+    assert [(c, f[0]) for c, _, _, f in held] == [("Owner1", "multi_owner")]
+
+
 def test_cyrillic_ruling_does_not_shadow_transliterated_spelling():
     # ПАО "Газпром" is ruled; PAO Gazprom transliterates to the same key but keeps its gazetteer match
     assert ES.style('ПАО "Газпром"').basis == "ruling"

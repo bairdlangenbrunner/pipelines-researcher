@@ -67,7 +67,8 @@ Rules (CLAUDE.md "Hard requirements"; docs/plans/2026-09-30_review-app.md §5):
     2026-10-14 those passed silently (P7829 MVP). Fix the line with a suggest, or rule on the name in
     data/owner_rulings.json, and re-plan. An Operator cell may hold several operators separated by `; `
     when each one is already in style (Baird 2026-10-22, P5585): there is no Operator2 column. A list with
-    a slash, or with any name the styler would re-spell, is still refused. Owner cells keep one company each.
+    a slash, or with any name the styler would re-spell, is still refused. Owner cells keep one company each,
+    even when the list is a ruled spelling (the ruling was made for an Operator cell; entity_style.owner_list).
   * STYLE-ONLY lines (Baird 2026-10-05): a line flagged `style_only` (an owner-style batch: the entity is
     unchanged, only its spelling moves) stamps LastUpdated but leaves Researcher as it is -- the person
     who researched the ownership keeps the credit. A row with any non-style-only line is stamped in full
@@ -499,7 +500,9 @@ def unstyled_names(writes):
         st = entity_style.style(sv)
         if c == "Operator" and operator_list_in_style(sv):
             continue
-        if entity_style.needs_person(st):
+        if entity_style.owner_list(c, sv):      # one company per Owner<N>; a ruling on a list is the Operator cell's
+            out.append((c, sv, st.styled, "held: multi_owner"))
+        elif entity_style.needs_person(st):
             out.append((c, sv, st.styled, "held: " + ", ".join(st.flags)))
         elif st.changed and entity_style.adoptable(st):
             out.append((c, sv, st.styled, "restyle"))

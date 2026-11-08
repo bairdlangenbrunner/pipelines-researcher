@@ -47,7 +47,8 @@ def test_the_page_is_one_file_the_artifact_tool_can_wrap(scope, tmp_path):
     data, rep = publish.build_dataset(["Russia"], "gas", batches_root=scope["root"], data_dir=scope["data"], write=False)
     assert data["pipelines"] and rep["orphan_reasons"] == [] and rep["label"] == "Russia gas"
     page = build_static.render(data, reviewer="BL")
-    assert page.startswith("<title>pipelines reviewer</title>\n<style>")
+    # the charset comes first so a copy opened from disk reads the ✓ ✗ · marks (shared builder, 2026-11-06)
+    assert page.startswith('<meta charset="utf-8">\n<title>pipelines reviewer</title>\n<style>')
     assert not re.search(r"<!doctype|<html[ >]|<head[ >]|<body[ >]", page, re.I)
     assert not re.search(r'<script[^>]+src=', page) and '<link rel="stylesheet"' not in page
     for name in build_static.SCRIPTS:

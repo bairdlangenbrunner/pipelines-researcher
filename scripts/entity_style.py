@@ -940,16 +940,28 @@ def needs_person(res: StyleResult) -> bool:
     return res.changed and not adoptable(res)
 
 
+def owner_list(col, value) -> bool:
+    """Is `value` several names in one Owner<N> cell? An Operator cell may list operators joined by
+    `; ` (there is no Operator2 column; Baird 2026-10-22, P5585), an Owner<N> cell never: it holds one
+    company and the next goes in Owner<N+1> (Baird 2026-10-16). A ruling recorded on such a list was made
+    for the Operator cell, so it does not clear the same text in an owner cell."""
+    sv = str(value or "")
+    return str(col) != "Operator" and (";" in sv or bool(_SLASH_LIST.search(sv)))
+
+
 def held_names(values: dict) -> list[tuple[str, str, str, list[str]]]:
     """[(col, value, styled, flags)] for each Owner<N> / Operator value in `values` that
-    needs_person(); the caller passes only the cells it would actually write."""
+    needs_person(), or that lists several owners in one Owner<N> cell (owner_list); the caller passes
+    only the cells it would actually write."""
     out = []
     for c, v in (values or {}).items():
         sv = str(v or "").strip()
         if not OWNER_COL.fullmatch(str(c)) or not sv:
             continue
         st = style(sv)
-        if needs_person(st):
+        if owner_list(c, sv):
+            out.append((c, sv, st.styled, list(dict.fromkeys(["multi_owner"] + st.flags))))
+        elif needs_person(st):
             out.append((c, sv, st.styled, st.flags))
     return out
 
