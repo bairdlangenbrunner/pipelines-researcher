@@ -294,8 +294,8 @@ def intro(pg, rows, tracker):
 
 
 def table(num_, title, header, body, caption="", collapsed=False, sortable=False, footnote=""):
-    # drop columns that are empty in every row (GEMwiki exclude_empty_columns=True); first column always kept
-    keep = [0] + [i for i in range(1, len(header)) if any(row[i].strip() for row in body) or header[i] == "Segment"]
+    # every column is shown on every page, empty or not, so the tables read the same on every page (Baird 2026-11-08)
+    keep = list(range(len(header)))
     cls = "wikitable" + (" sortable" if sortable and len(body) > 1 else "") + (" mw-collapsible mw-collapsed" if collapsed else "")
     t = [f"==== '''Table {num_}:''' {title} ====", "", f'{{| class="{cls}"']
     t.append("|+" + (f" {caption}" if caption else ""))
@@ -664,8 +664,8 @@ SEG_CSS = seg_css()
 
 def segment_table(pg, rows, owners):
     """One sortable table, a row per segment, every column tagged with its group(s) so the stylesheet
-    can show one group at a time. Columns empty in every row are left out, and a tab whose columns are
-    all gone is not offered. Old heading anchors (Table 1 ... Ownership) are kept as empty spans."""
+    can show one group at a time. Every column and every tab is shown on every page, empty or not, so the
+    tables read the same on every page (Baird 2026-11-08). Old heading anchors (Table 1 ... Ownership) are kept as empty spans."""
     units = set()
     shapes = shape_cells(pg, rows)
     # (header, groups, unsortable) in table order: one order serves every tab
@@ -682,7 +682,7 @@ def segment_table(pg, rows, owners):
         tl = timeline_cells(pg, r)
         cells = [shapes.get(r["ProjectID"], "")] + rt[:2] + [dt[0], dt[1], dt[2], dt[3], dt[4], dt[5]] + tl + [cost_cell(pg, r)] + owner_cells(pg, r, owners)
         body.append((label(r, rows), cells))
-    keep = [i for i in range(len(cols)) if any(cells[i].strip() for _, cells in body)]
+    keep = list(range(len(cols)))
     groups = [g for g in SEG_GROUPS if any(g in cols[i][1] for i in keep)]
     est = any(cells[6].endswith("*") for _, cells in body) and 6 in keep
     caps = {"details": gloss(units), "timeline": FID_GLOSS if 10 in keep else "", "cost": COST_NOTE if 14 in keep else ""}
@@ -748,12 +748,11 @@ def location(pg, rows, tab, tabbed=False):
 def details(pg, rows, tab):
     out = ["==Project details=="]
     units = set()
-    has_pressure = any(r.get("Pressure", "").strip() for r in rows)
     body = []
     for r in rows:
         d = detail_cells(pg, r, units)
-        body.append([label(r, rows)] + (d if has_pressure else d[:5]))
-    head = ["Segment", "Status", "Fuel", "Capacity", "Length", "Diameter"] + (["Pressure"] if has_pressure else [])
+        body.append([label(r, rows)] + d)
+    head = ["Segment", "Status", "Fuel", "Capacity", "Length", "Diameter", "Pressure"]
     out.append(table(tab(), "Pipeline details", head, body, gloss(units), sortable=True,
                      footnote=EST_NOTE if any(b[4].endswith("*") for b in body) else ""))
 
@@ -766,11 +765,7 @@ def details(pg, rows, tab):
 
     # cost
     body = [[label(r, rows), cost_cell(pg, r)] for r in rows]
-    out.append("")
-    if any(b[1] for b in body):
-        out.append(table(tab(), "Cost", ["Segment", "Cost"], body, sortable=True))
-    else:
-        out.append("====Cost====\nNo cost data available.")
+    out += ["", table(tab(), "Cost", ["Segment", "Cost"], body, sortable=True)]   # the table even with no cost, like every other
     return "\n".join(out)
 
 
