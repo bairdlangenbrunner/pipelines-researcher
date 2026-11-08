@@ -283,7 +283,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## uganda-oil
 
-- `staging/update-eacop-wiki-20261107` [update] — rows=1 fills=7 updates=0 status-pending=0 refs(REFS_ADDED=11, SHEET_SUSPECT=1) routes=0 new(none) decided —
+- `staging/update-eacop-wiki-20261107` [update] — rows=1 fills=7 updates=0 status-pending=0 refs(REFS_ADDED=11, SHEET_SUSPECT=1) routes=0 new(none) decided 0a/0h/0r/0s of 18
 
 ## ukraine-gas
 
@@ -310,7 +310,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/deepsweep-appalachian-operating` — rows=46 fills=146 updates=0 status-pending=0 refs(REFS_ADDED=336, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none) decided 2a/0h/4r/0s of 485
 - `staging/deepsweep-gulf-operating` — rows=50 fills=166 updates=0 status-pending=0 refs(REFS_ADDED=350, REF_UNSUPPORTED=3, REVERIFIED=5, UNRESOLVED=84) routes=0 new(none) decided 2a/0h/3r/0s of 523
 - `staging/deepsweep-remainder` — rows=45 fills=200 updates=0 status-pending=10 refs(REFS_ADDED=279, UNRESOLVED=114) routes=0 new(none) decided 6a/0h/0r/0s of 489
-- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=145 updates=0 status-pending=25 refs(REFS_ADDED=338, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 5a/0h/0r/0s of 540
+- `staging/deepsweep-s2-appalachian-indev` — rows=46 fills=145 updates=0 status-pending=25 refs(REFS_ADDED=338, REF_UNSUPPORTED=10, REVERIFIED=27, UNRESOLVED=60) routes=0 new(none) decided 8a/0h/0r/0s of 540
 - `staging/deepsweep-s2-gulf-indev` — rows=44 fills=172 updates=0 status-pending=25 refs(DEAD_LINK=5, REFS_ADDED=356, REF_BLOCKED=5, REF_UNSUPPORTED=12, REVERIFIED=34, UNRESOLVED=36) routes=0 new(none) decided 13a/0h/0r/0s of 587
 - `staging/deepsweep-s2-gulf-se-operating` — rows=41 fills=120 updates=0 status-pending=8 refs(DEAD_LINK=1, REFS_ADDED=318, REF_BLOCKED=1, REF_UNSUPPORTED=4, REVERIFIED=11, UNRESOLVED=48) routes=0 new(none) decided 2a/0h/0r/0s of 465
 - `staging/deepsweep-s2-northeast-alaska` — rows=42 fills=149 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=327, REF_BLOCKED=9, REF_UNSUPPORTED=9, REVERIFIED=18, UNRESOLVED=55) routes=0 new(none) decided 1a/0h/0r/0s of 503
@@ -355,6 +355,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/discovery-datacenter-west-ne-ak-retry4-20261016` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(monitor=9) decided 0a/0h/0r/0s of 1
 - `staging/discovery-fsc-laterals-20261105` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/discovery-gulf-20261002` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(monitor=18) decided 0a/0h/0r/0s of 43
+- `staging/discovery-header-improvement-20261107` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
 - `staging/discovery-midcon-north-20261002` [update] — rows=4 fills=4 updates=0 status-pending=0 refs(none) routes=0 new(monitor=15) decided 0a/0h/0r/0s of 41
 - `staging/discovery-seeds-20261002` — no store — invisible to discovery
 - `staging/discovery-southeast-connector-20261104` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none) decided —
@@ -374,6 +375,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/route-creation-p8327-20261020` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 1a/0h/0r/0s of 1
 - `staging/route-creation-palo-duro-20261017` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 2a/0h/0r/0s of 2
 - `staging/route-creation-transco-20261106` [route-creation] — rows=13 fills=0 updates=0 status-pending=0 refs(none) routes=13 new(none) decided 13a/0h/0r/0s of 13
+- `staging/route-creation-vng-hip-20261107` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none) decided 0a/0h/0r/0s of 2
 - `staging/route-creation-yuma-20261017` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none) decided 0a/0h/0r/0s of 1
 - `staging/route-merge-p7853-20261106` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
@@ -383,10 +385,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-datacenter-tags-powerplant-20261019` [update] — rows=11 fills=11 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 11
 - `staging/update-followups-20261014` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-km-to-mi-20261009` [update] — rows=7 fills=7 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 7
-- `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 101
+- `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 2a/0h/0r/0s of 101
 - `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
-- `staging/update-p2607-p0145-20261106` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(UNRESOLVED=1) routes=0 new(none) decided —
+- `staging/update-p2607-p0145-20261106` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(UNRESOLVED=1) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
 - `staging/update-p7814-parent-20261008` [update] — rows=1 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-p7833-south-mississippi-20261102` [update] — rows=1 fills=8 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 9
@@ -396,7 +398,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-rex-owners-20261008` [update] — rows=5 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-stale-lines-20261014` [update] — rows=3 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-state-fixes-20261014` [update] — rows=20 fills=20 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 5a/0h/0r/0s of 20
-- `staging/update-transco-owners-20261107` [update] — rows=2 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided —
+- `staging/update-transco-owners-20261107` [update] — rows=2 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 2
+- `staging/update-vng-interconnect-merge-20261107` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `deliverables/US_gas_datacenter_monitor_2026-10-18.xlsx`
 - `deliverables/US_gas_datacenter_monitor_2026-10-18_watch.csv`
 - `deliverables/US_gas_datacenter_monitor_2026-10-19.xlsx`
