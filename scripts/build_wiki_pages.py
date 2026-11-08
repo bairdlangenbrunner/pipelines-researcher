@@ -110,7 +110,7 @@ STATUS_ORDER = ["operating", "construction", "proposed", "shelved", "mothballed"
                 "retired", "mixed status"]
 
 
-def map_block(pids, maxpts=60, status=None):
+def map_block(pids, maxpts=60, status=None, label=' '):
     """The page map. With status (ProjectID -> Status), each line takes its status color from GEM's website
     tracker map and a row of colored squares under the map names the statuses shown."""
     status = status or {}
@@ -121,8 +121,10 @@ def map_block(pids, maxpts=60, status=None):
     clat = sum(p[1] for p in allp) / len(allp); clon = sum(p[0] for p in allp) / len(allp)
     span = max(max(p[1] for p in allp) - min(p[1] for p in allp), max(p[0] for p in allp) - min(p[0] for p in allp))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9 if span > .3 else 10
+    lab = (label or ' ').replace('~', '-').replace(';', ',').replace('|', '/')  # a blank label tripped the site firewall once (2026-11-07)
     col = lambda p: STATUS_COLORS['gas'].get(status.get(p, ''), MAP_GREY)
-    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~ ~ ~{col(p)}~1~3' if status else '')  # never ~~~: it saves as a signature for p, l in segs)
+    # never write ~~~ in a line's style: on save it becomes the editor's signature
+    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~{lab}~ ~{col(p)}~1~3' if status else '') for p, l in segs)
     out = f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
     shown = sorted({status[p] for p, _ in segs if p in status}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
     if len(set(pids)) > 1 and shown:
@@ -349,11 +351,13 @@ def wiki_key(u):
 
 LEGEND_RE = r'(?:\n*<span style="color:#[0-9a-f]{6}">■</span>[^\n]*\n?)?'
 
-def update_map(text, pids, status=None):
+def update_map(text, pids, status=None, label=None):
     # an existing page's main map (the first display_map) is redrawn from the routes repo for every pipeline on the page,
     # with the status legend that follows it; sub-project maps under their own headings stay. No map yet: add one after
     # the Location text. No routes: leave alone.
-    blk = map_block(pids, 100, status)
+    if label is None:
+        m = re.search(r"'''(.+?)'''", text); label = m.group(1) if m else ' '
+    blk = map_block(pids, 100, status, label)
     if not blk: return text
     m = re.search(r'\{\{#display_map:.*?\}\}\n?' + LEGEND_RE, text, re.S)
     if m: return sentence_case_headings(text[:m.start()] + blk + text[m.end():])
