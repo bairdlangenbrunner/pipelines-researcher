@@ -434,3 +434,23 @@ def test_a_fill_decided_under_its_first_column_alone_carries_to_the_multi_column
     # a legacy key naming a column that no multi-column fill of this pid carries stays an orphan
     store.append_records([gas_record(l, "b", key=old.replace("|Capacity", "|Length"), id="legacy2")], dirs)
     assert publish.carry_forward(d, dirs) == [] and len(publish.orphans(d, dirs)) == 1
+
+
+def test_merge_datasets_puts_another_commodity_on_the_page():
+    gas = {"dirs": ["batches/russia-gas/staging/a"], "columns": ["ProjectID", "Fuel"],
+           "scope": {"commodity": "gas", "countries": ["Russia"], "country": "Russia",
+                     "country_status": [{"country": "Russia", "dirs": 1, "pipelines": 1, "lines": 2, "open_lines": 1,
+                                         "items": 0, "open_items": 0, "done": False, "hidden": False}]},
+           "pipelines": [{"pid": "P1", "lines": [], "items": []}]}
+    oil = {"dirs": ["batches/uganda-oil/staging/b"], "columns": ["ProjectID", "Oil only"],
+           "scope": {"commodity": "oil", "countries": ["Uganda"], "snapshot": "GOIT_x.csv",
+                     "country_status": [{"country": "Uganda", "dirs": 1, "pipelines": 1, "lines": 3, "open_lines": 3,
+                                         "items": 1, "open_items": 1, "done": False, "hidden": False}]},
+           "pipelines": [{"pid": "P2", "lines": [], "items": []}, {"pid": "x", "commodity": "both", "lines": [], "items": []}]}
+    out = publish.merge_datasets(gas, oil)
+    assert [p.get("commodity") for p in out["pipelines"]] == ["gas", "oil", "both"]
+    assert out["scope"]["countries"] == ["Russia", "Uganda"] and out["scope"]["country"] == "Russia, Uganda"
+    assert [c["country"] for c in out["scope"]["country_status"]] == ["Russia", "Uganda"]
+    assert out["dirs"] == ["batches/russia-gas/staging/a", "batches/uganda-oil/staging/b"]
+    assert out["columns"] == ["ProjectID", "Fuel", "Oil only"]
+    assert out["scope"]["also"] == [{"commodity": "oil", "snapshot": "GOIT_x.csv"}]

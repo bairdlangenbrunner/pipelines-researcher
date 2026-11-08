@@ -620,6 +620,34 @@ def build_dataset(countries, commodity, dirs=None, exclude_pids=(), snapshot=Non
     return data, rep
 
 
+def merge_datasets(base, extra):
+    """Put the pipelines of `extra` (another commodity's batch dataset) on the page `base` builds, in place.
+    Each card keeps its own commodity (the page's fuel filter reads it), the dirs and countries are unioned,
+    and a country in both gets its counts summed. Decisions still route by the staging dir in each line key,
+    and push.py stays per commodity (push the oil accepts with --commodity oil). -> base."""
+    for d, c in ((base, base["scope"].get("commodity", "gas")), (extra, extra["scope"].get("commodity", "oil"))):
+        for p in d["pipelines"]:
+            p.setdefault("commodity", c)
+    base["pipelines"] += extra["pipelines"]
+    base["dirs"] = sorted(set(base["dirs"]) | set(extra["dirs"]))
+    sc, xs = base["scope"], extra["scope"]
+    sc["countries"] = list(dict.fromkeys(sc.get("countries", []) + xs.get("countries", [])))
+    sc["country"] = ", ".join(sc["countries"])
+    sc.setdefault("also", []).append({"commodity": xs.get("commodity"), "snapshot": xs.get("snapshot", "")})
+    have = {c["country"]: c for c in sc.get("country_status", [])}
+    for c in xs.get("country_status", []):
+        if c["country"] in have:
+            h = have[c["country"]]
+            for k in ("dirs", "pipelines", "lines", "open_lines", "items", "open_items"):
+                h[k] += c[k]
+            h["done"] = h["done"] and c["done"]
+            h["hidden"] = h["hidden"] and c["hidden"]
+        else:
+            sc.setdefault("country_status", []).append(c)
+    base["columns"] = list(dict.fromkeys(base["columns"] + [c for c in extra["columns"] if c not in base["columns"]]))
+    return base
+
+
 def publish(countries, commodity, out, dirs=None, exclude_pids=(), snapshot=None, sid=None, cursor=1,
             batches_root=None, data_dir=None, sync=False, ver=None, target=PART_BYTES, batch=False,
             include_done=False, emails=None, led=None, write=True):

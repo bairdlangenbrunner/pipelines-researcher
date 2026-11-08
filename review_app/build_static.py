@@ -103,6 +103,8 @@ def main(argv=None):
                          "on a published artifact each viewer is recorded under their own")
     ap.add_argument("--out", default=None, help="default work/review_static/<commodity>-batch.html, or <scope id>.html with --country")
     ap.add_argument("--config", default=None, help="default review_app/google.json")
+    ap.add_argument("--also", action="append", default=[], choices=["gas", "oil"],
+                    help="review-app batch: also put this commodity's included countries on the page (repeat)")
     ap.add_argument("--artifact", default="", help="the artifact url the page goes to: fills map picture urls from review_app/assets.json")
     ap.add_argument("--batches-root", default=None, help=argparse.SUPPRESS)
     ap.add_argument("--data-dir", default=None, help=argparse.SUPPRESS)
@@ -136,6 +138,23 @@ def main(argv=None):
                                           exclude_pids=[p for p in a.exclude_pids.split(",") if p], snapshot=a.snapshot,
                                           batches_root=a.batches_root, data_dir=a.data_dir, batch=batch,
                                           include_done=a.include_done, led=led, write=pulled)
+        for extra_c in ([] if not batch else [c for c in a.also if c != a.commodity]):
+            xc = scopes.included(extra_c, a.manifest)
+            if not xc:
+                print(f"--also {extra_c}: the review-app batch includes no {extra_c} countries", file=sys.stderr)
+                continue
+            xdata, xrep = publish.build_dataset(xc, extra_c, exclude_pids=[p for p in a.exclude_pids.split(",") if p],
+                                                batches_root=a.batches_root, data_dir=a.data_dir, batch=True,
+                                                include_done=a.include_done, led=led, write=pulled)
+            publish.merge_datasets(data, xdata)
+            rep["label"] += f" + {xrep['label']}"
+            rep["decided"] += xrep["decided"]
+            rep["synced_in_memory"] += xrep["synced_in_memory"]
+            rep["carried"] = list(rep["carried"]) + list(xrep["carried"])
+            rep["orphan_reasons"] = list(rep["orphan_reasons"]) + list(xrep["orphan_reasons"])
+            for k, v in xrep["skipped"].items():
+                cur = rep["skipped"].get(k)
+                rep["skipped"][k] = (cur or 0) + v if isinstance(v, int) else list(cur or []) + list(v)
     except ledger.StoreError as e:
         raise SystemExit(f"{e}\nnothing built: the carried-forward decisions could not reach the decision store")
     reviewer = a.reviewer if a.reviewer is not None else git_initials()

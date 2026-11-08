@@ -108,7 +108,8 @@ def write_parked(pl, work=None, now=None):
 
 
 def _add_args(ap):
-    ap.add_argument("--commodity", choices=["gas", "oil"], default="gas")
+    ap.add_argument("--commodity", choices=["gas", "oil", "both"], default="both",
+                    help="the dataset keys are placed in; both = gas plus oil, as the gas-batch page carries them")
 
 
 def _parked_lines(pl):

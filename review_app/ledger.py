@@ -80,6 +80,16 @@ def _dataset(commodity, root=None):
     import scopes
     import staged_store
     root = Path(root) if root else staged_store.BATCHES_ROOT
+    if commodity == "both":     # the gas page also carries the included oil countries (artifacts.json "also")
+        import publish
+        built = [_dataset(c, root) for c in ("gas", "oil") if scopes.included(c, None)]
+        if not built:
+            raise SystemExit("the review-app batch includes no countries")
+        ds, paths = built[0]
+        for xds, xpaths in built[1:]:
+            publish.merge_datasets(ds, xds)
+            paths = {**paths, **xpaths}
+        return ds, paths
     countries = scopes.included(commodity, None)
     if not countries:
         raise SystemExit(f"the review-app batch includes no {commodity} countries")
@@ -97,7 +107,7 @@ def main(argv=None):
     sub.add_parser("status", help="store configured? who writes it? how many rows?")
     for name in ("decide", "undo", "item"):
         sp = sub.add_parser(name)
-        sp.add_argument("--commodity", default="gas")
+        sp.add_argument("--commodity", default="both", choices=["gas", "oil", "both"])
         sp.add_argument("--key", action="append", default=[], help="a line (decide/undo) or item key; repeatable")
         sp.add_argument("--records", help="JSON file: a list of records as /api/decide or /api/item take them")
         sp.add_argument("--reviewer", default=None, help="the person deciding (default: the store account's address)")

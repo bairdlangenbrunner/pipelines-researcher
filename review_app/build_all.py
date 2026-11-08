@@ -46,21 +46,38 @@ DATA = ROOT / "data"
 ASSETS = HERE / "assets.json"         # uploaded map pictures, per artifact page (build_static.ASSETS)
 
 
-def _countries(entry):
+def _commodities(entry):
+    """The page's own commodity, then the ones its batch scope adds with "also" (oil on the gas page)."""
     sc = entry.get("scope") or {}
-    return list(sc["countries"]) if sc.get("countries") else scopes.included(sc.get("commodity", "gas"))
+    base = sc.get("commodity", "gas")
+    extra = [c for c in sc.get("also", []) if c != base] if sc.get("batch") and not sc.get("countries") else []
+    return [base, *extra]
+
+
+def _countries(entry, commodity=None):
+    sc = entry.get("scope") or {}
+    if sc.get("countries"):
+        return list(sc["countries"])
+    if commodity:
+        return scopes.included(commodity)
+    return [c for cm in _commodities(entry) for c in scopes.included(cm)]
 
 
 def _dirs(entry, cache=None):
     if entry.get("dirs"):
         return [ROOT / d for d in entry["dirs"]]
-    sc = entry.get("scope") or {}
-    if cache is None:
-        dirs, _ = review_data._country_dirs(_countries(entry), sc.get("commodity", "gas"), staged_store.BATCHES_ROOT)
-    else:
-        with staged_store.meta_cache(cache):
-            dirs, _ = review_data._country_dirs(_countries(entry), sc.get("commodity", "gas"), staged_store.BATCHES_ROOT)
-    return [Path(d) for d in dirs]
+    dirs = []
+    for cm in _commodities(entry):
+        cs = _countries(entry, cm)
+        if not cs:
+            continue
+        if cache is None:
+            ds, _ = review_data._country_dirs(cs, cm, staged_store.BATCHES_ROOT)
+        else:
+            with staged_store.meta_cache(cache):
+                ds, _ = review_data._country_dirs(cs, cm, staged_store.BATCHES_ROOT)
+        dirs += [Path(d) for d in ds]
+    return dirs
 
 
 def _extra(entry):
@@ -69,6 +86,9 @@ def _extra(entry):
     owners = review_data._pick_owners([], tracker, DATA)
     out = {"manifest": hashlib.sha256("|".join(sorted(_countries(entry))).encode()).hexdigest(),
            "snapshot": tracker.name if tracker else "", "owners": owners.name if owners else ""}
+    for cm in _commodities(entry)[1:]:      # an added commodity's snapshot is an input too
+        t = review_data._pick_snapshot(cm, [], DATA)
+        out[f"snapshot_{cm}"] = t.name if t else ""
     up = sorted((sha, v["url"]) for sha, per in core_assets.load_manifest(ASSETS).items()
                 for art, v in per.items() if art == entry.get("url"))
     if up:      # a recorded upload changes the page (its picture urls); pages with none keep their old parts
@@ -122,6 +142,8 @@ def build_page(entry, args):
         argv += ["--country", c]
     if entry.get("dirs"):
         argv += ["--dirs", *[str(ROOT / d) for d in entry["dirs"]]]
+    for cm in _commodities(entry)[1:]:
+        argv += ["--also", cm]
     if args.no_pull:
         argv.append("--no-pull")
     build_static.main(argv)

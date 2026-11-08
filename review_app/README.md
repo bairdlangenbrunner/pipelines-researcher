@@ -358,6 +358,7 @@ python review_app/import_log.py FILE.json --reviewer AL=researcher@globalenergym
 python review_app/import_log.py FILE.json --reviewer AL=researcher@globalenergymonitor.org
 ```
 
+- **One page, both commodities (Baird 2026-11-07).** The gas-batch entry in `artifacts.json` carries `"also": ["oil"]`, so the included oil countries (Uganda's EACOP work first) sit on the same page as the gas ones; each oil card keeps `commodity: oil` for the fuel filter (`build_static.py --also oil`, `publish.merge_datasets`). Decisions still land by the staging dir in each key; `import_log.py` and `ledger.py decide` default to `--commodity both`. Push stays per commodity: `push.py --commodity oil` for the oil accepts.
 - **Is the live page current? `python review_app/build_all.py --check`.** A page is a snapshot, so
   `artifacts.json` lists each live page (the artifact above) with a `published` block
   recording what it was built from, and the check says which are stale and why (interface, builder, newest snapshot,
