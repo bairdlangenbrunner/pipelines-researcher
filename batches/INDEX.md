@@ -281,6 +281,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/ref-sweep-10row` — rows=10 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=67, REF_BLOCKED=10, REF_UNSUPPORTED=15, REVERIFIED=10, UNRESOLVED=6) routes=0 new(none) decided 0a/0h/0r/0s of 102
 - `deliverables/pipelines_batch_20260717_1804_ET_saudi-arabia_discovery.xlsx`
 
+## uganda-oil
+
+- `staging/update-eacop-wiki-20261107` [update] — rows=1 fills=7 updates=0 status-pending=0 refs(REFS_ADDED=11, SHEET_SUSPECT=1) routes=0 new(none) decided —
+
 ## ukraine-gas
 
 - `staging/deepsweep-20261002` — rows=47 fills=38 updates=0 status-pending=0 refs(REFS_ADDED=277, UNRESOLVED=90) routes=0 new(none) decided 175a/0h/0r/0s of 315
@@ -392,6 +396,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-rex-owners-20261008` [update] — rows=5 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-stale-lines-20261014` [update] — rows=3 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-state-fixes-20261014` [update] — rows=20 fills=20 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 5a/0h/0r/0s of 20
+- `staging/update-transco-owners-20261107` [update] — rows=2 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided —
 - `deliverables/US_gas_datacenter_monitor_2026-10-18.xlsx`
 - `deliverables/US_gas_datacenter_monitor_2026-10-18_watch.csv`
 - `deliverables/US_gas_datacenter_monitor_2026-10-19.xlsx`
