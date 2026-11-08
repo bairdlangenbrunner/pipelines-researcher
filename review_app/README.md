@@ -77,7 +77,7 @@ is not a line at all: it is a **concern** item (key `…|ref-check:<ref col>`, t
 for a person to open and check, and the sheet keeps the ref. A different ref for the same value is
 minor; refs for a new value are major. Severity is what the line does to the cells, never its kind
 (a `fill`-kind `REFS_ADDED` proposing the sheet's own value is minor), and a rival
-candidate never promotes a ref-only line. The card's tabs are **major changes · minor changes ·
+candidate never promotes a ref-only line. **A value that differs from the sheet only in number formatting is the same value** (the snapshot shows `1,443.00` and `246,000.00` where the staged record says `1443` and `246000`; EACOP P0541, Baird 2026-11-07): the page's pair table (`sameVal`), `review_data._same`, `push.same_value` and `clean_accepts.same_value` all strip thousands separators and compare numerically, so such a row reads `same`, is never tagged `change`, and never counts as a stale basis cell. The card's tabs are **major changes · minor changes ·
 items · everything** (it opens on major, or minor when the pipeline has no major change; `i`
 toggles items); the queue badge reads `N major · M minor to decide`; a **severity** facet filter
 (`sev=` in the URL) and an **accept all minor changes** bulk button act on it; each line carries a
