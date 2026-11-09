@@ -179,9 +179,12 @@ def parent_text(cell):
 def fill_unknown_parents(df):
     # a Parent the ownership team has not linked yet reads 'unknown [unknown %]'; take the parent the backend gives
     # for the identical Owner cell on other rows, when there is exactly one
+    # a blank or placeholder Owner ('--', 'unknown') is no company: never fill from it (Baird 2026-11-08: 541
+    # '--' rows took P3959's Samruk-Kazyna parent)
     unk = df['Parent'].str.strip().str.match(r'^(unknown\b|$)')
-    known = df[~unk].groupby('Owner')['Parent'].agg(lambda x: x.iloc[0] if x.nunique() == 1 else '')
-    df.loc[unk, 'Parent'] = df.loc[unk, 'Owner'].map(known).fillna('')
+    real = ~df['Owner'].str.strip().str.lower().isin(['', '--', '-', 'unknown', 'n/a'])
+    known = df[~unk & real].groupby('Owner')['Parent'].agg(lambda x: x.iloc[0] if x.nunique() == 1 else '')
+    df.loc[unk, 'Parent'] = df.loc[unk & real, 'Owner'].map(known).reindex(df.index).fillna('')
     return df
 
 def verb(st):
