@@ -63,9 +63,6 @@ STATUS_PHRASE = {"construction": "under construction"}
 VERB = {"operating": "runs", "idled": "runs", "mothballed": "runs", "proposed": "is proposed to run",
         "construction": "is proposed to run", "shelved": "was proposed to run",
         "cancelled": "was proposed to run", "retired": "ran"}
-CAPTION = {"very high (within meters)": "the exact route", "high": "the exact route",
-           "medium": "the approximate route", "low": "the approximate route",
-           "very low (straight line/schematic)": "a sketch of the route"}
 MAP_GREY, STATUS_COLORS, STATUS_ORDER = B.MAP_GREY, B.STATUS_COLORS, B.STATUS_ORDER
 
 
@@ -357,10 +354,7 @@ def map_block(pg, rows):
     lats, lons = [p[1] for p in allp], [p[0] for p in allp]
     span = max(max(lats) - min(lats), max(lons) - min(lons))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9
-    accs = {r["RouteAccuracy"] for r in mapped}
-    cap = CAPTION.get(next(iter(accs)), "the approximate route") if len(accs) == 1 else "the approximate route"
-    where = "of the pipeline" if len(rows) == 1 else "of its mapped segments"
-    text = f"The map below shows {cap} {where}."
+    text = ""   # no "The map below shows ..." sentence on a one-segment page (Baird 2026-11-08)
     legend = ""
     if len(rows) > 1:
         sts = sorted({r["Status"] for r in mapped}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
@@ -370,7 +364,7 @@ def map_block(pg, rows):
         text = f"{len(mapped)} of {len(rows)} segments have a mapped route in the database."
     body = ";".join(lines)
     mid = f"{(max(lats) + min(lats)) / 2:.5f}, {(max(lons) + min(lons)) / 2:.5f}"
-    return (f'{text}\n\n<templatestyles src="{MAP_STYLES_PAGE}" />\n'
+    return ((f'{text}\n\n' if text else "") + f'<templatestyles src="{MAP_STYLES_PAGE}" />\n'
             f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}{legend}",
             len(allp))
 
