@@ -101,9 +101,9 @@ Caption under the table: list each unit abbreviation used on the page, for examp
 
 **Table 3: Project timeline**
 
-| Segment | Proposal year | FID | Construction year | Start year | Inactive year |
-|---|---|---|---|---|---|
-| segment label | «ProposalYear» [ref: «Proposal [ref]»] | «FIDYear» («FIDStatus») [ref: «FID [ref]»] | «ConstructionYear» [ref: «Construction [ref]»] | «StartYear1» [ref: «Start [ref]»] | {year} ({status}) [ref] |
+| Segment | Proposal year | FID | Construction year | Start year |
+|---|---|---|---|---|
+| segment label | «ProposalYear» [ref: «Proposal [ref]»] | «FIDYear» («FIDStatus») [ref: «FID [ref]»] | «ConstructionYear» [ref: «Construction [ref]»] | «StartYear1» [ref: «Start [ref]»] |
 
 Caption under the table: "FID = final investment decision, used by some developers to indicate a project will move forward".
 
@@ -111,7 +111,7 @@ No Status column here: Table 2 right above already shows it (Baird 2026-11-06).
 
 **Logic:**
 - **Start year:** For `proposed` and `construction`, the header note reads "planned". If `«Delayed» = yes`, add " (delayed)" after the start year, with the ref from `«Delay [ref]»`. Later phases (`«StartYear2»`, `«StartYear3»`) are added as "2027, 2029 (phase 2)".
-- **Inactive year:** For `shelved`, use `«ShelvedYear»` [ref: «Shelved [ref]»]. For `cancelled`, use `«CancelledYear»` [ref: «Cancelled [ref]»]. For `retired`, `mothballed` and `idled`, use `«StopYear»` [ref: «Stop [ref]»]. Add "(inferred)" when `«ShelvedCancelledType» = inferred`. Leave the cell blank for any other status.
+- **No inactive year column (Baird 2026-11-08).** Shelved, cancelled and stop years are not shown in the timeline table.
 - **FID:** The FID column is left out when every segment's `«FIDStatus»` is blank (most oil rows).
 
 **Table 4: Cost**
@@ -127,7 +127,7 @@ No Status column here: Table 2 right above already shows it (Baird 2026-11-06).
 
 ### Pages with five or more segments (Baird 2026-11-06)
 
-A page with five or more segments gets ONE sortable table under Project details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end with a thin rule between start and end and the location refs at the right end of the End line, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year, Inactive year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 5` in the script (lowered from 10, Baird 2026-11-06). Every generated map block also loads `Template:Pipeline map/styles.css` (`MAP_CSS`), which collapses Google's popup header band and padding and adds a status dot before the status line.
+A page with five or more segments gets ONE sortable table under Project details instead of Tables 1 to 5, with a row per segment and a tab strip above it: Route, Details, Timeline, Cost, Ownership, All columns. Each tab shows that table's columns (Route = Segment, Route shape, Start/end with a thin rule between start and end and the location refs at the right end of the End line, Countries/areas, Length; Details = Segment, Status, Fuel, Capacity, Length, Diameter, Pressure; Timeline = Segment, Status, Proposal year, FID, Construction year, Start year; Cost; Ownership). Status and Length appear on two tabs. Column rules above still apply: a column empty in every row is left out, and a tab with no columns left is not offered. There is no Ownership section on such a page; the old heading anchors (`Table_1:_Route_details` ... `Ownership`) stay as empty spans so existing links land on the table. The tabs are CSS only (`:target` on empty anchor divs, no JavaScript); the stylesheet lives on `Template:Segment table/styles.css` (content model sanitized-css, loaded with `<templatestyles>`), and `wiki/scripts/generate_pages.py --push-styles` keeps it equal to the text in the script. Without the stylesheet every column shows. First page: Transcontinental Gas Pipeline (32 segments, 2026-11-06). Threshold `SEG_TABLE_MIN = 5` in the script (lowered from 10, Baird 2026-11-06). Every generated map block also loads `Template:Pipeline map/styles.css` (`MAP_CSS`), which collapses Google's popup header band and padding and adds a status dot before the status line.
 
 Segment names link the two tables (Baird 2026-11-06). On a tabbed page each segment name in the table links down to its row in the Background table (anchor `bg-<ProjectID>`, hover text "Click for project background"), and the name there links back up (anchor `row-<ProjectID>`, hover text "Click for project details"). Both anchors carry `scroll-margin-top`, so the row lands at the same height below the wiki's top bar either way. Background rows are matched to segments by name after normalizing; a Background row that matches no single segment stays unlinked, and the generator logs it. A jump changes the page fragment, so the table shows its default Route tab again.
 
