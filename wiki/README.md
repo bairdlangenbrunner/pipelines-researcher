@@ -55,7 +55,7 @@ Tabled on 2026-11-06; Baird wants to work through them later. Items 1 to 4 are l
 1. Page names: keep each page at its current `Wiki` URL, or move pages so they match `PipelineName`? The readiness report counts both sides. The design note recommends `PipelineName` is the page name and `Wiki` is derived from it.
 2. Parent companies: decided 2026-11-06, see Decided.
 3. Oil's `Background` column: use it to seed Background on new pages only, or ignore it?
-4. Status categories: live pages mix "Existing pipelines in X", "Proposed pipelines in X" and others. Pick one scheme.
+4. Status categories: decided 2026-11-08, no categories on generated pages.
 5. Page type rule: row details only on the primary page, with network pages generated as a roster plus one map (recommended), or keep per-segment details on network pages as the China pages have now.
 6. Tracker columns: the implementation plan (`docs/plans/2026-11-06_wiki-tagging-backend.md`) drops the new `NetworkTags` column after a blast-radius check (`match.py`, `build_qc_workbook.py`, `gem-db-ops` colmap and the public release sheets all read `PipelineNetworkGrouping` as one value). Instead `PipelineNetworkGrouping` is secondary tag 1 and the Alt column is secondary tag 2, both single page names; whether to unify the two Alt headers is open.
 7. Whether the owners tab's `PipelineNetworkContainer` systems also become network tags.

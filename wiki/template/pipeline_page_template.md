@@ -174,17 +174,11 @@ To access additional data, including an interactive map of {oil and NGL / gas} p
 <references />
 ```
 
-### Categories (generated)
+### Categories
 
-```
-[[Category:Global Oil Infrastructure Tracker]]   or   [[Category:Global Gas Infrastructure Tracker]]
-[[Category:Oil and NGL Pipelines]]               or   [[Category:Gas and Hydrogen Pipelines]]
-[[Category:{Status} pipelines in «country»]]     one per country in «CountriesOrAreas», per distinct status
-```
+None (Baird 2026-11-08). A generated page carries no `[[Category:...]]` lines, and category lines found in preserved text are dropped too.
 
 **Logic:**
-- **Live categories:** The first two lines match what live pages carry now, judging from a sample of 50 pages taken 2026-11-06.
-- **Status categories:** Live pages mix "Existing pipelines in X", "Existing oil pipelines in X", "Proposed pipelines in X" and "Operating pipelines in X" (open decision 4). The draft proposes `Operating`, `Proposed`, `Under construction`, `Shelved`, `Cancelled`, `Retired`, `Idled` and `Mothballed` + "pipelines in «country»". Old status categories that are not on the generated list stay on the page only if they sit inside a preserved section.
 - **Table of contents:** Add `__NOTOC__` when the page has no preserved sections, as GEMwiki does for the other trackers.
 
 ---
@@ -194,7 +188,7 @@ To access additional data, including an interactive map of {oil and NGL / gas} p
 1. **Page names.** Keep each page at its current `«Wiki»` URL (the draft does this), or move pages to match `«PipelineName»`? The readiness report lists the mismatches. Most are dash or spacing differences (`-` vs `–`), and some are real renames. Real renames go to the data team as the step 3 list.
 2. **Parent companies.** Decided 2026-11-06: a Parent column next to Owner, filled from the backend's Parent cell (see Table 5).
 3. **Oil `Background` column.** Seed Background on new pages from it, or leave it out?
-4. **Status categories.** Which scheme should the pages use?
+4. **Status categories.** Decided 2026-11-08: no categories on generated pages.
 5. **Route geometry.** Send WKT per ProjectID as an extra column in the tracker file, or as a separate file the generator joins?
 6. **Old Expansion Projects sections.** Leave them as preserved text, or fold them into Background in a cleanup pass before the first generated upload?
 7. **Gas `«PipelineType»`.** It is blank on 1,648 gas rows, so the draft keeps it out of the intro. It could be added later as "a gas transmission pipeline" once filled.
