@@ -378,7 +378,7 @@ def map_block(pg, rows):
             title = label(r, rows) if len(rows) > 1 else pg.name
             dot = f'<span class="gem-mapdot gem-mapdot-{r["Status"].replace(" ", "-")}"></span>'
             pop = f"{pts}~{title}~{dot}{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}"
-            edges.append(f"{pop}~{MAP_EDGE}~1~{LINE_W + 3}")
+            edges.append(f"{pop}~{MAP_EDGE}~1~{LINE_W + 5}")
             lines.append(f"{pop}~{color}~1~{LINE_W}")
     # every line gets a white edge, drawn first under all the colored lines, so a status color reads on any
     # background (Baird 2026-11-09, after oilandgaswatch.org's bordered lines). The edge carries the line's own label
@@ -390,11 +390,11 @@ def map_block(pg, rows):
     span = max(max(lats) - min(lats), max(lons) - min(lons))
     zoom = 4 if span > 12 else 5 if span > 6 else 6 if span > 3 else 7 if span > 1.5 else 8 if span > .7 else 9
     text = ""   # no "The map below shows ..." sentence on a one-segment page (Baird 2026-11-08)
-    legend = ""
+    # a legend under every map, one segment or many (Baird 2026-11-09)
+    sts = sorted({r["Status"] for r in mapped}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
+    legend = "\n\n" + " &nbsp; ".join(f'<span style="color:{status_color(pg, s)}">■</span> {STATUS_PHRASE.get(s, s).capitalize()}'
+                                        for s in sts)
     if len(rows) > 1:
-        sts = sorted({r["Status"] for r in mapped}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
-        legend = "\n\n" + " &nbsp; ".join(f'<span style="color:{status_color(pg, s)}">■</span> {STATUS_PHRASE.get(s, s).capitalize()}'
-                                            for s in sts)
         # one plain count on multi-segment pages (Baird 2026-11-06)
         text = f"{len(mapped)} of {len(rows)} segments have a mapped route in the database."
     body = ";".join(lines)

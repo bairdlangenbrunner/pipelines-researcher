@@ -160,7 +160,7 @@ def map_section(pg, members, connected):
                     allp += l
                 pts = ":".join(f"{p[1]:.5f}, {p[0]:.5f}" for p in l)
                 if not faint:   # a white edge under each member line, same pop-up (generate_pages.map_block); connected lines get none
-                    edges.append(f"{pts}~{title}~{dot}{st}~{G.MAP_EDGE}~1~{G.LINE_W + 3}")
+                    edges.append(f"{pts}~{title}~{dot}{st}~{G.MAP_EDGE}~1~{G.LINE_W + 5}")
                 lines.append(f"{pts}~{title}~{dot}{st}~{G.status_color(pg, r['Status'])}~{w}")
     mapped = sum(1 for r in members if r["RouteType"].startswith("Mapped route"))
     text = f"{num(mapped).capitalize() if mapped < 10 else mapped} of {num(len(members))} segments have a mapped route in the database."
