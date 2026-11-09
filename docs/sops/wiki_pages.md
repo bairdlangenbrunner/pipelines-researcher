@@ -64,7 +64,7 @@ The pipeline is proposed to run from X to Y.<ref>
 - **Map colors (Baird 2026-11-06).** Each line takes its status color from GEM's tracker maps on the website (the `color` block of `trackers/ggit/config.js` in `GlobalEnergyMonitor/maps`, branch `gitpages-production`, read only): gas operating red `#c74a48`, construction blue `#5c62cf`, proposed green `#4c9d4f`, everything else grey `#8f8f8e`. Oil follows `trackers/GOIT/config.js`, which differs (proposed blue, cancelled and mothballed green). The colors live in `build_wiki_pages.STATUS_COLORS`, shared by both builders; the route-shape pictures in the segment table use the same colors. A page with several segments gets a legend line right under the map: a colored square and the status for each status shown, with no lead-in words.
 - **Section headings are sentence case (Baird 2026-11-06).** "Project details", "Articles and resources", "Additional data". `sentence_case_headings` lowercases the later words of a level-2 or level-3 heading only when every one is a generic word, so a name in a heading a person wrote ("Opposition From Sierra Club", a segment name) keeps its capitals.
 - **A blank SegmentName on a page with several segments is "Main Line".**
-- **Dormancy sentence.** The template sentence is used only for shelved-inferred or cancelled-inferred rows that have a year.
+- **Dormancy sentence.** The template sentence is used only for shelved-inferred or cancelled-inferred rows that have a year. It goes at the end of the Background (or the segment's Background entry), never in the lead: the lead only says the pipeline is cancelled or shelved (Baird 2026-11-09).
 
 ## References
 

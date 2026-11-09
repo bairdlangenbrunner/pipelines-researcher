@@ -277,12 +277,10 @@ def intro(pg, rows, tracker):
             continue
         last = int(yr) - (2 if st == "shelved" else 4)
         rc = r["Shelved [ref]"] if st == "shelved" else r["Cancelled [ref]"]
-        if len(rows) > 1:
-            # too specific for the intro of a many-unit page: it goes in that unit's Background entry
-            pg.dorm.append((r, f"No development on the project has been reported since {last}, and it is considered {st}.", rc))
-            continue
-        dorm.append(f"No development on the pipeline has been reported since {last}, and it is considered {st}." + pg.cite(rc))
-    return s + ("\n\n" + " ".join(dorm) if dorm else "")
+        # the lead only says the status; when and why go in the Background (Baird 2026-11-09, Delmarva)
+        what = "pipeline" if len(rows) == 1 else "project"
+        pg.dorm.append((r, f"No development on the {what} has been reported since {last}, and it is considered {st}.", rc))
+    return s
 
 
 def table(num_, title, header, body, caption="", collapsed=False, sortable=False, footnote=""):
@@ -1049,6 +1047,21 @@ def link_background(pg, kept, rows):
 def dormancy_into_background(pg, kept, rows):
     """Put each segment's dormancy sentence at the end of its row in the Background table, or add a
     row for the segment when it has none. Skipped when the sentence is already there (a re-run)."""
+    if len(rows) == 1:
+        for r, sent, rc in pg.dorm:   # one-row page: the sentence ends the Background
+            m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|^<!---|\Z)", kept)
+            text = sent + pg.cite(rc)
+            if m and sent.split(",")[0] in m.group(1):
+                continue
+            if m:
+                body = m.group(1).rstrip()
+                tail = re.search(r"(?s)\n+Additional sources:.*\Z", body)
+                at = tail.start() if tail else len(body)
+                kept = kept[:m.start(1)] + body[:at].rstrip() + "\n\n" + text + body[at:] + "\n" + kept[m.end(1):]
+            else:
+                kept = kept.rstrip() + ("\n\n" if kept.strip() else "") + f"==Background==\n{text}\n"
+            pg.log.append(f"{r['ProjectID']}: dormancy sentence put at the end of the Background")
+        return kept
     for r, sent, rc in pg.dorm:
         tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
         if not tm:
@@ -1162,7 +1175,7 @@ def shade_first_column(text):
 # a kept Background sentence that states a status: "is considered to be shelved", "remains on hold", "was cancelled"
 _ST = r"(shelved|cancell?ed|on hold|operating|operational|in operation|in service|under construction|proposed|retired|mothballed|idled?|abandoned)"
 _CLAIM_NOW = re.compile(r"\b(?:considered|presumed|deemed|classified|listed)\s+(?:to\s+be\s+|as\s+)?(?:being\s+)?" + _ST + r"\b"
-                        r"|\b(?:is|are|remains?)\s+(?:now\s+|currently\s+|still\s+|officially\s+)?" + _ST + r"\b", re.I)
+                        r"|\b(?:is|are|remains?)\s+(?:now\s+|currently\s+|still\s+|officially\s+)?(?:an?\s+)?" + _ST + r"\b", re.I)
 _CLAIM_PAST = re.compile(r"\b(?:was|were|has\s+been|have\s+been)\s+(?:officially\s+|formally\s+)?"
                          r"(shelved|cancell?ed|retired|mothballed|abandoned|placed\s+in(?:to)?\s+service|put\s+in(?:to)?\s+service)\b", re.I)
 _CANON = {"canceled": "cancelled", "on hold": "shelved", "operational": "operating", "in operation": "operating",
