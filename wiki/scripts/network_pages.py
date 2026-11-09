@@ -23,6 +23,13 @@ SID = "1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek"
 TAB = "Gas pipelines"
 ORDER = ["operating", "construction", "proposed", "shelved", "cancelled", "mothballed", "idled", "retired"]
 H = "!"
+OVERVIEW_PAGE = "Chinese Gas Pipeline Networks"   # the page that explains every China network (china_networks_page.py)
+# what each of the three groupings holds, from the 2024 classification checklist (I / N / T)
+GROUPING_SCOPE = {
+    "China National Gas Pipelines": "China's national trunk gas pipelines, most of them built by PetroChina, PipeChina and other state-owned companies",
+    "China International Gas Pipelines": "the gas pipelines that cross China's borders",
+    "China Interprovincial Gas Pipelines": "the gas pipelines that cross provincial borders in China but belong to neither a provincial network nor the national trunk system",
+}
 
 
 def live_rows():
@@ -196,18 +203,10 @@ def build_network(s, entry, df, old_text=""):
     have = exists(s, list(pages.values()) + nets)
     region = region_of(entry)
 
-    # lead
-    sts = sorted({r["Status"] for r in members}, key=status_rank)
-    where = f"in {region}, China" if region else "in China"
-    loc = f" (local name: '''{entry['PrimaryNetworkLocalLanguage']}''')" if entry.get("PrimaryNetworkLocalLanguage") else ""
-    links = [link(p, pages[p], have) for p in pipes]
-    lead = (f"'''{name}'''{loc} is a gas pipeline network {where}, with segments that are "
-            f"{G.join_list([G.STATUS_PHRASE.get(x, x) for x in sts])}. The network itself is not necessarily official in Chinese "
-            "infrastructure planning, but is a way to organize the vast buildout occurring there. "
-            f"Its {len(members)} segments belong to {len(pipes)} pipeline{'s' if len(pipes) != 1 else ''}: {G.join_list(links)}.")
-    if connected:
-        lead += (f" Pipelines from other networks that enter {region or 'the network'} are listed under "
-                 "[[#Connected pipelines|Connected pipelines]].")
+    # lead: two short sentences (Baird 2026-11-08); "GEM grouping" links to the page that explains the whole scheme
+    loc = f" ({entry['PrimaryNetworkLocalLanguage']})" if entry.get("PrimaryNetworkLocalLanguage") else ""
+    what = f"the gas pipelines in {region}, China" if region else GROUPING_SCOPE.get(name, "a set of gas pipelines in China")
+    lead = (f"'''{name}'''{loc} groups {what}. It is a [[{OVERVIEW_PAGE}|GEM grouping]], not an official Chinese network.")
 
     # location
     provs = sorted({p.strip() for r in members for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
