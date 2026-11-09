@@ -1251,6 +1251,9 @@ _EMPTY_SUB = re.compile(r"^(===+)([^=\n]+)\1[ \t]*\n(?:[ \t]*\n)*(?=(?:==)|\Z|<!
 def drop_empty_subsections(pg, kept):
     """A Background subsection heading with nothing under it reads as a broken page (Baird 2026-11-09)."""
     def fix(m):
+        nxt = re.match(r"=+", kept[m.end():])
+        if nxt and len(nxt.group(0)) > len(m.group(1)):   # a deeper heading follows: not empty
+            return m.group(0)
         pg.log.append(f"empty Background subsection removed: {m.group(2).strip()}")
         return ""
     return _EMPTY_SUB.sub(fix, kept)
