@@ -46,15 +46,15 @@ The scheme follows the 2024 reorganization doc ("Chinese gas pipelines - 2024 re
 
 | Type | Network | Holds today | Rows |
 |---|---|---|---|
-| P | `<Place> Provincial Gas Network` (provinces and autonomous regions; "Provincial" because Guangxi, Xinjiang, Inner Mongolia and Ningxia are autonomous regions) | the 26 provincial networks | about 700 |
+| P | `<Place> Provincial Gas Network` (provinces and autonomous regions; "Provincial" because Guangxi, Xinjiang, Inner Mongolia and Ningxia are autonomous regions) | the 26 provincial networks, Sichuan-Chongqing becoming Sichuan's | about 700 |
 | P | `<Place> Municipal Gas Network` (Beijing, Chongqing, Shanghai, Tianjin) | the 4 municipal networks | 55 |
 | N | China National Gas Pipelines | the 23 trunk-line networks (West-East 1-5, Shaan-Jing, Sichuan-Shanghai and its parallel, China-Russia East, China-Russia Far East, the Tibet line and the rest) | 171 |
 | I | China International Gas Pipelines | the 10 import and 1 export networks, the Guangdong-Macao link, and P6787 Sarybulak-Zimunay (the one row with no network) | about 29 |
-| T | China Interprovincial Gas Pipelines | the connecting-line and coal-to-gas networks except Guangdong-Macao | about 26 |
+| T | China Interprovincial Gas Pipelines ("interprovincial": one word, the standard English form; the 2024 doc's "trans-province" names the same type) | the connecting-line and coal-to-gas networks except Guangdong-Macao | about 26 |
 
 - Tibet gets no provincial network: its one row (P5100, cancelled) runs from Qinghai into Tibet, so it is N. A Tibet network is added the day an in-region line is tracked.
 - `PrimaryNetworkLocalLanguage` keeps the Chinese name for the provincial networks; the three national groupings get one each (to draft).
-- Open: Sichuan-Chongqing spans two divisions, so by the doc's rule it is not P. Proposed: its 28 rows go to China Interprovincial Gas Pipelines. Alternative: split them between the Sichuan and Chongqing networks. Sichuan has no provincial network of its own today; its in-province rows sit in Sichuan-Chongqing.
+- Sichuan-Chongqing becomes Sichuan Provincial Gas Network (Baird 2026-11-08: Sichuan had no network of its own). 27 of its 28 rows run within Sichuan. The 28th, P4568 (CNPC Sichuan & Chongqing Gas Pipeline Network, Sichuan to Chongqing), stays in it with Chongqing Municipal Gas Network as a secondary. Chongqing already has its own network (38 rows), which is unchanged apart from the rename.
 
 Secondaries: every N, I and T pipeline takes as `SecondaryNetworks` the provincial and municipal networks of the divisions its route crosses, derived from route geometry (mechanical, not research). A provincial page then lists its own pipelines and the national lines passing through, and its map shows everything in the division.
 
@@ -87,7 +87,7 @@ Provincial renames:
 | N0048 | Shandong Gas Pipeline Network | Shandong Provincial Gas Network | 1 | 36 |
 | N0049 | Shanghai Gas Pipeline Network | Shanghai Municipal Gas Network | 1 | 8 |
 | N0050 | Shanxi Gas Pipeline Network | Shanxi Provincial Gas Network | 1 | 66 |
-| N0052 | Sichuan-Chongqing Gas Pipeline Network | China Interprovincial Gas Pipelines (T; open, see below) | 2 | 28 |
+| N0052 | Sichuan-Chongqing Gas Pipeline Network | Sichuan Provincial Gas Network | 2 | 28 |
 | N0057 | Tianjin Gas Pipeline Network | Tianjin Municipal Gas Network | 1 | 8 |
 | N0066 | Xinjiang Gas Pipeline Network | Xinjiang Provincial Gas Network | 2 | 29 |
 | N0069 | Yunnan Gas Pipeline Network | Yunnan Provincial Gas Network | 1 | 24 |
