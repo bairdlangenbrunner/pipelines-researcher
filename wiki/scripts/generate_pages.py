@@ -410,7 +410,7 @@ def overview_sentence(pg, rows, tabbed=False):
     if tabbed:
         out.append("The segment table under Project details lists each segment's start and end points on its Route tab.")
     else:
-        out.append("The table below lists each segment's start and end points; click Expand to show it.")
+        out.append("The table below lists each segment's start and end points.")
     return " ".join(out)
 
 
@@ -738,7 +738,7 @@ def location(pg, rows, tab, tabbed=False):
         shapes = shape_cells(pg, rows) if len(rows) > 1 else {}
         body = [([shapes[r["ProjectID"]]] if shapes else []) + [label(r, rows)] + route_cells(pg, r) for r in rows]
         out += ["", table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
-                          collapsed=len(rows) > 1, sortable=True)]
+                          sortable=True)]   # always open, never collapsed (Baird 2026-11-08)
     m, npts = map_block(pg, rows)
     out += ["", m]
     pg.log.append(f"map points: {npts}")
