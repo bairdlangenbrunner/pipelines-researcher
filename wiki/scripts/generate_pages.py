@@ -1184,6 +1184,35 @@ def fold_expansions(pg, kept, rows):
     return kept.strip(), removed
 
 
+DETAILS_HEAD = re.compile(r"(?mi)^(=+)\s*(?:project\s+)?(?:expansion\s+)?(?:project\s+)?details\s*\1\s*\n")
+
+
+def drop_data_bullets(pg, kept):
+    """A Background list of project data (Owner, Capacity, Length, Diameter, Status ...), often under a "Project
+    expansion details" heading, goes: the tables carry those values (Baird 2026-11-09, DeRuyter). A run of two or
+    more data bullets is removed, and a details heading goes too. Returns (kept, removed
+    text); the removed text is scanned like a replaced section, so its citations move to Additional sources and a
+    named ref reused elsewhere keeps its definition (fix_named_refs)."""
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if not m:
+        return kept, ""
+    body, removed = m.group(1), []
+
+    def run(mm):
+        if len(DATA_BULLET.findall(mm.group(0))) < 2:
+            return mm.group(0)
+        removed.append(mm.group(0))
+        return ""
+    body = re.sub(r"(?m)(?:^\*[^\n]*(?:\n|\Z))+", run, body)
+    if not removed:
+        return kept, ""
+    # a "Project expansion details" heading goes too; any prose under it joins the subsection above
+    body = DETAILS_HEAD.sub("", body)
+    body = re.sub(r"\n{3,}", "\n\n", body)
+    pg.log.append(f"Background: {len(removed)} project-data bullet list(s) removed, citations kept as Additional sources")
+    return kept[:m.start(1)] + body + kept[m.end(1):], "\n".join(removed)
+
+
 MEDIA_OPEN = re.compile(r"\[\[\s*(?:File|Image|Media)\s*:", re.I)
 MEDIA_BLOCK = re.compile(r"<gallery\b.*?</gallery>|<video\b.*?</video>|<embedvideo\b.*?</embedvideo>|<youtube\b.*?</youtube>"
                          r"|\{\{\s*#(?:ev|evt|evu|evp|evl)\s*:.*?\}\}|\{\{\s*EmbedVideo\b.*?\}\}", re.I | re.S)
@@ -1664,7 +1693,8 @@ def build(name, rows, owners, live, tracker):
     kept, extra_ar, replaced = preserved(pg, live)
     kept = strip_background_numbers(unshade(kept))
     kept, gone = fold_expansions(pg, kept, rows)
-    replaced = replaced + "\n\n" + gone
+    kept, gone2 = drop_data_bullets(pg, kept)
+    replaced = replaced + "\n\n" + gone + "\n\n" + gone2
     kept, old_other = pop_other_sources(pg, kept)
     kept = fold_other_sections(pg, kept)
     # a Background table only on a tabbed page; below SEG_TABLE_MIN it is one subsection per segment (Baird 2026-11-07)
