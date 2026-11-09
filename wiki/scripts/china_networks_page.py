@@ -41,7 +41,7 @@ def build(s, nets, df):
             "pipelines on a vast scale, and these groups make the buildout easier to follow. They are GEM's own way of "
             "organizing the pipelines, not official Chinese networks.")
     how = ["==How pipelines are grouped==",
-           "Every gas pipeline in China belongs to one network. There are four kinds:",
+           "Every gas pipeline in China belongs to one network. There are five kinds:",
            f"* '''Provincial gas networks.''' Pipelines that a province builds, or that run within one province or autonomous "
            f"region. There are {n_prov}, one for each province or region with gas pipelines.",
            f"* '''Municipal gas networks.''' The same for the {n_muni} cities governed directly by the central government: "
