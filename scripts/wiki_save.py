@@ -24,7 +24,7 @@ curl: Cloudflare challenges curl and a challenge page holds no map div, which on
 on a day two pages were broken (2026-11-06). The map must also be confirmed in a real browser on a pilot
 page: python scripts/wiki_map_check.py <url>.
 
-Every successful save also upserts the page's row in the backend sheet's `wiki-overhaul` tab (wiki_log.py;
+Every successful save also upserts the page's row in the backend sheet's `Wiki overhaul (Nov 2026)` tab (wiki_log.py;
 standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
 never fails the save.
 """
@@ -87,7 +87,7 @@ def save(s, title, text=None, summary='', **kw):
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     if r.get('result') == 'Success' and 'nochange' not in r:
-        wiki_log.record(title, summary, text)   # the backend sheet's wiki-overhaul tab; never raises
+        wiki_log.record(title, summary, text)   # the backend sheet's 'Wiki overhaul (Nov 2026)' tab; never raises
     return r
 
 

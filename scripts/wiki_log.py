@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep the `wiki-overhaul` tab of the backend sheet listing every gem.wiki page the agent has saved.
+"""Keep the `Wiki overhaul (Nov 2026)` tab of the backend sheet listing every gem.wiki page the agent has saved.
 
 One row per page: pipelinename (the page title), wiki (its URL), last updated (YYYY-MM-DD, Eastern), reason
 (plain words for what the edits did, newest first). Baird asked for it 2026-11-09 and gave standing permission
@@ -25,7 +25,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 SHEET_ID = '1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek'
-TAB = 'wiki-overhaul'
+TAB = 'Wiki overhaul (Nov 2026)'
 HEADER = ['pipelinename', 'wiki', 'last updated', 'reason', 'new design', 'out of date']
 PENDING = Path(__file__).resolve().parents[1] / 'work' / 'wiki_log_pending.jsonl'
 ET = ZoneInfo('America/New_York')
@@ -39,6 +39,7 @@ _REASONS = [
     (r'self-evident|table pointer|segment-count', 'removed the segment table sentence'),
     (r'links to missing pages|empty subsections', 'removed links to missing pages'),
     (r'^add background', 'added Background text'),
+    (r'white edge', 'map lines given a white edge'),
     (r'tense|status|grammar', 'status, tense and grammar fixes'),
     (r'dead|archive|links? moved|moved .*links|shortlink|giignl|banned|a barrel full|wayback|sohu|unbracket|citation|\bref', 'fixed citation links'),
     (r'^generated from the tracker|^regenerate|^rebuild|generated from the tracker', 'page rebuilt from the tracker'),
