@@ -80,9 +80,6 @@ def status_dot(pg, status):
             f'border-radius:50%;vertical-align:middle;background:{status_color(pg, status)}"></span>')
 
 
-STATUS_CATEGORY = {"operating": "Existing", "proposed": "Proposed", "construction": "Under construction",
-                   "shelved": "Shelved", "cancelled": "Cancelled", "retired": "Retired",
-                   "idled": "Idled", "mothballed": "Mothballed"}
 THE_COUNTRIES = {"United States", "United Kingdom", "Netherlands", "Philippines", "United Arab Emirates",
                  "Czech Republic", "Democratic Republic of the Congo", "Republic of the Congo",
                  "Dominican Republic", "Central African Republic", "Bahamas", "Gambia"}
@@ -97,8 +94,6 @@ TRACKER_LINK = {
     "gas": ("gas", "[https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/ Global Gas Infrastructure Tracker]"),
     "oil": ("oil and NGL", "[https://globalenergymonitor.org/projects/global-oil-infrastructure-tracker/ Global Oil Infrastructure Tracker]"),
 }
-CATS = {"gas": ["Global Gas Infrastructure Tracker", "Gas and Hydrogen Pipelines"],
-        "oil": ["Global Oil Infrastructure Tracker", "Oil and NGL Pipelines"]}
 
 
 class Page:
@@ -1197,18 +1192,7 @@ def build(name, rows, owners, live, tracker):
         # in the human-kept zone, so the data team's generator also keeps it
         kept = (kept + "\n\n" if kept else "") + "==Other sources==\nSources cited on earlier versions of this page.\n\n" + carried
     word, link = TRACKER_LINK[tracker]
-    cats = [f"[[Category:{c}]]" for c in CATS[tracker]]
-    for r in rows:
-        for c in countries(r["CountriesOrAreas"]):
-            sc = STATUS_CATEGORY.get(r["Status"])
-            cat = f"[[Category:{sc} pipelines in {country_name(c)}]]" if sc else ""
-            if cat and cat not in cats:
-                cats.append(cat)
-    # category lines inside kept text move to the category block at the end
-    for blk in (kept, extra_ar):
-        for c in re.findall(r"\[\[\s*Category\s*:\s*([^\]]+?)\s*\]\]", blk):
-            if f"[[Category:{c}]]" not in cats:
-                cats.append(f"[[Category:{c}]]")
+    # no categories on a page; category lines in kept text are dropped too (Baird 2026-11-08)
     strip_cat = lambda t: re.sub(r"\n*\[\[\s*Category\s*:[^\]]+\]\]", "", t).strip()
     kept, extra_ar = strip_cat(kept), strip_cat(extra_ar)
     extra_ar = "\n\n".join(b for b in re.split(r"\n\n(?====)", extra_ar) if b.strip() and "\n" in b.strip())
@@ -1217,7 +1201,7 @@ def build(name, rows, owners, live, tracker):
         tail += [extra_ar, ""]
     tail += ["===Additional data===",
              f"To access additional data, including an interactive map of {word} pipelines, a downloadable dataset, and summary data, please visit the {link} on the Global Energy Monitor website.",
-             ""] + cats
+             ]
     text = gen + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
     text = B.sentence_case_headings(shade_first_column(text))
     if not kept:
