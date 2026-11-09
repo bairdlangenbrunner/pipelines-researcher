@@ -214,7 +214,7 @@ def build_network(s, entry, df, old_text=""):
     # lead: two short sentences (Baird 2026-11-08); "GEM grouping" links to the page that explains the whole scheme
     loc = f" ({entry['PrimaryNetworkLocalLanguage']})" if entry.get("PrimaryNetworkLocalLanguage") else ""
     what = f"the gas pipelines in {region}, China" if region else GROUPING_SCOPE.get(name, "a set of gas pipelines in China")
-    lead = (f"'''{name}'''{loc} groups {what}. It is a [[{OVERVIEW_PAGE}|GEM grouping]], not an official Chinese network.")
+    lead = (f"'''{name}'''{loc} groups {what}. It is a [[{OVERVIEW_PAGE}|Chinese pipeline grouping by GEM]], not an official Chinese network.")
 
     # location
     provs = sorted({p.strip() for r in members for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
