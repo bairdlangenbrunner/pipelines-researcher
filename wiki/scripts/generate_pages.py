@@ -96,6 +96,9 @@ TRACKER_LINK = {
 }
 
 
+CHINA_SEE_ALL = "See all Chinese pipeline network groupings [[Chinese Gas Pipeline Networks|here]]."
+
+
 class Page:
     """Per-page state: named refs and a log of what the generator had to decide."""
 
@@ -108,6 +111,8 @@ class Page:
         self.dorm = []
         self.shapes = {}        # wiki file name -> svg text for the route-shape column
         self.bg = set()         # ProjectIDs with a row in the Background table (linked both ways, link_background)
+        self.carried = []       # citations from replaced sections, or an old 'Other sources' section, added to Background (lost_refs)
+        self.lost = []          # live citations the generated page no longer carries (audit_refs); blocks --save
         # self.dorm: (row, sentence, ref cell) for a segment's Background entry
 
     def cite(self, cell):
@@ -199,11 +204,29 @@ def place(*parts):
     return ", ".join(out)
 
 
+MAINISH = re.compile(r"main\s*-?\s*line|trunk\s*-?\s*line|\bmain\s+(system|pipeline|segment|trunk)\b|\btrunk\b", re.I)
+
+
+def is_main_line(r, rows):
+    """The "Main Line" rule (Baird 2026-11-09): a blank SegmentName is the pipeline's Main Line when its
+    PipelineName has more than one row, this is the only blank one, and no other segment is already named as
+    a main line or trunk line ("South Mainline Expansion Project" on El Paso). A one-row pipeline stays blank.
+    The gas tab was filled this way the same day (117 rows); the check keeps new and oil rows consistent."""
+    if (r["SegmentName"] or "").strip():
+        return False
+    same = [q for q in rows if q["PipelineName"] == r["PipelineName"]]
+    if len(same) < 2 or sum(1 for q in same if not (q["SegmentName"] or "").strip()) != 1:
+        return False
+    return not any(MAINISH.search(q["SegmentName"] or "") for q in same)
+
+
 def label(r, rows):
     s = (r["SegmentName"] or "").strip()
     m = re.match(r"SYSTEM/NETWORK INFO\s*\((.*)\)", s, re.I)
     if m:
         s = m.group(1).strip() or "Main Line"
+    if not s and is_main_line(r, rows):
+        s = "Main Line"
     s = s or r["PipelineName"]
     if sum(1 for q in rows if (q["SegmentName"] or q["PipelineName"]) == (r["SegmentName"] or r["PipelineName"])) > 1:
         s += f" ({r['ProjectID']})"
@@ -249,13 +272,17 @@ def intro(pg, rows, tracker):
                 n = n.strip()
                 if n and n != pg.name and n not in names:
                     names.append(n)
-    aka = (", also known as " + ", ".join(f"'''{n}'''" for n in names) + ",") if names else ""
+    bold = [f"'''{n}'''" for n in names]   # "A and B", "A, B, and C" (Baird 2026-11-07)
+    joined = "" if not bold else bold[0] if len(bold) == 1 else (" and ".join(bold) if len(bold) == 2 else ", ".join(bold[:-1]) + ", and " + bold[-1])
+    aka = (", also known as " + joined + ",") if names else ""
     local = rows[0]["OtherLanguagePrimaryPipelineName"].strip() if len(rows) == 1 else ""
     local = f" (local name: '''{local}''')" if local else ""
     fuel, loc = fuel_phrase(rows, tracker), location_phrase(rows)
+    # a page called a network is introduced as one: "is a ... pipeline network" (Baird 2026-11-08)
+    kind = "pipeline network" if re.search(r"\bnetwork\b", pg.name, re.I) else "pipeline"
     if len(rows) == 1:
         st = STATUS_PHRASE.get(rows[0]["Status"], rows[0]["Status"])
-        s = f"'''{pg.name}'''{aka}{local} is {a_an(st)} {st} {fuel} pipeline {loc}.{pg.cite(rows[0]['Status [ref]'])}"
+        s = f"'''{pg.name}'''{aka}{local} is {a_an(st)} {st} {fuel} {kind} {loc}.{pg.cite(rows[0]['Status [ref]'])}"
     else:
         sts = []
         for r in rows:
@@ -264,8 +291,11 @@ def intro(pg, rows, tracker):
                 sts.append(p)
         rank = ["operating", "under construction", "proposed", "shelved", "cancelled", "idled", "mothballed", "retired"]
         sts.sort(key=lambda x: rank.index(x) if x in rank else 99)
-        lst = sts[0] if len(sts) == 1 else ", ".join(sts[:-1]) + " and " + sts[-1]
-        s = f"'''{pg.name}'''{aka}{local} is {a_an(fuel)} {fuel} pipeline {loc} with segments that are {lst}."
+        if len(sts) == 1:   # every segment has one status: say it like a one-row page (Baird 2026-11-07, Kern River)
+            s = f"'''{pg.name}'''{aka}{local} is {a_an(sts[0])} {sts[0]} {fuel} {kind} {loc}."
+        else:
+            lst = join_list(sts)
+            s = f"'''{pg.name}'''{aka}{local} is {a_an(fuel)} {fuel} {kind} {loc} with segments that are {lst}."
     dorm = []
     for r in rows:
         if r["ShelvedCancelledType"] != "inferred":
@@ -275,11 +305,10 @@ def intro(pg, rows, tracker):
         if yr is None:
             pg.log.append(f"{r['ProjectID']}: inferred {st} with no year; dormancy sentence left out")
             continue
-        last = int(yr) - (2 if st == "shelved" else 4)
         rc = r["Shelved [ref]"] if st == "shelved" else r["Cancelled [ref]"]
         # the lead only says the status; when and why go in the Background (Baird 2026-11-09, Delmarva)
         what = "pipeline" if len(rows) == 1 else "project"
-        pg.dorm.append((r, f"No development on the {what} has been reported since {last}, and it is considered {st}.", rc))
+        pg.dorm.append((r, f"With no development reported on the {what}, it was considered {st} as of {int(yr)}.", rc))
     return s
 
 
@@ -370,12 +399,13 @@ def end_place(loc, prov, country=""):
 
 
 def join_list(xs):
-    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+    # serial (Oxford) comma from three items up (GEM style guide, Baird 2026-11-08)
+    return xs[0] if len(xs) == 1 else xs[0] + " and " + xs[1] if len(xs) == 2 else ", ".join(xs[:-1]) + ", and " + xs[-1]
 
 
 def overview_sentence(pg, rows, tabbed=False):
-    """One sentence on where a many-segment pipeline is, so the page says it even with the
-    route table collapsed: the system row's end points if there is one, then where the segments are.
+    """One sentence on where a many-segment pipeline is, so the page says it
+    before the route table: the system row's end points if there is one, then where the segments are.
     On a tabbed page the table sits under Project details, open, so the pointer says that instead."""
     sysr = [r for r in rows if r["SegmentName"].upper().startswith("SYSTEM/NETWORK")]
     cs = sorted({c for r in rows for c in countries(r["CountriesOrAreas"])})
@@ -383,19 +413,15 @@ def overview_sentence(pg, rows, tabbed=False):
     if sysr:
         r = sysr[0]
         same_c = r["StartCountryOrArea"] == r["EndCountryOrArea"]
-        a = end_place(r["StartLocation"], r["StartState/Province"], "" if same_c else r["StartCountryOrArea"])
-        z = end_place(r["EndLocation"], r["EndState/Province"], r["EndCountryOrArea"])
+        a = end_place(r["StartLocation"], r["StartState/Province"], "" if same_c else country_name(r["StartCountryOrArea"]))
+        z = end_place(r["EndLocation"], r["EndState/Province"], country_name(r["EndCountryOrArea"]))
         if a and z:
             out.append(f"The main pipeline {VERB.get(r['Status'], 'runs')} from {a} to {z}.{pg.cite(r['Location [ref]'])}")
     provs = sorted({p.strip() for r in rows for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
-    if len(cs) == 1 and provs:
-        word = "states" if cs[0] == "United States" else "provinces or states"
-        n = f"{len(provs)} {word}" if len(provs) > 1 else provs[0]
-        out.append(f"Its {len(rows)} segments are in {n}" + (f": {join_list(provs)}." if len(provs) > 1 else "."))
-    elif len(cs) > 1:
-        out.append(f"Its {len(rows)} segments are in {len(cs)} countries: {join_list([country_name(c) for c in cs])}.")
-    if tabbed:
-        out.append("The segment table under Project details lists each segment's start and end points on its Route tab.")
+    if tabbed:   # a tabbed page says neither where its segments are nor where the table is (Baird 2026-11-08)
+        return " ".join(out)
+    # no "Its N segments are in ..." sentence: pages stay short (Baird 2026-11-08)
+    # no "The table below lists ..." sentence either: self-evident (Baird 2026-11-09)
     return " ".join(out)
 
 
@@ -674,14 +700,14 @@ def segment_table(pg, rows, owners):
           '<div class="gem-segtabs">' + " ".join(f"[[#seg-{g}|{SEG_TAB_LABEL[g]}]]" for g in groups + ["all"]) + "</div>",
           '{| class="wikitable sortable"',
           "|+ " + "".join(f'<span class="cap-{g}">{c}</span>' for g, c in caps.items() if c and (g == "all" or g in groups)),
-          "!Segment"]
+          "!#", "!Segment"]   # a running number counts the segments (Baird 2026-11-08)
     for i in keep:
         h, gs, uns = cols[i]
         t.append(f'!class="{"unsortable " if uns else ""}{" ".join("col-" + g for g in gs)}"|{h}')
-    for (lab, cells), r in zip(body, rows):
+    for n, ((lab, cells), r) in enumerate(zip(body, rows), 1):
         pid = r["ProjectID"]
         # each segment name is an anchor, and links down to its Background row when it has one (Baird 2026-11-06)
-        t += ["|-", f'|<span id="row-{pid}" class="gem-anchor"></span>' + (f'<span title="Click for project background">[[#bg-{pid}|{lab}]]</span>' if pid in pg.bg else lab)]
+        t += ["|-", f"|{n}", f'|style="background-color:{UNIT_GRAY}"|<span id="row-{pid}" class="gem-anchor"></span>' + (f'<span title="Click for project background">[[#bg-{pid}|{lab}]]</span>' if pid in pg.bg else lab)]
         for i in keep:
             v = cells[i].strip()
             cls = f'class="{" ".join("col-" + g for g in cols[i][1])}"'
@@ -690,9 +716,9 @@ def segment_table(pg, rows, owners):
                 cls, v = f"{cls} {m.group(1)}", m.group(2)
             t.append(f'|{cls}|{v if v else ("" if i == 0 else "–")}')
     if est:
-        t += ['|- class="sortbottom col-route col-details"', f'|colspan="{len(keep) + 1}"|{EST_NOTE}']
+        t += ['|- class="sortbottom col-route col-details"', f'|colspan="{len(keep) + 2}"|{EST_NOTE}']
     t += ["|}", "</div>"]
-    pg.log.append(f"tabbed segment table: {len(rows)} segments, {len(keep) + 1} columns, tabs {', '.join(groups)}")
+    pg.log.append(f"tabbed segment table: {len(rows)} segments, {len(keep) + 2} columns, tabs {', '.join(groups)}")
     return "\n".join(t)
 
 
@@ -703,10 +729,21 @@ def location(pg, rows, tab, tabbed=False):
     if len(rows) == 1:
         r = rows[0]
         same_c = r["StartCountryOrArea"] == r["EndCountryOrArea"]
-        a = place(r["StartLocation"], r["StartState/Province"], "" if same_c else r["StartCountryOrArea"])
-        z = place(r["EndLocation"], r["EndState/Province"], r["EndCountryOrArea"])
+        a0 = place(r["StartLocation"], r["StartState/Province"])
+        z0 = place(r["EndLocation"], r["EndState/Province"])
+        cn = lambda c: country_name(c) if c else ""   # "the United States" (Baird 2026-11-07)
+        a = place(r["StartLocation"], r["StartState/Province"], "" if same_c else cn(r["StartCountryOrArea"]))
+        z = place(r["EndLocation"], r["EndState/Province"], cn(r["EndCountryOrArea"]))
         v = VERB.get(r["Status"], "runs")
-        out.append(f"The pipeline {v} from {a} to {z}.{pg.cite(r['Location [ref]'])}")
+        if a0 and a0.lower() == z0.lower():   # same place at both ends: "runs in Virginia, the United States", not "from X to X"
+            out.append(f"The pipeline {v} in {z}.{pg.cite(r['Location [ref]'])}")
+        elif (r["StartLocation"].strip() and r["EndLocation"].strip() and same_c
+              and r["StartState/Province"].strip().lower() == r["EndState/Province"].strip().lower() != ""):
+            # both end points named and in one state: "from A to B in Virginia, the United States" (Baird 2026-11-07)
+            st = place(r["EndState/Province"], cn(r["EndCountryOrArea"]))
+            out.append(f"The pipeline {v} from {r['StartLocation'].strip()} to {r['EndLocation'].strip()} in {st}.{pg.cite(r['Location [ref]'])}")
+        else:
+            out.append(f"The pipeline {v} from {a} to {z}.{pg.cite(r['Location [ref]'])}")
     elif tabbed:
         out.append(overview_sentence(pg, rows, tabbed=True))
     else:
@@ -749,8 +786,9 @@ def details(pg, rows, tab):
 
 
 def ownership(pg, rows, owners, tab):
+    """Table 5: Ownership, a table under Project details after Cost, not a section of its own (Baird 2026-11-07)."""
     body = [[label(r, rows)] + owner_cells(pg, r, owners) for r in rows]
-    return "==Ownership==\n" + table(tab(), "Ownership", ["Segment"] + [f'width="26%"|{h}' for h in ("Operator", "Owner", "Parent")], body)
+    return table(tab(), "Ownership", ["Segment"] + [f'width="26%"|{h}' for h in ("Operator", "Owner", "Parent")], body)
 
 
 # ---------- preserved sections ----------
@@ -804,7 +842,7 @@ def norm_url(u):
 
 def lost_refs(pg, replaced, new_text):
     """Every <ref> and bare external link in the replaced sections whose source the new page no
-    longer cites. Returns citation lines for an 'Other sources' section, so nothing is dropped."""
+    longer cites. Returns the citations, which add_sources puts in Background, so nothing is dropped."""
     have = {norm_url(u) for u in URL_RE.findall(new_text)}
     flat = re.sub(r"\s+", " ", new_text)
     out, seen = [], set()
@@ -830,8 +868,111 @@ def lost_refs(pg, replaced, new_text):
         seen.add((norm_url(u),))
         out.append(f"[{u.rstrip('.,;)')}]")
     if out:
-        pg.log.append(f"{len(out)} sources cited only in replaced sections; carried into 'Other sources'")
-    return "\n".join(f"* {c}" for c in out)
+        pg.log.append(f"{len(out)} sources cited only in replaced sections; added to Background")
+    return out
+
+
+OTHER_SOURCES_INTRO = re.compile(r"(?im)^\s*Sources cited on earlier versions of this page\.?\s*$")
+ADDITIONAL = re.compile(r"(?m)^Additional sources:(.*)$")
+
+
+def pop_other_sources(pg, kept):
+    """(kept without its 'Other sources' section, the section's citations). There is never an Other sources
+    section (Baird 2026-11-07, Los Ramones): its citations go into Background through add_sources."""
+    secs = split_sections(kept)
+    if not any(h and h.lower() == "other sources" for h, _, _ in secs[1:]):
+        return kept, []
+    cites, rest = [], [secs[0][2].strip()] if secs[0][2].strip() else []
+    for h, _, body in secs[1:]:
+        if h.lower() != "other sources":
+            rest.append(f"=={h}==\n{body.strip()}")
+            continue
+        body = OTHER_SOURCES_INTRO.sub("", body)
+        for m in REF_ANY.finditer(body):   # refs written inside the section
+            if m.group(2).strip():
+                cites.append(m.group(2).strip())
+        body = REF_ANY.sub("", body)
+        for line in body.splitlines():
+            line = re.sub(r"^\s*[*#:]+\s*", "", line).strip()
+            if line:
+                cites.append(line)
+    pg.log.append(f"Other sources section removed; {len(cites)} citations to Background")
+    return "\n\n".join(rest), cites
+
+
+def add_sources(pg, kept, cites, new_text):
+    """Citations that no longer sit beside a fact go on one line at the very bottom of Background, 'Additional
+    sources: ' then the refs, a space after the colon (Baird 2026-11-07). A line already there is extended, never repeated. Citations
+    the page already cites elsewhere are skipped. Placing a citation beside the fact it supports is a hand edit."""
+    kept = re.sub(r"(?m)^Additional sources:(?=\S)", "Additional sources: ", kept)   # a space before the refs (Baird 2026-11-07)
+    have = {norm_url(u) for u in URL_RE.findall(new_text)}
+    out, seen = [], set()
+    for c in cites:
+        us = [u for u in URL_RE.findall(c) if not OWN_LINK.search(u)]
+        key = tuple(sorted(norm_url(u) for u in us)) or (re.sub(r"\s+", " ", c),)
+        if key in seen or (us and all(norm_url(u) in have for u in us)) or (not us and c in new_text):
+            continue
+        seen.add(key)
+        out.append(c)
+    pg.carried = list(out)
+    if not out:
+        return kept
+    refs = "".join(f"<ref>{c}</ref>" for c in out)
+    secs = split_sections(kept)
+    i = next((k for k, (h, _, _) in enumerate(secs) if h and h.lower() == "background"), None)
+    if i is None:
+        bg_body = f"Additional sources: {refs}"
+        parts = [s[2].strip() for s in secs[:1] if s[2].strip()] + [f"=={h}==\n{b.strip()}" for h, _, b in secs[1:]]
+        return "\n\n".join(parts + [f"==Background==\n{bg_body}"])
+    h, _, body = secs[i]
+    body = body.rstrip()
+    if ADDITIONAL.search(body):
+        m = list(ADDITIONAL.finditer(body))[-1]
+        body = body[:m.end()] + refs + body[m.end():]
+    else:
+        body = body + "\n\nAdditional sources: " + refs
+    secs[i] = (h, 2, "\n" + body.strip() + "\n")
+    parts = [secs[0][2].strip()] if secs[0][2].strip() else []
+    parts += [f"=={h}==\n{b.strip()}" for h, _, b in secs[1:]]
+    pg.log.append(f"{len(out)} citations added to the Additional sources line in Background")
+    return "\n\n".join(parts)
+
+
+def audit_refs(pg, live, text):
+    """Every citation on the live page must still be on the generated page: a <ref> with URLs by each URL, a
+    <ref> without one by its text, and a bare external link by its URL. Returns the citations that are not,
+    and logs each one. The run never saves a page with a lost citation (Baird 2026-11-06)."""
+    if not live:
+        pg.lost = []
+        return []
+    src = strip_generated_comments(live)
+    have = {norm_url(u) for u in URL_RE.findall(text)}
+    flat = re.sub(r"\s+", " ", text)
+    lost, seen = [], set()
+    for m in REF_ANY.finditer(src):
+        c = m.group(2).strip()
+        if not c:
+            continue
+        us = [u for u in URL_RE.findall(c) if not OWN_LINK.search(u)]
+        key = tuple(sorted(norm_url(u) for u in us)) or (re.sub(r"\s+", " ", c),)
+        if key in seen:
+            continue
+        seen.add(key)
+        if us:
+            missing = [u for u in us if norm_url(u) not in have]
+            if missing:
+                lost.append(c)
+        elif re.sub(r"\s+", " ", c) not in flat:
+            lost.append(c)
+    for u in URL_RE.findall(REF_ANY.sub("", src)):
+        if OWN_LINK.search(u) or norm_url(u) in have or (norm_url(u),) in seen:
+            continue
+        seen.add((norm_url(u),))
+        lost.append(f"[{u.rstrip('.,;)')}]")
+    pg.lost = lost
+    for c in lost:
+        pg.log.append(f"LOST REF (on the live page, not on the generated page): {c[:200]}")
+    return lost
 
 
 NAMED_DEF = re.compile(r'<ref\s+name\s*=\s*"?([^">/]+?)"?\s*>(.*?)</ref>', re.S)
@@ -878,6 +1019,17 @@ def _key(x):
     return re.sub(r"[^a-z0-9]+", "", x)
 
 
+def main_line_key(rows, pid=False):
+    """A Background subsection called "Main Line" (or "Main System", "Mainline") is the one row whose SegmentName
+    is blank, when there is exactly one (hand-built pages label that row Main Line; 10 US pages, 2026-11-06).
+    Returns {key: Status} or, with pid, {key: ProjectID}."""
+    blank = [r for r in rows if not (r["SegmentName"] or "").strip()]
+    if len(blank) != 1:
+        return {}
+    r = blank[0]
+    return {_key(k): (r["ProjectID"] if pid else r["Status"]) for k in ("Main Line", "Mainline", "Main System")}
+
+
 def background_table(pg, kept, rows):
     """On a many-segment page, a Background written as one === subsection per segment becomes a
     table (Segment | Status | Background). Text before the first subsection stays as prose; a
@@ -900,6 +1052,7 @@ def background_table(pg, kept, rows):
             loose.setdefault(k, set()).add(r["ProjectID"])
     by_pid = {r["ProjectID"]: r["Status"] for r in rows}
     status = {k: by_pid[next(iter(p))] for k, p in loose.items() if len(p) == 1}
+    status.update(main_line_key(rows))
     def st_of(h):
         st = exact.get(h.strip().lower()) or status.get(_key(h), "")
         if not st and _key(h):                     # "Phase II" for "Phase II Kovykta-Chayanda": a unique prefix
@@ -926,6 +1079,57 @@ def background_table(pg, kept, rows):
     pg.log.append(f"Background: {len(rows_in)} segment subsections turned into a table")
     new = (lead + "\n\n" if lead else "") + "\n".join(t) + "\n\n" + "".join(f"==={h}===\n{txt}\n\n" for h, txt in other)
     return kept[:m.start(1)] + new + kept[m.end(1):]
+
+
+BG_TABLE = re.compile(r"(?ms)(?:^<div class=\"gem-bgbox\">\n)?^\{\|[^\n]*\n!(?:Segment|Unit)\n!Status\n!Background\n(.*?)^\|\}(?:\n</div>)?")
+
+
+def background_subsections(pg, kept):
+    """Below SEG_TABLE_MIN segments the Background holds no table: one === subsection per segment (Baird 2026-11-07,
+    Iroquois). A Background table an earlier run built is turned back into subsections; the status column goes,
+    since the tables above carry it, and a bold-only line in a cell goes back to a ==== heading."""
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    tm = BG_TABLE.search(m.group(1)) if m else None
+    if not tm:
+        return kept
+    subs = []
+    for part in re.split(r"(?m)^\|-\s*\n", tm.group(1))[1:]:
+        cm = re.match(r"(?s)\|(?:style=\"[^\"]*\"\|)?([^\n]*)\n\|[^\n]*\n\|\n?(.*)", part)
+        if not cm:
+            pg.log.append(f"BACKGROUND TABLE ROW NOT PARSED, table left in place: {part[:60]!r}")
+            return kept
+        name = re.sub(r"<span[^>]*></span>", "", BG_LINKED.sub(r"\1", cm.group(1))).strip()
+        txt = cm.group(2).strip()
+        txt = re.sub(r"(?m)^'''([^'\n]+)'''\s*$", r"====\1====", txt)
+        txt = re.sub(r"(?m)^<nowiki>([|!])</nowiki>", r"\1", txt)
+        subs.append(f"==={name}===\n" + ("" if txt in ("", "–") else txt))
+    body = m.group(1)
+    new = body[:tm.start()].rstrip() + "\n\n" + "\n\n".join(subs) + "\n\n" + body[tm.end():].lstrip()
+    pg.log.append(f"Background: table of {len(subs)} rows turned back into subsections (under {SEG_TABLE_MIN} segments)")
+    return kept[:m.start(1)] + new.lstrip() + kept[m.end(1):]
+
+
+def dormancy_into_subsection(pg, kept, rows, r, sent, rc):
+    """Below SEG_TABLE_MIN: the dormancy sentence ends the segment's Background subsection, or gets one of its own."""
+    text = sent + pg.cite(rc)
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if not m:
+        kept = kept.rstrip() + ("\n\n" if kept.strip() else "") + f"==Background==\n==={label(r, rows)}===\n{text}\n"
+        pg.log.append(f"{r['ProjectID']}: dormancy sentence put in a new Background subsection")
+        return kept
+    body = m.group(1)
+    if sent.split(",")[0] in body:
+        return kept   # an earlier run put it there
+    find = segment_matcher(rows)
+    heads = list(re.finditer(r"(?m)^===\s*([^=].*?)\s*===\s*$", body))
+    hit = next((i for i, h in enumerate(heads) if find(h.group(1)) == r["ProjectID"]), None)
+    if hit is None:
+        body = body.rstrip() + f"\n\n==={label(r, rows)}===\n{text}\n\n"
+    else:
+        end = heads[hit + 1].start() if hit + 1 < len(heads) else len(body)
+        body = body[:end].rstrip() + "\n\n" + text + "\n\n" + body[end:].lstrip()
+    pg.log.append(f"{r['ProjectID']}: dormancy sentence put in its Background subsection")
+    return kept[:m.start(1)] + body + kept[m.end(1):]
 
 
 EXPANSION_HEAD = re.compile(r"(?ms)^==\s*(expansions?(?: projects?)?|expansion and extension projects?|extensions?)\s*==\s*\n(.*?)(?=^==[^=]|\Z)", re.I)
@@ -982,18 +1186,79 @@ def fold_expansions(pg, kept, rows):
     return kept.strip(), removed
 
 
-def fold_other_sections(pg, kept):
-    """A page has four sections, Location, Project details, Ownership and Background, plus Other sources (Baird
-    2026-11-07, Kern River). Any other kept section (Environmental impact, Opposition, Financing ...) moves into Background as a
-    subsection, its own subsections one level down, in page order. Other sources stays last."""
+MEDIA_OPEN = re.compile(r"\[\[\s*(?:File|Image|Media)\s*:", re.I)
+MEDIA_BLOCK = re.compile(r"<gallery\b.*?</gallery>|<video\b.*?</video>|<embedvideo\b.*?</embedvideo>|<youtube\b.*?</youtube>"
+                         r"|\{\{\s*#(?:ev|evt|evu|evp|evl)\s*:.*?\}\}|\{\{\s*EmbedVideo\b.*?\}\}", re.I | re.S)
+OWN_MEDIA = re.compile(r"Route shape P\d+\.svg", re.I)   # the generator's own route-shape pictures
+
+
+def find_media(txt):
+    """[(start, end, markup)] for every image, gallery or video in txt, file links matched with their nested
+    [[...]] captions."""
+    out = [(m.start(), m.end(), m.group(0)) for m in MEDIA_BLOCK.finditer(txt)]
+    for m in MEDIA_OPEN.finditer(txt):
+        if any(a <= m.start() < b for a, b, _ in out):
+            continue
+        depth, i = 0, m.start()
+        while i < len(txt) - 1:
+            if txt.startswith("[[", i):
+                depth += 1; i += 2; continue
+            if txt.startswith("]]", i):
+                depth -= 1; i += 2
+                if depth == 0:
+                    break
+                continue
+            i += 1
+        out.append((m.start(), i, txt[m.start():i]))
+    return sorted(o for o in out if not OWN_MEDIA.search(o[2]))
+
+
+def media_key(markup):
+    m = re.match(r"\[\[\s*(?:File|Image|Media)\s*:\s*([^|\]]+)", markup, re.I)
+    return re.sub(r"[\s_]+", " ", m.group(1)).strip().lower() if m else re.sub(r"\s+", " ", markup)
+
+
+def gather_media(pg, kept, replaced, extra_ar):
+    """Images, galleries and videos a person put anywhere but Background (above the map, in the lead, in a rebuilt
+    section, under Articles and resources) move to the top of Background (Baird 2026-11-08, China–Russia East).
+    Media already in Background stays where it is. Returns (kept, extra_ar)."""
+    have = {media_key(t) for _, _, t in find_media(kept)}
+    moved = []
+    for _, _, t in find_media(replaced):
+        k = media_key(t)
+        if k not in have:
+            have.add(k); moved.append(t.strip())
+    for a, b, t in reversed(find_media(extra_ar)):
+        extra_ar = extra_ar[:a] + extra_ar[b:]
+        k = media_key(t)
+        if k not in have:
+            have.add(k); moved.insert(0, t.strip())
+    if not moved:
+        return kept, extra_ar
+    pg.log.append(f"{len(moved)} images or videos moved to the top of Background")
+    block = "\n".join(moved)
     secs = split_sections(kept)
-    bg, other, moved = [], [], []
+    i = next((k for k, (h, _, _) in enumerate(secs) if h and h.lower() == "background"), None)
+    if i is None:
+        secs.append(("Background", 2, "\n" + block + "\n"))
+    else:
+        h, _, body = secs[i]
+        secs[i] = (h, 2, "\n" + block + "\n\n" + body.strip() + "\n")
+    parts = [secs[0][2].strip()] if secs[0][2].strip() else []
+    parts += [f"=={h}==\n{b.strip()}" for h, _, b in secs[1:]]
+    return "\n\n".join(parts), extra_ar
+
+
+def fold_other_sections(pg, kept):
+    """A page has four sections, Location, Project details, Ownership and Background (Baird 2026-11-07, Kern River;
+    no Other sources section, Los Ramones). Any other kept section (Environmental impact, Opposition, Financing ...)
+    moves into Background as a subsection, its own subsections one level down, in page order."""
+    secs = split_sections(kept)
+    bg, moved = [], []
     for h, _, body in secs[1:]:
         hl = h.lower()
         if hl == "background":
             bg.append(body.strip())
-        elif hl == "other sources":
-            other.append(f"=={h}==\n{body.strip()}")
         else:
             moved.append((h, re.sub(r"(?m)^(===+)([^=].*?[^=])(===+)\s*$", r"=\1\2\3=", body.strip())))
     if not moved:
@@ -1003,7 +1268,7 @@ def fold_other_sections(pg, kept):
     if lead:   # text above the first heading in kept: keep it at the top of Background
         bg.insert(0, lead)
     body = "\n\n".join([b for b in bg if b] + [f"==={h}===\n{t}" for h, t in moved if t])
-    return "\n\n".join(["==Background==\n" + body] + other)
+    return "==Background==\n" + body
 
 
 BG_LINKED = re.compile(r'<span id="bg-P\d+" class="gem-anchor"></span>(?:<span title="[^"]*">)?\[\[#row-P\d+\|(.*?)\]\](?:</span>)?')
@@ -1020,6 +1285,8 @@ def link_background(pg, kept, rows):
     for r in rows:
         for k in {_key(label(r, rows)), _key(r["SegmentName"])} - {""}:
             keys.setdefault(k, set()).add(r["ProjectID"])
+    for k, pid in main_line_key(rows, pid=True).items():
+        keys.setdefault(k, set()).add(pid)
     unmatched, used = [], set()
 
     def cell(mo):
@@ -1042,9 +1309,83 @@ def link_background(pg, kept, rows):
     return kept[:m.start(1)] + body + kept[m.end(1):]
 
 
+def blank_background_rows(pg, kept, rows):
+    """On a tabbed page every segment has a row in the Background table (Baird 2026-11-07, Kern River): a segment
+    with no background text gets a row with the Background cell left blank. Each missing row goes before the next
+    segment, in tracker order, that already has a row; run after link_background, so the row is linked both ways."""
+    tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
+    if not tm:
+        return kept
+    parts = re.split(r"(?m)(?=^\|-\s*$)", tm.group(1))
+    head, rws = parts[0], parts[1:]
+    ordered = list(rows)
+    missing = [r for r in ordered if r["ProjectID"] not in pg.bg and not any(f'id="bg-{r["ProjectID"]}"' in w for w in rws)]
+    if not missing:
+        return kept
+    for r in missing:
+        pid, name = r["ProjectID"], label(r, rows)
+        row = (f'|-\n|<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{name}]]</span>\n'
+               f'|{STATUS_PHRASE.get(r["Status"], r["Status"])}\n|\n')
+        later = {x["ProjectID"] for x in ordered[ordered.index(r) + 1:]}
+        at = next((i for i, w in enumerate(rws) if any(f'id="bg-{q}"' in w for q in later)), len(rws))
+        rws.insert(at, row)
+        pg.bg.add(pid)
+    pg.log.append(f"Background: {len(missing)} segments with no background text added as blank rows ({', '.join(r['ProjectID'] for r in missing)})")
+    return kept[:tm.start(1)] + head + "".join(w if w.endswith("\n") else w + "\n" for w in rws) + kept[tm.end(1):]
+
+
+BG_SECTION = re.compile(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)")
+
+
+def _bg_insert_at(body):
+    """Where a new Background entry goes: before the Additional sources line, else at the end."""
+    m = ADDITIONAL.search(body)
+    return m.start() if m else len(body)
+
+
+def ensure_background(pg, kept, rows):
+    """Every page has a Background, and every segment of a multi-segment page has its own entry in it, empty when
+    nothing is written yet, so others can fill it in (Baird 2026-11-08). A tabbed page gets an empty Background
+    table when it has none (blank_background_rows then gives every segment its row); below SEG_TABLE_MIN each
+    segment with no === subsection gets an empty one, in tracker order. A one-segment page gets the heading only."""
+    m = BG_SECTION.search(kept)
+    if not m:
+        kept = kept.rstrip() + ("\n\n" if kept.strip() else "") + "==Background==\n"
+        m = BG_SECTION.search(kept)
+        pg.log.append("Background: empty section added")
+    if len(rows) < 2:
+        return kept
+    body = m.group(1)
+    if len(rows) >= SEG_TABLE_MIN:
+        if re.search(r"(?m)^\{\|[^\n]*\n!(?:Segment|Unit)\n!Status\n!Background\n", body):
+            return kept
+        # after the prose lead, before any subsection and the Additional sources line
+        h = re.search(r"(?m)^===\s*[^=]", body)
+        at = min(h.start() if h else len(body), _bg_insert_at(body))
+        tbl = '{| class="wikitable"\n!Segment\n!Status\n!Background\n|}\n\n'
+        body = body[:at].rstrip() + ("\n\n" if body[:at].strip() else "") + tbl + body[at:].lstrip()
+        pg.log.append("Background: empty segment table added")
+        return kept[:m.start(1)] + body + kept[m.end(1):]
+    find = segment_matcher(rows)
+    heads = [(hm, find(hm.group(1))) for hm in re.finditer(r"(?m)^===\s*([^=].*?)\s*===\s*$", body)]
+    have = {pid for _, pid in heads if pid}
+    missing = [r for r in rows if r["ProjectID"] not in have]
+    if not missing:
+        return kept
+    for r in missing:
+        later = [x["ProjectID"] for x in rows[rows.index(r) + 1:]]
+        heads = [(hm, find(hm.group(1))) for hm in re.finditer(r"(?m)^===\s*([^=].*?)\s*===\s*$", body)]
+        nxt = next((hm.start() for hm, pid in heads if pid in later), None)
+        at = nxt if nxt is not None else _bg_insert_at(body)
+        body = body[:at].rstrip() + ("\n\n" if body[:at].strip() else "") + f"==={label(r, rows)}===\n\n" + body[at:].lstrip()
+    pg.log.append(f"Background: {len(missing)} segments with no background text added as empty subsections ({', '.join(r['ProjectID'] for r in missing)})")
+    return kept[:m.start(1)] + body.rstrip() + "\n\n" + kept[m.end(1):]
+
+
 def dormancy_into_background(pg, kept, rows):
     """Put each segment's dormancy sentence at the end of its row in the Background table, or add a
-    row for the segment when it has none. Skipped when the sentence is already there (a re-run)."""
+    row for the segment when it has none. Skipped when the sentence is already there (a re-run). Below
+    SEG_TABLE_MIN segments there is no table: the sentence goes in the segment's subsection instead."""
     if len(rows) == 1:
         for r, sent, rc in pg.dorm:   # one-row page: the sentence ends the Background
             m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|^<!---|\Z)", kept)
@@ -1053,12 +1394,16 @@ def dormancy_into_background(pg, kept, rows):
                 continue
             if m:
                 body = m.group(1).rstrip()
-                tail = re.search(r"(?s)\n+Additional sources:.*\Z", body)
+                tail = re.search(r"(?s)\n+Additional sources:.*\Z", body)   # before an "Additional sources" line
                 at = tail.start() if tail else len(body)
                 kept = kept[:m.start(1)] + body[:at].rstrip() + "\n\n" + text + body[at:] + "\n" + kept[m.end(1):]
             else:
                 kept = kept.rstrip() + ("\n\n" if kept.strip() else "") + f"==Background==\n{text}\n"
             pg.log.append(f"{r['ProjectID']}: dormancy sentence put at the end of the Background")
+        return kept
+    if len(rows) < SEG_TABLE_MIN:
+        for r, sent, rc in pg.dorm:
+            kept = dormancy_into_subsection(pg, kept, rows, r, sent, rc)
         return kept
     for r, sent, rc in pg.dorm:
         tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
@@ -1124,6 +1469,26 @@ TABLE_FONT = "85%"      # table text a step smaller than the page body
 UNIT_GRAY = "#eaecf0"     # the wikitable header-cell gray, on the unit-name cells
 HEAD_GRAY = "#d4d8de"     # one step darker, on the column-title cells
 SHADES = (UNIT_GRAY, HEAD_GRAY)
+
+
+BG_HEAD = r"(?ms)^(\{\|[^\n]*\n)%s(!Segment\n!Status\n!Background\n)(.*?)^\|\}"
+
+
+def number_background(text):
+    """A running number in the Background table's first column, like the segment table's (Baird 2026-11-08).
+    It is added last and stripped again by strip_background_numbers when a live page is read back in."""
+    def f(m):
+        n = [0]
+
+        def row(_):
+            n[0] += 1
+            return f'|-\n|{n[0]}\n|style="background-color:{UNIT_GRAY}"|'
+        return m.group(1) + "!#\n" + m.group(2) + re.sub(r"(?m)^\|-\n\|", row, m.group(3)) + "|}"
+    return re.sub(BG_HEAD % "", f, text)
+
+
+def strip_background_numbers(text):
+    return re.sub(BG_HEAD % r"!#\n", lambda m: m.group(1) + m.group(2) + re.sub(r"(?m)^\|-\n\|\d+\n\|", "|-\n|", m.group(3)) + "|}", text)
 
 
 def unshade(text):
@@ -1291,25 +1656,34 @@ def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
-    kept = unshade(kept)
+    kept = strip_background_numbers(unshade(kept))
     kept, gone = fold_expansions(pg, kept, rows)
     replaced = replaced + "\n\n" + gone
+    kept, old_other = pop_other_sources(pg, kept)
     kept = fold_other_sections(pg, kept)
-    kept = background_table(pg, kept, order(rows))
+    # a Background table only on a tabbed page; below SEG_TABLE_MIN it is one subsection per segment (Baird 2026-11-07)
     if len(rows) >= SEG_TABLE_MIN:
+        kept = background_table(pg, kept, order(rows))
+        kept = ensure_background(pg, kept, rows)
         kept = link_background(pg, kept, rows)
+        kept = blank_background_rows(pg, kept, rows)
+    else:
+        kept = background_subsections(pg, kept)
+        kept = ensure_background(pg, kept, rows)
     # a Background table built on the 2026-11-06 run says "Unit"; the row label is "Segment" (Baird 2026-11-06)
     kept = kept.replace("!Unit\n!Status\n!Background", "!Segment\n!Status\n!Background")
     seed_url_names(pg, kept)
     # names the kept text defines are cited bare by the tables, never redefined
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     tab = Counter()
-    head = [name, "", f"<!---\n\t{COMMENT1}\n-->", NAVBAR[tracker], intro(pg, rows, tracker), ""]
+    # every Chinese pipeline page carries, after its opening paragraph, a pointer to the page that explains the groupings (Baird 2026-11-08)
+    china = [CHINA_SEE_ALL, ""] if tracker == "gas" and any("China" in (r.get("Countries/Areas") or "").split(", ") or r.get("StartCountryOrArea") == "China" for r in rows) else []
+    head = [name, "", f"<!---\n\t{COMMENT1}\n-->", NAVBAR[tracker], intro(pg, rows, tracker), ""] + china
     tabbed = len(rows) >= SEG_TABLE_MIN
     if tabbed:   # one tabbed segment table instead of the five separate tables (Baird 2026-11-06)
         body = location(pg, rows, tab, tabbed=True) + "\n\n==Project details==\n" + segment_table(pg, rows, owners)
     else:
-        body = location(pg, rows, tab) + "\n\n" + details(pg, rows, tab) + "\n\n" + ownership(pg, rows, owners, tab)
+        body = location(pg, rows, tab) + "\n\n" + details(pg, rows, tab) + "\n\n" + ownership(pg, rows, owners, tab)   # Ownership is Table 5 inside Project details
     gen = "\n".join(head) + "\n" + body + "\n"
     # the generated part defines its refs before kept text uses them; named refs the kept text
     # defines itself are reused above
@@ -1320,10 +1694,12 @@ def build(name, rows, owners, live, tracker):
     pg.status_conflicts = status_conflicts(pg, kept, rows)
     kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
-    carried = lost_refs(pg, replaced, gen + kept + extra_ar)
-    if carried:
-        # in the human-kept zone, so the data team's generator also keeps it
-        kept = (kept + "\n\n" if kept else "") + "==Other sources==\nSources cited on earlier versions of this page.\n\n" + carried
+    kept, extra_ar = gather_media(pg, kept, replaced, extra_ar)
+    # in Background, the human-kept zone, so the data team's generator also keeps them; never an Other sources section
+    kept = add_sources(pg, kept, old_other + lost_refs(pg, replaced, gen + kept + extra_ar), gen + kept + extra_ar)
+    # an Additional sources line right under a Background table gets an empty line above it, or it renders flush
+    # against the table (Baird 2026-11-08); the extra blank line renders as <br />
+    kept = re.sub(r"(?m)^(\|\}|</div>)\n+(?=Additional sources:)", r"\1\n\n\n", kept)
     word, link = TRACKER_LINK[tracker]
     # no categories on a page; category lines in kept text are dropped too (Baird 2026-11-08)
     strip_cat = lambda t: re.sub(r"\n*\[\[\s*Category\s*:[^\]]+\]\]", "", t).strip()
@@ -1336,7 +1712,7 @@ def build(name, rows, owners, live, tracker):
              f"To access additional data, including an interactive map of {word} pipelines, a downloadable dataset, and summary data, please visit the {link} on the Global Energy Monitor website.",
              ]
     text = gen + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
-    text = B.sentence_case_headings(shade_first_column(text))
+    text = B.sentence_case_headings(shade_first_column(number_background(text)))
     if not kept:
         text += "\n__NOTOC__\n"
     return text, pg
@@ -1408,16 +1784,40 @@ def ensure_styles(s):
     return "\n".join(out)
 
 
+def oil_columns(df):
+    """Give the oil tab the gas tab's column names where the two differ, so the page code reads one schema:
+    oil keeps separate start and end location refs (joined into `Location [ref]`, start first, no repeats)
+    and one Cost column (read as the segment cost; oil has no project-level cost). Oil has no pressure.
+    Oil routes live in the routes repo's liquid-pipelines folder, not gas-pipelines."""
+    B.ROUTES = B.ROUTES.replace("/gas-pipelines/", "/liquid-pipelines/")
+    def join(a, b):
+        seen = []
+        for u in B.urls(a) + B.urls(b):
+            if u not in seen:
+                seen.append(u)
+        return ", ".join(seen)
+    df["Location [ref]"] = [join(a, b) for a, b in zip(df["StartLocation [ref]"], df["EndLocation [ref]"])]
+    df["SegmentCost"], df["SegmentCostUnits"], df["SegmentCost [ref]"] = df["Cost"], df["CostUnits"], df["Cost [ref]"]
+    for c in ("ProjectLevelCost", "ProjectLevelCostUnits", "ProjectLevelCost [ref]"):
+        df[c] = ""
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("pages", nargs="*")
-    ap.add_argument("--tracker", default="gas", choices=["gas"])
+    ap.add_argument("--tracker", default="gas", choices=["gas", "oil"])
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--save", action="store_true", help="upload the route shapes and save each page via wiki_save (page-name line dropped)")
     ap.add_argument("--allow-status-conflicts", action="store_true", help="save a page even when its Background states a status other than the tracker's (the conflict is still logged)")
     ap.add_argument("--push-styles", action="store_true", help="save the tabbed-table and map-popup stylesheet pages on the wiki if they differ")
+    ap.add_argument("--pages-file", help="a text file with one page name per line, added to the page names given")
+    ap.add_argument("--resume", action="store_true", help="skip pages already in --out's refs_ledger.json and append to its report")
+    ap.add_argument("--rate", type=float, default=3.0, help="gem.wiki requests per second for this run (the client's ceiling is 5)")
     a = ap.parse_args()
+    GW.MAX_CALLS_PER_SECOND = min(a.rate, GW.MAX_CALLS_PER_SECOND)
+    if a.pages_file:
+        a.pages += [l.strip() for l in open(a.pages_file) if l.strip() and not l.startswith("#")]
     if a.push_styles:
         print(ensure_styles(GW.session(login=True)))
         if not a.pages:
@@ -1425,6 +1825,8 @@ def main():
     elif not a.pages:
         ap.error("no pages given")
     df = C.load(a.tracker)
+    if a.tracker == "oil":
+        oil_columns(df)
     df["page"] = df["Wiki"].map(C.page_name)
     B.fill_unknown_parents(df)
     own = C.load("owners").drop_duplicates("ProjectID").set_index("ProjectID")
@@ -1433,16 +1835,31 @@ def main():
     os.makedirs(out, exist_ok=True)
     s = GW.session()
     report = [f"# Sample pages, {time.strftime('%Y-%m-%d %H:%M')}", "", f"Snapshot: `{os.path.basename(df.attrs['path'])}`", ""]
+    ledger = {}   # page -> what happened to the live page's citations (refs_ledger.json)
+    if a.resume and os.path.exists(os.path.join(out, "refs_ledger.json")):
+        ledger = json.load(open(os.path.join(out, "refs_ledger.json")))
+        old = open(os.path.join(out, "report.md")).read().split("\n## Totals")[0].rstrip("\n")
+        report = old.split("\n") + ["", f"Resumed {time.strftime('%Y-%m-%d %H:%M')}: {len(ledger)} pages already built", ""]
     for name in a.pages:
+        # with --save, a page counts as done only once it saved (an entry written before a crash says saved: False);
+        # an entry from before the flag existed has no key and is taken as done
+        if a.resume and name in ledger and (not a.save or ledger[name].get("saved", True)):
+            continue
         rows = [r.to_dict() for _, r in df[df["page"] == name].iterrows()]
         if not rows:
             report += [f"## {name}", "", "No tracker rows point at this page.", ""]
             continue
         live = GW.page_text(s, name) or ""
         text, pg = build(name, rows, owners, live, a.tracker)
+        lost = audit_refs(pg, live, text)
         fn = re.sub(r"[^\w.-]+", "_", name)
         open(os.path.join(out, fn + ".txt"), "w").write(text)
         open(os.path.join(out, fn + ".orig.txt"), "w").write(live)
+        ledger[name] = {"file": fn, "rows": len(rows), "live_chars": len(live),
+                        "live_refs": len(REF_ANY.findall(strip_generated_comments(live))),
+                        "live_urls": len({norm_url(u) for u in URL_RE.findall(live)}),
+                        "carried_to_background": pg.carried, "lost": lost, "saved": False}
+        json.dump(ledger, open(os.path.join(out, "refs_ledger.json"), "w"), indent=1, ensure_ascii=False)
         if pg.shapes:
             os.makedirs(os.path.join(out, "shapes"), exist_ok=True)
             for f, svg in pg.shapes.items():
@@ -1455,20 +1872,34 @@ def main():
             if "#display_map" in text and "maps.googleapis.com" not in headhtml:
                 pg.log.append("parse head has no Google Maps script (expected for a parse preview; check after a real save)")
         report += [f"## {name}", "", f"- rows: {len(rows)}; generated text {len(text):,} characters (live page {len(live):,})",
-                   f"- cite errors in the rendered preview: {len(errs)}"]
+                   f"- cite errors in the rendered preview: {len(errs)}",
+                   f"- live citations: {ledger[name]['live_refs']} refs, {ledger[name]['live_urls']} distinct URLs; added to Background: {len(pg.carried)}; LOST: {len(lost)}"]
         report += [f"  - {e}" for e in errs[:20]]
-        if a.save and pg.status_conflicts and not a.allow_status_conflicts:
-            pg.log.append("NOT SAVED: Background states a status other than the tracker's (see STATUS CONFLICT); fix the text or the sheet, or re-run with --allow-status-conflicts")
-        elif a.save:
-            import wiki_save
-            ls = ls if "ls" in dir() else GW.session(login=True)
-            up = upload_shapes(ls, out, name)
-            r = wiki_save.save(ls, name, text=page_body(text), summary="generated from the tracker by generate_pages.py")
-            pg.log.append(f"saved: {r.get('result')}, map {'BROKEN' if r.get('map', {}).get('broken') else 'ok'}, {len(up)} shapes uploaded")
+        if a.save:
+            if pg.status_conflicts and not a.allow_status_conflicts:
+                pg.log.append("NOT SAVED: Background states a status other than the tracker's (see STATUS CONFLICT); fix the text or the sheet, or re-run with --allow-status-conflicts")
+            elif lost or errs:
+                pg.log.append(f"NOT SAVED: {len(lost)} lost citations, {len(errs)} cite errors; fix and re-run")
+            else:
+                import wiki_save
+                ls = ls if "ls" in dir() else GW.session(login=True)
+                try:
+                    up = upload_shapes(ls, out, name)
+                    r = wiki_save.save(ls, name, text=page_body(text), summary="generated from the tracker by generate_pages.py")
+                    pg.log.append(f"saved: {r.get('result')}, map {'BROKEN' if r.get('map', {}).get('broken') else 'ok'}, {len(up)} shapes uploaded")
+                    ledger[name]["saved"] = r.get("result") == "Success" and not r.get("map", {}).get("broken")
+                except Exception as e:  # one failed save is logged and retried by --resume, never the end of the run
+                    pg.log.append(f"SAVE FAILED: {type(e).__name__}: {e}")
+                json.dump(ledger, open(os.path.join(out, "refs_ledger.json"), "w"), indent=1, ensure_ascii=False)
         report += [f"- {l}" for l in pg.log] + [""]
+        open(os.path.join(out, "report.md"), "w").write("\n".join(report))
+    n_lost = sum(1 for v in ledger.values() if v["lost"])
+    n_carried = sum(1 for v in ledger.values() if v["carried_to_background"])
+    report += ["## Totals", "", f"- pages: {len(ledger)}; pages with citations added to Background: {n_carried}; pages with LOST citations: {n_lost}",
+               f"- citation ledger: `refs_ledger.json` in this folder; the live text of every page is beside its draft as `.orig.txt`", ""]
     open(os.path.join(out, "report.md"), "w").write("\n".join(report))
     print(out)
-    print("\n".join(report))
+    print("\n".join(report[-4:]))
 
 
 if __name__ == "__main__":
