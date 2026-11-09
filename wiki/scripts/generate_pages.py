@@ -478,7 +478,7 @@ def detail_cells(pg, r, units):
 
 
 def timeline_cells(pg, r):
-    """proposal year, FID, construction year, start year, inactive year, each with its ref."""
+    """proposal year, FID, construction year, start year, each with its ref. No inactive year column (Baird 2026-11-08)."""
     st = r["Status"]
     fid = ""
     if r["FIDYear"].strip() or r["FIDStatus"].strip():
@@ -495,16 +495,10 @@ def timeline_cells(pg, r):
         start += pg.cite(r["Start [ref]"])
         if r["Delayed"].strip().lower() == "yes":
             start += " (delayed)" + pg.cite(r["Delay [ref]"])
-    inactive = ""
-    col = {"shelved": ("ShelvedYear", "Shelved [ref]"), "cancelled": ("CancelledYear", "Cancelled [ref]"),
-           "retired": ("StopYear", "Stop [ref]"), "mothballed": ("StopYear", "Stop [ref]"),
-           "idled": ("StopYear", "Stop [ref]")}.get(st)
-    if col and r[col[0]].strip():
-        inactive = f"{r[col[0]].strip()} ({st}{', inferred' if r['ShelvedCancelledType'] == 'inferred' else ''})" + pg.cite(r[col[1]])
     prop = r["ProposalYear"].strip()
     cons = r["ConstructionYear"].strip()
     return [prop + (pg.cite(r["Proposal [ref]"]) if prop else ""), fid,
-            cons + (pg.cite(r["Construction [ref]"]) if cons else ""), start, inactive]
+            cons + (pg.cite(r["Construction [ref]"]) if cons else ""), start]
 
 
 def cost_cell(pg, r):
@@ -667,7 +661,7 @@ def segment_table(pg, rows, owners):
             ("Status", ["details", "timeline"], False), ("Fuel", ["details"], False), ("Capacity", ["details"], False),
             ("Length", ["route", "details"], False), ("Diameter", ["details"], False), ("Pressure", ["details"], False),
             ("Proposal year", ["timeline"], False), ("FID", ["timeline"], False), ("Construction year", ["timeline"], False),
-            ("Start year", ["timeline"], False), ("Inactive year", ["timeline"], False),
+            ("Start year", ["timeline"], False),
             ("Cost", ["cost"], False), ("Operator", ["ownership"], False), ("Owner", ["ownership"], False), ("Parent", ["ownership"], False)]
     body = []
     for r in rows:
@@ -679,7 +673,7 @@ def segment_table(pg, rows, owners):
     keep = list(range(len(cols)))
     groups = [g for g in SEG_GROUPS if any(g in cols[i][1] for i in keep)]
     est = any(cells[6].endswith("*") for _, cells in body) and 6 in keep
-    caps = {"details": gloss(units), "timeline": FID_GLOSS if 10 in keep else "", "cost": COST_NOTE if 14 in keep else ""}
+    caps = {"details": gloss(units), "timeline": FID_GLOSS if 10 in keep else "", "cost": COST_NOTE if 13 in keep else ""}
     caps["all"] = "; ".join(c for c in (caps["details"], caps["timeline"], caps["cost"].rstrip(".")) if c)
     t = [f'<templatestyles src="{STYLES_PAGE}" />',
          '<span id="Table_1:_Route_details"></span><span id="Table_2:_Pipeline_details"></span><span id="Table_3:_Project_timeline"></span>'
@@ -755,7 +749,7 @@ def details(pg, rows, tab):
     body = [[label(r, rows)] + timeline_cells(pg, r) for r in rows]
     cap = FID_GLOSS if any(r["FIDStatus"].strip() or r["FIDYear"].strip() for r in rows) else ""
     out += ["", table(tab(), "Project timeline", ["Segment", "Proposal year", "FID", "Construction year",
-                                                  "Start year", "Inactive year"], body, cap, sortable=True)]
+                                                  "Start year"], body, cap, sortable=True)]
 
     # cost
     body = [[label(r, rows), cost_cell(pg, r)] for r in rows]
