@@ -172,7 +172,7 @@ For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
   run wiki-fetching passes in both at the same time.
 - Full writeup, including the account's actual rights: that repo's
   `gem-wiki/README.md` → Auth and the Cloudflare section.
-- **Saving a gem.wiki page goes through `scripts/wiki_save.py`, never `gemwiki.edit_page` directly (Baird 2026-11-06).** A page saved through the API is cached without the Google Maps script and its map shows "Your browser is not compatible with Google Maps v3"; `wiki_save.save()` edits, purges and checks the render, and the PreToolUse hook `.claude/hooks/guard-wiki-save.py` blocks a hand-rolled save. Repair: `python scripts/wiki_save.py --check --since <date> --purge`. Detail: `docs/sops/wiki_pages.md`.
+- **Saving a gem.wiki page goes through `scripts/wiki_save.py`, never `gemwiki.edit_page` directly (Baird 2026-11-06).** A page saved through the API is cached without the Google Maps script and its map shows "Your browser is not compatible with Google Maps v3"; `wiki_save.save()` edits, purges and checks the render, and the PreToolUse hook `.claude/hooks/guard-wiki-save.py` blocks a hand-rolled save. Repair: `python scripts/wiki_save.py --check --since <date> --purge`. Every save also upserts the page's row in the backend sheet's `wiki-overhaul` tab (`scripts/wiki_log.py`; standing permission for that tab only, Baird 2026-11-09). Detail: `docs/sops/wiki_pages.md`.
 
 ---
 

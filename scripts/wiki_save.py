@@ -23,6 +23,10 @@ The check reads the parser cache through action=parse (prop=text|headhtml), the 
 curl: Cloudflare challenges curl and a challenge page holds no map div, which once read as "0 with a map"
 on a day two pages were broken (2026-11-06). The map must also be confirmed in a real browser on a pilot
 page: python scripts/wiki_map_check.py <url>.
+
+Every successful save also upserts the page's row in the backend sheet's `wiki-overhaul` tab (wiki_log.py;
+standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
+never fails the save.
 """
 import argparse, json, sys, time
 from datetime import datetime, timedelta, timezone
@@ -30,6 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'goit-ggit-data-ops' / 'gem-wiki'))
 import gemwiki as g
+import wiki_log
 
 ACCOUNT = 'Baird Langenbrunner'
 
@@ -81,6 +86,8 @@ def save(s, title, text=None, summary='', **kw):
     """gemwiki.edit_page + purge + map check. The session must be logged in. Returns the edit dict plus 'map'."""
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
+    if r.get('result') == 'Success' and 'nochange' not in r:
+        wiki_log.record(title, summary)   # the backend sheet's wiki-overhaul tab; never raises
     return r
 
 
