@@ -357,11 +357,14 @@ def thin_lines(pid, tol):
     return out
 
 
+MAP_EDGE, LINE_W = "#FFFFFF", 4   # the white edge under each map line, and the colored line's width in pixels
+
+
 def map_block(pg, rows):
     mapped = [r for r in rows if r["RouteType"].startswith("Mapped route")]
     if not mapped:
         return "The route of this pipeline has not been mapped.", 0
-    allp, lines = [], []
+    allp, lines, edges = [], [], []
     tol = 0.01 if len(rows) > 1 else 0.003
     for r in mapped:
         ls = thin_lines(r["ProjectID"], tol)
@@ -374,7 +377,13 @@ def map_block(pg, rows):
             pts = ":".join(f"{p[1]:.5f}, {p[0]:.5f}" for p in l)
             title = label(r, rows) if len(rows) > 1 else pg.name
             dot = f'<span class="gem-mapdot gem-mapdot-{r["Status"].replace(" ", "-")}"></span>'
-            lines.append(f"{pts}~{title}~{dot}{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}~{color}~1~3")
+            pop = f"{pts}~{title}~{dot}{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}"
+            edges.append(f"{pop}~{MAP_EDGE}~1~{LINE_W + 3}")
+            lines.append(f"{pop}~{color}~1~{LINE_W}")
+    # every line gets a white edge, drawn first under all the colored lines, so a status color reads on any
+    # background (Baird 2026-11-09, after oilandgaswatch.org's bordered lines). The edge carries the line's own label
+    # and pop-up, so a click on its rim opens the same pop-up (the Maps extension opens one for any labeled line)
+    lines = edges + lines
     if not lines:
         return "The route of this pipeline has not been mapped.", 0
     lats, lons = [p[1] for p in allp], [p[0] for p in allp]

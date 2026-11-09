@@ -124,7 +124,10 @@ def map_block(pids, maxpts=60, status=None, label=' '):
     lab = (label or ' ').replace('~', '-').replace(';', ',').replace('|', '/')  # a blank label tripped the site firewall once (2026-11-07)
     col = lambda p: STATUS_COLORS['gas'].get(status.get(p, ''), MAP_GREY)
     # never write ~~~ in a line's style: on save it becomes the editor's signature
-    body = ';'.join(':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l) + (f'~{lab}~ ~{col(p)}~1~3' if status else '') for p, l in segs)
+    pts = lambda l: ':'.join(f'{q[1]:.5f}, {q[0]:.5f}' for q in l)
+    # with status colors, a white edge under every line first, so each color reads on any background (Baird 2026-11-09)
+    edges = [f'{pts(l)}~{lab}~ ~#FFFFFF~1~7' for _, l in segs] if status else []
+    body = ';'.join(edges + [pts(l) + (f'~{lab}~ ~{col(p)}~1~4' if status else '') for p, l in segs])
     out = f'{{{{#display_map:\n|lines={body}|center={clat:.5f}, {clon:.5f}|width=100%|height=400|type=normal|zoom={zoom}}}}}\n'
     shown = sorted({status[p] for p, _ in segs if p in status}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
     if len(set(pids)) > 1 and shown:
