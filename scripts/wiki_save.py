@@ -28,7 +28,7 @@ Every successful save also upserts the page's row in the backend sheet's `Wiki o
 standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
 never fails the save.
 """
-import argparse, json, sys, time
+import argparse, json, re, sys, time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -57,7 +57,7 @@ def _retry(fn, n=6, wait=10):
 def map_state(s, title):
     """{'maps': n, 'script': bool, 'broken': bool} for the page as the parser cache serves it."""
     p = _retry(lambda: g.get(s, action='parse', page=title, prop='text|headhtml'))['parse']
-    maps = p['text'].count('maps-googlemaps3')
+    maps = len(re.findall(r'class="[^"]*maps-googlemaps3', p['text']))  # map elements, not a stylesheet page that names the class
     script = 'maps.googleapis.com' in p['headhtml']
     return {'title': title, 'maps': maps, 'script': script, 'broken': bool(maps and not script)}
 

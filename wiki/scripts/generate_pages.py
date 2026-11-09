@@ -621,6 +621,8 @@ MAP_CSS = """\
 .gm-style .gm-style-iw-d b p { font-size: 13px; margin: 0 0 1px; }
 .gm-style .gm-style-iw-d p + p { color: #54595d; }
 .gem-mapdot { display: inline-block; width: 8px; height: 8px; margin: 0 5px 1px 0; border-radius: 50%; vertical-align: middle; background: """ + MAP_GREY + """; }
+/* phones: the map takes about half the screen, so a thumb finds page above or below it to keep scrolling; never taller than the 400 px desktop map, never under 260 px (Baird 2026-11-09). The Maps extension sets the height inline, so it needs !important */
+@media (max-width: 767px) { .maps-map.maps-googlemaps3 { height: 50vh !important; max-height: 400px; min-height: 260px; } }
 """ + "".join(f".gem-mapdot-{s.replace(' ', '-')} {{ background: {c}; }}\n" for s, c in STATUS_COLORS["gas"].items())
 SEG_GROUPS = ("route", "details", "timeline", "cost", "ownership")
 SEG_TAB_LABEL = {"route": "Route", "details": "Details", "timeline": "Timeline", "cost": "Cost",
@@ -656,6 +658,14 @@ _CSS_HEAD = """\
 #seg-ownership:target ~ .gem-segments table { display: table; table-layout: fixed; width: 100%; }   /* display: the phone skin makes tables blocks, which ignores fixed layout */
 #seg-ownership:target ~ .gem-segments th.col-ownership { width: 26%; }
 #seg-ownership:target ~ .gem-segments td { overflow-wrap: break-word; }
+/* phones: the tables scroll sideways inside their boxes rather than squeeze into the screen width; a Background cell is most of a screen wide, names keep room, and the Ownership tab drops its fixed equal widths (Baird 2026-11-09) */
+@media (max-width: 767px) {
+.gem-bgbox td:last-child { min-width: 85vw; }
+.gem-bgbox td:nth-last-child(3), .gem-segments td:nth-child(2) { min-width: 9em; }
+#seg-ownership:target ~ .gem-segments table { table-layout: auto; width: auto; }
+#seg-ownership:target ~ .gem-segments th.col-ownership { width: auto; }
+#seg-ownership:target ~ .gem-segments td.col-ownership { min-width: 11em; }
+}
 .gem-segments .cap-details, .gem-segments .cap-timeline, .gem-segments .cap-cost, .gem-segments .cap-ownership, .gem-segments .cap-all { display: none; }
 """
 
