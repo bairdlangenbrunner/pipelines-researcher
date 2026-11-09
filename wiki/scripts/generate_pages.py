@@ -394,7 +394,12 @@ def map_block(pg, rows):
     if not mapped:
         return "The route of this pipeline has not been mapped.", 0
     allp, lines, edges = [], [], []
-    tol = 0.01 if len(rows) > 1 else 0.003
+    # a map that opens at zoom 4 or 5 (span over 6 degrees, about a continent) gets a coarser simplification:
+    # at those zooms one pixel is 0.04 to 0.09 degrees, so the dropped points are invisible, and Transco's 450 lines
+    # were slow to zoom and pan on a phone (Baird 2026-11-09)
+    raw = [p for r in mapped for l in (B.coords_of(r["ProjectID"]) or []) for p in l]
+    rspan = max(max(p[1] for p in raw) - min(p[1] for p in raw), max(p[0] for p in raw) - min(p[0] for p in raw)) if raw else 0
+    tol = 0.025 if rspan > 12 else 0.015 if rspan > 6 else 0.01 if len(rows) > 1 else 0.003
     for r in mapped:
         ls = thin_lines(r["ProjectID"], tol)
         if not ls:
@@ -407,11 +412,11 @@ def map_block(pg, rows):
             title = label(r, rows) if len(rows) > 1 else pg.name
             dot = f'<span class="gem-mapdot gem-mapdot-{r["Status"].replace(" ", "-")}"></span>'
             pop = f"{pts}~{title}~{dot}{STATUS_PHRASE.get(r['Status'], r['Status']).capitalize()}"
-            edges.append(f"{pop}~{MAP_EDGE}~1~{LINE_W + 5}")
+            edges.append(f"{pts}~~~{MAP_EDGE}~1~{LINE_W + 5}")
             lines.append(f"{pop}~{color}~1~{LINE_W}")
     # every line gets a white edge, drawn first under all the colored lines, so a status color reads on any
-    # background (Baird 2026-11-09, after oilandgaswatch.org's bordered lines). The edge carries the line's own label
-    # and pop-up, so a click on its rim opens the same pop-up (the Maps extension opens one for any labeled line)
+    # background (Baird 2026-11-09, after oilandgaswatch.org's bordered lines). The edge has no label or pop-up text:
+    # only the colored line carries it, which halves the repeated text on big maps (Baird 2026-11-09)
     lines = edges + lines
     if not lines:
         return "The route of this pipeline has not been mapped.", 0
