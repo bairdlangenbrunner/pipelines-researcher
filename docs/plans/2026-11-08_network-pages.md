@@ -36,6 +36,66 @@ Added to the Gas tab by Baird on 2026-11-08, ahead of the pilot: `PrimaryNetwork
 
 **Networks tab (created 2026-11-08, Baird's request):** the backend's `Gas pipeline networks` tab (gid 132857322) holds one row per network, header in row 2, written from the registry: `NetworkID` (N0001.., stable key), `NetworkName` (English; the value the Gas tab's `PrimaryNetwork` and `SecondaryNetworks` carry), `NetworkNameLocalLanguage`, `Countries`, `NetworkType`, `Pipelines` (member PipelineNames, `;`), `PipelineCount`, `SegmentCount`, `LengthKnownKm`, `Wiki`, `WikiPageKind`, `Notes`, `Researcher`, `LastUpdated`. `SegmentCount` and `LengthKnownKm` are snapshot values from the creation date, not formulas; a refresh rewrites them from a fresh pull. The registry (`networks_tab` key) and the tab are kept in step: edit the registry, rewrite the tab, never hand-edit one without the other. Backup: `notes/sheet-backup-2026-11-08-gas-pipeline-networks-tab.csv`. The 57 networks outside China (N0073-N0129: the other PrimaryNetwork values as written, plus four used only as secondaries) were added the same day so the dropdowns cover every value in use; they sit in the registry's `networks_outside_china` list, unreviewed, with wiki work on hold, and the generator never reads that list. Backup: `notes/sheet-backup-2026-11-08-gas-networks-outside-china-and-dropdowns.csv`.
 
+## Network names (proposed 2026-11-08, not applied)
+
+Baird 2026-11-08: the network label must read differently from the pipeline that shares its name (the Guangxi Gas Pipeline Network page held both the network and its own 33 segments). PipelineNames stay as they are; the network side is renamed.
+
+- Provincial-level networks (provinces and autonomous regions): `<Place> Provincial Gas Network`. "Provincial" covers autonomous regions (Guangxi, Xinjiang, Inner Mongolia, Ningxia are autonomous regions in GEM's naming conventions, so "Province" would be wrong for them).
+- The four municipalities (Beijing, Chongqing, Shanghai, Tianjin): `<Place> Municipal Gas Network`.
+- A network that spans two divisions: `<A>-<B> Regional Gas Network` (Sichuan-Chongqing).
+- Trunk, import, export, connecting and coal-to-gas networks (42) keep their names: each is one line, and its pipeline page is its page.
+- `PrimaryNetworkLocalLanguage` (Chinese) does not change.
+
+This follows the 2024 reorganization doc ("Chinese gas pipelines - 2024 reorganization", Google Doc `1GONZpFFWlEExd2G2CbUaiPZW-3DZkB5PBpi5BisMco4`), which sorted every Chinese pipeline into I (international), P (provincial network: within one province or autonomous region), N (national) and T (trans-province), with a `ChineseNetworkPrimary` label deciding its wiki page. The registry's `kind` is that sort: provincial and municipal networks are P; trunk lines N; import and export lines I; connecting and coal-to-gas lines mostly T. The doc's columns (`ChinesePipelineType`, `ChineseNetworkPrimary`, `ChineseNetworkSecondary`, `ChineseClassificationNotes`) are no longer on the Gas tab; `PrimaryNetwork` and `SecondaryNetworks` replaced the network two.
+
+| ID | Current | Proposed | Pipelines | Rows |
+|---|---|---|---|---|
+| N0001 | Anhui Gas Pipeline Network | Anhui Provincial Gas Network | 1 | 52 |
+| N0002 | Beijing Gas Pipeline Network | Beijing Municipal Gas Network | 1 | 1 |
+| N0011 | Chongqing Gas Pipeline Network | Chongqing Municipal Gas Network | 1 | 38 |
+| N0015 | Fujian Gas Pipeline Network | Fujian Provincial Gas Network | 1 | 10 |
+| N0016 | Gansu Gas Pipeline Network | Gansu Provincial Gas Network | 1 | 10 |
+| N0017 | Guangdong Gas Pipeline Network | Guangdong Provincial Gas Network | 6 | 44 |
+| N0019 | Guangxi Gas Pipeline Network | Guangxi Provincial Gas Network | 3 | 43 |
+| N0020 | Guizhou Gas Pipeline Network | Guizhou Provincial Gas Network | 1 | 48 |
+| N0021 | Hainan Gas Pipeline Network | Hainan Provincial Gas Network | 1 | 6 |
+| N0023 | Hebei Gas Pipeline Network | Hebei Provincial Gas Network | 1 | 27 |
+| N0025 | Heilongjiang Natural Gas Pipeline Network | Heilongjiang Provincial Gas Network | 1 | 9 |
+| N0026 | Henan Gas Pipeline Network | Henan Provincial Gas Network | 1 | 23 |
+| N0028 | Hubei Gas Pipeline Network | Hubei Provincial Gas Network | 1 | 18 |
+| N0029 | Hunan Gas Pipeline Network | Hunan Provincial Gas Network | 1 | 30 |
+| N0030 | Inner Mongolia Gas Pipeline Network | Inner Mongolia Provincial Gas Network | 1 | 43 |
+| N0031 | Jiangsu Coastal Gas Pipeline | Jiangsu Provincial Gas Network | 1 | 22 |
+| N0033 | Jiangxi Natural Gas Pipeline Network | Jiangxi Provincial Gas Network | 1 | 28 |
+| N0034 | Jilin Gas Pipeline Network | Jilin Provincial Gas Network | 1 | 14 |
+| N0035 | Liaoning Gas Pipeline Network | Liaoning Provincial Gas Network | 1 | 19 |
+| N0037 | Ningxia Gas Pipeline Network | Ningxia Provincial Gas Network | 1 | 6 |
+| N0042 | Qinghai Gas Pipeline Network | Qinghai Provincial Gas Network | 1 | 8 |
+| N0047 | Shaanxi Gas Pipeline Network | Shaanxi Provincial Gas Network | 1 | 23 |
+| N0048 | Shandong Gas Pipeline Network | Shandong Provincial Gas Network | 1 | 36 |
+| N0049 | Shanghai Gas Pipeline Network | Shanghai Municipal Gas Network | 1 | 8 |
+| N0050 | Shanxi Gas Pipeline Network | Shanxi Provincial Gas Network | 1 | 66 |
+| N0052 | Sichuan-Chongqing Gas Pipeline Network | Sichuan-Chongqing Regional Gas Network | 2 | 28 |
+| N0057 | Tianjin Gas Pipeline Network | Tianjin Municipal Gas Network | 1 | 8 |
+| N0066 | Xinjiang Gas Pipeline Network | Xinjiang Provincial Gas Network | 2 | 29 |
+| N0069 | Yunnan Gas Pipeline Network | Yunnan Provincial Gas Network | 1 | 24 |
+| N0070 | Zhejiang Natural Gas Pipeline Network | Zhejiang Provincial Gas Network | 1 | 38 |
+
+None of the proposed titles exists on gem.wiki yet. Jiangsu Coastal Gas Pipeline is the one network whose current name is not a "Gas Pipeline Network" name; it becomes Jiangsu Provincial Gas Network like the rest.
+
+Pages after the rename:
+
+- Several pipelines (Guangdong, Guangxi, Xinjiang, Sichuan-Chongqing): the network gets its own page at the new name, holding the Pipelines table, Connected pipelines, the network map and network-wide Background. The same-named pipeline (Guangxi Gas Pipeline Network) keeps its page as an ordinary pipeline page with its own segments, and its lead says "It is classified as part of the [[Guangxi Provincial Gas Network]]." The page case 2 in "Network page rules" goes away: every multi-pipeline network is case 3.
+- One pipeline (26 networks): no network page; the new title is a redirect to the pipeline page, and `PrimaryNetworkWiki` stays the pipeline page's URL. The page becomes a real network page the day a second pipeline joins.
+
+Apply steps (each sheet write under the hard requirements, after Baird's OK):
+
+1. Registry: rename `PrimaryNetwork`, keep the old value as `former_name`.
+2. Networks tab: rewrite `NetworkName` for the 30 networks (the dropdowns read that column).
+3. Gas tab: rewrite `PrimaryNetwork` on the 759 rows and any `SecondaryNetworks` value naming one of the 30, in the same run as step 2.
+4. Wiki: create Guangxi Provincial Gas Network from the network parts of the current page, return Guangxi Gas Pipeline Network to a pipeline page, update the member leads, then the same for Guangdong, Xinjiang and Sichuan-Chongqing as each is reached. Create the 26 redirects.
+5. `PrimaryNetworkWiki` on the multi-pipeline networks' rows points at the new pages.
+
 ## Network page rules
 
 Which page a network gets, from the registry's `page_case`:
