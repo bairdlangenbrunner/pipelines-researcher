@@ -342,12 +342,44 @@ class Counter:
         return self.n
 
 
+def join_near(parts, tol):
+    """Join pieces of one route whose ends lie within tol degrees, reversing a piece when needed.
+    A routes-repo trace can come as hundreds of two-point pieces with tiny gaps (Gulf South's Main Line:
+    293), and the Maps extension draws lines with no stacking order, so past about 450 lines Google Maps
+    draws some white edges over the colored lines (Baird 2026-11-09). Fewer, longer lines avoid it."""
+    parts = [list(p) for p in parts if len(p) >= 2]
+    near = lambda a, b: abs(a[0] - b[0]) <= tol and abs(a[1] - b[1]) <= tol
+    done = False
+    while not done:
+        done = True
+        for i in range(len(parts)):
+            for j in range(i + 1, len(parts)):
+                a, b = parts[i], parts[j]
+                if near(a[-1], b[0]):
+                    parts[i] = a + b
+                elif near(a[-1], b[-1]):
+                    parts[i] = a + b[::-1]
+                elif near(a[0], b[-1]):
+                    parts[i] = b + a
+                elif near(a[0], b[0]):
+                    parts[i] = b[::-1] + a
+                else:
+                    continue
+                del parts[j]
+                done = False
+                break
+            if not done:
+                break
+    return parts
+
+
 def thin_lines(pid, tol):
     raw = B.coords_of(pid)
     if not raw:
         return []
     merged = linemerge(MultiLineString([LineString(l) for l in raw if len(l) >= 2]))
-    parts = list(merged.geoms) if hasattr(merged, "geoms") else [merged]
+    parts = join_near([list(g.coords) for g in (merged.geoms if hasattr(merged, "geoms") else [merged])], tol)
+    parts = [LineString(c) for c in parts]
     out = []
     for g in parts:
         s = g.simplify(tol, preserve_topology=False)
