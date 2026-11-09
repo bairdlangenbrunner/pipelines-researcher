@@ -660,6 +660,7 @@ _CSS_HEAD = """\
 #seg-ownership:target ~ .gem-segments td { overflow-wrap: break-word; }
 /* phones: the tables scroll sideways inside their boxes rather than squeeze into the screen width; a Background cell is most of a screen wide, names keep room, and the Ownership tab drops its fixed equal widths (Baird 2026-11-09) */
 @media (max-width: 767px) {
+.gem-segments, .gem-bgbox { max-height: 67vh; }   /* about two thirds of the screen, so there is page to scroll on above or below (Baird 2026-11-09) */
 .gem-bgbox td:last-child { min-width: 85vw; }
 .gem-bgbox td:nth-last-child(3), .gem-segments td:nth-child(2) { min-width: 9em; }
 #seg-ownership:target ~ .gem-segments table { table-layout: auto; width: auto; }
