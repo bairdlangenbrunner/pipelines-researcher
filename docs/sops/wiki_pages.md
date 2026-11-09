@@ -46,9 +46,9 @@ The pipeline is proposed to run from X to Y.<ref>
 ===References===
 <references />
 ===Additional data===          (the Global Gas Infrastructure Tracker paragraph)
-[[Category:Global Gas Infrastructure Tracker]]
-[[Category:Gas and Hydrogen Pipelines]]
 ```
+
+- **No categories (Baird 2026-11-08).** No builder writes `[[Category:...]]` lines, and category lines already on a page are dropped when a builder rewrites it.
 
 - **Lead.** "'''Name''' is a {status} natural gas pipeline in the United States" with a reference.
 - **Background tense (Baird 2026-11-04).** Write Background in the past tense, or at least acknowledge the timeline. Something proposed, filed or approved is stated as having happened, with its date ("Dominion Energy North Carolina proposed the T-15 Reliability Project"). What the project would have done stays conditional ("would run", "would be regulated"). Never "plans to", "proposes" or "is now" without a date, because the source may be months old.

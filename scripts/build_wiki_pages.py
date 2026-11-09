@@ -231,8 +231,7 @@ def dormancy(r):
     return ''
 
 TAIL = ['==Articles and resources==', '', '===References===', '<references />', '', '===Additional data===',
-        'To access additional data, including an interactive map of gas pipelines, a downloadable dataset, and summary data, please visit the [https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/ Global Gas Infrastructure Tracker] on the Global Energy Monitor website.', '',
-        '[[Category:Global Gas Infrastructure Tracker]]', '[[Category:Gas and Hydrogen Pipelines]]']
+        'To access additional data, including an interactive map of gas pipelines, a downloadable dataset, and summary data, please visit the [https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/ Global Gas Infrastructure Tracker] on the Global Energy Monitor website.']   # no categories on a page (Baird 2026-11-08)
 
 import hashlib
 _REF = re.compile(r'<ref>(\{\{Cite web\|url=([^|]+)\|.*?\}\})</ref>')
@@ -406,8 +405,8 @@ def insert_segments(text, rows, own, map_pids=None):
     bb = background_block(rows)
     if bb: text = _insert(text, 'Background', dedupe_refs(bb, seen), 'Articles and resources')
     if '{{reflist' not in text.lower() and '<references' not in text.lower():
-        cat = text.find('[[Category:')
-        text = (text[:cat] + '==References==\n<references />\n\n' + text[cat:]) if cat >= 0 else text + '\n==References==\n<references />\n'
+        text = text.rstrip('\n') + '\n\n==References==\n<references />\n'
+    text = re.sub(r"\n*\[\[\s*Category\s*:[^\]]+\]\]", "", text).rstrip('\n') + '\n'   # existing category lines dropped too (Baird 2026-11-08)
     return sentence_case_headings(text)
 
 if __name__ == '__main__':
