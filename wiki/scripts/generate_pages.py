@@ -396,8 +396,6 @@ def overview_sentence(pg, rows, tabbed=False):
         out.append(f"Its {len(rows)} segments are in {len(cs)} countries: {join_list([country_name(c) for c in cs])}.")
     if tabbed:
         out.append("The segment table under Project details lists each segment's start and end points on its Route tab.")
-    else:
-        out.append("The table below lists each segment's start and end points.")
     return " ".join(out)
 
 
