@@ -11,6 +11,7 @@ writes it.
 
     python scripts/wiki_log.py --rebuild --since 2026-07-01            # plan the tab from the account's edit history
     python scripts/wiki_log.py --rebuild --since 2026-07-01 --apply    # write it
+    python scripts/wiki_log.py --design --apply                         # re-check every listed page against the current design
     python scripts/wiki_log.py --flush                                 # write entries a failed save left behind
 
 The rebuild counts an edit as the agent's when it is in the main namespace, on or after --since, and its edit
@@ -25,7 +26,7 @@ from zoneinfo import ZoneInfo
 
 SHEET_ID = '1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek'
 TAB = 'wiki-overhaul'
-HEADER = ['pipelinename', 'wiki', 'last updated', 'reason']
+HEADER = ['pipelinename', 'wiki', 'last updated', 'reason', 'new design', 'out of date']
 PENDING = Path(__file__).resolve().parents[1] / 'work' / 'wiki_log_pending.jsonl'
 ET = ZoneInfo('America/New_York')
 
@@ -63,6 +64,45 @@ def is_pipeline_page(title):
     return ':' not in title.split(' ')[0] and not (NOT_PIPELINE.search(title) and 'Pipeline' not in title)
 
 
+def design_gaps(text):
+    """What a page's saved wikitext lacks of the current page design (generate_pages.py as of 2026-11-09).
+    [] = new design; None = a redirect. When the generator's layout changes, add the new rule here."""
+    v = text or ''
+    if v.lstrip().upper().startswith('#REDIRECT'):
+        return None
+    if 'COMMENT 1:' not in v or 'gem-statusdot' not in v or '#d4d8de' not in v:
+        return ['old page layout (bullet lists or the pre-November tables)']
+    f = []
+    if '#display_map' in v and ('Pipeline map/styles.css' not in v or 'width=100%' not in v):
+        f.append('old map')
+    for col in ('Operator', 'Owner', 'Parent'):
+        if not re.search(r'^!(?:[^|\n]*\|)?\s*' + col + r'\s*$', v, re.M):
+            f.append(f'no {col} column')
+    if re.search(r'^!(?:[^|\n]*\|)?\s*Inactive year', v, re.M | re.I):
+        f.append('inactive year column')
+    if '[[Category:' in v:
+        f.append('categories')
+    if re.search(r'^==\s*Ownership\s*==', v, re.M | re.I):
+        f.append('separate Ownership section')
+    if 'The table below lists' in v:
+        f.append('table pointer sentence')
+    if re.search(r'Its \d+ segments|segments are in ', v):
+        f.append('segment count sentence')
+    if 'Segment table/styles.css' not in v and 'The map below shows' in v:
+        m = re.search(r'Table 1:.*?\n\{\|(.*?)\n\|\}', v, re.S)
+        if m and m.group(1).count('\n|-') <= 1:
+            f.append('map sentence on a one-segment page')
+    lead = re.sub(r'<ref.*?(</ref>|/>)', '', v.split('==Location==')[0], flags=re.S)
+    if re.search(r'(considered|presumed|inferred)[^.]{0,20}(cancelled|shelved)|no (news|updates)', lead, re.I):
+        f.append('dormancy sentence in the lead')
+    return f
+
+
+def design_cells(text):
+    g = design_gaps(text)
+    return ['n/a (redirect)', ''] if g is None else (['yes', ''] if not g else ['no', '; '.join(g)])
+
+
 def is_agent_summary(summary):
     s = (summary or '').strip()
     return bool(s) and not re.fullmatch(r'/\*.*?\*/\s*', s)
@@ -83,23 +123,27 @@ def _gws(config, *args):
 
 
 def read_tab():
-    r = _gws('gws-gem', 'get', '--params', json.dumps({'spreadsheetId': SHEET_ID, 'range': f"'{TAB}'!A:D",
+    r = _gws('gws-gem', 'get', '--params', json.dumps({'spreadsheetId': SHEET_ID, 'range': f"'{TAB}'!A:F",
                                                         'valueRenderOption': 'FORMULA'}))
     return r.get('values', [])
 
 
 def merge(entries, rows):
-    """entries: [{'title','date','reason'}] newest last. Returns (updates {rownum: row}, appends [row])."""
+    """entries: [{'title','date','reason'[,'design']}] newest last; 'reason' may be None (design only).
+    Returns (updates {rownum: row}, appends [row])."""
     index = {r[0]: i + 1 for i, r in enumerate(rows) if r and i > 0}   # title -> 1-based sheet row
-    cur = {r[0]: (list(r) + ['', '', '', ''])[:4] for r in rows[1:] if r}
+    cur = {r[0]: (list(r) + [''] * 6)[:6] for r in rows[1:] if r}
     updates, appends, fresh = {}, [], {}
     for e in entries:
         t = e['title']
-        row = fresh.get(t) or updates.get(index.get(t)) or cur.get(t) or [t, url(t), '', '']
+        row = fresh.get(t) or updates.get(index.get(t)) or cur.get(t) or [t, url(t), '', '', '', '']
         reasons = [x.strip() for x in str(row[3]).split(';') if x.strip()]
-        if e['reason'] in reasons:
-            reasons.remove(e['reason'])
-        row = [t, url(t), max(str(row[2]), e['date']), '; '.join([e['reason']] + reasons)]
+        if e.get('reason'):
+            if e['reason'] in reasons:
+                reasons.remove(e['reason'])
+            reasons.insert(0, e['reason'])
+        date = max(str(row[2]), e['date']) if e.get('date') else row[2]
+        row = [t, url(t), date, '; '.join(reasons)] + (e.get('design') or list(row[4:6]))
         if t in index:
             updates[index[t]] = row
         else:
@@ -109,15 +153,15 @@ def merge(entries, rows):
 
 
 def write(updates, appends, header_ok=True):
-    data = [{'range': f"'{TAB}'!A{n}:D{n}", 'values': [row]} for n, row in sorted(updates.items())]
+    data = [{'range': f"'{TAB}'!A{n}:F{n}", 'values': [row]} for n, row in sorted(updates.items())]
     if not header_ok:
-        data.insert(0, {'range': f"'{TAB}'!A1:D1", 'values': [HEADER]})
+        data.insert(0, {'range': f"'{TAB}'!A1:F1", 'values': [HEADER]})
     if data:
         _gws('gws-gem-write', 'batchUpdate', '--params', json.dumps({'spreadsheetId': SHEET_ID}),
              '--json', json.dumps({'valueInputOption': 'RAW', 'data': data}))
     for i in range(0, len(appends), 500):
         _gws('gws-gem-write', 'append', '--params', json.dumps({
-            'spreadsheetId': SHEET_ID, 'range': f"'{TAB}'!A:D", 'valueInputOption': 'RAW',
+            'spreadsheetId': SHEET_ID, 'range': f"'{TAB}'!A:F", 'valueInputOption': 'RAW',
             'insertDataOption': 'INSERT_ROWS'}), '--json', json.dumps({'values': appends[i:i + 500]}))
 
 
@@ -126,7 +170,7 @@ def upsert(entries):
     if any(str(c).startswith('=') for r in rows for c in r):   # never write over a formula
         raise RuntimeError(f'{TAB} holds a formula cell; not writing')
     updates, appends = merge(entries, rows)
-    write(updates, appends, header_ok=bool(rows) and rows[0][:4] == HEADER)
+    write(updates, appends, header_ok=bool(rows) and rows[0][:6] == HEADER)
     return updates, appends
 
 
@@ -136,11 +180,13 @@ def _pending():
     return [json.loads(l) for l in PENDING.read_text().splitlines() if l.strip()]
 
 
-def record(title, summary):
-    """Called by wiki_save.save() after a successful save. Never raises."""
+def record(title, summary, text=None):
+    """Called by wiki_save.save() after a successful save, with the text saved. Never raises."""
     if ':' in title.split(' ')[0]:   # MediaWiki:, File:, Template: pages are not pipeline pages
         return
     entry = {'title': title, 'date': datetime.now(ET).strftime('%Y-%m-%d'), 'reason': reason(summary)}
+    if text is not None:
+        entry['design'] = design_cells(text)
     entries = _pending() + [entry]
     try:
         upsert(entries)
@@ -169,12 +215,25 @@ def from_history(since):
     return out
 
 
+def live_texts(titles):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'goit-ggit-data-ops' / 'gem-wiki'))
+    import gemwiki as g
+    s, out = g.session(login=True), {}
+    for i in range(0, len(titles), 50):
+        r = g.get(s, action='query', prop='revisions', rvprop='content', rvslots='main',
+                  titles='|'.join(titles[i:i + 50]), formatversion=2)
+        for p in r['query']['pages']:
+            out[p['title']] = '' if p.get('missing') else p['revisions'][0]['slots']['main']['content']
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--rebuild', action='store_true')
     ap.add_argument('--since', default='2026-07-01')
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--flush', action='store_true')
+    ap.add_argument('--design', action='store_true', help='re-check every listed page against the current design')
     a = ap.parse_args()
     if a.flush:
         p = _pending()
@@ -182,17 +241,21 @@ def main():
             upsert(p); PENDING.unlink()
         print(f'flushed {len(p)} entries')
         return
-    if not a.rebuild:
-        ap.error('--rebuild or --flush')
-    entries = from_history(a.since)
+    if not (a.rebuild or a.design):
+        ap.error('--rebuild, --design or --flush')
     rows = read_tab()
+    entries = from_history(a.since) if a.rebuild else []
+    if a.design:
+        texts = live_texts(sorted({r[0] for r in rows[1:] if r} | {e['title'] for e in entries}))
+        entries += [{'title': k, 'design': design_cells(v)} for k, v in texts.items()]
+        print('new design:', {x: sum(1 for e in entries if e.get('design', [''])[0] == x) for x in ('yes', 'no', 'n/a (redirect)')})
     updates, appends = merge(entries, rows)
     print(f'{len(entries)} agent edits on {len({e["title"] for e in entries})} pages; '
           f'{len(updates)} rows to update, {len(appends)} to add')
     for r in (list(updates.values()) + appends)[:15]:
         print(' | '.join(r))
     if a.apply:
-        write(updates, appends, header_ok=bool(rows) and rows[0][:4] == HEADER)
+        write(updates, appends, header_ok=bool(rows) and rows[0][:6] == HEADER)
         after = read_tab()
         print(f'{TAB} now holds {len(after) - 1} pages')
 

@@ -87,7 +87,7 @@ def save(s, title, text=None, summary='', **kw):
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     if r.get('result') == 'Success' and 'nochange' not in r:
-        wiki_log.record(title, summary)   # the backend sheet's wiki-overhaul tab; never raises
+        wiki_log.record(title, summary, text)   # the backend sheet's wiki-overhaul tab; never raises
     return r
 
 
