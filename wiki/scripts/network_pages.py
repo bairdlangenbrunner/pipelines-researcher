@@ -50,6 +50,14 @@ def live_rows():
     return df
 
 
+WORDS = "zero one two three four five six seven eight nine".split()
+
+
+def num(n):
+    """Prose numbers: one to nine as words, 10 and up as numerals (Baird 2026-11-08). Table cells stay numerals."""
+    return WORDS[n] if 0 <= n <= 9 else str(n)
+
+
 def km(r):
     for c in ("LengthMergedKm", "LengthKnownKm"):
         try:
@@ -153,7 +161,7 @@ def map_section(pg, members, connected):
                 pts = ":".join(f"{p[1]:.5f}, {p[0]:.5f}" for p in l)
                 lines.append(f"{pts}~{title}~{dot}{st}~{G.status_color(pg, r['Status'])}~{w}")
     mapped = sum(1 for r in members if r["RouteType"].startswith("Mapped route"))
-    text = f"{mapped} of {len(members)} segments have a mapped route in the database."
+    text = f"{num(mapped).capitalize() if mapped < 10 else mapped} of {num(len(members))} segments have a mapped route in the database."
     if not allp:
         return text
     lats, lons = [p[1] for p in allp], [p[0] for p in allp]
@@ -183,7 +191,7 @@ def explainer(pipe, page, have, rows, old_sub):
         if "[[" in first:
             return f"{first} Its page has more details."
     lk = link(pipe, page, have)
-    return f"The {lk} has {len(rows)} segment{'s' if len(rows) != 1 else ''}: {mix_words(rows)}. Its page has more details."
+    return f"The {lk} has {num(len(rows))} segment{'s' if len(rows) != 1 else ''}: {mix_words(rows)}. Its page has more details."
 
 
 def sections(txt):
@@ -210,8 +218,8 @@ def build_network(s, entry, df, old_text=""):
 
     # location
     provs = sorted({p.strip() for r in members for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
-    loc_s = (f"Its {len(members)} segments are in {len(provs)} provinces: {G.join_list(provs)}." if len(provs) > 1
-             else f"Its {len(members)} segments are in {provs[0]}." if provs else "")
+    loc_s = (f"Its {num(len(members))} segments are in {num(len(provs))} provinces: {G.join_list(provs)}." if len(provs) > 1
+             else f"Its {num(len(members))} segments are in {provs[0]}." if provs else "")
     loc_s += " Each pipeline's page lists its segments' start and end points."
     location = ["==Location==", loc_s.strip(), "", map_section(pg, members, connected)]
 

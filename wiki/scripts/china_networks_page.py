@@ -43,8 +43,8 @@ def build(s, nets, df):
     how = ["==How pipelines are grouped==",
            "Every gas pipeline in China belongs to one network. There are five kinds:",
            f"* '''Provincial gas networks.''' Pipelines that a province builds, or that run within one province or autonomous "
-           f"region. There are {n_prov}, one for each province or region with gas pipelines.",
-           f"* '''Municipal gas networks.''' The same for the {n_muni} cities governed directly by the central government: "
+           f"region. There are {N.num(n_prov)}, one for each province or region with gas pipelines.",
+           f"* '''Municipal gas networks.''' The same for the {N.num(n_muni)} cities governed directly by the central government: "
            + G.join_list([n.replace(" Municipal Gas Network", "") for n in names if kind(n) == "Municipal network"]) + ".",
            f"* '''{lk('China National Gas Pipelines')}.''' {N.GROUPING_SCOPE['China National Gas Pipelines'][0].upper()}"
            f"{N.GROUPING_SCOPE['China National Gas Pipelines'][1:]}.",
