@@ -1157,6 +1157,79 @@ def shade_first_column(text):
     return "\n".join(out)
 
 
+# ---------- Background vs lead: status check (Baird 2026-11-09, Delmarva) ----------
+
+# a kept Background sentence that states a status: "is considered to be shelved", "remains on hold", "was cancelled"
+_ST = r"(shelved|cancell?ed|on hold|operating|operational|in operation|in service|under construction|proposed|retired|mothballed|idled?|abandoned)"
+_CLAIM_NOW = re.compile(r"\b(?:considered|presumed|deemed|classified|listed)\s+(?:to\s+be\s+|as\s+)?(?:being\s+)?" + _ST + r"\b"
+                        r"|\b(?:is|are|remains?)\s+(?:now\s+|currently\s+|still\s+|officially\s+)?" + _ST + r"\b", re.I)
+_CLAIM_PAST = re.compile(r"\b(?:was|were|has\s+been|have\s+been)\s+(?:officially\s+|formally\s+)?"
+                         r"(shelved|cancell?ed|retired|mothballed|abandoned|placed\s+in(?:to)?\s+service|put\s+in(?:to)?\s+service)\b", re.I)
+_CANON = {"canceled": "cancelled", "on hold": "shelved", "operational": "operating", "in operation": "operating",
+          "in service": "operating", "under construction": "construction", "idle": "idled", "abandoned": "retired"}
+_SAME = {("mothballed", "idled"), ("idled", "mothballed")}
+
+
+def _canon(w):
+    w = re.sub(r"\s+", " ", w.lower())
+    return "operating" if re.match(r"(placed|put) in", w) else _CANON.get(w, w)
+
+
+def _claims(text):
+    """(status, sentence, present-tense?) for every status claim in prose, refs, comments and markup stripped."""
+    t = re.sub(r"<ref[^>]*/>", "", text)
+    t = re.sub(r"(?s)<ref[^>]*>.*?</ref>|<!--.*?-->", "", t)
+    t = re.sub(r"(?m)^Additional sources:.*$", "", t)
+    out = []
+    for sent in re.split(r"(?<=[.!?])\s+|\n+", t):
+        if not sent.strip() or sent.lstrip()[:1] in "|{!=":
+            continue
+        for m in sorted(list(_CLAIM_NOW.finditer(sent)) + list(_CLAIM_PAST.finditer(sent)), key=lambda m: m.start()):
+            w = next(g for g in m.groups() if g)
+            out.append((_canon(w), sent.strip(), m.re is _CLAIM_NOW))
+    return out
+
+
+def status_conflicts(pg, kept, rows):
+    """A Background that says one status while the lead says another is held, never saved (Baird 2026-11-09:
+    Delmarva's lead said cancelled, its Background said shelved). Each segment's Background text (the whole
+    Background on a one-row page, its === subsection, or its row of the Background table) is read for status
+    claims. A present-tense or "considered" claim that differs from the tracker status is a conflict wherever it
+    sits; a past-tense one ("was shelved") only when it is the last claim in that text. Returns the conflicts."""
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if not m:
+        return []
+    bg = m.group(1)
+    units = []   # (row, text)
+    if len(rows) == 1:
+        units.append((rows[0], bg))
+    else:
+        names = {_key(label(r, rows)): r for r in rows} | {_key(r["SegmentName"]): r for r in rows if r["SegmentName"]}
+        for h, body in re.findall(r"(?ms)^===\s*(.*?)\s*===\s*$(.*?)(?=^===?[^=]|\Z)", bg):
+            r = names.get(_key(BG_LINKED.sub(r"\1", h)))
+            if r:
+                units.append((r, body))
+        tm = re.search(r"(?ms)^\{\|[^\n]*\n(?:!#\n)?!Segment\n!Status\n!Background\n(.*?)^\|\}", bg)
+        if tm:
+            for part in re.split(r"(?m)^\|-\s*\n", tm.group(1))[1:]:
+                pid = re.search(r'id="bg-(P\d+)"', part)
+                r = next((q for q in rows if pid and q["ProjectID"] == pid.group(1)), None)
+                if r:
+                    units.append((r, "\n".join(part.split("\n")[2:])))
+    out = []
+    for r, text in units:
+        st = r["Status"]
+        cl = _claims(text)
+        for i, (c, sent, now) in enumerate(cl):
+            if c == st or (c, st) in _SAME or (c == "proposed" and st in ("shelved", "cancelled")):
+                continue
+            if now or i == len(cl) - 1:
+                out.append(f"{r['ProjectID']}: tracker status {st}, Background says {c}: {sent[:160]}")
+    for o in out:
+        pg.log.append(f"STATUS CONFLICT between the lead and Background, {o}")
+    return out
+
+
 def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     rows = order(rows)
@@ -1185,6 +1258,7 @@ def build(name, rows, owners, live, tracker):
     # defines itself are reused above
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     kept = dormancy_into_background(pg, kept, rows)
+    pg.status_conflicts = status_conflicts(pg, kept, rows)
     kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
     carried = lost_refs(pg, replaced, gen + kept + extra_ar)
@@ -1282,6 +1356,7 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--save", action="store_true", help="upload the route shapes and save each page via wiki_save (page-name line dropped)")
+    ap.add_argument("--allow-status-conflicts", action="store_true", help="save a page even when its Background states a status other than the tracker's (the conflict is still logged)")
     ap.add_argument("--push-styles", action="store_true", help="save the tabbed-table and map-popup stylesheet pages on the wiki if they differ")
     a = ap.parse_args()
     if a.push_styles:
@@ -1323,7 +1398,9 @@ def main():
         report += [f"## {name}", "", f"- rows: {len(rows)}; generated text {len(text):,} characters (live page {len(live):,})",
                    f"- cite errors in the rendered preview: {len(errs)}"]
         report += [f"  - {e}" for e in errs[:20]]
-        if a.save:
+        if a.save and pg.status_conflicts and not a.allow_status_conflicts:
+            pg.log.append("NOT SAVED: Background states a status other than the tracker's (see STATUS CONFLICT); fix the text or the sheet, or re-run with --allow-status-conflicts")
+        elif a.save:
             import wiki_save
             ls = ls if "ls" in dir() else GW.session(login=True)
             up = upload_shapes(ls, out, name)

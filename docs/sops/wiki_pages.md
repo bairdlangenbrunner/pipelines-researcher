@@ -48,6 +48,7 @@ The pipeline is proposed to run from X to Y.<ref>
 ===Additional data===          (the Global Gas Infrastructure Tracker paragraph)
 ```
 
+- **The Background must agree with the lead on status (Baird 2026-11-09, Delmarva).** `generate_pages.py` reads each segment's Background text for status words ("considered to be shelved", "remains on hold", "was cancelled") and logs a `STATUS CONFLICT` when one differs from the tracker status the lead uses. A page with a conflict is not saved: fix the Background text or the sheet, or re-run with `--allow-status-conflicts` once a person has decided the text can stand.
 - **No categories (Baird 2026-11-08).** No builder writes `[[Category:...]]` lines, and category lines already on a page are dropped when a builder rewrites it.
 
 - **Lead.** "'''Name''' is a {status} natural gas pipeline in the United States" with a reference.
