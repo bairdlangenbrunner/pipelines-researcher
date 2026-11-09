@@ -52,16 +52,15 @@ def build(s, nets, df):
            f"* '''{lk('China Interprovincial Gas Pipelines')}.''' Gas pipelines that cross provincial borders but belong to "
            "neither a provincial network nor the national trunk system.",
            "",
-           "All segments of a pipeline belong to the same network. When a pipeline also runs through another network's "
-           "province, that network's page lists it under Connected pipelines but does not count it in its totals."]
+           "All segments of a pipeline belong to the same network."]
     t = ["==Networks==",
-         '{| class="wikitable sortable"', H + "Network", H + "Local name", H + "Kind", H + "Pipelines", H + "Segments",
+         '{| class="wikitable sortable"', H + "Network", H + "Kind", H + "Pipelines", H + "Segments",
          H + "Length", H + "Status"]
     for n in names:
         rs = rows[n]
-        t += ["|-", f"|{lk(n)}", f"|{local[n] or '–'}", f"|{kind(n)}", f"|{len({r['PipelineName'] for r in rs})}",
+        t += ["|-", f"|{lk(n)}", f"|{kind(n)}", f"|{len({r['PipelineName'] for r in rs})}",
               f"|{len(rs)}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else '–'}"]
-    t += ['|- class="sortbottom"', "!Total", "!", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(allrows)}",
+    t += ['|- class="sortbottom"', "!Total", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(allrows)}",
           f"!{N.length_cell(allrows).split('|')[-1]}", f"!{N.mix(pg, allrows)}", "|}"]
     tail = ["==Articles and resources==", "", "===Additional data===",
             f"To access additional data, including an interactive map of {G.TRACKER_LINK['gas'][0]} pipelines, a downloadable dataset, "

@@ -203,8 +203,7 @@ def build_network(s, entry, df, old_text=""):
     name = entry["PrimaryNetwork"]
     pg = G.Page(name, "gas")
     members = G.order([r.to_dict() for _, r in df[df["PrimaryNetwork"] == name].iterrows()])
-    connected = G.order([r.to_dict() for _, r in df.iterrows()
-                         if r["PrimaryNetwork"] != name and name in secondaries(r)])
+    connected = []   # Connected pipelines are not shown on network pages (Baird 2026-11-08); SecondaryNetworks stays on the sheet
     pipes, cpipes = group(members), group(connected)
     pages = {p: page_of(rs) for p, rs in list(pipes.items()) + list(cpipes.items())}
     nets = sorted({r["PrimaryNetwork"] for r in connected})
@@ -216,12 +215,8 @@ def build_network(s, entry, df, old_text=""):
     what = f"the gas pipelines in {region}, China" if region else GROUPING_SCOPE.get(name, "a set of gas pipelines in China")
     lead = (f"'''{name}'''{loc} groups {what}. It is a [[{OVERVIEW_PAGE}|Chinese pipeline grouping by GEM]], not an official Chinese network.")
 
-    # location
-    provs = sorted({p.strip() for r in members for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
-    loc_s = (f"Its {num(len(members))} segments are in {num(len(provs))} provinces: {G.join_list(provs)}." if len(provs) > 1
-             else f"Its {num(len(members))} segments are in {provs[0]}." if provs else "")
-    loc_s += " Each pipeline's page lists its segments' start and end points."
-    location = ["==Location==", loc_s.strip(), "", map_section(pg, members, connected)]
+    # location: the map and its count only; no provinces sentence (Baird 2026-11-08)
+    location = ["==Location==", map_section(pg, members, connected)]
 
     # pipelines
     t = ["==Pipelines==",
@@ -230,33 +225,14 @@ def build_network(s, entry, df, old_text=""):
     for p, rs in pipes.items():
         t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs) or '–'}",
               f"|{len(rs)}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
-    t += ['|- class="sortbottom"', "!Total", "!", f"!{len(members)}", f"!{length_cell(members).split('|')[-1]}", f"!{mix(pg, members)}", "|}"]
-    if connected:
-        t += ["", "===Connected pipelines===",
-              f"These pipelines belong to other networks and are not counted in the totals above. Part of each runs in "
-              f"{region or 'the network'}, so they are listed here; their details are on their own pages.",
-              '{| class="wikitable sortable"', H + "Pipeline", H + "Local name", H + "Primary network", H + "Segments", H + "Length", H + "Status"]
-        for p, rs in cpipes.items():
-            nets_p = sorted({r["PrimaryNetwork"] for r in rs})
-            t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs) or '–'}",
-                  "|" + ", ".join(f"[[{n}]]" if have.get(n) else n for n in nets_p),
-                  f"|{len(rs)}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
-        t += ["|}"]
-
-    # background: network-wide prose from the old page, then one explainer per member pipeline
-    old_subs = sections(old_text.split("==Background==", 1)[1]) if "==Background==" in old_text else {}
-    prose = old_subs.get("Network background", "").strip()
-    prose = re.sub(r"(?m)^Additional sources:.*$", "", prose).strip()   # the branch-line sources stay on the pipeline page
-    bg = ["==Background=="] + ([prose, ""] if prose else [])
-    for p, rs in pipes.items():
-        bg += [f"==={p}===", explainer(p, pages[p], have, rs, old_subs.get(p, "")), ""]
-
-    tail = ["==Articles and resources==", "", "===References===", "<references />", "",
-            "===Additional data===",
+    t += ["|}"]
+    # No Background section (Baird 2026-11-08): a network page holds no history. Its background goes onto the member
+    # pipelines' own pages, so the page has no citations and no References section either.
+    tail = ["==Articles and resources==", "", "===Additional data===",
             f"To access additional data, including an interactive map of {G.TRACKER_LINK['gas'][0]} pipelines, a downloadable dataset, "
             f"and summary data, please visit the {G.TRACKER_LINK['gas'][1]} on the Global Energy Monitor website.", ""]
     text = "\n".join([name, "", f"<!---\n\t{G.COMMENT1}\n-->", G.NAVBAR["gas"], lead, ""] + location + [""] + t + [""]
-                     + [f"<!---\n\t{G.COMMENT2}\n-->"] + bg + [f"<!---\n\t{G.COMMENT3}\n-->"] + tail)
+                     + [f"<!---\n\t{G.COMMENT3}\n-->"] + tail)
     text = B.sentence_case_headings(G.shade_first_column(text))
     pg.log.append(f"members {len(members)} in {len(pipes)} pipelines; connected {len(connected)} in {len(cpipes)} pipelines")
     return text, pg
