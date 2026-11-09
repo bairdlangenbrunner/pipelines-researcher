@@ -96,7 +96,10 @@ def design_gaps(text):
     lead = re.sub(r'<ref.*?(</ref>|/>)', '', v.split('==Location==')[0], flags=re.S)
     if re.search(r'(considered|presumed|inferred)[^.]{0,20}(cancelled|shelved)|no (news|updates)', lead, re.I):
         f.append('dormancy sentence in the lead')
-    if 'SYSTEM/NETWORK INFO' in v.upper():   # internal backend marker, never shown (Baird 2026-11-09)
+    loc = re.search(r'^==Location==\n+(.*?)\n', v, re.M)
+    if loc and not re.match(r'\s*(=|\{\||<templatestyles|\{\{#display_map|<div|\[\[File|\d+ of \d+ segments have a mapped route)', loc.group(1)):
+        f.append('sentence in Location')   # route table and map only, no sentence (Baird 2026-11-09)
+    if 'SYSTEM/NETWORK INFO' in v:   # the raw backend marker, never shown; "Full system/network info" is fine (Baird 2026-11-09)
         f.append('SYSTEM/NETWORK INFO shown as a segment name')
     return f
 

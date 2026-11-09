@@ -11,7 +11,7 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 3. **Edits to existing pages need a live-text check.** Before posting, re-read the live page and confirm it is unchanged since the draft was made. Never overwrite someone else's edit.
 4. **The sheet's Wiki column is not written by this workflow.** Writing new URLs back needs Baird's explicit OK and `gws-gem-write`, like any sheet write.
 5. **No deleting.** The wiki account has no delete or suppress-redirect rights, so a bad page cannot be undone by deletion. Check drafts before posting.
-6b. **Page shape (Baird 2026-11-08).** Chinese pipeline pages carry "See all Chinese pipeline network groupings here." as its own paragraph AFTER the opening paragraph. Location text is short: no "Its N segments are in ..." and no segment-table pointer sentence, on tabbed pages or plain ones ("The table below lists each segment's start and end points" is self-evident; Baird 2026-11-09). Segment tables and Background tables have a running "#" first column. An Additional sources line under a table has two blank lines above it.
+6b. **Page shape (Baird 2026-11-08).** Chinese pipeline pages carry "See all Chinese pipeline network groupings here." as its own paragraph AFTER the opening paragraph. **Location has no sentence at all (Baird 2026-11-09): just the route table (or the tabbed table's Route tab) and the map.** The start and end points and their location refs live in the table's Start/end cells; `wiki_log.design_gaps` flags any sentence left under the heading (the map's "N of M segments have a mapped route" caption is fine). Segment tables and Background tables have a running "#" first column. An Additional sources line under a table has two blank lines above it.
 6a. **A page called a network is introduced as one (Baird 2026-11-08).** When the PipelineName or wiki page title contains "Network", the lead says "is a ... pipeline network ...", never "pipeline" (`intro()` in `generate_pages.py` does it; Guangxi Gas Pipeline Network).
 6. Prose follows the notes style rule: short sentences, plain words, no AI-sounding phrasing, no em-dashes. American spelling. **Numbers in prose: one to nine as words, 10 and up as numerals (Baird 2026-11-08)**, so "four cities", "26 provinces"; table cells and units stay numerals. `network_pages.num()` does it for the network pages. **Always the Oxford comma (Baird 2026-11-08; GEM American English Style Guide)**: "A, B, and C", in generated lists (`join_list`) and in any prose written by hand or script.
 
@@ -38,7 +38,7 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 {{Navbar-Global Gas Infrastructure Tracker}}
 '''Name''' is a {status} natural gas pipeline in the United States.<ref>
 ==Location==
-The pipeline is proposed to run from X to Y.<ref>
+Route details table          (no sentence; Baird 2026-11-09)
 {{#display_map: ... }}        (omit if there is no route)
 ==Project details==
 ==Background==                 (always present, even if empty)
@@ -57,7 +57,7 @@ The pipeline is proposed to run from X to Y.<ref>
 - **Construction wording (Baird 2026-11-04).** A construction-status pipeline is "a natural gas pipeline under construction", never "a construction natural gas pipeline". The generator's `new_page` does this.
 - **Null route stubs.** A routes-repo geojson with `geometry: null` (142 bytes) means no route. Leave the map off.
 - **Browser check limit.** `wiki_map_check.py` runs headless Chrome under the `GEMWIKI_USER_AGENT` identity; without it Cloudflare serves a challenge page and the check reads as `no map` or `CHALLENGED`. `scripts/wiki_save.py` checks every save through `action=parse` (`prop=text|headhtml`): a page with a map div must have `maps.googleapis.com` in its head. Never check with curl: a Cloudflare challenge page has no map div and reads as "0 with a map".
-- **Location verb by status.** Proposed: "is proposed to run from X to Y". Construction: "is being built from X to Y" (Baird 2026-11-05: a pipeline under construction is not just proposed). Cancelled or shelved: "was proposed to run". Operating: "runs".
+- **Location verb by status.** Superseded 2026-11-09: Location carries no sentence, so no verb. The status wording rules still apply to the lead and Background.
 - **Saving a generated page.** `generate_pages.py` writes each `.txt` with the page name as its first line, the way GEMwiki's uploader expects. Save with `generate_pages.py --save`, which drops that line (`page_body`); saving the `.txt` as it stands prints the name a second time above the intro (Baird 2026-11-06).
 - **Project Details order.** Operator, Owner, Parent, Capacity, Length, Diameter, Status, Start year, Cost. Parent is the gas tab's Parent cell as the backend has it, with no ref; a cell reading `unknown [unknown %]` takes the parent of the same Owner cell on other rows, when there is exactly one (`parent_text`, `fill_unknown_parents`; Baird 2026-11-06). Parents stay the ownership team's research; the page only shows them. Keep original units. Costs are full units shown as "US$...".
 - **Single segment vs several.** A page with one segment has no subheadings in Project Details or Background, and no "Main Line" label. "Main Line" and `===<SegmentName>===` headings appear only on pages with several segments.

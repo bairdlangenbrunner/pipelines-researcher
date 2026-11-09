@@ -60,9 +60,6 @@ GENERATED = {"introduction", "location", "project details", "pipeline details", 
 GENERATED_SUBS = {"references", "additional data"}
 
 STATUS_PHRASE = {"construction": "under construction"}
-VERB = {"operating": "runs", "idled": "runs", "mothballed": "runs", "proposed": "is proposed to run",
-        "construction": "is proposed to run", "shelved": "was proposed to run",
-        "cancelled": "was proposed to run", "retired": "ran"}
 MAP_GREY, STATUS_COLORS, STATUS_ORDER = B.MAP_GREY, B.STATUS_COLORS, B.STATUS_ORDER
 
 
@@ -436,41 +433,9 @@ def map_block(pg, rows):
             len(allp))
 
 
-def end_place(loc, prov, country=""):
-    loc = (loc or "").strip()
-    if loc.lower() == "offshore" and prov:
-        return place(f"offshore {prov}", country)
-    return place(loc, prov, country)
-
-
 def join_list(xs):
     # serial (Oxford) comma from three items up (GEM style guide, Baird 2026-11-08)
     return xs[0] if len(xs) == 1 else xs[0] + " and " + xs[1] if len(xs) == 2 else ", ".join(xs[:-1]) + ", and " + xs[-1]
-
-
-def overview_sentence(pg, rows, tabbed=False):
-    """One sentence on where a many-segment pipeline is, so the page says it
-    before the route table: the system row's end points if there is one, then where the segments are.
-    On a tabbed page the table sits under Project details, open, so the pointer says that instead."""
-    sysr = [r for r in rows if r["SegmentName"].upper().startswith("SYSTEM/NETWORK")]
-    if not sysr:   # the Main Line row speaks for the system the same way (Baird 2026-11-09, Northwest)
-        ml = [r for r in rows if label(r, rows) == "Main Line"]
-        sysr = ml if len(ml) == 1 else []
-    cs = sorted({c for r in rows for c in countries(r["CountriesOrAreas"])})
-    out = []
-    if sysr:
-        r = sysr[0]
-        same_c = r["StartCountryOrArea"] == r["EndCountryOrArea"]
-        a = end_place(r["StartLocation"], r["StartState/Province"], "" if same_c else country_name(r["StartCountryOrArea"]))
-        z = end_place(r["EndLocation"], r["EndState/Province"], country_name(r["EndCountryOrArea"]))
-        if a and z:
-            out.append(f"The main pipeline {VERB.get(r['Status'], 'runs')} from {a} to {z}.{pg.cite(r['Location [ref]'])}")
-    provs = sorted({p.strip() for r in rows for p in (r["StartState/Province"], r["EndState/Province"]) if p.strip()})
-    if tabbed:   # a tabbed page says neither where its segments are nor where the table is (Baird 2026-11-08)
-        return " ".join(out)
-    # no "Its N segments are in ..." sentence: pages stay short (Baird 2026-11-08)
-    # no "The table below lists ..." sentence either: self-evident (Baird 2026-11-09)
-    return " ".join(out)
 
 
 SHAPE_W, SHAPE_H, SHAPE_PAD = 120, 60, 4
@@ -773,38 +738,18 @@ def segment_table(pg, rows, owners):
 # ---------- sections ----------
 
 def location(pg, rows, tab, tabbed=False):
+    # no sentence here, ever: just the route table and the map (Baird 2026-11-09). The location refs sit in the
+    # table's Start/end cells (or the tabbed table's Route tab), so none is lost.
     out = ["==Location=="]
-    if len(rows) == 1:
-        r = rows[0]
-        same_c = r["StartCountryOrArea"] == r["EndCountryOrArea"]
-        a0 = place(r["StartLocation"], r["StartState/Province"])
-        z0 = place(r["EndLocation"], r["EndState/Province"])
-        cn = lambda c: country_name(c) if c else ""   # "the United States" (Baird 2026-11-07)
-        a = place(r["StartLocation"], r["StartState/Province"], "" if same_c else cn(r["StartCountryOrArea"]))
-        z = place(r["EndLocation"], r["EndState/Province"], cn(r["EndCountryOrArea"]))
-        v = VERB.get(r["Status"], "runs")
-        if a0 and a0.lower() == z0.lower():   # same place at both ends: "runs in Virginia, the United States", not "from X to X"
-            out.append(f"The pipeline {v} in {z}.{pg.cite(r['Location [ref]'])}")
-        elif (r["StartLocation"].strip() and r["EndLocation"].strip() and same_c
-              and r["StartState/Province"].strip().lower() == r["EndState/Province"].strip().lower() != ""):
-            # both end points named and in one state: "from A to B in Virginia, the United States" (Baird 2026-11-07)
-            st = place(r["EndState/Province"], cn(r["EndCountryOrArea"]))
-            out.append(f"The pipeline {v} from {r['StartLocation'].strip()} to {r['EndLocation'].strip()} in {st}.{pg.cite(r['Location [ref]'])}")
-        else:
-            out.append(f"The pipeline {v} from {a} to {z}.{pg.cite(r['Location [ref]'])}")
-    elif tabbed:
-        out.append(overview_sentence(pg, rows, tabbed=True))
-    else:
-        out.append(overview_sentence(pg, rows))
     if not tabbed:
         # the Route details table, the five-table pages' version of the tabbed table's Route tab. A one-segment page
         # gets it too, open and with no route picture, since the map sits right below (Baird 2026-11-06)
         shapes = shape_cells(pg, rows) if len(rows) > 1 else {}
         body = [([shapes[r["ProjectID"]]] if shapes else []) + [label(r, rows)] + route_cells(pg, r) for r in rows]
-        out += ["", table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
+        out += [table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
                           sortable=True)]   # always open, never collapsed (Baird 2026-11-08)
     m, npts = map_block(pg, rows)
-    out += ["", m]
+    out += (["", m] if len(out) > 1 else [m])
     pg.log.append(f"map points: {npts}")
     return "\n".join(out)
 
