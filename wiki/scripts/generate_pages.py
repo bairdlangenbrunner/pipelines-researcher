@@ -1243,6 +1243,38 @@ def status_conflicts(pg, kept, rows):
     return out
 
 
+_WIKILINK = re.compile(r"\[\[([^\]\|#:]+)(?:#[^\]\|]*)?(?:\|([^\]]*))?\]\]")
+_LINK_CACHE = {}
+
+
+def unlink_missing(pg, kept):
+    """Turn [[links]] to gem.wiki pages that do not exist into plain text (Baird 2026-11-09, Arkoma).
+    A red link in kept text reads as a broken page; the label stays, only the brackets go."""
+    targets = {m.group(1).strip() for m in _WIKILINK.finditer(kept)} - set(_LINK_CACHE)
+    if targets:
+        try:
+            s = _LINK_CACHE.setdefault("_session", GW.session())
+            ts = sorted(targets)
+            for i in range(0, len(ts), 40):
+                d = GW.get(s, action="query", titles="|".join(ts[i:i + 40]))["query"]
+                norm = {n["from"]: n["to"] for n in d.get("normalized", [])}
+                pages = d["pages"].values() if isinstance(d["pages"], dict) else d["pages"]
+                have = {p["title"] for p in pages if "missing" not in p and "invalid" not in p}
+                for t in ts[i:i + 40]:
+                    _LINK_CACHE[t] = norm.get(t, t) in have
+        except Exception as e:  # never block a build on the check; say it did not run
+            pg.log.append(f"LINK CHECK NOT RUN ({type(e).__name__}); red links in kept text not looked for")
+            return kept
+
+    def fix(m):
+        t = m.group(1).strip()
+        if _LINK_CACHE.get(t, True):
+            return m.group(0)
+        pg.log.append(f"unlinked a link to a page that does not exist: [[{t}]]")
+        return (m.group(2) or m.group(1)).strip()
+    return _WIKILINK.sub(fix, kept)
+
+
 def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     rows = order(rows)
@@ -1271,6 +1303,7 @@ def build(name, rows, owners, live, tracker):
     # defines itself are reused above
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     kept = dormancy_into_background(pg, kept, rows)
+    kept = unlink_missing(pg, kept)
     pg.status_conflicts = status_conflicts(pg, kept, rows)
     kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
