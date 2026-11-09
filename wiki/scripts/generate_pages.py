@@ -1245,6 +1245,17 @@ _WIKILINK = re.compile(r"\[\[([^\]\|#:]+)(?:#[^\]\|]*)?(?:\|([^\]]*))?\]\]")
 _LINK_CACHE = {}
 
 
+_EMPTY_SUB = re.compile(r"^(===+)([^=\n]+)\1[ \t]*\n(?:[ \t]*\n)*(?=(?:==)|\Z|<!--)", re.M)
+
+
+def drop_empty_subsections(pg, kept):
+    """A Background subsection heading with nothing under it reads as a broken page (Baird 2026-11-09)."""
+    def fix(m):
+        pg.log.append(f"empty Background subsection removed: {m.group(2).strip()}")
+        return ""
+    return _EMPTY_SUB.sub(fix, kept)
+
+
 def unlink_missing(pg, kept):
     """Turn [[links]] to gem.wiki pages that do not exist into plain text (Baird 2026-11-09, Arkoma).
     A red link in kept text reads as a broken page; the label stays, only the brackets go."""
@@ -1302,6 +1313,7 @@ def build(name, rows, owners, live, tracker):
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     kept = dormancy_into_background(pg, kept, rows)
     kept = unlink_missing(pg, kept)
+    kept = drop_empty_subsections(pg, kept)
     pg.status_conflicts = status_conflicts(pg, kept, rows)
     kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
