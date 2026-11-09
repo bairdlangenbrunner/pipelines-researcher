@@ -204,6 +204,7 @@ def place(*parts):
     return ", ".join(out)
 
 
+SYSTEM_LABEL = "Full system/network info"
 MAINISH = re.compile(r"main\s*-?\s*line|trunk\s*-?\s*line|\bmain\s+(system|pipeline|segment|trunk)\b|\btrunk\b", re.I)
 
 
@@ -225,6 +226,9 @@ def label(r, rows):
     m = re.match(r"SYSTEM/NETWORK INFO\s*\((.*)\)", s, re.I)
     if m:
         s = m.group(1).strip() or "Main Line"
+    elif s.upper().startswith("SYSTEM/NETWORK"):
+        # SYSTEM/NETWORK INFO is an internal backend marker and never appears on a wiki page (Baird 2026-11-09)
+        s = SYSTEM_LABEL
     if not s and is_main_line(r, rows):
         s = "Main Line"
     s = s or r["PipelineName"]
@@ -408,6 +412,9 @@ def overview_sentence(pg, rows, tabbed=False):
     before the route table: the system row's end points if there is one, then where the segments are.
     On a tabbed page the table sits under Project details, open, so the pointer says that instead."""
     sysr = [r for r in rows if r["SegmentName"].upper().startswith("SYSTEM/NETWORK")]
+    if not sysr:   # the Main Line row speaks for the system the same way (Baird 2026-11-09, Northwest)
+        ml = [r for r in rows if label(r, rows) == "Main Line"]
+        sysr = ml if len(ml) == 1 else []
     cs = sorted({c for r in rows for c in countries(r["CountriesOrAreas"])})
     out = []
     if sysr:
@@ -1289,8 +1296,16 @@ def link_background(pg, kept, rows):
         keys.setdefault(k, set()).add(pid)
     unmatched, used = [], set()
 
+    by_pid = {r["ProjectID"]: r for r in rows}
+
     def cell(mo):
         pre, name = mo.group(1), BG_LINKED.sub(r"\1", mo.group(2)).strip()
+        # a row already linked to a segment stays with it under that segment's current name, so a renamed
+        # segment (SYSTEM/NETWORK INFO to Main Line on Northwest, 2026-11-09) is not left as a stray row
+        old = re.search(r'id="bg-(P\d+)"', mo.group(2))
+        if old and old.group(1) in by_pid and old.group(1) not in used:
+            pid = old.group(1); used.add(pid); name = label(by_pid[pid], rows)
+            return f'{pre}<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{name}]]</span>'
         pids = keys.get(_key(name), set())
         if len(pids) != 1 or next(iter(pids)) in used:
             unmatched.append(name)

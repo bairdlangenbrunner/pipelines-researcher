@@ -199,9 +199,16 @@ def route_sentence(r, what='pipeline'):
     if a or z: return f"The {what} is located in {a or z}.{refs(r['Location [ref]'])}"
     return ''
 
+def public_segment(s):
+    # SYSTEM/NETWORK INFO is an internal backend marker, never shown on a wiki page (Baird 2026-11-09)
+    s = (s or '').strip()
+    m = re.match(r'SYSTEM/NETWORK INFO\s*\((.*)\)', s, re.I)
+    if m: return m.group(1).strip() or 'Main Line'
+    return 'Full system/network info' if s.upper().startswith('SYSTEM/NETWORK') else s
+
 def seg_title(r, single=False):
     # a row with no SegmentName on a page with several segments is the system's main line
-    return 'Main Line' if single else (r['SegmentName'] or 'Main Line')
+    return 'Main Line' if single else (public_segment(r['SegmentName']) or 'Main Line')
 
 def cite(url, title, site, date=None):
     if title == site or not title: title = _known_titles().get(url) or url.replace('|', '%7C')
@@ -222,7 +229,7 @@ def background_text(r):
     return dormancy(r)
 
 def dormancy(r):
-    t = r['SegmentName'] or r['PipelineName']
+    t = public_segment(r['SegmentName']) or r['PipelineName']
     if r['ShelvedCancelledType'] == 'inferred':
         if r['Status'] == 'cancelled' and r['CancelledYear']:
             return f"As of {r['CancelledYear']}, no development on the {t} has been reported for over 4 years, and it is considered cancelled.{refs(r['Cancelled [ref]'] or r['Status [ref]'])}"

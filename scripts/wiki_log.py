@@ -95,6 +95,8 @@ def design_gaps(text):
     lead = re.sub(r'<ref.*?(</ref>|/>)', '', v.split('==Location==')[0], flags=re.S)
     if re.search(r'(considered|presumed|inferred)[^.]{0,20}(cancelled|shelved)|no (news|updates)', lead, re.I):
         f.append('dormancy sentence in the lead')
+    if 'SYSTEM/NETWORK INFO' in v.upper():   # internal backend marker, never shown (Baird 2026-11-09)
+        f.append('SYSTEM/NETWORK INFO shown as a segment name')
     return f
 
 
