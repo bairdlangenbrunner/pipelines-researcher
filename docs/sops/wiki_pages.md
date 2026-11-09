@@ -11,6 +11,7 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 3. **Edits to existing pages need a live-text check.** Before posting, re-read the live page and confirm it is unchanged since the draft was made. Never overwrite someone else's edit.
 4. **The sheet's Wiki column is not written by this workflow.** Writing new URLs back needs Baird's explicit OK and `gws-gem-write`, like any sheet write.
 5. **No deleting.** The wiki account has no delete or suppress-redirect rights, so a bad page cannot be undone by deletion. Check drafts before posting.
+6a. **A page called a network is introduced as one (Baird 2026-11-08).** When the PipelineName or wiki page title contains "Network", the lead says "is a ... pipeline network ...", never "pipeline" (`intro()` in `generate_pages.py` does it; Guangxi Gas Pipeline Network).
 6. Prose follows the notes style rule: short sentences, plain words, no AI-sounding phrasing, no em-dashes. American spelling. **Numbers in prose: one to nine as words, 10 and up as numerals (Baird 2026-11-08)**, so "four cities", "26 provinces"; table cells and units stay numerals. `network_pages.num()` does it for the network pages.
 
 ## Tools
