@@ -36,11 +36,11 @@ Added to the Gas tab by Baird on 2026-11-08, ahead of the pilot: `PrimaryNetwork
 
 **Networks tab (created 2026-11-08, Baird's request):** the backend's `Gas pipeline networks` tab (gid 132857322) holds one row per network, header in row 2, written from the registry: `NetworkID` (N0001.., stable key), `NetworkName` (English; the value the Gas tab's `PrimaryNetwork` and `SecondaryNetworks` carry), `NetworkNameLocalLanguage`, `Countries`, `NetworkType`, `Pipelines` (member PipelineNames, `;`), `PipelineCount`, `SegmentCount`, `LengthKnownKm`, `Wiki`, `WikiPageKind`, `Notes`, `Researcher`, `LastUpdated`. `SegmentCount` and `LengthKnownKm` are snapshot values from the creation date, not formulas; a refresh rewrites them from a fresh pull. The registry (`networks_tab` key) and the tab are kept in step: edit the registry, rewrite the tab, never hand-edit one without the other. Backup: `notes/sheet-backup-2026-11-08-gas-pipeline-networks-tab.csv`. The 57 networks outside China (N0073-N0129: the other PrimaryNetwork values as written, plus four used only as secondaries) were added the same day so the dropdowns cover every value in use; they sit in the registry's `networks_outside_china` list, unreviewed, with wiki work on hold, and the generator never reads that list. Backup: `notes/sheet-backup-2026-11-08-gas-networks-outside-china-and-dropdowns.csv`.
 
-## Network names (proposed 2026-11-08, not applied)
+## Network names (2026-11-08: applied to the sheet; network pages not built yet)
 
 Baird 2026-11-08: the network label must read differently from the pipeline that shares its name, and every Chinese pipeline should belong to a network that has a page. PipelineNames stay as they are; only the network side changes.
 
-Why: on the live sheet (2026-11-08, 985 China gas rows) every row but one has a `PrimaryNetwork`, but 42 of the 72 networks hold a single pipeline (West-East Gas Pipeline 1, Sino-Myanmar, Zhongwei-Guiyang), so "network" and "pipeline" were the same thing and those networks could only ever be redirects. `SecondaryNetworks` is empty on every row.
+Why: on the live sheet (2026-11-08, 985 China gas rows) every row but one has a `PrimaryNetwork`, but 42 of the 72 networks hold a single pipeline (West-East Gas Pipeline 1, Sino-Myanmar, Zhongwei-Guiyang), so "network" and "pipeline" were the same thing and those networks could only ever be redirects. `SecondaryNetworks` was empty on every row.
 
 The scheme follows the 2024 reorganization doc ("Chinese gas pipelines - 2024 reorganization", Google Doc `1GONZpFFWlEExd2G2CbUaiPZW-3DZkB5PBpi5BisMco4`), which sorted every Chinese pipeline into I (international), P (provincial network: within one province or autonomous region), N (national) and T (trans-province), with a `ChineseNetworkPrimary` label deciding its wiki page. The doc's columns (`ChinesePipelineType`, `ChineseNetworkPrimary`, `ChineseNetworkSecondary`, `ChineseClassificationNotes`) are no longer on the Gas tab; `PrimaryNetwork` and `SecondaryNetworks` replaced the network two. About 33 networks replace the 72:
 
@@ -101,11 +101,11 @@ Pages after the change:
 - A pipeline that shared the old network name (Guangxi Gas Pipeline Network) keeps its page as an ordinary pipeline page with its own segments, and its lead says "It is classified as part of the [[Guangxi Provincial Gas Network]]." In 24 divisions all rows share one PipelineName (Shanxi's 66 rows are all Shanxi Gas Pipeline Network), so the network page and the pipeline page overlap; the network page carries the pass-through lines and the map, the pipeline page the segment detail.
 - The trunk lines' own pages (West-East Gas Pipeline 1 and the rest) are unchanged; their leads say which grouping they are in.
 
-Apply steps (each sheet write under the hard requirements, after Baird's OK):
+Apply steps:
 
-1. Registry: the new networks, each old one kept as `former_name` on the network that absorbs it.
-2. Networks tab: rewrite `NetworkName` (the dropdowns read that column), dropping the absorbed rows.
-3. Gas tab: rewrite `PrimaryNetwork` on all 985 rows and write the derived `SecondaryNetworks`, in the same run as step 2.
+1. Done 2026-11-08. Registry: `networks` holds the 33; a renamed network keeps its NetworkID with `former_name`; the three groupings are N0130-N0132 with `former_networks`; the 42 absorbed networks are in `networks_retired` with `merged_into`.
+2. Done 2026-11-08. Networks tab: rewritten from the registry, 33 China rows then the 57 outside China (90 rows, A3:N92; rows 93-131 cleared). The groupings' local-language names are blank until drafted.
+3. Done 2026-11-08. Gas tab: `PrimaryNetwork` on 986 rows, `SecondaryNetworks` on 282, `LastUpdated` stamped on all 986 (`Researcher` left as it was, as in the first `PrimaryNetwork` write: classification, not research). Crossings counted from the routes repo at 10 km or 10% of the route; 28 rows with no route used their start and end provinces. Baird kept the five provincial rows whose route lies in a neighboring division (P5983, P4994, P4678, P5053, P5096) in their own network, with the crossed division as a secondary. P5100 (cancelled, Qinghai to Tibet) is in China National Gas Pipelines with Qinghai as a secondary; Tibet has no network. `PrimaryNetworkWiki` is unchanged until the network pages exist (step 5). Backups: `notes/sheet-backup-2026-11-08-china-network-scheme-gas.csv` and `-networks-tab.csv`.
 4. Wiki: create Guangxi Provincial Gas Network from the network parts of the current page and return Guangxi Gas Pipeline Network to a pipeline page, then the other networks as each is reached.
 5. `PrimaryNetworkWiki` points at each network's page.
 
