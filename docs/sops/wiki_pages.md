@@ -11,8 +11,9 @@ How to create wiki pages for newly added pipelines, and how to add a new segment
 3. **Edits to existing pages need a live-text check.** Before posting, re-read the live page and confirm it is unchanged since the draft was made. Never overwrite someone else's edit.
 4. **The sheet's Wiki column is not written by this workflow.** Writing new URLs back needs Baird's explicit OK and `gws-gem-write`, like any sheet write.
 5. **No deleting.** The wiki account has no delete or suppress-redirect rights, so a bad page cannot be undone by deletion. Check drafts before posting.
+6b. **Page shape (Baird 2026-11-08).** Chinese pipeline pages carry "See all Chinese pipeline network groupings here." as its own paragraph AFTER the opening paragraph. Location text is short: no "Its N segments are in ..." and no segment-table pointer sentence. Segment tables and Background tables have a running "#" first column. An Additional sources line under a table has two blank lines above it.
 6a. **A page called a network is introduced as one (Baird 2026-11-08).** When the PipelineName or wiki page title contains "Network", the lead says "is a ... pipeline network ...", never "pipeline" (`intro()` in `generate_pages.py` does it; Guangxi Gas Pipeline Network).
-6. Prose follows the notes style rule: short sentences, plain words, no AI-sounding phrasing, no em-dashes. American spelling. **Numbers in prose: one to nine as words, 10 and up as numerals (Baird 2026-11-08)**, so "four cities", "26 provinces"; table cells and units stay numerals. `network_pages.num()` does it for the network pages.
+6. Prose follows the notes style rule: short sentences, plain words, no AI-sounding phrasing, no em-dashes. American spelling. **Numbers in prose: one to nine as words, 10 and up as numerals (Baird 2026-11-08)**, so "four cities", "26 provinces"; table cells and units stay numerals. `network_pages.num()` does it for the network pages. **Always the Oxford comma (Baird 2026-11-08; GEM American English Style Guide)**: "A, B, and C", in generated lists (`join_list`) and in any prose written by hand or script.
 
 ## Tools
 

@@ -26,7 +26,7 @@ H = "!"
 OVERVIEW_PAGE = "Chinese Gas Pipeline Networks"   # the page that explains every China network (china_networks_page.py)
 # what each of the three groupings holds, from the 2024 classification checklist (I / N / T)
 GROUPING_SCOPE = {
-    "China National Gas Pipelines": "China's national trunk gas pipelines, most of them built by PetroChina, PipeChina and other state-owned companies",
+    "China National Gas Pipelines": "China's national trunk gas pipelines, most of them built by PetroChina, PipeChina, and other state-owned companies",
     "China International Gas Pipelines": "the gas pipelines that cross China's borders",
     "China Interprovincial Gas Pipelines": "the gas pipelines that cross provincial borders in China but belong to neither a provincial network nor the national trunk system",
 }
