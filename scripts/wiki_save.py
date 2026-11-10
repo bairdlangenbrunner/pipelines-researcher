@@ -28,6 +28,8 @@ Every successful save also upserts the page's row in the backend sheet's `Wiki o
 standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
 never fails the save.
 
+save() previews the text first and refuses (CiteError) any page that would show a Cite error (Baird 2026-11-10).
+
 save() refuses any page that is not a pipeline page (Baird 2026-11-10: this repo edits pipeline wiki pages and
 nothing else): the title must be one the GOIT/GGIT snapshots name (Wiki cell, PipelineName, network columns) or one
 of the pipeline pages' own stylesheets. No override.
@@ -49,6 +51,25 @@ class MapBroken(RuntimeError):
 
 class NotAPipelinePage(RuntimeError):
     pass
+
+
+class CiteError(RuntimeError):
+    pass
+
+
+_CITE_ERR = re.compile(r'<(span|strong|div)[^>]*class="[^"]*\bcite-error\b[^"]*"[^>]*>(.*?)</\1>', re.S)
+
+
+def cite_errors(s, title, text):
+    """The Cite errors the page would show, from a preview parse of the text (nothing is saved). Both error
+    classes MediaWiki uses (cite-error, mw-ext-cite-error) count, plus any bare 'Cite error:' text."""
+    p = _retry(lambda: g.post(s, action='parse', title=title, text=text, contentmodel='wikitext', prop='text', pst=1,
+                              disablelimitreport=1))['parse']['text']
+    html = p['*'] if isinstance(p, dict) else p
+    errs = [re.sub('<[^>]+>', '', m.group(2))[:160] for m in _CITE_ERR.finditer(html)]
+    if not errs and 'Cite error:' in re.sub('<[^>]+>', '', html):
+        errs = ['Cite error text on the page']
+    return errs
 
 
 # The only non-article pages this repo may save: the pipeline pages' own stylesheets (generate_pages.ensure_styles).
@@ -128,6 +149,11 @@ def save(s, title, text=None, summary='', **kw):
         # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
         raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
     check_pipeline_page(title)
+    if text and not text.lstrip().upper().startswith('#REDIRECT'):
+        # a page that would show a Cite error is never saved, whichever script built it (Baird 2026-11-10)
+        errs = cite_errors(s, title, text)
+        if errs:
+            raise CiteError(f'{title}: {len(errs)} Cite error(s) in the preview, not saved: {errs[:3]}')
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     if r.get('result') == 'Success' and 'nochange' not in r:

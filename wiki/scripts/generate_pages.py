@@ -1837,8 +1837,17 @@ def unlink_missing(pg, kept):
 MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
+def join_ref_lines(txt):
+    """A <ref>...</ref> that spans lines becomes one line (newlines inside a citation are only whitespace to the
+    wiki). Every pass here that works line by line (data bullets, headings, Other sources) would otherwise cut a
+    citation in half: drop_data_bullets took the first line of a two-line ref on the Guangdong Pearl River Delta
+    page and left an unclosed <ref> in Additional sources (2026-11-10)."""
+    return re.sub(r"<ref(?:\s[^>]*)?(?<!/)>.*?</ref>", lambda m: re.sub(r"\s*\n\s*", " ", m.group(0)), txt or "", flags=re.S)
+
+
 def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
+    live = join_ref_lines(live)
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
     # a map sketch an earlier run moved into Background by mistake goes; it belongs only under the map (2026-11-10)
@@ -1919,13 +1928,24 @@ def page_body(text):
     return rest.lstrip("\n")
 
 
+CITE_ERROR = re.compile(r'<(span|strong|div)[^>]*class="[^"]*\bcite-error\b[^"]*"[^>]*>(.*?)</\1>', re.S)
+
+
+def cite_errors(html):
+    """Every Cite error on a rendered page. MediaWiki writes them as class="cite-error" or class="error
+    mw-ext-cite-error" depending on the error; matching only the first let a "Closing </ref> missing" error onto the
+    Guangdong Pearl River Delta page (2026-11-10)."""
+    out = [re.sub("<[^>]+>", "", m.group(2))[:160] for m in CITE_ERROR.finditer(html)]
+    return out or (["Cite error (text found outside a cite-error element)"] if "Cite error:" in re.sub("<[^>]+>", "", html) else [])
+
+
 def render(s, title, text):
     body = page_body(text)
     d = GW.post(s, action="parse", title=title, text=body, contentmodel="wikitext", prop="text|headhtml",
                 disablelimitreport=1, pst=1)
     t = d["parse"]["text"]
     html = t["*"] if isinstance(t, dict) else t
-    errs = re.findall(r'<span class="cite-error">(.*?)</span>', html, re.S)
+    errs = cite_errors(html)
     return html, (lambda h: h["*"] if isinstance(h, dict) else h or "")(d["parse"].get("headhtml")), [re.sub("<[^>]+>", "", e)[:160] for e in errs]
 
 
