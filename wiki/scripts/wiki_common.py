@@ -99,9 +99,13 @@ DOWNLOAD_URL = {'gas': 'https://globalenergymonitor.org/projects/global-gas-infr
                 'oil': 'https://globalenergymonitor.org/projects/global-oil-infrastructure-tracker/'}
 NOTE_START = "Note: some pipeline routes are simplified"
 
+# styled like the tables' unit captions ("Dth/d = dekatherms per day"): 85%, bold, the skin's caption grey (Baird 2026-11-10)
+NOTE_STYLE = "font-size: 85%; font-weight: bold; color: #95a5a6;"
+
 def route_note(tracker='gas'):
-    return (f"{NOTE_START} for easier visualization on these pages. "
-            f"Full routes are available for download [{DOWNLOAD_URL[tracker]} here].")
+    return (f'<div class="gem-routenote" style="{NOTE_STYLE}">{NOTE_START} for easier visualization on wiki pages, '
+            f"and route accuracy varies. Full route and accuracy information is available for download "
+            f"[{DOWNLOAD_URL[tracker]} here].</div>")
 
 def parent_text(cell):
     # the gas tab's Parent cell as the backend has it, shares kept where known (Baird 2026-11-06): parents are the
