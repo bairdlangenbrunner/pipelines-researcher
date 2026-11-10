@@ -393,7 +393,7 @@ def map_block(pg, rows):
     mapped = [r for r in rows if r["RouteType"].startswith("Mapped route")]
     if not mapped:
         return "The route of this pipeline has not been mapped.", 0
-    allp, lines, edges = [], [], []
+    allp, lines, edges, drawn = [], [], [], []
     # a map that opens at zoom 4 or 5 (span over 6 degrees, about a continent) gets a coarser simplification:
     # at those zooms one pixel is 0.04 to 0.09 degrees, so the dropped points are invisible, and Transco's 450 lines
     # were slow to zoom and pan on a phone (Baird 2026-11-09)
@@ -408,6 +408,7 @@ def map_block(pg, rows):
         color = status_color(pg, r["Status"])
         for l in ls:
             allp += l
+            drawn.append((l, color))
             pts = ":".join(f"{p[1]:.5f}, {p[0]:.5f}" for p in l)
             title = label(r, rows) if len(rows) > 1 else pg.name
             dot = f'<span class="gem-mapdot gem-mapdot-{r["Status"].replace(" ", "-")}"></span>'
@@ -432,10 +433,50 @@ def map_block(pg, rows):
         # one plain count on multi-segment pages (Baird 2026-11-06)
         text = f"{len(mapped)} of {len(rows)} segments have a mapped route in the database."
     body = ";".join(lines)
-    mid = f"{(max(lats) + min(lats)) / 2:.5f}, {(max(lons) + min(lons)) / 2:.5f}"
+    clat, clon = (max(lats) + min(lats)) / 2, (max(lons) + min(lons)) / 2
+    mid = f"{clat:.5f}, {clon:.5f}"
+    # a sketch of the same lines at the same center and zoom sits under the map until Google draws over it, so the
+    # routes show the moment the page loads instead of three seconds later (Baird 2026-11-10; see map_sketch_svg)
+    sk = sketch_file(pg.name)
+    pg.shapes[sk] = map_sketch_svg(drawn, clat, clon, zoom)
     return ((f'{text}\n\n' if text else "") + f'<templatestyles src="{MAP_STYLES_PAGE}" />\n'
-            f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}{legend}",
+            f'<div class="gem-mapwrap"><div class="gem-mapph">[[File:{sk}|{SKETCH_W}px|link=|alt=]]</div>\n'
+            f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}\n</div>{legend}",
             len(allp))
+
+
+SKETCH_W, SKETCH_H, SKETCH_LAND = 1600, 400, "#f1efea"   # wider than any content column, as tall as the map
+
+
+def sketch_file(page):
+    return "Map sketch " + re.sub(r"[^\w .()-]+", "_", page) + ".svg"
+
+
+def _merc(lat, lon, zoom):
+    """Google's web-mercator pixel position at an integer zoom: 256 * 2^zoom pixels around the world."""
+    import math
+    s = 256 * 2 ** zoom
+    lat = max(-85.05, min(85.05, lat))
+    return ((lon + 180) / 360 * s,
+            (1 - math.log(math.tan(math.radians(lat)) + 1 / math.cos(math.radians(lat))) / math.pi) / 2 * s)
+
+
+def map_sketch_svg(drawn, clat, clon, zoom):
+    """The map's lines drawn on a plain land-colored canvas at the pixel scale Google uses for the map's zoom, centered
+    on the map's center. The page centers the picture in the map's box, so every route lands where Google then draws
+    it, and the tiles fade in under lines that are already there. Lines beyond the canvas are simply cut off."""
+    xc, yc = _merc(clat, clon, zoom)
+    def path(l):
+        pts = [(x - xc + SKETCH_W / 2, y - yc + SKETCH_H / 2) for x, y in (_merc(p[1], p[0], zoom) for p in l)]
+        return "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    paths = [path(l) for l, _ in drawn]
+    edge = " ".join(paths)
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{SKETCH_W}" height="{SKETCH_H}" viewBox="0 0 {SKETCH_W} {SKETCH_H}">',
+           f'<rect width="{SKETCH_W}" height="{SKETCH_H}" fill="{SKETCH_LAND}"/>',
+           f'<path d="{edge}" fill="none" stroke="{MAP_EDGE}" stroke-width="{LINE_W + 5}" stroke-linecap="round" stroke-linejoin="round"/>']
+    out += [f'<path d="{d}" fill="none" stroke="{c}" stroke-width="{LINE_W}" stroke-linecap="round" stroke-linejoin="round"/>'
+            for d, (_, c) in zip(paths, drawn)]
+    return "\n".join(out) + "\n</svg>\n"
 
 
 def join_list(xs):
@@ -621,6 +662,11 @@ MAP_CSS = """\
 .gm-style .gm-style-iw-d b p { font-size: 13px; margin: 0 0 1px; }
 .gm-style .gm-style-iw-d p + p { color: #54595d; }
 .gem-mapdot { display: inline-block; width: 8px; height: 8px; margin: 0 5px 1px 0; border-radius: 50%; vertical-align: middle; background: """ + MAP_GREY + """; }
+/* the route sketch (map_sketch_svg) sits centered under the map box until Google's tiles cover it (Baird 2026-11-10) */
+.gem-mapwrap { position: relative; overflow: hidden; }
+.gem-mapph { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); line-height: 0; z-index: 0; }
+.gem-mapph img { max-width: none; }
+.gem-mapwrap .maps-map { position: relative; z-index: 1; background: transparent !important; }
 /* phones: the map takes about half the screen, so a thumb finds page above or below it to keep scrolling; never taller than the 400 px desktop map, never under 260 px (Baird 2026-11-09). The Maps extension sets the height inline, so it needs !important */
 @media (max-width: 767px) { .maps-map.maps-googlemaps3 { height: 50vh !important; max-height: 400px; min-height: 260px; } }
 """ + "".join(f".gem-mapdot-{s.replace(' ', '-')} {{ background: {c}; }}\n" for s, c in STATUS_COLORS["gas"].items())
@@ -1783,7 +1829,7 @@ def render(s, title, text):
 
 
 def upload_shapes(s, folder, page):
-    """Upload each route-shape SVG in folder/shapes, skipping files whose bytes the wiki already has."""
+    """Upload each route-shape and map-sketch SVG in folder/shapes, skipping files whose bytes the wiki already has."""
     done = []
     d = os.path.join(folder, "shapes")
     for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
@@ -1795,8 +1841,10 @@ def upload_shapes(s, folder, page):
             continue
         GW.throttle()
         r = s.post(GW.API, data={"action": "upload", "filename": f, "format": "json", "ignorewarnings": 1,
-                                 "comment": f"route shape for [[{page}]]",
-                                 "text": f"Route shape of one segment of [[{page}]], drawn from the pipeline's route line with no map background.",
+                                 "comment": f"{'map sketch' if f.startswith('Map sketch') else 'route shape'} for [[{page}]]",
+                                 "text": (f"Sketch of the mapped routes of [[{page}]], shown under the page's map while it loads. Drawn from the pipelines' route lines with no map background."
+                                          if f.startswith("Map sketch") else
+                                          f"Route shape of one segment of [[{page}]], drawn from the pipeline's route line with no map background."),
                                  "token": GW.csrf_token(s)},
                    files={"file": (f, data, "image/svg+xml")}).json()
         if r.get("upload", {}).get("result") != "Success":
