@@ -139,6 +139,10 @@ Steps:
 Generator gap found on that page: `intro()` falls back to the first row's `OtherLanguageAlternativePipelineNames` on a multi-segment page with no system row, so a segment's local name (柳州支线) lands in the lead as the pipeline's alias. Network mode must take the pipeline's local name from `OtherLanguagePrimaryPipelineName` (the majority value) and skip segment aliases. Fixed in `generate_pages.intro()` 2026-11-10: the local name is the majority `OtherLanguagePrimaryPipelineName`, written in plain parentheses after the page name as GOGPT does (no "local name:" label, Baird 2026-11-10), segment aliases are never the pipeline's, and `network_line()` adds "It is classified as part of the [[<PrimaryNetwork>]]." when that network page exists on the wiki, so a plain generator run gives a member page its full lead.
 5. Audit: `python wiki/scripts/network_audit.py` (to write) checks the invariants: one primary per PipelineName, every primary in the registry, every registry page exists or is a PipelineName, no secondary equal to the primary, no grouping value equal to the row's own PipelineName.
 
+## Guangdong (done 2026-11-10)
+
+Network page Guangdong Provincial Gas Network created (case 3: no PipelineName equals it). The five member pipelines (Guangdong Gas Pipeline Network, East, North, Pearl River Delta, West) were rebuilt from their old network-style pages: each old segment block became a `===` Background subsection so the generator's segment table carries its history, old per-segment `{{#display_map}}` blocks went (the page map draws every segment), and one citation audit across all 11 old pages showed no URL dropped (a `web.archive.org/save/` copy and its original count as one source). Blocks moved to the pipeline they belong to: Shante, Shenzhen LNG, Guangzhou-Dongguan and Huizhou LNG to Guangdong Gas Pipeline Network; Chaozhou LNG into East. Six old single-segment titles now `#REDIRECT` to `<page>#row-<PID>`. 30 Wiki cells repointed (backup `notes/sheet-write-2026-11-10-guangdong-wiki-cells.csv`). Gotcha: `network_pages.py` links each member through its rows' Wiki cells read live, so repoint the cells before saving the network page. Open: P8037 (grouping fix, still on the old PRD redirect), possible duplicates P7440/P5869 (both the 穗莞 line) and P4687/P5882.
+
 ## Gates (Baird decides)
 
 1. The mockup's shape (this turn).
@@ -146,7 +150,7 @@ Generator gap found on that page: `intro()` falls back to the first row's `Other
 3. P7668's move to Guangxi Gas Pipeline Network (done 2026-11-08: `PrimaryNetwork` and `PrimaryNetworkWiki`, backup `notes/sheet-backup-2026-11-08-gas-p7668-primary-network.csv`), and the other grouping fixes already on the list (P4553, P3894, P8037). Each is a sheet write under the hard requirements: FORMULA pre-read, backup CSV in `notes/`, RAW cell-scoped write, re-read, `Researcher` = CB and `LastUpdated` stamped.
 4. The name for 川渝输气管网 and whether the four Central Asia–China line groupings merge into one network.
 5. Which secondary proposals become `SecondaryNetworks` values for the Guangxi pilot.
-6. Extending past Guangxi: Guangdong and Xinjiang next (case 2, no new page), then Sichuan-Chongqing (case 3), then the one-pipeline networks, which only gain the lead line.
+6. Extending past Guangxi: Guangdong done 2026-11-10 (it turned out case 3, see above); Xinjiang next (case 2, no new page), then Sichuan-Chongqing (case 3), then the one-pipeline networks, which only gain the lead line.
 
 ## Out of scope here
 
