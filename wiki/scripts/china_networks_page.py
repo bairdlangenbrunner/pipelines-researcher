@@ -69,7 +69,7 @@ def build(s, nets, df):
     for n in names:
         rs = rows[n]
         t += ["|-", f"|{lk(n)}", f"|{kind(n)}", f"|{len({r['PipelineName'] for r in rs})}",
-              f"|{len(rs)}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else ''}"]
+              f"|{len(rs)}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else '–'}"]
     t += ['|- class="sortbottom"', "!Total", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(allrows)}",
           f"!{N.length_cell(allrows).split('|')[-1]}", f"!{N.mix(pg, allrows)}", "|}"]
     tail = ["==Articles and resources==", "", "===Additional data===",

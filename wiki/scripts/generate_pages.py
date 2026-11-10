@@ -353,7 +353,7 @@ def table(num_, title, header, body, caption="", collapsed=False, sortable=False
     for row in body:
         t.append("|-")
         # an empty route-shape cell stays blank; every other empty cell gets a dash
-        t += [f"|{row[i] if row[i].strip() else ''}" for i in keep]   # an empty cell stays blank, no dash (Baird 2026-11-10)
+        t += [f"|{row[i] if row[i].strip() else ('' if header[i].endswith('|Route') else '–')}" for i in keep]
     if footnote:   # stays at the bottom when the table is sorted
         t += ['|- class="sortbottom"', f'|colspan="{len(keep)}"|{footnote}']
     t.append("|}")
@@ -562,8 +562,8 @@ def route_cells(pg, r):
     """start/end (with the Location ref) and countries. No length here: the Route details table carried an
     unreferenced copy of it, and the referenced figure already sits in the Pipeline details table (Baird
     2026-11-06, Ruby). The tabbed table's Route tab shows the referenced Pipeline details cell instead."""
-    a = place(r["StartLocation"], r["StartState/Province"])
-    z = place(r["EndLocation"], r["EndState/Province"])
+    a = place(r["StartLocation"], r["StartState/Province"]) or "–"
+    z = place(r["EndLocation"], r["EndState/Province"]) or "–"
     rf = pg.cite(r["Location [ref]"])
     rf = f'<span style="float:right;margin-left:0.4em">{rf}</span>' if rf else ""   # the refs sit at the right end of the End line
     return [f"'''Start:''' {a}{END_RULE}{rf}'''End:''' {z}</div>",
@@ -826,7 +826,7 @@ def segment_table(pg, rows, owners):
             m = re.match(r'(data-sort-value="[^"]*")\|(.*)', v, re.S)   # a cost cell carries its sort key as an attribute
             if m:
                 cls, v = f"{cls} {m.group(1)}", m.group(2)
-            t.append(f'|{cls}|{v}')   # an empty cell stays blank, no dash (Baird 2026-11-10)
+            t.append(f'|{cls}|{v if v else ("" if i == 0 else "–")}')
     if est:
         t += ['|- class="sortbottom col-route col-details"', f'|colspan="{len(keep) + 2}"|{EST_NOTE}']
     t += ["|}", "</div>"]
@@ -1749,7 +1749,7 @@ def color_background_status(pg, kept):
         return mo.group(1) + (status_dot(pg, word.get(st, st)) + st if st and st != "–" else st)
 
     body = re.sub(r"(?m)(^\|-\s*\n\|[^\n]*\n\|)([^\n]*)$", dot, tm.group(1))
-    # a Background cell holding only a dash (older builds) goes blank: empty cells carry no dash (Baird 2026-11-10)
+    # a Background cell holding only a dash (older builds) goes blank: an empty Background cell carries no dash, other empty cells keep theirs (Baird 2026-11-10)
     body = re.sub(r"(?m)^\|\n[–-]\s*$", "|", body)
     return kept[:tm.start(1)] + body + kept[tm.end(1):]
 
