@@ -313,10 +313,17 @@ def intro(pg, rows, tracker):
     return s
 
 
+# Click-to-sort is off (Baird 2026-11-10): a "sortable" class adds jquery.tablesorter to the page's script bundle, and
+# gem.wiki's Cloudflare answers that bundle with a 403 challenge for ordinary visitors, so the map and every other
+# script on the page never load. MediaWiki adds the sorter whenever "sortable" appears anywhere in the page HTML, so the
+# "unsortable" column classes go too. Turn back on once the firewall lets that load.php request through.
+SORTABLE = False
+
+
 def table(num_, title, header, body, caption="", collapsed=False, sortable=False, footnote=""):
     # every column is shown on every page, empty or not, so the tables read the same on every page (Baird 2026-11-08)
     keep = list(range(len(header)))
-    cls = "wikitable" + (" sortable" if sortable and len(body) > 1 else "") + (" mw-collapsible mw-collapsed" if collapsed else "")
+    cls = "wikitable" + (" sortable" if SORTABLE and sortable and len(body) > 1 else "") + (" mw-collapsible mw-collapsed" if collapsed else "")
     t = [f"==== '''Table {num_}:''' {title} ====", "", f'{{| class="{cls}"']
     t.append("|+" + (f" {caption}" if caption else ""))
     t += [f"!{header[i]}" for i in keep]
@@ -773,12 +780,12 @@ def segment_table(pg, rows, owners):
     t += [f'<div id="seg-{g}"></div>' for g in groups + ["all"]]
     t += ['<div class="gem-segments">',
           '<div class="gem-segtabs">' + " ".join(f"[[#seg-{g}|{SEG_TAB_LABEL[g]}]]" for g in groups + ["all"]) + "</div>",
-          '{| class="wikitable sortable"',
+          '{| class="wikitable' + (' sortable"' if SORTABLE else '"'),
           "|+ " + "".join(f'<span class="cap-{g}">{c}</span>' for g, c in caps.items() if c and (g == "all" or g in groups)),
           "!#", "!Segment"]   # a running number counts the segments (Baird 2026-11-08)
     for i in keep:
         h, gs, uns = cols[i]
-        t.append(f'!class="{"unsortable " if uns else ""}{" ".join("col-" + g for g in gs)}"|{h}')
+        t.append(f'!class="{"unsortable " if uns and SORTABLE else ""}{" ".join("col-" + g for g in gs)}"|{h}')
     for n, ((lab, cells), r) in enumerate(zip(body, rows), 1):
         pid = r["ProjectID"]
         # each segment name is an anchor, and links down to its Background row when it has one (Baird 2026-11-06)
@@ -808,7 +815,7 @@ def location(pg, rows, tab, tabbed=False):
         # gets it too, open and with no route picture, since the map sits right below (Baird 2026-11-06)
         shapes = shape_cells(pg, rows) if len(rows) > 1 else {}
         body = [([shapes[r["ProjectID"]]] if shapes else []) + [label(r, rows)] + route_cells(pg, r) for r in rows]
-        out += [table(tab(), "Route details", (['class="unsortable"|Route'] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
+        out += [table(tab(), "Route details", ([('class="unsortable"|Route' if SORTABLE else "Route")] if shapes else []) + ["Segment", "Start/end", "Countries/areas"], body,
                           sortable=True)]   # always open, never collapsed (Baird 2026-11-08)
     m, npts = map_block(pg, rows)
     out += (["", m] if len(out) > 1 else [m])
