@@ -1751,6 +1751,9 @@ def unlink_missing(pg, kept):
     return _WIKILINK.sub(fix, kept)
 
 
+MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
 def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     rows = order(rows)
@@ -1806,6 +1809,11 @@ def build(name, rows, owners, live, tracker):
     # no categories on a page; category lines in kept text are dropped too (Baird 2026-11-08)
     strip_cat = lambda t: re.sub(r"\n*\[\[\s*Category\s*:[^\]]+\]\]", "", t).strip()
     kept, extra_ar = strip_cat(kept), strip_cat(extra_ar)
+    # CS1 reads date=2026-08 as an abbreviated year range and files the page under a visible category
+    # (Transco, 2026-11-10); a year-month cite date is written out as "August 2026"
+    cs1_date = lambda t: re.sub(r"(\|\s*date\s*=\s*)(\d{4})-(0[1-9]|1[0-2])(?=\s*[|}])",
+                                lambda m: f"{m.group(1)}{MONTH_NAMES[int(m.group(3)) - 1]} {m.group(2)}", t)
+    kept, extra_ar = cs1_date(kept), cs1_date(extra_ar)
     extra_ar = "\n\n".join(b for b in re.split(r"\n\n(?====)", extra_ar) if b.strip() and "\n" in b.strip())
     tail = ["==Articles and resources==", "", "===References===", "<references />", ""]
     if extra_ar:
