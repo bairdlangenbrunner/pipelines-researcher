@@ -14,6 +14,10 @@ import network_pages as N  # noqa: E402
 
 G, GW, REPO, H = N.G, N.GW, N.REPO, N.H
 TITLE = N.OVERVIEW_PAGE
+# Mainland China's 22 provinces and five autonomous regions, named as the network registry names them.
+PROVINCES = ["Anhui", "Fujian", "Gansu", "Guangdong", "Guizhou", "Hainan", "Hebei", "Heilongjiang", "Henan", "Hubei",
+             "Hunan", "Jiangsu", "Jiangxi", "Jilin", "Liaoning", "Qinghai", "Shaanxi", "Shandong", "Shanxi", "Sichuan",
+             "Yunnan", "Zhejiang", "Guangxi", "Inner Mongolia", "Ningxia", "Tibet", "Xinjiang"]
 
 
 def kind(name):
@@ -36,23 +40,29 @@ def build(s, nets, df):
     allrows = [r for n in names for r in rows[n]]
     n_prov = sum(kind(n) == "Provincial network" for n in names)
     n_muni = sum(kind(n) == "Municipal network" for n in names)
+    have_prov = {n.replace(" Provincial Gas Network", "") for n in names if kind(n) == "Provincial network"}
+    missing = [p for p in PROVINCES if p not in have_prov]
+    if not missing:
+        gap = "Every province and autonomous region has one."
+    elif len(missing) == 1:
+        gap = f"{missing[0]} is the only one without a provincial network."
+    else:
+        gap = f"{G.join_list(missing)} are the only ones without a provincial network."
 
-    lead = (f"'''{TITLE}''' are the groups Global Energy Monitor uses to sort China's gas pipelines. China has built gas "
+    lead = (f"'''{TITLE}''' are the groups Global Energy Monitor (GEM) uses to sort China's gas pipelines. China has built gas "
             "pipelines on a vast scale, and these groups make the buildout easier to follow. They are GEM's own way of "
             "organizing the pipelines, not official Chinese networks.")
     how = ["==How pipelines are grouped==",
            "Every gas pipeline in China belongs to one network. There are five kinds:",
-           f"* '''Provincial gas networks.''' Pipelines that a province builds, or that run within one province or autonomous "
-           f"region. There are {N.num(n_prov)}, one for each province or region with gas pipelines.",
-           f"* '''Municipal gas networks.''' The same for the {N.num(n_muni)} cities governed directly by the central government: "
+           f"* '''Provincial gas networks:''' Pipelines that a province builds, or that run within one province or autonomous "
+           f"region. There are {N.num(n_prov)}, one for each province or region with gas pipelines. {gap}",
+           f"* '''Municipal gas networks:''' The same for the {N.num(n_muni)} cities governed directly by the central government: "
            + G.join_list([n.replace(" Municipal Gas Network", "") for n in names if kind(n) == "Municipal network"]) + ".",
-           f"* '''{lk('China National Gas Pipelines')}.''' {N.GROUPING_SCOPE['China National Gas Pipelines'][0].upper()}"
+           f"* '''{lk('China National Gas Pipelines')}:''' {N.GROUPING_SCOPE['China National Gas Pipelines'][0].upper()}"
            f"{N.GROUPING_SCOPE['China National Gas Pipelines'][1:]}.",
-           f"* '''{lk('China International Gas Pipelines')}.''' Gas pipelines that cross China's borders.",
-           f"* '''{lk('China Interprovincial Gas Pipelines')}.''' Gas pipelines that cross provincial borders but belong to "
-           "neither a provincial network nor the national trunk system.",
-           "",
-           "All segments of a pipeline belong to the same network."]
+           f"* '''{lk('China International Gas Pipelines')}:''' Gas pipelines that cross China's borders.",
+           f"* '''{lk('China Interprovincial Gas Pipelines')}:''' Gas pipelines that cross provincial borders but belong to "
+           "neither a provincial network nor the national trunk system."]
     t = ["==Networks==",
          '{| class="wikitable sortable"', H + "Network", H + "Kind", H + "Pipelines", H + "Segments",
          H + "Length", H + "Status"]
