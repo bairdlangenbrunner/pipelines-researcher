@@ -37,10 +37,10 @@ REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 sys.path.insert(0, os.path.join(REPO, "..", "goit-ggit-data-ops", "gem-wiki"))
-os.chdir(REPO)  # build_wiki_pages reads data/ paths relative to the repo
+os.chdir(REPO)  # wiki_common reads data/ paths relative to the repo
 
 import _common as C  # noqa: E402
-import build_wiki_pages as B  # noqa: E402  (urls, ref_title, coords_of: shared with the hand-built pages)
+import wiki_common as B  # noqa: E402  (urls, ref_title, coords_of, route_note: shared by the page scripts)
 import gemwiki as GW  # noqa: E402
 
 from shapely.geometry import LineString, MultiLineString  # noqa: E402

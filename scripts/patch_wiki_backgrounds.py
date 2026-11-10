@@ -9,11 +9,11 @@ dormancy sentence; the dormancy sentence stays after the new text. Dry run write
 With --post: re-reads the live page, skips on any change since planning, saves, purges, parse-checks the map.
 """
 import json, re, sys, time, os
-sys.path.insert(0, 'scripts'); sys.path.insert(0, '../goit-ggit-data-ops/gem-wiki')
+sys.path.insert(0, 'scripts'); sys.path.insert(0, 'wiki/scripts'); sys.path.insert(0, '../goit-ggit-data-ops/gem-wiki')
 import pandas as pd
-import build_wiki_pages as B
+import wiki_common as B
 import gemwiki as g
-from wiki_save import save as wiki_save_save  # same scripts/ path build_wiki_pages comes from
+from wiki_save import save as wiki_save_save
 
 drafted_path, man_path, outdir = sys.argv[1:4]
 POST = '--post' in sys.argv
