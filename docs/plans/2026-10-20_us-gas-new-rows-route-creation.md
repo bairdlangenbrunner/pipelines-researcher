@@ -36,7 +36,7 @@ Precedent: P7814 Decatur Lateral was applied 2026-10-15 from an oilandgaswatch r
 - Texas RRC pipeline layer (entry exists, URL to fill): the 33 Texas-only rows, intrastate lines and ET, Atmos, Enterprise and Kinder Morgan Texas segments.
 - BOEM pipeline layer (entry exists, URL to fill): the four offshore gathering rows (Okeanos, Manta Ray, Cleopatra, Canyon).
 - MassGIS MORIS HubLine arc layer: P8091's own status ref is its metadata page.
-- OSM Overpass is NOT used in this pass (Baird 2026-10-20: OSM is not trusted; no fallback to it).
+- OSM Overpass is NOT used in this pass (Baird 2026-10-20: OSM is not trusted; no fallback to it). Exception (Baird 2026-11-05): an OSM line may be used when it is explicitly high resolution and much better than every other available source, for example a named, tagged way that matches the company map far more finely than a trace could. Record the comparison against the best non-OSM source in PROVENANCE.md. First use: P4457 Lowman.
 
 GulfPub (rung 1) has 10 US gas features and is not worth running.
 
@@ -54,7 +54,7 @@ GulfPub (rung 1) has 10 US gas features and is not worth running.
 1. Tier order A, B, C. The old tier C was split: operating rows stay in scope (C, 180 rows); cancelled, blank and other-status rows are tier D (13 rows) and are not in this pass.
 2. oilandgaswatch geometry is accepted as a route source at its own grade: High or Medium becomes `RouteAccuracy = medium`, Low or Unknown becomes `low`, `Route [ref]` is the record page. Low grades are not re-digitized from the underlying filing unless a better map turns up during the hunt anyway. The 22 direct and part matches carry this decision in `inventory.csv` already.
 3. The five tier X rows get `RouteType = Capacity expansion only` where blank (only P8310 is blank) and nothing else.
-4. No OSM in this pass. ODbL is the Open Database License, OSM's share-alike license; the question is moot because OSM is not a trusted source for this work.
+4. No OSM in this pass, except under the 2026-11-05 exception above (explicitly high resolution and much better than the alternatives). ODbL is the Open Database License, OSM's share-alike license; credit OpenStreetMap contributors when an OSM line is used.
 5. The review surface for step 3 is an artifact gallery, one card per row, decisions written back to `inventory.csv`.
 
 Execution is handed to a cheaper model: `notes/handoff-2026-10-20-us-gas-new-rows-route-creation.md` is the self-contained brief for that session.

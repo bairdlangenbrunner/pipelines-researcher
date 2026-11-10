@@ -383,12 +383,13 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-datacenter-tags-20261016` [update] — rows=10 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 10
 - `staging/update-datacenter-tags-loose-20261016` [update] — rows=17 fills=17 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 17
 - `staging/update-datacenter-tags-powerplant-20261019` [update] — rows=11 fills=11 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 11
+- `staging/update-dormancy-fixes-20261108` [update] — rows=2 fills=4 updates=0 status-pending=1 refs(none) routes=0 new(none) decided —
 - `staging/update-followups-20261014` [update] — rows=6 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-km-to-mi-20261009` [update] — rows=7 fills=7 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 7
 - `staging/update-km-to-mi-20261106` [update] — rows=101 fills=101 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 2a/0h/0r/0s of 101
 - `staging/update-nextera-20261105` [update] — rows=3 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=3, REF_UNSUPPORTED=2) routes=0 new(none) decided 0a/0h/0r/0s of 4
 - `staging/update-owner-parents-20261020` [update] — rows=24 fills=37 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 37
-- `staging/update-p2607-p0145-20261106` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(UNRESOLVED=1) routes=0 new(none) decided 0a/0h/0r/0s of 4
+- `staging/update-p2607-p0145-20261106` [update] — rows=2 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 1a/0h/0r/0s of 5
 - `staging/update-p5905-proposal-20261008` [update] — rows=1 fills=1 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 1
 - `staging/update-p7814-parent-20261008` [update] — rows=1 fills=5 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 5
 - `staging/update-p7833-south-mississippi-20261102` [update] — rows=1 fills=8 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 9
@@ -399,7 +400,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/update-stale-lines-20261014` [update] — rows=3 fills=6 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `staging/update-state-fixes-20261014` [update] — rows=20 fills=20 updates=0 status-pending=0 refs(none) routes=0 new(none) decided 5a/0h/0r/0s of 20
 - `staging/update-transco-owners-20261107` [update] — rows=2 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 2
-- `staging/update-vng-interconnect-merge-20261107` [update] — rows=2 fills=4 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 5
+- `staging/update-vng-interconnect-merge-20261107` [update] — rows=2 fills=5 updates=0 status-pending=0 refs(REFS_ADDED=1) routes=0 new(none) decided 0a/0h/0r/0s of 6
 - `deliverables/US_gas_datacenter_monitor_2026-10-18.xlsx`
 - `deliverables/US_gas_datacenter_monitor_2026-10-18_watch.csv`
 - `deliverables/US_gas_datacenter_monitor_2026-10-19.xlsx`

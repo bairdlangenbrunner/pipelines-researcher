@@ -84,6 +84,9 @@ def purge_until_ok(s, title, tries=3):
 
 def save(s, title, text=None, summary='', **kw):
     """gemwiki.edit_page + purge + map check. The session must be logged in. Returns the edit dict plus 'map'."""
+    if text and '~~~' in re.sub(r'(?s)<nowiki>.*?</nowiki>', '', text):
+        # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
+        raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     if r.get('result') == 'Success' and 'nochange' not in r:

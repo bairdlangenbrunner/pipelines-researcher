@@ -1,0 +1,39 @@
+{
+ "P4457": {
+  "root_source": {
+   "name": "Route map on the archived Lowman Pipeline project page (Wayback snapshot of July 13, 2023)",
+   "url": "https://web.archive.org/web/20230713140710/https://www.lowmanpipeline.com/project.html",
+   "image": "lowman-map.jpeg, 1008 by 417 pixels; the detail map on the left half shows the line in blue",
+   "fetched": "2026-11-05",
+   "local_copy": "maps/lowman_company_map_20230713.jpg"
+  },
+  "parent_artifact": "traces/trace.json (128 pixel points: centerline of the blue band, thinned at 4x size, resampled every 2 px and smoothed; plant dot center added as the last point; traces/trace_band.py)",
+  "method": "traced (route-creation rung 3)",
+  "georef": {
+   "tool": "scripts/georef.py",
+   "order": 1,
+   "n_gcps": 5,
+   "rmse_km": 0.192,
+   "loo_rmse_km": 0.544,
+   "max_residual_km": 0.243,
+   "gcps": "traces/gcps.json (county polygon vertices from the US Census 2023 cartographic boundary counties 1:20m file)"
+  },
+  "cross_checks": [
+   {"name": "Alabama Public Service Commission affidavit filing, docket 32978", "url": "https://www.pscpublicaccess.alabama.gov/pscpublicaccess/ViewFile.aspx?Id=551e03df-819c-494d-bbab-c36f60b16006", "local_copy": "maps/psc_docket_32978_affidavit_filing.pdf", "result": "about 51 miles of 16 inch pipe from near Butler, Choctaw County, to the Lowman Energy Center near Leroy, Washington County"},
+   {"name": "EIA plant 56 location for Lowman Energy Center, as shown by interconnection.fyi", "url": "https://www.interconnection.fyi/eia/plant/56", "result": "plant at 31.488, -87.911; traced end is 0.46 km away"},
+   {"name": "OpenStreetMap way 1282145901, comparison overlay only, not a source and not staged", "result": "largest gap between the traced line and the OSM line is 1.5 km, average 0.2 km"}
+  ],
+  "checks": {
+   "traced_length_km": 81.5,
+   "sheet_length_km": 86.9,
+   "length_ratio": 0.938,
+   "start": "Choctaw County, Alabama, near the Mississippi state line (32.0593, -88.3780)",
+   "end": "Lowman Energy Center, Leroy, Washington County, Alabama (31.4920, -87.9120)"
+  },
+  "accuracy_cap": "medium",
+  "qc_gate": "validate_route_candidate.py PASS (length ratio 0.938, no warnings)",
+  "created": "2026-11-05",
+  "creator": "CB",
+  "revised": "2026-11-05 (first version rested on OSM, replaced after the 2026-10-20 ruling that OSM is not a trusted source for US gas routes)"
+ }
+}

@@ -1,0 +1,19 @@
+# Route genealogy — P8161 Florida Southeast Connection Pipeline, Main Line
+
+The candidate route `candidate_routes/P8161.geojson` traces back to one source: part 0 of the Oil and Gas Watch record for the Southeast Market Pipeline Project, https://oilandgaswatch.org/pipeline/3360 (fetched 2026-10-20 through the site's data interface in the earlier new-rows batch, and reused here). The record holds the Sabal Trail, Hillabee Expansion and Florida Southeast Connection routes as separate parts. The site grades it medium and says it was georeferenced from Federal Energy Regulatory Commission filings dated 2014. Baird ruled on 2026-10-20 that Oil and Gas Watch geometry is accepted at its own grade, so the suggested RouteAccuracy is medium.
+
+| Step | File | What it is |
+|---|---|---|
+| Source layer | `fetched_layers/ogw_3360_P8161.geojson` | the 12 parts of record 3360; part 0 is 126.5 miles and is this pipeline |
+| Candidate | `candidate_routes/P8161.geojson` | part 0 only, 203.3 km against 126 miles (202.8 km) on the sheet, ratio 1.002 |
+| Checks | `candidates.json`, `staged_resolutions.json` | the validation gate passed with no warnings |
+
+What was checked. The line starts at the Central Florida Hub near Intercession City and ends near the Martin Clean Energy Center. Its start is about 1 meter from the Sabal Trail route already in the routes repository (P0249), which is where the two systems join. The 2014 Federal Energy Regulatory Commission application notice describes about 126 miles from a Sabal Trail connection near Intercession City to the Martin plant near Indiantown: https://www.govinfo.gov/content/pkg/FR-2014-10-24/pdf/2014-25325.pdf. The December 2015 final environmental impact statement notice gives 126.3 miles of 30 and 36 inch pipe: https://www.gpo.gov/fdsys/pkg/FR-2015-12-24/html/2015-32402.htm.
+
+OpenStreetMap comparison only, not staged. OpenStreetMap carries a Florida Southeast Connection line of 202.8 km that lies within about 50 meters of the candidate at 11 sampled points. It looks to come from the same filings, so it is not an independent check, and it was not used for the route.
+
+Not done. The FERC final environmental impact statement route maps were not traced. The Oil and Gas Watch geometry already came from those filings, and a hand trace of the same maps would be less exact. A sponsor map was not found: the company site floridasoutheastconnection.com is a JavaScript page and gave nothing to read.
+
+Why the company now says 169 miles. NextEra's landowner page calls the line about 169 miles: https://www.nexteraenergyresources.com/landowners/pipelines.html. The sheet's 126 miles is the original main line. Two later additions account for the rest. The Okeechobee Lateral is about 5.2 miles of 20 inch pipe, approved by FERC in 2018 (Federal Register notice https://www.gpo.gov/fdsys/pkg/FR-2018-02-23/html/2018-03715.htm). The Riviera Beach Lateral is about 38 miles of existing pipe that Florida Southeast Connection asked in March 2018 to acquire from Florida Power & Light and fold into its system. That 38 miles is quoted from the application notice on https://wwals.net/2018/04/02/fpl-wants-martin-riviera-pipeline-folded-into-fsc/, a local advocacy site, and a primary FERC copy was not confirmed. 126.3 plus 5.2 plus 38 is about 169.5. The laterals are not part of this route and are not in the sheet's 126 miles.
+
+Owner and operator, noted only and not staged. The legal entity is Florida Southeast Connection, LLC, which asked FERC to "construct, own and operate" the line (https://www.govinfo.gov/content/pkg/FR-2014-10-24/pdf/2014-25325.pdf). A February 2016 NextEra press release calls it a wholly owned subsidiary of NextEra Energy, Inc. (Wayback copy: https://web.archive.org/web/2016/https://www.investor.nexteraenergy.com/news-and-events/news-releases/2016/02-03-2016-202012609). No source found names a separate operator, so the operator is the same company.
