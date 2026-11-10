@@ -49,7 +49,7 @@ def build(s, nets, df):
     else:
         gap = f"{G.join_list(missing)} are the only ones without a provincial network."
 
-    lead = (f"'''{TITLE}''' are the groups Global Energy Monitor (GEM) uses to sort China's gas pipelines. China has built gas "
+    lead = (f"'''{TITLE}''' are the groups Global Energy Monitor (GEM) uses to sort China's gas pipelines. China is building gas "
             "pipelines on a vast scale, and these groups make the buildout easier to follow. They are GEM's own way of "
             "organizing the pipelines, not official Chinese networks.")
     how = ["==How pipelines are grouped==",
