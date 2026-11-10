@@ -2,8 +2,8 @@
 """Keep the `Wiki overhaul (Nov 2026)` tab of the backend sheet listing every gem.wiki page the agent has saved.
 
 One row per page: pipelinename (the page title), wiki (its URL), last updated (full timestamp, Eastern, `2026-11-10 17:41 ET`), reason
-(plain words for what the edits did, newest first), new design (`yes, <timestamp of the page's latest revision>`
-when the saved page has the current layout, else `no` with the gaps in out of date). Baird asked for it 2026-11-09 and gave standing permission
+(plain words for what the edits did, newest first), new design (`yes` when the saved page has the current layout,
+else `no` with the gaps in out of date). Baird asked for it 2026-11-09 and gave standing permission
 to update this one tab on every wiki save; it covers that tab only, upsert only, nothing else in the sheet.
 
 wiki_save.save() calls record() after every save, so nothing needs to be done by hand. A failed sheet write
@@ -109,12 +109,11 @@ def stamp(dt):
     return dt.astimezone(ET).strftime('%Y-%m-%d %H:%M ET')
 
 
-def design_cells(text, when=None):
-    """when: the timestamp text of the revision checked; a page in the new design reads 'yes, <when>'."""
+def design_cells(text, when=None):   # when: unused, kept for callers
     g = design_gaps(text)
     if g is None:
         return ['n/a (redirect)', '']
-    return [f'yes, {when}' if when else 'yes', ''] if not g else ['no', '; '.join(g)]
+    return ['yes', ''] if not g else ['no', '; '.join(g)]
 
 
 def is_agent_summary(summary):
