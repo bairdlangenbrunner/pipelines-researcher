@@ -50,6 +50,15 @@ R = [
  rec(ML, "Start [ref]", {"StartYear1": "1954"}, [PHMSA], "medium",
      "Start year 1954. A PHMSA special permit analysis gives 1954 as the construction year of most Mainline 100 segments. No source gives the date of first gas, so this is inferred from the end of construction. Mainline 200 (1958 to 1963) and Mainline 300 (1968 to 1969) were added later."),
 ]
+TCREL = "https://www.tcenergy.com/announcements/2023-07-24-tc-energy-partners-with-global-infrastructure-partners-through-$5.2-billion-sale-of-a-40-per-cent-equity-interest-in-columbia-gas-and/"
+TCSEC = "https://www.sec.gov/Archives/edgar/data/1232384/000123238423000058/a07242023-tcenergypartne.htm"
+NOTE[TCREL] = "TC Energy news release of July 24, 2023. It sells a 40 percent interest in 'its Columbia Gas Transmission, LLC (Columbia Gas) and Columbia Gulf Transmission, LLC (Columbia Gulf) systems', which go into a new joint venture with Global Infrastructure Partners. TC Energy remains the operator."
+NOTE[TCSEC] = "The same TC Energy news release of July 24, 2023, as filed with the SEC on Form 6-K. Same wording on Columbia Gulf Transmission, LLC."
+R.append({**base("P6533", 5187, "Main Line"), "tab": "operators_owners", "ref_col": "Owner [ref]", "value_cols": ["Owner1"],
+          "primary_value_col": "Owner1", "values": {"Owner1": "Columbia Gulf Transmission LLC"}, "primary_value": "Columbia Gulf Transmission LLC",
+          "current_value": "TC Energy Corp", "current_ref": "https://www.tcenergy.com/operations/natural-gas/columbia-gulf-transmission-pipeline/",
+          "class_in": "FILL", "class_out": "REFS_ADDED", "proposed_refs": [TCREL, TCSEC], "verifications": ver([TCREL, TCSEC]), "tier": "high",
+          "researcher_notes": "Owner changed from TC Energy Corp to Columbia Gulf Transmission LLC, the company that holds the pipeline. TC Energy is its parent. A TC Energy news release from July 2023 names the system as Columbia Gulf Transmission, LLC, when TC Energy sold 40 percent of it to Global Infrastructure Partners. The three laterals on this pipeline already name Columbia Gulf Transmission LLC. The Operator stays TC Energy Corp, since the same release says TC Energy remains the operator."})
 meta = {"commodity": "gas", "mode": "update",
         "scope": {"csv": "GGIT_gas_snapshot_20261109.csv", "country": "United States", "province": None,
                   "include_pids": ["P6533", "P8124", "P8125", "P8126"], "rows": 4, "project_ids": 4},
