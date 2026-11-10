@@ -87,7 +87,7 @@ def mix_words(rows):
 
 def length_cell(rows):
     k = sum(km(r) for r in rows)
-    return f'data-sort-value="{k:.0f}"|{k:,.0f} km' if k else "–"
+    return f'data-sort-value="{k:.0f}"|{k:,.0f} km' if k else ""
 
 
 def page_of(rows):
@@ -227,7 +227,7 @@ def build_network(s, entry, df, old_text=""):
          "Each pipeline or group of pipelines in the network has its own page with details.",
          '{| class="wikitable"', H + "Pipeline", H + "Local name", H + "Segments", H + "Length", H + "Status"]
     for p, rs in pipes.items():
-        t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs) or '–'}",
+        t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs)}",
               f"|{len(rs)}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
     t += ["|}"]
     # No Background section (Baird 2026-11-08): a network page holds no history. Its background goes onto the member
