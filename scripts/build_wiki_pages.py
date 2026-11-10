@@ -132,7 +132,17 @@ def map_block(pids, maxpts=60, status=None, label=' '):
     shown = sorted({status[p] for p, _ in segs if p in status}, key=lambda x: STATUS_ORDER.index(x) if x in STATUS_ORDER else 99)
     if shown:   # a legend under every map, one segment or many (Baird 2026-11-09)
         out += '\n' + legend_html(shown) + '\n'
-    return out
+    return out + '\n' + route_note() + '\n'
+
+# a note under every map's legend, on every page with a map: the drawn routes are simplified, the full ones are in
+# the tracker's download (Baird 2026-11-10). Oil pages link GOIT's download, gas pages GGIT's.
+DOWNLOAD_URL = {'gas': 'https://globalenergymonitor.org/projects/global-gas-infrastructure-tracker/',
+                'oil': 'https://globalenergymonitor.org/projects/global-oil-infrastructure-tracker/'}
+NOTE_START = "Note: some pipeline routes are simplified"
+
+def route_note(tracker='gas'):
+    return (f"{NOTE_START} for easier visualization on these pages. "
+            f"Full routes are available for download [{DOWNLOAD_URL[tracker]} here].")
 
 def legend_html(statuses, tracker='gas'):
     phrase = {'construction': 'under construction'}
@@ -361,7 +371,7 @@ def wiki_key(u):
     from urllib.parse import unquote
     return unquote(str(u)).split('gem.wiki/')[-1].replace('_', ' ').strip().lower()
 
-LEGEND_RE = r'(?:\n*<span style="color:#[0-9a-f]{6}">■</span>[^\n]*\n?)?'
+LEGEND_RE = r'(?:\n*<span style="color:#[0-9a-f]{6}">■</span>[^\n]*\n?)?(?:\n*' + re.escape(NOTE_START) + r'[^\n]*\n?)?'
 
 def update_map(text, pids, status=None, label=None):
     # an existing page's main map (the first display_map) is redrawn from the routes repo for every pipeline on the page,

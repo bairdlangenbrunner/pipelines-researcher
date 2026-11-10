@@ -175,7 +175,7 @@ def map_section(pg, members, connected):
     if connected:
         legend += ' &nbsp; <span style="color:#8f8f8e;opacity:.5">━</span> Connected pipeline (lighter line, not counted)'
     return (f'{text}\n\n<templatestyles src="{G.MAP_STYLES_PAGE}" />\n'
-            f"{{{{#display_map:\n|lines={';'.join(edges + lines)}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}\n\n{legend}")
+            f"{{{{#display_map:\n|lines={';'.join(edges + lines)}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}\n\n{legend}\n\n{G.B.route_note(pg.tracker)}")
 
 
 def region_of(entry):

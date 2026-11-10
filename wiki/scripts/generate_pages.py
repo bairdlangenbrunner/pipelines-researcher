@@ -444,15 +444,22 @@ def map_block(pg, rows):
     mid = f"{clat:.5f}, {clon:.5f}"
     # a sketch of the same lines at the same center and zoom sits under the map until Google draws over it, so the
     # routes show the moment the page loads instead of three seconds later (Baird 2026-11-10; see map_sketch_svg)
-    sk = sketch_file(pg.name)
-    pg.shapes[sk] = map_sketch_svg(drawn, clat, clon, zoom)
+    # only a big map gets one: SKETCH_MIN_SEGS mapped segments or SKETCH_MIN_PTS drawn points (Baird 2026-11-10). A small
+    # map loads fast enough without it, and every sketch is one more file to upload and keep current
+    ph = ""
+    if len(mapped) >= SKETCH_MIN_SEGS or len(allp) >= SKETCH_MIN_PTS:
+        sk = sketch_file(pg.name)
+        pg.shapes[sk] = map_sketch_svg(drawn, clat, clon, zoom)
+        ph = f'<div class="gem-mapph">[[File:{sk}|{SKETCH_W}px|link=|alt=]]</div>'
+    pg.log.append(f"map sketch: {'yes' if ph else 'no'} ({len(mapped)} mapped segments, {len(allp)} points)")
     return ((f'{text}\n\n' if text else "") + f'<templatestyles src="{MAP_STYLES_PAGE}" />\n'
-            f'<div class="gem-mapwrap"><div class="gem-mapph">[[File:{sk}|{SKETCH_W}px|link=|alt=]]</div>\n'
-            f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}\n</div>{legend}",
+            f'<div class="gem-mapwrap">{ph}\n'
+            f"{{{{#display_map:\n|lines={body}|center={mid}|width=100%|height=400|type=map|zoom={zoom}}}}}\n</div>{legend}\n\n{B.route_note(pg.tracker)}",
             len(allp))
 
 
 SKETCH_W, SKETCH_H, SKETCH_LAND = 1600, 400, "#f1efea"   # wider than any content column, as tall as the map
+SKETCH_MIN_SEGS, SKETCH_MIN_PTS = 10, 500    # the maps big enough to get a sketch (see map_block)
 
 
 def sketch_file(page):
