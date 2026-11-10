@@ -730,7 +730,7 @@ _CSS_HEAD = """\
 .gem-anchor { display: inline-block; width: 0; height: 0; scroll-margin-top: 4.5em; }
 .gem-segments .gem-anchor { scroll-margin-top: 7em; }
 /* the Background table on the same pages: its own box, header fixed at the top */
-.gem-bgbox { overflow: auto; max-height: 80vh; }
+.gem-bgbox { overflow: auto; max-height: 80vh; clear: both; }   /* never beside a floated picture (Baird 2026-11-10) */
 .gem-bgbox table { margin: 0; }
 .gem-bgbox th { position: sticky; top: 0; z-index: 2; border-top: 0; box-shadow: inset 0 1px #a2a9b1, inset 0 -1px #a2a9b1; }
 .gem-bgbox .gem-anchor { scroll-margin-top: 3.5em; }   /* below the column header */
@@ -1339,6 +1339,126 @@ def media_key(markup):
     return re.sub(r"[\s_]+", " ", m.group(1)).strip().lower() if m else re.sub(r"\s+", " ", markup)
 
 
+ALIGN_OPTS = {"left", "right", "center", "centre", "none"}
+IMGROW_OPEN = '<div class="gem-imgrow" style="display:flex;flex-wrap:wrap;gap:0 1em;align-items:flex-start;clear:both">'
+
+
+def set_align(markup, align):
+    """A [[File:...]] link with its alignment option set to align (None drops it). Galleries and videos are returned
+    unchanged."""
+    if not MEDIA_OPEN.match(markup):
+        return markup
+    inner, parts, depth, cur, i = markup[2:-2], [], 0, "", 0
+    while i < len(inner):
+        two = inner[i:i + 2]
+        if two in ("[[", "{{"):
+            depth += 1; cur += two; i += 2; continue
+        if two in ("]]", "}}"):
+            depth -= 1; cur += two; i += 2; continue
+        if inner[i] == "|" and depth == 0:
+            parts.append(cur); cur = ""; i += 1; continue
+        cur += inner[i]; i += 1
+    parts.append(cur)
+    head, opts = parts[0], [o for o in parts[1:] if o.strip().lower() not in ALIGN_OPTS]
+    if align:
+        opts.insert(0, align)
+    return "[[" + "|".join([head] + opts) + "]]"
+
+
+def table_spans(txt):
+    """[(start, end)] of every top-level {| ... |} table in txt."""
+    out, depth, start = [], 0, 0
+    for m in re.finditer(r"(?m)^\s*(\{\||\|\})", txt):
+        if m.group(1) == "{|":
+            if depth == 0:
+                start = m.start()
+            depth += 1
+        elif depth:
+            depth -= 1
+            if depth == 0:
+                out.append((start, m.end()))
+    return out
+
+
+def layout_media(pg, kept):
+    """How pictures sit in Background (Baird 2026-11-10, Guangdong East and Pearl River Delta):
+    - a picture inside a table cell is centered in the cell;
+    - pictures outside a table wrap only with text, never beside a table: every Background table clears the floats
+      above it (the Background-table box through its stylesheet, any other table through an inline clear:both);
+    - a run of pictures on their own lines with no prose right after it sits side by side in one wrapping row
+      instead of a right-hand stack. Runs followed by prose keep floating so the text wraps around them.
+    Idempotent: rows an earlier run made are taken apart and decided again."""
+    # undo earlier rows
+    def unwrap(m):
+        return "\n".join(set_align(l, None) if MEDIA_OPEN.match(l.strip()) else l for l in m.group(1).split("\n"))
+    kept = re.sub(r"(?ms)^<div class=\"gem-imgrow\"[^>]*>\n(.*?)\n</div>$", unwrap, kept)
+    spans = table_spans(kept)
+    inside = lambda a: any(s <= a < e for s, e in spans)
+    n_center = 0
+    for a, b, mk in reversed(find_media(kept)):
+        if inside(a):
+            new = set_align(mk, "center")
+            if new != mk:
+                n_center += 1
+                kept = kept[:a] + new + kept[b:]
+    # inline clear on every table that is not the Background-table box's own (the stylesheet clears that box)
+    def clear(m):
+        line = m.group(0)
+        if "clear:" in line:
+            return line
+        if re.search(r'style="', line):
+            return re.sub(r'style="', 'style="clear:both;', line, count=1)
+        return line + ' style="clear:both"'
+    kept = re.sub(r'(?m)(?<!<div class="gem-bgbox">\n)^\{\|[^\n]*', clear, kept)
+    # pictures at the start or end of a prose line (outside tables) go onto lines of their own, so the run rules
+    # below decide them; a picture in the middle of a sentence stays where it is
+    spans = table_spans(kept)
+    for a, b, mk in reversed(find_media(kept)):
+        if inside(a):
+            continue
+        ls_, le = kept.rfind("\n", 0, a) + 1, kept.find("\n", b)
+        le = len(kept) if le < 0 else le
+        before, after = kept[ls_:a], kept[b:le]
+        strip_media = lambda x: re.sub(r"\s+", "", "".join(re.split("|".join(re.escape(m[2]) for m in find_media(x)) or "$^", x)))
+        if before.strip() and not strip_media(after):        # trailing: text, then only pictures to line end
+            kept = kept[:a].rstrip(" ") + "\n" + mk + kept[b:]
+        elif after.strip() and not strip_media(before):      # leading: only pictures, then text
+            kept = kept[:b] + "\n" + kept[b:].lstrip(" ")
+    spans = table_spans(kept)
+    # runs of whole-line pictures
+    lines = kept.split("\n")
+    media_line = lambda l: bool(l.strip()) and not re.sub(r"\s+", "", "".join(
+        l.replace(t, "") for _, _, t in [(0, 0, x[2]) for x in find_media(l)]).strip()) and bool(find_media(l))
+    def prose(l):
+        # running text a floated picture can wrap with: not a table, div, heading or comment line, and not a bare
+        # bold label (an old sub-heading kept as a line, such as Phase I on Pearl River Delta) once its refs are set aside
+        if not l.strip() or re.match(r"\s*(\{\||\||!|<div|</div>|=|<!--|__|\[\[\s*Category)", l):
+            return False
+        vis = re.sub(r"<ref[^>]*/>|<ref[^>]*>.*?</ref>", "", l).strip()
+        return bool(vis) and not re.fullmatch(r"'''[^']+'''[\s:.]*", vis)
+    out, i, n_rows = [], 0, 0
+    while i < len(lines):
+        if not media_line(lines[i]) or inside(sum(len(x) + 1 for x in lines[:i])):
+            out.append(lines[i]); i += 1; continue
+        j = i
+        while j < len(lines) and (media_line(lines[j]) or (not lines[j].strip() and j + 1 < len(lines) and media_line(lines[j + 1]))):
+            j += 1
+        nxt = next((l for l in lines[j:] if l.strip()), "")
+        run = [l for l in lines[i:j] if l.strip()]
+        if prose(nxt) and not media_line(nxt):
+            # text follows: the pictures float so it wraps around them (a centered or unaligned one would not)
+            fl = lambda l: set_align(l, "right") if re.search(r"\|\s*(center|centre|none)\s*(?=[|\]])", l) else l
+            out += [fl(l) if MEDIA_OPEN.match(l.strip()) else l for l in lines[i:j]]
+        else:
+            out += [IMGROW_OPEN] + [set_align(l.strip(), "none") if MEDIA_OPEN.match(l.strip()) else l for l in run] + ["</div>"]
+            n_rows += 1
+        i = j
+    kept = "\n".join(out)
+    if n_center or n_rows:
+        pg.log.append(f"pictures: {n_center} centered in table cells, {n_rows} picture rows set side by side")
+    return kept
+
+
 def gather_media(pg, kept, replaced, extra_ar):
     """Images, galleries and videos a person put anywhere but Background (above the map, in the lead, in a rebuilt
     section, under Articles and resources) move to the top of Background (Baird 2026-11-08, China–Russia East).
@@ -1893,6 +2013,7 @@ def build(name, rows, owners, live, tracker):
     kept = color_background_status(pg, kept)
     kept = fix_named_refs(pg, kept, live, gen)
     kept, extra_ar = gather_media(pg, kept, replaced, extra_ar)
+    kept = layout_media(pg, kept)
     # in Background, the human-kept zone, so the data team's generator also keeps them; never an Other sources section
     kept = add_sources(pg, kept, old_other + lost_refs(pg, replaced, gen + kept + extra_ar), gen + kept + extra_ar)
     # an Additional sources line right under a Background table gets an empty line above it, or it renders flush
