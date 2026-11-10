@@ -36,7 +36,7 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 
 **Single segment:**
 
-> '''«page name»''', also known as '''«OtherEnglishNames»''' (local name: '''«OtherLanguagePrimaryPipelineName»'''), is {a/an} {status phrase} {fuel phrase} pipeline {location phrase}.[ref: «Status [ref]»]
+> '''«page name»''' («OtherLanguagePrimaryPipelineName»), also known as '''«OtherEnglishNames»''', is {a/an} {status phrase} {fuel phrase} pipeline {location phrase}.[ref: «Status [ref]»]
 
 **Multiple segments:**
 
@@ -45,7 +45,7 @@ Counts from the 2026-11-06 snapshot: oil has 2,093 rows on 1,250 pages, with 305
 When every segment has the same status, the intro reads like a single-segment page, with no ref (Baird 2026-11-07, Kern River): "'''«page name»''' is {a/an} {status phrase} {fuel phrase} pipeline {location phrase}."
 
 **Logic:**
-- **Also known as:** List `«OtherEnglishNames»`, then `«OtherLanguageAlternativePipelineNames»`, split on commas and semicolons, each in bold. Leave out any name equal to the page name. Leave the clause out when the list is empty. The local name is `«OtherLanguagePrimaryPipelineName»` and is left out when blank.
+- **Also known as:** List `«OtherEnglishNames»`, then `«OtherLanguageAlternativePipelineNames»`, split on commas and semicolons, each in bold. Leave out any name equal to the page name. Leave the clause out when the list is empty. The local name is `«OtherLanguagePrimaryPipelineName»`, in plain parentheses right after the bold page name with no label, as GOGPT pages write it (Baird 2026-11-10), and is left out when blank.
 - **Status phrase:** taken from `«Status»`. `construction` becomes "under construction". `operating`, `proposed`, `shelved`, `cancelled`, `retired`, `mothballed` and `idled` stay as they are. Use "an" before a vowel sound.
 - **Fuel phrase:** On the gas tab, `gas` becomes "gas" and `gas and hydrogen` becomes "gas and hydrogen". On the oil tab, `oil` becomes "crude oil", `NGL` becomes "natural gas liquids (NGL)", `oil products (only)` becomes "oil products", `LPG` becomes "liquefied petroleum gas (LPG)", `CO2` becomes "carbon dioxide", and `condensate` and `naphtha (only)` become "condensate" and "naphtha". A combined value such as `oil, NGL` becomes "crude oil and NGL". Define an abbreviation only the first time it appears.
 - **Location phrase:** If every segment's `«CountriesOrAreas»` is one country, use "in «StartState/Province», «Country»". Drop the province when the start and end provinces differ, or when it is blank. If there are several countries, use "running from «StartCountryOrArea» to «EndCountryOrArea»". If the countries in between are known, add "through «middle countries»".

@@ -117,7 +117,9 @@ def local_name(s, page, rows):
     """The local name the pipeline's own page gives in its lead, else the commonest local name on its rows."""
     if page and page not in FORMER:
         try:
-            m = re.search(r"\(local name: '''(.*?)'''", GW.page_text(s, page) or "")
+            # old pages say "(local name: '''X''')", new ones "'''Name''' (X)" (GOGPT style, 2026-11-10)
+            m = (re.search(r"\(local name: '''(.*?)'''", GW.page_text(s, page) or "")
+                 or re.search(r"^'''[^'\n]+''' \(([^()\n]*[^\x00-\x7f][^()\n]*)\)", GW.page_text(s, page) or "", re.M))
             if m:
                 return m.group(1)
         except Exception:
@@ -278,8 +280,9 @@ def main():
         own = local_name(s, "", prow)
         q = "'" * 3
         alias = re.compile(r"(\n" + q + re.escape(former) + q + r")(?:, also known as " + q + r"[^\n]*?" + q + ","
-                           r"| \(local name: " + q + r"[^\n]*?" + q + r"\))")
-        ptext = alias.sub(lambda m: m.group(1) + (f" (local name: {q}{own}{q})" if own else ""), ptext, count=1)
+                           r"| \(local name: " + q + r"[^\n]*?" + q + r"\)"
+                           r"| \([^()\n]*[^\x00-\x7f][^()\n]*\))")
+        ptext = alias.sub(lambda m: m.group(1) + (f" ({own})" if own else ""), ptext, count=1)
         lead_end = re.search(r"(\n'''" + re.escape(former) + r"'''[^\n]*?\.)(?= |\n)", ptext)
         if lead_end and entry["PrimaryNetwork"] not in ptext:
             ptext = ptext[:lead_end.end()] + f" It is classified as part of the [[{entry['PrimaryNetwork']}]]." + ptext[lead_end.end():]

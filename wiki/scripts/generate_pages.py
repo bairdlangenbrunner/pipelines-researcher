@@ -277,13 +277,13 @@ def intro(pg, rows, tracker):
     joined = "" if not bold else bold[0] if len(bold) == 1 else (" and ".join(bold) if len(bold) == 2 else ", ".join(bold[:-1]) + ", and " + bold[-1])
     aka = (", also known as " + joined + ",") if names else ""
     local = rows[0]["OtherLanguagePrimaryPipelineName"].strip() if len(rows) == 1 else ""
-    local = f" (local name: '''{local}''')" if local else ""
+    local = f" ({local})" if local else ""   # GOGPT style: plain parentheses after the name, no label (Baird 2026-11-10)
     fuel, loc = fuel_phrase(rows, tracker), location_phrase(rows)
     # a page called a network is introduced as one: "is a ... pipeline network" (Baird 2026-11-08)
     kind = "pipeline network" if re.search(r"\bnetwork\b", pg.name, re.I) else "pipeline"
     if len(rows) == 1:
         st = STATUS_PHRASE.get(rows[0]["Status"], rows[0]["Status"])
-        s = f"'''{pg.name}'''{aka}{local} is {a_an(st)} {st} {fuel} {kind} {loc}.{pg.cite(rows[0]['Status [ref]'])}"
+        s = f"'''{pg.name}'''{local}{aka} is {a_an(st)} {st} {fuel} {kind} {loc}.{pg.cite(rows[0]['Status [ref]'])}"
     else:
         sts = []
         for r in rows:
@@ -293,10 +293,10 @@ def intro(pg, rows, tracker):
         rank = ["operating", "under construction", "proposed", "shelved", "cancelled", "idled", "mothballed", "retired"]
         sts.sort(key=lambda x: rank.index(x) if x in rank else 99)
         if len(sts) == 1:   # every segment has one status: say it like a one-row page (Baird 2026-11-07, Kern River)
-            s = f"'''{pg.name}'''{aka}{local} is {a_an(sts[0])} {sts[0]} {fuel} {kind} {loc}."
+            s = f"'''{pg.name}'''{local}{aka} is {a_an(sts[0])} {sts[0]} {fuel} {kind} {loc}."
         else:
             lst = join_list(sts)
-            s = f"'''{pg.name}'''{aka}{local} is {a_an(fuel)} {fuel} {kind} {loc} with segments that are {lst}."
+            s = f"'''{pg.name}'''{local}{aka} is {a_an(fuel)} {fuel} {kind} {loc} with segments that are {lst}."
     dorm = []
     for r in rows:
         if r["ShelvedCancelledType"] != "inferred":
