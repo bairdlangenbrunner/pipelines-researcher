@@ -1541,6 +1541,59 @@ def dormancy_into_background(pg, kept, rows):
     return dedupe_background(kept)
 
 
+def order_background(pg, kept, rows):
+    """Background follows the tables' segment order (Baird 2026-11-10, Columbia Gulf: Main Line came last under
+    Background but first in the tables). Subsections, or Background table rows on a tabbed page, that name a segment
+    are put in table order in the places such entries held; any other subsection ("Technical description") and the
+    text before the first subsection stay where they are."""
+    m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
+    if not m:
+        return kept
+    rank = {r["ProjectID"]: i for i, r in enumerate(rows)}
+    find = segment_matcher(rows)
+
+    def reorder(parts, pid_of):
+        slots = [i for i, x in enumerate(parts) if pid_of(x) in rank]
+        if len(slots) < 2:
+            return parts, False
+        seg = sorted((parts[i] for i in slots), key=lambda x: rank[pid_of(x)])
+        out = list(parts)
+        for i, x in zip(slots, seg):
+            out[i] = x
+        return out, out != parts
+
+    body = m.group(1)
+    tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", body)
+    if tm:
+        parts = re.split(r"(?m)(?=^\|-\s*$)", tm.group(1))
+        lead, items = (parts[0], parts[1:]) if parts and not parts[0].startswith("|-") else ("", parts)
+
+        def pid_of(x):
+            a = re.search(r'id="bg-(P\d+)"', x)
+            if a:
+                return a.group(1)
+            c = re.match(r"\|-\s*\n\|(?:style=\"[^\"]*\"\|)?([^\n]*)", x)
+            return find(BG_LINKED.sub(r"\1", c.group(1)).strip()) if c else None
+        items = [x if x.endswith("\n") else x + "\n" for x in items]
+        new, moved = reorder(items, pid_of)
+        if not moved:
+            return kept
+        body = body[:tm.start(1)] + lead + "".join(new) + body[tm.end(1):]
+    else:
+        heads = list(re.finditer(r"(?m)^===\s*([^=].*?)\s*===\s*$", body))
+        if len(heads) < 2:
+            return kept
+        lead = body[:heads[0].start()]
+        subs = [body[h.start():(heads[i + 1].start() if i + 1 < len(heads) else len(body))] for i, h in enumerate(heads)]
+        subs = [x.rstrip("\n") + "\n\n" for x in subs]
+        new, moved = reorder(subs, lambda x: find(re.match(r"===\s*(.*?)\s*===", x).group(1)))
+        if not moved:
+            return kept
+        body = lead + "".join(new)
+    pg.log.append("Background: entries put in the tables' segment order")
+    return kept[:m.start(1)] + body + kept[m.end(1):]
+
+
 def color_background_status(pg, kept):
     """Put the map-colored status dot before each status in the Background table; a re-run replaces the old dot."""
     tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", kept)
@@ -1801,6 +1854,7 @@ def build(name, rows, owners, live, tracker):
     # defines itself are reused above
     pg.defined |= {m.group(1).strip() for m in NAMED_DEF.finditer(kept)}
     kept = dormancy_into_background(pg, kept, rows)
+    kept = order_background(pg, kept, rows)
     kept = unlink_missing(pg, kept)
     kept = drop_empty_subsections(pg, kept)
     pg.status_conflicts = status_conflicts(pg, kept, rows)
