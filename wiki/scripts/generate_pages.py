@@ -1280,7 +1280,7 @@ def drop_data_bullets(pg, kept):
 MEDIA_OPEN = re.compile(r"\[\[\s*(?:File|Image|Media)\s*:", re.I)
 MEDIA_BLOCK = re.compile(r"<gallery\b.*?</gallery>|<video\b.*?</video>|<embedvideo\b.*?</embedvideo>|<youtube\b.*?</youtube>"
                          r"|\{\{\s*#(?:ev|evt|evu|evp|evl)\s*:.*?\}\}|\{\{\s*EmbedVideo\b.*?\}\}", re.I | re.S)
-OWN_MEDIA = re.compile(r"Route shape P\d+\.svg", re.I)   # the generator's own route-shape pictures
+OWN_MEDIA = re.compile(r"Route shape P\d+\.svg|Map sketch [^|\]]*\.svg", re.I)   # the generator's own route-shape and map-sketch pictures
 
 
 def find_media(txt):
@@ -1755,6 +1755,8 @@ def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
+    # a map sketch an earlier run moved into Background by mistake goes; it belongs only under the map (2026-11-10)
+    kept = re.sub(r"(?m)^[ \t]*\[\[\s*File\s*:\s*Map sketch [^\]]*\]\][ \t]*\n?", "", kept)
     kept = strip_background_numbers(unshade(kept))
     kept, gone = fold_expansions(pg, kept, rows)
     kept, gone2 = drop_data_bullets(pg, kept)
