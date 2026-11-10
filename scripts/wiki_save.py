@@ -34,7 +34,8 @@ save() previews the text first and refuses (CiteError) any page that would show 
 
 save() refuses any page that is not a pipeline page (Baird 2026-11-10: this repo edits pipeline wiki pages and
 nothing else): the title must be one the GOIT/GGIT snapshots name (Wiki cell, PipelineName, network columns) or one
-of the pipeline pages' own stylesheets. No override.
+of the pipeline pages' own stylesheets. No override. One narrow case passes: a redirect that already leads to a pipeline
+page through another redirect may be pointed straight at it (redirect_repair_ok).
 """
 import argparse, json, re, sys, time
 from datetime import datetime, timedelta, timezone
@@ -138,6 +139,22 @@ def check_pipeline_page(title):
     raise NotAPipelinePage(f'{title}: not a pipeline page in the GOIT/GGIT snapshots; this repo saves only pipeline pages')
 
 
+_REDIRECT_ONLY = re.compile(r'^\s*#REDIRECT\s*\[\[([^\]|#]+)(#[^\]|]*)?\]\]\s*((\[\[Category:[^\]]*\]\]\s*)*)$', re.I)
+
+
+def redirect_repair_ok(s, title, text):
+    """True when saving `text` on a non-pipeline title only shortens a redirect chain into a pipeline page
+    (Baird 2026-11-10, "Guangdong Gas Pipeline Network Phase I": a redirect to a redirect strands readers). The
+    page must already be a redirect, the chain it starts must end at a pipeline page, and the new text must be a
+    bare #REDIRECT to that same page (categories it already had may stay)."""
+    m = _REDIRECT_ONLY.match(text or '')
+    if not m or m.group(1).strip() not in pipeline_titles():
+        return False
+    q = _retry(lambda: g.get(s, action='query', titles=title, redirects=1, prop='info'))['query']
+    chain = q.get('redirects', [])
+    return bool(chain) and chain[-1]['to'] == m.group(1).strip()
+
+
 def _retry(fn, n=6, wait=10):
     last = None
     for _ in range(n):
@@ -182,7 +199,8 @@ def save(s, title, text=None, summary='', **kw):
     if text and '~~~' in re.sub(r'(?s)<nowiki>.*?</nowiki>', '', text):
         # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
         raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
-    check_pipeline_page(title)
+    if not redirect_repair_ok(s, title, text):
+        check_pipeline_page(title)
     relinked = []
     if text and not text.lstrip().upper().startswith('#REDIRECT'):
         # links point at current titles, never at a redirect (Baird 2026-11-10)
