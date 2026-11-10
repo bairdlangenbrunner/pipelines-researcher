@@ -24,6 +24,7 @@ For each page name it writes, under `wiki/out/samples/<stamp>/`:
 from __future__ import annotations
 
 import argparse
+import collections
 import hashlib
 import json
 import os
@@ -266,7 +267,8 @@ def intro(pg, rows, tracker):
     names = []
     # on a many-segment page a segment's aliases name that segment, not the pipeline: only the
     # system row (or rows with no segment name) speak for the whole page
-    whole = [r for r in rows if not r["SegmentName"].strip() or r["SegmentName"].upper().startswith("SYSTEM/NETWORK")] or rows[:1]
+    # (no fallback to the first segment: its local name, 柳州支线, is not the pipeline's alias; 2026-11-10)
+    whole = [r for r in rows if not r["SegmentName"].strip() or r["SegmentName"].upper().startswith("SYSTEM/NETWORK")] or (rows if len(rows) == 1 else [])
     for col in ("OtherEnglishNames", "OtherLanguageAlternativePipelineNames"):
         for r in whole:
             for n in re.split(r"[;,]", r[col] or ""):
@@ -276,7 +278,9 @@ def intro(pg, rows, tracker):
     bold = [f"'''{n}'''" for n in names]   # "A and B", "A, B, and C" (Baird 2026-11-07)
     joined = "" if not bold else bold[0] if len(bold) == 1 else (" and ".join(bold) if len(bold) == 2 else ", ".join(bold[:-1]) + ", and " + bold[-1])
     aka = (", also known as " + joined + ",") if names else ""
-    local = rows[0]["OtherLanguagePrimaryPipelineName"].strip() if len(rows) == 1 else ""
+    # the pipeline's local name is the commonest OtherLanguagePrimaryPipelineName on its rows
+    lc = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in rows if r["OtherLanguagePrimaryPipelineName"].strip())
+    local = lc.most_common(1)[0][0] if lc else ""
     local = f" ({local})" if local else ""   # GOGPT style: plain parentheses after the name, no label (Baird 2026-11-10)
     fuel, loc = fuel_phrase(rows, tracker), location_phrase(rows)
     # a page called a network is introduced as one: "is a ... pipeline network" (Baird 2026-11-08)
@@ -310,7 +314,26 @@ def intro(pg, rows, tracker):
         # the lead only says the status; when and why go in the Background (Baird 2026-11-09, Delmarva)
         what = "pipeline" if len(rows) == 1 else "project"
         pg.dorm.append((r, f"With no development reported on the {what}, it was considered {st} as of {int(yr)}.", rc))
-    return s
+    return s + network_line(pg, rows)
+
+
+_PAGE_EXISTS = {}
+
+
+def network_line(pg, rows):
+    """'It is classified as part of the [[X]].' when the rows' PrimaryNetwork is another page that exists on the wiki
+    (Baird 2026-11-08: "classified as part of", never a bare "part of"). PrimaryNetworkWiki can still name an old
+    page, so the network's own title is checked instead."""
+    nc = collections.Counter(r.get("PrimaryNetwork", "").strip() for r in rows if r.get("PrimaryNetwork", "").strip())
+    net = nc.most_common(1)[0][0] if nc else ""
+    if not net or net == pg.name:
+        return ""
+    if net not in _PAGE_EXISTS:
+        try:
+            _PAGE_EXISTS[net] = bool(GW.page_text(GW.session(), net))
+        except Exception:
+            _PAGE_EXISTS[net] = False
+    return f" It is classified as part of the [[{net}]]." if _PAGE_EXISTS[net] else ""
 
 
 # Click-to-sort is off (Baird 2026-11-10): a "sortable" class adds jquery.tablesorter to the page's script bundle, and

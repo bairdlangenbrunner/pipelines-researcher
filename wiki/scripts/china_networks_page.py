@@ -64,7 +64,7 @@ def build(s, nets, df):
            f"* '''{lk('China Interprovincial Gas Pipelines')}:''' Gas pipelines that cross provincial borders but belong to "
            "neither a provincial network nor the national trunk system."]
     t = ["==Networks==",
-         '{| class="wikitable sortable"', H + "Network", H + "Kind", H + "Pipelines", H + "Segments",
+         '{| class="wikitable"', H + "Network", H + "Kind", H + "Pipelines", H + "Segments",
          H + "Length", H + "Status"]
     for n in names:
         rs = rows[n]

@@ -225,7 +225,7 @@ def build_network(s, entry, df, old_text=""):
     # pipelines
     t = ["==Pipelines==",
          "Each pipeline or group of pipelines in the network has its own page with details.",
-         '{| class="wikitable sortable"', H + "Pipeline", H + "Local name", H + "Segments", H + "Length", H + "Status"]
+         '{| class="wikitable"', H + "Pipeline", H + "Local name", H + "Segments", H + "Length", H + "Status"]
     for p, rs in pipes.items():
         t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs) or '–'}",
               f"|{len(rs)}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
