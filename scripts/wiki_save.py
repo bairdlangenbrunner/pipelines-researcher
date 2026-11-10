@@ -27,6 +27,10 @@ page: python scripts/wiki_map_check.py <url>.
 Every successful save also upserts the page's row in the backend sheet's `Wiki overhaul (Nov 2026)` tab (wiki_log.py;
 standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
 never fails the save.
+
+save() refuses any page that is not a pipeline page (Baird 2026-11-10: this repo edits pipeline wiki pages and
+nothing else): the title must be one the GOIT/GGIT snapshots name (Wiki cell, PipelineName, network columns) or one
+of the pipeline pages' own stylesheets. No override.
 """
 import argparse, json, re, sys, time
 from datetime import datetime, timedelta, timezone
@@ -41,6 +45,42 @@ ACCOUNT = 'Baird Langenbrunner'
 
 class MapBroken(RuntimeError):
     pass
+
+
+class NotAPipelinePage(RuntimeError):
+    pass
+
+
+# The only non-article pages this repo may save: the pipeline pages' own stylesheets (generate_pages.ensure_styles).
+PIPELINE_TEMPLATES = {'Template:Segment table/styles.css', 'Template:Pipeline map/styles.css'}
+_PIPELINE_TITLES = None
+
+
+def pipeline_titles():
+    """Every page title the GOIT and GGIT snapshots point at or name: the Wiki cell's page, PipelineName, and the
+    network columns. A page outside this set is not a pipeline page."""
+    global _PIPELINE_TITLES
+    if _PIPELINE_TITLES is None:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'wiki' / 'scripts'))
+        import _common as C
+        out = set()
+        for tracker in ('gas', 'oil'):
+            df = C.load(tracker)
+            out |= {C.page_name(u) for u in df.get('Wiki', [])}
+            for col in ('PipelineName', 'PrimaryNetwork', 'SecondaryNetworks', 'PipelineNetworkGrouping'):
+                for v in df.get(col, []):
+                    out |= {x.strip() for x in str(v).split(',' if col == 'SecondaryNetworks' else '\x00')}
+        out.add('Chinese Gas Pipeline Networks')   # network_pages.OVERVIEW_PAGE
+        _PIPELINE_TITLES = {t.replace('_', ' ') for t in out if t}
+    return _PIPELINE_TITLES
+
+
+def check_pipeline_page(title):
+    """Baird 2026-11-10: this repo edits pipeline wiki pages and nothing else. Raises NotAPipelinePage."""
+    t = title.replace('_', ' ').strip()
+    if t in PIPELINE_TEMPLATES or t in pipeline_titles():
+        return
+    raise NotAPipelinePage(f'{title}: not a pipeline page in the GOIT/GGIT snapshots; this repo saves only pipeline pages')
 
 
 def _retry(fn, n=6, wait=10):
@@ -87,6 +127,7 @@ def save(s, title, text=None, summary='', **kw):
     if text and '~~~' in re.sub(r'(?s)<nowiki>.*?</nowiki>', '', text):
         # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
         raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
+    check_pipeline_page(title)
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     if r.get('result') == 'Success' and 'nochange' not in r:
