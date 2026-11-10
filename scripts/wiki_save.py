@@ -28,6 +28,8 @@ Every successful save also upserts the page's row in the backend sheet's `Wiki o
 standing permission, Baird 2026-11-09). A failed sheet write is queued in work/wiki_log_pending.jsonl and
 never fails the save.
 
+save() repoints every [[link]] to a redirect at the page's current title (resolve_links; Baird 2026-11-10).
+
 save() previews the text first and refuses (CiteError) any page that would show a Cite error (Baird 2026-11-10).
 
 save() refuses any page that is not a pipeline page (Baird 2026-11-10: this repo edits pipeline wiki pages and
@@ -70,6 +72,38 @@ def cite_errors(s, title, text):
     if not errs and 'Cite error:' in re.sub('<[^>]+>', '', html):
         errs = ['Cite error text on the page']
     return errs
+
+
+_LINK = re.compile(r'\[\[([^\[\]|#\n]+)(#[^\[\]|\n]*)?(\|[^\[\]\n]*)?\]\]')
+_NS = re.compile(r'^\s*:|^\s*(file|image|media|category|template|help|special|user|w|wikipedia|gem|mediawiki)\s*:', re.I)
+
+
+def resolve_links(s, text):
+    """(text, changes): every [[link]] to a redirect points at the page's current title instead (Baird 2026-11-10:
+    links go to the current name, never the old one that redirects). The shown words stay the same, and a
+    redirect to a section keeps that section. Namespaced links (File:, Category: ...) are left alone."""
+    targets = sorted({m.group(1).strip() for m in _LINK.finditer(text) if not _NS.match(m.group(1))})
+    to = {}
+    for i in range(0, len(targets), 40):
+        q = _retry(lambda: g.get(s, action='query', titles='|'.join(targets[i:i + 40]), redirects=1))['query']
+        norm = {n['from']: n['to'] for n in q.get('normalized', [])}
+        red = {r['from']: (r['to'], r.get('tofragment', '')) for r in q.get('redirects', [])}
+        for t in targets[i:i + 40]:
+            n = norm.get(t, t)
+            if n in red:
+                to[t] = red[n]
+    changes = []
+
+    def sub(m):
+        t = m.group(1).strip()
+        if t not in to:
+            return m.group(0)
+        new, frag = to[t]
+        frag = m.group(2) or (f'#{frag}' if frag else '')
+        label = m.group(3) or f'|{m.group(1)}'
+        changes.append(f'{t} -> {new}{frag}')
+        return f'[[{new}{frag}{label}]]'
+    return _LINK.sub(sub, text), changes
 
 
 # The only non-article pages this repo may save: the pipeline pages' own stylesheets (generate_pages.ensure_styles).
@@ -149,13 +183,17 @@ def save(s, title, text=None, summary='', **kw):
         # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
         raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
     check_pipeline_page(title)
+    relinked = []
     if text and not text.lstrip().upper().startswith('#REDIRECT'):
+        # links point at current titles, never at a redirect (Baird 2026-11-10)
+        text, relinked = resolve_links(s, text)
         # a page that would show a Cite error is never saved, whichever script built it (Baird 2026-11-10)
         errs = cite_errors(s, title, text)
         if errs:
             raise CiteError(f'{title}: {len(errs)} Cite error(s) in the preview, not saved: {errs[:3]}')
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
+    r['relinked'] = relinked
     if r.get('result') == 'Success' and 'nochange' not in r:
         wiki_log.record(title, summary, text)   # the backend sheet's 'Wiki overhaul (Nov 2026)' tab; never raises
     return r
