@@ -891,8 +891,10 @@ def strip_generated_comments(txt):
 
 
 def split_sections(txt):
-    """[(heading or None, level, body)] for level-2 sections; body keeps its subsections."""
-    parts = re.split(r"(?m)^(==[^=].*?[^=]==)\s*$", txt)
+    """[(heading or None, level, body)] for level-2 sections; body keeps its subsections. A level-1 heading
+    ("=Articles and resources=", Anhui) counts as a level-2 one, or it and its {{reflist}} ride along inside the
+    section above it and the page shows two References sections (Baird 2026-11-11)."""
+    parts = re.split(r"(?m)^(==?[^=].*?[^=]==?)\s*$", txt)
     out = [(None, 0, parts[0])]
     for i in range(1, len(parts), 2):
         h = parts[i].strip("= ").strip()
