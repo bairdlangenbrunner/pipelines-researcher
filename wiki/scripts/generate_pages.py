@@ -731,7 +731,7 @@ _CSS_HEAD = """\
 .gem-anchor { display: inline-block; width: 0; height: 0; scroll-margin-top: 4.5em; }
 .gem-segments .gem-anchor { scroll-margin-top: 7em; }
 /* the Background table on the same pages: its own box, header fixed at the top */
-.gem-bgbox { overflow: auto; max-height: 80vh; clear: both; }   /* never beside a floated picture (Baird 2026-11-10) */
+.gem-bgbox { overflow: auto; max-height: 80vh; clear: both; margin-bottom: 1em; }   /* never beside a floated picture (Baird 2026-11-10); a line of space before the text under it (Baird 2026-11-11) */
 .gem-bgbox table { margin: 0; }
 .gem-bgbox th { position: sticky; top: 0; z-index: 2; border-top: 0; box-shadow: inset 0 1px #a2a9b1, inset 0 -1px #a2a9b1; }
 .gem-bgbox .gem-anchor { scroll-margin-top: 3.5em; }   /* below the column header */
@@ -1125,6 +1125,26 @@ def main_line_key(rows, pid=False):
     return {_key(k): (r["ProjectID"] if pid else r["Status"]) for k in ("Main Line", "Mainline", "Main System")}
 
 
+def cell_safe(txt):
+    """Text that goes into a table cell. A line starting | or ! would end the cell, so it is escaped, except inside a
+    whole table of its own ({| ... |}), which nests in the cell as it is. Escaping the rows of a nested table but not
+    its {| left it open, so it swallowed the Background table's own |} and the References section showed inside the
+    table (Baird 2026-11-11, Heilongjiang). An escaped row under a live {| is unescaped; a table still open at the end
+    is closed."""
+    out, depth = [], 0
+    for line in txt.split("\n"):
+        if depth:
+            line = re.sub(r"^<nowiki>([|!])</nowiki>", r"\1", line)
+        if line.startswith("{|"):
+            depth += 1
+        elif depth and line.startswith("|}"):
+            depth -= 1
+        elif not depth:
+            line = re.sub(r"^([|!])", r"<nowiki>\1</nowiki>", line)
+        out.append(line)
+    return "\n".join(out + ["|}"] * depth)
+
+
 def background_table(pg, kept, rows):
     """On a many-segment page, a Background written as one === subsection per segment becomes a
     table (Segment | Status | Background). Text before the first subsection stays as prose; a
@@ -1166,7 +1186,7 @@ def background_table(pg, kept, rows):
     t = ['{| class="wikitable"', "!Segment", "!Status", "!Background"]
     for h, txt, st in rows_in:
         txt = re.sub(r"(?m)^====+\s*(.*?)\s*=+\s*$", "'''\\1'''", txt)
-        txt = re.sub(r"(?m)^([|!])", r"<nowiki>\1</nowiki>", txt)  # a line starting | or ! would break the table
+        txt = cell_safe(txt)
         t += ["|-", f"|{h}", f"|{STATUS_PHRASE.get(st, st)}", "|\n" + txt]
     t.append("|}")
     if other:
@@ -1850,7 +1870,7 @@ def merge_background_into_table(pg, kept, rows):
     for pid, texts in add.items():
         w = rws[slot[pid]].rstrip("\n")
         # an empty cell is a bare "|" line; text already in the cell gets a blank line before the new text
-        w = w + ("\n" if w.endswith("\n|") else "\n\n") + "\n\n".join(texts)
+        w = w + ("\n" if w.endswith("\n|") else "\n\n") + "\n\n".join(cell_safe(t) for t in texts)
         rws[slot[pid]] = w + "\n"
     tbl = main.group(0)
     new_tbl = tbl[:main.start(1) - main.start()] + head + "".join(rws) + tbl[main.end(1) - main.start():]
