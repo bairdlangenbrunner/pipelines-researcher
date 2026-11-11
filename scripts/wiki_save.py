@@ -145,7 +145,7 @@ _REDIRECT_ONLY = re.compile(r'^\s*#REDIRECT\s*\[\[([^\]|#]+)(#[^\]|]*)?\]\]\s*((
 
 
 _CAT_LINE = re.compile(r'(?i)(?:^[^\S\n]*)?\[\[\s*Category\s*:[^\]]*\]\][^\S\n]*\n?', re.M)
-_CITE = re.compile(r'\{\{\s*Cite (?:web|book|news)\b[^{}]*\}\}', re.I)
+_CITE = re.compile(r'\{\{\s*(?:Cite[ _]+[a-z][a-z ]*?|Citation)\s*\|(?:[^{}]|\{\{[^{}|]*\}\})*\}\}', re.I)   # every CS1 template (web, news, journal ...); {{!}} may sit in a value
 
 
 def _iso_date(v):
@@ -170,18 +170,117 @@ def no_categories(text):
     text = _CAT_LINE.sub('', text or '')
 
     def fix(m):
-        c = m.group(0)
+        held = []                                                    # {{!}} and other pipe-free templates inside a value
+
+        def hold(x):
+            held.append(x.group(0))
+            return '\x01%d\x02' % (len(held) - 1)
+        c = '{{' + re.sub(r'\{\{[^{}|]*\}\}', hold, m.group(0)[2:-2]) + '}}'
+        c = re.sub(r'(?i)</ref>\s*<ref(?:\s[^>/]*)?>', ' ', c)           # a ref break pasted into a value (Central Asia-China)
         # CS1 tracks no-break, zero-width and other invisible characters (Guizhou 2026-11-11)
         c = re.sub(r'[\u00a0\u2000-\u200a\u202f\u205f\u3000]', ' ', c)
         c = re.sub(r'[\u00ad\u200b-\u200f\u2060\ufeff]', '', c)
         c = re.sub(r'(\|\s*title\s*=\s*)(?:https?://)?(?:www\.)?(?=[^|}]*\.)', lambda x: x.group(1), c) if re.search(r'\|\s*title\s*=\s*(?:https?://|www\.)', c) else c
+        # a URL in website=/work=/publisher= is the same "external link" error (Liaoning 2026-11-11): keep the host
+        c = re.sub(r'(\|\s*(?:website|work|publisher|newspaper|agency)\s*=\s*)https?://(?:www\.)?([^|}/\s]+)/?(?=\s*(?:\||\}\}))', r'\1\2', c)
+        c = re.sub(r'(\|\s*(?:website|work|publisher|newspaper|agency)\s*=\s*)https?://(?:www\.)?', r'\1', c)
         c = re.sub(r'\|\s*language\s*=[^|}]*', '', c)
+        sm = re.search(r'\|\s*script-title\s*=\s*(?:[a-z]{2,3}:)?([^|}]*)', c)   # script-title= adds a language-script category
+        if sm:
+            c = c[:sm.start()] + c[sm.end():]
+            tm = re.search(r'(\|\s*title\s*=\s*)([^|}]*)', c)
+            if tm and tm.group(2).strip():
+                c = c[:tm.end(2)].rstrip() + ' (' + sm.group(1).strip() + ')' + c[tm.end(2):]
+            else:
+                c = (c[:tm.start()] + c[tm.end():] if tm else c)[:-2] + '|title=' + sm.group(1).strip() + '}}'
+        c = re.sub(r'\s*\n\s*', ' ', c)                             # a line feed inside a parameter
+        c = re.sub(r'\|\s*dead-?url\s*=[^|}]*', '', c)               # an old parameter CS1 no longer knows
         c = re.sub(r'\|\s*[\w-]+\s*=\s*(?=\||\}\})', '', c)
-        c = re.sub(r'(\|\s*(?:archive-)?date\s*=)([^|}]*)', lambda x: x.group(1) + _iso_date(x.group(2)), c)
+        c = re.sub(r'(\|\s*(?:archive-?|access-?)?date\s*=)([^|}]*)', lambda x: x.group(1) + _iso_date(x.group(2)), c)
+        c = re.sub(r'\|\s*[\w-]+\s*=\s*(?=\||\}\})', '', c)       # a date dropped just now leaves an empty parameter
+        um = re.search(r'\|\s*url\s*=\s*([^|}\s]+)', c)
+        if um and not re.search(r'\|\s*title\s*=\s*[^|}\s]', c):     # no title: the address without its scheme stands in
+            c = c[:um.end()] + '|title=' + re.sub(r'^https?://(?:www\.)?', '', um.group(1))[:120] + c[um.end():]
+        if re.match(r'\{\{\s*Cite[ _]+journal\b', c, re.I) and not re.search(r'\|\s*(?:journal|work|magazine|periodical)\s*=\s*[^|}\s]', c):
+            c = re.sub(r'(?i)^\{\{\s*Cite[ _]+journal', '{{Cite web', c)   # a journal cite with no journal is a web cite
         if not re.search(r'\|\s*archive-url\s*=\s*\S', c):
             c = re.sub(r'\|\s*url-status\s*=[^|}]*', '', c)
-        return c
+        return re.sub(r'\x01(\d+)\x02', lambda x: held[int(x.group(1))], c)
     return _CITE.sub(fix, text).rstrip('\n') + ('\n' if (text or '').endswith('\n') else '')
+
+
+def _cite_params(c):
+    """(positional texts, {name: value}) of one cite template; a | inside [[...]] or [...] does not split."""
+    body = re.sub(r'^\{\{[^|]*\|?|\}\}$', '', c)
+    parts, depth, cur = [], 0, ''
+    for ch in body:
+        depth += ch == '['
+        depth -= ch == ']'
+        if ch == '|' and depth <= 0:
+            parts.append(cur)
+            cur = ''
+        else:
+            cur += ch
+    parts.append(cur)
+    pos, named = [], {}
+    for x in parts:
+        k, eq, v = x.partition('=')
+        if eq and re.fullmatch(r'\s*[\w-]+\s*', k):
+            if v.strip():
+                named[k.strip().lower()] = v.strip()
+        elif x.strip():
+            pos.append(x.strip())
+    return pos, named
+
+
+def plain_cite(c):
+    """One cite template written out as plain text: author, linked title, site, publisher, date, archived copy. A
+    plain citation adds no tracking category, and every fact the template held is still shown."""
+    pos, p = _cite_params(c.replace('{{!}}', '&#124;'))
+    g_ = lambda *ks: next((p[k] for k in ks if p.get(k)), '')
+    author = g_('author', 'authors', 'vauthors')
+    if not author and (p.get('last') or p.get('first')):
+        author = ' '.join(x for x in (p.get('first', ''), p.get('last', '')) if x)
+    url, title = g_('url', 'chapter-url'), g_('title', 'chapter')
+    title = re.sub(r'\s+', ' ', title.replace('[', '(').replace(']', ')')) if url else title
+    head = f'[{url} {title}]' if url and title else (url or title)
+    site = g_('website', 'work', 'newspaper', 'journal', 'magazine', 'periodical')
+    bits = [author, head, f"''{site}''" if site else '', g_('publisher', 'agency'), g_('location'), g_('date', 'year')]
+    bits += [x for x in pos if x not in bits]
+    out = ', '.join(b for b in bits if b)
+    arc = g_('archive-url', 'archiveurl')
+    if arc:
+        out += f'. [{arc} Archived]' + (f" {g_('archive-date', 'archivedate')}" if g_('archive-date', 'archivedate') else '')
+    acc = g_('access-date', 'accessdate')
+    return out + (f'. Accessed {acc}' if acc else '') + '.'
+
+
+_TRACKING = re.compile(r'^CS1[ _]|^Pages[ _]with[ _]')
+
+
+def plain_tracked_cites(s, title, text):
+    """(text, n): cites that still put the page in a CS1 tracking category after no_categories are written out as
+    plain text (Baird 2026-11-11: never a category on a pipeline page, and the repairs above cannot know every
+    CS1 complaint). Two preview parses, nothing saved: the first reads the page's categories, the second renders
+    each cite on its own to find the ones CS1 marks."""
+    def parse(tx, prop):
+        return _retry(lambda: g.post(s, action='parse', title=title, text=tx, contentmodel='wikitext', prop=prop, pst=1,
+                                     disablelimitreport=1))['parse']
+    cats = [c.get('category') or c.get('*') or '' for c in parse(text, 'categories')['categories']]
+    if not any(c.startswith('CS1') for c in cats):
+        return text, 0
+    cites = list(dict.fromkeys(m.group(0) for m in _CITE.finditer(text)))
+    probe = '\n'.join(f'<div class="gemprobe" id="gp{i}">{c}</div>' for i, c in enumerate(cites))
+    h = parse(probe, 'text')['text']
+    html = h['*'] if isinstance(h, dict) else h
+    bad = set()
+    for i, chunk in enumerate(re.split(r'<div class="gemprobe" id="gp\d+">', html)[1:]):
+        if re.search(r'cs1-(?:visible-error|hidden-error|maint)|cs1-lock|script-|class="error"', chunk) and \
+                re.search(r'cs1-(?:visible-error|hidden-error|maint)|class="error"', chunk):
+            bad.add(cites[i])
+    if not bad:   # a category with no marked cite (a language category from a script-title, say): every cite goes plain
+        bad = set(cites)
+    return _CITE.sub(lambda m: plain_cite(m.group(0)) if m.group(0) in bad else m.group(0), text), len(bad)
 
 
 def redirect_repair_ok(s, title, text):
@@ -261,6 +360,9 @@ def save(s, title, text=None, summary='', **kw):
     if text and not text.lstrip().upper().startswith('#REDIRECT'):
         # links point at current titles, never at a redirect (Baird 2026-11-10)
         text, relinked = resolve_links(s, text)
+        text, plained = plain_tracked_cites(s, title, text)
+        if plained:
+            print(f'{title}: {plained} cite(s) written as plain text to keep tracking categories off the page', file=sys.stderr)
         # a page that would show a Cite error is never saved, whichever script built it (Baird 2026-11-10)
         errs = cite_errors(s, title, text)
         if errs:
@@ -272,6 +374,8 @@ def save(s, title, text=None, summary='', **kw):
         r['categories'] = [c['category'] for c in _retry(lambda: g.get(s, action='parse', page=title, prop='categories'))['parse']['categories']]
     except Exception:
         r['categories'] = None
+    if r['categories']:   # every caller shows it, whether or not it reads r (Baird 2026-11-11, Liaoning)
+        print(f'WARNING {title}: still in categories after the save: {r["categories"]}', file=sys.stderr)
     if r.get('result') == 'Success' and 'nochange' not in r:
         wiki_log.record(title, summary, text)   # the backend sheet's 'Wiki overhaul (Nov 2026)' tab; never raises
     return r
