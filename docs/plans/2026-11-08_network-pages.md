@@ -113,7 +113,7 @@ Apply steps:
 
 Which page a network gets, from the registry's `page_case`:
 
-1. The network has one PipelineName: no extra page. The pipeline page is the network page and its lead names the network (66 of 72 Chinese networks today).
+1. The network has one PipelineName: it still gets its own network page (Baird 2026-11-10, reversing the earlier no-extra-page rule), with a one-row Pipelines table, and the pipeline page's lead says it is classified as part of the network. A one-segment network has no mapped-route count line, as on a one-segment pipeline page.
 2. Several PipelineNames and one of them equals the network's English name: that page becomes the network page. Its own rows are the direct segments; the other names are listed in a Pipelines table and link to their own pages (Guangdong, Guangxi, Xinjiang, Sebei-Xining-Lanzhou, and West-East Gas Pipeline 2 until P7668 moves).
 3. Several PipelineNames and none matches: a new page at the registry's English name (today only 川渝输气管网, proposed as Sichuan-Chongqing Gas Pipeline Network; Baird decides the name).
 
@@ -154,7 +154,7 @@ Network page Xinjiang Provincial Gas Network created (case 3, like Guangdong: th
 3. P7668's move to Guangxi Gas Pipeline Network (done 2026-11-08: `PrimaryNetwork` and `PrimaryNetworkWiki`, backup `notes/sheet-backup-2026-11-08-gas-p7668-primary-network.csv`), and the other grouping fixes already on the list (P4553, P3894, P8037). Each is a sheet write under the hard requirements: FORMULA pre-read, backup CSV in `notes/`, RAW cell-scoped write, re-read, `Researcher` = CB and `LastUpdated` stamped.
 4. The name for 川渝输气管网 and whether the four Central Asia–China line groupings merge into one network.
 5. Which secondary proposals become `SecondaryNetworks` values for the Guangxi pilot.
-6. Extending past Guangxi: Guangdong done 2026-11-10 (it turned out case 3, see above); Xinjiang done 2026-11-10 (also case 3, see above); next Sichuan-Chongqing (case 3), then the one-pipeline networks, which only gain the lead line.
+6. Extending past Guangxi: Guangdong done 2026-11-10 (it turned out case 3, see above); Xinjiang done 2026-11-10 (also case 3, see above); the 26 one-pipeline networks done 2026-11-10 (network page each, member pipeline page regenerated for the lead line); next Sichuan-Chongqing (case 3), then the three groupings. Open: old standalone segment pages still named in Wiki cells (count of pages) for Hebei (5), Inner Mongolia (5), Jiangsu (1), Jilin (1), Shandong (12), Tianjin (3), and Jiangxi (1), to be folded Guangdong-style.
 
 ## Out of scope here
 

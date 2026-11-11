@@ -72,7 +72,7 @@ def build(s, nets, df):
               f"|{len(rs)}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else '–'}"]
     t += ['|- class="sortbottom"', "!Total", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(allrows)}",
           f"!{N.length_cell(allrows).split('|')[-1]}", f"!{N.mix(pg, allrows)}", "|}"]
-    tail = ["==Articles and resources==", "", "===Additional data===",
+    tail = [N.G.SECTION_BREAK, "==Articles and resources==", "", "===Additional data===",
             f"To access additional data, including an interactive map of {G.TRACKER_LINK['gas'][0]} pipelines, a downloadable dataset, "
             f"and summary data, please visit the {G.TRACKER_LINK['gas'][1]} on the Global Energy Monitor website.", ""]
     text = "\n".join([TITLE, "", f"<!---\n\t{G.COMMENT1}\n-->", G.NAVBAR["gas"], lead, ""] + how + [""] + t + [""] + tail)

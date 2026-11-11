@@ -52,6 +52,7 @@ ACCESS = time.strftime("%Y-%m-%d")
 # GEMwiki generic/wiki_util.py COMMENT1-3, word for word
 COMMENT1 = ("COMMENT 1: THIS PAGE'S SOURCE CODE IS PARTIALLY GENERATED USING SCRIPTING CODE.\n\t\tCHANGES TO THE WIKI PAGE MAY BE OVERWRITTEN UNLESS MADE IN DESIGNATED AREAS.\n\t\tIF CHANGES WITHIN THE SCRIPT-GENERATED SECTIONS NEED TO BE MADE, PLEASE REACH OUT TO THE DATA TEAM.")
 COMMENT2 = ("COMMENT 2: CHANGES MADE IN SECTIONS BETWEEN THIS AND \"COMMENT 3\" WILL NOT BE OVERWRITTEN.\n\t\tPLEASE ENSURE NO DUPLICATE SECTION HEADERS.")
+SECTION_BREAK = '<div style="clear:both"></div>'
 COMMENT3 = ("COMMENT 3: CHANGES MADE BELOW THIS COMMENT WILL BE OVERWRITTEN.\n\t\tPLEASE DO NOT MANUALLY EDIT BELOW THIS COMMENT.")
 
 # headings the generator owns; every spelling seen live (template: "Copied as-is")
@@ -352,8 +353,8 @@ def table(num_, title, header, body, caption="", collapsed=False, sortable=False
     t += [f"!{header[i]}" for i in keep]
     for row in body:
         t.append("|-")
-        # an empty route-shape cell stays blank; every other empty cell gets a dash
-        t += [f"|{row[i] if row[i].strip() else ('' if header[i].endswith('|Route') else '–')}" for i in keep]
+        # empty route cells (shape, countries) stay blank; every other empty cell gets a dash (Baird 2026-11-10)
+        t += [f"|{row[i] if row[i].strip() else ('' if header[i].endswith('|Route') or title == 'Route details' else '–')}" for i in keep]
     if footnote:   # stays at the bottom when the table is sorted
         t += ['|- class="sortbottom"', f'|colspan="{len(keep)}"|{footnote}']
     t.append("|}")
@@ -562,8 +563,8 @@ def route_cells(pg, r):
     """start/end (with the Location ref) and countries. No length here: the Route details table carried an
     unreferenced copy of it, and the referenced figure already sits in the Pipeline details table (Baird
     2026-11-06, Ruby). The tabbed table's Route tab shows the referenced Pipeline details cell instead."""
-    a = place(r["StartLocation"], r["StartState/Province"]) or "–"
-    z = place(r["EndLocation"], r["EndState/Province"]) or "–"
+    a = place(r["StartLocation"], r["StartState/Province"])   # route cells stay blank when empty, no dash (Baird 2026-11-10)
+    z = place(r["EndLocation"], r["EndState/Province"])
     rf = pg.cite(r["Location [ref]"])
     rf = f'<span style="float:right;margin-left:0.4em">{rf}</span>' if rf else ""   # the refs sit at the right end of the End line
     return [f"'''Start:''' {a}{END_RULE}{rf}'''End:''' {z}</div>",
@@ -826,7 +827,7 @@ def segment_table(pg, rows, owners):
             m = re.match(r'(data-sort-value="[^"]*")\|(.*)', v, re.S)   # a cost cell carries its sort key as an attribute
             if m:
                 cls, v = f"{cls} {m.group(1)}", m.group(2)
-            t.append(f'|{cls}|{v if v else ("" if i == 0 else "–")}')
+            t.append(f'|{cls}|{v if v else ("" if i in (0, 1, 2) else "–")}')   # route cells stay blank
     if est:
         t += ['|- class="sortbottom col-route col-details"', f'|colspan="{len(keep) + 2}"|{EST_NOTE}']
     t += ["|}", "</div>"]
@@ -1278,7 +1279,22 @@ def fold_expansions(pg, kept, rows):
     return kept.strip(), removed
 
 
-DETAILS_HEAD = re.compile(r"(?mi)^(=+)\s*(?:project\s+)?(?:expansion\s+)?(?:project\s+)?details\s*\1\s*\n")
+DETAILS_HEAD = re.compile(r"(?mi)^(=+)\s*(?:(?:project|network|segment|pipeline)\s+)?(?:expansion\s+)?(?:project\s+)?details\s*\1\s*\n")
+# an old per-segment map in Background ({{#display_map:...}} beside a segment's prose); the page's own map shows every route
+OLD_MAP = re.compile(r"\{\{\s*#display_map:[^{}]*\}\}\n?", re.I)
+
+
+def drop_details_heading(body):
+    """A details heading goes; the subsections under it move up one level, so they sit where it stood (Gansu 2026-11-10)."""
+    while True:
+        m = DETAILS_HEAD.search(body)
+        if not m:
+            return body
+        lvl = len(m.group(1))
+        nxt = re.search(r"(?m)^={2,%d}[^=]" % lvl, body[m.end():])
+        end = m.end() + nxt.start() if nxt else len(body)
+        sub = re.sub(r"(?m)^=(=+)([^=].*?[^=])=(=+)\s*$", r"\1\2\3", body[m.end():end])
+        body = body[:m.start()] + sub + body[end:]
 
 
 def drop_data_bullets(pg, kept):
@@ -1298,10 +1314,15 @@ def drop_data_bullets(pg, kept):
         removed.append(mm.group(0))
         return ""
     body = re.sub(r"(?m)(?:^\*[^\n]*(?:\n|\Z))+", run, body)
-    if not removed:
+    # old per-segment maps go with the data lists; the page's own map carries every route (Baird 2026-11-10, Gansu)
+    maps = OLD_MAP.findall(body)
+    body = OLD_MAP.sub(lambda m: "\n" if m.group(0).endswith("\n") else "", body)   # a map glued to prose keeps the line break
+    if not removed and not maps:
         return kept, ""
-    # a "Project expansion details" heading goes too; any prose under it joins the subsection above
-    body = DETAILS_HEAD.sub("", body)
+    # a "Project details" or "Network details" heading goes too; its subsections move up one level
+    body = drop_details_heading(body)
+    if maps:
+        pg.log.append(f"Background: {len(maps)} old segment map(s) removed")
     body = re.sub(r"\n{3,}", "\n\n", body)
     pg.log.append(f"Background: {len(removed)} project-data bullet list(s) removed, citations kept as Additional sources")
     return kept[:m.start(1)] + body + kept[m.end(1):], "\n".join(removed)
@@ -1385,8 +1406,9 @@ def layout_media(pg, kept):
     - a picture inside a table cell is centered in the cell;
     - pictures outside a table wrap only with text, never beside a table: every Background table clears the floats
       above it (the Background-table box through its stylesheet, any other table through an inline clear:both);
-    - a run of pictures on their own lines with no prose right after it sits side by side in one wrapping row
-      instead of a right-hand stack. Runs followed by prose keep floating so the text wraps around them.
+    - two or more pictures in a run (on their own lines) always sit side by side in one wrapping row, text after
+      them or not (Baird 2026-11-10: Guangdong Gas Pipeline Network to look like Pearl River Delta). A single
+      picture floats right when text follows it, so the text wraps around it, and sits in a row otherwise.
     Idempotent: rows an earlier run made are taken apart and decided again."""
     # undo earlier rows
     def unwrap(m):
@@ -1445,8 +1467,8 @@ def layout_media(pg, kept):
             j += 1
         nxt = next((l for l in lines[j:] if l.strip()), "")
         run = [l for l in lines[i:j] if l.strip()]
-        if prose(nxt) and not media_line(nxt):
-            # text follows: the pictures float so it wraps around them (a centered or unaligned one would not)
+        if sum(len(find_media(l)) for l in run) == 1 and prose(nxt) and not media_line(nxt):
+            # one picture with text after it floats so the text wraps around it (a centered or unaligned one would not)
             fl = lambda l: set_align(l, "right") if re.search(r"\|\s*(center|centre|none)\s*(?=[|\]])", l) else l
             out += [fl(l) if MEDIA_OPEN.match(l.strip()) else l for l in lines[i:j]]
         else:
@@ -1970,6 +1992,9 @@ def join_ref_lines(txt):
 def build(name, rows, owners, live, tracker):
     pg = Page(name, tracker)
     live = join_ref_lines(live)
+    # an empty <ref name=x></ref> is a reuse, written as one, so a definition that sat in a dropped data bullet is
+    # copied back (fix_named_refs) instead of the reuse rendering as a cite error (Shandong, 2026-11-10)
+    live = re.sub(r'<ref\s+name\s*=\s*"?([^">/]+?)"?\s*>\s*</ref>', r'<ref name="\1" />', live)
     rows = order(rows)
     kept, extra_ar, replaced = preserved(pg, live)
     # a map sketch an earlier run moved into Background by mistake goes; it belongs only under the map (2026-11-10)
@@ -1980,6 +2005,12 @@ def build(name, rows, owners, live, tracker):
     replaced = replaced + "\n\n" + gone + "\n\n" + gone2
     kept, old_other = pop_other_sources(pg, kept)
     kept = fold_other_sections(pg, kept)
+    # a section folded in just now (a "Network details" section, Gansu 2026-11-10) gets the same data-list cleanup
+    kept, gone3 = drop_data_bullets(pg, kept)
+    replaced = replaced + "\n\n" + gone3
+    # a link from a page to itself ([[Gansu Gas Pipeline Network|Changqing-Lanzhou Gas Pipeline]]) reads as plain text
+    kept = re.sub(r"\[\[\s*(?:%s)\s*(?:\|([^\]]*))?\]\]" % re.escape(name).replace(r"\ ", "[ _]"),
+                  lambda m: m.group(1) if m.group(1) is not None else name, kept)
     # a Background table only on a tabbed page; below SEG_TABLE_MIN it is one subsection per segment (Baird 2026-11-07)
     if len(rows) >= SEG_TABLE_MIN:
         kept = background_table(pg, kept, order(rows))
@@ -2031,13 +2062,15 @@ def build(name, rows, owners, live, tracker):
                                 lambda m: f"{m.group(1)}{MONTH_NAMES[int(m.group(3)) - 1]} {m.group(2)}", t)
     kept, extra_ar = cs1_date(kept), cs1_date(extra_ar)
     extra_ar = "\n\n".join(b for b in re.split(r"\n\n(?====)", extra_ar) if b.strip() and "\n" in b.strip())
-    tail = ["==Articles and resources==", "", "===References===", "<references />", ""]
+    # a hard break before Background and before Articles and resources: no picture from one section floats into the
+    # next (Baird 2026-11-10, Valley Crossing). Both lines sit in the generated zones, so a rebuild never doubles them
+    tail = [SECTION_BREAK, "==Articles and resources==", "", "===References===", "<references />", ""]
     if extra_ar:
         tail += [extra_ar, ""]
     tail += ["===Additional data===",
              f"To access additional data, including an interactive map of {word} pipelines, a downloadable dataset, and summary data, please visit the {link} on the Global Energy Monitor website.",
              ]
-    text = gen + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
+    text = gen.rstrip("\n") + "\n" + SECTION_BREAK + "\n" + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
     text = B.sentence_case_headings(shade_first_column(number_background(text)))
     if not kept:
         text += "\n__NOTOC__\n"

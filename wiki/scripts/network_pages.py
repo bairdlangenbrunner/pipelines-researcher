@@ -166,6 +166,8 @@ def map_section(pg, members, connected):
                 lines.append(f"{pts}~{title}~{dot}{st}~{G.status_color(pg, r['Status'])}~{w}")
     mapped = sum(1 for r in members if r["RouteType"].startswith("Mapped route"))
     text = f"{num(mapped).capitalize() if mapped < 10 else mapped} of {num(len(members))} segments have a mapped route in the database."
+    if len(members) == 1:
+        text = ""   # no count on a one-segment network, as on a one-segment pipeline page (generate_pages.map_block)
     if not allp:
         return text
     lats, lons = [p[1] for p in allp], [p[0] for p in allp]
@@ -232,7 +234,7 @@ def build_network(s, entry, df, old_text=""):
     t += ["|}"]
     # No Background section (Baird 2026-11-08): a network page holds no history. Its background goes onto the member
     # pipelines' own pages, so the page has no citations and no References section either.
-    tail = ["==Articles and resources==", "", "===Additional data===",
+    tail = [G.SECTION_BREAK, "==Articles and resources==", "", "===Additional data===",
             f"To access additional data, including an interactive map of {G.TRACKER_LINK['gas'][0]} pipelines, a downloadable dataset, "
             f"and summary data, please visit the {G.TRACKER_LINK['gas'][1]} on the Global Energy Monitor website.", ""]
     text = "\n".join([name, "", f"<!---\n\t{G.COMMENT1}\n-->", G.NAVBAR["gas"], lead, ""] + location + [""] + t + [""]
