@@ -1709,6 +1709,20 @@ def row_by_text(rows, txt):
     return hit[0] if len(hit) == 1 else None
 
 
+POINTER = re.compile(r"The background for this section is with \[\[#bg-(P\d+)\|[^\]]*\]\], since one description covers all its sections\.")
+BG_CELL = re.compile(r"(?s)(\|-\s*\n(?:\|[^\n]+\n)+\|[^\S\n]*\n)(.*)")  # the cells before the bare "|" line, then the body
+
+
+def name_refs(txt):
+    """Every <ref> in txt gets a name (a hash of its content) so a copy of the text can reuse it."""
+    return re.sub(r"<ref>(.*?)</ref>", lambda m: f'<ref name="c{hashlib.md5(m.group(1).encode()).hexdigest()[:6]}">{m.group(1)}</ref>', txt, flags=re.S)
+
+
+def reuse_refs(txt):
+    """A copy of named-ref text: each definition becomes a reuse, so the source is listed once."""
+    return re.sub(r'<ref\s+name\s*=\s*"?([^">/]+?)"?\s*>.*?</ref>', r'<ref name="\1" />', txt, flags=re.S)
+
+
 def merge_background_into_table(pg, kept, rows):
     """On a tabbed page every bit of Background about one segment sits in that segment's row of the Background table
     (Baird 2026-11-10, Gansu). A "Network background" subsection is about the whole network and stays as it is.
@@ -1733,6 +1747,23 @@ def merge_background_into_table(pg, kept, rows):
             slot[a.group(1)] = i
     add = collections.defaultdict(list)
     log = []
+    # an earlier run left "The background for this section is with [[#bg-X|...]]" in a section's row: it becomes a
+    # copy of X's text (Baird 2026-11-11: both sections show the text and pictures)
+    fixed = False
+    for i, w in enumerate(rws):
+        pm = POINTER.search(w)
+        tgt = pm and slot.get(pm.group(1))
+        if tgt is None:
+            continue
+        bm = BG_CELL.match(rws[tgt])
+        src = bm.group(2).strip() if bm else ""
+        if src and not POINTER.search(src):
+            nb = name_refs(src)
+            rws[tgt] = rws[tgt].replace(src, nb, 1)
+            rws[i] = w.replace(pm.group(0), reuse_refs(nb), 1)
+            me = re.search(r'id="bg-(P\d+)', w)
+            log.append(f"pointer in {me.group(1) if me else i} replaced by a copy of {pm.group(1)}")
+            fixed = True
 
     def place(pid, txt, why):
         # bold-only lines that name another segment carry the text under them to that segment
@@ -1828,10 +1859,12 @@ def merge_background_into_table(pg, kept, rows):
             fam = [r["ProjectID"] for r in rows if r["ProjectID"] in slot and want and base(label(r, rows)) == want
                    and base(label(r, rows)) != " ".join(_name_words(label(r, rows)))]
             if len(fam) >= 2:
-                first = fam[0]
-                place(first, with_heading(s_["txt"], s_["h"]), why + " (first of its sections)")
+                # every section's row carries the whole text and pictures (Baird 2026-11-11, Shanghai-Suzhou); the
+                # copies reuse the first row's refs by name so the reference list holds each source once
+                txt = name_refs(with_heading(s_["txt"], s_["h"]))
+                place(fam[0], txt, why + " (first of its sections)")
                 for q in fam[1:]:
-                    place(q, f"The background for this section is with [[#bg-{first}|the {label(next(r for r in rows if r['ProjectID'] == first), rows)} row]], since one description covers all its sections.", why + " (pointer)")
+                    place(q, reuse_refs(txt), why + " (copy)")
                 return [s_["tail"]], e
         if pid or inherit:
             if pid:
@@ -1865,7 +1898,7 @@ def merge_background_into_table(pg, kept, rows):
         o, i = handle(i)
         out += o
     rest = "".join(out)
-    if not add:
+    if not add and not fixed:
         return kept
     for pid, texts in add.items():
         w = rws[slot[pid]].rstrip("\n")
@@ -2501,6 +2534,7 @@ def main():
         ledger = json.load(open(os.path.join(out, "refs_ledger.json")))
         old = open(os.path.join(out, "report.md")).read().split("\n## Totals")[0].rstrip("\n")
         report = old.split("\n") + ["", f"Resumed {time.strftime('%Y-%m-%d %H:%M')}: {len(ledger)} pages already built", ""]
+    china_saved = []   # China pages saved this run: the Chinese Gas Pipeline Networks page is refreshed after them
     for name in a.pages:
         # with --save, a page counts as done only once it saved (an entry written before a crash says saved: False);
         # an entry from before the flag existed has no key and is taken as done
@@ -2549,6 +2583,8 @@ def main():
                     r = wiki_save.save(ls, name, text=page_body(text), summary="generated from the tracker by generate_pages.py")
                     pg.log.append(f"saved: {r.get('result')}, map {'BROKEN' if r.get('map', {}).get('broken') else 'ok'}, {len(up)} shapes uploaded")
                     ledger[name]["saved"] = r.get("result") == "Success" and not r.get("map", {}).get("broken")
+                    if r.get("result") == "Success" and any("China" in str(x.get("CountriesOrAreas", "")) for x in rows):
+                        china_saved.append(name)
                 except Exception as e:  # one failed save is logged and retried by --resume, never the end of the run
                     pg.log.append(f"SAVE FAILED: {type(e).__name__}: {e}")
                 json.dump(ledger, open(os.path.join(out, "refs_ledger.json"), "w"), indent=1, ensure_ascii=False)
@@ -2558,6 +2594,12 @@ def main():
     n_carried = sum(1 for v in ledger.values() if v["carried_to_background"])
     report += ["## Totals", "", f"- pages: {len(ledger)}; pages with citations added to Background: {n_carried}; pages with LOST citations: {n_lost}",
                f"- citation ledger: `refs_ledger.json` in this folder; the live text of every page is beside its draft as `.orig.txt`", ""]
+    if china_saved:
+        # every edit of a Chinese page also refreshes the overview that lists them (Baird 2026-11-11)
+        import subprocess
+        p = subprocess.run([sys.executable, os.path.join(HERE, "china_networks_page.py"), "--save"], capture_output=True, text=True)
+        report += [f"- Chinese Gas Pipeline Networks refreshed after {len(china_saved)} China page(s): "
+                   + ((p.stdout.strip().splitlines() or ["no output"])[-1] if p.returncode == 0 else f"FAILED: {p.stderr.strip()[-300:]}"), ""]
     open(os.path.join(out, "report.md"), "w").write("\n".join(report))
     print(out)
     print("\n".join(report[-4:]))

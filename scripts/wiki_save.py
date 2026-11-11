@@ -144,7 +144,7 @@ def check_pipeline_page(title):
 _REDIRECT_ONLY = re.compile(r'^\s*#REDIRECT\s*\[\[([^\]|#]+)(#[^\]|]*)?\]\]\s*((\[\[Category:[^\]]*\]\]\s*)*)$', re.I)
 
 
-_CAT_LINE = re.compile(r'(?mi)^[^\S\n]*\[\[\s*Category\s*:[^\]]*\]\][^\S\n]*\n?')
+_CAT_LINE = re.compile(r'(?i)(?:^[^\S\n]*)?\[\[\s*Category\s*:[^\]]*\]\][^\S\n]*\n?', re.M)
 _CITE = re.compile(r'\{\{\s*Cite (?:web|book|news)\b[^{}]*\}\}', re.I)
 
 
@@ -171,6 +171,9 @@ def no_categories(text):
 
     def fix(m):
         c = m.group(0)
+        # CS1 tracks no-break, zero-width and other invisible characters (Guizhou 2026-11-11)
+        c = re.sub(r'[\u00a0\u2000-\u200a\u202f\u205f\u3000]', ' ', c)
+        c = re.sub(r'[\u00ad\u200b-\u200f\u2060\ufeff]', '', c)
         c = re.sub(r'(\|\s*title\s*=\s*)(?:https?://)?(?:www\.)?(?=[^|}]*\.)', lambda x: x.group(1), c) if re.search(r'\|\s*title\s*=\s*(?:https?://|www\.)', c) else c
         c = re.sub(r'\|\s*language\s*=[^|}]*', '', c)
         c = re.sub(r'\|\s*[\w-]+\s*=\s*(?=\||\}\})', '', c)

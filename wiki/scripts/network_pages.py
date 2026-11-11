@@ -321,6 +321,10 @@ def main():
                     if title == entry["PrimaryNetwork"] else f"back to a pipeline page; its network is now [[{entry['PrimaryNetwork']}]]")
             r = wiki_save.save(ls, title, text=G.page_body(text), summary=summ)
             print("saved", title, r.get("result"), "map", r.get("map"), "shapes", len(up))
+        if any("China" in c for c in entry.get("countries") or ["China"]):
+            # every edit of a Chinese page also refreshes the overview that lists them (Baird 2026-11-11)
+            import subprocess
+            subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "china_networks_page.py"), "--save"])
 
 
 if __name__ == "__main__":
