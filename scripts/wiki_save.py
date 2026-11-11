@@ -32,6 +32,8 @@ save() repoints every [[link]] to a redirect at the page's current title (resolv
 
 save() previews the text first and refuses (CiteError) any page that would show a Cite error (Baird 2026-11-10).
 
+save() never writes a category and repairs the cites that would add a CS1 tracking category (no_categories; Baird 2026-11-11).
+
 save() refuses any page that is not a pipeline page (Baird 2026-11-10: this repo edits pipeline wiki pages and
 nothing else): the title must be one the GOIT/GGIT snapshots name (Wiki cell, PipelineName, network columns) or one
 of the pipeline pages' own stylesheets. No override. One narrow case passes: a redirect that already leads to a pipeline
@@ -142,6 +144,43 @@ def check_pipeline_page(title):
 _REDIRECT_ONLY = re.compile(r'^\s*#REDIRECT\s*\[\[([^\]|#]+)(#[^\]|]*)?\]\]\s*((\[\[Category:[^\]]*\]\]\s*)*)$', re.I)
 
 
+_CAT_LINE = re.compile(r'(?mi)^[^\S\n]*\[\[\s*Category\s*:[^\]]*\]\][^\S\n]*\n?')
+_CITE = re.compile(r'\{\{\s*Cite (?:web|book|news)\b[^{}]*\}\}', re.I)
+
+
+def _iso_date(v):
+    """A cite date CS1 accepts: ISO as is, a clear d/m/y or month-name form rewritten to ISO, anything else dropped
+    (a bad date adds the 'CS1 errors: dates' category)."""
+    v = v.strip()
+    if re.fullmatch(r'\d{4}(-\d\d(-\d\d)?)?', v) or not v:
+        return v
+    for f in ('%b.%d, %Y', '%b. %d, %Y', '%b %d, %Y', '%B %d, %Y', '%d %B %Y', '%d %b %Y', '%m-%d-%Y', '%Y/%m/%d', '%Y.%m.%d'):
+        try:
+            return datetime.strptime(v, f).strftime('%Y-%m-%d')
+        except ValueError:
+            pass
+    return ''
+
+
+def no_categories(text):
+    """Never a category on a pipeline page, redirects included (Baird 2026-11-11): drops every [[Category:...]] line,
+    and cleans the cites that would add a CS1 tracking category to the page's foot. A cite title that is a URL
+    ("External link in title" error), a language= (a language-sources category), a url-status= with no archive-url
+    (a maintenance category) and empty parameters are the causes; each is repaired in the cite, never left to show."""
+    text = _CAT_LINE.sub('', text or '')
+
+    def fix(m):
+        c = m.group(0)
+        c = re.sub(r'(\|\s*title\s*=\s*)(?:https?://)?(?:www\.)?(?=[^|}]*\.)', lambda x: x.group(1), c) if re.search(r'\|\s*title\s*=\s*(?:https?://|www\.)', c) else c
+        c = re.sub(r'\|\s*language\s*=[^|}]*', '', c)
+        c = re.sub(r'\|\s*[\w-]+\s*=\s*(?=\||\}\})', '', c)
+        c = re.sub(r'(\|\s*(?:archive-)?date\s*=)([^|}]*)', lambda x: x.group(1) + _iso_date(x.group(2)), c)
+        if not re.search(r'\|\s*archive-url\s*=\s*\S', c):
+            c = re.sub(r'\|\s*url-status\s*=[^|}]*', '', c)
+        return c
+    return _CITE.sub(fix, text).rstrip('\n') + ('\n' if (text or '').endswith('\n') else '')
+
+
 def redirect_repair_ok(s, title, text):
     """True when saving `text` on a non-pipeline title only shortens a redirect chain into a pipeline page
     (Baird 2026-11-10, "Guangdong Gas Pipeline Network Phase I": a redirect to a redirect strands readers). The
@@ -211,6 +250,8 @@ def save(s, title, text=None, summary='', **kw):
     if text and '~~~' in re.sub(r'(?s)<nowiki>.*?</nowiki>', '', text):
         # MediaWiki turns ~~~ into the editor's signature on save; in a map's lines= it breaks the map (2026-11-10)
         raise ValueError(f'{title}: text holds ~~~, which saves as a signature; refusing to save')
+    if text:
+        text = no_categories(text)
     if not redirect_repair_ok(s, title, text):
         check_pipeline_page(title)
     relinked = []
@@ -224,6 +265,10 @@ def save(s, title, text=None, summary='', **kw):
     r = g.edit_page(s, title, text=text, summary=summary, bot=False, **kw)  # the account has no bot right
     r['map'] = purge_until_ok(s, title)
     r['relinked'] = relinked
+    try:  # a category on the rendered page is reported at once (Baird 2026-11-11: never categories on a pipeline page)
+        r['categories'] = [c['category'] for c in _retry(lambda: g.get(s, action='parse', page=title, prop='categories'))['parse']['categories']]
+    except Exception:
+        r['categories'] = None
     if r.get('result') == 'Success' and 'nochange' not in r:
         wiki_log.record(title, summary, text)   # the backend sheet's 'Wiki overhaul (Nov 2026)' tab; never raises
     return r
