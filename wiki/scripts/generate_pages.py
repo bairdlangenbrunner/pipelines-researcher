@@ -1680,8 +1680,11 @@ def link_background(pg, kept, rows):
 
     # the first cell after each row separator: "|name" or "|style=...|name"
     body = m.group(1)
+    # a link an earlier run put in a hand-made table goes back to the plain name: one anchor per segment, and it
+    # is the Background table's (Chongqing, Guizhou, Heilongjiang, Inner Mongolia, 2026-11-11)
     if tm:
-        body = body[:tm.start(1)] + keep_names(re.sub(first_cell, cell, tbl)) + body[tm.end(1):]
+        body = (BG_LINKED.sub(r"\1", body[:tm.start(1)]) + keep_names(re.sub(first_cell, cell, tbl))
+                + BG_LINKED.sub(r"\1", body[tm.end(1):]))
     # the Background table scrolls in its own box with its header fixed, like the segment table (Baird 2026-11-06)
     body = body.replace('\n<div class="gem-segtail"></div>', "")  # the blank spacer an earlier version put under the table
     if 'class="gem-bgbox"' not in body:
