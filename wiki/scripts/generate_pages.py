@@ -1566,16 +1566,29 @@ def gather_media(pg, kept, replaced, extra_ar):
     return "\n\n".join(parts), extra_ar
 
 
+# a References heading below section level, and the list tags an old References section carried
+REFS_HEADING = re.compile(r"(?im)^===+[ \t]*References[ \t]*===+[ \t]*\n")
+REFS_TAG = re.compile(r"(?im)^[ \t]*(?:<references\s*/?>(?:\s*</references>)?|\{\{\s*reflist[^{}]*\}\})[ \t]*\n?")
+
+
 def fold_other_sections(pg, kept):
     """A page has four sections, Location, Project details, Ownership and Background (Baird 2026-11-07, Kern River;
     no Other sources section, Los Ramones). Any other kept section (Environmental impact, Opposition, Financing ...)
     moves into Background as a subsection, its own subsections one level down, in page order."""
+    kept = REFS_HEADING.sub("", kept)
     secs = split_sections(kept)
     bg, moved = [], []
     for h, _, body in secs[1:]:
         hl = h.lower()
         if hl == "background":
             bg.append(body.strip())
+        elif hl == "references":
+            # an old References section's loose citations stay, at the bottom of Background, with no heading of
+            # their own: the only References heading is the one under Articles and resources (Baird 2026-11-11, Hebei)
+            body = REFS_TAG.sub("", body).strip()
+            if body:
+                bg.append(body)
+            pg.log.append("old References section: heading dropped, its text kept in Background")
         else:
             moved.append((h, re.sub(r"(?m)^(===+)([^=].*?[^=])(===+)\s*$", r"=\1\2\3=", body.strip())))
     if not moved:
