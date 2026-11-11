@@ -1620,6 +1620,30 @@ def link_background(pg, kept, rows):
     unmatched, used = [], set()
 
     by_pid = {r["ProjectID"]: r for r in rows}
+    first_cell = r'(?m)(^\|-\s*\n\|(?:[^|\n]*?=\s*"[^"\n]*"\s*\|)?)([^\n]+)$'
+    # only the Background table's own rows are linked, never a table an editor wrote by hand beside it
+    tm = re.search(r"(?ms)^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}", m.group(1))
+    tbl = tm.group(1) if tm else ""
+    # a blank row an earlier run added for a segment goes, so a row whose name is one word off can take that
+    # segment; blank_background_rows puts it back if nothing does
+    tbl = re.sub(r'(?m)^\|-\s*\n\|[^\n]*id="bg-P\d+"[^\n]*\n\|[^\n]*\n\|[^\S\n]*\n(?=\|-|\Z)', "", tbl)
+    # segments some row names exactly: a near-match never takes one of these (it waits for its own row)
+    exact = set()
+    for mo in re.finditer(first_cell, tbl):
+        old = re.search(r'id="bg-(P\d+)"', mo.group(2))
+        hit = {old.group(1)} if old else keys.get(_key(BG_LINKED.sub(r"\1", mo.group(2)).strip()), set())
+        if len(hit) == 1:
+            exact |= hit
+
+    def linked(pre, pid, name):
+        # the row shows the segment's name exactly as the segment table does (Baird 2026-11-11, Shanxi); the Chinese
+        # name it carried, or an older English name, goes to the first line of the Background cell (keep_names)
+        used.add(pid)
+        lab = label(by_pid[pid], rows)
+        zm = re.search(r"[\u3400-\u9fff“].*[\u3400-\u9fff）)]", name)
+        was = "" if name == lab else (zm.group(0).strip("“” ") if zm and _key(name) == _key(lab) else name)
+        return (f'{pre}<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{lab}]]</span>'
+                + (f"<!--was:{was}-->" if was else ""))
 
     def cell(mo):
         pre, name = mo.group(1), BG_LINKED.sub(r"\1", mo.group(2)).strip()
@@ -1627,17 +1651,37 @@ def link_background(pg, kept, rows):
         # segment (SYSTEM/NETWORK INFO to Main Line on Northwest, 2026-11-09) is not left as a stray row
         old = re.search(r'id="bg-(P\d+)"', mo.group(2))
         if old and old.group(1) in by_pid and old.group(1) not in used:
-            pid = old.group(1); used.add(pid); name = label(by_pid[pid], rows)
-            return f'{pre}<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{name}]]</span>'
+            return linked(pre, old.group(1), name)
         pids = keys.get(_key(name), set())
-        if len(pids) != 1 or next(iter(pids)) in used:
-            unmatched.append(name)
-            return pre + name
-        pid = pids.pop(); used.add(pid)
-        return f'{pre}<span id="bg-{pid}" class="gem-anchor"></span><span title="Click for project details">[[#row-{pid}|{name}]]</span>'
+        if len(pids) == 1 and next(iter(pids)) not in used:
+            return linked(pre, next(iter(pids)), name)
+        # a name one word off a single segment's ("Duanshi–Zhangzi Project Pipeline" for the Coalbed Project Pipeline)
+        near = row_by_name(rows, name)
+        if near and near not in used and near not in exact:
+            pg.log.append(f"Background row '{name}' matched to {near} ({label(by_pid[near], rows)}) by its words")
+            return linked(pre, near, name)
+        unmatched.append(name)
+        return pre + name
+
+    def keep_names(body):
+        out = []
+        for w in re.split(r"(?m)(?=^\|-\s*$)", body):
+            wm = re.search(r"<!--was:(.*?)-->", w)
+            if wm:
+                w = w.replace(wm.group(0), "", 1)
+                was = wm.group(1)
+                squash = lambda t: re.sub(r"[\s\-–—－()（）]", "", t)
+                cm = re.search(r"(?m)^\|[^\S\n]*\n", w[wm.start():])
+                if cm and squash(was) not in squash(w):
+                    at = wm.start() + cm.end()
+                    w = w[:at] + was + "\n\n" + w[at:]
+            out.append(w)
+        return "".join(out)
 
     # the first cell after each row separator: "|name" or "|style=...|name"
-    body = re.sub(r'(?m)(^\|-\s*\n\|(?:[^|\n]*?=\s*"[^"\n]*"\s*\|)?)([^\n]+)$', cell, m.group(1))
+    body = m.group(1)
+    if tm:
+        body = body[:tm.start(1)] + keep_names(re.sub(first_cell, cell, tbl)) + body[tm.end(1):]
     # the Background table scrolls in its own box with its header fixed, like the segment table (Baird 2026-11-06)
     body = body.replace('\n<div class="gem-segtail"></div>', "")  # the blank spacer an earlier version put under the table
     if 'class="gem-bgbox"' not in body:
@@ -2135,20 +2179,27 @@ BG_HEAD = r"(?ms)^(\{\|[^\n]*\n)%s(!Segment\n!Status\n!Background\n)(.*?)^\|\}"
 
 
 def number_background(text):
-    """A running number in the Background table's first column, like the segment table's (Baird 2026-11-08).
-    It is added last and stripped again by strip_background_numbers when a live page is read back in."""
+    """The Background table's first column carries each segment's number from the segment table, so the two tables
+    match (Baird 2026-11-08; by segment, not by position, 2026-11-11, Shanxi). A row that names no segment gets a
+    dash. With no segment table to read, a running number. Stripped again by strip_background_numbers."""
+    seg = {}
+    for pid in re.findall(r'<span id="row-(P\d+)"', text):
+        seg.setdefault(pid, len(seg) + 1)
+
     def f(m):
         n = [0]
 
-        def row(_):
+        def row(mo):
             n[0] += 1
-            return f'|-\n|{n[0]}\n|style="background-color:{UNIT_GRAY}"|'
-        return m.group(1) + "!#\n" + m.group(2) + re.sub(r"(?m)^\|-\n\|", row, m.group(3)) + "|}"
+            pm = re.search(r'id="bg-(P\d+)"', mo.group(1))
+            k = (seg.get(pm.group(1), "–") if pm else "–") if seg else n[0]
+            return f'|-\n|{k}\n|style="background-color:{UNIT_GRAY}"|{mo.group(1)}'
+        return m.group(1) + "!#\n" + m.group(2) + re.sub(r"(?m)^\|-\n\|([^\n]*)", row, m.group(3)) + "|}"
     return re.sub(BG_HEAD % "", f, text)
 
 
 def strip_background_numbers(text):
-    return re.sub(BG_HEAD % r"!#\n", lambda m: m.group(1) + m.group(2) + re.sub(r"(?m)^\|-\n\|\d+\n\|", "|-\n|", m.group(3)) + "|}", text)
+    return re.sub(BG_HEAD % r"!#\n", lambda m: m.group(1) + m.group(2) + re.sub(r"(?m)^\|-\n\|(?:\d+|–)\n\|", "|-\n|", m.group(3)) + "|}", text)
 
 
 def unshade(text):
@@ -2159,17 +2210,36 @@ def unshade(text):
 
 
 def shade_first_column(text):
-    """In every wikitable: column-title cells get HEAD_GRAY, and the unit-name cell of each body row
-    (its first cell that is not a route-shape image) gets UNIT_GRAY. A cell already styled is left alone."""
-    out, in_tab, want, skip, shape_col, first_head = [], False, False, False, False, False
-    for line in text.split("\n"):
-        if line.startswith('{| class="wikitable'):
-            in_tab, shape_col, first_head = True, False, True
-            if "style=" not in line:
-                line = re.sub(r'"$', f'" style="font-size:{TABLE_FONT}"', line.rstrip())
-        elif line.startswith("|}"):
-            in_tab = want = False
-        elif in_tab and line.startswith("|-"):
+    """In every wikitable this generator builds: column-title cells get HEAD_GRAY, and the unit-name cell of each body
+    row (its first cell that is not a route-shape image) gets UNIT_GRAY. A cell already styled is left alone.
+    A table an editor wrote by hand is left exactly as it is (Baird 2026-11-11, Zhejiang: the shading broke the
+    colspan heading rows of the five-year-plan table): that is any table inside Background other than the Background
+    table itself, and any table nested in another table's cell."""
+    out, want, skip, shape_col, first_head = [], False, False, False, False
+    stack, in_bg = [], False
+    lines = text.split("\n")
+    for i, line in enumerate(lines):
+        if re.match(r"==[^=]", line):
+            in_bg = bool(re.match(r"==\s*Background\s*==", line))
+        if line.startswith("{|"):
+            ours = line.startswith('{| class="wikitable') and not stack
+            if ours and in_bg:
+                heads = [x for x in lines[i + 1:i + 6] if x.startswith("!")]
+                ours = [h.split("|")[-1].strip() for h in heads[:4]] in (["#", "Segment", "Status", "Background"], ["Segment", "Status", "Background"])
+            stack.append(ours)
+            if ours:
+                shape_col, first_head, want = False, True, False
+                if "style=" not in line:
+                    line = re.sub(r'"$', f'" style="font-size:{TABLE_FONT}"', line.rstrip())
+            out.append(line)
+            continue
+        if line.startswith("|}") and stack:
+            stack.pop()
+            want = False
+            out.append(line)
+            continue
+        in_tab = len(stack) == 1 and stack[0]
+        if in_tab and line.startswith("|-"):
             want, skip = True, shape_col
         elif in_tab and line.startswith("!") and first_head and line.endswith("|Route"):
             shape_col, first_head = True, False   # the route-shape column: body cells start one later
@@ -2557,8 +2627,16 @@ def main():
         if not rows:
             report += [f"## {name}", "", "No tracker rows point at this page.", ""]
             continue
+        # a Wiki cell can still name a title the page was moved from (Shanxi, 2026-11-11: the new page was saved over
+        # the redirect and the moved page stayed old). The page is read, built and saved at its current title.
+        asked = name
+        q = GW.get(s, action="query", titles=name, redirects=1, formatversion=2).get("query", {})
+        if q.get("redirects"):
+            name = q["redirects"][-1]["to"]
         live = GW.page_text(s, name) or ""
         text, pg = build(name, rows, owners, live, a.tracker)
+        if name != asked:
+            pg.log.append(f"the Wiki cell names '{asked}', a redirect; built and saved at its current title '{name}' (the sheet's Wiki cell needs the new title)")
         lost = audit_refs(pg, live, text)
         fn = re.sub(r"[^\w.-]+", "_", name)
         open(os.path.join(out, fn + ".txt"), "w").write(text)
