@@ -1668,9 +1668,17 @@ def row_by_name(rows, h, strict=False):
     hw = _name_words(h)
     sc = sorted(((max(_fuzzy_jaccard(hw, _name_words(n)) for n in (label(r, rows), r["SegmentName"], r.get("OtherEnglishNames", "")) if n), r["ProjectID"])
                  for r in rows), reverse=True)
-    if not sc or sc[0][0] < (1.0 if strict else 0.5) or (len(sc) > 1 and sc[1][0] >= sc[0][0]):
-        return None
-    return sc[0][1]
+    if sc and sc[0][0] >= (1.0 if strict else 0.5) and not (len(sc) > 1 and sc[1][0] >= sc[0][0]):
+        return sc[0][1]
+    if not strict:
+        # a short heading whose every word sits in one row's longer name ("East Trunk Line" for "Shandong Gas Pipeline
+        # Network East Trunk", Baird 2026-11-11, Shandong); two words or more, one row only
+        gen = {"line", "network", "main", "system"}
+        core = {w for w in hw if w not in gen}
+        hit = [r["ProjectID"] for r in rows if len(core) >= 2 and core <= set(_name_words(label(r, rows)))]
+        if len(hit) == 1:
+            return hit[0]
+    return None
 
 
 def row_by_text(rows, txt):
@@ -1792,6 +1800,19 @@ def merge_background_into_table(pg, kept, rows):
         pid = row_by_name(rows, s_["h"])
         pid = pid if pid in slot else None
         why = f"subsection '{s_['name']}'"
+        if not pid and not inherit:
+            # one pipeline recorded as several sections ("X (Shanghai Section)", "X (Suzhou Section)"): the subsection
+            # is about all of them, so the text goes in the first row and the others point to it (Baird 2026-11-11)
+            base = lambda x: " ".join(_name_words(re.sub(r"\s*\([^)]*\)\s*$", "", x)))
+            want = base(CJK.sub("", HREF.sub("", s_["h"])))
+            fam = [r["ProjectID"] for r in rows if r["ProjectID"] in slot and want and base(label(r, rows)) == want
+                   and base(label(r, rows)) != " ".join(_name_words(label(r, rows)))]
+            if len(fam) >= 2:
+                first = fam[0]
+                place(first, with_heading(s_["txt"], s_["h"]), why + " (first of its sections)")
+                for q in fam[1:]:
+                    place(q, f"The background for this section is with [[#bg-{first}|the {label(next(r for r in rows if r['ProjectID'] == first), rows)} row]], since one description covers all its sections.", why + " (pointer)")
+                return [s_["tail"]], e
         if pid or inherit:
             if pid:
                 place(pid, with_heading(s_["txt"], s_["h"]), why)
