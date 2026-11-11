@@ -270,7 +270,10 @@ def main():
     s = GW.session()
     df = live_rows()
     former = entry.get("former_name", "")
-    old = GW.page_text(s, former) if former else ""
+    try:   # a former name the registry carries for a page that was never made (Sichuan) is no former page
+        old = GW.page_text(s, former) if former else ""
+    except GW.WikiError:
+        old = ""
     old_is_network = bool(old) and "==Pipelines==" in old
     if old_is_network:
         FORMER.add(former)
