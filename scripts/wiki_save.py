@@ -152,7 +152,19 @@ def redirect_repair_ok(s, title, text):
         return False
     q = _retry(lambda: g.get(s, action='query', titles=title, redirects=1, prop='info'))['query']
     chain = q.get('redirects', [])
-    return bool(chain) and chain[-1]['to'] == m.group(1).strip()
+    if chain:
+        return chain[-1]['to'] == m.group(1).strip()
+    # a redirect written without its # ("Redirect [[Tianjin Gas Pipeline Network]]") shows as text and sends no
+    # one anywhere (Baird 2026-11-10); making it a real #REDIRECT to the same pipeline page, or to where that
+    # page now redirects, is the same repair
+    cur = _retry(lambda: g.get(s, action='query', prop='revisions', titles=title, rvprop='content', rvslots='main'))['query']['pages'][0]
+    old = ((cur.get('revisions') or [{}])[0].get('slots', {}).get('main', {}).get('content') or '')
+    bm = re.search(r'(?mi)^[^\S\n]*redirect\s*(?:to)?\s*:?\s*\[\[([^\]|#]+)', old)
+    if not bm or old.lstrip().upper().startswith('#REDIRECT'):
+        return False
+    t = _retry(lambda: g.get(s, action='query', titles=bm.group(1).strip(), redirects=1))['query']
+    final = (t.get('redirects') or [{'to': (t.get('normalized') or [{'to': bm.group(1).strip()}])[-1]['to']}])[-1]['to']
+    return final == m.group(1).strip()
 
 
 def _retry(fn, n=6, wait=10):

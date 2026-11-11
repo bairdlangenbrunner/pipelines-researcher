@@ -1446,11 +1446,43 @@ def layout_media(pg, kept):
             kept = kept[:a].rstrip(" ") + "\n" + mk + kept[b:]
         elif after.strip() and not strip_media(before):      # leading: only pictures, then text
             kept = kept[:b] + "\n" + kept[b:].lstrip(" ")
+    media_line = lambda l: bool(l.strip()) and not re.sub(r"\s+", "", "".join(
+        l.replace(t, "") for _, _, t in [(0, 0, x[2]) for x in find_media(l)]).strip()) and bool(find_media(l))
+    # two or more pictures under one heading with text between them would each float and stack down the right edge
+    # (Baird 2026-11-10, Yunnan's Network Background): they are gathered into one run at the top of that section,
+    # which the run rule below sets side by side
+    spans = table_spans(kept)
+    lines, pos, secs, cur = kept.split("\n"), 0, [], []
+    for l in lines:
+        if re.match(r"={2,}[^=\n].*=+\s*$", l) and not inside(pos):
+            secs.append(cur); cur = []
+        cur.append((l, inside(pos)))
+        pos += len(l) + 1
+    secs.append(cur)
+    lines, n_gathered = [], 0
+    for sec in secs:
+        head = 1 if sec and re.match(r"={2,}", sec[0][0]) else 0
+        free = "\n".join("" if tab else l for l, tab in sec[head:])     # the section with its table lines blanked
+        found = find_media(free)
+        between = "".join(free[x[1]:y[0]] for x, y in zip(found, found[1:]))
+        if len(found) >= 2 and between.strip():
+            # every picture, one in the middle of a paragraph included, leaves its place
+            body = []
+            for l, tab in sec[head:]:
+                if not tab:
+                    for _, _, mk in find_media(l):
+                        l = l.replace(mk, "", 1)
+                    if not l.strip() and body and not body[-1].strip():
+                        continue
+                body.append(l)
+            lines += [sec[k][0] for k in range(head)] + [mk for _, _, mk in found] + [""] + body
+            n_gathered += 1
+        else:
+            lines += [l for l, _ in sec]
+    kept = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)) if n_gathered else kept
     spans = table_spans(kept)
     # runs of whole-line pictures
     lines = kept.split("\n")
-    media_line = lambda l: bool(l.strip()) and not re.sub(r"\s+", "", "".join(
-        l.replace(t, "") for _, _, t in [(0, 0, x[2]) for x in find_media(l)]).strip()) and bool(find_media(l))
     def prose(l):
         # running text a floated picture can wrap with: not a table, div, heading or comment line, and not a bare
         # bold label (an old sub-heading kept as a line, such as Phase I on Pearl River Delta) once its refs are set aside
@@ -1605,6 +1637,206 @@ def blank_background_rows(pg, kept, rows):
     return kept[:tm.start(1)] + head + "".join(w if w.endswith("\n") else w + "\n" for w in rws) + kept[tm.end(1):]
 
 
+LEAD_SUB = re.compile(r"(?mi)^===\s*(?:(?:network|system|pipeline|project)\s+)?(?:background|overview)\s*===\s*\n")
+CJK = re.compile(r"[　-〿㐀-鿿＀-￯“”]+")
+NAME_STOP = {"gas", "pipeline", "pipelines", "natural", "the", "and", "of", "project", "section", "county", "district", "to"}
+HREF = re.compile(r"<ref(?:\s[^>]*)?/>|<ref(?:\s[^>]*)?>.*?</ref>", re.S)
+
+
+def _name_words(s):
+    s = CJK.sub(" ", HREF.sub(" ", BG_LINKED.sub(r"\1", s or "")))
+    return [w for w in re.findall(r"[a-z0-9]+", s.lower()) if w not in NAME_STOP]
+
+
+def _fuzzy_jaccard(a, b):
+    import difflib
+    a, b = set(a), set(b)
+    if not a or not b:
+        return 0.0
+    hit = sum(1 for x in a if any(x == y or (len(x) > 4 and difflib.SequenceMatcher(None, x, y).ratio() >= 0.85) for y in b))
+    return hit / (len(a) + len(b) - hit)
+
+
+def row_by_name(rows, h, strict=False):
+    """ProjectID for a heading or table name that names one segment: segment_matcher first, then a word match that
+    forgives Chinese text, refs and small typos in the heading ("Lanzou-Dingxi" for Lanzhou-Dingxi, Gansu 2026-11-10)."""
+    pid = segment_matcher(rows)(CJK.sub("", HREF.sub("", BG_LINKED.sub(r"\1", h))).strip())
+    if pid:
+        return pid
+    hw = _name_words(h)
+    sc = sorted(((max(_fuzzy_jaccard(hw, _name_words(n)) for n in (label(r, rows), r["SegmentName"], r.get("OtherEnglishNames", "")) if n), r["ProjectID"])
+                 for r in rows), reverse=True)
+    if not sc or sc[0][0] < (1.0 if strict else 0.5) or (len(sc) > 1 and sc[1][0] >= sc[0][0]):
+        return None
+    return sc[0][1]
+
+
+def row_by_text(rows, txt):
+    """A subsection whose heading names no segment ("Gannan Gas Supply Pipeline") goes to the one segment whose every
+    name word its first paragraph states ("the Linxia-Hezuo Main Line and the Xiahe Branch"); 3+ words, one row only."""
+    words = set(_name_words(re.split(r"\n\s*\n", txt.strip(), 1)[0]))
+    hit = [r["ProjectID"] for r in rows if len(set(_name_words(label(r, rows)))) >= 3 and set(_name_words(label(r, rows))) <= words]
+    return hit[0] if len(hit) == 1 else None
+
+
+def merge_background_into_table(pg, kept, rows):
+    """On a tabbed page every bit of Background about one segment sits in that segment's row of the Background table
+    (Baird 2026-11-10, Gansu). A "Network background" subsection is about the whole network and stays as it is.
+    Every other subsection, and every row of a second Background table an older
+    run left, joins the row of the segment it names; a bold line inside it that names another segment takes the text
+    under it to that segment's row. A heading's refs go to the end of the first paragraph; its Chinese name is kept as
+    the first line. Anything that names no single segment stays where it is and is logged."""
+    m = BG_SECTION.search(kept)
+    if not m:
+        return kept
+    body = m.group(1)
+    tables = list(re.finditer(r"(?ms)(?:^<div class=\"gem-bgbox\">\n)?^\{\|[^\n]*\n!Segment\n!Status\n!Background\n(.*?)^\|\}(?:\n</div>)?\n?", body))
+    if not tables:
+        return kept
+    main = tables[0]
+    rws = re.split(r"(?m)(?=^\|-\s*$)", main.group(1))
+    head, rws = rws[0], rws[1:]
+    slot = {}
+    for i, w in enumerate(rws):
+        a = re.search(r'id="bg-(P\d+)"', w)
+        if a:
+            slot[a.group(1)] = i
+    add = collections.defaultdict(list)
+    log = []
+
+    def place(pid, txt, why):
+        # bold-only lines that name another segment carry the text under them to that segment
+        chunks, cur, cur_pid = [], [], pid
+        for line in txt.split("\n"):
+            bm = re.match(r"^'''(.+?)'''\s*((?:<ref[^\n]*)?)$", line.strip())
+            other = row_by_name(rows, bm.group(1), strict=True) if bm else None
+            if other and other != cur_pid and other in slot:
+                chunks.append((cur_pid, "\n".join(cur)))
+                refs, zh = heading_bits(bm.group(1))
+                cur, cur_pid = [x for x in (zh, refs + bm.group(2)) if x], other
+                continue
+            cur.append(line)
+        chunks.append((cur_pid, "\n".join(cur)))
+        for p, t in chunks:
+            t = re.sub(r"<div style=\"clear:both\"></div>", "", t).strip()
+            if t and t != "–":
+                add[p].append(t)
+                log.append(f"{why} -> {p}")
+            elif p != pid:
+                log.append(f"{why} (empty) -> {p}")
+
+    def heading_bits(h):
+        # the Chinese name: from its first Chinese character to its last, punctuation inside kept (兰州—定西输气管道)
+        refs, bare = "".join(HREF.findall(h)), HREF.sub("", h)
+        zm = re.search(r"[\u3400-\u9fff“].*[\u3400-\u9fff）)]", bare)
+        return refs, (zm.group(0).strip("“” ") if zm else "")
+
+    def with_heading(txt, h, keep_name=False):
+        refs, zh = heading_bits(h)
+        txt = re.sub(r"(?m)^====+\s*(.*?)\s*=+\s*$", r"'''\1'''", txt.strip())
+        if keep_name:
+            # matched by its text, so its heading is another name for the segment: kept whole as a bold line
+            return f"'''{HREF.sub('', h).strip()}'''{refs}\n\n{txt}".strip()
+        if refs:
+            # on the first paragraph that is prose, not a picture alone
+            paras = re.split(r"(\n\s*\n)", txt)
+            k = next((i for i in range(0, len(paras), 2) if re.sub(r"\[\[\s*File:[^\]]*\]\]|<[^>]+>", "", paras[i]).strip()), 0)
+            paras[k] = paras[k].rstrip() + refs
+            txt = "".join(paras)
+        return (zh + "\n\n" + txt if zh and txt else zh or txt).strip()
+
+    # extra Background tables an older run left: each row joins its segment's row in the main table
+    rest = body[:main.start()] + "\x00MAIN\x00" + body[main.end():]
+    for t in tables[1:]:
+        left = []
+        for part in re.split(r"(?m)^\|-\s*\n", t.group(1))[1:]:
+            cm = re.match(r"(?s)\|(?:style=\"[^\"]*\"\|)?([^\n]*)\n\|[^\n]*\n\|\n?(.*)", part)
+            pid = row_by_name(rows, cm.group(1)) if cm else None
+            if pid in slot:
+                place(pid, with_heading(cm.group(2), cm.group(1)), "old table row " + _name_words(cm.group(1))[0])
+            else:
+                left.append("|-\n" + part)
+        rest = rest.replace(t.group(0), "" if not left else "{| class=\"wikitable\"\n!Segment\n!Status\n!Background\n" + "".join(left) + "|}\n")
+        if left:
+            pg.log.append(f"Background: {len(left)} rows of an older Background table name no segment, left in place")
+    # subsections, at any depth: a group heading (Guizhou's "Trunk lines" over its ==== segments) hands each
+    # child to its own row; an unmatched child of a matched section goes along with its parent
+    hs = list(re.finditer(r"(?m)^(={3,})\s*([^=\n].*?)\s*\1[ \t]*$\n?", rest))
+    out = [rest[:hs[0].start()] if hs else rest]
+    secs = []
+    for k, hm in enumerate(hs):
+        txt = rest[hm.end():hs[k + 1].start() if k + 1 < len(hs) else len(rest)]
+        tail = ""
+        am = ADDITIONAL.search(txt)
+        if am:
+            txt, tail = txt[:am.start()], txt[am.start():]
+        h = hm.group(2).replace("'''", "").strip()
+        secs.append(dict(level=len(hm.group(1)), line=hm.group(0).rstrip("\n") + "\n", h=h, txt=txt, tail=tail,
+                         name=CJK.sub("", HREF.sub("", h)).strip()))
+
+    def end_of(i):
+        j = i + 1
+        while j < len(secs) and secs[j]["level"] > secs[i]["level"]:
+            j += 1
+        return j
+
+    def raw(i, e):
+        return [x for s_ in secs[i:e] for x in (s_["line"], s_["txt"] + s_["tail"])]
+
+    def handle(i, inherit=None):
+        s_, e = secs[i], end_of(i)
+        if inherit is None and LEAD_SUB.match(s_["line"].replace("=" * s_["level"], "===")):
+            return raw(i, e), e   # about the whole network: stays as it is (Baird 2026-11-10)
+        pid = row_by_name(rows, s_["h"])
+        pid = pid if pid in slot else None
+        why = f"subsection '{s_['name']}'"
+        if pid or inherit:
+            if pid:
+                place(pid, with_heading(s_["txt"], s_["h"]), why)
+            else:
+                place(inherit, with_heading(s_["txt"], s_["h"], keep_name=True), why + " (with the section above it)")
+            o, j = [s_["tail"]], i + 1
+            while j < e:
+                oo, j = handle(j, pid or inherit)
+                o += oo
+            return o, e
+        if e == i + 1:
+            pid = row_by_text(rows, s_["txt"])
+            if pid in slot:
+                place(pid, with_heading(s_["txt"], s_["h"], keep_name=True), why + " (by its text)")
+                return [s_["tail"]], e
+            pg.log.append(f"Background: subsection names no single segment, left as a subsection: {s_['name']}")
+            return raw(i, e), e
+        o, j = [], i + 1
+        while j < e:
+            oo, j = handle(j)
+            o += oo
+        if s_["txt"].strip() or any(x.strip() for x in o):
+            pg.log.append(f"Background: group heading kept: {s_['name']}")
+            return [s_["line"], s_["txt"] + s_["tail"]] + o, e
+        log.append(f"group heading '{s_['name']}' dropped, its segments moved")
+        return [s_["tail"]] + o, e
+
+    i = 0
+    while i < len(secs):
+        o, i = handle(i)
+        out += o
+    rest = "".join(out)
+    if not add:
+        return kept
+    for pid, texts in add.items():
+        w = rws[slot[pid]].rstrip("\n")
+        # an empty cell is a bare "|" line; text already in the cell gets a blank line before the new text
+        w = w + ("\n" if w.endswith("\n|") else "\n\n") + "\n\n".join(texts)
+        rws[slot[pid]] = w + "\n"
+    tbl = main.group(0)
+    new_tbl = tbl[:main.start(1) - main.start()] + head + "".join(rws) + tbl[main.end(1) - main.start():]
+    rest = rest.replace("\x00MAIN\x00", new_tbl)
+    rest = re.sub(r"\n{3,}", "\n\n", rest).lstrip("\n")
+    pg.log.append("Background folded into the table: " + "; ".join(log))
+    return kept[:m.start(1)] + rest + kept[m.end(1):]
+
+
 BG_SECTION = re.compile(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)")
 
 
@@ -1638,6 +1870,19 @@ def ensure_background(pg, kept, rows):
         pg.log.append("Background: empty segment table added")
         return kept[:m.start(1)] + body + kept[m.end(1):]
     find = segment_matcher(rows)
+    # a subsection heading that is the segment's name with another dash, spacing or case takes the name the tables
+    # show, so the page does not read as two pipelines (Baird 2026-11-10, Tianjin: Dagang-Cangzhou 406)
+    by_pid = {r["ProjectID"]: label(r, rows) for r in rows}
+    loose = lambda x: re.sub(r"\s+", " ", re.sub(r"\s*[-\u2010-\u2015\u2212]\s*", "-", x.replace("'''", ""))).strip().lower()
+    def rename(hm):
+        pid = find(hm.group(1))
+        if pid and hm.group(1) != by_pid[pid] and loose(hm.group(1)) == loose(by_pid[pid]):
+            pg.log.append(f"{pid}: Background heading '{hm.group(1)}' written as the tracker's '{by_pid[pid]}'")
+            return f"==={by_pid[pid]}==="
+        return hm.group(0)
+    body = re.sub(r"(?m)^===\s*([^=].*?)\s*===[ \t]*$", rename, body)
+    kept = kept[:m.start(1)] + body + kept[m.end(1):]
+    m = BG_SECTION.search(kept)
     heads = [(hm, find(hm.group(1))) for hm in re.finditer(r"(?m)^===\s*([^=].*?)\s*===\s*$", body)]
     have = {pid for _, pid in heads if pid}
     missing = [r for r in rows if r["ProjectID"] not in have]
@@ -2017,6 +2262,7 @@ def build(name, rows, owners, live, tracker):
         kept = ensure_background(pg, kept, rows)
         kept = link_background(pg, kept, rows)
         kept = blank_background_rows(pg, kept, rows)
+        kept = merge_background_into_table(pg, kept, rows)
     else:
         kept = background_subsections(pg, kept)
         kept = ensure_background(pg, kept, rows)
