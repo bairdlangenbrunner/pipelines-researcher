@@ -1423,6 +1423,57 @@ def table_spans(txt):
     return out
 
 
+REFS_ONLY = re.compile(r"(?:\s*<ref[^>]*/>|\s*<ref[^>]*>.*?</ref>)+\s*")
+
+
+def unwrap_rows(kept):
+    """Take apart the picture rows an earlier run made. A row is its opening div line, picture lines, and the next
+    line starting with </div>, never anything further on: a pattern that ran to the next bare </div> line once
+    paired one row's opening with a later row's closing, and with the Background box's own, so Articles and
+    resources scrolled inside the box (Liaoning, Baird 2026-11-13). Refs an earlier run put after a row's closing
+    div go to the end of the text line above the pictures. A closing div left with refs after it and no opening,
+    and an opening left with no closing, are that old damage and are dropped."""
+    is_media = lambda l: bool(MEDIA_OPEN.match(l.strip()))
+    lines, out, i = kept.split("\n"), [], 0
+
+    def give_refs(refs):
+        # the nearest line above that is text, in the same cell; a line of their own when there is none
+        for k in range(len(out) - 1, -1, -1):
+            l = out[k]
+            if not l.strip() or is_media(l):
+                continue
+            if not re.match(r"\s*(\{\||\||!|<div|</div>|=)", l):
+                out[k] = l.rstrip() + refs
+                return
+            break
+        out.append(refs)
+
+    while i < len(lines):
+        l = lines[i]
+        if l.startswith('<div class="gem-imgrow"'):
+            j = i + 1
+            while j < len(lines) and (is_media(lines[j]) or not lines[j].strip()):
+                j += 1
+            closed = j < len(lines) and lines[j].startswith("</div>")
+            out += [set_align(x, None) if is_media(x) else x for x in lines[i + 1:j]]
+            if closed:
+                tail = lines[j][len("</div>"):].strip()
+                if tail and REFS_ONLY.fullmatch(tail):
+                    give_refs(tail)
+                elif tail:
+                    out.append(tail)
+                j += 1
+            i = j
+            continue
+        if l.startswith("</div><ref") and REFS_ONLY.fullmatch(l[len("</div>"):]):
+            give_refs(l[len("</div>"):].strip())
+            i += 1
+            continue
+        out.append(l)
+        i += 1
+    return "\n".join(out)
+
+
 def layout_media(pg, kept):
     """How pictures sit in Background (Baird 2026-11-10, Guangdong East and Pearl River Delta):
     - a picture inside a table cell is centered in the cell;
@@ -1433,9 +1484,7 @@ def layout_media(pg, kept):
       picture floats right when text follows it, so the text wraps around it, and sits in a row otherwise.
     Idempotent: rows an earlier run made are taken apart and decided again."""
     # undo earlier rows
-    def unwrap(m):
-        return "\n".join(set_align(l, None) if MEDIA_OPEN.match(l.strip()) else l for l in m.group(1).split("\n"))
-    kept = re.sub(r"(?ms)^<div class=\"gem-imgrow\"[^>]*>\n(.*?)\n</div>$", unwrap, kept)
+    kept = unwrap_rows(kept)
     spans = table_spans(kept)
     inside = lambda a: any(s <= a < e for s, e in spans)
     n_center = 0
@@ -1687,8 +1736,9 @@ def link_background(pg, kept, rows):
                 + BG_LINKED.sub(r"\1", body[tm.end(1):]))
     # the Background table scrolls in its own box with its header fixed, like the segment table (Baird 2026-11-06)
     body = body.replace('\n<div class="gem-segtail"></div>', "")  # the blank spacer an earlier version put under the table
-    if 'class="gem-bgbox"' not in body:
-        body = re.sub(r"(?ms)^(\{\|[^\n]*\n!Segment\n.*?^\|\})", r'<div class="gem-bgbox">\n\1\n</div>', body, count=1)
+    # the box is taken off and put back, so one that lost its closing div gets it again (Liaoning, 2026-11-13)
+    body = re.sub(r'(?m)^<div class="gem-bgbox">\n(?=\{\|)', "", body)
+    body = re.sub(r"(?ms)^(\{\|[^\n]*\n!Segment\n.*?^\|\})(?:\n</div>)?", r'<div class="gem-bgbox">\n\1\n</div>', body, count=1)
     pg.bg |= used
     pg.log.append(f"Background links: {len(used)} rows linked to the segment table" + (f"; no single segment matched {', '.join(unmatched)}" if unmatched else ""))
     return kept[:m.start(1)] + body + kept[m.end(1):]
@@ -1735,6 +1785,14 @@ def _fuzzy_jaccard(a, b):
     a, b = set(a), set(b)
     if not a or not b:
         return 0.0
+    # one name written as one word here and two there ("Xinsanpi" and "Xin Sanpi", Grand Loop Line 2026-11-13) is one word
+    def joined(short, long_):
+        for x in [w for w in short if w not in long_]:
+            pair = next(((p, q) for p in long_ for q in long_ if p != q and p + q == x), None)
+            if pair:
+                long_ = (long_ - set(pair)) | {x}
+        return long_
+    a, b = joined(b, a), joined(a, b)
     hit = sum(1 for x in a if any(x == y or (len(x) > 4 and difflib.SequenceMatcher(None, x, y).ratio() >= 0.85) for y in b))
     return hit / (len(a) + len(b) - hit)
 
@@ -1742,12 +1800,20 @@ def _fuzzy_jaccard(a, b):
 def row_by_name(rows, h, strict=False):
     """ProjectID for a heading or table name that names one segment: segment_matcher first, then a word match that
     forgives Chinese text, refs and small typos in the heading ("Lanzou-Dingxi" for Lanzhou-Dingxi, Gansu 2026-11-10)."""
-    pid = segment_matcher(rows)(CJK.sub("", HREF.sub("", BG_LINKED.sub(r"\1", h))).strip())
-    if pid:
-        return pid
+    clean = CJK.sub("", HREF.sub("", BG_LINKED.sub(r"\1", h))).strip()
+    pid = segment_matcher(rows)(clean)
     hw = _name_words(h)
     sc = sorted(((max(_fuzzy_jaccard(hw, _name_words(n)) for n in (label(r, rows), r["SegmentName"], r.get("OtherEnglishNames", "")) if n), r["ProjectID"])
                  for r in rows), reverse=True)
+    if pid:
+        # a prefix match is the weakest one: "Pengzhou-Dujiangyan Second Gas Pipeline - D325" starts with the name of
+        # the proposed "Pengzhou-Dujiangyan Gas Pipeline" but is the "D325" row (CNPC Sichuan 2026-11-13). A row that
+        # shares more words with the heading than the prefix row does, alone at the top, wins.
+        exact = any(clean.lower() == n.strip().lower() for r in rows for n in (label(r, rows), r["SegmentName"]) if n.strip())
+        mine = next(s_ for s_, p_ in sc if p_ == pid)
+        if not exact and sc[0][1] != pid and sc[0][0] >= 0.5 and sc[0][0] > mine and not (len(sc) > 1 and sc[1][0] >= sc[0][0]):
+            return sc[0][1]
+        return pid
     if sc and sc[0][0] >= (1.0 if strict else 0.5) and not (len(sc) > 1 and sc[1][0] >= sc[0][0]):
         return sc[0][1]
     if not strict:
@@ -1862,7 +1928,14 @@ def merge_background_into_table(pg, kept, rows):
             # on the first paragraph that is prose, not a picture alone
             paras = re.split(r"(\n\s*\n)", txt)
             k = next((i for i in range(0, len(paras), 2) if re.sub(r"\[\[\s*File:[^\]]*\]\]|<[^>]+>", "", paras[i]).strip()), 0)
-            paras[k] = paras[k].rstrip() + refs
+            # at the end of that paragraph's last line of text, never after a picture or a picture row's closing div
+            pl = paras[k].rstrip().split("\n")
+            t = next((i for i in range(len(pl) - 1, -1, -1) if re.sub(r"\[\[\s*File:[^\]]*\]\]|<[^>]+>", "", pl[i]).strip()), None)
+            if t is None and zh:
+                zh += refs
+            else:
+                pl[t if t is not None else len(pl) - 1] += refs
+            paras[k] = "\n".join(pl)
             txt = "".join(paras)
         return (zh + "\n\n" + txt if zh and txt else zh or txt).strip()
 
@@ -1891,6 +1964,15 @@ def merge_background_into_table(pg, kept, rows):
         am = ADDITIONAL.search(txt)
         if am:
             txt, tail = txt[:am.start()], txt[am.start():]
+        # a hand-made table under a subsection never goes into a Background cell: a table inside the cell ends the
+        # Background table early for every pass that reads it, and its rows were sorted in among the segments'
+        # (Sichuan & Chongqing Grand Loop Line, 2026-11-13). It stays where it is, under the Background table.
+        spans = table_spans(txt)
+        if spans:
+            tail = "".join(txt[a:b].strip("\n") + "\n\n" for a, b in spans) + tail
+            for a, b in reversed(spans):
+                txt = txt[:a] + txt[b:]
+            pg.log.append(f"Background: {len(spans)} hand-made table(s) under '{hm.group(2)[:40]}' left under the Background table, not folded into a cell")
         h = hm.group(2).replace("'''", "").strip()
         secs.append(dict(level=len(hm.group(1)), line=hm.group(0).rstrip("\n") + "\n", h=h, txt=txt, tail=tail,
                          name=CJK.sub("", HREF.sub("", h)).strip()))
@@ -1911,11 +1993,14 @@ def merge_background_into_table(pg, kept, rows):
         pid = row_by_name(rows, s_["h"])
         pid = pid if pid in slot else None
         why = f"subsection '{s_['name']}'"
-        if not pid and not inherit:
+        if not inherit:
             # one pipeline recorded as several sections ("X (Shanghai Section)", "X (Suzhou Section)"): the subsection
-            # is about all of them, so the text goes in the first row and the others point to it (Baird 2026-11-11)
-            base = lambda x: " ".join(_name_words(re.sub(r"\s*\([^)]*\)\s*$", "", x)))
-            want = base(CJK.sub("", HREF.sub("", s_["h"])))
+            # is about all of them, so the text goes in the first row and the others point to it (Baird 2026-11-11).
+            # Full-width brackets count, and a heading that is the shared name alone is about all the sections even
+            # when the word match prefers one of them (Grand Loop Line's Xin Sanpi and Pidu sections, 2026-11-13).
+            base = lambda x: " ".join(_name_words(re.sub(r"\s*[(（][^)）]*[)）]\s*$", "", x)))
+            hname = HREF.sub("", s_["h"])
+            want = base(CJK.sub("", hname)) if not re.search(r"[(（]", hname) else ""
             fam = [r["ProjectID"] for r in rows if r["ProjectID"] in slot and want and base(label(r, rows)) == want
                    and base(label(r, rows)) != " ".join(_name_words(label(r, rows)))]
             if len(fam) >= 2:
@@ -2406,6 +2491,8 @@ def build(name, rows, owners, live, tracker):
     kept, extra_ar, replaced = preserved(pg, live)
     # a map sketch an earlier run moved into Background by mistake goes; it belongs only under the map (2026-11-10)
     kept = re.sub(r"(?m)^[ \t]*\[\[\s*File\s*:\s*Map sketch [^\]]*\]\][ \t]*\n?", "", kept)
+    # picture rows come apart before anything reads the Background table; layout_media sets them again at the end
+    kept = unwrap_rows(kept)
     kept = strip_background_numbers(unshade(kept))
     kept, gone = fold_expansions(pg, kept, rows)
     kept, gone2 = drop_data_bullets(pg, kept)
@@ -2478,6 +2565,8 @@ def build(name, rows, owners, live, tracker):
     tail += ["===Additional data===",
              f"To access additional data, including an interactive map of {word} pipelines, a downloadable dataset, and summary data, please visit the {link} on the Global Energy Monitor website.",
              ]
+    # breaks left at the end of Background by earlier builds go: the one above Articles and resources is enough
+    kept = re.sub(r"(?:\s*%s)+\s*$" % re.escape(SECTION_BREAK), "", kept)
     text = gen.rstrip("\n") + "\n" + SECTION_BREAK + "\n" + f"<!---\n\t{COMMENT2}\n-->\n" + (kept + "\n" if kept else "") + f"<!---\n\t{COMMENT3}\n-->\n" + "\n".join(tail) + "\n"
     text = B.sentence_case_headings(shade_first_column(number_background(text)))
     if not kept:
