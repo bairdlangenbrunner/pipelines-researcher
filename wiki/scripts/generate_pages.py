@@ -2370,17 +2370,20 @@ def _canon(w):
 
 
 def _claims(text):
-    """(status, sentence, present-tense?) for every status claim in prose, refs, comments and markup stripped."""
+    """(status, sentence, present-tense?, superseded?) for every status claim in prose, refs, comments and markup stripped."""
     t = re.sub(r"<ref[^>]*/>", "", text)
     t = re.sub(r"(?s)<ref[^>]*>.*?</ref>|<!--.*?-->", "", t)
     t = re.sub(r"(?m)^Additional sources:.*$", "", t)
     out = []
-    for sent in re.split(r"(?<=[.!?])\s+|\n+", t):
-        if not sent.strip() or sent.lstrip()[:1] in "|{!=":
-            continue
+    sents = [x for x in re.split(r"(?<=[.!?])\s+|\n+", t) if x.strip() and x.lstrip()[:1] not in "|{!="]
+    years = [[int(y) for y in re.findall(r"\b((?:19|20)\d\d)\b", x)] for x in sents]
+    for k, sent in enumerate(sents):
+        # a dated past event with a later dated event after it is history, not the current status
+        after = [y for ys in years[k + 1:] for y in ys]
+        superseded = bool(years[k] and after and max(after) > max(years[k]))
         for m in sorted(list(_CLAIM_NOW.finditer(sent)) + list(_CLAIM_PAST.finditer(sent)), key=lambda m: m.start()):
             w = next(g for g in m.groups() if g)
-            out.append((_canon(w), sent.strip(), m.re is _CLAIM_NOW))
+            out.append((_canon(w), sent.strip(), m.re is _CLAIM_NOW, superseded))
     return out
 
 
@@ -2389,7 +2392,8 @@ def status_conflicts(pg, kept, rows):
     Delmarva's lead said cancelled, its Background said shelved). Each segment's Background text (the whole
     Background on a one-row page, its === subsection, or its row of the Background table) is read for status
     claims. A present-tense or "considered" claim that differs from the tracker status is a conflict wherever it
-    sits; a past-tense one ("was shelved") only when it is the last claim in that text. Returns the conflicts."""
+    sits; a past-tense one ("was shelved") only when it is the last claim in that text and no later-dated event follows it
+    ("was shelved in 2019. In 2021 it was listed in the plan" is history; Zhejiang P4844, 2026-11-13). Returns the conflicts."""
     m = re.search(r"(?ms)^==\s*Background\s*==\s*\n(.*?)(?=^==[^=]|\Z)", kept)
     if not m:
         return []
@@ -2414,10 +2418,10 @@ def status_conflicts(pg, kept, rows):
     for r, text in units:
         st = r["Status"]
         cl = _claims(text)
-        for i, (c, sent, now) in enumerate(cl):
+        for i, (c, sent, now, superseded) in enumerate(cl):
             if c == st or (c, st) in _SAME or (c == "proposed" and st in ("shelved", "cancelled")):
                 continue
-            if now or i == len(cl) - 1:
+            if now or (i == len(cl) - 1 and not superseded):
                 out.append(f"{r['ProjectID']}: tracker status {st}, Background says {c}: {sent[:160]}")
     for o in out:
         pg.log.append(f"STATUS CONFLICT between the lead and Background, {o}")
