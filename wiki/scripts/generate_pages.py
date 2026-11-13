@@ -2491,6 +2491,17 @@ def build(name, rows, owners, live, tracker):
     kept, extra_ar, replaced = preserved(pg, live)
     # a map sketch an earlier run moved into Background by mistake goes; it belongs only under the map (2026-11-10)
     kept = re.sub(r"(?m)^[ \t]*\[\[\s*File\s*:\s*Map sketch [^\]]*\]\][ \t]*\n?", "", kept)
+    # a line whose only quote marks are one lone bold marker has lost its partner; the marker goes (Baird 2026-11-13,
+    # CNPC Sichuan: "... diameter of D711.'''<ref>")
+    def lone_bold(m):
+        runs = re.findall(r"'{2,}", re.sub(r"<ref[^>]*>.*?</ref>|<ref[^>]*/>", "", m.group(0), flags=re.S))
+        return m.group(0) if runs != ["'''"] else re.sub(r"(?<!')'''(?!')", "", m.group(0), count=1)
+    fixed = re.sub(r"(?m)^[^\n]*'''[^\n]*$", lone_bold, kept)
+    # bold set around nothing but citations is bold around nothing: both markers go
+    fixed = re.sub(r"(?<!')'''((?:\s*(?:<ref[^>/]*>(?:(?!</ref>)[^\n])*</ref>|<ref[^>]*/>))+\s*)'''(?!')", r"\1", fixed)
+    if fixed != kept:
+        pg.log.append("Background: bold markers with no partner or around citations only removed") if hasattr(pg, "log") else None
+        kept = fixed
     # picture rows come apart before anything reads the Background table; layout_media sets them again at the end
     kept = unwrap_rows(kept)
     kept = strip_background_numbers(unshade(kept))
@@ -2725,6 +2736,13 @@ def main():
         q = GW.get(s, action="query", titles=name, redirects=1, formatversion=2).get("query", {})
         if q.get("redirects"):
             name = q["redirects"][-1]["to"]
+            # a title merged into another pipeline's page is not a move: building these rows alone would replace
+            # that page with theirs (the Guangdong-Fujian connecting line redirects to Fujian's page, 2026-11-13)
+            if (df["page"] == name).any():
+                report += [f"## {asked}", "", f"NOT BUILT: '{asked}' redirects to '{name}', which other tracker rows already name as their page. "
+                           f"Point these rows' Wiki cells at '{name}' or give them a page of their own.", ""]
+                name = asked
+                continue
         live = GW.page_text(s, name) or ""
         text, pg = build(name, rows, owners, live, a.tracker)
         if name != asked:
