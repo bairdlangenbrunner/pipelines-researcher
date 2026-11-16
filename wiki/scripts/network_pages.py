@@ -75,18 +75,25 @@ def status_rank(s):
     return ORDER.index(s) if s in ORDER else 99
 
 
+def counted(rows):
+    """The rows that count as segments. A SYSTEM/NETWORK INFO row restates its whole pipeline, so beside that pipeline's
+    own segments it would count the length twice (China–Russia East, P4482, 2026-11-13); alone it is the segment."""
+    n = collections.Counter(r["PipelineName"] for r in rows)
+    return [r for r in rows if not (r["SegmentName"].strip().upper().startswith("SYSTEM/NETWORK") and n[r["PipelineName"]] > 1)]
+
+
 def mix(pg, rows):
-    c = collections.Counter(r["Status"] for r in rows)
+    c = collections.Counter(r["Status"] for r in counted(rows))
     return " ".join(f"{G.status_dot(pg, s)}{c[s]} {G.STATUS_PHRASE.get(s, s)}" for s in sorted(c, key=status_rank))
 
 
 def mix_words(rows):
-    c = collections.Counter(r["Status"] for r in rows)
+    c = collections.Counter(r["Status"] for r in counted(rows))
     return G.join_list([f"{c[s]} {G.STATUS_PHRASE.get(s, s)}" for s in sorted(c, key=status_rank)])
 
 
 def length_cell(rows):
-    k = sum(km(r) for r in rows)
+    k = sum(km(r) for r in counted(rows))
     return f'data-sort-value="{k:.0f}"|{k:,.0f} km' if k else "–"
 
 
@@ -114,25 +121,23 @@ FORMER = set()   # pages that are still the old network-style page: their lead n
 
 
 def local_name(s, page, rows):
-    """The local name the pipeline's own page gives in its lead, else the commonest local name on its rows."""
-    if page and page not in FORMER:
-        try:
-            # old pages say "(local name: '''X''')", new ones "'''Name''' (X)" (GOGPT style, 2026-11-10)
-            m = (re.search(r"\(local name: '''(.*?)'''", GW.page_text(s, page) or "")
-                 or re.search(r"^'''[^'\n]+''' \(([^()\n]*[^\x00-\x7f][^()\n]*)\)", GW.page_text(s, page) or "", re.M))
-            if m:
-                return m.group(1)
-        except Exception:
-            pass
-    c = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in rows if r["OtherLanguagePrimaryPipelineName"].strip())
-    return c.most_common(1)[0][0] if c else ""
+    """The pipeline's local name from its own rows (2026-11-13): the system row's (or the unnamed row's), else the one
+    every row agrees on, else none. Never another page's lead (the Guangdong-Fujian connector's Wiki cell points at the
+    Fujian page, whose name it took) and never one segment's name for the whole pipeline (陕京4线, 中亚管线A)."""
+    v = lambda r: r["OtherLanguagePrimaryPipelineName"].strip()
+    whole = [v(r) for r in rows if (not r["SegmentName"].strip() or r["SegmentName"].strip().upper().startswith("SYSTEM/NETWORK")) and v(r)]
+    vals = {v(r) for r in rows if v(r)}   # a blank row is no disagreement (West-East 3, P6019)
+    name = whole[0] if whole else vals.pop() if len(vals) == 1 else ""
+    # a cell with unbalanced brackets is broken text on the sheet (Power of Siberia 2), not a name to publish
+    pairs = ("()", "（）", "«»")
+    return "" if any(name.count(a) != name.count(b) for a, b in pairs) else name
 
 
 def group(rows):
     g = collections.OrderedDict()
     for r in sorted(rows, key=lambda r: r["PipelineName"]):
         g.setdefault(r["PipelineName"], []).append(r)
-    return collections.OrderedDict(sorted(g.items(), key=lambda kv: -sum(km(r) for r in kv[1])))
+    return collections.OrderedDict(sorted(g.items(), key=lambda kv: -sum(km(r) for r in counted(kv[1]))))
 
 
 def link(name, page, have):
@@ -164,9 +169,10 @@ def map_section(pg, members, connected):
                 if not faint:   # a white edge under each member line, same pop-up (generate_pages.map_block); connected lines get none
                     edges.append(f"{pts}~{title}~{dot}{st}~{G.MAP_EDGE}~1~{G.LINE_W + 5}")
                 lines.append(f"{pts}~{title}~{dot}{st}~{G.status_color(pg, r['Status'])}~{w}")
-    mapped = sum(1 for r in members if r["RouteType"].startswith("Mapped route"))
-    text = f"{num(mapped).capitalize() if mapped < 10 else mapped} of {num(len(members))} segments have a mapped route in the database."
-    if len(members) == 1:
+    seg = counted(members)
+    mapped = sum(1 for r in seg if r["RouteType"].startswith("Mapped route"))
+    text = f"{num(mapped).capitalize() if mapped < 10 else mapped} of {num(len(seg))} segments have a mapped route in the database."
+    if len(seg) == 1:
         text = ""   # no count on a one-segment network, as on a one-segment pipeline page (generate_pages.map_block)
     if not allp:
         return text
@@ -197,7 +203,7 @@ def explainer(pipe, page, have, rows, old_sub):
         if "[[" in first:
             return f"{first} Its page has more details."
     lk = link(pipe, page, have)
-    return f"The {lk} has {num(len(rows))} segment{'s' if len(rows) != 1 else ''}: {mix_words(rows)}. Its page has more details."
+    return f"The {lk} has {num(len(counted(rows)))} segment{'s' if len(counted(rows)) != 1 else ''}: {mix_words(rows)}. Its page has more details."
 
 
 def sections(txt):
@@ -230,7 +236,7 @@ def build_network(s, entry, df, old_text=""):
          '{| class="wikitable"', H + "Pipeline", H + "Local name", H + "Segments", H + "Length", H + "Status"]
     for p, rs in pipes.items():
         t += ["|-", f"|{link(p, pages[p], have)}", f"|{local_name(s, pages[p] if have.get(pages[p]) else '', rs) or '–'}",
-              f"|{len(rs)}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
+              f"|{len(counted(rs))}", f"|{length_cell(rs)}", f"|{mix(pg, rs)}"]
     t += ["|}"]
     # No Background section (Baird 2026-11-08): a network page holds no history. Its background goes onto the member
     # pipelines' own pages, so the page has no citations and no References section either.

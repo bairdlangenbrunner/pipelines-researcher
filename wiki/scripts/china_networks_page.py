@@ -69,8 +69,8 @@ def build(s, nets, df):
     for n in names:
         rs = rows[n]
         t += ["|-", f"|{lk(n)}", f"|{kind(n)}", f"|{len({r['PipelineName'] for r in rs})}",
-              f"|{len(rs)}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else '–'}"]
-    t += ['|- class="sortbottom"', "!Total", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(allrows)}",
+              f"|{len(N.counted(rs))}", f"|{N.length_cell(rs)}", f"|{N.mix(pg, rs) if rs else '–'}"]
+    t += ['|- class="sortbottom"', "!Total", "!", f"!{len({r['PipelineName'] for r in allrows})}", f"!{len(N.counted(allrows))}",
           f"!{N.length_cell(allrows).split('|')[-1]}", f"!{N.mix(pg, allrows)}", "|}"]
     tail = [N.G.SECTION_BREAK, "==Articles and resources==", "", "===Additional data===",
             f"To access additional data, including an interactive map of {G.TRACKER_LINK['gas'][0]} pipelines, a downloadable dataset, "
@@ -78,7 +78,7 @@ def build(s, nets, df):
     text = "\n".join([TITLE, "", f"<!---\n\t{G.COMMENT1}\n-->", G.NAVBAR["gas"], lead, ""] + how + [""] + t + [""] + tail)
     text = N.B.sentence_case_headings(G.shade_first_column(text))
     empty = [n for n in names if not rows[n]]
-    pg.log.append(f"{len(names)} networks, {len(allrows)} segments; pages that exist: {sum(have.values())}; empty networks: {empty}")
+    pg.log.append(f"{len(names)} networks, {len(N.counted(allrows))} segments; pages that exist: {sum(have.values())}; empty networks: {empty}")
     return text, pg
 
 
