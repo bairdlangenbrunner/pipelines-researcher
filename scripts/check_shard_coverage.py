@@ -177,7 +177,7 @@ GAS_FUEL_VALUES = {"gas", "hydrogen", "gas and hydrogen", "coke oven gas"}  # lo
 PIPELINE_TYPE_VALUES = {"transmission", "gathering", "distribution", "both transmission and gathering",
                         "both transmission and distribution", "both gathering and distribution"}
 DATA_CENTER_VALUES = {"yes", ""}  # Baird 2026-10-16: `yes` or blank, never `no` or `Yes`
-LNG_FLAG_VALUES = {"export", "import", ""}  # AssociatedWithLNGExports, Baird 2026-11-17
+LNG_FLAG_VALUES = {"export", "import", ""}  # AssociatedWithLNGExportOrImport, Baird 2026-11-17
 VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK", "REF_BLOCKED",
                    "REF_UNSUPPORTED"}
 
@@ -324,21 +324,21 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 sheet_value(sheet, pid, f.get("sheet_row"), "DataCenter") if sheet is not None else "yes")
             if str(dc_ or "").strip() != "yes":
                 why.append("`DataCenterNotes` without `DataCenter` = `yes`")
-        # `AssociatedWithLNGExports` takes `export`, `import` or blank (Baird 2026-11-17; it was `yes`
+        # `AssociatedWithLNGExportOrImport` takes `export`, `import` or blank (Baird 2026-11-17; it was `yes`
         # or blank earlier the same day), the terminal cell holds terminal names (never `yes` or a URL),
         # and `AssociatedLNGNotes` goes only beside a flag or a terminal name, staged here or on the sheet.
-        if "AssociatedWithLNGExports" in vals_ and str(vals_["AssociatedWithLNGExports"]).strip() not in LNG_FLAG_VALUES:
-            cur_lng = sheet_value(sheet, pid, f.get("sheet_row"), "AssociatedWithLNGExports") if sheet is not None else None
-            if str(vals_["AssociatedWithLNGExports"]).strip() != str(cur_lng or "").strip():
-                why.append(f"`AssociatedWithLNGExports` = {vals_['AssociatedWithLNGExports']!r} — only `export`, `import` or blank")
-        term_ = str(vals_.get("AssociatedLNGTerminal") or "").strip()
+        if "AssociatedWithLNGExportOrImport" in vals_ and str(vals_["AssociatedWithLNGExportOrImport"]).strip() not in LNG_FLAG_VALUES:
+            cur_lng = sheet_value(sheet, pid, f.get("sheet_row"), "AssociatedWithLNGExportOrImport") if sheet is not None else None
+            if str(vals_["AssociatedWithLNGExportOrImport"]).strip() != str(cur_lng or "").strip():
+                why.append(f"`AssociatedWithLNGExportOrImport` = {vals_['AssociatedWithLNGExportOrImport']!r} — only `export`, `import` or blank")
+        term_ = str(vals_.get("AssociatedLNGTerminal(s)") or "").strip()
         if term_ and (term_.lower() in ("yes", "no") or "http" in term_):
-            why.append(f"`AssociatedLNGTerminal` = {term_!r} — terminal names only, never yes/no or a URL")
+            why.append(f"`AssociatedLNGTerminal(s)` = {term_!r} — terminal names only, never yes/no or a URL")
         if str(vals_.get("AssociatedLNGNotes") or "").strip():
             tag_ = {c: (vals_[c] if c in vals_ else (sheet_value(sheet, pid, f.get("sheet_row"), c) if sheet is not None else "yes"))
-                    for c in ("AssociatedWithLNGExports", "AssociatedLNGTerminal")}
+                    for c in ("AssociatedWithLNGExportOrImport", "AssociatedLNGTerminal(s)")}
             if not any(str(v or "").strip() for v in tag_.values()):
-                why.append("`AssociatedLNGNotes` without an `AssociatedWithLNGExports` flag or an `AssociatedLNGTerminal`")
+                why.append("`AssociatedLNGNotes` without an `AssociatedWithLNGExportOrImport` flag or an `AssociatedLNGTerminal(s)`")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).
