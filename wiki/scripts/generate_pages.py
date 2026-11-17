@@ -264,6 +264,17 @@ def location_phrase(rows):
     return f"running from {country_name(a)} to {country_name(z)}" + (f" through {', '.join(mid)}" if mid else "")
 
 
+URL_IN_NAME = re.compile(r"https?://|www\.", re.I)
+
+
+def not_a_name(pg, r, col, v):
+    """A URL pasted into a name cell is not a name: never print it in the lead (Baird 2026-11-17, Sajaa-Hamriya P5778)."""
+    if v and URL_IN_NAME.search(v):
+        pg.log.append(f"{r['ProjectID']}: {col} holds a URL, not a name; left out of the lead (fix the sheet cell)")
+        return True
+    return False
+
+
 def intro(pg, rows, tracker):
     names = []
     # on a many-segment page a segment's aliases name that segment, not the pipeline: only the
@@ -274,13 +285,16 @@ def intro(pg, rows, tracker):
         for r in whole:
             for n in re.split(r"[;,]", r[col] or ""):
                 n = n.strip()
+                if not_a_name(pg, r, col, n):
+                    continue
                 if n and n != pg.name and n not in names:
                     names.append(n)
     bold = [f"'''{n}'''" for n in names]   # "A and B", "A, B, and C" (Baird 2026-11-07)
     joined = "" if not bold else bold[0] if len(bold) == 1 else (" and ".join(bold) if len(bold) == 2 else ", ".join(bold[:-1]) + ", and " + bold[-1])
     aka = (", also known as " + joined + ",") if names else ""
     # the pipeline's local name is the commonest OtherLanguagePrimaryPipelineName on its rows
-    lc = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in rows if r["OtherLanguagePrimaryPipelineName"].strip())
+    lc = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in rows if r["OtherLanguagePrimaryPipelineName"].strip()
+                             and not not_a_name(pg, r, "OtherLanguagePrimaryPipelineName", r["OtherLanguagePrimaryPipelineName"].strip()))
     local = lc.most_common(1)[0][0] if lc else ""
     local = f" ({local})" if local else ""   # GOGPT style: plain parentheses after the name, no label (Baird 2026-11-10)
     fuel, loc = fuel_phrase(rows, tracker), location_phrase(rows)
