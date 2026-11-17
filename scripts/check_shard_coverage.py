@@ -323,6 +323,21 @@ def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
                 sheet_value(sheet, pid, f.get("sheet_row"), "DataCenter") if sheet is not None else "yes")
             if str(dc_ or "").strip() != "yes":
                 why.append("`DataCenterNotes` without `DataCenter` = `yes`")
+        # `AssociatedWithUSLNGExports` takes `yes` or blank like `DataCenter` (Baird 2026-11-17), the
+        # terminal cell holds terminal names (never `yes` or a URL), and `AssociatedLNGNotes` goes only
+        # beside a `yes` or a terminal name, staged here or already on the sheet.
+        if "AssociatedWithUSLNGExports" in vals_ and str(vals_["AssociatedWithUSLNGExports"]).strip() not in DATA_CENTER_VALUES:
+            cur_lng = sheet_value(sheet, pid, f.get("sheet_row"), "AssociatedWithUSLNGExports") if sheet is not None else None
+            if str(vals_["AssociatedWithUSLNGExports"]).strip() != str(cur_lng or "").strip():
+                why.append(f"`AssociatedWithUSLNGExports` = {vals_['AssociatedWithUSLNGExports']!r} — only `yes` or blank")
+        term_ = str(vals_.get("AssociatedLNGTerminal") or "").strip()
+        if term_ and (term_.lower() in ("yes", "no") or "http" in term_):
+            why.append(f"`AssociatedLNGTerminal` = {term_!r} — terminal names only, never yes/no or a URL")
+        if str(vals_.get("AssociatedLNGNotes") or "").strip():
+            tag_ = {c: (vals_[c] if c in vals_ else (sheet_value(sheet, pid, f.get("sheet_row"), c) if sheet is not None else "yes"))
+                    for c in ("AssociatedWithUSLNGExports", "AssociatedLNGTerminal")}
+            if not any(str(v or "").strip() for v in tag_.values()):
+                why.append("`AssociatedLNGNotes` without `AssociatedWithUSLNGExports` = `yes` or an `AssociatedLNGTerminal`")
         # Costs are staged in FULL currency units (Baird 2026-10-02): EIA workbooks say
         # `Cost (millions)`, so 5,100 there is 5100000000. A USD cost under 100,000 is a figure
         # left unscaled. Other currencies are exempt (small RUB/RMB amounts can be real).

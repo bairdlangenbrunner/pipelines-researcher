@@ -40,6 +40,7 @@ NON_REF_VALUE_COLS = {
     "CountriesOrAreas", "NumberOfCountries",
     # notes
     "ResearcherNotes", "ESJNotes", "H2Notes", "CCSNotes", "ChineseClassificationNotes",
+    "DataCenterNotes", "AssociatedLNGNotes",
     # IDs / codes
     "OwnerEntityIDs", "ParentEntityIDs", "AlternateRouteProjectIDs", "OtherIDs",
     "PCI345ID", "PCI6ID", "PCI6ProjectCode", "DraftPCI6List", "SciGridNames",
@@ -77,10 +78,20 @@ SKIP_REF_COLS = {"Route [ref]"}
 _UNIT_SUFFIXES = ("Units",)
 
 
+# A shared [ref] whose stripped name matches neither of its value columns: the ref -> the column its
+# cluster starts at. `AssociatedLNG [ref]` (gas, added 2026-11-17) sources BOTH the yes/blank flag and
+# the terminal names; a prefix match alone would start at AssociatedLNGTerminal and drop the flag.
+CLUSTER_START = {"AssociatedLNG [ref]": "AssociatedWithUSLNGExports"}
+# value columns a shared [ref] makes ref-bearing, though no same-named `<col> [ref]` exists
+_SHARED_REF_VALUES = {"AssociatedLNG [ref]": ("AssociatedWithUSLNGExports", "AssociatedLNGTerminal")}
+
+
 def _excluded(col: str, columns_set: set) -> bool:
     """True if `col` should never be part of a cluster."""
     if col in NON_REF_VALUE_COLS or col in OWNER_VALUE_COLS or col in ROUTE_VALUE_COLS:
         return True
+    if any(r in columns_set and col in v for r, v in _SHARED_REF_VALUES.items()):
+        return False
     # orphan-ok only when it has no [ref] of its own
     if col in ORPHAN_OK_VALUE_COLS and (col + REF_SUFFIX) not in columns_set:
         return True
@@ -116,7 +127,10 @@ def discover_ref_pairs(columns: list[str]) -> list[dict]:
                 run = []
                 continue
             stripped = c[: -len(REF_SUFFIX)]
-            primary, match_kind = _pick_primary(stripped, run)
+            if c in CLUSTER_START and CLUSTER_START[c] in run:
+                primary, match_kind = CLUSTER_START[c], "exact"
+            else:
+                primary, match_kind = _pick_primary(stripped, run)
             if match_kind in ("exact", "prefix") and primary in run:
                 # name matched → cluster starts at the matched column (drop leading junk)
                 value_cols = run[run.index(primary):]
