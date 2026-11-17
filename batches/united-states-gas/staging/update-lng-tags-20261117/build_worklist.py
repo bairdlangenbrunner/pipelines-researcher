@@ -1,7 +1,7 @@
 """LNG tag worklist, US gas, 2026-11-17 (run from repo root).
 
 Every US row (Status not N/A) in the 2026-11-17 snapshot, plus the three Mexico Rosarito rows that already carry an LNG
-terminal cell. Each row carries its current AssociatedWithUSLNGExports / AssociatedLNGTerminal values, its existing refs,
+terminal cell. Each row carries its current AssociatedWithLNGExports / AssociatedLNGTerminal values, its existing refs,
 and the EIA pipeline-projects candidates from eia/eia_crosswalk.json with EIA's notes and demand-served text, so agents
 start from what EIA says. Group A (likely LNG ties: already tagged, EIA text naming LNG or export, LNG words in the name or
 notes, Texas or Louisiana or Alaska rows built since 2010 or in development) goes to sonnet in small chunks; group B (the
@@ -41,7 +41,7 @@ for _, r in rows_df.iterrows():
                      | {'demand_served': '' if e is None else e['demand_served'], 'project_notes': '' if e is None else e['project_notes'],
                         'press_names': '' if e is None else e['name_of_the_projects_as_appeared_on_press_releases_or_government_applications']})
     eia_txt = ' '.join(f"{c['project_name']} {c['notes']} {c['demand_served']} {c['project_notes']}" for c in cands)
-    tagged = r.AssociatedWithUSLNGExports.strip() != '' or r.AssociatedLNGTerminal.strip() != ''
+    tagged = r.AssociatedWithLNGExports.strip() != '' or r.AssociatedLNGTerminal.strip() != ''
     gulf = any(s in f"{r['StartState/Province']} {r['EndState/Province']}" for s in ('Texas', 'Louisiana', 'Alaska'))
     yr = pd.to_numeric(r.StartYear1, errors='coerce')
     recent = r.Status in ('proposed', 'construction', 'shelved', 'cancelled') or (yr == yr and yr >= 2010)
@@ -55,7 +55,7 @@ for _, r in rows_df.iterrows():
                 'start': f"{r.StartLocation}, {r['StartState/Province']}", 'end': f"{r.EndLocation}, {r['EndState/Province']}",
                 'length': f"{r.LengthKnown} {r.LengthKnownUnits}".strip(), 'diameter': f"{r.Diameter} {r.DiameterUnits}".strip(),
                 'capacity': f"{r.Capacity} {r.CapacityUnits}".strip(),
-                'current': {'AssociatedWithUSLNGExports': r.AssociatedWithUSLNGExports, 'AssociatedLNGTerminal': r.AssociatedLNGTerminal,
+                'current': {'AssociatedWithLNGExports': r.AssociatedWithLNGExports, 'AssociatedLNGTerminal': r.AssociatedLNGTerminal,
                             'AssociatedLNG [ref]': r['AssociatedLNG [ref]'], 'AssociatedLNGNotes': r.AssociatedLNGNotes},
                 'researcher_notes': r.ResearcherNotes[:600], 'existing_refs': refs[:20], 'eia': cands})
 out.sort(key=lambda x: (x['group'], x['pipeline_name'], x['segment_name']))

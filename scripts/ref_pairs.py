@@ -59,7 +59,7 @@ ORPHAN_OK_VALUE_COLS = {
     "Disrupted", "ShelvedCancelledType", "AssociatedEthyleneCrackerRMI",
     "EuropeTracker", "PCI3", "PCI4", "PCI5", "PCI6", "DraftPCI7", "Opposition",
     "PipelineDirectionality", "H2PipelineType", "H2%", "H2ProposedYear", "H2StartYear",
-    "H2Cost", "H2CostUnits", "AssociatedWithUSLNGExports", "AssociatedLNGTerminal",
+    "H2Cost", "H2CostUnits", "AssociatedWithLNGExports", "AssociatedLNGTerminal",
     "ImpactedByRussiaUkraineInvasion", "EGTImport", "ChinesePipelineType",
     "ChineseNetworkPrimary", "ChineseNetworkSecondary",
 }
@@ -81,9 +81,9 @@ _UNIT_SUFFIXES = ("Units",)
 # A shared [ref] whose stripped name matches neither of its value columns: the ref -> the column its
 # cluster starts at. `AssociatedLNG [ref]` (gas, added 2026-11-17) sources BOTH the yes/blank flag and
 # the terminal names; a prefix match alone would start at AssociatedLNGTerminal and drop the flag.
-CLUSTER_START = {"AssociatedLNG [ref]": "AssociatedWithUSLNGExports"}
+CLUSTER_START = {"AssociatedLNG [ref]": "AssociatedWithLNGExports"}
 # value columns a shared [ref] makes ref-bearing, though no same-named `<col> [ref]` exists
-_SHARED_REF_VALUES = {"AssociatedLNG [ref]": ("AssociatedWithUSLNGExports", "AssociatedLNGTerminal")}
+_SHARED_REF_VALUES = {"AssociatedLNG [ref]": ("AssociatedWithLNGExports", "AssociatedLNGTerminal")}
 
 
 def _excluded(col: str, columns_set: set) -> bool:

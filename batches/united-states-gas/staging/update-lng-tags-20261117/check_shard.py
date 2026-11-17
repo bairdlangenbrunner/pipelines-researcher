@@ -14,7 +14,7 @@ want = set(json.load(open(D / 'chunks.json'))[chunk])
 wl = {r['project_id']: r for r in json.load(open(D / 'worklist.json'))['rows']}
 s = json.load(open(D / 'shards' / f'lng-{chunk}.json'))
 OUT = {'yes', 'terminal_only', 'confirmed_existing', 'existing_unsupported', 'blank_noted', 'unfinished'}
-COLS = ['AssociatedWithUSLNGExports', 'AssociatedLNGTerminal', 'AssociatedLNGNotes']
+COLS = ['AssociatedWithLNGExports', 'AssociatedLNGTerminal', 'AssociatedLNGNotes']
 bad = []
 led = {x['project_id']: x for x in s.get('ledger', [])}
 if set(led) != want:
@@ -42,7 +42,7 @@ for r in s.get('records', []):
     if not str(v.get(COLS[2], '')).strip():
         bad.append(f'{p}: AssociatedLNGNotes empty')
     cur = wl[p]['current']
-    if cur['AssociatedWithUSLNGExports'] == 'yes' and flag != 'yes':
+    if cur['AssociatedWithLNGExports'] == 'yes' and flag != 'yes':
         bad.append(f'{p}: clears the existing yes')
     old_t = cur['AssociatedLNGTerminal'].strip()
     if old_t and 'http' not in old_t and old_t.lower() != 'yes' and not term:

@@ -1,7 +1,7 @@
 """Merge the LNG tag shards (shards/lng-*.json) into staged_resolutions.json (run from repo root).
 
 Rows: every US gas row (plus three Mexico Rosarito rows) in the 2026-11-17 snapshot (worklist.json). Records carry
-AssociatedWithUSLNGExports, AssociatedLNGTerminal and AssociatedLNGNotes with the shared AssociatedLNG [ref] (columns
+AssociatedWithLNGExports, AssociatedLNGTerminal and AssociatedLNGNotes with the shared AssociatedLNG [ref] (columns
 added 2026-11-17). Every row keeps a ledger line in meta. Pass --partial to merge before every chunk is in.
 """
 import glob, json, sys
@@ -22,7 +22,7 @@ wl = {r['project_id']: r for r in json.load(open(f'{D}/worklist.json'))['rows']}
 for p, r in recs.items():  # sheet row, names and the current ref come from the snapshot, not the agent
     w = wl[p]
     r.update(sheet_row=w['sheet_row'], pipeline_name=w['pipeline_name'], segment_name=w['segment_name'],
-             current_ref=w['current']['AssociatedLNG [ref]'], primary_value=r['values'].get('AssociatedWithUSLNGExports', ''))
+             current_ref=w['current']['AssociatedLNG [ref]'], primary_value=r['values'].get('AssociatedWithLNGExports', ''))
 stray = sorted(set(led) - set(wl))
 assert not stray, stray
 if '--partial' not in sys.argv:
@@ -32,7 +32,7 @@ meta = {'commodity': 'gas', 'mode': 'update',
         'scope': {'csv': 'GGIT_gas_snapshot_20261117.csv', 'country': 'United States', 'include_pids': pids,
                   'rows': len(pids), 'project_ids': len(pids)},
         'n_units': len(recs), 'created': '2026-11-17', 'requested_by': 'BL',
-        'purpose': 'LNG terminal tags, 17 November 2026: AssociatedWithUSLNGExports (yes when a validated source ties this '
+        'purpose': 'LNG terminal tags, 17 November 2026: AssociatedWithLNGExports (yes when a validated source ties this '
                    'pipeline or expansion to LNG export, directly or as feedgas supply), AssociatedLNGTerminal (terminal names '
                    'as GEM\'s LNG tracker writes them), and AssociatedLNGNotes, with the new shared AssociatedLNG [ref]. '
                    'Covers every US gas row (brief: BRIEF.md in this folder).',

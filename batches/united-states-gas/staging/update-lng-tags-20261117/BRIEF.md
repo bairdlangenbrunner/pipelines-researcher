@@ -4,14 +4,14 @@ You judge three Gas tab fields for a few GGIT rows and stage what you find with 
 
 The fields:
 
-- `AssociatedWithUSLNGExports`: `yes` or blank, never `no`.
+- `AssociatedWithLNGExports`: `yes` or blank, never `no`.
 - `AssociatedLNGTerminal`: the terminal name or names, comma and space separated, written exactly as `lng_terminals.json` names them (`Sabine Pass LNG Terminal`, `Corpus Christi LNG Terminal`). If the terminal is not in that file, write the name the source uses plus "LNG Terminal" and say so in your note.
 - `AssociatedLNGNotes`: one to three plain sentences on why the pipeline is tied to the terminal, naming the source for each fact.
 - One ref column, `AssociatedLNG [ref]`, holds the URLs for all three.
 
 ## Rules (Baird 2026-11-17)
 
-- **`AssociatedWithUSLNGExports = yes` when a validated ref names this pipeline, segment, or expansion project and ties it to LNG export.** The tie can be any of: it delivers gas into an LNG export terminal or a header built for one; it was built or expanded to carry feedgas for LNG export; an LNG exporter or terminal is a named shipper, anchor customer, or the reason in the filing; or the source names LNG exports among the demand drivers for this project. Upstream supply lines count (a Permian or Haynesville takeaway line built partly for Gulf Coast LNG feedgas is yes), as long as the source ties THIS project to LNG.
+- **`AssociatedWithLNGExports = yes` when a validated ref names this pipeline, segment, or expansion project and ties it to LNG export.** The tie can be any of: it delivers gas into an LNG export terminal or a header built for one; it was built or expanded to carry feedgas for LNG export; an LNG exporter or terminal is a named shipper, anchor customer, or the reason in the filing; or the source names LNG exports among the demand drivers for this project. Upstream supply lines count (a Permian or Haynesville takeaway line built partly for Gulf Coast LNG feedgas is yes), as long as the source ties THIS project to LNG.
 - Terminals in Mexico that export US gas (Costa Azul, Saguaro Energia, Mexico Pacific, AMIGO, Vista Pacifico, and similar) count as US LNG exports.
 - **Leave it blank with a ledger note** when the LNG talk is company-wide and not about this project, comes only from opponents, or is about another row or system. A tie guessed from a line's location or name is not a tie.
 - **Mainline vs expansion.** When the source ties an expansion or lateral to LNG, tag that expansion or lateral row, not the legacy mainline it hangs off. Tag a mainline or main segment only when the source says that line itself delivers gas to the terminal.
@@ -42,9 +42,9 @@ Record shape (rows with outcome yes, terminal_only, or confirmed_existing):
 ```json
 {"project_id": "P3663", "pipeline_name": "<from worklist>", "segment_name": "<from worklist>", "sheet_row": 0,
  "class_in": "FILL", "class_out": "REFS_ADDED", "ref_col": "AssociatedLNG [ref]",
- "value_cols": ["AssociatedWithUSLNGExports", "AssociatedLNGTerminal", "AssociatedLNGNotes"],
- "primary_value_col": "AssociatedWithUSLNGExports",
- "values": {"AssociatedWithUSLNGExports": "yes", "AssociatedLNGTerminal": "Commonwealth LNG Terminal",
+ "value_cols": ["AssociatedWithLNGExports", "AssociatedLNGTerminal", "AssociatedLNGNotes"],
+ "primary_value_col": "AssociatedWithLNGExports",
+ "values": {"AssociatedWithLNGExports": "yes", "AssociatedLNGTerminal": "Commonwealth LNG Terminal",
             "AssociatedLNGNotes": "<why the pipeline is tied to the terminal, naming the source>"},
  "primary_value": "yes", "current_ref": "", "proposed_refs": ["<url naming the pipeline and the LNG tie>"],
  "verifications": [{"url": "...", "ok": true, "contains_value": true, "name_found": true, "note": "<what the page says>"}],
@@ -52,7 +52,7 @@ Record shape (rows with outcome yes, terminal_only, or confirmed_existing):
  "researcher_notes": "<plain-language note for Baird>", "action": "change"}
 ```
 
-- `values` always holds all three columns. Leave `AssociatedLNGTerminal` as `""` only when no source names a terminal (an upstream line feeding Gulf Coast LNG in general), and leave `AssociatedWithUSLNGExports` as `""` on a `terminal_only` record.
+- `values` always holds all three columns. Leave `AssociatedLNGTerminal` as `""` only when no source names a terminal (an upstream line feeding Gulf Coast LNG in general), and leave `AssociatedWithLNGExports` as `""` on a `terminal_only` record.
 - `tier`: high when the ref names this pipeline and states the terminal or the LNG export purpose directly; medium when LNG exports are one of several demand drivers named for the project, or the tie runs through a shipper; low when the ref is weak or only partly fits the row.
 - `independent` is true only when two refs from different publishers each support the tie.
 
