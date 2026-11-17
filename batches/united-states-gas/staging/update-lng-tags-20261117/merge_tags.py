@@ -32,7 +32,7 @@ meta = {'commodity': 'gas', 'mode': 'update',
         'scope': {'csv': 'GGIT_gas_snapshot_20261117.csv', 'country': 'United States', 'include_pids': pids,
                   'rows': len(pids), 'project_ids': len(pids)},
         'n_units': len(recs), 'created': '2026-11-17', 'requested_by': 'BL',
-        'purpose': 'LNG terminal tags, 17 November 2026: AssociatedWithLNGExports (yes when a validated source ties this '
+        'purpose': 'LNG terminal tags, 17 November 2026: AssociatedWithLNGExports (export or import since 17 November 2026, first yes; set when a validated source ties this '
                    'pipeline or expansion to LNG export, directly or as feedgas supply), AssociatedLNGTerminal (terminal names '
                    'as GEM\'s LNG tracker writes them), and AssociatedLNGNotes, with the new shared AssociatedLNG [ref]. '
                    'Covers every US gas row (brief: BRIEF.md in this folder).',

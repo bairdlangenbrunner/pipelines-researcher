@@ -33,8 +33,8 @@ for r in s.get('records', []):
     if sorted(v) != sorted(COLS) or r.get('value_cols') != COLS or r.get('ref_col') != 'AssociatedLNG [ref]':
         bad.append(f'{p}: values / value_cols / ref_col must be the three columns and AssociatedLNG [ref]')
     flag, term = str(v.get(COLS[0], '')).strip(), str(v.get(COLS[1], '')).strip()
-    if flag not in ('yes', ''):
-        bad.append(f'{p}: flag {flag!r} (yes or blank)')
+    if flag not in ('export', 'import', ''):  # was yes or blank until 2026-11-17
+        bad.append(f'{p}: flag {flag!r} (export, import, or blank)')
     if not flag and not term:
         bad.append(f'{p}: record with neither the flag nor a terminal')
     if term.lower() in ('yes', 'no') or 'http' in term:
@@ -42,8 +42,8 @@ for r in s.get('records', []):
     if not str(v.get(COLS[2], '')).strip():
         bad.append(f'{p}: AssociatedLNGNotes empty')
     cur = wl[p]['current']
-    if cur['AssociatedWithLNGExports'] == 'yes' and flag != 'yes':
-        bad.append(f'{p}: clears the existing yes')
+    if cur['AssociatedWithLNGExports'].strip() and not flag:
+        bad.append(f'{p}: clears the existing flag')
     old_t = cur['AssociatedLNGTerminal'].strip()
     if old_t and 'http' not in old_t and old_t.lower() != 'yes' and not term:
         bad.append(f'{p}: clears the existing terminal {old_t!r}')
