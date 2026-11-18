@@ -2,11 +2,13 @@
 
     python scripts/link_lng_terminal_wiki.py            # plan: what would be linked, and names with no page
     python scripts/link_lng_terminal_wiki.py --apply    # write the links (gws-gem-write), back up, re-read
+    python scripts/link_lng_terminal_wiki.py --respell [--apply]   # also rewrite each name the tracker's way (Baird 2026-11-18)
 
 The page for a name comes from GEM's LNG terminal tracker export (../gem-db-ops/lng/gem_export.csv, `Wiki`), matched on
 TerminalName, then on the tracker's other names (Driftwood LNG Terminal is Woodside Louisiana LNG Terminal), then on a
 small alias table below for spellings the tracker does not list. A cell with several names gets one link per name (rich
-text runs); a single-name cell is linked whole, like the cells Baird linked by hand. The cell text is never changed. The
+text runs); a single-name cell is linked whole, like the cells Baird linked by hand. The cell text is changed only with --respell, which writes each matched name as the tracker's TerminalName (Driftwood LNG
+Terminal becomes Woodside Louisiana LNG Terminal) and drops stray spaces. The
 write is formatting only, so it stamps LastUpdated and leaves Researcher (the style-only rule). A cell already linked
 to the right page is left alone; a formula cell aborts the run.
 """
@@ -19,6 +21,7 @@ import pandas as pd
 SHEET_ID = "1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek"
 TAB, GID, HEADER_ROW = "Gas pipelines", 1020144097, 3
 COL, STAMP = "AssociatedLNGTerminal(s)", "LastUpdated"
+RESPELL = "--respell" in sys.argv
 EXPORT = Path(os.environ.get("GEM_DB_OPS_REPO", "../gem-db-ops")) / "lng/gem_export.csv"
 # names on the sheet the tracker spells differently and does not list among its other names
 ALIASES = {"Papua New Guinea LNG Terminal (Exxon)": "Papua New Guinea LNG Terminal",
@@ -57,13 +60,13 @@ def pages():
         u = r["Wiki"].strip()
         if not u:
             continue
-        by.setdefault(fold(r["TerminalName"]), u)
+        by.setdefault(fold(r["TerminalName"]), (u, r["TerminalName"].strip()))
     for _, r in t.iterrows():  # other names only after every main name, so a main name always wins
         u = r["Wiki"].strip()
         for c in other:
             for n in str(r[c]).split(","):
                 if u and n.strip():
-                    by.setdefault(fold(n), u)
+                    by.setdefault(fold(n), (u, r["TerminalName"].strip()))
     for a, n in ALIASES.items():
         by[fold(a)] = by[fold(n)]
     return by
@@ -130,20 +133,24 @@ def plan():
             sys.exit(f"row {HEADER_ROW + 1 + i}: formula cell in {COL}; aborting")
         row = HEADER_ROW + 1 + i
         pid = (pids[i][0] if i < len(pids) and pids[i] else "")
+        names = [n for _, _, n in spans(text)]
+        new = text
+        if RESPELL and all(fold(n) in by for n in names):
+            new = ", ".join(by[fold(n)][1] for n in names)
         want = {}
-        for a, b, name in spans(text):
-            u = by.get(fold(name))
-            if u:
-                want[(a, b)] = u
+        for a, b, name in spans(new):
+            hit = by.get(fold(name))
+            if hit:
+                want[(a, b)] = hit[0]
             else:
                 missing.append((row, pid, name))
         if not want:
             continue
         have = links_now(v, text)
-        if all(have.get(k) == u for k, u in want.items()):
+        if new == text and all(have.get(k) == u for k, u in want.items()):
             done += 1
             continue
-        todo.append({"row": row, "pid": pid, "text": text, "want": [[a, b, u] for (a, b), u in sorted(want.items())],
+        todo.append({"row": row, "pid": pid, "before": text, "text": new, "want": [[a, b, u] for (a, b), u in sorted(want.items())],
                      "before_links": json.dumps({f"{a}-{b}": u for (a, b), u in have.items()})})
     return ci, si, todo, missing, done
 
@@ -169,7 +176,7 @@ def main():
     ci, si, todo, missing, done = plan()
     print(f"{len(todo)} cells to link, {done} already linked right")
     for t in todo:
-        print(f"  row {t['row']} {t['pid']}: {t['text']!r} -> " + ", ".join(u.rsplit('/', 1)[-1] for _, _, u in t["want"]))
+        print(f"  row {t['row']} {t['pid']}: {t['before']!r}" + (f" respelled {t['text']!r}" if t['text'] != t['before'] else "") + " -> " + ", ".join(u.rsplit('/', 1)[-1] for _, _, u in t["want"]))
     print(f"{len(missing)} names with no gem.wiki page in the LNG tracker export:")
     for row, pid, name in missing:
         print(f"  row {row} {pid}: {name!r}")
@@ -179,9 +186,9 @@ def main():
     bk = Path("notes") / f"sheet-write-{datetime.now():%Y-%m-%d-%H%M}-lng-terminal-wiki-links.csv"
     with open(bk, "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["row", "ProjectID", "text", "links_before", "links_after", "LastUpdated_after"])
+        w.writerow(["row", "ProjectID", "text_before", "text_after", "links_before", "links_after", "LastUpdated_after"])
         for t in todo:
-            w.writerow([t["row"], t["pid"], t["text"], t["before_links"], json.dumps(t["want"]), stamp])
+            w.writerow([t["row"], t["pid"], t["before"], t["text"], t["before_links"], json.dumps(t["want"]), stamp])
     print("backup:", bk)
     reqs = []
     for t in todo:
