@@ -135,8 +135,8 @@ Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`. Pull via
 
 **AUTHENTICATED ACCESS IS THE ONLY PATH — for this sheet and for every other work
 shared-drive / Google Docs-Sheets-Slides object.** Baird is deliberately withdrawing
-anonymous link access, so reach for the `gws` CLI (`gws-gem`, read-only, the default) or the
-Google Drive MCP tools first, never a public export URL, and never treat auth as a fallback.
+anonymous link access, so reach for the `gws` CLI (`gws-gem`, read-only, the default) first, never the Google Drive MCP
+connector and never a public export URL, and never treat auth as a fallback.
 The anonymous CSV export died 2026-07-29 (401 on every tab; the sheet lives in shared drive
 `0AFOra93TfZAeUk9PVA`) and has been removed from the script — don't re-add it. `refresh_csvs.sh`
 is now a thin wrapper around the shared pull engine in **`../gem-db-ops`** (as of 2026-08-11):
@@ -155,14 +155,14 @@ Pipeline operators/owners (44 cols, GID 1489950650) — the script pulls all thr
 
 **Header is at CSV row index 2 for the two tracker tabs**: `pd.read_csv(path, header=2, low_memory=False)`.
 **The operators/owners tab's header is at row index 1** (`header=1`) — row 0 is a filter-view banner.
-For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
-`download_file_content` (first tab only) or `read_file_content` (lossy). Schema gotchas
+For a multi-tab spreadsheet, use Sheets `values.get` per tab through `gws-gem`; the Drive MCP connector
+is not used (its `download_file_content` is first tab only, `read_file_content` is lossy). Schema gotchas
 (multi-value diameter, buffer rows,
 `SheetRow = CSV index + 4`, `[ref]` pairing, segment-vs-network granularity):
 `docs/reference/gem_schema.md`.
 
 ### Fetching gem.wiki needs a specific User-Agent
-`harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it, standing rule 1). The gem.wiki zone ran Cloudflare **Under Attack Mode** 2026-08-07 to about 08-11, and the sanctioned way through was a User-Agent carrying a token GEM's infra admin recognizes. UAM is **off again** (verified 2026-08-11), but that token stays the identity the admin knows in the firewall logs. It is a credential and is never committed: `url_verifier.WIKI_UA` reads it from the `GEMWIKI_USER_AGENT` env var (ask Baird for the value). If gem.wiki fetches start 403ing `cf-mitigated: challenge`, check that the variable is set.
+`harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it, standing rule 1). The gem.wiki zone ran Cloudflare **Under Attack Mode** 2026-08-07 to about 08-11, and the sanctioned way through was a User-Agent carrying a token GEM's infra admin recognizes. UAM was off from 2026-08-11, but **a zone-wide challenge came back 2026-11-16 at 4:39 pm ET, during a 166-page `generate_pages.py --save` run, and the token no longer gets through** (verified 2026-11-17 from two networks). Don't run wiki passes until GEM's infra admin says the zone is open to the token again. The token stays the identity the admin knows in the firewall logs. It is a credential and is never committed: `url_verifier.WIKI_UA` reads it from the `GEMWIKI_USER_AGENT` env var (ask Baird for the value). If gem.wiki fetches start 403ing `cf-mitigated: challenge`, check that the variable is set.
 - `goit-ggit-data-ops/gem-wiki/gemwiki.py` reads the same variable, so both repos present as one client in GEM's firewall logs.
 - Do **not** use `WIKI_UA` for external sites — they need the browser-ish `_UA`, and
   the token means nothing off GEM's zone.
@@ -578,11 +578,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **GEM Project Database MCP:** wraps `gem-project-db.herokuapp.com`; auth via
   `GEM_SESSION_COOKIE` (Django sessionid; rotates ~2 weeks). Not needed for reconciliation.
 - **GEM LNG tracker:** Sheet `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`, GID
-  `243795339`; header at row index 1. Read it through `gws-gem`/Drive MCP like everything
+  `243795339`; header at row index 1. Read it through `gws-gem` like everything
   else — if an anonymous CSV export still happens to work here, it is being withdrawn too.
 - **SFOC sheet** (LNG carrier reconciliation): `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`;
-  authenticated read only (Sheets `values.get`, or Drive MCP `read_file_content` for its
-  pipe-delimited markdown); anonymous CSV export → 401.
+  authenticated read only (Sheets `values.get` through `gws-gem`); anonymous CSV export → 401.
 - **Preferred sources** + the reference-dataset registry: `docs/reference/source_roster.md`.
 - **Archiving a `[ref]` document (Internet Archive).** Two different routes, and the
   distinction matters: a **Wayback capture** (`web.archive.org/web/<ts>/<url>`) is IA's

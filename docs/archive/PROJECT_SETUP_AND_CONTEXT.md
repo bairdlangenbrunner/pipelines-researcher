@@ -198,8 +198,7 @@ EPSG:4326 is the standard projection.
   `list_entities`, etc.); session cookie expires ~every 2 weeks.
 - **SFOC Google Sheet** (LNG carrier reconciliation): ID
   `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`; authenticated read only — Sheets
-  `values.get` via `gws-gem`, or Drive MCP `read_file_content` for its pipe-delimited
-  markdown; anonymous CSV export returns HTTP 401.
+  `values.get` via `gws-gem`; anonymous CSV export returns HTTP 401.
 - **GEM LNG tracker:** Sheet ID `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`,
   GID `243795339`; header at row index 1. Read it authenticated like everything else —
   anonymous access to work documents is being withdrawn.

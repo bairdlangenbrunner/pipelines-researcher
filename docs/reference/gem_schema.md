@@ -43,8 +43,8 @@ engine in `../gem-db-ops` (`goit/pull.py`, `ggit/pull.py`).
 - **Pull it with `./scripts/refresh_csvs.sh`** (authenticated Sheets `values.get` per tab via
   `gws-gem`, implemented once in `../gem-db-ops/gem_sheets.py` — never re-implement it here).
   The anonymous CSV export died 2026-07-29 and anonymous access to these documents
-  is being withdrawn deliberately — don't curl an export URL. Drive MCP is not a substitute
-  either: `download_file_content` returns the first tab only and `read_file_content` is
+  is being withdrawn deliberately — don't curl an export URL. The Drive MCP connector is not used
+  at all: `download_file_content` returns the first tab only and `read_file_content` is
   lossy/truncating. `FORMATTED_VALUE` per-tab reads are the lossless path.
 
 ### Pipeline operators/owners tab (GID `1489950650`)
