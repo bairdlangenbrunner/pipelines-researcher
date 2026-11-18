@@ -258,10 +258,20 @@ def location_phrase(rows):
             if a and a == z:
                 return f"in {a}, {country_name(cs[0])}"
         return f"in {country_name(cs[0])}"
-    r = rows[0]
+    whole = [r for r in rows if not r["SegmentName"].strip() or r["SegmentName"].upper().startswith("SYSTEM/NETWORK")]
+    if len(rows) > 1 and len(whole) != 1:
+        # segments with no system row: the first segment's ends are not the pipeline's (Arab Gas Pipeline
+        # read "from Egypt to Egypt", 2026-11-18), so name every country in route order
+        seen = []
+        for r in rows:
+            for c in [r["StartCountryOrArea"]] + countries(r["CountriesOrAreas"]) + [r["EndCountryOrArea"]]:
+                if c and c not in seen:
+                    seen.append(c)
+        return "in " + join_list([country_name(c) for c in seen])
+    r = whole[0] if whole else rows[0]
     a, z = r["StartCountryOrArea"], r["EndCountryOrArea"]
-    mid = [c for c in countries(r["CountriesOrAreas"]) if c not in (a, z)]
-    return f"running from {country_name(a)} to {country_name(z)}" + (f" through {', '.join(mid)}" if mid else "")
+    mid = [country_name(c) for c in countries(r["CountriesOrAreas"]) if c not in (a, z)]
+    return f"running from {country_name(a)} to {country_name(z)}" + (f" through {join_list(mid)}" if mid else "")
 
 
 def intro(pg, rows, tracker):
@@ -280,8 +290,13 @@ def intro(pg, rows, tracker):
     joined = "" if not bold else bold[0] if len(bold) == 1 else (" and ".join(bold) if len(bold) == 2 else ", ".join(bold[:-1]) + ", and " + bold[-1])
     aka = (", also known as " + joined + ",") if names else ""
     # the pipeline's local name is the commonest OtherLanguagePrimaryPipelineName on its rows
-    lc = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in rows if r["OtherLanguagePrimaryPipelineName"].strip())
+    lc = collections.Counter(r["OtherLanguagePrimaryPipelineName"].strip() for r in (whole or rows) if r["OtherLanguagePrimaryPipelineName"].strip())
     local = lc.most_common(1)[0][0] if lc else ""
+    if len(lc) > 1:
+        # segment names that differ only by a trailing "(segment)" share the pipeline's name: Arab Gas Pipeline's
+        # rows read "خطّ الغاز العربي (العريش -طابا)" etc. (2026-11-18); otherwise no segment speaks for the page
+        bare = {re.sub(r"\s*\([^()]*\)\s*$", "", n).strip() for n in lc}
+        local = bare.pop() if len(bare) == 1 else ""
     local = f" ({local})" if local else ""   # GOGPT style: plain parentheses after the name, no label (Baird 2026-11-10)
     fuel, loc = fuel_phrase(rows, tracker), location_phrase(rows)
     # a page called a network is introduced as one: "is a ... pipeline network" (Baird 2026-11-08)
@@ -2698,7 +2713,18 @@ def main():
     ap.add_argument("--pages-file", help="a text file with one page name per line, added to the page names given")
     ap.add_argument("--resume", action="store_true", help="skip pages already in --out's refs_ledger.json and append to its report")
     ap.add_argument("--rate", type=float, default=3.0, help="gem.wiki requests per second for this run (the client's ceiling is 5)")
+    ap.add_argument("--live-dir", help="offline mode for when gem.wiki's firewall blocks scripts: read each page's live text from "
+                    "DIR/<file>.live.txt (copied from the browser; an empty file means a new page) and make no wiki calls. "
+                    "Implies --no-render; the redirect and red-link checks do not run. The page is then pasted and saved "
+                    "in the browser (docs/sops/wiki_pages.md, 'When the wiki blocks scripts')")
     a = ap.parse_args()
+    if a.live_dir:
+        if a.save or a.push_styles:
+            ap.error("--live-dir cannot save: paste the .paste.txt drafts in the browser instead")
+        a.no_render = True
+        def _blocked(*_, **__):
+            raise GW.WikiError("offline run (--live-dir): no wiki calls")
+        GW.get = GW.post = GW.page_text = _blocked
     GW.MAX_CALLS_PER_SECOND = min(a.rate, GW.MAX_CALLS_PER_SECOND)
     if a.pages_file:
         a.pages += [l.strip() for l in open(a.pages_file) if l.strip() and not l.startswith("#")]
@@ -2737,7 +2763,17 @@ def main():
         # a Wiki cell can still name a title the page was moved from (Shanxi, 2026-11-11: the new page was saved over
         # the redirect and the moved page stayed old). The page is read, built and saved at its current title.
         asked = name
-        q = GW.get(s, action="query", titles=name, redirects=1, formatversion=2).get("query", {})
+        fn = re.sub(r"[^\w.-]+", "_", name)
+        if a.live_dir:
+            src = os.path.join(a.live_dir, fn + ".live.txt")
+            if not os.path.exists(src):
+                report += [f"## {name}", "", f"NOT BUILT: no live text at `{src}`. Copy the page's source from the browser "
+                           "(an empty file for a page that does not exist yet).", ""]
+                continue
+            live = open(src).read()
+            text, pg = build(name, rows, owners, live, a.tracker)
+            pg.log.append("offline run (--live-dir): redirect, red-link and network-page checks not run; no wiki preview")
+        q = {} if a.live_dir else GW.get(s, action="query", titles=name, redirects=1, formatversion=2).get("query", {})
         if q.get("redirects"):
             name = q["redirects"][-1]["to"]
             # a title merged into another pipeline's page is not a move: building these rows alone would replace
@@ -2747,13 +2783,16 @@ def main():
                            f"Point these rows' Wiki cells at '{name}' or give them a page of their own.", ""]
                 name = asked
                 continue
-        live = GW.page_text(s, name) or ""
-        text, pg = build(name, rows, owners, live, a.tracker)
+        if not a.live_dir:
+            live = GW.page_text(s, name) or ""
+            text, pg = build(name, rows, owners, live, a.tracker)
         if name != asked:
             pg.log.append(f"the Wiki cell names '{asked}', a redirect; built and saved at its current title '{name}' (the sheet's Wiki cell needs the new title)")
         lost = audit_refs(pg, live, text)
         fn = re.sub(r"[^\w.-]+", "_", name)
         open(os.path.join(out, fn + ".txt"), "w").write(text)
+        if a.live_dir:
+            open(os.path.join(out, fn + ".paste.txt"), "w").write(page_body(text))   # exactly what goes in the edit box
         open(os.path.join(out, fn + ".orig.txt"), "w").write(live)
         ledger[name] = {"file": fn, "rows": len(rows), "live_chars": len(live),
                         "live_refs": len(REF_ANY.findall(strip_generated_comments(live))),
